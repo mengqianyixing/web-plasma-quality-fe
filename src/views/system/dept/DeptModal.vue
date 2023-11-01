@@ -9,7 +9,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './dept.data';
 
-  import { getDeptList } from '/@/api/demo/system';
+  import { getDeptList } from '/@/api/systemServer/system';
 
   export default defineComponent({
     name: 'DeptModal',
