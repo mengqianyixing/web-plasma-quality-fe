@@ -1,11 +1,12 @@
 import { defHttp } from '/@/utils/http/axios';
-import { LoginParams, LoginResultModel, GetUserInfoModel } from './model/userModel';
+import { GetUserInfoModel } from './model/userModel';
 
 import { ErrorMessageMode } from '/#/axios';
+import { PostSysUserLoginRequest, PostSysUserLoginResponse } from '@/api/type/login';
 
 enum Api {
-  Login = '/login',
-  Logout = '/logout',
+  Login = '/sys/user/login',
+  Logout = '/sys/user/logout',
   GetUserInfo = '/getUserInfo',
   GetPermCode = '/getPermCode',
   TestRetry = '/testRetry',
@@ -14,8 +15,8 @@ enum Api {
 /**
  * @description: user login api
  */
-export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
-  return defHttp.post<LoginResultModel>(
+export function loginApi(params: PostSysUserLoginRequest, mode: ErrorMessageMode = 'modal') {
+  return defHttp.post<PostSysUserLoginResponse>(
     {
       url: Api.Login,
       params,

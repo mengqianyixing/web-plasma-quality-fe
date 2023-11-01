@@ -5,6 +5,7 @@ import { getParentLayout, LAYOUT, EXCEPTION_COMPONENT } from '/@/router/constant
 import { cloneDeep, omit } from 'lodash-es';
 import { warn } from '/@/utils/log';
 import { createRouter, createWebHashHistory } from 'vue-router';
+import { GetSysRoleUserMenutreeResponse } from '@/api/type/roleManage';
 
 export type LayoutMapKey = 'LAYOUT';
 const IFRAME = () => import('/@/views/sys/iframe/FrameBlank.vue');
@@ -65,6 +66,47 @@ function dynamicImport(
     warn('在src/views/下找不到`' + component + '.vue` 或 `' + component + '.tsx`, 请自行创建!');
     return EXCEPTION_COMPONENT;
   }
+}
+
+const arr = [] as any[];
+function convertMenuToRouterObject(
+  menu: GetSysRoleUserMenutreeResponse[number],
+): AppRouteRecordRaw {
+  const routerObject: AppRouteModule = {
+    path: menu.menuPath!,
+    name: menu.menuName,
+    component: menu.component,
+    meta: {
+      title: menu.menuName,
+      icon: menu.iconType,
+    },
+  };
+
+  if (menu.children) {
+    routerObject.children = [];
+    for (const childMenu of menu.children) {
+      if (childMenu.menuType !== 2) {
+        routerObject.children.push(
+          convertMenuToRouterObject(childMenu as GetSysRoleUserMenutreeResponse[number]),
+        );
+      } else {
+        arr.push(childMenu.menuCode);
+      }
+    }
+  }
+
+  return routerObject;
+}
+
+export function convertMenuArrToRouterObject(
+  menus: GetSysRoleUserMenutreeResponse,
+): AppRouteRecordRaw[] {
+  const routerObjects: AppRouteRecordRaw[] = [];
+  for (const menu of menus) {
+    routerObjects.push(convertMenuToRouterObject(menu) as unknown as AppRouteRecordRaw);
+  }
+
+  return routerObjects;
 }
 
 // Turn background objects into routing objects
