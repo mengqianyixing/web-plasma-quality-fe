@@ -16,7 +16,8 @@
   import { formSchema } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
 
-  import { getMenuList } from '/@/api/demo/system';
+  import { addMenu, editMenu, getMenuTree } from '/@/api/systemServer/system';
+  import { PostSysMenuRequest, PutSysMenuRequest } from '@/api/type/menuManage';
 
   export default defineComponent({
     name: 'MenuDrawer',
@@ -24,6 +25,7 @@
     emits: ['success', 'register'],
     setup(_, { emit }) {
       const isUpdate = ref(true);
+      const menuId = ref('');
 
       const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
         labelWidth: 100,
@@ -38,13 +40,14 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
+          menuId.value = data.record.menuId;
           setFieldsValue({
             ...data.record,
           });
         }
-        const treeData = await getMenuList();
+        const treeData = await getMenuTree();
         updateSchema({
-          field: 'parentMenu',
+          field: 'parentId',
           componentProps: { treeData },
         });
       });
@@ -55,9 +58,17 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
-          closeDrawer();
+
+          if (unref(isUpdate)) {
+            await editMenu({
+              ...values,
+              menuId: menuId.value,
+            } as PutSysMenuRequest);
+            closeDrawer();
+          } else {
+            await addMenu(values as PostSysMenuRequest);
+            closeDrawer();
+          }
           emit('success');
         } finally {
           setDrawerProps({ confirmLoading: false });

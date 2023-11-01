@@ -1,23 +1,33 @@
 import {
   AccountParams,
   DeptListItem,
-  MenuParams,
   RoleParams,
   RolePageParams,
-  MenuListGetResultModel,
   DeptListGetResultModel,
   AccountListGetResultModel,
   RolePageListGetResultModel,
   RoleListGetResultModel,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
+import {
+  DeleteSysMenuIdRequest,
+  GetSysMenuTreeResponse,
+  PostSysMenuRequest,
+  PostSysMenuResponse,
+  PostSysMenusRequest,
+  PostSysMenusResponse,
+  PutSysMenuRequest,
+  PutSysMenuResponse,
+} from '@/api/type/menuManage';
 
 enum Api {
   AccountList = '/system/getAccountList',
   IsAccountExist = '/system/accountExist',
   DeptList = '/system/getDeptList',
   setRoleStatus = '/system/setRoleStatus',
-  MenuList = '/system/getMenuList',
+  MenuList = '/sys/menus',
+  MenuTree = '/sys/menu/tree',
+  restfulMenuUrl = '/sys/menu',
   RolePageList = '/system/getRoleListByPage',
   GetAllRoleList = '/system/getAllRoleList',
 }
@@ -28,8 +38,19 @@ export const getAccountList = (params: AccountParams) =>
 export const getDeptList = (params?: DeptListItem) =>
   defHttp.get<DeptListGetResultModel>({ url: Api.DeptList, params });
 
-export const getMenuList = (params?: MenuParams) =>
-  defHttp.get<MenuListGetResultModel>({ url: Api.MenuList, params });
+export const getMenuList = (params?: PostSysMenusRequest) =>
+  defHttp.post<PostSysMenusResponse>({ url: Api.MenuList, params });
+
+export const getMenuTree = () => defHttp.get<GetSysMenuTreeResponse>({ url: Api.MenuTree });
+
+export const addMenu = (params: PostSysMenuRequest) =>
+  defHttp.post<PostSysMenuResponse>({ url: Api.restfulMenuUrl, params });
+
+export const deleteMenu = (id: DeleteSysMenuIdRequest['id']) =>
+  defHttp.delete({ url: Api.restfulMenuUrl + `/${id}` });
+
+export const editMenu = (params: PutSysMenuRequest) =>
+  defHttp.put<PutSysMenuResponse>({ url: Api.restfulMenuUrl, params });
 
 export const getRoleListByPage = (params?: RolePageParams) =>
   defHttp.get<RolePageListGetResultModel>({ url: Api.RolePageList, params });
