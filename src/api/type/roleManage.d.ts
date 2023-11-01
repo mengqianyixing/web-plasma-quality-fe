@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
  * @请求头 `POST /sys/roles`
- * @更新时间 `2023-10-24 10:47:33`
+ * @更新时间 `2023-10-27 17:19:39`
  */
 export interface PostSysRolesRequest {
   /**
@@ -38,7 +38,7 @@ export interface PostSysRolesRequest {
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
  * @请求头 `POST /sys/roles`
- * @更新时间 `2023-10-24 10:47:33`
+ * @更新时间 `2023-10-27 17:19:39`
  */
 export interface PostSysRolesResponse {
   /**
@@ -57,7 +57,7 @@ export interface PostSysRolesResponse {
    * 当前页数
    */
   currPage: number;
-  list: {
+  result: {
     /**
      * 角色id，主键
      */
@@ -90,7 +90,7 @@ export interface PostSysRolesResponse {
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
  * @请求头 `POST /sys/role`
- * @更新时间 `2023-10-24 11:02:25`
+ * @更新时间 `2023-10-27 17:19:31`
  */
 export interface PostSysRoleRequest {
   roleName: string;
@@ -99,12 +99,7 @@ export interface PostSysRoleRequest {
   /**
    * 菜单集合
    */
-  menuIds: {
-    /**
-     * 已选择菜单编号
-     */
-    menuId: string;
-  }[];
+  menuIds: string[];
 }
 
 /**
@@ -112,25 +107,16 @@ export interface PostSysRoleRequest {
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
  * @请求头 `POST /sys/role`
- * @更新时间 `2023-10-24 11:02:25`
+ * @更新时间 `2023-10-27 17:19:31`
  */
-export interface PostSysRoleResponse {
-  /**
-   * 响应码
-   */
-  code?: string;
-  /**
-   * 响应信息
-   */
-  msg?: string;
-}
+export interface PostSysRoleResponse {}
 
 /**
  * 接口 [删除角色信息↗](https://yapi.sharing8.cn/project/521/interface/api/29332) 的 **请求类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
  * @请求头 `DELETE /sys/role/{id}`
- * @更新时间 `2023-10-24 10:23:57`
+ * @更新时间 `2023-10-27 17:19:44`
  */
 export interface DeleteSysRoleIdRequest {
   /**
@@ -144,25 +130,16 @@ export interface DeleteSysRoleIdRequest {
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
  * @请求头 `DELETE /sys/role/{id}`
- * @更新时间 `2023-10-24 10:23:57`
+ * @更新时间 `2023-10-27 17:19:44`
  */
-export interface DeleteSysRoleIdResponse {
-  /**
-   * 状态码
-   */
-  code?: string;
-  /**
-   * 状态信息
-   */
-  msg?: string;
-}
+export interface DeleteSysRoleIdResponse {}
 
 /**
  * 接口 [编辑角色信息↗](https://yapi.sharing8.cn/project/521/interface/api/29338) 的 **请求类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
  * @请求头 `PUT /sys/role`
- * @更新时间 `2023-10-24 11:33:12`
+ * @更新时间 `2023-10-27 17:19:49`
  */
 export interface PutSysRoleRequest {
   /**
@@ -192,25 +169,16 @@ export interface PutSysRoleRequest {
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
  * @请求头 `PUT /sys/role`
- * @更新时间 `2023-10-24 11:33:12`
+ * @更新时间 `2023-10-27 17:19:49`
  */
-export interface PutSysRoleResponse {
-  /**
-   * 状态码
-   */
-  code?: string;
-  /**
-   * 状态信息
-   */
-  msg?: string;
-}
+export interface PutSysRoleResponse {}
 
 /**
  * 接口 [查询单个角色，包括菜单信息↗](https://yapi.sharing8.cn/project/521/interface/api/29416) 的 **请求类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
  * @请求头 `GET /sys/role/{id}`
- * @更新时间 `2023-10-24 15:18:39`
+ * @更新时间 `2023-10-31 16:05:41`
  */
 export interface GetSysRoleIdRequest {
   /**
@@ -224,7 +192,7 @@ export interface GetSysRoleIdRequest {
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
  * @请求头 `GET /sys/role/{id}`
- * @更新时间 `2023-10-24 15:18:39`
+ * @更新时间 `2023-10-31 16:05:41`
  */
 export interface GetSysRoleIdResponse {
   /**
@@ -243,6 +211,14 @@ export interface GetSysRoleIdResponse {
    * 备注信息
    */
   remark?: string;
+  /**
+   * 菜单标识
+   */
+  menuCode: string;
+  /**
+   * 图标
+   */
+  iconType?: string;
   menuTree?: {
     /**
      * 菜单id
@@ -261,6 +237,14 @@ export interface GetSysRoleIdResponse {
      */
     menuOrder: string;
     /**
+     * 菜单路径
+     */
+    menuPath?: string;
+    /**
+     * 菜单组件
+     */
+    component?: string;
+    /**
      * 父菜单id
      */
     parentId?: string;
@@ -271,7 +255,7 @@ export interface GetSysRoleIdResponse {
     /**
      * 叶子节点
      */
-    child?: {
+    children?: {
       /**
        * 菜单id
        */
@@ -289,6 +273,14 @@ export interface GetSysRoleIdResponse {
        */
       menuOrder: string;
       /**
+       * 菜单路径
+       */
+      menuPath?: string;
+      /**
+       * 菜单组件
+       */
+      component?: string;
+      /**
        * 父菜单id
        */
       parentId?: string;
@@ -299,9 +291,103 @@ export interface GetSysRoleIdResponse {
       /**
        * 叶子节点
        */
-      child?: {}[];
+      children?: {}[];
     }[];
   }[];
 }
+
+/**
+ * 接口 [根据用户id，获取用户的菜单↗](https://yapi.sharing8.cn/project/521/interface/api/29740) 的 **请求类型**
+ *
+ * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
+ * @请求头 `GET /sys/role/user/menutree`
+ * @更新时间 `2023-10-31 16:05:52`
+ */
+export interface GetSysRoleUserMenutreeRequest {}
+
+/**
+ * 接口 [根据用户id，获取用户的菜单↗](https://yapi.sharing8.cn/project/521/interface/api/29740) 的 **返回类型**
+ *
+ * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
+ * @请求头 `GET /sys/role/user/menutree`
+ * @更新时间 `2023-10-31 16:05:52`
+ */
+export type GetSysRoleUserMenutreeResponse = {
+  /**
+   * 菜单编号
+   */
+  menuId: string;
+  /**
+   * 菜单名称
+   */
+  menuName: string;
+  /**
+   * 菜单类型
+   */
+  menuType: number;
+  /**
+   * 菜单排序
+   */
+  menuOrder: string;
+  /**
+   * 父菜单id
+   */
+  parentId?: string;
+  /**
+   * 菜单编码
+   */
+  menuCode: string;
+  /**
+   * 图标
+   */
+  iconType?: string;
+  /**
+   * 菜单路径
+   */
+  menuPath?: string;
+  /**
+   * 组件
+   */
+  component?: string;
+  children?: {
+    /**
+     * 菜单编号
+     */
+    menuId: string;
+    /**
+     * 菜单名称
+     */
+    menuName: string;
+    /**
+     * 菜单类型
+     */
+    menuType: number;
+    /**
+     * 菜单排序
+     */
+    menuOrder: string;
+    /**
+     * 父菜单id
+     */
+    parentId?: string;
+    /**
+     * 菜单编码
+     */
+    menuCode: string;
+    /**
+     * 图标
+     */
+    iconType?: string;
+    /**
+     * 菜单路径
+     */
+    menuPath?: string;
+    /**
+     * 组件
+     */
+    component?: string;
+    children?: {}[];
+  }[];
+}[];
 
 /* prettier-ignore-end */

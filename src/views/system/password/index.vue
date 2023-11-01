@@ -37,7 +37,9 @@
           console.log(passwordOld, passwordNew);
           // const { router } = useRouter();
           // router.push(pageEnum.BASE_LOGIN);
-        } catch (error) {}
+        } catch (error) {
+          console.log(error);
+        }
       }
 
       return { register, resetFields, handleSubmit };

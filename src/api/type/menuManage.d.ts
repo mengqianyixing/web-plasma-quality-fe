@@ -12,17 +12,9 @@ type FileData = File;
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
  * @请求头 `POST /sys/menus`
- * @更新时间 `2023-10-24 15:14:49`
+ * @更新时间 `2023-10-31 16:31:06`
  */
 export interface PostSysMenusRequest {
-  /**
-   * 当前页
-   */
-  currPage: number;
-  /**
-   * 分页大小
-   */
-  pageSize: number;
   /**
    * 菜单名称
    */
@@ -42,26 +34,10 @@ export interface PostSysMenusRequest {
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
  * @请求头 `POST /sys/menus`
- * @更新时间 `2023-10-24 15:14:49`
+ * @更新时间 `2023-10-31 16:31:06`
  */
 export interface PostSysMenusResponse {
-  /**
-   * 总条数
-   */
-  totalCount: number;
-  /**
-   * 总页数
-   */
-  totalPage: number;
-  /**
-   * 当前页数
-   */
-  currPage: number;
-  /**
-   * 分页大小
-   */
-  pageSize: number;
-  list?: {
+  result?: {
     /**
      * 创建人
      */
@@ -91,6 +67,14 @@ export interface PostSysMenusResponse {
      */
     menuOrder: string;
     /**
+     * 菜单路径
+     */
+    menuPath?: string;
+    /**
+     * 菜单组件
+     */
+    component?: string;
+    /**
      * 图标类型
      */
     iconType?: string;
@@ -99,17 +83,13 @@ export interface PostSysMenusResponse {
      */
     parentId?: string;
     /**
-     * 路径
-     */
-    path?: string;
-    /**
      * 备注
      */
     remark?: string;
     /**
      * 叶子节点
      */
-    child?: {
+    children?: {
       /**
        * 菜单id，主键
        */
@@ -127,6 +107,14 @@ export interface PostSysMenusResponse {
        * 菜单排序
        */
       menuOrder: string;
+      /**
+       * 菜单路径
+       */
+      menuPath?: string;
+      /**
+       * 菜单组件
+       */
+      component?: string;
       /**
        * 图标类型
        */
@@ -146,7 +134,7 @@ export interface PostSysMenusResponse {
       /**
        * 叶子节点
        */
-      child?: {}[];
+      children?: {}[];
     }[];
   }[];
 }
@@ -156,7 +144,7 @@ export interface PostSysMenusResponse {
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
  * @请求头 `POST /sys/menu`
- * @更新时间 `2023-10-24 15:16:51`
+ * @更新时间 `2023-10-30 10:56:42`
  */
 export interface PostSysMenuRequest {
   /**
@@ -176,6 +164,14 @@ export interface PostSysMenuRequest {
    */
   menuName: string;
   /**
+   * 菜单路径
+   */
+  menuPath?: string;
+  /**
+   * component
+   */
+  component?: string;
+  /**
    * 图标类型
    */
   iconType?: string;
@@ -183,10 +179,6 @@ export interface PostSysMenuRequest {
    * 父菜单id
    */
   parentId?: string;
-  /**
-   * 路径
-   */
-  path?: string;
   /**
    * 备注
    */
@@ -198,25 +190,16 @@ export interface PostSysMenuRequest {
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
  * @请求头 `POST /sys/menu`
- * @更新时间 `2023-10-24 15:16:51`
+ * @更新时间 `2023-10-30 10:56:42`
  */
-export interface PostSysMenuResponse {
-  /**
-   * 响应信息
-   */
-  msg: string;
-  /**
-   * 响应码
-   */
-  code: string;
-}
+export interface PostSysMenuResponse {}
 
 /**
  * 接口 [删除菜单信息↗](https://yapi.sharing8.cn/project/521/interface/api/29368) 的 **请求类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
  * @请求头 `DELETE /sys/menu/{id}`
- * @更新时间 `2023-10-24 10:25:01`
+ * @更新时间 `2023-10-30 10:56:46`
  */
 export interface DeleteSysMenuIdRequest {
   /**
@@ -230,25 +213,16 @@ export interface DeleteSysMenuIdRequest {
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
  * @请求头 `DELETE /sys/menu/{id}`
- * @更新时间 `2023-10-24 10:25:01`
+ * @更新时间 `2023-10-30 10:56:46`
  */
-export interface DeleteSysMenuIdResponse {
-  /**
-   * 响应信息
-   */
-  msg: string;
-  /**
-   * 响应码
-   */
-  code: string;
-}
+export interface DeleteSysMenuIdResponse {}
 
 /**
  * 接口 [编辑菜单信息↗](https://yapi.sharing8.cn/project/521/interface/api/29374) 的 **请求类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
  * @请求头 `PUT /sys/menu`
- * @更新时间 `2023-10-24 15:17:21`
+ * @更新时间 `2023-10-30 10:56:51`
  */
 export interface PutSysMenuRequest {
   /**
@@ -272,6 +246,14 @@ export interface PutSysMenuRequest {
    */
   menuName?: string;
   /**
+   * 菜单路径
+   */
+  menuPath?: string;
+  /**
+   * 菜单组件
+   */
+  component?: string;
+  /**
    * 图标类型
    */
   iconType?: string;
@@ -279,10 +261,6 @@ export interface PutSysMenuRequest {
    * 父菜单id
    */
   parentId?: string;
-  /**
-   * 路径
-   */
-  path?: string;
   /**
    * 备注
    */
@@ -294,41 +272,27 @@ export interface PutSysMenuRequest {
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
  * @请求头 `PUT /sys/menu`
- * @更新时间 `2023-10-24 15:17:21`
+ * @更新时间 `2023-10-30 10:56:51`
  */
-export interface PutSysMenuResponse {
-  /**
-   * 响应信息
-   */
-  msg: string;
-  /**
-   * 响应码
-   */
-  code: string;
-}
+export interface PutSysMenuResponse {}
 
 /**
  * 接口 [查询菜单树↗](https://yapi.sharing8.cn/project/521/interface/api/29410) 的 **请求类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
- * @请求头 `POST /sys/menu/tree`
- * @更新时间 `2023-10-24 15:06:26`
+ * @请求头 `GET /sys/menu/tree`
+ * @更新时间 `2023-10-31 16:06:14`
  */
-export interface PostSysMenuTreeRequest {
-  /**
-   * 角色Id
-   */
-  角色Id?: string;
-}
+export interface GetSysMenuTreeRequest {}
 
 /**
  * 接口 [查询菜单树↗](https://yapi.sharing8.cn/project/521/interface/api/29410) 的 **返回类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
- * @请求头 `POST /sys/menu/tree`
- * @更新时间 `2023-10-24 15:06:26`
+ * @请求头 `GET /sys/menu/tree`
+ * @更新时间 `2023-10-31 16:06:14`
  */
-export type PostSysMenuTreeResponse = {
+export type GetSysMenuTreeResponse = {
   /**
    * 菜单id
    */
@@ -346,13 +310,21 @@ export type PostSysMenuTreeResponse = {
    */
   menuOrder: string;
   /**
+   * 菜单路径
+   */
+  menuPath?: string;
+  /**
+   * 菜单组件
+   */
+  component?: string;
+  /**
    * 父菜单id
    */
   parentId?: string;
   /**
    * 子节点
    */
-  child: {
+  children: {
     /**
      * 菜单id
      */
@@ -370,13 +342,21 @@ export type PostSysMenuTreeResponse = {
      */
     menuOrder: string;
     /**
+     * 菜单路径
+     */
+    menuPath?: string;
+    /**
+     * 菜单组件
+     */
+    component?: string;
+    /**
      * 父菜单id
      */
     parentId?: string;
     /**
      * 子节点
      */
-    child?: {}[];
+    children?: {}[];
   }[];
 }[];
 

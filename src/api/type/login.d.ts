@@ -11,10 +11,10 @@ type FileData = File;
  * 接口 [获取验证码↗](https://yapi.sharing8.cn/project/521/interface/api/29380) 的 **请求类型**
  *
  * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
- * @请求头 `GET /sys/verify-code/{uuid}`
- * @更新时间 `2023-10-24 10:54:24`
+ * @请求头 `GET /sys/captcha/{uuid}`
+ * @更新时间 `2023-10-26 13:55:43`
  */
-export interface GetSysVerifyCodeUuidRequest {
+export interface GetSysCaptchaUuidRequest {
   /**
    * 终端登录标识
    */
@@ -25,17 +25,17 @@ export interface GetSysVerifyCodeUuidRequest {
  * 接口 [获取验证码↗](https://yapi.sharing8.cn/project/521/interface/api/29380) 的 **返回类型**
  *
  * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
- * @请求头 `GET /sys/verify-code/{uuid}`
- * @更新时间 `2023-10-24 10:54:24`
+ * @请求头 `GET /sys/captcha/{uuid}`
+ * @更新时间 `2023-10-26 13:55:43`
  */
-export type GetSysVerifyCodeUuidResponse = string;
+export type GetSysCaptchaUuidResponse = string;
 
 /**
  * 接口 [用户登录↗](https://yapi.sharing8.cn/project/521/interface/api/29386) 的 **请求类型**
  *
  * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
  * @请求头 `POST /sys/user/login`
- * @更新时间 `2023-10-24 15:21:16`
+ * @更新时间 `2023-10-30 14:18:19`
  */
 export interface PostSysUserLoginRequest {
   /**
@@ -61,7 +61,7 @@ export interface PostSysUserLoginRequest {
  *
  * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
  * @请求头 `POST /sys/user/login`
- * @更新时间 `2023-10-24 15:21:16`
+ * @更新时间 `2023-10-30 14:18:19`
  */
 export interface PostSysUserLoginResponse {
   /**
@@ -69,59 +69,13 @@ export interface PostSysUserLoginResponse {
    */
   accessToken: string;
   /**
-   * 刷新token
+   * 用户名称
    */
-  refreshToken: string;
+  username: string;
   /**
-   * 菜单授权列表
+   * 用户id
    */
-  menuAuthList?: {
-    /**
-     * 菜单编码
-     */
-    menuCode: string;
-    /**
-     * 菜单名称
-     */
-    menuName: string;
-    /**
-     * 菜单类型
-     */
-    menuType: number;
-    /**
-     * 图标类型
-     */
-    iconType?: string;
-    /**
-     * 菜单id
-     */
-    menuId: string;
-    /**
-     * 子菜单
-     */
-    childMenuList?: {
-      /**
-       * 菜单编码
-       */
-      menuCode: string;
-      /**
-       * 菜单名称
-       */
-      menuName: string;
-      /**
-       * 菜单类型
-       */
-      menuType: number;
-      /**
-       * 图标类型
-       */
-      iconType?: string;
-      /**
-       * 菜单id
-       */
-      menuId: string;
-    }[];
-  }[];
+  userId: string;
 }
 
 /**
@@ -129,7 +83,7 @@ export interface PostSysUserLoginResponse {
  *
  * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
  * @请求头 `GET /sys/user/logout`
- * @更新时间 `2023-10-24 10:04:14`
+ * @更新时间 `2023-10-30 14:18:28`
  */
 export interface GetSysUserLogoutRequest {}
 
@@ -138,7 +92,7 @@ export interface GetSysUserLogoutRequest {}
  *
  * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
  * @请求头 `GET /sys/user/logout`
- * @更新时间 `2023-10-24 10:04:14`
+ * @更新时间 `2023-10-30 14:18:28`
  */
 export interface GetSysUserLogoutResponse {
   /**
@@ -149,33 +103,6 @@ export interface GetSysUserLogoutResponse {
    * 响应信息
    */
   msg: string;
-}
-
-/**
- * 接口 [刷新token↗](https://yapi.sharing8.cn/project/521/interface/api/29404) 的 **请求类型**
- *
- * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
- * @请求头 `GET /sys/user/refresh-token`
- * @更新时间 `2023-10-24 10:08:54`
- */
-export interface GetSysUserRefreshTokenRequest {}
-
-/**
- * 接口 [刷新token↗](https://yapi.sharing8.cn/project/521/interface/api/29404) 的 **返回类型**
- *
- * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
- * @请求头 `GET /sys/user/refresh-token`
- * @更新时间 `2023-10-24 10:08:54`
- */
-export interface GetSysUserRefreshTokenResponse {
-  /**
-   * 接入token
-   */
-  access_token: string;
-  /**
-   * 刷新token
-   */
-  refresh_token: string;
 }
 
 /* prettier-ignore-end */

@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `POST /sys/users`
- * @更新时间 `2023-10-24 10:45:49`
+ * @更新时间 `2023-10-27 16:25:08`
  */
 export interface PostSysUsersRequest {
   /**
@@ -58,10 +58,10 @@ export interface PostSysUsersRequest {
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `POST /sys/users`
- * @更新时间 `2023-10-24 10:45:49`
+ * @更新时间 `2023-10-27 16:25:08`
  */
 export interface PostSysUsersResponse {
-  list?: {
+  result?: {
     /**
      * 用户id，主键
      */
@@ -159,7 +159,7 @@ export interface PostSysUsersResponse {
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `POST /sys/user`
- * @更新时间 `2023-10-24 10:34:56`
+ * @更新时间 `2023-10-30 16:39:36`
  */
 export interface PostSysUserRequest {
   /**
@@ -173,7 +173,7 @@ export interface PostSysUserRequest {
   /**
    * 用户密码
    */
-  password?: string;
+  password: string;
   /**
    * 是否支持多端登录：1：是，0：否
    */
@@ -217,25 +217,16 @@ export interface PostSysUserRequest {
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `POST /sys/user`
- * @更新时间 `2023-10-24 10:34:56`
+ * @更新时间 `2023-10-30 16:39:36`
  */
-export interface PostSysUserResponse {
-  /**
-   * 响应码
-   */
-  code: string;
-  /**
-   * 响应信息
-   */
-  msg: string;
-}
+export interface PostSysUserResponse {}
 
 /**
  * 接口 [删除用户信息↗](https://yapi.sharing8.cn/project/521/interface/api/29278) 的 **请求类型**
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `DELETE /user/{id}`
- * @更新时间 `2023-10-24 10:25:47`
+ * @更新时间 `2023-10-27 16:25:32`
  */
 export interface DeleteUserIdRequest {
   /**
@@ -249,25 +240,16 @@ export interface DeleteUserIdRequest {
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `DELETE /user/{id}`
- * @更新时间 `2023-10-24 10:25:47`
+ * @更新时间 `2023-10-27 16:25:32`
  */
-export interface DeleteUserIdResponse {
-  /**
-   * 响应码
-   */
-  code: string;
-  /**
-   * 响应信息
-   */
-  msg: string;
-}
+export type DeleteUserIdResponse = string;
 
 /**
  * 接口 [编辑用户基本信息↗](https://yapi.sharing8.cn/project/521/interface/api/29290) 的 **请求类型**
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `PUT /sys/user`
- * @更新时间 `2023-10-24 10:34:31`
+ * @更新时间 `2023-10-27 16:25:38`
  */
 export interface PutSysUserRequest {
   /**
@@ -307,9 +289,13 @@ export interface PutSysUserRequest {
    */
   remark?: string;
   /**
-   * 角色Id列表
+   * 新增的角色ID集合
    */
-  roleIds?: string[];
+  addRoleIds?: string[];
+  /**
+   * 删除的角色id集合
+   */
+  deleteRoleIds?: string[];
   /**
    * 部门Id
    */
@@ -321,30 +307,34 @@ export interface PutSysUserRequest {
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `PUT /sys/user`
- * @更新时间 `2023-10-24 10:34:31`
+ * @更新时间 `2023-10-27 16:25:38`
  */
-export interface PutSysUserResponse {
-  /**
-   * 响应码
-   */
-  code: string;
-  /**
-   * 响应信息
-   */
-  msg: string;
-}
+export interface PutSysUserResponse {}
 
 /**
  * 接口 [修改用户密码↗](https://yapi.sharing8.cn/project/521/interface/api/29308) 的 **请求类型**
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `PUT /sys/user/pwd`
- * @更新时间 `2023-10-24 10:26:03`
+ * @更新时间 `2023-10-27 16:25:46`
  */
 export interface PutSysUserPwdRequest {
+  /**
+   * 用户id，主键
+   */
   userId: string;
-  account?: string;
+  /**
+   * 用户新密码
+   */
   password?: string;
+  /**
+   * 用户旧密码
+   */
+  oldPassword?: string;
+  /**
+   * 重置标志，true：重置密码为设定密码；false：使用新密码，此时新密码必填
+   */
+  resetFlag: boolean;
 }
 
 /**
@@ -352,25 +342,16 @@ export interface PutSysUserPwdRequest {
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `PUT /sys/user/pwd`
- * @更新时间 `2023-10-24 10:26:03`
+ * @更新时间 `2023-10-27 16:25:46`
  */
-export interface PutSysUserPwdResponse {
-  /**
-   * 响应码
-   */
-  code: string;
-  /**
-   * 响应信息
-   */
-  msg: string;
-}
+export interface PutSysUserPwdResponse {}
 
 /**
  * 接口 [查询个人信息详情↗](https://yapi.sharing8.cn/project/521/interface/api/29350) 的 **请求类型**
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `GET /sys/user/{id}`
- * @更新时间 `2023-10-24 10:47:11`
+ * @更新时间 `2023-10-27 16:25:52`
  */
 export interface GetSysUserIdRequest {
   /**
@@ -384,7 +365,7 @@ export interface GetSysUserIdRequest {
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `GET /sys/user/{id}`
- * @更新时间 `2023-10-24 10:47:11`
+ * @更新时间 `2023-10-27 16:25:52`
  */
 export interface GetSysUserIdResponse {
   /**

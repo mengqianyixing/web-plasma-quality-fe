@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
  * @请求头 `POST /sys/depts`
- * @更新时间 `2023-10-24 10:44:47`
+ * @更新时间 `2023-10-27 15:43:19`
  */
 export interface PostSysDeptsRequest {
   currPage: number;
@@ -28,7 +28,7 @@ export interface PostSysDeptsRequest {
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
  * @请求头 `POST /sys/depts`
- * @更新时间 `2023-10-24 10:44:47`
+ * @更新时间 `2023-10-27 15:43:19`
  */
 export interface PostSysDeptsResponse {
   /**
@@ -50,7 +50,7 @@ export interface PostSysDeptsResponse {
   /**
    * item 类型: object
    */
-  list?: {
+  result?: {
     /**
      * 部门id，主键
      */
@@ -87,7 +87,7 @@ export interface PostSysDeptsResponse {
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
  * @请求头 `POST /sys/dept`
- * @更新时间 `2023-10-24 09:49:51`
+ * @更新时间 `2023-10-27 15:43:26`
  */
 export interface PostSysDeptRequest {
   /**
@@ -113,25 +113,16 @@ export interface PostSysDeptRequest {
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
  * @请求头 `POST /sys/dept`
- * @更新时间 `2023-10-24 09:49:51`
+ * @更新时间 `2023-10-27 15:43:26`
  */
-export interface PostSysDeptResponse {
-  /**
-   * 响应码
-   */
-  code: string;
-  /**
-   * 响应信息
-   */
-  msg: string;
-}
+export interface PostSysDeptResponse {}
 
 /**
  * 接口 [删除部门信息↗](https://yapi.sharing8.cn/project/521/interface/api/29242) 的 **请求类型**
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
  * @请求头 `DELETE /sys/dept/{id}`
- * @更新时间 `2023-10-24 10:16:05`
+ * @更新时间 `2023-10-27 15:43:33`
  */
 export interface DeleteSysDeptIdRequest {
   /**
@@ -145,25 +136,16 @@ export interface DeleteSysDeptIdRequest {
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
  * @请求头 `DELETE /sys/dept/{id}`
- * @更新时间 `2023-10-24 10:16:05`
+ * @更新时间 `2023-10-27 15:43:33`
  */
-export interface DeleteSysDeptIdResponse {
-  /**
-   * 响应码
-   */
-  code: string;
-  /**
-   * 响应信息
-   */
-  msg: string;
-}
+export interface DeleteSysDeptIdResponse {}
 
 /**
  * 接口 [编辑部门信息↗](https://yapi.sharing8.cn/project/521/interface/api/29248) 的 **请求类型**
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
  * @请求头 `PUT /sys/dept`
- * @更新时间 `2023-10-24 09:50:52`
+ * @更新时间 `2023-10-27 15:41:57`
  */
 export interface PutSysDeptRequest {
   /**
@@ -193,17 +175,8 @@ export interface PutSysDeptRequest {
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
  * @请求头 `PUT /sys/dept`
- * @更新时间 `2023-10-24 09:50:52`
+ * @更新时间 `2023-10-27 15:41:57`
  */
-export interface PutSysDeptResponse {
-  /**
-   * 响应码
-   */
-  code: string;
-  /**
-   * 响应信息
-   */
-  msg: string;
-}
+export interface PutSysDeptResponse {}
 
 /* prettier-ignore-end */

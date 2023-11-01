@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `POST /sys/resource`
- * @更新时间 `2023-10-23 16:37:02`
+ * @更新时间 `2023-10-30 14:18:45`
  */
 export interface PostSysResourceRequest {
   /**
@@ -42,7 +42,7 @@ export interface PostSysResourceRequest {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `POST /sys/resource`
- * @更新时间 `2023-10-23 16:37:02`
+ * @更新时间 `2023-10-30 14:18:45`
  */
 export interface PostSysResourceResponse {
   /**
@@ -60,7 +60,7 @@ export interface PostSysResourceResponse {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `DELETE /sys/resource/{id}`
- * @更新时间 `2023-10-23 16:57:30`
+ * @更新时间 `2023-10-30 14:18:58`
  */
 export interface DeleteSysResourceIdRequest {
   /**
@@ -74,7 +74,7 @@ export interface DeleteSysResourceIdRequest {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `DELETE /sys/resource/{id}`
- * @更新时间 `2023-10-23 16:57:30`
+ * @更新时间 `2023-10-30 14:18:58`
  */
 export interface DeleteSysResourceIdResponse {
   /**
@@ -92,7 +92,7 @@ export interface DeleteSysResourceIdResponse {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `PUT /sys/resource`
- * @更新时间 `2023-10-23 16:37:53`
+ * @更新时间 `2023-10-30 14:19:17`
  */
 export interface PutSysResourceRequest {
   /**
@@ -126,7 +126,7 @@ export interface PutSysResourceRequest {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `PUT /sys/resource`
- * @更新时间 `2023-10-23 16:37:53`
+ * @更新时间 `2023-10-30 14:19:17`
  */
 export interface PutSysResourceResponse {
   /**
@@ -144,7 +144,7 @@ export interface PutSysResourceResponse {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `GET /sys/resource/{id}`
- * @更新时间 `2023-10-23 16:39:02`
+ * @更新时间 `2023-10-30 14:19:35`
  */
 export interface GetSysResourceIdRequest {
   /**
@@ -158,7 +158,7 @@ export interface GetSysResourceIdRequest {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `GET /sys/resource/{id}`
- * @更新时间 `2023-10-23 16:39:02`
+ * @更新时间 `2023-10-30 14:19:35`
  */
 export interface GetSysResourceIdResponse {
   /**
@@ -208,7 +208,7 @@ export interface GetSysResourceIdResponse {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `POST /sys/resources`
- * @更新时间 `2023-10-23 16:55:28`
+ * @更新时间 `2023-10-30 14:20:00`
  */
 export interface PostSysResourcesRequest {
   /**
@@ -234,7 +234,7 @@ export interface PostSysResourcesRequest {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `POST /sys/resources`
- * @更新时间 `2023-10-23 16:55:28`
+ * @更新时间 `2023-10-30 14:20:00`
  */
 export interface PostSysResourcesResponse {
   /**
