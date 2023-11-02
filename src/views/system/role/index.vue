@@ -33,7 +33,7 @@
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getRoleListByPage } from '/@/api/systemServer/system';
+  import { deleteRole, getRoleListByPage } from '/@/api/systemServer/system';
 
   import { useDrawer } from '/@/components/Drawer';
   import RoleDrawer from './RoleDrawer.vue';
@@ -48,6 +48,12 @@
       const [registerTable, { reload }] = useTable({
         title: '角色列表',
         api: getRoleListByPage,
+        fetchSetting: {
+          pageField: 'currPage',
+          sizeField: 'pageSize',
+          totalField: 'totalCount',
+          listField: 'result',
+        },
         columns,
         formConfig: {
           labelWidth: 120,
@@ -79,8 +85,8 @@
         });
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
+      async function handleDelete(record: Recordable) {
+        await deleteRole(record.roleId);
       }
 
       function handleSuccess() {
