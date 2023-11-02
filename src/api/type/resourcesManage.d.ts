@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `POST /sys/resource`
- * @更新时间 `2023-10-30 14:18:45`
+ * @更新时间 `2023-11-01 10:03:17`
  */
 export interface PostSysResourceRequest {
   /**
@@ -32,9 +32,9 @@ export interface PostSysResourceRequest {
    */
   remark?: string;
   /**
-   * 关联的菜单id，多个则以英文逗号隔开
+   * 该资源URI关联的菜单id数组
    */
-  menuIds: string;
+  resourceMenuList: string[];
 }
 
 /**
@@ -42,7 +42,7 @@ export interface PostSysResourceRequest {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `POST /sys/resource`
- * @更新时间 `2023-10-30 14:18:45`
+ * @更新时间 `2023-11-01 10:03:17`
  */
 export interface PostSysResourceResponse {
   /**
@@ -92,7 +92,7 @@ export interface DeleteSysResourceIdResponse {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `PUT /sys/resource`
- * @更新时间 `2023-10-30 14:19:17`
+ * @更新时间 `2023-11-01 10:05:24`
  */
 export interface PutSysResourceRequest {
   /**
@@ -116,9 +116,9 @@ export interface PutSysResourceRequest {
    */
   remark?: string;
   /**
-   * 关联的菜单id，多个则以英文逗号隔开
+   * 该资源URI关联的菜单id数组
    */
-  menuIds: string;
+  resourceMenuList: string[];
 }
 
 /**
@@ -126,7 +126,7 @@ export interface PutSysResourceRequest {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `PUT /sys/resource`
- * @更新时间 `2023-10-30 14:19:17`
+ * @更新时间 `2023-11-01 10:05:24`
  */
 export interface PutSysResourceResponse {
   /**
@@ -144,7 +144,7 @@ export interface PutSysResourceResponse {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `GET /sys/resource/{id}`
- * @更新时间 `2023-10-30 14:19:35`
+ * @更新时间 `2023-11-01 10:26:41`
  */
 export interface GetSysResourceIdRequest {
   /**
@@ -158,7 +158,7 @@ export interface GetSysResourceIdRequest {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `GET /sys/resource/{id}`
- * @更新时间 `2023-10-30 14:19:35`
+ * @更新时间 `2023-11-01 10:26:41`
  */
 export interface GetSysResourceIdResponse {
   /**
@@ -198,9 +198,9 @@ export interface GetSysResourceIdResponse {
    */
   updateTime?: string;
   /**
-   * 关联的菜单id，多个则以英文逗号隔开
+   * 资源关联的菜单树
    */
-  menuIds: string;
+  menuTree?: {}[];
 }
 
 /**

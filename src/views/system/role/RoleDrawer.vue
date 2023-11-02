@@ -28,7 +28,7 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
 
-  import { getMenuList } from '/@/api/demo/system';
+  import { getMenuList } from '/@/api/systemServer/system';
 
   const emit = defineEmits(['success', 'register']);
   const isUpdate = ref(true);

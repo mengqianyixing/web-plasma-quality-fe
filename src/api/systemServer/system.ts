@@ -1,9 +1,7 @@
 import {
   AccountParams,
-  DeptListItem,
   RoleParams,
   RolePageParams,
-  DeptListGetResultModel,
   AccountListGetResultModel,
   RolePageListGetResultModel,
   RoleListGetResultModel,
@@ -19,15 +17,26 @@ import {
   PutSysMenuRequest,
   PutSysMenuResponse,
 } from '@/api/type/menuManage';
+import {
+  DeleteSysDeptIdRequest,
+  DeleteSysDeptIdResponse,
+  PostSysDeptRequest,
+  PostSysDeptResponse,
+  PostSysDeptsRequest,
+  PostSysDeptsResponse,
+  PutSysDeptRequest,
+  PutSysDeptResponse,
+} from '@/api/type/deptManage';
 
 enum Api {
   AccountList = '/system/getAccountList',
   IsAccountExist = '/system/accountExist',
-  DeptList = '/system/getDeptList',
+  DeptList = '/sys/depts',
+  RestfulDeptUrl = '/sys/dept',
   setRoleStatus = '/system/setRoleStatus',
   MenuList = '/sys/menus',
   MenuTree = '/sys/menu/tree',
-  restfulMenuUrl = '/sys/menu',
+  RestfulMenuUrl = '/sys/menu',
   RolePageList = '/system/getRoleListByPage',
   GetAllRoleList = '/system/getAllRoleList',
 }
@@ -35,8 +44,17 @@ enum Api {
 export const getAccountList = (params: AccountParams) =>
   defHttp.get<AccountListGetResultModel>({ url: Api.AccountList, params });
 
-export const getDeptList = (params?: DeptListItem) =>
-  defHttp.get<DeptListGetResultModel>({ url: Api.DeptList, params });
+export const getDeptList = (params: PostSysDeptsRequest) =>
+  defHttp.post<PostSysDeptsResponse>({ url: Api.DeptList, params });
+
+export const addDept = (params: PostSysDeptRequest) =>
+  defHttp.post<PostSysDeptResponse>({ url: Api.RestfulDeptUrl, params });
+
+export const editDept = (params: PutSysDeptRequest) =>
+  defHttp.put<PutSysDeptResponse>({ url: Api.RestfulDeptUrl, params });
+
+export const deleteDept = (params: DeleteSysDeptIdRequest['id']) =>
+  defHttp.delete<DeleteSysDeptIdResponse>({ url: Api.RestfulDeptUrl + `/${params}` });
 
 export const getMenuList = (params?: PostSysMenusRequest) =>
   defHttp.post<PostSysMenusResponse>({ url: Api.MenuList, params });
@@ -44,13 +62,13 @@ export const getMenuList = (params?: PostSysMenusRequest) =>
 export const getMenuTree = () => defHttp.get<GetSysMenuTreeResponse>({ url: Api.MenuTree });
 
 export const addMenu = (params: PostSysMenuRequest) =>
-  defHttp.post<PostSysMenuResponse>({ url: Api.restfulMenuUrl, params });
+  defHttp.post<PostSysMenuResponse>({ url: Api.RestfulMenuUrl, params });
 
 export const deleteMenu = (id: DeleteSysMenuIdRequest['id']) =>
-  defHttp.delete({ url: Api.restfulMenuUrl + `/${id}` });
+  defHttp.delete({ url: Api.RestfulMenuUrl + `/${id}` });
 
 export const editMenu = (params: PutSysMenuRequest) =>
-  defHttp.put<PutSysMenuResponse>({ url: Api.restfulMenuUrl, params });
+  defHttp.put<PutSysMenuResponse>({ url: Api.RestfulMenuUrl, params });
 
 export const getRoleListByPage = (params?: RolePageParams) =>
   defHttp.get<RolePageListGetResultModel>({ url: Api.RolePageList, params });

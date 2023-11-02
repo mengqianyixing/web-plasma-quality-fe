@@ -12,11 +12,9 @@ type FileData = File;
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
  * @请求头 `POST /sys/depts`
- * @更新时间 `2023-10-27 15:43:19`
+ * @更新时间 `2023-11-01 17:40:54`
  */
 export interface PostSysDeptsRequest {
-  currPage: number;
-  pageSize: number;
   /**
    * 部门名称，模糊查询
    */
@@ -28,47 +26,59 @@ export interface PostSysDeptsRequest {
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
  * @请求头 `POST /sys/depts`
- * @更新时间 `2023-10-27 15:43:19`
+ * @更新时间 `2023-11-01 17:40:54`
  */
-export interface PostSysDeptsResponse {
+export type PostSysDeptsResponse = {
   /**
-   * 当前页
+   * 部门id
    */
-  currPage: number;
+  deptId?: string;
   /**
-   * 页数大小
+   * 部门名称
    */
-  pageSize: number;
+  deptName?: string;
   /**
-   * 总数量
+   * 部门排序
    */
-  totalCount: number;
+  deptOrder?: number;
   /**
-   * 总页数
+   * 上级部门id
    */
-  totalPage: string;
+  parentId?: string;
   /**
-   * item 类型: object
+   * 备注
    */
-  result?: {
+  remark?: string;
+  /**
+   * 创建人
+   */
+  createUser?: string;
+  /**
+   * 创建时间
+   */
+  createTime?: string;
+  /**
+   * 叶子节点
+   */
+  children?: {
     /**
-     * 部门id，主键
+     * 部门id
      */
-    deptId: string;
+    deptId?: string;
     /**
      * 部门名称
      */
-    deptName: string;
+    deptName?: string;
+    /**
+     * 部门排序
+     */
+    deptOrder?: number;
     /**
      * 上级部门id
      */
     parentId?: string;
     /**
-     * 排序序号
-     */
-    deptOrder: number;
-    /**
-     * 备注信息
+     * 备注
      */
     remark?: string;
     /**
@@ -79,8 +89,12 @@ export interface PostSysDeptsResponse {
      * 创建时间
      */
     createTime?: string;
+    /**
+     * 叶子节点
+     */
+    children?: {}[];
   }[];
-}
+}[];
 
 /**
  * 接口 [新增部门信息↗](https://yapi.sharing8.cn/project/521/interface/api/29236) 的 **请求类型**
