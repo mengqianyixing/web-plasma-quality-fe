@@ -32,6 +32,11 @@ export const columns: BasicColumn[] = [
     width: 50,
   },
   {
+    title: '路由路径',
+    dataIndex: 'menuPath',
+    width: 100,
+  },
+  {
     title: '创建时间',
     dataIndex: 'createTime',
     width: 180,
@@ -97,6 +102,13 @@ export const formSchema: FormSchema[] = [
     field: 'iconType',
     label: '图标',
     component: 'IconPicker',
+    ifShow: ({ values }) => !isButton(values.menuType),
+  },
+  {
+    field: 'menuPath',
+    label: '路由地址',
+    component: 'Input',
+    required: true,
     ifShow: ({ values }) => !isButton(values.menuType),
   },
   {
