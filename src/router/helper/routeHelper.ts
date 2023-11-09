@@ -5,6 +5,7 @@ import { getParentLayout, LAYOUT, EXCEPTION_COMPONENT } from '/@/router/constant
 import { cloneDeep, omit } from 'lodash-es';
 import { warn } from '/@/utils/log';
 import { createRouter, createWebHashHistory } from 'vue-router';
+import { GetSysRoleUserMenutreeResponse } from '@/api/type/roleManage';
 
 export type LayoutMapKey = 'LAYOUT';
 const IFRAME = () => import('/@/views/sys/iframe/FrameBlank.vue');
@@ -67,6 +68,47 @@ function dynamicImport(
   }
 }
 
+const arr = [] as any[];
+function convertMenuToRouterObject(
+  menu: GetSysRoleUserMenutreeResponse[number],
+): AppRouteRecordRaw {
+  const routerObject: AppRouteModule = {
+    path: menu.menuPath!,
+    name: menu.menuName,
+    component: menu.component,
+    meta: {
+      title: menu.menuName,
+      icon: menu.iconType,
+    },
+  };
+
+  if (menu.children) {
+    routerObject.children = [];
+    for (const childMenu of menu.children) {
+      if (childMenu.menuType !== 2) {
+        routerObject.children.push(
+          convertMenuToRouterObject(childMenu as GetSysRoleUserMenutreeResponse[number]),
+        );
+      } else {
+        arr.push(childMenu.menuCode);
+      }
+    }
+  }
+
+  return routerObject;
+}
+
+export function convertMenuArrToRouterObject(
+  menus: GetSysRoleUserMenutreeResponse,
+): AppRouteRecordRaw[] {
+  const routerObjects: AppRouteRecordRaw[] = [];
+  for (const menu of menus) {
+    routerObjects.push(convertMenuToRouterObject(menu) as unknown as AppRouteRecordRaw);
+  }
+
+  return routerObjects;
+}
+
 // Turn background objects into routing objects
 // 将背景对象变成路由对象
 export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModule[]): T[] {
@@ -78,7 +120,11 @@ export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModul
       } else {
         route.children = [cloneDeep(route)];
         route.component = LAYOUT;
-        route.name = `${route.name}Parent`;
+        //某些情况下如果name如果没有值， 多个一级路由菜单会导致页面404
+        if (!route.name || !route.menuName) {
+          warn('找不到菜单对应的name或menuName, 请检查数据!');
+        }
+        route.name = `${route.name || route.menuName}Parent`;
         route.path = '';
         const meta = route.meta || {};
         meta.single = true;

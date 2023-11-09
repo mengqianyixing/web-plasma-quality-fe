@@ -63,12 +63,12 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { PageWrapper } from '/@/components/Page';
 
-  import { optionsListApi } from '/@/api/demo/select';
+  import { optionsListApi } from '/@/api/systemServer/select';
   import { useDebounceFn } from '@vueuse/core';
-  import { treeOptionsListApi } from '/@/api/demo/tree';
+  import { treeOptionsListApi } from '/@/api/systemServer/tree';
   import { Select, type SelectProps } from 'ant-design-vue';
   import { cloneDeep } from 'lodash-es';
-  import { areaRecord } from '/@/api/demo/cascader';
+  import { areaRecord } from '/@/api/systemServer/cascader';
   import { uploadApi } from '/@/api/sys/upload';
 
   const valueSelectA = ref<string[]>([]);

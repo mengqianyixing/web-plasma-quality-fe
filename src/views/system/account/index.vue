@@ -10,11 +10,6 @@
           <TableAction
             :actions="[
               {
-                icon: 'clarity:info-standard-line',
-                tooltip: '查看用户详情',
-                onClick: handleView.bind(null, record),
-              },
-              {
                 icon: 'clarity:note-edit-line',
                 tooltip: '编辑用户资料',
                 onClick: handleEdit.bind(null, record),
@@ -41,7 +36,7 @@
   import { defineComponent, reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getAccountList } from '/@/api/demo/system';
+  import { deleteUser, getAccountList } from '/@/api/systemServer/system';
   import { PageWrapper } from '/@/components/Page';
   import DeptTree from './DeptTree.vue';
 
@@ -61,6 +56,12 @@
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
         title: '账号列表',
         api: getAccountList,
+        fetchSetting: {
+          pageField: 'currPage',
+          sizeField: 'pageSize',
+          totalField: 'totalCount',
+          listField: 'result',
+        },
         rowKey: 'id',
         columns,
         formConfig: {
@@ -97,8 +98,9 @@
         });
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
+      async function handleDelete(record: Recordable) {
+        await deleteUser(record.userId);
+        reload();
       }
 
       function handleSuccess({ isUpdate, values }) {

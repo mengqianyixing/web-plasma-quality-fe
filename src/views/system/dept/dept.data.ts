@@ -1,6 +1,4 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
-import { h } from 'vue';
-import { Tag } from 'ant-design-vue';
 
 export const columns: BasicColumn[] = [
   {
@@ -11,20 +9,8 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '排序',
-    dataIndex: 'orderNo',
+    dataIndex: 'deptOrder',
     width: 50,
-  },
-  {
-    title: '状态',
-    dataIndex: 'status',
-    width: 80,
-    customRender: ({ record }) => {
-      const status = record.status;
-      const enable = ~~status === 0;
-      const color = enable ? 'green' : 'red';
-      const text = enable ? '启用' : '停用';
-      return h(Tag, { color: color }, () => text);
-    },
   },
   {
     title: '创建时间',
@@ -44,18 +30,6 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Input',
     colProps: { span: 8 },
   },
-  {
-    field: 'status',
-    label: '状态',
-    component: 'Select',
-    componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
-      ],
-    },
-    colProps: { span: 8 },
-  },
 ];
 
 export const formSchema: FormSchema[] = [
@@ -66,37 +40,23 @@ export const formSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'parentDept',
+    field: 'parentId',
     label: '上级部门',
     component: 'TreeSelect',
 
     componentProps: {
       fieldNames: {
         label: 'deptName',
-        key: 'id',
-        value: 'id',
+        key: 'deptId',
+        value: 'deptId',
       },
       getPopupContainer: () => document.body,
     },
-    required: true,
   },
   {
-    field: 'orderNo',
+    field: 'deptOrder',
     label: '排序',
     component: 'InputNumber',
-    required: true,
-  },
-  {
-    field: 'status',
-    label: '状态',
-    component: 'RadioButtonGroup',
-    defaultValue: '0',
-    componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
-      ],
-    },
     required: true,
   },
   {

@@ -1,8 +1,8 @@
 import { defHttp } from '/@/utils/http/axios';
-import { getMenuListResultModel } from './model/menuModel';
+import { GetSysRoleUserMenutreeResponse } from '@/api/type/roleManage';
 
 enum Api {
-  GetMenuList = '/getMenuList',
+  GetMenuList = '/sys/role/user/menutree',
 }
 
 /**
@@ -10,5 +10,5 @@ enum Api {
  */
 
 export const getMenuList = () => {
-  return defHttp.get<getMenuListResultModel>({ url: Api.GetMenuList });
+  return defHttp.get<GetSysRoleUserMenutreeResponse>({ url: Api.GetMenuList });
 };

@@ -1,7 +1,7 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Switch } from 'ant-design-vue';
-import { setRoleStatus } from '/@/api/demo/system';
+import { editRole } from '/@/api/systemServer/system';
 import { useMessage } from '/@/hooks/web/useMessage';
 
 type CheckedType = boolean | string | number;
@@ -12,16 +12,6 @@ export const columns: BasicColumn[] = [
     width: 200,
   },
   {
-    title: '角色值',
-    dataIndex: 'roleValue',
-    width: 180,
-  },
-  {
-    title: '排序',
-    dataIndex: 'orderNo',
-    width: 50,
-  },
-  {
     title: '状态',
     dataIndex: 'status',
     width: 120,
@@ -30,15 +20,18 @@ export const columns: BasicColumn[] = [
         record.pendingStatus = false;
       }
       return h(Switch, {
-        checked: record.status === '1',
+        checked: record.status === 1,
         checkedChildren: '停用',
         unCheckedChildren: '启用',
         loading: record.pendingStatus,
         onChange(checked: CheckedType) {
           record.pendingStatus = true;
-          const newStatus = checked ? '1' : '0';
+          const newStatus = checked ? 1 : 0;
           const { createMessage } = useMessage();
-          setRoleStatus(record.id, newStatus)
+          editRole({
+            roleId: record.roleId,
+            status: newStatus,
+          })
             .then(() => {
               record.status = newStatus;
               createMessage.success(`已成功修改角色状态`);
@@ -66,7 +59,7 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'roleNme',
+    field: 'roleName',
     label: '角色名称',
     component: 'Input',
     colProps: { span: 8 },
@@ -93,20 +86,14 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
   },
   {
-    field: 'roleValue',
-    label: '角色值',
-    required: true,
-    component: 'Input',
-  },
-  {
     field: 'status',
     label: '状态',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: 0,
     componentProps: {
       options: [
-        { label: '启用', value: '1' },
-        { label: '停用', value: '0' },
+        { label: '启用', value: 1 },
+        { label: '停用', value: 0 },
       ],
     },
   },
@@ -117,8 +104,8 @@ export const formSchema: FormSchema[] = [
   },
   {
     label: ' ',
-    field: 'menu',
+    field: 'menuIds',
     slot: 'menu',
-    component: 'Input',
+    component: 'ApiTree',
   },
 ];

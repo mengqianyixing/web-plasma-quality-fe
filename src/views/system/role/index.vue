@@ -1,8 +1,8 @@
 <template>
   <div>
-    <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
+    <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增菜单 </a-button>
+        <a-button type="primary" @click="handleCreate"> 新增角色 </a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -26,41 +26,43 @@
         </template>
       </template>
     </BasicTable>
-    <MenuDrawer @register="registerDrawer" @success="handleSuccess" />
+    <RoleDrawer @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, nextTick } from 'vue';
+  import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getMenuList } from '/@/api/demo/system';
+  import { deleteRole, getRoleListByPage } from '/@/api/systemServer/system';
 
   import { useDrawer } from '/@/components/Drawer';
-  import MenuDrawer from './MenuDrawer.vue';
+  import RoleDrawer from './RoleDrawer.vue';
 
-  import { columns, searchFormSchema } from './menu.data';
+  import { columns, searchFormSchema } from './role.data';
 
   export default defineComponent({
-    name: 'MenuManagement',
-    components: { BasicTable, MenuDrawer, TableAction },
+    name: 'RoleManagement',
+    components: { BasicTable, RoleDrawer, TableAction },
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
-      const [registerTable, { reload, expandAll }] = useTable({
-        title: '菜单列表',
-        api: getMenuList,
+      const [registerTable, { reload }] = useTable({
+        title: '角色列表',
+        api: getRoleListByPage,
+        fetchSetting: {
+          pageField: 'currPage',
+          sizeField: 'pageSize',
+          totalField: 'totalCount',
+          listField: 'result',
+        },
         columns,
         formConfig: {
           labelWidth: 120,
           schemas: searchFormSchema,
         },
-        isTreeTable: true,
-        pagination: false,
-        striped: false,
         useSearchForm: true,
         showTableSetting: true,
         bordered: true,
         showIndexColumn: false,
-        canResize: false,
         actionColumn: {
           width: 80,
           title: '操作',
@@ -83,17 +85,12 @@
         });
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
+      async function handleDelete(record: Recordable) {
+        await deleteRole(record.roleId);
       }
 
       function handleSuccess() {
         reload();
-      }
-
-      function onFetchSuccess() {
-        // 演示默认展开所有表项
-        nextTick(expandAll);
       }
 
       return {
@@ -103,7 +100,6 @@
         handleEdit,
         handleDelete,
         handleSuccess,
-        onFetchSuccess,
       };
     },
   });

@@ -35,7 +35,8 @@
     "reinstall": "rimraf pnpm-lock.yaml && rimraf package.lock.json && rimraf node_modules && npm run bootstrap",
     "serve": "npm run dev",
     "test:gzip": "npx http-server dist --cors --gzip -c-1",
-    "type:check": "vue-tsc --noEmit --skipLibCheck"
+    "type:check": "vue-tsc --noEmit --skipLibCheck",
+    "ytt": "npx ytt"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -108,7 +109,8 @@
     "vxe-table": "^4.4.5",
     "vxe-table-plugin-export-xlsx": "^3.0.4",
     "xe-utils": "^3.5.11",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "yapi-to-typescript": "^3.37.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.6",
