@@ -1,27 +1,5 @@
-import { getAllRoleList, isAccountExist } from '/@/api/systemServer/system';
+import { getDeptList, isAccountExist } from '/@/api/systemServer/system';
 import { BasicColumn, FormSchema } from '/@/components/Table';
-
-/**
- * transform mock data
- * {
- *  0: '华东分部',
- * '0-0': '华东分部-研发部'
- * '0-1': '华东分部-市场部',
- *  ...
- * }
- */
-const deptMap = (() => {
-  const pDept = ['华东分部', '华南分部', '西北分部'];
-  const cDept = ['研发部', '市场部', '商务部', '财务部'];
-
-  return pDept.reduce((map, p, pIdx) => {
-    map[pIdx] = p;
-
-    cDept.forEach((c, cIndex) => (map[`${pIdx}-${cIndex}`] = `${p}-${c}`));
-
-    return map;
-  }, {});
-})();
 
 export const columns: BasicColumn[] = [
   {
@@ -31,7 +9,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '昵称',
-    dataIndex: 'nickname',
+    dataIndex: 'username',
     width: 120,
   },
   {
@@ -48,13 +26,13 @@ export const columns: BasicColumn[] = [
     title: '角色',
     dataIndex: 'role',
     width: 200,
+    customRender: ({ record }) => {
+      return record.roles.length > 0 ? record.roles.map((it) => it.roleName).join('，') : '-';
+    },
   },
   {
     title: '所属部门',
-    dataIndex: 'dept',
-    customRender: ({ value }) => {
-      return deptMap[value];
-    },
+    dataIndex: 'deptName',
   },
   {
     title: '备注',
@@ -70,7 +48,7 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    field: 'nickname',
+    field: 'username',
     label: '昵称',
     component: 'Input',
     colProps: { span: 8 },
@@ -80,9 +58,8 @@ export const searchFormSchema: FormSchema[] = [
 export const accountFormSchema: FormSchema[] = [
   {
     field: 'account',
-    label: '用户名',
+    label: '账号',
     component: 'Input',
-    helpMessage: ['本字段演示异步验证', '不能输入带有admin的用户名'],
     rules: [
       {
         required: true,
@@ -104,44 +81,75 @@ export const accountFormSchema: FormSchema[] = [
     ],
   },
   {
-    field: 'pwd',
-    label: '密码',
-    component: 'InputPassword',
-    required: true,
-    ifShow: false,
-  },
-  {
-    label: '角色',
-    field: 'role',
-    component: 'ApiSelect',
-    componentProps: {
-      api: getAllRoleList,
-      labelField: 'roleName',
-      valueField: 'roleValue',
-    },
-    required: true,
-  },
-  {
-    field: 'dept',
-    label: '所属部门',
-    component: 'TreeSelect',
-    componentProps: {
-      fieldNames: {
-        label: 'deptName',
-        key: 'id',
-        value: 'id',
-      },
-      getPopupContainer: () => document.body,
-    },
-    required: true,
-  },
-  {
-    field: 'nickname',
+    field: 'username',
     label: '昵称',
     component: 'Input',
     required: true,
   },
-
+  {
+    field: 'password',
+    label: '密码',
+    component: 'InputPassword',
+    required: true,
+  },
+  {
+    field: 'sex',
+    label: '性别',
+    component: 'RadioButtonGroup',
+    defaultValue: '男',
+    componentProps: {
+      options: [
+        { label: '男', value: '男' },
+        { label: '女', value: '女' },
+      ],
+    },
+    colProps: { lg: 24, md: 24 },
+  },
+  {
+    field: 'status',
+    label: '状态',
+    component: 'RadioButtonGroup',
+    defaultValue: 1,
+    componentProps: {
+      options: [
+        { label: '禁用', value: 0 },
+        { label: '正常', value: 1 },
+        { label: '人工锁定', value: 2 },
+        { label: '密码过期自动锁定', value: 3 },
+      ],
+    },
+    colProps: { lg: 24, md: 24 },
+  },
+  {
+    label: '角色',
+    field: 'roles',
+    component: 'ApiSelect',
+    slot: 'roleSelect',
+  },
+  {
+    field: 'deptId',
+    label: '所属部门',
+    component: 'ApiTreeSelect',
+    componentProps: {
+      api: getDeptList,
+      labelField: 'deptName',
+      valueField: 'deptId',
+    },
+    required: true,
+  },
+  {
+    field: 'multiClientLoginEnable',
+    label: '多端登录',
+    component: 'RadioButtonGroup',
+    defaultValue: 1,
+    componentProps: {
+      options: [
+        { label: '是', value: 1 },
+        { label: '否', value: 0 },
+      ],
+    },
+    colProps: { lg: 24, md: 24 },
+  },
   {
     label: '邮箱',
     field: 'email',
