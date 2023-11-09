@@ -3,8 +3,8 @@ pipeline {
     docker {
       image 'node:16.20-alpine'
     }
-  }
 
+  }
   stages {
     stage('Install pnpm') {
       steps {
@@ -27,8 +27,9 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        sh 'cp -r dist/* /home/psms2.0-test'
+        sh 'cp -r dist/* /home/psms2.0-test/psms-fe'
       }
     }
+
   }
 }
