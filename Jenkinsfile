@@ -27,7 +27,7 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        sh 'cp -r dist/* /home/psms2.0-test'
+        sh 'cp -r dist/* /home/psms2.0-test/psms-fe'
       }
     }
   }
