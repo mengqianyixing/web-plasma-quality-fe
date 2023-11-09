@@ -1,9 +1,4 @@
-import {
-  AccountParams,
-  RoleParams,
-  AccountListGetResultModel,
-  RoleListGetResultModel,
-} from './model/systemModel';
+import { RoleParams, RoleListGetResultModel } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
 import {
   DeleteSysMenuIdRequest,
@@ -35,9 +30,29 @@ import {
   PutSysRoleRequest,
   PutSysRoleResponse,
 } from '@/api/type/roleManage';
+import {
+  DeleteUserIdRequest,
+  DeleteUserIdResponse,
+  PostSysUserRequest,
+  PostSysUserResponse,
+  PostSysUsersRequest,
+  PostSysUsersResponse,
+  PutSysUserRequest,
+  PutSysUserResponse,
+} from '@/api/type/userManage';
+import {
+  GetSysResourceIdRequest,
+  GetSysResourceIdResponse,
+  PostSysResourceRequest,
+  PostSysResourceResponse,
+  PostSysResourcesRequest,
+  PostSysResourcesResponse,
+  PutSysResourceRequest,
+  PutSysResourceResponse,
+} from '@/api/type/resourcesManage';
 
 enum Api {
-  AccountList = '/system/getAccountList',
+  AccountList = '/sys/users',
   IsAccountExist = '/system/accountExist',
   DeptList = '/sys/depts',
   RestfulDeptUrl = '/sys/dept',
@@ -47,11 +62,14 @@ enum Api {
   RestfulMenuUrl = '/sys/menu',
   RolePageList = '/sys/roles',
   RestfulRoleUrl = '/sys/role',
+  RestfulUserUrl = '/sys/user',
+  RestfulResourceUrl = '/sys/resource',
+  GetResourcesList = '/sys/resources',
   GetAllRoleList = '/system/getAllRoleList',
 }
 
-export const getAccountList = (params: AccountParams) =>
-  defHttp.get<AccountListGetResultModel>({ url: Api.AccountList, params });
+export const getAccountList = (params: PostSysUsersRequest) =>
+  defHttp.post<PostSysUsersResponse>({ url: Api.AccountList, params });
 
 export const getDeptList = (params: PostSysDeptsRequest) =>
   defHttp.post<PostSysDeptsResponse>({ url: Api.DeptList, params });
@@ -93,6 +111,30 @@ export const addRole = (params: PostSysRoleRequest) =>
 
 export const getRoleDetail = (params: GetSysRoleIdRequest['id']) =>
   defHttp.get<GetSysRoleIdResponse>({ url: Api.RestfulRoleUrl + `/${params}` });
+
+export const deleteUser = (params: DeleteUserIdRequest['id']) =>
+  defHttp.delete<DeleteUserIdResponse>({ url: Api.RestfulUserUrl + `/${params}` });
+
+export const editUser = (params: PutSysUserRequest) =>
+  defHttp.put<PutSysUserResponse>({ url: Api.RestfulUserUrl, params });
+
+export const addUser = (params: PostSysUserRequest) =>
+  defHttp.post<PostSysUserResponse>({ url: Api.RestfulUserUrl, params });
+
+export const getResourcesList = (params: PostSysResourcesRequest) =>
+  defHttp.post<PostSysResourcesResponse>({ url: Api.GetResourcesList, params });
+
+export const getResourceDetail = (params: GetSysResourceIdRequest['id']) =>
+  defHttp.get<GetSysResourceIdResponse>({ url: Api.RestfulResourceUrl + `/${params}` });
+
+export const addResource = (params: PostSysResourceRequest) =>
+  defHttp.post<PostSysResourceResponse>({ url: Api.RestfulResourceUrl, params });
+
+export const editResource = (params: PutSysResourceRequest) =>
+  defHttp.put<PutSysResourceResponse>({ url: Api.RestfulResourceUrl, params });
+
+export const deleteResource = (params: GetSysResourceIdRequest['id']) =>
+  defHttp.delete<GetSysResourceIdResponse>({ url: Api.RestfulResourceUrl + `/${params}` });
 
 export const getAllRoleList = (params?: RoleParams) =>
   defHttp.get<RoleListGetResultModel>({ url: Api.GetAllRoleList, params });
