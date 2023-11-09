@@ -1,10 +1,10 @@
 pipeline {
   agent {
-    docker {
-      image 'node:16.20-alpine'
+    node {
+      label '16.20'
     }
-  }
 
+  }
   stages {
     stage('Install pnpm') {
       steps {
@@ -30,5 +30,6 @@ pipeline {
         sh 'cp -r dist/* /home/psms2.0-test/psms-fe'
       }
     }
+
   }
 }
