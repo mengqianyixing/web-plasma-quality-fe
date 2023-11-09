@@ -144,7 +144,7 @@ export interface PutSysResourceResponse {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `GET /sys/resource/{id}`
- * @更新时间 `2023-11-01 10:26:41`
+ * @更新时间 `2023-11-07 17:43:41`
  */
 export interface GetSysResourceIdRequest {
   /**
@@ -158,7 +158,7 @@ export interface GetSysResourceIdRequest {
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
  * @请求头 `GET /sys/resource/{id}`
- * @更新时间 `2023-11-01 10:26:41`
+ * @更新时间 `2023-11-07 17:43:41`
  */
 export interface GetSysResourceIdResponse {
   /**
@@ -200,7 +200,85 @@ export interface GetSysResourceIdResponse {
   /**
    * 资源关联的菜单树
    */
-  menuTree?: {}[];
+  menuTree?: {
+    /**
+     * 菜单编号
+     */
+    menuId: string;
+    /**
+     * 菜单名称
+     */
+    menuName: string;
+    /**
+     * 菜单类型
+     */
+    menuType: string;
+    /**
+     * 菜单排序
+     */
+    menuOrder: string;
+    /**
+     * 父菜单id
+     */
+    parentId?: string;
+    /**
+     * 菜单编码
+     */
+    menuCode: string;
+    /**
+     * 图标
+     */
+    iconType?: string;
+    /**
+     * 菜单路径
+     */
+    menuPath?: string;
+    /**
+     * 组件
+     */
+    component?: string;
+    check: boolean;
+    children?: {
+      /**
+       * 菜单编号
+       */
+      menuId: string;
+      /**
+       * 菜单名称
+       */
+      menuName: string;
+      /**
+       * 菜单类型
+       */
+      menuType: string;
+      /**
+       * 菜单排序
+       */
+      menuOrder: string;
+      /**
+       * 父菜单id
+       */
+      parentId?: string;
+      /**
+       * 菜单编码
+       */
+      menuCode: string;
+      /**
+       * 图标
+       */
+      iconType?: string;
+      /**
+       * 菜单路径
+       */
+      menuPath?: string;
+      /**
+       * 组件
+       */
+      component?: string;
+      check: string;
+      children?: {}[];
+    }[];
+  }[];
 }
 
 /**
