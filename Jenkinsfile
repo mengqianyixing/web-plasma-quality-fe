@@ -3,6 +3,8 @@ pipeline {
   stages {
     stage('Install dependencies') {
       steps {
+        sh 'node -v'
+        sh 'pnpm -v'
         sh 'pnpm install'
       }
     }
