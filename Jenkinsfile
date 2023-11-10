@@ -1,18 +1,6 @@
 pipeline {
-  agent {
-    node {
-      label '16.20'
-    }
-
-  }
+  agent any
   stages {
-    stage('Install pnpm') {
-      steps {
-        sh 'npm config set registry https://registry.npm.taobao.org'
-        sh 'npm install -g pnpm@latest'
-      }
-    }
-
     stage('Install dependencies') {
       steps {
         sh 'pnpm install'
