@@ -1,17 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Install dependencies') {
-      steps {
-        sh 'node -v'
-        sh 'pnpm -v'
-        sh 'pnpm install'
-      }
-    }
-
     stage('Build') {
       steps {
-        sh 'pnpm build'
+        sh 'node -v'
       }
     }
 
