@@ -122,9 +122,10 @@ export const accountFormSchema: FormSchema[] = [
   },
   {
     label: '角色',
-    field: 'roles',
+    field: 'roleIds',
     component: 'ApiSelect',
     slot: 'roleSelect',
+    componentProps: {},
   },
   {
     field: 'deptId',
