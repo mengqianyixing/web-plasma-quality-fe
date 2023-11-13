@@ -3,7 +3,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'whoami'
+        sh '''whoami
+'''
+        sh 'node -v'
       }
     }
 
