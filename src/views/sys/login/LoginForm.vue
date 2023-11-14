@@ -90,7 +90,7 @@
 
   const formData = reactive({
     account: '101',
-    password: 'Psms2023!',
+    password: 'Stpass123!',
     verifyCode: '1234',
   });
 

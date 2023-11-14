@@ -24,7 +24,7 @@
   import { BasicTable, useTable } from '/@/components/Table';
   import { getCustomHeaderColumns } from './tableData';
   import { FormOutlined } from '@ant-design/icons-vue';
-  import { demoListApi } from '/@/api/demo/table';
+  import { demoListApi } from '/@/api/systemServer/table';
   import { BasicHelp } from '/@/components/Basic';
   import HeaderCell from '/@/components/Table/src/components/HeaderCell.vue';
 

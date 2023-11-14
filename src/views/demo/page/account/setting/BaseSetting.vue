@@ -31,7 +31,7 @@
   import { useMessage } from '/@/hooks/web/useMessage';
 
   import headerImg from '/@/assets/images/header.jpg';
-  import { accountInfoApi } from '/@/api/demo/account';
+  import { accountInfoApi } from '/@/api/systemServer/account';
   import { baseSetschemas } from './data';
   import { useUserStore } from '/@/store/modules/user';
   import { uploadApi } from '/@/api/sys/upload';

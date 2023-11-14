@@ -19,7 +19,7 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { vxeTableColumns, vxeTableFormSchema } from './tableData';
   import { BasicTableProps, VxeBasicTable, VxeGridInstance } from '/@/components/VxeTable';
-  import { demoListApi } from '/@/api/demo/table';
+  import { demoListApi } from '/@/api/systemServer/table';
 
   const { createMessage } = useMessage();
 
