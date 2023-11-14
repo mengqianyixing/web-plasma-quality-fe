@@ -1,27 +1,10 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:16.20-alpine'
-    }
-  }
-
+  agent any
   stages {
-    stage('Install pnpm') {
-      steps {
-        sh 'npm config set registry https://registry.npm.taobao.org'
-        sh 'npm install -g pnpm@latest'
-      }
-    }
-
-    stage('Install dependencies') {
-      steps {
-        sh 'pnpm install'
-      }
-    }
-
     stage('Build') {
       steps {
-        sh 'pnpm build'
+        sh 'node -v && pnpm -v'
+        sh 'pnpm install && pnpm build'
       }
     }
 
@@ -30,5 +13,6 @@ pipeline {
         sh 'cp -r dist/* /home/psms2.0-test/psms-fe'
       }
     }
+
   }
 }
