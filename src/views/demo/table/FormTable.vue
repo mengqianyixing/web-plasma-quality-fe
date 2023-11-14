@@ -25,7 +25,7 @@
   import { getBasicColumns, getFormConfig } from './tableData';
   import { Alert } from 'ant-design-vue';
 
-  import { demoListApi } from '/@/api/demo/table';
+  import { demoListApi } from '/@/api/systemServer/table';
 
   export default defineComponent({
     components: { BasicTable, AAlert: Alert },

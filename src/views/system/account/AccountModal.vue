@@ -1,12 +1,13 @@
 <template>
   <BasicModal v-bind="$attrs" @register="registerModal" :title="getTitle" @ok="handleSubmit">
     <BasicForm @register="registerForm">
-      <template #roleSelect="">
+      <template #roleSelect="{ model, field }">
         <ApiSelect
           :api="getRoleListByPage"
           :params="selectParams"
           mode="multiple"
-          v-model:value="defaultSelectValue"
+          :value="defaultSelectValue"
+          @change="model[field]"
           resultField="result"
           labelField="roleName"
           valueField="roleId"
@@ -59,6 +60,8 @@
           setFieldsValue({
             ...data.record,
           });
+        } else {
+          defaultSelectValue.value = [];
         }
       });
 

@@ -40,7 +40,7 @@
   import { BasicForm, FormSchema, useForm, type FormProps } from '/@/components/Form';
   import { CollapseContainer } from '/@/components/Container';
   import { PageWrapper } from '/@/components/Page';
-  import { areaRecord } from '/@/api/demo/cascader';
+  import { areaRecord } from '/@/api/systemServer/cascader';
 
   const sizeList = [
     { value: 'large', label: 'large' },

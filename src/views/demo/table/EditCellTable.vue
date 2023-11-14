@@ -11,10 +11,10 @@
 <script lang="ts">
   import { defineComponent, h } from 'vue';
   import { BasicTable, useTable, BasicColumn } from '/@/components/Table';
-  import { optionsListApi } from '/@/api/demo/select';
+  import { optionsListApi } from '/@/api/systemServer/select';
 
-  import { demoListApi } from '/@/api/demo/table';
-  import { treeOptionsListApi } from '/@/api/demo/tree';
+  import { demoListApi } from '/@/api/systemServer/table';
+  import { treeOptionsListApi } from '/@/api/systemServer/tree';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { Progress } from 'ant-design-vue';
 

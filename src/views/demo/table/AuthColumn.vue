@@ -60,7 +60,7 @@
   import { defineComponent } from 'vue';
   import { BasicTable, useTable, BasicColumn, TableAction } from '/@/components/Table';
 
-  import { demoListApi } from '/@/api/demo/table';
+  import { demoListApi } from '/@/api/systemServer/table';
 
   const columns: BasicColumn[] = [
     {

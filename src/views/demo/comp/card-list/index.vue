@@ -12,7 +12,7 @@
   import { CardList } from '/@/components/CardList';
   import { Button } from '/@/components/Button';
   import { PageWrapper } from '/@/components/Page';
-  import { demoListApi } from '/@/api/demo/table';
+  import { demoListApi } from '/@/api/systemServer/table';
   import { useMessage } from '/@/hooks/web/useMessage';
 
   const { notification } = useMessage();

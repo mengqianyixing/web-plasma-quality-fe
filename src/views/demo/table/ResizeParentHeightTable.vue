@@ -27,7 +27,7 @@
   import { BasicTable, useTable } from '/@/components/Table';
   import { getBasicColumns, getFormConfig } from './tableData';
 
-  import { demoListApi } from '/@/api/demo/table';
+  import { demoListApi } from '/@/api/systemServer/table';
 
   export default defineComponent({
     components: { BasicTable },

@@ -19,7 +19,7 @@
   import { PageWrapper } from '/@/components/Page';
   import { useUserStore } from '/@/store/modules/user';
 
-  import { sessionTimeoutApi, tokenExpiredApi } from '/@/api/demo/account';
+  import { sessionTimeoutApi, tokenExpiredApi } from '/@/api/systemServer/account';
   import { Card } from 'ant-design-vue';
 
   export default defineComponent({
