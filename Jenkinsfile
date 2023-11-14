@@ -3,9 +3,11 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''whoami
+        sh '''node -v
 '''
-        sh 'node -v'
+        sh 'npm config set registry https://registry.npm.taobao.org'
+        sh 'npm install -g pnpm@latest'
+        sh 'pnpm install && pnpm build'
       }
     }
 
