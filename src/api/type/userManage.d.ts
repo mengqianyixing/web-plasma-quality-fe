@@ -249,7 +249,7 @@ export type DeleteUserIdResponse = string;
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `PUT /sys/user`
- * @更新时间 `2023-10-27 16:25:38`
+ * @更新时间 `2023-11-15 10:29:24`
  */
 export interface PutSysUserRequest {
   /**
@@ -289,13 +289,9 @@ export interface PutSysUserRequest {
    */
   remark?: string;
   /**
-   * 新增的角色ID集合
+   * 角色ID数组
    */
-  addRoleIds?: string[];
-  /**
-   * 删除的角色id集合
-   */
-  deleteRoleIds?: string[];
+  roleIds?: string[];
   /**
    * 部门Id
    */
@@ -307,7 +303,7 @@ export interface PutSysUserRequest {
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `PUT /sys/user`
- * @更新时间 `2023-10-27 16:25:38`
+ * @更新时间 `2023-11-15 10:29:24`
  */
 export interface PutSysUserResponse {}
 
