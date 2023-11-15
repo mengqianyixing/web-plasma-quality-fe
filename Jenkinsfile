@@ -10,7 +10,7 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        sh 'cp -r dist/* /home/plasma_gz/nginx/web/psms/'
+          sh 'sudo docker cp $(docker ps -q):dist/* /home/plasma_gz/nginx/web/psms'
       }
     }
 
