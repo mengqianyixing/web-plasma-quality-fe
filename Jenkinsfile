@@ -5,6 +5,7 @@ pipeline {
       steps {
         sh 'node -v && pnpm -v'
         sh 'pnpm install --frozen-lockfile && pnpm build:docker'
+        sh 'env'
       }
     }
 
