@@ -3,8 +3,6 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'export NODE_OPTIONS="--max-old-space-size=16384"'
-        sh 'env | grep NODE_OPTIONS'
         sh 'node -v && pnpm -v'
         sh 'pnpm install --frozen-lockfile && pnpm build:docker'
       }
