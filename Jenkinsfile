@@ -3,8 +3,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'export NODE_OPTIONS=--max-old-space-size=16384'
-        sh 'node -v && pnpm -v && node -e \'console.log(v8.getHeapStatistics().heap_size_limit/(1024*1024))\''
+        sh 'export NODE_OPTIONS=--max-old-space-size=16384 && node -e console.log(v8.getHeapStatistics().heap_size_limit/(1024*1024))'
+        sh 'node -v && pnpm -v'
         sh 'pnpm install --frozen-lockfile && pnpm build:docker'
       }
     }
