@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         sh 'node -v && pnpm -v'
-        sh 'pnpm install && pnpm build'
+        sh 'pnpm install --frozen-lockfile && pnpm build:docker'
       }
     }
 
