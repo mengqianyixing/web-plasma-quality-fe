@@ -10,7 +10,11 @@ pipeline {
 
     stage('Deploy') {
       steps {
-          sh './deploy.sh'
+        sshPublisher(publishers: [sshPublisherDesc(configName: 'chengdu182', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
+                     execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, 
+                     patternSeparator: '[, ]+', remoteDirectory: 'psms', remoteDirectorySDF: false, removePrefix: 'dist', 
+                     sourceFiles: 'dist/**/*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+        echo 'Credentials SUCCESS'
       }
     }
 
