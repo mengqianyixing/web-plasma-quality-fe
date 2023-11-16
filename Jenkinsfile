@@ -1,33 +1,20 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:16-alpine'
-    }
-
-  }
+  agent any
   stages {
-    stage('Install pnpm') {
-      steps {
-        sh 'npm config set registry https://registry.npm.taobao.org'
-        sh 'npm install -g pnpm@latest'
-      }
-    }
-
-    stage('Install dependencies') {
-      steps {
-        sh 'pnpm install'
-      }
-    }
-
     stage('Build') {
       steps {
-        sh 'pnpm build'
+        sh 'node -v && pnpm -v'
+        sh 'pnpm install --frozen-lockfile && pnpm build:docker'
       }
     }
 
     stage('Deploy') {
       steps {
-        sh 'cp -r dist/* /home/psms2.0-test/psms-fe'
+        sshPublisher(publishers: [sshPublisherDesc(configName: 'chengdu182', transfers: [sshTransfer(cleanRemote: false, excludes: '',
+                     execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false,
+                     patternSeparator: '[, ]+', remoteDirectory: 'psms', remoteDirectorySDF: false, removePrefix: 'dist',
+                     sourceFiles: 'dist/**/*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+        echo 'Credentials SUCCESS'
       }
     }
 

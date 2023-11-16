@@ -2,6 +2,7 @@ import { defineApplicationConfig } from '@vben/vite-config';
 
 export default defineApplicationConfig({
   overrides: {
+    base: './',
     optimizeDeps: {
       include: [
         'echarts/core',
@@ -17,7 +18,9 @@ export default defineApplicationConfig({
     server: {
       proxy: {
         '/basic-api': {
-          target: 'http://localhost:3000',
+          // target: 'http://192.168.1.81:7002',
+          // target: 'http://192.168.1.67:7002',
+          target: 'http://192.168.1.182:7002',
           changeOrigin: true,
           ws: true,
           rewrite: (path) => path.replace(new RegExp(`^/basic-api`), ''),
