@@ -192,7 +192,25 @@
     .@{countdown-prefix-cls} input {
       min-width: unset;
     }
+    #ARowInput {
+      min-width: 265px;
 
+      @media (max-width: @screen-xl) {
+        min-width: 250px;
+      }
+
+      @media (max-width: @screen-lg) {
+        min-width: 240px;
+      }
+
+      @media (max-width: @screen-md) {
+        min-width: 200px;
+      }
+
+      @media (max-width: @screen-sm) {
+        min-width: 160px;
+      }
+    }
     .ant-divider-inner-text {
       color: @text-color-secondary;
       font-size: 12px;

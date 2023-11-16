@@ -24,13 +24,14 @@
         :placeholder="t('sys.login.password')"
       />
     </FormItem>
-    <ARow justify="space-around" align="middle">
+    <ARow justify="space-around" align="middle" id="ARowInput">
       <ACol :span="8">
         <FormItem name="verifyCode" class="enter-x">
           <Input
             size="large"
             v-model:value="formData.verifyCode"
             :placeholder="t('sys.login.smsPlaceholder')"
+            id="ARowInput"
           />
         </FormItem>
       </ACol>
