@@ -6,4 +6,4 @@ current_path=$(pwd)
 # 退出当前容器
 exit
 
-docker cp (docker ps -q | grep 4c):${current_path}/dist/* /home/plasma_gz/nginx/web/psms
+docker cp (docker ps -q | grep 4c):${current_path}/dist/* /home/demo
