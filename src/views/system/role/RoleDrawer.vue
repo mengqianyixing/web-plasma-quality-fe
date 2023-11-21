@@ -25,12 +25,12 @@
 </template>
 <script lang="ts" setup>
   import { ref, computed, unref } from 'vue';
-  import { BasicForm, useForm } from '/@/components/Form/index';
+  import { BasicForm, useForm } from '@/components/Form';
   import { formSchema } from './role.data';
-  import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { BasicTree, TreeItem } from '/@/components/Tree';
+  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicTree, TreeItem } from '@/components/Tree';
 
-  import { editRole, getRoleDetail, getMenuList, addRole } from '/@/api/systemServer/system';
+  import { editRole, getRoleDetail, getMenuList, addRole } from '@/api/systemServer/system';
   import {
     GetSysRoleIdResponse,
     PostSysRoleRequest,

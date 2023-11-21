@@ -40,8 +40,8 @@
 <script lang="ts" setup>
   import { AppLogo, AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
   import LoginForm from './LoginForm.vue';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { useLocaleStore } from '/@/store/modules/locale';
+  import { useDesign } from '@/hooks/web/useDesign';
+  import { useLocaleStore } from '@/store/modules/locale';
   import { version } from './../../../../package.json';
 
   defineProps({

@@ -1,4 +1,4 @@
-import { BasicColumn, FormSchema } from '/@/components/Table';
+import { BasicColumn, FormSchema } from '@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
@@ -43,7 +43,11 @@ export const formSchema: FormSchema[] = [
     field: 'parentId',
     label: '上级部门',
     component: 'TreeSelect',
-
+    ifShow({ values }) {
+      const { deptName, parentDept } = values;
+      // Hide without a parentDept when editing
+      return parentDept || (!deptName && !parentDept);
+    },
     componentProps: {
       fieldNames: {
         label: 'deptName',
