@@ -10,6 +10,7 @@
   >
     <FormItem name="account" class="enter-x">
       <Input
+        :maxlength="64"
         size="large"
         v-model:value="formData.account"
         :placeholder="t('sys.login.userName')"
@@ -18,6 +19,7 @@
     </FormItem>
     <FormItem name="password" class="enter-x">
       <InputPassword
+        :maxlength="128"
         size="large"
         visibilityToggle
         v-model:value="formData.password"
@@ -28,6 +30,7 @@
       <ACol :span="8">
         <FormItem name="verifyCode" class="enter-x">
           <Input
+            :maxlength="4"
             size="large"
             v-model:value="formData.verifyCode"
             :placeholder="t('sys.login.smsPlaceholder')"
