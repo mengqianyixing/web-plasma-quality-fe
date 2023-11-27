@@ -13,8 +13,8 @@
         :maxlength="64"
         size="large"
         v-model:value="formData.account"
-        :placeholder="t('sys.login.userName')"
         class="fix-auto-fill"
+        placeholder="请输入用户账号"
       />
     </FormItem>
     <FormItem name="password" class="enter-x">
@@ -23,7 +23,7 @@
         size="large"
         visibilityToggle
         v-model:value="formData.password"
-        :placeholder="t('sys.login.password')"
+        placeholder="请输入用户密码"
       />
     </FormItem>
     <ARow justify="space-around" align="middle" id="ARowInput">
@@ -33,7 +33,7 @@
             :maxlength="4"
             size="large"
             v-model:value="formData.verifyCode"
-            :placeholder="t('sys.login.smsPlaceholder')"
+            placeholder="请输入验证码"
             id="ARowInput"
           />
         </FormItem>
@@ -93,9 +93,9 @@
   const verifyCode = ref('');
 
   const formData = reactive({
-    account: '101',
-    password: 'Stpass123!',
-    verifyCode: '1234',
+    account: '',
+    password: '',
+    verifyCode: '',
   });
 
   const { validForm } = useFormValid(formRef);
