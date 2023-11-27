@@ -13,8 +13,8 @@
         :maxlength="64"
         size="large"
         v-model:value="formData.account"
+        :placeholder="t('sys.login.accountPlaceholder')"
         class="fix-auto-fill"
-        placeholder="请输入用户账号"
       />
     </FormItem>
     <FormItem name="password" class="enter-x">
@@ -23,7 +23,7 @@
         size="large"
         visibilityToggle
         v-model:value="formData.password"
-        placeholder="请输入用户密码"
+        :placeholder="t('sys.login.passwordPlaceholder')"
       />
     </FormItem>
     <ARow justify="space-around" align="middle" id="ARowInput">
@@ -33,7 +33,7 @@
             :maxlength="4"
             size="large"
             v-model:value="formData.verifyCode"
-            placeholder="请输入验证码"
+            :placeholder="t('sys.login.smsPlaceholder')"
             id="ARowInput"
           />
         </FormItem>
