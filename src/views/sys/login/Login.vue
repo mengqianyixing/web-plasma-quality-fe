@@ -19,22 +19,16 @@
           <AppLogo class="-enter-x" />
         </div>
         <div
-          class="welcome-wrapper flex flex-col items-start justify-between p-5 top-3/10 left-17 w-3/5 h-2/5 rounded-md enter-x"
+          class="welcome-wrapper flex flex-col items-start justify-between p-5 relative left-17 w-3/5 h-2/5 rounded-md enter-x"
         >
-          <img
-            src="../../../assets/images/welcome.png"
-            style="margin-top: 35%; margin-left: 5%"
-            alt=""
-          />
-          <div class="text-white" style="margin-bottom: 35%; margin-left: 5%"
-            >v {{ prodVersion }}</div
-          >
+          <img class="relative top-23%" src="../../../assets/images/welcome.png" alt="" />
+          <div class="text-white relative bottom-1/5"> v {{ prodVersion }} </div>
         </div>
 
         <div class="flex items-center w-full h-full py-5 xl:h-auto xl:py-0 xl:my-0 xl:w-6/12">
           <div
             :class="`${prefixCls}-form`"
-            class="relative w-full h-3/5 bg-white px-5 py-8 mx-auto my-auto rounded-md shadow-md xl:bg-transparent sm:px-8 xl:p-4 xl:shadow-none sm:w-3/4 lg:w-2/4 xl:w-auto enter-x"
+            class="relative w-full h-3/5 bg-white px-5 py-8 mx-auto my-auto rounded-md shadow-md xl:ml-16 xl:bg-transparent sm:px-8 xl:p-4 xl:shadow-none sm:w-3/4 lg:w-2/4 xl:w-auto enter-x"
           >
             <LoginForm />
           </div>
@@ -230,7 +224,6 @@
     background-size: 100% 60%;
     background-repeat: no-repeat;
     background-position: center;
-    //background-position: center;
     @media (max-width: @screen-xl) {
       display: none;
     }
