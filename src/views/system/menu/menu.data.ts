@@ -44,7 +44,7 @@ export const columns: BasicColumn[] = [
 ];
 
 // const isDir = (type: string) => type === '0';
-const isMenu = (type: number) => type === 1;
+const isMenu = (type: number) => type !== 2;
 const isButton = (type: number) => type === 2;
 
 export const searchFormSchema: FormSchema[] = [
