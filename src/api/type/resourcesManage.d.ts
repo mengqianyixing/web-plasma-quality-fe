@@ -11,10 +11,10 @@ type FileData = File;
  * 接口 [新增资源↗](https://yapi.sharing8.cn/project/521/interface/api/29272) 的 **请求类型**
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
- * @请求头 `POST /sys/resource`
- * @更新时间 `2023-11-01 10:03:17`
+ * @请求头 `POST /api/sys/resource`
+ * @更新时间 `2023-12-15 10:46:34`
  */
-export interface PostSysResourceRequest {
+export interface PostApiSysResourceRequest {
   /**
    * 资源URI
    */
@@ -41,10 +41,10 @@ export interface PostSysResourceRequest {
  * 接口 [新增资源↗](https://yapi.sharing8.cn/project/521/interface/api/29272) 的 **返回类型**
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
- * @请求头 `POST /sys/resource`
- * @更新时间 `2023-11-01 10:03:17`
+ * @请求头 `POST /api/sys/resource`
+ * @更新时间 `2023-12-15 10:46:34`
  */
-export interface PostSysResourceResponse {
+export interface PostApiSysResourceResponse {
   /**
    * 响应码
    */
@@ -59,10 +59,10 @@ export interface PostSysResourceResponse {
  * 接口 [删除资源↗](https://yapi.sharing8.cn/project/521/interface/api/29284) 的 **请求类型**
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
- * @请求头 `DELETE /sys/resource/{id}`
- * @更新时间 `2023-10-30 14:18:58`
+ * @请求头 `DELETE /api/sys/resource/{id}`
+ * @更新时间 `2023-12-15 10:46:40`
  */
-export interface DeleteSysResourceIdRequest {
+export interface DeleteApiSysResourceIdRequest {
   /**
    * 资源id
    */
@@ -73,10 +73,10 @@ export interface DeleteSysResourceIdRequest {
  * 接口 [删除资源↗](https://yapi.sharing8.cn/project/521/interface/api/29284) 的 **返回类型**
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
- * @请求头 `DELETE /sys/resource/{id}`
- * @更新时间 `2023-10-30 14:18:58`
+ * @请求头 `DELETE /api/sys/resource/{id}`
+ * @更新时间 `2023-12-15 10:46:40`
  */
-export interface DeleteSysResourceIdResponse {
+export interface DeleteApiSysResourceIdResponse {
   /**
    * 响应码
    */
@@ -91,10 +91,10 @@ export interface DeleteSysResourceIdResponse {
  * 接口 [修改资源↗](https://yapi.sharing8.cn/project/521/interface/api/29296) 的 **请求类型**
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
- * @请求头 `PUT /sys/resource`
- * @更新时间 `2023-11-01 10:05:24`
+ * @请求头 `PUT /api/sys/resource`
+ * @更新时间 `2023-12-15 10:46:48`
  */
-export interface PutSysResourceRequest {
+export interface PutApiSysResourceRequest {
   /**
    * 1234567
    */
@@ -125,10 +125,10 @@ export interface PutSysResourceRequest {
  * 接口 [修改资源↗](https://yapi.sharing8.cn/project/521/interface/api/29296) 的 **返回类型**
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
- * @请求头 `PUT /sys/resource`
- * @更新时间 `2023-11-01 10:05:24`
+ * @请求头 `PUT /api/sys/resource`
+ * @更新时间 `2023-12-15 10:46:48`
  */
-export interface PutSysResourceResponse {
+export interface PutApiSysResourceResponse {
   /**
    * 响应码
    */
@@ -143,10 +143,10 @@ export interface PutSysResourceResponse {
  * 接口 [查询单个资源↗](https://yapi.sharing8.cn/project/521/interface/api/29302) 的 **请求类型**
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
- * @请求头 `GET /sys/resource/{id}`
- * @更新时间 `2023-11-07 17:43:41`
+ * @请求头 `GET /api/sys/resource/{id}`
+ * @更新时间 `2023-12-15 10:46:57`
  */
-export interface GetSysResourceIdRequest {
+export interface GetApiSysResourceIdRequest {
   /**
    * 资源id
    */
@@ -157,10 +157,10 @@ export interface GetSysResourceIdRequest {
  * 接口 [查询单个资源↗](https://yapi.sharing8.cn/project/521/interface/api/29302) 的 **返回类型**
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
- * @请求头 `GET /sys/resource/{id}`
- * @更新时间 `2023-11-07 17:43:41`
+ * @请求头 `GET /api/sys/resource/{id}`
+ * @更新时间 `2023-12-15 10:46:57`
  */
-export interface GetSysResourceIdResponse {
+export interface GetApiSysResourceIdResponse {
   /**
    * 资源id
    */
@@ -285,10 +285,10 @@ export interface GetSysResourceIdResponse {
  * 接口 [查询资源列表↗](https://yapi.sharing8.cn/project/521/interface/api/29326) 的 **请求类型**
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
- * @请求头 `POST /sys/resources`
- * @更新时间 `2023-10-30 14:20:00`
+ * @请求头 `POST /api/sys/resources`
+ * @更新时间 `2023-12-15 10:47:11`
  */
-export interface PostSysResourcesRequest {
+export interface PostApiSysResourcesRequest {
   /**
    * 当前页码
    */
@@ -311,10 +311,10 @@ export interface PostSysResourcesRequest {
  * 接口 [查询资源列表↗](https://yapi.sharing8.cn/project/521/interface/api/29326) 的 **返回类型**
  *
  * @分类 [资源管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4392)
- * @请求头 `POST /sys/resources`
- * @更新时间 `2023-10-30 14:20:00`
+ * @请求头 `POST /api/sys/resources`
+ * @更新时间 `2023-12-15 10:47:11`
  */
-export interface PostSysResourcesResponse {
+export interface PostApiSysResourcesResponse {
   /**
    * 当前页
    */

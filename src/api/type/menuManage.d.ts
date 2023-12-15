@@ -11,10 +11,10 @@ type FileData = File;
  * 接口 [查询菜单信息↗](https://yapi.sharing8.cn/project/521/interface/api/29356) 的 **请求类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
- * @请求头 `POST /sys/menus`
- * @更新时间 `2023-10-31 16:31:06`
+ * @请求头 `POST /api/sys/menus`
+ * @更新时间 `2023-12-15 10:45:51`
  */
-export interface PostSysMenusRequest {
+export interface PostApiSysMenusRequest {
   /**
    * 菜单名称
    */
@@ -33,10 +33,10 @@ export interface PostSysMenusRequest {
  * 接口 [查询菜单信息↗](https://yapi.sharing8.cn/project/521/interface/api/29356) 的 **返回类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
- * @请求头 `POST /sys/menus`
- * @更新时间 `2023-10-31 16:31:06`
+ * @请求头 `POST /api/sys/menus`
+ * @更新时间 `2023-12-15 10:45:51`
  */
-export interface PostSysMenusResponse {
+export interface PostApiSysMenusResponse {
   result?: {
     /**
      * 创建人
@@ -143,10 +143,10 @@ export interface PostSysMenusResponse {
  * 接口 [新增菜单信息↗](https://yapi.sharing8.cn/project/521/interface/api/29362) 的 **请求类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
- * @请求头 `POST /sys/menu`
- * @更新时间 `2023-10-30 10:56:42`
+ * @请求头 `POST /api/sys/menu`
+ * @更新时间 `2023-12-15 10:45:59`
  */
-export interface PostSysMenuRequest {
+export interface PostApiSysMenuRequest {
   /**
    * 菜单编码，唯一
    */
@@ -189,19 +189,19 @@ export interface PostSysMenuRequest {
  * 接口 [新增菜单信息↗](https://yapi.sharing8.cn/project/521/interface/api/29362) 的 **返回类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
- * @请求头 `POST /sys/menu`
- * @更新时间 `2023-10-30 10:56:42`
+ * @请求头 `POST /api/sys/menu`
+ * @更新时间 `2023-12-15 10:45:59`
  */
-export interface PostSysMenuResponse {}
+export interface PostApiSysMenuResponse {}
 
 /**
  * 接口 [删除菜单信息↗](https://yapi.sharing8.cn/project/521/interface/api/29368) 的 **请求类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
- * @请求头 `DELETE /sys/menu/{id}`
- * @更新时间 `2023-10-30 10:56:46`
+ * @请求头 `DELETE /api/sys/menu/{id}`
+ * @更新时间 `2023-12-15 10:46:07`
  */
-export interface DeleteSysMenuIdRequest {
+export interface DeleteApiSysMenuIdRequest {
   /**
    * 菜单id
    */
@@ -212,19 +212,19 @@ export interface DeleteSysMenuIdRequest {
  * 接口 [删除菜单信息↗](https://yapi.sharing8.cn/project/521/interface/api/29368) 的 **返回类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
- * @请求头 `DELETE /sys/menu/{id}`
- * @更新时间 `2023-10-30 10:56:46`
+ * @请求头 `DELETE /api/sys/menu/{id}`
+ * @更新时间 `2023-12-15 10:46:07`
  */
-export interface DeleteSysMenuIdResponse {}
+export interface DeleteApiSysMenuIdResponse {}
 
 /**
  * 接口 [编辑菜单信息↗](https://yapi.sharing8.cn/project/521/interface/api/29374) 的 **请求类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
- * @请求头 `PUT /sys/menu`
- * @更新时间 `2023-10-30 10:56:51`
+ * @请求头 `PUT /api/sys/menu`
+ * @更新时间 `2023-12-15 10:46:13`
  */
-export interface PutSysMenuRequest {
+export interface PutApiSysMenuRequest {
   /**
    * 菜单id，主键
    */
@@ -271,28 +271,28 @@ export interface PutSysMenuRequest {
  * 接口 [编辑菜单信息↗](https://yapi.sharing8.cn/project/521/interface/api/29374) 的 **返回类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
- * @请求头 `PUT /sys/menu`
- * @更新时间 `2023-10-30 10:56:51`
+ * @请求头 `PUT /api/sys/menu`
+ * @更新时间 `2023-12-15 10:46:13`
  */
-export interface PutSysMenuResponse {}
+export interface PutApiSysMenuResponse {}
 
 /**
  * 接口 [查询菜单树↗](https://yapi.sharing8.cn/project/521/interface/api/29410) 的 **请求类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
- * @请求头 `GET /sys/menu/tree`
- * @更新时间 `2023-10-31 16:06:14`
+ * @请求头 `GET /api/sys/menu/tree`
+ * @更新时间 `2023-12-15 10:46:20`
  */
-export interface GetSysMenuTreeRequest {}
+export interface GetApiSysMenuTreeRequest {}
 
 /**
  * 接口 [查询菜单树↗](https://yapi.sharing8.cn/project/521/interface/api/29410) 的 **返回类型**
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
- * @请求头 `GET /sys/menu/tree`
- * @更新时间 `2023-10-31 16:06:14`
+ * @请求头 `GET /api/sys/menu/tree`
+ * @更新时间 `2023-12-15 10:46:20`
  */
-export type GetSysMenuTreeResponse = {
+export type GetApiSysMenuTreeResponse = {
   /**
    * 菜单id
    */

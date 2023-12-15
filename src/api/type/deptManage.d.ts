@@ -11,10 +11,10 @@ type FileData = File;
  * 接口 [查询部门列表↗](https://yapi.sharing8.cn/project/521/interface/api/29224) 的 **请求类型**
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
- * @请求头 `POST /sys/depts`
- * @更新时间 `2023-11-01 17:40:54`
+ * @请求头 `POST /api/sys/depts`
+ * @更新时间 `2023-12-15 10:43:31`
  */
-export interface PostSysDeptsRequest {
+export interface PostApiSysDeptsRequest {
   /**
    * 部门名称，模糊查询
    */
@@ -25,10 +25,10 @@ export interface PostSysDeptsRequest {
  * 接口 [查询部门列表↗](https://yapi.sharing8.cn/project/521/interface/api/29224) 的 **返回类型**
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
- * @请求头 `POST /sys/depts`
- * @更新时间 `2023-11-01 17:40:54`
+ * @请求头 `POST /api/sys/depts`
+ * @更新时间 `2023-12-15 10:43:31`
  */
-export type PostSysDeptsResponse = {
+export type PostApiSysDeptsResponse = {
   /**
    * 部门id
    */
@@ -100,10 +100,10 @@ export type PostSysDeptsResponse = {
  * 接口 [新增部门信息↗](https://yapi.sharing8.cn/project/521/interface/api/29236) 的 **请求类型**
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
- * @请求头 `POST /sys/dept`
- * @更新时间 `2023-10-27 15:43:26`
+ * @请求头 `POST /api/sys/dept`
+ * @更新时间 `2023-12-15 10:43:37`
  */
-export interface PostSysDeptRequest {
+export interface PostApiSysDeptRequest {
   /**
    * 部门名称
    */
@@ -126,19 +126,19 @@ export interface PostSysDeptRequest {
  * 接口 [新增部门信息↗](https://yapi.sharing8.cn/project/521/interface/api/29236) 的 **返回类型**
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
- * @请求头 `POST /sys/dept`
- * @更新时间 `2023-10-27 15:43:26`
+ * @请求头 `POST /api/sys/dept`
+ * @更新时间 `2023-12-15 10:43:37`
  */
-export interface PostSysDeptResponse {}
+export interface PostApiSysDeptResponse {}
 
 /**
  * 接口 [删除部门信息↗](https://yapi.sharing8.cn/project/521/interface/api/29242) 的 **请求类型**
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
- * @请求头 `DELETE /sys/dept/{id}`
- * @更新时间 `2023-10-27 15:43:33`
+ * @请求头 `DELETE /api/sys/dept/{id}`
+ * @更新时间 `2023-12-15 10:43:46`
  */
-export interface DeleteSysDeptIdRequest {
+export interface DeleteApiSysDeptIdRequest {
   /**
    * 部门id
    */
@@ -149,19 +149,19 @@ export interface DeleteSysDeptIdRequest {
  * 接口 [删除部门信息↗](https://yapi.sharing8.cn/project/521/interface/api/29242) 的 **返回类型**
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
- * @请求头 `DELETE /sys/dept/{id}`
- * @更新时间 `2023-10-27 15:43:33`
+ * @请求头 `DELETE /api/sys/dept/{id}`
+ * @更新时间 `2023-12-15 10:43:46`
  */
-export interface DeleteSysDeptIdResponse {}
+export interface DeleteApiSysDeptIdResponse {}
 
 /**
  * 接口 [编辑部门信息↗](https://yapi.sharing8.cn/project/521/interface/api/29248) 的 **请求类型**
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
- * @请求头 `PUT /sys/dept`
- * @更新时间 `2023-10-27 15:41:57`
+ * @请求头 `PUT /api/sys/dept`
+ * @更新时间 `2023-12-15 10:43:53`
  */
-export interface PutSysDeptRequest {
+export interface PutApiSysDeptRequest {
   /**
    * 部门编号
    */
@@ -188,9 +188,9 @@ export interface PutSysDeptRequest {
  * 接口 [编辑部门信息↗](https://yapi.sharing8.cn/project/521/interface/api/29248) 的 **返回类型**
  *
  * @分类 [部门管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4368)
- * @请求头 `PUT /sys/dept`
- * @更新时间 `2023-10-27 15:41:57`
+ * @请求头 `PUT /api/sys/dept`
+ * @更新时间 `2023-12-15 10:43:53`
  */
-export interface PutSysDeptResponse {}
+export interface PutApiSysDeptResponse {}
 
 /* prettier-ignore-end */

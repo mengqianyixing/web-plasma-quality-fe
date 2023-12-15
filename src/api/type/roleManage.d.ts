@@ -11,10 +11,10 @@ type FileData = File;
  * 接口 [查询角色列表↗](https://yapi.sharing8.cn/project/521/interface/api/29314) 的 **请求类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
- * @请求头 `POST /sys/roles`
- * @更新时间 `2023-10-27 17:19:39`
+ * @请求头 `POST /api/sys/roles`
+ * @更新时间 `2023-12-15 10:45:06`
  */
-export interface PostSysRolesRequest {
+export interface PostApiSysRolesRequest {
   /**
    * 当前页
    */
@@ -37,10 +37,10 @@ export interface PostSysRolesRequest {
  * 接口 [查询角色列表↗](https://yapi.sharing8.cn/project/521/interface/api/29314) 的 **返回类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
- * @请求头 `POST /sys/roles`
- * @更新时间 `2023-10-27 17:19:39`
+ * @请求头 `POST /api/sys/roles`
+ * @更新时间 `2023-12-15 10:45:06`
  */
-export interface PostSysRolesResponse {
+export interface PostApiSysRolesResponse {
   /**
    * 总数
    */
@@ -89,10 +89,10 @@ export interface PostSysRolesResponse {
  * 接口 [新增角色信息↗](https://yapi.sharing8.cn/project/521/interface/api/29320) 的 **请求类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
- * @请求头 `POST /sys/role`
- * @更新时间 `2023-10-27 17:19:31`
+ * @请求头 `POST /api/sys/role`
+ * @更新时间 `2023-12-15 10:45:14`
  */
-export interface PostSysRoleRequest {
+export interface PostApiSysRoleRequest {
   roleName: string;
   status: number;
   remark?: string;
@@ -106,19 +106,19 @@ export interface PostSysRoleRequest {
  * 接口 [新增角色信息↗](https://yapi.sharing8.cn/project/521/interface/api/29320) 的 **返回类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
- * @请求头 `POST /sys/role`
- * @更新时间 `2023-10-27 17:19:31`
+ * @请求头 `POST /api/sys/role`
+ * @更新时间 `2023-12-15 10:45:14`
  */
-export interface PostSysRoleResponse {}
+export interface PostApiSysRoleResponse {}
 
 /**
  * 接口 [删除角色信息↗](https://yapi.sharing8.cn/project/521/interface/api/29332) 的 **请求类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
- * @请求头 `DELETE /sys/role/{id}`
- * @更新时间 `2023-10-27 17:19:44`
+ * @请求头 `DELETE /api/sys/role/{id}`
+ * @更新时间 `2023-12-15 10:45:20`
  */
-export interface DeleteSysRoleIdRequest {
+export interface DeleteApiSysRoleIdRequest {
   /**
    * 角色id
    */
@@ -129,19 +129,19 @@ export interface DeleteSysRoleIdRequest {
  * 接口 [删除角色信息↗](https://yapi.sharing8.cn/project/521/interface/api/29332) 的 **返回类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
- * @请求头 `DELETE /sys/role/{id}`
- * @更新时间 `2023-10-27 17:19:44`
+ * @请求头 `DELETE /api/sys/role/{id}`
+ * @更新时间 `2023-12-15 10:45:20`
  */
-export interface DeleteSysRoleIdResponse {}
+export interface DeleteApiSysRoleIdResponse {}
 
 /**
  * 接口 [编辑角色信息↗](https://yapi.sharing8.cn/project/521/interface/api/29338) 的 **请求类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
- * @请求头 `PUT /sys/role`
- * @更新时间 `2023-10-27 17:19:49`
+ * @请求头 `PUT /api/sys/role`
+ * @更新时间 `2023-12-15 10:45:27`
  */
-export interface PutSysRoleRequest {
+export interface PutApiSysRoleRequest {
   /**
    * 角色id，主键
    */
@@ -168,19 +168,19 @@ export interface PutSysRoleRequest {
  * 接口 [编辑角色信息↗](https://yapi.sharing8.cn/project/521/interface/api/29338) 的 **返回类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
- * @请求头 `PUT /sys/role`
- * @更新时间 `2023-10-27 17:19:49`
+ * @请求头 `PUT /api/sys/role`
+ * @更新时间 `2023-12-15 10:45:27`
  */
-export interface PutSysRoleResponse {}
+export interface PutApiSysRoleResponse {}
 
 /**
  * 接口 [查询单个角色，包括菜单信息↗](https://yapi.sharing8.cn/project/521/interface/api/29416) 的 **请求类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
- * @请求头 `GET /sys/role/{id}`
- * @更新时间 `2023-10-31 16:05:41`
+ * @请求头 `GET /api/sys/role/{id}`
+ * @更新时间 `2023-12-15 10:45:35`
  */
-export interface GetSysRoleIdRequest {
+export interface GetApiSysRoleIdRequest {
   /**
    * 角色编号
    */
@@ -191,10 +191,10 @@ export interface GetSysRoleIdRequest {
  * 接口 [查询单个角色，包括菜单信息↗](https://yapi.sharing8.cn/project/521/interface/api/29416) 的 **返回类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
- * @请求头 `GET /sys/role/{id}`
- * @更新时间 `2023-10-31 16:05:41`
+ * @请求头 `GET /api/sys/role/{id}`
+ * @更新时间 `2023-12-15 10:45:35`
  */
-export interface GetSysRoleIdResponse {
+export interface GetApiSysRoleIdResponse {
   /**
    * 角色id，主键
    */
@@ -300,19 +300,19 @@ export interface GetSysRoleIdResponse {
  * 接口 [根据用户id，获取用户的菜单↗](https://yapi.sharing8.cn/project/521/interface/api/29740) 的 **请求类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
- * @请求头 `GET /sys/role/user/menutree`
- * @更新时间 `2023-10-31 16:05:52`
+ * @请求头 `GET /api/sys/role/user/menutree`
+ * @更新时间 `2023-12-15 10:45:42`
  */
-export interface GetSysRoleUserMenutreeRequest {}
+export interface GetApiSysRoleUserMenutreeRequest {}
 
 /**
  * 接口 [根据用户id，获取用户的菜单↗](https://yapi.sharing8.cn/project/521/interface/api/29740) 的 **返回类型**
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
- * @请求头 `GET /sys/role/user/menutree`
- * @更新时间 `2023-10-31 16:05:52`
+ * @请求头 `GET /api/sys/role/user/menutree`
+ * @更新时间 `2023-12-15 10:45:42`
  */
-export type GetSysRoleUserMenutreeResponse = {
+export type GetApiSysRoleUserMenutreeResponse = {
   /**
    * 菜单编号
    */
