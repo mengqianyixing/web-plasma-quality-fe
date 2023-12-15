@@ -1,5 +1,5 @@
-import { getDeptList, isAccountExist } from '/@/api/systemServer/system';
-import { BasicColumn, FormSchema } from '/@/components/Table';
+import { getDeptList, isAccountExist } from '@/api/systemServer/system';
+import { BasicColumn, FormSchema } from '@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
@@ -48,7 +48,7 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    field: 'username',
+    field: 'nickname',
     label: '昵称',
     component: 'Input',
     colProps: { span: 8 },

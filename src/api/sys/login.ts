@@ -2,7 +2,7 @@ import { defHttp } from '/@/utils/http/axios';
 import { GetSysCaptchaUuidRequest, GetSysCaptchaUuidResponse } from '@/api/type/login';
 
 enum Api {
-  GetSysVerifyCode = '/sys/captcha',
+  GetSysVerifyCode = '/api/sys/captcha',
 }
 
 /**

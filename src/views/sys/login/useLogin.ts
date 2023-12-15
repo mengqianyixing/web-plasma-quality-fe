@@ -5,7 +5,7 @@ import type {
   Rule as ValidationRule,
 } from 'ant-design-vue/lib/form/interface';
 import { ref, computed, unref, Ref } from 'vue';
-import { useI18n } from '/@/hooks/web/useI18n';
+import { useI18n } from '@/hooks/web/useI18n';
 
 export enum LoginStateEnum {
   LOGIN,
@@ -55,6 +55,7 @@ export function useFormRules(formData?: Recordable) {
 
   const getAccountFormRule = computed(() => createRule(t('sys.login.accountPlaceholder')));
   const getPasswordFormRule = computed(() => createRule(t('sys.login.passwordPlaceholder')));
+  const getVerifyCodeFormRule = computed(() => createRule(t('sys.login.verifyCodePlaceholder')));
   const getSmsFormRule = computed(() => createRule(t('sys.login.smsPlaceholder')));
   const getMobileFormRule = computed(() => createRule(t('sys.login.mobilePlaceholder')));
 
@@ -77,6 +78,7 @@ export function useFormRules(formData?: Recordable) {
   const getFormRules = computed((): { [k: string]: ValidationRule | ValidationRule[] } => {
     const accountFormRule = unref(getAccountFormRule);
     const passwordFormRule = unref(getPasswordFormRule);
+    const verifyCodeFormRule = unref(getVerifyCodeFormRule);
     const smsFormRule = unref(getSmsFormRule);
     const mobileFormRule = unref(getMobileFormRule);
 
@@ -90,6 +92,7 @@ export function useFormRules(formData?: Recordable) {
         return {
           account: accountFormRule,
           password: passwordFormRule,
+          verifyCode: verifyCodeFormRule,
           confirmPassword: [
             { validator: validateConfirmPassword(formData?.password), trigger: 'change' },
           ],
@@ -113,6 +116,7 @@ export function useFormRules(formData?: Recordable) {
         return {
           account: accountFormRule,
           password: passwordFormRule,
+          verifyCode: verifyCodeFormRule,
         };
     }
   });

@@ -10,27 +10,31 @@
   >
     <FormItem name="account" class="enter-x">
       <Input
+        :maxlength="64"
         size="large"
         v-model:value="formData.account"
-        :placeholder="t('sys.login.userName')"
+        :placeholder="t('sys.login.accountPlaceholder')"
         class="fix-auto-fill"
       />
     </FormItem>
     <FormItem name="password" class="enter-x">
       <InputPassword
+        :maxlength="128"
         size="large"
         visibilityToggle
         v-model:value="formData.password"
-        :placeholder="t('sys.login.password')"
+        :placeholder="t('sys.login.passwordPlaceholder')"
       />
     </FormItem>
-    <ARow justify="space-around" align="middle">
+    <ARow justify="space-around" align="middle" id="ARowInput">
       <ACol :span="8">
         <FormItem name="verifyCode" class="enter-x">
           <Input
+            :maxlength="4"
             size="large"
             v-model:value="formData.verifyCode"
             :placeholder="t('sys.login.smsPlaceholder')"
+            id="ARowInput"
           />
         </FormItem>
       </ACol>
@@ -59,14 +63,14 @@
   import { Form, Input, Row, Col, Button } from 'ant-design-vue';
   import LoginFormTitle from './LoginFormTitle.vue';
 
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useMessage } from '/@/hooks/web/useMessage';
+  import { useI18n } from '@/hooks/web/useI18n';
+  import { useMessage } from '@/hooks/web/useMessage';
 
-  import { useUserStore } from '/@/store/modules/user';
+  import { useUserStore } from '@/store/modules/user';
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
-  import { useDesign } from '/@/hooks/web/useDesign';
+  import { useDesign } from '@/hooks/web/useDesign';
   import { getSysVerifyCode } from '@/api/sys/login';
-  import { buildUUID } from '/@/utils/uuid';
+  import { buildUUID } from '@/utils/uuid';
 
   const ACol = Col;
   const ARow = Row;
@@ -89,9 +93,9 @@
   const verifyCode = ref('');
 
   const formData = reactive({
-    account: '101',
-    password: 'Stpass123!',
-    verifyCode: '1234',
+    account: '',
+    password: '',
+    verifyCode: '',
   });
 
   const { validForm } = useFormValid(formRef);

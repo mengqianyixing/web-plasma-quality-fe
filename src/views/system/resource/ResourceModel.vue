@@ -103,13 +103,13 @@
           if (isUpdate.value) {
             await editResource({
               ...values,
-              resourceMenuList: values.resourceMenuList.checked,
+              resourceMenuList: values.menuIds.checked,
               resourceId: resourceId.value,
             } as PutSysResourceRequest);
           } else {
             await addResource({
               ...values,
-              resourceMenuList: values.resourceMenuList.checked,
+              resourceMenuList: values.menuIds.checked,
             } as PostSysResourceRequest);
           }
           closeModal();

@@ -7,7 +7,7 @@
           :params="selectParams"
           mode="multiple"
           :value="defaultSelectValue"
-          @change="model[field]"
+          @change="(value) => (model[field] = value)"
           resultField="result"
           labelField="roleName"
           valueField="roleId"

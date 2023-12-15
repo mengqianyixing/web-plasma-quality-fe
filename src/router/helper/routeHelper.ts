@@ -122,7 +122,7 @@ export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModul
         route.component = LAYOUT;
         //某些情况下如果name如果没有值， 多个一级路由菜单会导致页面404
         if (!route.name || !route.menuName) {
-          warn('找不到菜单对应的name或menuName, 请检查数据!');
+          warn('找不到菜单对应的name或menuName, 请检查数据!' + JSON.stringify(route));
         }
         route.name = `${route.name || route.menuName}Parent`;
         route.path = '';

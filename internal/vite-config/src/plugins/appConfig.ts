@@ -16,6 +16,7 @@ export async function createConfigPluginConfig(
   // https://github.com/kirklin/unplugin-config
   return GenerateConfig({
     appName: APP_NAME,
+    baseDir: './',
     envVariables: {
       prefix: 'VITE_GLOB_',
     },

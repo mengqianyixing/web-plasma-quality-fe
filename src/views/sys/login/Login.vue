@@ -19,10 +19,10 @@
           <AppLogo class="-enter-x" />
         </div>
         <div
-          class="welcome-wrapper flex flex-col items-start justify-between p-5 relative top-3/10 left-17 w-3/5 h-2/5 rounded-md enter-x"
+          class="welcome-wrapper flex flex-col items-start justify-between p-5 relative left-17 w-3/5 h-2/5 rounded-md enter-x"
         >
-          <img src="../../../assets/images/welcome.png" alt="" />
-          <div class="text-white">v {{ prodVersion }}</div>
+          <img class="relative top-23%" src="../../../assets/images/welcome.png" alt="" />
+          <div class="text-white relative bottom-1/5"> v {{ prodVersion }} </div>
         </div>
 
         <div class="flex items-center w-full h-full py-5 xl:h-auto xl:py-0 xl:my-0 xl:w-6/12">
@@ -40,8 +40,8 @@
 <script lang="ts" setup>
   import { AppLogo, AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
   import LoginForm from './LoginForm.vue';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { useLocaleStore } from '/@/store/modules/locale';
+  import { useDesign } from '@/hooks/web/useDesign';
+  import { useLocaleStore } from '@/store/modules/locale';
   import { version } from './../../../../package.json';
 
   defineProps({
@@ -118,7 +118,7 @@
       background-image: url('@/assets/images/login-bg.png');
       background-repeat: no-repeat;
       background-position: 100%;
-      background-size: auto 100%;
+      background-size: 100% 100%;
 
       @media (max-width: @screen-xl) {
         display: none;
@@ -192,6 +192,25 @@
     .@{countdown-prefix-cls} input {
       min-width: unset;
     }
+    #ARowInput {
+      min-width: 265px;
+
+      @media (max-width: @screen-xl) {
+        min-width: 250px;
+      }
+
+      @media (max-width: @screen-lg) {
+        min-width: 240px;
+      }
+
+      @media (max-width: @screen-md) {
+        min-width: 200px;
+      }
+
+      @media (max-width: @screen-sm) {
+        min-width: 160px;
+      }
+    }
 
     .ant-divider-inner-text {
       color: @text-color-secondary;
@@ -201,7 +220,10 @@
 
   .welcome-wrapper {
     background-image: url('@/assets/images/welcome-bg.png');
-
+    height: 100%;
+    background-size: 100% 60%;
+    background-repeat: no-repeat;
+    background-position: center;
     @media (max-width: @screen-xl) {
       display: none;
     }
