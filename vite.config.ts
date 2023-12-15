@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-08 09:39:00
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-14 17:54:23
+ * @LastEditTime: 2023-12-15 10:34:32
  */
 import { defineApplicationConfig } from '@vben/vite-config';
 
@@ -32,8 +32,14 @@ export default defineApplicationConfig({
           changeOrigin: true,
           rewrite: (p) => p.replace(new RegExp(`^/basic-api/mock`), ''),
         },
+        '/basic-api/sys': {
+          target: 'http://192.168.1.133:7100/api',
+          changeOrigin: true,
+          ws: true,
+          rewrite: (path) => path.replace(new RegExp(`^/basic-api`), ''),
+        },
         '/basic-api': {
-          target: 'http://192.168.1.67:7002',
+          target: 'http://192.168.1.133:7100',
           changeOrigin: true,
           ws: true,
           rewrite: (path) => path.replace(new RegExp(`^/basic-api`), ''),
