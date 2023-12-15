@@ -2,7 +2,7 @@ import { defHttp } from '/@/utils/http/axios';
 import { GetSysRoleUserMenutreeResponse } from '@/api/type/roleManage';
 
 enum Api {
-  GetMenuList = '/sys/role/user/menutree',
+  GetMenuList = '/api/sys/role/user/menutree',
 }
 
 /**

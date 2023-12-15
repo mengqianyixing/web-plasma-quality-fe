@@ -52,20 +52,20 @@ import {
 } from '@/api/type/resourcesManage';
 
 enum Api {
-  AccountList = '/sys/users',
-  IsAccountExist = '/system/accountExist',
-  DeptList = '/sys/depts',
-  RestfulDeptUrl = '/sys/dept',
+  AccountList = '/api/sys/users',
+  IsAccountExist = '/api/system/accountExist',
+  DeptList = '/api/sys/depts',
+  RestfulDeptUrl = '/api/sys/dept',
   setRoleStatus = '/system/setRoleStatus',
-  MenuList = '/sys/menus',
-  MenuTree = '/sys/menu/tree',
-  RestfulMenuUrl = '/sys/menu',
-  RolePageList = '/sys/roles',
-  RestfulRoleUrl = '/sys/role',
-  RestfulUserUrl = '/sys/user',
-  RestfulResourceUrl = '/sys/resource',
-  GetResourcesList = '/sys/resources',
-  GetAllRoleList = '/system/getAllRoleList',
+  MenuList = '/api/sys/menus',
+  MenuTree = '/api/sys/menu/tree',
+  RestfulMenuUrl = '/api/sys/menu',
+  RolePageList = '/api/sys/roles',
+  RestfulRoleUrl = '/api/sys/role',
+  RestfulUserUrl = '/api/sys/user',
+  RestfulResourceUrl = '/api/sys/resource',
+  GetResourcesList = '/api/sys/resources',
+  GetAllRoleList = '/api/system/getAllRoleList',
 }
 
 export const getAccountList = (params: PostSysUsersRequest) =>
