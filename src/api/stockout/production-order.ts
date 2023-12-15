@@ -1,15 +1,15 @@
 import { defHttp } from '/@/utils/http/axios';
 import {
-  DeleteApiProductOrderCheckOrderNoRequest,
-  DeleteApiProductOrderReviewOrderNoRequest,
   GetApiProductOrderOrderNoRequest,
   GetApiProductOrderOrderNoResponse,
-  PostApiProductOrderCheckRequest,
   PostApiProductOrderRequest,
-  PostApiProductOrderReviewRequest,
   PostApiProductOrdersRequest,
   PostApiProductOrdersResponse,
+  PutApiProductOrderCheckOrderNoRequest,
+  PutApiProductOrderCheckRequest,
   PutApiProductOrderRequest,
+  PutApiProductOrderReviewOrderNoRequest,
+  PutApiProductOrderReviewRequest,
 } from '@/api/type/productionOrder';
 
 enum Api {
@@ -42,22 +42,18 @@ export const delProOrder = (params: GetApiProductOrderOrderNoRequest['orderNo'])
   return defHttp.delete({ url: `${Api.AddOrder}/${params}` });
 };
 
-export const checkProOrder = (params: PostApiProductOrderCheckRequest) => {
-  return defHttp.post({ url: Api.CheckOrder, params });
+export const checkProOrder = (params: PutApiProductOrderCheckOrderNoRequest['orderNo']) => {
+  return defHttp.put({ url: `${Api.CheckOrder}/${params}` });
 };
 
-export const cancelCheckProOrder = (
-  params: DeleteApiProductOrderCheckOrderNoRequest['orderNo'],
-) => {
-  return defHttp.delete({ url: `${Api.CheckOrder}/${params}` });
+export const cancelCheckProOrder = (params: PutApiProductOrderCheckRequest) => {
+  return defHttp.put({ url: Api.CheckOrder, params });
 };
 
-export const reCheckProOrder = (params: PostApiProductOrderReviewRequest) => {
-  return defHttp.post({ url: Api.ReCheckOrder, params });
+export const reCheckProOrder = (params: PutApiProductOrderReviewOrderNoRequest['orderNo']) => {
+  return defHttp.put({ url: `${Api.ReCheckOrder}/${params}` });
 };
 
-export const cancelReCheckProOrder = (
-  params: DeleteApiProductOrderReviewOrderNoRequest['orderNo'],
-) => {
-  return defHttp.delete({ url: `${Api.ReCheckOrder}/${params}` });
+export const cancelReCheckProOrder = (params: PutApiProductOrderReviewRequest) => {
+  return defHttp.put({ url: Api.ReCheckOrder, params });
 };

@@ -1,7 +1,6 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
 import {
-  auditResultMap,
   expirationMap,
   expirationValueEnum,
   operationMap,
@@ -15,7 +14,6 @@ export const columns: BasicColumn[] = [
   {
     title: '制造批号',
     dataIndex: 'mesId',
-    width: 120,
     align: 'left',
     slots: { customRender: 'mesId' },
   },
@@ -197,25 +195,12 @@ export const formSchema: FormSchema[] = [
 
 export const checkFormSchema: FormSchema[] = [
   {
-    field: 'result',
-    label: '审核结果',
-    component: 'Select',
-    colProps: { span: 12 },
-    componentProps: {
-      options: [...auditResultMap.entries()].map(([key, value]) => ({
-        value: key,
-        label: value,
-      })),
-    },
-    required: true,
-  },
-  {
     field: 'idea',
-    label: '审核意见',
+    label: '意见',
     component: 'InputTextArea',
     colProps: { span: 20 },
     componentProps: {
-      rows: 4,
+      rows: 6,
     },
   },
 ];

@@ -10,17 +10,18 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { ref, computed, unref } from 'vue';
+  import { computed, ref, unref } from 'vue';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { checkFormSchema } from './po.data';
 
-  import { checkProOrder, reCheckProOrder } from '@/api/stockout/production-order';
+  import { cancelCheckProOrder, cancelReCheckProOrder } from '@/api/stockout/production-order';
 
   import {
-    PostApiProductOrderCheckRequest,
-    PostApiProductOrderReviewRequest,
+    PutApiProductOrderCheckRequest,
+    PutApiProductOrderReviewRequest,
   } from '@/api/type/productionOrder';
+  import { auditResultValueEnum } from '@/enums/stockoutEnum';
 
   defineOptions({ name: 'CheckModal' });
 
@@ -43,22 +44,24 @@
     orderNo.value = data?.record?.orderNo;
   });
 
-  const getTitle = computed(() => (!unref(isReCheck) ? '审核' : '复核'));
+  const getTitle = computed(() => (!unref(isReCheck) ? '取消审核' : '取消复核'));
 
   async function handleSubmit() {
     try {
       const values = await validate();
       setModalProps({ confirmLoading: true });
       if (isReCheck.value) {
-        await reCheckProOrder({
+        await cancelReCheckProOrder({
           ...values,
           orderNo: orderNo.value,
-        } as PostApiProductOrderReviewRequest);
+          result: auditResultValueEnum.PA,
+        } as PutApiProductOrderReviewRequest);
       } else {
-        await checkProOrder({
+        await cancelCheckProOrder({
           ...values,
           orderNo: orderNo.value,
-        } as PostApiProductOrderCheckRequest);
+          result: auditResultValueEnum.PA,
+        } as PutApiProductOrderCheckRequest);
       }
       closeModal();
       emit('success');
