@@ -47,6 +47,7 @@
   });
   const [registerDrawer] = useDrawerInner(({ houseNo }) => {
     state.houseNo = houseNo;
+    setPagination({ current: 1 });
     reload();
   });
   const [registerFormDrawer, { openDrawer }] = useDrawer();
@@ -55,7 +56,14 @@
 
   const [
     registerTable,
-    { getRowSelection, findTableDataRecord, reload, clearSelectedRowKeys, getRawDataSource },
+    {
+      getRowSelection,
+      findTableDataRecord,
+      reload,
+      clearSelectedRowKeys,
+      getRawDataSource,
+      setPagination,
+    },
   ] = useTable({
     title: '区域列表',
     api: areaListApi,

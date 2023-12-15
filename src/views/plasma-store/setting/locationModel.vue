@@ -51,32 +51,35 @@
 
   const [registerCapacityDrawer, { openDrawer }] = useDrawer();
 
-  const [registerTable, { getRowSelection, findTableDataRecord, clearSelectedRowKeys, reload }] =
-    useTable({
-      title: '货位列表',
-      api: locationListApi,
-      fetchSetting: {
-        pageField: 'currPage',
-        sizeField: 'pageSize',
-        totalField: 'totalCount',
-        listField: 'result',
-      },
-      formConfig: {
-        labelWidth: 60,
-        schemas: locationSearchForSchema,
-      },
-      rowKey: 'locationNo',
-      columns,
-      useSearchForm: true,
-      showTableSetting: true,
-      bordered: true,
-      rowSelection: { type: 'checkbox' },
-      beforeFetch: (params) => {
-        return { ...params, houseNo: state.houseNo };
-      },
-    });
+  const [
+    registerTable,
+    { getRowSelection, findTableDataRecord, clearSelectedRowKeys, reload, setPagination },
+  ] = useTable({
+    title: '货位列表',
+    api: locationListApi,
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    formConfig: {
+      labelWidth: 60,
+      schemas: locationSearchForSchema,
+    },
+    rowKey: 'locationNo',
+    columns,
+    useSearchForm: true,
+    showTableSetting: true,
+    bordered: true,
+    rowSelection: { type: 'checkbox' },
+    beforeFetch: (params) => {
+      return { ...params, houseNo: state.houseNo };
+    },
+  });
   const [registerDrawer] = useDrawerInner(({ houseNo }) => {
     state.houseNo = houseNo;
+    setPagination({ current: 1 });
     clearSelectedRowKeys();
     pageReload();
   });
