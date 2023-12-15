@@ -237,7 +237,7 @@ export interface GetApiProductOrderOrderNoResponse {
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `DELETE /api/product/order/{orderNo}`
- * @更新时间 `2023-12-12 10:43:04`
+ * @更新时间 `2023-12-15 13:46:25`
  */
 export interface DeleteApiProductOrderOrderNoRequest {
   orderNo: string;
@@ -248,18 +248,18 @@ export interface DeleteApiProductOrderOrderNoRequest {
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `DELETE /api/product/order/{orderNo}`
- * @更新时间 `2023-12-12 10:43:04`
+ * @更新时间 `2023-12-15 13:46:25`
  */
 export type DeleteApiProductOrderOrderNoResponse = string;
 
 /**
- * 接口 [生产指令审核↗](https://yapi.sharing8.cn/project/529/interface/api/31524) 的 **请求类型**
+ * 接口 [生产指令审核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/31524) 的 **请求类型**
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
- * @请求头 `POST /api/product/order/check`
- * @更新时间 `2023-12-12 10:43:27`
+ * @请求头 `PUT /api/product/order/check`
+ * @更新时间 `2023-12-15 13:49:33`
  */
-export interface PostApiProductOrderCheckRequest {
+export interface PutApiProductOrderCheckRequest {
   /**
    * 审批结果
    */
@@ -275,42 +275,42 @@ export interface PostApiProductOrderCheckRequest {
 }
 
 /**
- * 接口 [生产指令审核↗](https://yapi.sharing8.cn/project/529/interface/api/31524) 的 **返回类型**
+ * 接口 [生产指令审核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/31524) 的 **返回类型**
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
- * @请求头 `POST /api/product/order/check`
- * @更新时间 `2023-12-12 10:43:27`
+ * @请求头 `PUT /api/product/order/check`
+ * @更新时间 `2023-12-15 13:49:33`
  */
-export interface PostApiProductOrderCheckResponse {}
+export interface PutApiProductOrderCheckResponse {}
 
 /**
- * 接口 [生产指令审核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/31527) 的 **请求类型**
+ * 接口 [生产指令审核↗](https://yapi.sharing8.cn/project/529/interface/api/31527) 的 **请求类型**
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
- * @请求头 `DELETE /api/product/order/check/{orderNo}`
- * @更新时间 `2023-12-12 10:43:42`
+ * @请求头 `PUT /api/product/order/check/{orderNo}`
+ * @更新时间 `2023-12-15 13:46:58`
  */
-export interface DeleteApiProductOrderCheckOrderNoRequest {
+export interface PutApiProductOrderCheckOrderNoRequest {
   orderNo: string;
 }
 
 /**
- * 接口 [生产指令审核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/31527) 的 **返回类型**
+ * 接口 [生产指令审核↗](https://yapi.sharing8.cn/project/529/interface/api/31527) 的 **返回类型**
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
- * @请求头 `DELETE /api/product/order/check/{orderNo}`
- * @更新时间 `2023-12-12 10:43:42`
+ * @请求头 `PUT /api/product/order/check/{orderNo}`
+ * @更新时间 `2023-12-15 13:46:58`
  */
-export type DeleteApiProductOrderCheckOrderNoResponse = string;
+export type PutApiProductOrderCheckOrderNoResponse = string;
 
 /**
- * 接口 [生产指令复核↗](https://yapi.sharing8.cn/project/529/interface/api/31530) 的 **请求类型**
+ * 接口 [生产指令复核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/31530) 的 **请求类型**
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
- * @请求头 `POST /api/product/order/review`
- * @更新时间 `2023-12-12 10:43:58`
+ * @请求头 `PUT /api/product/order/review`
+ * @更新时间 `2023-12-15 13:49:01`
  */
-export interface PostApiProductOrderReviewRequest {
+export interface PutApiProductOrderReviewRequest {
   /**
    * 生产指令编号
    */
@@ -326,32 +326,32 @@ export interface PostApiProductOrderReviewRequest {
 }
 
 /**
- * 接口 [生产指令复核↗](https://yapi.sharing8.cn/project/529/interface/api/31530) 的 **返回类型**
+ * 接口 [生产指令复核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/31530) 的 **返回类型**
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
- * @请求头 `POST /api/product/order/review`
- * @更新时间 `2023-12-12 10:43:58`
+ * @请求头 `PUT /api/product/order/review`
+ * @更新时间 `2023-12-15 13:49:01`
  */
-export type PostApiProductOrderReviewResponse = string;
+export type PutApiProductOrderReviewResponse = string;
 
 /**
- * 接口 [生产指令复核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/31533) 的 **请求类型**
+ * 接口 [生产指令复核↗](https://yapi.sharing8.cn/project/529/interface/api/31533) 的 **请求类型**
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
- * @请求头 `DELETE /api/product/order/review/{orderNo}`
- * @更新时间 `2023-12-12 10:45:18`
+ * @请求头 `PUT /api/product/order/review/{orderNo}`
+ * @更新时间 `2023-12-15 13:48:55`
  */
-export interface DeleteApiProductOrderReviewOrderNoRequest {
+export interface PutApiProductOrderReviewOrderNoRequest {
   orderNo: string;
 }
 
 /**
- * 接口 [生产指令复核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/31533) 的 **返回类型**
+ * 接口 [生产指令复核↗](https://yapi.sharing8.cn/project/529/interface/api/31533) 的 **返回类型**
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
- * @请求头 `DELETE /api/product/order/review/{orderNo}`
- * @更新时间 `2023-12-12 10:45:18`
+ * @请求头 `PUT /api/product/order/review/{orderNo}`
+ * @更新时间 `2023-12-15 13:48:55`
  */
-export type DeleteApiProductOrderReviewOrderNoResponse = string;
+export type PutApiProductOrderReviewOrderNoResponse = string;
 
 /* prettier-ignore-end */

@@ -8,7 +8,7 @@
           </a-button>
         </div>
       </template>
-      <template #headerTop>
+      <template #toolbar>
         <div class="flex gap-2">
           <a-button type="primary" @click="handleAdd"> 新增 </a-button>
           <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
@@ -40,8 +40,8 @@
   import {
     getProOrders,
     delProOrder,
-    cancelReCheckProOrder,
-    cancelCheckProOrder,
+    reCheckProOrder,
+    checkProOrder,
   } from '@/api/stockout/production-order';
   import { createVNode, ref } from 'vue';
 
@@ -62,6 +62,7 @@
   const { warning } = createMessage;
 
   const [registerTable, { reload }] = useTable({
+    title: '生产指令列表',
     api: getProOrders,
     columns,
     formConfig: {
@@ -86,7 +87,7 @@
     useSearchForm: true,
     showTableSetting: true,
     tableSetting: {
-      size: true,
+      size: false,
       redo: false,
       setting: false,
     },
@@ -163,9 +164,22 @@
       warning('该指令不是待复核的状态');
       return;
     }
-    openCheckModal(true, {
-      isReCheck: true,
-      record: selectedRow.value[0],
+    createConfirm({
+      iconType: 'warning',
+      title: '复核',
+      content: () =>
+        createVNode('span', null, [
+          '是否复核该指令  ',
+          createVNode(
+            'span',
+            { style: 'color: red; font-size: 20px;' },
+            `${selectedRow.value[0]?.mesId}`,
+          ),
+        ]),
+      onOk: async () => {
+        await reCheckProOrder(selectedRow.value[0]?.orderNo);
+        await reload();
+      },
     });
   }
 
@@ -177,22 +191,9 @@
       return;
     }
 
-    createConfirm({
-      iconType: 'warning',
-      title: '取消复核',
-      content: () =>
-        createVNode('span', null, [
-          '是否取消复核该指令  ',
-          createVNode(
-            'span',
-            { style: 'color: red; font-size: 20px;' },
-            `${selectedRow.value[0]?.mesId}`,
-          ),
-        ]),
-      onOk: async () => {
-        await cancelReCheckProOrder(selectedRow.value[0]?.orderNo);
-        await reload();
-      },
+    openCheckModal(true, {
+      isReCheck: true,
+      record: selectedRow.value[0],
     });
   }
 
@@ -209,9 +210,22 @@
       return;
     }
 
-    openCheckModal(true, {
-      isReCheck: false,
-      record: selectedRow.value[0],
+    createConfirm({
+      iconType: 'warning',
+      title: '审核',
+      content: () =>
+        createVNode('span', null, [
+          '是否审核该指令  ',
+          createVNode(
+            'span',
+            { style: 'color: red; font-size: 20px;' },
+            `${selectedRow.value[0]?.mesId}`,
+          ),
+        ]),
+      onOk: async () => {
+        await checkProOrder(selectedRow.value[0]?.orderNo);
+        await reload();
+      },
     });
   }
 
@@ -223,22 +237,9 @@
       return;
     }
 
-    createConfirm({
-      iconType: 'warning',
-      title: '取消审核',
-      content: () =>
-        createVNode('span', null, [
-          '是否取消审核该指令  ',
-          createVNode(
-            'span',
-            { style: 'color: red; font-size: 20px;' },
-            `${selectedRow.value[0]?.mesId}`,
-          ),
-        ]),
-      onOk: async () => {
-        await cancelCheckProOrder(selectedRow.value[0]?.orderNo);
-        await reload();
-      },
+    openCheckModal(true, {
+      isReCheck: false,
+      record: selectedRow.value[0],
     });
   }
 
