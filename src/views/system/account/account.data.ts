@@ -1,4 +1,4 @@
-import { getDeptList, isAccountExist } from '@/api/systemServer/system';
+import { getDeptList } from '@/api/systemServer/system';
 import { BasicColumn, FormSchema } from '@/components/Table';
 
 export const columns: BasicColumn[] = [
@@ -64,19 +64,6 @@ export const accountFormSchema: FormSchema[] = [
       {
         required: true,
         message: '请输入用户名',
-      },
-      {
-        trigger: 'blur',
-        validator(_, value) {
-          return new Promise((resolve, reject) => {
-            if (!value) return resolve();
-            isAccountExist(value)
-              .then(resolve)
-              .catch((err) => {
-                reject(err.message || '验证失败');
-              });
-          });
-        },
       },
     ],
   },
