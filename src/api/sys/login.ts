@@ -1,5 +1,5 @@
-import { defHttp } from '/@/utils/http/axios';
-import { GetSysCaptchaUuidRequest, GetSysCaptchaUuidResponse } from '@/api/type/login';
+import { defHttp } from '@/utils/http/axios';
+import { GetApiSysCaptchaUuidRequest, GetApiSysCaptchaUuidResponse } from '@/api/type/login';
 
 enum Api {
   GetSysVerifyCode = '/api/sys/captcha',
@@ -9,8 +9,8 @@ enum Api {
  * @description: Get user menu based on id
  */
 
-export const getSysVerifyCode = (uuid: GetSysCaptchaUuidRequest['uuid']) => {
-  return defHttp.get<GetSysCaptchaUuidResponse>({
+export const getSysVerifyCode = (uuid: GetApiSysCaptchaUuidRequest['uuid']) => {
+  return defHttp.get<GetApiSysCaptchaUuidResponse>({
     url: Api.GetSysVerifyCode + `/${uuid}`,
   });
 };

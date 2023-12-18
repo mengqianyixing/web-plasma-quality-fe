@@ -6,7 +6,7 @@
  * @LastEditors: zcc
  * @LastEditTime: 2023-12-14 18:01:17
  */
-import { defHttp } from '/@/utils/http/axios';
+import { defHttp } from '@/utils/http/axios';
 import {
   GetApiCoreBankLocationsRequest,
   GetApiCoreBankLocationsResponse,

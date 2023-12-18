@@ -24,10 +24,10 @@ import { filter } from '@/utils/helper/treeHelper';
 
 import { getPermCode } from '@/api/sys/user';
 
-import { useMessage } from '/@/hooks/web/useMessage';
-import { PageEnum } from '/@/enums/pageEnum';
+import { useMessage } from '@/hooks/web/useMessage';
+import { PageEnum } from '@/enums/pageEnum';
 import { getMenuList } from '@/api/sys/menu';
-import { GetSysRoleUserMenutreeResponse } from '@/api/type/roleManage';
+import { GetApiSysRoleUserMenutreeResponse } from '@/api/type/roleManage';
 
 interface PermissionState {
   // Permission code list
@@ -225,7 +225,7 @@ export const usePermissionStore = defineStore({
           // this function may only need to be executed once, and the actual project can be put at the right time by itself
           // 这个功能可能只需要执行一次，实际项目可以自己放在合适的时间
           let routeList: AppRouteRecordRaw[] = [];
-          let originMenuList: GetSysRoleUserMenutreeResponse = [];
+          let originMenuList: GetApiSysRoleUserMenutreeResponse = [];
           try {
             originMenuList = await getMenuList();
           } catch (error) {

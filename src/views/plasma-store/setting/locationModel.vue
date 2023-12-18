@@ -21,7 +21,7 @@
 </template>
 <script setup lang="ts">
   import { BasicDrawer, useDrawerInner, useDrawer } from '@/components/Drawer';
-  import { BasicTable, useTable } from '/@/components/Table';
+  import { BasicTable, useTable } from '@/components/Table';
   import { locationListApi, checkLoactionApi, areaListApi } from '@/api/plasmaStore/setting';
   import {
     locationColumns as columns,

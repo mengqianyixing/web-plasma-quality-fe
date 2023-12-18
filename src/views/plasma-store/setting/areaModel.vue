@@ -24,7 +24,7 @@
 </template>
 <script setup lang="ts">
   import { BasicDrawer, useDrawerInner, useDrawer } from '@/components/Drawer';
-  import { BasicTable, useTable } from '/@/components/Table';
+  import { BasicTable, useTable } from '@/components/Table';
   import { areaListApi, checkHouseApi } from '@/api/plasmaStore/setting';
   import { areaColumns as columns, cellSchema } from './setting.data';
   import { message, Modal } from 'ant-design-vue';

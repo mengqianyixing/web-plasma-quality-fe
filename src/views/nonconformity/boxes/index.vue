@@ -49,10 +49,11 @@
   function handleAdd() {}
 
   function handleEdit(record: Recordable) {
-    openModal(true, {
-      record,
-      isUpdate: true,
-    });
+    console.log(record);
+    // openModal(true, {
+    //   record,
+    //   isUpdate: true,
+    // });
   }
 
   async function handleDelete(record: Recordable) {

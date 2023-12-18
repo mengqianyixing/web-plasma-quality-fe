@@ -5,7 +5,7 @@ import { getParentLayout, LAYOUT, EXCEPTION_COMPONENT } from '@/router/constant'
 import { cloneDeep, omit } from 'lodash-es';
 import { warn } from '@/utils/log';
 import { createRouter, createWebHashHistory } from 'vue-router';
-import { GetSysRoleUserMenutreeResponse } from '@/api/type/roleManage';
+import { GetApiSysRoleUserMenutreeResponse } from '@/api/type/roleManage';
 
 export type LayoutMapKey = 'LAYOUT';
 const IFRAME = () => import('@/views/sys/iframe/FrameBlank.vue');
@@ -70,7 +70,7 @@ function dynamicImport(
 
 const arr = [] as any[];
 function convertMenuToRouterObject(
-  menu: GetSysRoleUserMenutreeResponse[number],
+  menu: GetApiSysRoleUserMenutreeResponse[number],
 ): AppRouteRecordRaw {
   const routerObject: AppRouteModule = {
     path: menu.menuPath!,
@@ -87,7 +87,7 @@ function convertMenuToRouterObject(
     for (const childMenu of menu.children) {
       if (childMenu.menuType !== 2) {
         routerObject.children.push(
-          convertMenuToRouterObject(childMenu as GetSysRoleUserMenutreeResponse[number]),
+          convertMenuToRouterObject(childMenu as GetApiSysRoleUserMenutreeResponse[number]),
         );
       } else {
         arr.push(childMenu.menuCode);
@@ -99,7 +99,7 @@ function convertMenuToRouterObject(
 }
 
 export function convertMenuArrToRouterObject(
-  menus: GetSysRoleUserMenutreeResponse,
+  menus: GetApiSysRoleUserMenutreeResponse,
 ): AppRouteRecordRaw[] {
   const routerObjects: AppRouteRecordRaw[] = [];
   for (const menu of menus) {

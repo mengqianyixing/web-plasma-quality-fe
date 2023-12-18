@@ -18,8 +18,8 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, computed, unref, watch } from 'vue';
-  import { BasicModal, useModalInner } from '/@/components/Modal';
-  import { BasicForm, useForm } from '/@/components/Form/index';
+  import { BasicModal, useModalInner } from '@/components/Modal';
+  import { BasicForm, useForm } from '@/components/Form/index';
   import { formSchema } from './resource.data';
 
   import {
@@ -27,7 +27,7 @@
     editResource,
     getMenuTree,
     getResourceDetail,
-  } from '/@/api/systemServer/system';
+  } from '@/api/systemServer/system';
   import { BasicTree, TreeItem } from '@/components/Tree';
   import {
     GetApiSysResourceIdResponse,
