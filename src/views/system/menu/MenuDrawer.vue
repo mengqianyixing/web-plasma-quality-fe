@@ -17,7 +17,7 @@
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
 
   import { addMenu, editMenu, getMenuTree } from '@/api/systemServer/system';
-  import { PostSysMenuRequest, PutSysMenuRequest } from '@/api/type/menuManage';
+  import { PostApiSysMenuRequest, PutApiSysMenuRequest } from '@/api/type/menuManage';
 
   defineOptions({ name: 'MenuDrawer' });
 
@@ -62,10 +62,10 @@
         await editMenu({
           ...values,
           menuId: menuId.value,
-        } as PutSysMenuRequest);
+        } as PutApiSysMenuRequest);
         closeDrawer();
       } else {
-        await addMenu(values as PostSysMenuRequest);
+        await addMenu(values as PostApiSysMenuRequest);
         closeDrawer();
       }
       emit('success');

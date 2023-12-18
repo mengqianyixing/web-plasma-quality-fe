@@ -22,7 +22,7 @@
   import { ApiSelect, BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
   import { addUser, editUser, getRoleListByPage } from '/@/api/systemServer/system';
-  import { PostSysUserRequest } from '@/api/type/userManage';
+  import { PostApiSysUserRequest } from '@/api/type/userManage';
 
   export default defineComponent({
     name: 'AccountModal',
@@ -79,7 +79,7 @@
           } else {
             await addUser({
               ...values,
-            } as PostSysUserRequest);
+            } as PostApiSysUserRequest);
           }
           closeModal();
           emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });

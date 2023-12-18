@@ -32,9 +32,9 @@
 
   import { editRole, getRoleDetail, getMenuList, addRole } from '@/api/systemServer/system';
   import {
-    GetSysRoleIdResponse,
-    PostSysRoleRequest,
-    PutSysRoleRequest,
+    GetApiSysRoleIdResponse,
+    PostApiSysRoleRequest,
+    PutApiSysRoleRequest,
   } from '@/api/type/roleManage';
 
   const emit = defineEmits(['success', 'register']);
@@ -69,13 +69,13 @@
     }
   });
 
-  function flattenTreeArr(tree: GetSysRoleIdResponse['menuTree'], arr: any): Array<string> {
+  function flattenTreeArr(tree: GetApiSysRoleIdResponse['menuTree'], arr: any): Array<string> {
     if (tree) {
       tree.forEach((item) => {
         const { children, ...props } = item;
         props.check && arr.push(props.menuId);
         if (children && children.length != 0) {
-          flattenTreeArr(children as unknown as GetSysRoleIdResponse['menuTree'], arr);
+          flattenTreeArr(children as unknown as GetApiSysRoleIdResponse['menuTree'], arr);
         }
       });
     }
@@ -93,12 +93,12 @@
           ...values,
           roleId: roleId.value,
           menuIds: values.menuIds.checked,
-        } as PutSysRoleRequest);
+        } as PutApiSysRoleRequest);
       } else {
         await addRole({
           ...values,
           menuIds: values.menuIds.checked,
-        } as PostSysRoleRequest);
+        } as PostApiSysRoleRequest);
       }
       closeDrawer();
       emit('success');

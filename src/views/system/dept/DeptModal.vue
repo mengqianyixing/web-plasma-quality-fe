@@ -10,7 +10,7 @@
   import { formSchema } from './dept.data';
 
   import { addDept, editDept, getDeptList } from '@/api/systemServer/system';
-  import { PostSysDeptRequest } from '@/api/type/deptManage';
+  import { PostApiSysDeptRequest } from '@/api/type/deptManage';
 
   defineOptions({ name: 'DeptModal' });
 
@@ -53,7 +53,7 @@
       if (isUpdate.value) {
         await editDept({ ...values, deptId: deptId.value });
       } else {
-        await addDept(values as PostSysDeptRequest);
+        await addDept(values as PostApiSysDeptRequest);
       }
       closeModal();
       emit('success');
