@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'node -v && pnpm -v && pnpm config set registry https://registry.npmmirror.com'
+        sh 'node -v && pnpm -v && pnpm get registry'
         sh 'pnpm install --frozen-lockfile && pnpm build:docker'
       }
     }
