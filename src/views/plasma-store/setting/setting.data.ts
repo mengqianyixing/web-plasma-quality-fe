@@ -166,7 +166,7 @@ export const initFormSchema: (opt: {
     label: '是否启用',
     colProps: { span: 12 },
     required: true,
-    defaultValue: 'CLOSED',
+    defaultValue: 'NORMAL',
     componentProps: {
       options: [
         { label: '是', value: 'NORMAL' },
