@@ -7,7 +7,22 @@
  * @LastEditTime: 2023-12-14 18:01:17
  */
 import { defHttp } from '/@/utils/http/axios';
-import { List, SettingResp, settingRes, House } from './type';
+import {
+  GetApiCoreBankLocationsRequest,
+  GetApiCoreBankLocationsResponse,
+  GetApiCoreBankStockRequest,
+  GetApiCoreBankStockResponse,
+  GetApiCoreBankWarehousesRequest,
+  GetApiCoreBankWarehousesResponse,
+  PostApiCoreBankWarehouseRequest,
+  PostApiCoreBankWarehouseResponse,
+  PutApiCoreBankLocationUseRequest,
+  PutApiCoreBankLocationUseResponse,
+  PutApiCoreBankWarehouseRequest,
+  PutApiCoreBankWarehouseResponse,
+  PutApiCoreBankWarehouseUseRequest,
+  PutApiCoreBankWarehouseUseResponse,
+} from '@/api/type/plasmaStoreManage';
 
 enum Api {
   SETTING_LIST = `/api/core/bank/warehouses`,
@@ -17,23 +32,29 @@ enum Api {
   LOCATION_LIST = '/api/core/bank/locations',
   CHECK_LOCATION = '/api/core/bank/location-use',
   // ADD_CAPACITY = '/api/core/bank/warehouse',
+
+  INVENTORY_DETAIL = ' /api/core/bank/stock',
 }
 
-export const settingListApi = (params: settingRes) =>
-  defHttp.get<List<SettingResp>>({ url: Api.SETTING_LIST, params });
+export const settingListApi = (params: GetApiCoreBankWarehousesRequest) =>
+  defHttp.get<GetApiCoreBankWarehousesResponse>({ url: Api.SETTING_LIST, params });
 
-export const addHouseApi = (params: House) => defHttp.post<unknown>({ url: Api.ADD_HOUSE, params });
+export const addHouseApi = (params: PostApiCoreBankWarehouseRequest) =>
+  defHttp.post<PostApiCoreBankWarehouseResponse>({ url: Api.ADD_HOUSE, params });
 
-export const checkHouseApi = (data: { houseNo: string; closed: string }) =>
-  defHttp.put<unknown>({ url: Api.CHECK_HOUSE, data });
+export const checkHouseApi = (data: PutApiCoreBankWarehouseUseRequest) =>
+  defHttp.put<PutApiCoreBankWarehouseUseResponse>({ url: Api.CHECK_HOUSE, data });
 
 export const areaListApi = ({ houseNo }) => defHttp.get({ url: Api.AREA_LIST + houseNo });
 
-export const locationListApi = (params) => defHttp.get({ url: Api.LOCATION_LIST, params });
+export const locationListApi = (params: GetApiCoreBankLocationsRequest) =>
+  defHttp.get<GetApiCoreBankLocationsResponse>({ url: Api.LOCATION_LIST, params });
 
-export const checkLoactionApi = (data: { locationNo: string; closed: string }) =>
-  defHttp.put<unknown>({ url: Api.CHECK_LOCATION, data });
+export const checkLoactionApi = (data: PutApiCoreBankLocationUseRequest) =>
+  defHttp.put<PutApiCoreBankLocationUseResponse>({ url: Api.CHECK_LOCATION, data });
 
-export const addCapacityApi = (data: { houseNo: string; expansion: number }) =>
-  defHttp.put<unknown>({ url: Api.ADD_HOUSE, data });
-// export const addHouseApi = (params: House) => defHttp.post<unknown>({ url: '', params })
+export const addCapacityApi = (data: PutApiCoreBankWarehouseRequest) =>
+  defHttp.put<PutApiCoreBankWarehouseResponse>({ url: Api.ADD_HOUSE, data });
+
+export const inventoryDetailApi = (params: GetApiCoreBankStockRequest) =>
+  defHttp.get<GetApiCoreBankStockResponse>({ url: Api.INVENTORY_DETAIL, params });

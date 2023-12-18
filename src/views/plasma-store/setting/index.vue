@@ -11,7 +11,7 @@
           class="text-blue-500 underline cursor-pointer"
           @click.stop.self="handleDetails(record)"
         >
-          {{ record.houseName }}
+          {{ record?.houseName }}
         </span>
       </template>
     </BasicTable>
