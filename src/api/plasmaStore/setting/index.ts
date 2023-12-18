@@ -10,8 +10,6 @@ import { defHttp } from '/@/utils/http/axios';
 import {
   GetApiCoreBankLocationsRequest,
   GetApiCoreBankLocationsResponse,
-  GetApiCoreBankStockRequest,
-  GetApiCoreBankStockResponse,
   GetApiCoreBankWarehousesRequest,
   GetApiCoreBankWarehousesResponse,
   PostApiCoreBankWarehouseRequest,
@@ -55,6 +53,3 @@ export const checkLoactionApi = (data: PutApiCoreBankLocationUseRequest) =>
 
 export const addCapacityApi = (data: PutApiCoreBankWarehouseRequest) =>
   defHttp.put<PutApiCoreBankWarehouseResponse>({ url: Api.ADD_HOUSE, data });
-
-export const inventoryDetailApi = (params: GetApiCoreBankStockRequest) =>
-  defHttp.get<GetApiCoreBankStockResponse>({ url: Api.INVENTORY_DETAIL, params });
