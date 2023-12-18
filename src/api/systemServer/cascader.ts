@@ -1,5 +1,5 @@
-import { defHttp } from '/@/utils/http/axios';
-import { AreaModel, AreaParams } from '/@/api/systemServer/model/areaModel';
+import { defHttp } from '@/utils/http/axios';
+import { AreaModel, AreaParams } from '@/api/systemServer/model/areaModel';
 
 enum Api {
   AREA_RECORD = '/cascader/getAreaRecord',

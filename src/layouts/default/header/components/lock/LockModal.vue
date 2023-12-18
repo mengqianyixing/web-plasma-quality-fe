@@ -22,75 +22,58 @@
     </div>
   </BasicModal>
 </template>
-<script lang="ts">
-  import { defineComponent, computed } from 'vue';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useDesign } from '/@/hooks/web/useDesign';
+<script lang="ts" setup>
+  import { computed } from 'vue';
+  import { useI18n } from '@/hooks/web/useI18n';
+  import { useDesign } from '@/hooks/web/useDesign';
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { BasicForm, useForm } from '/@/components/Form/index';
+  import { BasicForm, useForm } from '@/components/Form';
 
-  import { useLockStore } from '/@/store/modules/lock';
-  import headerImg from '/@/assets/images/header.jpg';
+  import { useLockStore } from '@/store/modules/lock';
+  import headerImg from '@/assets/images/header.jpg';
 
-  export default defineComponent({
-    name: 'LockModal',
-    components: { BasicModal, BasicForm },
+  defineOptions({ name: 'LockModal' });
 
-    setup() {
-      const { t } = useI18n();
-      const { prefixCls } = useDesign('header-lock-modal');
-      const lockStore = useLockStore();
+  const { t } = useI18n();
+  const { prefixCls } = useDesign('header-lock-modal');
+  const lockStore = useLockStore();
 
-      const [register, { closeModal }] = useModalInner();
+  const [register, { closeModal }] = useModalInner();
 
-      const [registerForm, { validate, resetFields }] = useForm({
-        showActionButtonGroup: false,
-        schemas: [
-          {
-            field: 'password',
-            label: t('layout.header.lockScreenPassword'),
-            colProps: {
-              span: 24,
-            },
-            component: 'InputPassword',
-            required: true,
-          },
-        ],
-      });
+  const [registerForm, { validate, resetFields }] = useForm({
+    showActionButtonGroup: false,
+    schemas: [
+      {
+        field: 'password',
+        label: t('layout.header.lockScreenPassword'),
+        colProps: {
+          span: 24,
+        },
+        component: 'InputPassword',
+        required: true,
+      },
+    ],
+  });
+  const handleCancel = async () => {
+    await resetFields();
+  };
+  const handleLock = async () => {
+    const { password = '' } = await validate<{
+      password: string;
+    }>();
 
-      const handleCancel = async () => {
-        await resetFields();
-      };
+    closeModal();
 
-      const handleLock = async () => {
-        const { password = '' } = await validate<{
-          password: string;
-        }>();
+    lockStore.setLockInfo({
+      isLock: true,
+      pwd: password,
+    });
 
-        closeModal();
+    await resetFields();
+  };
 
-        lockStore.setLockInfo({
-          isLock: true,
-          pwd: password,
-        });
-
-        await resetFields();
-      };
-
-      const avatar = computed(() => {
-        return headerImg;
-      });
-
-      return {
-        t,
-        prefixCls,
-        register,
-        registerForm,
-        handleCancel,
-        handleLock,
-        avatar,
-      };
-    },
+  const avatar = computed(() => {
+    return headerImg;
   });
 </script>
 <style lang="less">

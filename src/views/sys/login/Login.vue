@@ -38,7 +38,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { AppLogo, AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
+  import { AppLogo, AppLocalePicker, AppDarkModeToggle } from '@/components/Application';
   import LoginForm from './LoginForm.vue';
   import { useDesign } from '@/hooks/web/useDesign';
   import { useLocaleStore } from '@/store/modules/locale';
@@ -94,6 +94,10 @@
       -webkit-text-fill-color: #c9d1d9 !important;
       box-shadow: inherit !important;
     }
+
+    .ant-divider-inner-text {
+      color: @text-color-secondary;
+    }
   }
 
   .@{prefix-cls} {
@@ -116,6 +120,7 @@
       width: 100%;
       height: 100%;
       background-image: url('@/assets/images/login-bg.png');
+      margin-left: -48%;
       background-repeat: no-repeat;
       background-position: 100%;
       background-size: 100% 100%;
