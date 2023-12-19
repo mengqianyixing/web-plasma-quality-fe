@@ -1,20 +1,20 @@
-import type { UserInfo } from '/#/store';
-import type { ErrorMessageMode } from '/#/axios';
+import type { UserInfo } from '#/store';
+import type { ErrorMessageMode } from '#/axios';
 import { defineStore } from 'pinia';
-import { store } from '/@/store';
-import { RoleEnum } from '/@/enums/roleEnum';
-import { PageEnum } from '/@/enums/pageEnum';
-import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
-import { getAuthCache, setAuthCache } from '/@/utils/auth';
-import { doLogout, loginApi } from '/@/api/sys/user';
-import { useI18n } from '/@/hooks/web/useI18n';
-import { useMessage } from '/@/hooks/web/useMessage';
-import { router } from '/@/router';
-import { usePermissionStore } from '/@/store/modules/permission';
+import { store } from '@/store';
+import { RoleEnum } from '@/enums/roleEnum';
+import { PageEnum } from '@/enums/pageEnum';
+import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '@/enums/cacheEnum';
+import { getAuthCache, setAuthCache } from '@/utils/auth';
+import { doLogout, loginApi } from '@/api/sys/user';
+import { useI18n } from '@/hooks/web/useI18n';
+import { useMessage } from '@/hooks/web/useMessage';
+import { router } from '@/router';
+import { usePermissionStore } from '@/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
-import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
+import { PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic';
 import { h } from 'vue';
-import { PostSysUserLoginRequest, PostSysUserLoginResponse } from '@/api/type/login';
+import { PostApiSysUserLoginRequest, PostApiSysUserLoginResponse } from '@/api/type/login';
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
@@ -82,11 +82,11 @@ export const useUserStore = defineStore({
      * @description: login
      */
     async login(
-      params: PostSysUserLoginRequest & {
+      params: PostApiSysUserLoginRequest & {
         goHome?: boolean;
         mode?: ErrorMessageMode;
       },
-    ): Promise<PostSysUserLoginResponse | null> {
+    ): Promise<PostApiSysUserLoginResponse | null> {
       try {
         const { goHome = true, mode, ...loginParams } = params;
         const data = await loginApi(loginParams, mode);
@@ -104,7 +104,7 @@ export const useUserStore = defineStore({
         return Promise.reject(error);
       }
     },
-    async afterLoginAction(goHome?: boolean): Promise<PostSysUserLoginResponse | null> {
+    async afterLoginAction(goHome?: boolean): Promise<PostApiSysUserLoginResponse | null> {
       if (!this.getToken) return null;
 
       const sessionTimeout = this.sessionTimeout;

@@ -3,22 +3,22 @@
 
 import type { AxiosInstance, AxiosResponse } from 'axios';
 import { clone } from 'lodash-es';
-import type { RequestOptions, Result } from '/#/axios';
+import type { RequestOptions, Result } from '#/axios';
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
 import { VAxios } from './Axios';
 import { checkStatus } from './checkStatus';
-import { useGlobSetting } from '/@/hooks/setting';
-import { useMessage } from '/@/hooks/web/useMessage';
-import { RequestEnum, ResultEnum, ContentTypeEnum } from '/@/enums/httpEnum';
-import { isString, isUndefined, isNull, isEmpty } from '/@/utils/is';
-import { getToken } from '/@/utils/auth';
-import { setObjToUrlParams, deepMerge } from '/@/utils';
-import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
-import { useI18n } from '/@/hooks/web/useI18n';
+import { useGlobSetting } from '@/hooks/setting';
+import { useMessage } from '@/hooks/web/useMessage';
+import { RequestEnum, ResultEnum, ContentTypeEnum } from '@/enums/httpEnum';
+import { isString, isUndefined, isNull, isEmpty } from '@/utils/is';
+import { getToken } from '@/utils/auth';
+import { setObjToUrlParams, deepMerge } from '@/utils';
+import { useErrorLogStoreWithOut } from '@/store/modules/errorLog';
+import { useI18n } from '@/hooks/web/useI18n';
 import { joinTimestamp, formatRequestDate } from './helper';
-import { useUserStoreWithOut } from '/@/store/modules/user';
-import { AxiosRetry } from '/@/utils/http/axios/axiosRetry';
+import { AxiosRetry } from '@/utils/http/axios/axiosRetry';
 import axios from 'axios';
+import { BackEndErrorEnum } from '@/enums/errorResponseEnum';
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
@@ -74,11 +74,6 @@ const transform: AxiosTransform = {
     // 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
     let timeoutMsg = '';
     switch (code) {
-      case ResultEnum.TIMEOUT:
-        timeoutMsg = t('sys.api.timeoutMessage');
-        const userStore = useUserStoreWithOut();
-        userStore.logout(true);
-        break;
       default:
         if (msg) {
           timeoutMsg = msg;
@@ -180,7 +175,8 @@ const transform: AxiosTransform = {
     errorLogStore.addAjaxErrorInfo(error);
     const { response, code, message, config } = error || {};
     const errorMessageMode = config?.requestOptions?.errorMessageMode || 'none';
-    const msg: string = response?.data?.error?.message ?? '';
+    const msg: string = response?.data?.msg ?? '';
+    const backEndErrorCode: string = response?.data?.code ?? '500';
     const err: string = error?.toString?.() ?? '';
     let errMessage = '';
 
@@ -214,6 +210,7 @@ const transform: AxiosTransform = {
     const retryRequest = new AxiosRetry();
     const { isOpenRetry } = config.requestOptions.retryRequest;
     config.method?.toUpperCase() === RequestEnum.GET &&
+      backEndErrorCode !== BackEndErrorEnum.LOGOUT_LONG_TIME_OPERATE &&
       isOpenRetry &&
       // @ts-ignore
       retryRequest.retry(axiosInstance, error);

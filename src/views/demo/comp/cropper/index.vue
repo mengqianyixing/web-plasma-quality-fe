@@ -38,14 +38,12 @@
   import { CropperImage, CropperAvatar } from '@/components/Cropper';
   import { uploadApi } from '@/api/sys/upload';
   import img from '@/assets/images/header.jpg';
-  import { useUserStore } from '@/store/modules/user';
 
   const info = ref('');
   const cropperImg = ref('');
   const circleInfo = ref('');
   const circleImg = ref('');
-  const userStore = useUserStore();
-  const avatar = ref(userStore.getUserInfo?.avatar || '');
+  const avatar = ref('');
   function handleCropend({ imgBase64, imgInfo }) {
     info.value = imgInfo;
     cropperImg.value = imgBase64;

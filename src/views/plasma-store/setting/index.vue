@@ -11,7 +11,7 @@
           class="text-blue-500 underline cursor-pointer"
           @click.stop.self="handleDetails(record)"
         >
-          {{ record.houseName }}
+          {{ record?.houseName }}
         </span>
       </template>
     </BasicTable>
@@ -33,7 +33,7 @@
 </template>
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { BasicTable, useTable } from '/@/components/Table';
+  import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { columns, searchFormSchema } from './setting.data';
   import { settingListApi, checkHouseApi } from '@/api/plasmaStore/setting';

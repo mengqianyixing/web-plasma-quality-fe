@@ -38,7 +38,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { AppLogo, AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
+  import { AppLogo, AppLocalePicker, AppDarkModeToggle } from '@/components/Application';
   import LoginForm from './LoginForm.vue';
   import { useDesign } from '@/hooks/web/useDesign';
   import { useLocaleStore } from '@/store/modules/locale';
@@ -93,6 +93,10 @@
     .fix-auto-fill input {
       -webkit-text-fill-color: #c9d1d9 !important;
       box-shadow: inherit !important;
+    }
+
+    .ant-divider-inner-text {
+      color: @text-color-secondary;
     }
   }
 

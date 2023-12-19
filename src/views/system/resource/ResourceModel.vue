@@ -18,8 +18,8 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, computed, unref, watch } from 'vue';
-  import { BasicModal, useModalInner } from '/@/components/Modal';
-  import { BasicForm, useForm } from '/@/components/Form/index';
+  import { BasicModal, useModalInner } from '@/components/Modal';
+  import { BasicForm, useForm } from '@/components/Form/index';
   import { formSchema } from './resource.data';
 
   import {
@@ -27,12 +27,12 @@
     editResource,
     getMenuTree,
     getResourceDetail,
-  } from '/@/api/systemServer/system';
+  } from '@/api/systemServer/system';
   import { BasicTree, TreeItem } from '@/components/Tree';
   import {
-    GetSysResourceIdResponse,
-    PostSysResourceRequest,
-    PutSysResourceRequest,
+    GetApiSysResourceIdResponse,
+    PostApiSysResourceRequest,
+    PutApiSysResourceRequest,
   } from '@/api/type/resourcesManage';
 
   export default defineComponent({
@@ -81,13 +81,16 @@
         },
       );
 
-      function flattenTreeArr(tree: GetSysResourceIdResponse['menuTree'], arr: any): Array<string> {
+      function flattenTreeArr(
+        tree: GetApiSysResourceIdResponse['menuTree'],
+        arr: any,
+      ): Array<string> {
         if (tree) {
           tree.forEach((item) => {
             const { children, ...props } = item;
             props.check && arr.push(props.menuId);
             if (children && children.length != 0) {
-              flattenTreeArr(children as unknown as GetSysResourceIdResponse['menuTree'], arr);
+              flattenTreeArr(children as unknown as GetApiSysResourceIdResponse['menuTree'], arr);
             }
           });
         }
@@ -105,12 +108,12 @@
               ...values,
               resourceMenuList: values.menuIds.checked,
               resourceId: resourceId.value,
-            } as PutSysResourceRequest);
+            } as PutApiSysResourceRequest);
           } else {
             await addResource({
               ...values,
               resourceMenuList: values.menuIds.checked,
-            } as PostSysResourceRequest);
+            } as PostApiSysResourceRequest);
           }
           closeModal();
           emit('success');

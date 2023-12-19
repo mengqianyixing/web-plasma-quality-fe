@@ -28,10 +28,7 @@
       <div :class="`${prefixCls}-entry`" v-show="!showDate">
         <div :class="`${prefixCls}-entry-content`">
           <div :class="`${prefixCls}-entry__header enter-x`">
-            <img :src="userInfo.avatar || headerImg" :class="`${prefixCls}-entry__header-img`" />
-            <p :class="`${prefixCls}-entry__header-name`">
-              {{ userInfo.realName }}
-            </p>
+            <img :src="headerImg" :class="`${prefixCls}-entry__header-img`" />
           </div>
           <InputPassword
             :placeholder="t('sys.lock.placeholder')"
@@ -77,9 +74,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { ref, computed } from 'vue';
+  import { ref } from 'vue';
   import { Input } from 'ant-design-vue';
-  import { useUserStore } from '@/store/modules/user';
   import { useLockStore } from '@/store/modules/lock';
   import { useI18n } from '@/hooks/web/useI18n';
   import { useNow } from './useNow';
@@ -96,15 +92,10 @@
 
   const { prefixCls } = useDesign('lock-page');
   const lockStore = useLockStore();
-  const userStore = useUserStore();
 
   const { hour, month, minute, meridiem, year, day, week } = useNow(true);
 
   const { t } = useI18n();
-
-  const userInfo = computed(() => {
-    return userStore.getUserInfo || {};
-  });
 
   /**
    * @description: unLock
@@ -124,12 +115,12 @@
   }
 
   function goLogin() {
-    userStore.logout(true);
     lockStore.resetLockInfo();
   }
 
   function handleShowForm(show = false) {
     showDate.value = show;
+    password.value = '';
   }
 </script>
 <style lang="less" scoped>
