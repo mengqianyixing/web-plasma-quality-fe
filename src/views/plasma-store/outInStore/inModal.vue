@@ -22,7 +22,7 @@
 <script setup lang="ts">
   import { BasicDrawer, useDrawerInner, useDrawer } from '@/components/Drawer';
   import { BasicForm, useForm } from '@/components/Form';
-  import { BasicTable, useTable } from '/@/components/Table';
+  import { BasicTable, useTable } from '@/components/Table';
   import { reactive } from 'vue';
   import { inStoreAreaSchema, inStoreFormSchema } from './outInStore.data';
   import LocationModal from './locationModal.vue';

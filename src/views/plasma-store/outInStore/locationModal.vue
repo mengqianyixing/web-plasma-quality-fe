@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-18 17:53:22
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-19 09:58:17
+ * @LastEditTime: 2023-12-19 10:38:41
 -->
 <template>
   <BasicDrawer
@@ -20,7 +20,7 @@
 </template>
 <script setup lang="ts">
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
-  import { BasicTable, useTable } from '/@/components/Table';
+  import { BasicTable, useTable } from '@/components/Table';
   import { message } from 'ant-design-vue';
   import { reactive } from 'vue';
 

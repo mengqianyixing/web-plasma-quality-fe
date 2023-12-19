@@ -13,7 +13,7 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup>
-  import { BasicTable, useTable } from '/@/components/Table';
+  import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { columns, searchFormSchema } from './outInStore.data';
   import { settingListApi } from '@/api/plasmaStore/setting';
