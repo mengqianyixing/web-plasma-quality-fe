@@ -13,10 +13,6 @@ import {
 
 export const columns: BasicColumn[] = [
   {
-    title: '库房编号',
-    dataIndex: 'houseNo',
-  },
-  {
     title: '库房名称',
     slots: { customRender: 'houseName' },
   },
@@ -66,20 +62,6 @@ export const columns: BasicColumn[] = [
   },
 ];
 
-export const searchFormSchema: FormSchema[] = [
-  {
-    field: 'houseNo',
-    label: '库房编号',
-    component: 'Input',
-    colProps: { span: 8 },
-  },
-  {
-    field: 'houseName',
-    label: '库房名称',
-    component: 'Input',
-    colProps: { span: 8 },
-  },
-];
 export const capacitySchema: FormSchema = {
   field: 'capacity',
   label: '货位数量',
@@ -212,10 +194,6 @@ export const locationSearchForSchema: FormSchema[] = [
 
 export const areaColumns: BasicColumn[] = [
   {
-    title: '区域编号',
-    dataIndex: 'houseNo',
-  },
-  {
     title: '区域名称',
     dataIndex: 'houseName',
   },
@@ -225,14 +203,17 @@ export const areaColumns: BasicColumn[] = [
     customRender: ({ record }) => {
       return record.standard.maxLocationSize;
     },
+    width: 80,
   },
   {
     title: '已使用货位数',
     dataIndex: '',
+    width: 110,
   },
   {
     title: '是否启用',
     dataIndex: '',
+    width: 100,
     customRender: ({ record }) => {
       return CLOSED_TEXT[record.closed];
     },
@@ -243,12 +224,6 @@ export const areaColumns: BasicColumn[] = [
   },
 ];
 export const areaSearchForSchema: FormSchema[] = [
-  {
-    field: 'houseNo',
-    label: '区域编号',
-    component: 'Input',
-    colProps: { span: 8 },
-  },
   {
     field: 'houseName',
     label: '区域名称',
@@ -268,10 +243,6 @@ export const locationCell: Cell[] = [
   },
 ];
 export const cellSchema: (locationCell: Cell[]) => Cell[] = (locationCell) => [
-  {
-    field: 'houseNo',
-    label: '库房编号',
-  },
   {
     field: 'houseName',
     label: '库房名称',
