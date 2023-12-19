@@ -9,7 +9,7 @@
   >
     <div class="flex flex-col h-full">
       <CellWapper :data="state" :row-count="3" :cell-list="cellSchema([])" />
-      <BasicTable @register="registerTable" @fetch-success="fetchSuccess" :isCanResizeParent="true">
+      <BasicTable @register="registerTable" @fetch-success="fetchSuccess">
         <template #toolbar>
           <a-button type="primary" @click="handleAdd">新增</a-button>
           <a-button type="primary" @click="handleCapacityAdd">扩容</a-button>
@@ -31,6 +31,7 @@
   import { CellWapper } from '@/components/CellWapper';
   import FormModel from './formModel.vue';
   import CapacityModel from './capacityModel.vue';
+  import { CLOSED } from '@/enums/plasmaStoreEnum';
 
   import { reactive } from 'vue';
 
@@ -65,7 +66,8 @@
       setPagination,
     },
   ] = useTable({
-    title: '区域列表',
+    immediate: false,
+    title: '',
     api: areaListApi,
     fetchSetting: {
       listField: 'subHouseList',
@@ -74,7 +76,6 @@
     rowKey: 'houseNo',
     columns,
     useSearchForm: false,
-    showTableSetting: true,
     bordered: true,
     rowSelection: { type: 'checkbox' },
     beforeFetch: () => {
@@ -85,7 +86,8 @@
     openDrawer(true, { parentHouseType: state.houseType, parentHouseNo: state.houseNo });
   }
   function handleCapacityAdd() {
-    const { houseNo } = getOnlyOneRow();
+    const { houseNo, closed } = getOnlyOneRow();
+    if (closed === CLOSED.CLOSED) return message.warning('禁用状态不可扩容');
     if (!houseNo) return;
     openCapacityDrawer(true, { houseNo });
   }

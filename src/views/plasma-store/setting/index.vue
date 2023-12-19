@@ -43,6 +43,7 @@
   import FormModel from './formModel.vue';
   import LocationModel from './locationModel.vue';
   import AreaModel from './areaModel.vue';
+  import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
 
   defineOptions({ name: 'PlasmaStoreSetting' });
 
@@ -68,7 +69,7 @@
       rowKey: 'houseNo',
       columns,
       useSearchForm: true,
-      showTableSetting: true,
+      showTableSetting: false,
       bordered: true,
       rowSelection: { type: 'checkbox' },
     });
@@ -94,7 +95,7 @@
   }
   function handleDetails(row: SettingResp) {
     houseNo.value = row.houseNo;
-    if (row.houseType[1] === 'F') {
+    if (row.houseType[1] === STORE_FLAG.F) {
       openAreaDrawer(true, { houseNo: row.houseNo });
     } else {
       openLoactionDrawer(true, { houseNo: row.houseNo });

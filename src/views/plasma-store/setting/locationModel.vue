@@ -33,6 +33,7 @@
   import CapacityModel from './capacityModel.vue';
   import { reactive, defineEmits } from 'vue';
   import { CellWapper } from '@/components/CellWapper';
+  import { CLOSED } from '@/enums/plasmaStoreEnum';
 
   defineOptions({ name: 'LocationModel' });
   const emit = defineEmits(['close', 'register']);
@@ -55,7 +56,8 @@
     registerTable,
     { getRowSelection, findTableDataRecord, clearSelectedRowKeys, reload, setPagination },
   ] = useTable({
-    title: '货位列表',
+    title: '',
+    immediate: false,
     api: locationListApi,
     fetchSetting: {
       pageField: 'currPage',
@@ -70,7 +72,6 @@
     rowKey: 'locationNo',
     columns,
     useSearchForm: true,
-    showTableSetting: true,
     bordered: true,
     rowSelection: { type: 'checkbox' },
     beforeFetch: (params) => {
@@ -84,6 +85,7 @@
     pageReload();
   });
   function handleAdd() {
+    if (state.closed === CLOSED.CLOSED) return message.warning('禁用状态不可扩容');
     openDrawer(true, { houseNo: state.houseNo });
   }
   function pageReload() {
