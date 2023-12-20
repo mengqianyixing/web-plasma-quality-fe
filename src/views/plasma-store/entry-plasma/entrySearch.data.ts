@@ -1,142 +1,100 @@
 // import { FormProps, FormSchema, BasicColumn } from '@/components/Table';
-import { VxeFormItemProps, VxeGridPropTypes } from '@/components/VxeTable';
+import { BasicColumn, FormSchema } from '@/components/Table';
 
-export const vxeTableColumns: VxeGridPropTypes.Columns = [
+export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    type: 'seq',
-    fixed: 'left',
-    align: 'center',
+    dataIndex: 'stationNo',
   },
   {
     title: '血浆批号',
-    field: '',
-    showOverflow: 'tooltip',
-    align: 'center',
+    slots: { customRender: 'houseName' },
   },
   {
     title: '采集开始日期',
-    field: '',
-    align: 'center',
+    dataIndex: 'collectStartDate',
   },
   {
     title: '采集结束日期',
-    field: '',
-    align: 'center',
+    dataIndex: 'collectEndDate',
   },
   {
     title: '浆站出库日期',
-    field: '',
-    align: 'center',
+    dataIndex: 'stationOutDate',
   },
   {
     title: '出库数量(袋)',
-    field: '',
-    align: 'center',
+    dataIndex: 'outNum',
   },
   {
-    title: '出库重量(kg)',
-    field: '',
-    align: 'center',
+    title: '出库总净重(kg)',
+    dataIndex: 'outWeight',
   },
   {
     title: '接收日期',
-    field: '',
-    align: 'center',
+    dataIndex: 'receptDate',
   },
   {
     title: '验收发布人',
-    field: '',
-    align: 'center',
+    dataIndex: 'verifyPuber',
+  },
+  {
+    title: '验收发布日期',
+    dataIndex: 'verifyPubDate',
   },
   {
     title: '验收数量(袋)',
-    field: '',
-    align: 'center',
+    dataIndex: 'verifyNum',
   },
   {
-    title: '验收重量(kg)',
-    field: '',
-    align: 'center',
+    title: '验收总净重(kg)',
+    dataIndex: 'verifyWeight',
   },
   {
     title: '差异数量(袋)',
-    field: '',
-    align: 'center',
+    dataIndex: 'diffNum',
   },
   {
-    title: '差异重量(kg)',
-    field: '',
-    align: 'center',
+    title: '差异总净重(kg)',
+    dataIndex: 'diffWeight',
   },
   {
     title: '验收合格数量(袋)',
-    field: '',
-    align: 'center',
+    dataIndex: 'verifyPassNum',
   },
   {
     title: '验收不合格数量(袋)',
-    field: '',
-    align: 'center',
+    dataIndex: 'verifyNoPassNum',
   },
   {
     title: '不足量数量(袋)',
-    field: '',
-    align: 'center',
+    dataIndex: 'hortFallNum',
   },
 ];
 
-export const vxeTableFormSchema: VxeFormItemProps[] = [
+export const searchFormSchema: FormSchema[] = [
   {
-    field: 'field0',
-    title: '采浆公司',
-    itemRender: {
-      name: 'ASelect',
-    },
-    titleClassName: '!mr-4',
-    className: '!mr-5.5',
-    span: 4,
+    label: '采浆公司',
+    component: 'Select',
+    field: '',
+    colProps: { span: 5 },
   },
   {
-    field: 'field1',
-    title: '血浆批号',
-    className: '!mr-5.5',
-    itemRender: {
-      name: 'AInput',
-    },
-    span: 5,
+    label: '血浆批次',
+    component: 'Input',
+    field: '',
+    colProps: { span: 5 },
   },
   {
-    field: 'field2',
-    title: '接收日期',
-    className: '!mr-5.5',
-    itemRender: {
-      name: 'ARangePicker',
-    },
-    span: 6,
+    label: '接收日期',
+    component: 'RangePicker',
+    field: '',
+    colProps: { span: 6 },
   },
   {
-    field: 'field3',
-    title: '验收日期',
-    className: '!mr-5.5',
-    itemRender: {
-      name: 'ARangePicker',
-    },
-    span: 6,
-  },
-  {
-    // span: 12,
-    align: 'right',
-    className: '!pr-0',
-    itemRender: {
-      name: 'AButtonGroup',
-      children: [
-        {
-          props: { type: 'primary', content: '查询', htmlType: 'submit' },
-          attrs: { class: 'mr-2' },
-        },
-        { props: { type: 'default', htmlType: 'reset', content: '重置' } },
-      ],
-    },
+    label: '验收日期',
+    component: 'RangePicker',
+    field: '',
+    colProps: { span: 6 },
   },
 ];
