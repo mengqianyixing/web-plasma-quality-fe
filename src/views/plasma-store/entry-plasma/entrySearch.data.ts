@@ -4,75 +4,79 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: '',
+    dataIndex: 'stationNo',
   },
   {
     title: '血浆批号',
-    dataIndex: '',
+    slots: { customRender: 'houseName' },
   },
   {
     title: '采集开始日期',
-    dataIndex: '',
+    dataIndex: 'collectStartDate',
   },
   {
     title: '采集结束日期',
-    dataIndex: '',
+    dataIndex: 'collectEndDate',
   },
   {
     title: '浆站出库日期',
-    dataIndex: '',
+    dataIndex: 'stationOutDate',
   },
   {
     title: '出库数量(袋)',
-    dataIndex: '',
+    dataIndex: 'outNum',
   },
   {
-    title: '出库重量(kg)',
-    dataIndex: '',
+    title: '出库总净重(kg)',
+    dataIndex: 'outWeight',
   },
   {
     title: '接收日期',
-    dataIndex: '',
+    dataIndex: 'receptDate',
   },
   {
     title: '验收发布人',
-    dataIndex: '',
+    dataIndex: 'verifyPuber',
+  },
+  {
+    title: '验收发布日期',
+    dataIndex: 'verifyPubDate',
   },
   {
     title: '验收数量(袋)',
-    dataIndex: '',
+    dataIndex: 'verifyNum',
   },
   {
-    title: '验收重量(kg)',
-    dataIndex: '',
+    title: '验收总净重(kg)',
+    dataIndex: 'verifyWeight',
   },
   {
     title: '差异数量(袋)',
-    dataIndex: '',
+    dataIndex: 'diffNum',
   },
   {
-    title: '差异重量(kg)',
-    dataIndex: '',
+    title: '差异总净重(kg)',
+    dataIndex: 'diffWeight',
   },
   {
     title: '验收合格数量(袋)',
-    dataIndex: '',
+    dataIndex: 'verifyPassNum',
   },
   {
     title: '验收不合格数量(袋)',
-    dataIndex: '',
+    dataIndex: 'verifyNoPassNum',
   },
   {
     title: '不足量数量(袋)',
-    dataIndex: '',
+    dataIndex: 'hortFallNum',
   },
 ];
 
 export const searchFormSchema: FormSchema[] = [
   {
     label: '采浆公司',
-    field: '',
     component: 'Select',
+    field: '',
     colProps: { span: 5 },
   },
   {
