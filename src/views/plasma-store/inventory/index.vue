@@ -1,6 +1,6 @@
 <template>
-  <div class="p-3">
-    <vxe-grid v-bind="gridOptions">
+  <div class="p-3 root">
+    <vxe-grid v-bind="gridOptions" ref="vxe">
       <template #receiptDate="{ data, field }">
         <range-picker v-model:value="data[field]" />
       </template>
@@ -64,7 +64,7 @@
             delete params.receiptDate;
           }
           const list = await inventoryDetailApi({
-            ...form,
+            ...params,
           });
 
           return new Promise((resolve) => {
@@ -96,3 +96,9 @@
     },
   });
 </script>
+
+<style scoped>
+  .root :deep(.vxe-pager) {
+    display: none;
+  }
+</style>

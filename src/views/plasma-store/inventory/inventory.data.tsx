@@ -10,7 +10,6 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
     title: '采浆公司',
     field: 'stationNo',
-    fixed: 'left',
     width: 100,
     align: 'center',
   },
@@ -19,7 +18,6 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     field: 'inNum',
     width: 150,
     showOverflow: 'tooltip',
-    fixed: 'left',
   },
   {
     title: '入库重量(kg)',
@@ -120,7 +118,14 @@ export const vxeTableFormSchema: VxeFormItemProps[] = [
       name: '$buttons',
       children: [
         { props: { type: 'submit', content: '确定', status: 'primary' } },
-        { props: { type: 'reset', content: '重置' } },
+        {
+          props: { type: 'reset', content: '重置' },
+          events: {
+            click: (params: any) => {
+              delete params.data.receiptDate;
+            },
+          },
+        },
       ],
     },
   },
