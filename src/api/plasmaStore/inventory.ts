@@ -6,7 +6,7 @@ import {
 } from '@/api/type/plasmaStoreManage';
 
 enum Api {
-  INVENTORY_DETAIL = ' /api/core/bank/stock',
+  INVENTORY_DETAIL = '/api/core/bank/stock',
 }
 
 export const inventoryDetailApi = (params: GetApiCoreBankStockRequest) =>
