@@ -1,11 +1,17 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2023-12-18 14:18:08
+ * @LastEditors: zcc
+ * @LastEditTime: 2023-12-20 15:25:32
+-->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
     <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button type="primary" @click="handleOutStore">出库</a-button>
         <a-button type="primary" @click="handleInStore">入库</a-button>
-        <a-button type="primary" @click="handlePrint()">打印托盘</a-button>
-        <a-button type="primary" @click="handlePrint()">补打印托盘</a-button>
       </template>
     </BasicTable>
     <OutModal @register="registerOutDrawer" @success="reload" />
@@ -21,13 +27,14 @@
   import { message } from 'ant-design-vue';
   import OutModal from './outModal.vue';
   import InModal from './inModal.vue';
+  import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
 
   defineOptions({ name: 'OutInStore' });
 
   const [registerOutDrawer, { openDrawer }] = useDrawer();
   const [registerInDrawer, { openDrawer: openInDrawer }] = useDrawer();
 
-  const [registerTable, { getRowSelection, reload }] = useTable({
+  const [registerTable, { getSelectRows, reload }] = useTable({
     title: '',
     api: settingListApi,
     fetchSetting: {
@@ -48,25 +55,32 @@
   });
 
   function handleOutStore() {
-    const keys = getSelections<string>(false);
-    if (!keys.length) return false;
-    openDrawer(true, { data: keys });
+    const rows = getSelections(false);
+    if (!rows.length) return false;
+    const [firstRow] = rows;
+    const notAlike = rows.some((_) => _.houseNo !== firstRow.houseNo);
+    if (notAlike) return message.warning('所选托盘不属于同一库房!');
+    if (firstRow.houseType[1] === STORE_FLAG.S) {
+      openDrawer(true, { data: rows, showSite: true });
+    } else {
+      openDrawer(true, { data: rows, showSite: false });
+    }
   }
   function handleInStore() {
-    const keys = getSelections<string>(false);
-    if (!keys.length) return false;
-    openInDrawer(true, { data: keys });
+    const rows = getSelections<string>(false);
+    if (!rows.length) return false;
+    openInDrawer(true, { data: rows });
   }
-  function handlePrint() {}
-  function getSelections<T>(onlyOne: boolean): T[] {
-    const { selectedRowKeys } = getRowSelection() as any;
-    if (selectedRowKeys.length === 0) {
+
+  function getSelections<T = any>(onlyOne: boolean): Recordable<T>[] {
+    const rows = getSelectRows();
+    if (rows.length === 0) {
       message.warning('请选择一条数据');
       return [];
-    } else if (selectedRowKeys.length > 1 && onlyOne) {
+    } else if (rows.length > 1 && onlyOne) {
       message.warning('只能选择一条数据');
       return [];
     }
-    return selectedRowKeys;
+    return rows;
   }
 </script>
