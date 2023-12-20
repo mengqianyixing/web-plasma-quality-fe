@@ -3,13 +3,13 @@
     v-bind="$attrs"
     @register="registerDrawer"
     showFooter
-    title="货位列表"
-    width="1280px"
+    title="区域列表"
+    width="860px"
     @close="emit('close')"
   >
     <div class="flex flex-col h-full">
-      <CellWapper :data="state" :row-count="3" :cell-list="cellSchema([])" />
-      <BasicTable @register="registerTable" @fetch-success="fetchSuccess" :isCanResizeParent="true">
+      <CellWapper :data="state" cell-width="33.33%" :cell-list="cellSchema([])" />
+      <BasicTable @register="registerTable" @fetch-success="fetchSuccess">
         <template #toolbar>
           <a-button type="primary" @click="handleAdd">新增</a-button>
           <a-button type="primary" @click="handleCapacityAdd">扩容</a-button>
@@ -31,6 +31,7 @@
   import { CellWapper } from '@/components/CellWapper';
   import FormModel from './formModel.vue';
   import CapacityModel from './capacityModel.vue';
+  import { CLOSED } from '@/enums/plasmaStoreEnum';
 
   import { reactive } from 'vue';
 
@@ -65,7 +66,8 @@
       setPagination,
     },
   ] = useTable({
-    title: '区域列表',
+    immediate: false,
+    title: '',
     api: areaListApi,
     fetchSetting: {
       listField: 'subHouseList',
@@ -74,9 +76,10 @@
     rowKey: 'houseNo',
     columns,
     useSearchForm: false,
-    showTableSetting: true,
     bordered: true,
+    size: 'small',
     rowSelection: { type: 'checkbox' },
+    canResize: false,
     beforeFetch: () => {
       return { houseNo: state.houseNo };
     },
@@ -85,12 +88,13 @@
     openDrawer(true, { parentHouseType: state.houseType, parentHouseNo: state.houseNo });
   }
   function handleCapacityAdd() {
-    const { houseNo } = getOnlyOneRow();
+    const { houseNo, closed } = getOnlyOneRow();
+    if (closed === CLOSED.CLOSED) return message.warning('禁用状态不可扩容');
     if (!houseNo) return;
     openCapacityDrawer(true, { houseNo });
   }
   function getOnlyOneRow() {
-    const { selectedRowKeys } = getRowSelection() as { selectedRowKeys: any[] };
+    const { selectedRowKeys } = getRowSelection() as { selectedRowKeys: string[] };
     if (selectedRowKeys.length === 0) {
       message.warning('请选择一条数据');
       return {};
@@ -98,7 +102,7 @@
       message.warning('只能选择一条数据');
       return {};
     }
-    return findTableDataRecord(selectedRowKeys[0]) as any;
+    return findTableDataRecord(selectedRowKeys[0]) as Recordable;
   }
   function handleCheckStatus(action: string) {
     const { closed, houseNo, houseName } = getOnlyOneRow();

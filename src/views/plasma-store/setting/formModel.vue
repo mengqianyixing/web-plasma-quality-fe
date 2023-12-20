@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-12 15:49:25
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-14 17:59:45
+ * @LastEditTime: 2023-12-19 11:41:14
 -->
 <template>
   <BasicDrawer
@@ -36,7 +36,7 @@
 
   const formSchema = initFormSchema({ name: '', houseType: '', updateSchema: () => ({}) });
 
-  const [registerForm, { resetFields, validate, updateSchema }] = useForm({
+  const [registerForm, { validate, updateSchema, setFieldsValue, clearValidate }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
     schemas: formSchema,
@@ -44,7 +44,6 @@
   });
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(
     ({ parentHouseType, parentHouseNo }) => {
-      resetFields();
       state.parentHouseNo = parentHouseNo || 'ROOT';
       const formSchema = initFormSchema({
         name: getNodeType.value,
@@ -53,6 +52,13 @@
       });
       setDrawerProps({ confirmLoading: false });
       updateSchema(formSchema);
+      setFieldsValue(
+        formSchema.reduce((t, c) => {
+          t[c.field] = c.defaultValue;
+          return t;
+        }, {}),
+      );
+      clearValidate();
     },
   );
 

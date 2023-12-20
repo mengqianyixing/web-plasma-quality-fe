@@ -1,26 +1,30 @@
 <template>
   <BasicDrawer
-    wrapClassName="locationModel"
+    wrapClassName="locationModal"
     v-bind="$attrs"
     @register="registerDrawer"
     showFooter
     title="货位列表"
     width="1000px"
+    :isDetail="true"
+    :showDetailBack="false"
     @close="close"
   >
-    <CellWapper :row-count="3" :data="state" :cell-list="cellSchema(locationCell)" />
-    <BasicTable @register="registerTable">
-      <template #toolbar>
-        <a-button type="primary" @click="handleAdd">扩容</a-button>
-        <a-button type="primary" @click="handleCheckStatus('CLOSED')">禁用</a-button>
-        <a-button type="primary" @click="handleCheckStatus('NORMAL')">启用</a-button>
-      </template>
-    </BasicTable>
-    <CapacityModel @register="registerCapacityDrawer" @success="pageReload" />
+    <div class="flex flex-col h-full">
+      <CellWapper :row-count="3" :data="state" :cell-list="cellSchema(locationCell)" />
+      <div class="flex-1">
+        <BasicTable @register="registerTable">
+          <template #toolbar>
+            <a-button type="primary" @click="handleCheckStatus('CLOSED')">禁用</a-button>
+            <a-button type="primary" @click="handleCheckStatus('NORMAL')">启用</a-button>
+          </template>
+        </BasicTable>
+      </div>
+    </div>
   </BasicDrawer>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner, useDrawer } from '@/components/Drawer';
+  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { BasicTable, useTable } from '@/components/Table';
   import { locationListApi, checkLoactionApi, areaListApi } from '@/api/plasmaStore/setting';
   import {
@@ -30,7 +34,6 @@
     locationCell,
   } from './setting.data';
   import { message, Modal } from 'ant-design-vue';
-  import CapacityModel from './capacityModel.vue';
   import { reactive, defineEmits } from 'vue';
   import { CellWapper } from '@/components/CellWapper';
 
@@ -49,13 +52,13 @@
     },
   });
 
-  const [registerCapacityDrawer, { openDrawer }] = useDrawer();
-
   const [
     registerTable,
     { getRowSelection, findTableDataRecord, clearSelectedRowKeys, reload, setPagination },
   ] = useTable({
-    title: '货位列表',
+    title: '',
+    immediate: false,
+    size: 'small',
     api: locationListApi,
     fetchSetting: {
       pageField: 'currPage',
@@ -70,8 +73,8 @@
     rowKey: 'locationNo',
     columns,
     useSearchForm: true,
-    showTableSetting: true,
     bordered: true,
+    isCanResizeParent: true,
     rowSelection: { type: 'checkbox' },
     beforeFetch: (params) => {
       return { ...params, houseNo: state.houseNo };
@@ -83,9 +86,6 @@
     clearSelectedRowKeys();
     pageReload();
   });
-  function handleAdd() {
-    openDrawer(true, { houseNo: state.houseNo });
-  }
   function pageReload() {
     reload();
     areaListApi({ houseNo: state.houseNo }).then((res) => {
@@ -95,10 +95,10 @@
     });
   }
   function handleCheckStatus(action: string) {
-    const { selectedRowKeys } = getRowSelection() as { selectedRowKeys: any[] };
+    const { selectedRowKeys } = getRowSelection() as { selectedRowKeys: string[] };
     if (selectedRowKeys.length === 0) return message.warning('请选择一条数据');
     else if (selectedRowKeys.length > 1) return message.warning('只能选择一条数据');
-    const { closed, locationNo } = findTableDataRecord(selectedRowKeys[0]) as any;
+    const { closed, locationNo } = findTableDataRecord(selectedRowKeys[0]) as Recordable;
     if (closed === action) return message.warning('状态不需要变更');
     Modal.confirm({
       content: '确认' + (action ? '禁用' : '启用') + locationNo + '?',
@@ -114,3 +114,8 @@
     emit('close');
   }
 </script>
+<style>
+  .locationModal .scrollbar__view {
+    height: 100%;
+  }
+</style>
