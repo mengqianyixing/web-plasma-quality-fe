@@ -87,7 +87,7 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       options: [...operationMap.entries()].map(([key, value]) => ({
         value: key,
-        label: value,
+        label: `${key}，${value}`,
       })),
     },
   },
@@ -133,7 +133,7 @@ export const formSchema: FormSchema[] = [
     componentProps: {
       options: [...operationMap.entries()].map(([key, value]) => ({
         value: key,
-        label: value,
+        label: `${key}，${value}`,
       })),
     },
     required: true,
