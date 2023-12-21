@@ -301,7 +301,7 @@ export interface GetApiSysRoleIdResponse {
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
  * @请求头 `GET /api/sys/role/user/menutree`
- * @更新时间 `2023-12-15 10:45:42`
+ * @更新时间 `2023-12-19 16:37:53`
  */
 export interface GetApiSysRoleUserMenutreeRequest {}
 
@@ -310,7 +310,7 @@ export interface GetApiSysRoleUserMenutreeRequest {}
  *
  * @分类 [角色管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4400)
  * @请求头 `GET /api/sys/role/user/menutree`
- * @更新时间 `2023-12-15 10:45:42`
+ * @更新时间 `2023-12-19 16:37:53`
  */
 export type GetApiSysRoleUserMenutreeResponse = {
   /**
@@ -349,45 +349,10 @@ export type GetApiSysRoleUserMenutreeResponse = {
    * 组件
    */
   component?: string;
-  children?: {
-    /**
-     * 菜单编号
-     */
-    menuId: string;
-    /**
-     * 菜单名称
-     */
-    menuName: string;
-    /**
-     * 菜单类型
-     */
-    menuType: number;
-    /**
-     * 菜单排序
-     */
-    menuOrder: string;
-    /**
-     * 父菜单id
-     */
-    parentId?: string;
-    /**
-     * 菜单编码
-     */
-    menuCode: string;
-    /**
-     * 图标
-     */
-    iconType?: string;
-    /**
-     * 菜单路径
-     */
-    menuPath?: string;
-    /**
-     * 组件
-     */
-    component?: string;
-    children?: {}[];
-  }[];
+  /**
+   * &..
+   */
+  children?: GetApiSysRoleUserMenutreeResponse;
 }[];
 
 /* prettier-ignore-end */
