@@ -1,19 +1,10 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: zcc
- * @Date: 2023-12-18 17:53:22
- * @LastEditors: zcc
- * @LastEditTime: 2023-12-20 17:23:46
--->
 <template>
   <BasicDrawer
-    wrapClassName="locationModal2"
     v-bind="$attrs"
     @register="registerDrawer"
     showFooter
-    title="货位选择"
-    width="400px"
+    title="托盘选择"
+    width="1200px"
     @ok="handleSubmit"
   >
     <BasicTable @register="registerTable" />
@@ -24,12 +15,12 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { message } from 'ant-design-vue';
   import { reactive } from 'vue';
-  import { locationListApi } from '@/api/plasmaStore/setting';
+  import { columns, formSchema } from './trayModal.data';
 
   const emit = defineEmits(['confim', 'register']);
-  const state = reactive({ disabledKeys: [] as string[], houseNo: '' });
+  const state = reactive({ disabledKeys: [] as string[], params: {} });
   const [registerTable, { reload, getSelectRows, setPagination, clearSelectedRowKeys }] = useTable({
-    api: locationListApi,
+    api: () => Promise.resolve({ result: [{ trayNo: '10086' }, { trayNo: '10087' }] }),
     isCanResizeParent: true,
     fetchSetting: {
       listField: 'result',
@@ -37,13 +28,17 @@
       sizeField: 'pageSize',
       totalField: 'totalCount',
     },
+    formConfig: {
+      labelWidth: 60,
+      schemas: formSchema,
+    },
     immediate: false,
-    rowKey: 'locationNo',
-    columns: [{ title: '货位号', dataIndex: 'locationNo' }],
+    rowKey: 'trayNo',
+    columns: columns,
     useSearchForm: false,
     bordered: true,
     beforeFetch: (params) => {
-      return { ...params, houseNo: state.houseNo };
+      return { ...params, ...state.params };
     },
     rowSelection: {
       type: 'radio',
@@ -52,9 +47,9 @@
       }),
     },
   });
-  const [registerDrawer] = useDrawerInner(({ disabledKeys, houseNo }) => {
-    state.disabledKeys = disabledKeys;
-    state.houseNo = houseNo;
+  const [registerDrawer] = useDrawerInner(({ disabledKeys, params }) => {
+    state.disabledKeys = disabledKeys || [];
+    state.params = params;
     setPagination({ current: 1 });
     clearSelectedRowKeys();
     reload();
@@ -62,7 +57,7 @@
 
   function handleSubmit() {
     const rows = getSelectRows();
-    if (!rows.length) return message.warning('请选择货位');
+    if (!rows.length) return message.warning('请选择托盘');
     emit('confim', rows);
   }
 </script>

@@ -16,7 +16,7 @@
         </a-button>
       </template>
     </BasicTable>
-    <LocationModal @register="registerLocationDrawer" @confim="confim" />
+    <LocationDrawer @register="registerLocationDrawer" @confim="confim" />
   </BasicDrawer>
 </template>
 <script setup lang="ts">
@@ -25,7 +25,7 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { reactive } from 'vue';
   import { inStoreAreaSchema, inStoreFormSchema } from './outInStore.data';
-  import LocationModal from './locationModal.vue';
+  import LocationDrawer from '@/components/BusinessDrawer/locationDrawer/index.vue';
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
   import { settingListApi, areaListApi } from '@/api/plasmaStore/setting';
   import { message } from 'ant-design-vue';
@@ -177,7 +177,7 @@
     const res = await validateFields(['houseNo']);
     openLocationDrawer(true, {
       disabledKeys: state.data.filter((_) => _.location).map((_) => _.location),
-      houseNo: res.houseNo,
+      params: { houseNo: res.houseNo },
     });
   }
 </script>

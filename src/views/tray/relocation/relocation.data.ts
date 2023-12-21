@@ -1,199 +1,274 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 
-export const plasmaTrayColumns: BasicColumn[] = [
-  {
-    title: '托盘编号',
-    dataIndex: '',
-    slots: { customRender: 'trayNo' },
-  },
-  {
-    title: '采浆公司',
-    dataIndex: '',
-  },
-  {
-    title: '血浆批次号',
-    dataIndex: '',
-  },
-  {
-    title: '箱号范围',
-    dataIndex: '',
-  },
-  {
-    title: '血浆箱数量',
-    dataIndex: '',
-  },
-  {
-    title: '血浆箱袋数',
-    dataIndex: '',
-  },
-  {
-    title: '库房',
-    dataIndex: '',
-  },
-  {
-    title: '货位',
-    dataIndex: '',
-  },
-];
-
-export const plasmaTraySearchSchema: FormSchema[] = [
-  {
-    label: '采浆公司',
-    field: '',
-    component: 'Select',
-    colProps: { span: 6 },
-  },
-  {
-    label: '投产准备号',
-    field: '',
-    component: 'Select',
-    colProps: { span: 6 },
-  },
-  {
-    label: '血浆批次号',
-    field: '',
-    component: 'Select',
-    colProps: { span: 6 },
-  },
-  {
-    label: '托盘编号',
-    field: '',
-    component: 'Select',
-    colProps: { span: 6 },
-  },
-  {
-    label: '血浆编号',
-    field: '',
-    component: 'Select',
-    colProps: { span: 6 },
-  },
-];
-
 export const plasmaTrayModelColumns: BasicColumn[] = [
   { title: '血浆批号', dataIndex: '' },
   { title: '血浆箱号', dataIndex: '' },
   { title: '血浆袋数', dataIndex: '' },
 ];
-
-export const sampleTrayColumns: BasicColumn[] = [
+export const taryRelocationColumns: BasicColumn[] = [
   {
     title: '托盘编号',
     dataIndex: '',
-    slots: { customRender: 'trayNo' },
   },
+  {
+    title: '原货位',
+    dataIndex: '',
+  },
+  {
+    title: '原库房',
+    dataIndex: '',
+  },
+  {
+    title: '目标货位',
+    dataIndex: '',
+  },
+  {
+    title: '目标库房',
+    dataIndex: '',
+  },
+  {
+    title: '操作人',
+    dataIndex: '',
+  },
+  {
+    title: '操作时间',
+    dataIndex: '',
+  },
+  {
+    title: '状态',
+    dataIndex: '',
+  },
+  {
+    title: '处理时间',
+    dataIndex: '',
+  },
+];
+
+export const siteSchema: FormSchema = {
+  label: '出库站点',
+  component: 'Select',
+  field: 'siteNo',
+  required: true,
+};
+export const locationSchema: FormSchema = {
+  label: '目标货位',
+  component: 'InputSearch',
+  field: 'location',
+  required: true,
+};
+export const areaSchema: FormSchema = {
+  label: '目标区域',
+  component: 'Select',
+  field: 'area',
+  required: true,
+  componentProps: {
+    options: [],
+  },
+};
+export const trayRelocationFormSchema: (fn1: Function, fn2: Function) => FormSchema[] = (
+  f1,
+  f2,
+) => [
+  {
+    label: '托盘编号',
+    component: 'InputSearch',
+    field: 'trayNo',
+    required: true,
+    componentProps: {
+      'enter-button': '选择',
+      onSearch: f1,
+    },
+  },
+
+  {
+    label: '入库库房',
+    component: 'Select',
+    field: 'houseNo',
+    required: true,
+    componentProps: {
+      onChange: f2,
+    },
+  },
+];
+
+export const plasmaBoxScanFormSchema: FormSchema[] = [
+  {
+    component: 'Input',
+    label: '托盘编号',
+    field: '',
+    colProps: { span: 8 },
+  },
+  {
+    component: 'Input',
+    label: '箱号',
+    field: '',
+    colProps: { span: 8 },
+  },
+];
+export const plasmaBoxScanSearchFormSchema: FormSchema[] = [
+  {
+    component: 'Input',
+    label: '托盘编号',
+    field: '',
+    colProps: { span: 6 },
+  },
+  {
+    component: 'Input',
+    label: '箱号',
+    field: '',
+    colProps: { span: 6 },
+  },
+];
+export const plasmaBoxScanColumns: (isBinding: boolean) => BasicColumn[] = (isBinding) => [
+  {
+    title: '箱号',
+    dataIndex: '',
+  },
+  {
+    title: '目标托盘',
+    dataIndex: '',
+  },
+  {
+    title: isBinding ? '绑定人' : '解绑人',
+    dataIndex: '',
+  },
+  {
+    title: isBinding ? '绑定时间' : '解绑时间',
+    dataIndex: '',
+  },
+];
+
+export const plasmaBoxHandSearchFormSchema: FormSchema[] = [
+  {
+    component: 'Select',
+    label: '采浆公司',
+    field: '',
+    colProps: { span: 6 },
+    componentProps: {
+      options: [],
+    },
+  },
+  {
+    component: 'Input',
+    label: '批号',
+    field: '',
+    colProps: { span: 6 },
+  },
+  {
+    component: 'Input',
+    label: '投产准备号',
+    field: '',
+    colProps: { span: 6 },
+  },
+];
+export const plasmaBoxHandColumns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: '',
   },
   {
-    title: '样品批号',
+    title: '箱号',
+    dataIndex: '采浆公司',
+  },
+  {
+    title: '血浆批号',
+    dataIndex: '采浆公司',
+  },
+  {
+    title: '投产准备号',
+    dataIndex: '采浆公司',
+  },
+  {
+    title: '袋数',
+    dataIndex: '采浆公司',
+  },
+  {
+    title: '类型',
+    dataIndex: '采浆公司',
+  },
+];
+export const sampleBoxScanFormSchema: FormSchema[] = [
+  {
+    component: 'Input',
+    label: '托盘编号',
+    field: '',
+    colProps: { span: 8 },
+  },
+  {
+    component: 'Input',
+    label: '样品箱号',
+    field: '',
+    colProps: { span: 8 },
+  },
+];
+export const sampleBoxScanSearchFormSchema: FormSchema[] = [
+  {
+    component: 'Input',
+    label: '托盘编号',
+    field: '',
+    colProps: { span: 6 },
+  },
+  {
+    component: 'Input',
+    label: '样品箱号',
+    field: '',
+    colProps: { span: 6 },
+  },
+];
+export const sampleBoxScanColumns: (isBinding: boolean) => BasicColumn[] = (isBinding) => [
+  {
+    title: '样本箱号',
     dataIndex: '',
   },
   {
-    title: '样品袋号范围',
+    title: '目标托盘',
     dataIndex: '',
   },
   {
-    title: '样本类型',
+    title: isBinding ? '绑定人' : '解绑人',
     dataIndex: '',
   },
   {
-    title: '样品袋数',
-    dataIndex: '',
-  },
-  {
-    title: '库房',
-    dataIndex: '',
-  },
-  {
-    title: '货位',
+    title: isBinding ? '绑定时间' : '解绑时间',
     dataIndex: '',
   },
 ];
-
-export const sampleTraySearchSchema: FormSchema[] = [
+export const sampleBoxHandSearchFormSchema: FormSchema[] = [
   {
+    component: 'Select',
     label: '采浆公司',
     field: '',
-    component: 'Select',
     colProps: { span: 6 },
+    componentProps: {
+      options: [],
+    },
   },
   {
-    label: '样品类型',
-    field: '',
-    component: 'Select',
-    colProps: { span: 6 },
-  },
-  {
+    component: 'Input',
     label: '样品批号',
     field: '',
-    component: 'Select',
-    colProps: { span: 6 },
-  },
-  {
-    label: '托盘编号',
-    field: '',
-    component: 'Select',
     colProps: { span: 6 },
   },
 ];
-export const sampleTrayModelColumns: BasicColumn[] = [
-  { title: '样品批号', dataIndex: '' },
-  { title: '样品袋号', dataIndex: '' },
-  { title: '样品数量', dataIndex: '' },
-];
-
-export const trayInStoreFormSchemas: (opt: {
-  changeFn: Function;
-  searchFn: Function;
-}) => FormSchema[] = ({ changeFn, searchFn }) => [
+export const sampleBoxHandColumns: BasicColumn[] = [
   {
-    label: '托盘编号',
-    field: 'trayNo',
-    component: 'Input',
-    colProps: { span: 6 },
-  },
-  {
-    label: '目标库房',
-    field: 'house',
-    component: 'Select',
-    colProps: { span: 6 },
-    componentProps: {
-      width: '300px',
-      onChange: changeFn,
-      options: [
-        { label: '立体库', value: 'N' },
-        { label: '平库', value: 'F' },
-      ],
-    },
-  },
-  {
-    label: '目标货位',
-    field: 'room',
-    component: 'InputSearch',
-    colProps: { span: 6 },
-    componentProps: {
-      'enter-button': '选择',
-      onSearch: searchFn,
-    },
-  },
-];
-
-export const trayPrintColumns: BasicColumn[] = [
-  {
-    title: '托盘编号',
+    title: '采浆公司',
     dataIndex: '',
   },
   {
-    title: '打印人',
-    dataIndex: '',
+    title: '样品箱号',
+    dataIndex: '采浆公司',
   },
   {
-    title: '打印时间',
-    dataIndex: '',
+    title: '样品批号',
+    dataIndex: '采浆公司',
   },
   {
-    title: '打印类型',
-    dataIndex: '',
+    title: '袋数',
+    dataIndex: '采浆公司',
+  },
+  {
+    title: '类型',
+    dataIndex: '采浆公司',
   },
 ];

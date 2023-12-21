@@ -1,24 +1,51 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2023-12-15 17:42:17
+ * @LastEditors: zcc
+ * @LastEditTime: 2023-12-21 16:58:56
+-->
 <template>
-  <div class="h-full p-16px">
-    <Tabs v-model:activeKey="activeKey" class="h-full bg-white">
-      <TabPane key="1" tab="血浆托盘出库">
-        <PlasmaTray />
+  <PageWrapper dense contentFullHeight fixedHeight>
+    <Tabs v-model:activeKey="activeKey" class="h-full bg-white m-16px">
+      <TabPane key="1" tab="托盘移库">
+        <TrayRelocation />
       </TabPane>
-      <TabPane key="2" tab="样品托盘出库"><SampleTray /></TabPane>
-      <TabPane key="3" tab="空托盘出库"><EmpryTray /></TabPane>
-      <TabPane key="4" tab="托盘入库"><TrayInStore /></TabPane>
-      <TabPane key="5" tab="托盘打印"><TrayPrint /></TabPane>
+      <TabPane key="2" tab="血浆箱扫描绑定">
+        <PlasmaBoxScan :is-binding="true" />
+      </TabPane>
+      <TabPane key="3" tab="血浆箱扫描解绑">
+        <PlasmaBoxScan :is-binding="false" />
+      </TabPane>
+      <TabPane key="4" tab="血浆箱手工绑定">
+        <PlasmaBoxHand :is-binding="true" />
+      </TabPane>
+      <TabPane key="5" tab="血浆箱手工解绑">
+        <PlasmaBoxHand :is-binding="false" />
+      </TabPane>
+      <TabPane key="6" tab="样品箱扫描绑定"> <SampleBoxScan :is-binding="true" /></TabPane>
+      <TabPane key="7" tab="样品箱扫描解绑">
+        <SampleBoxScan :is-binding="false" />
+      </TabPane>
+      <TabPane key="8" tab="样品箱手工绑定">
+        <SampleBoxHand :is-binding="true" />
+      </TabPane>
+      <TabPane key="9" tab="样品箱手工解绑">
+        <SampleBoxHand :is-binding="false" />
+      </TabPane>
     </Tabs>
-  </div>
+  </PageWrapper>
 </template>
 <script setup lang="ts">
   import { ref } from 'vue';
+  import { PageWrapper } from '@/components/Page';
   import { TabPane, Tabs } from 'ant-design-vue';
-  import PlasmaTray from './plasmaTray.vue';
-  import SampleTray from './sampleTray.vue';
-  import EmpryTray from './emptyTray.vue';
-  import TrayInStore from './trayInStore.vue';
-  import TrayPrint from './trayPrint.vue';
+  import TrayRelocation from './trayRelocation.vue';
+  import PlasmaBoxScan from './plasmaBoxScan.vue';
+  import PlasmaBoxHand from './plasmaBoxHand.vue';
+  import SampleBoxScan from './sampleBoxScan.vue';
+  import SampleBoxHand from './sampleBoxHand.vue';
 
   const activeKey = ref('1');
 </script>
