@@ -3,112 +3,129 @@ import { VxeFormItemProps, VxeGridPropTypes } from '@/components/VxeTable';
 
 export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
-    title: '采浆公司',
     type: 'seq',
-    fixed: 'left',
+    title: '序号',
+    width: 80,
+  },
+  {
+    title: '采浆公司',
+    field: 'stationNo',
     width: 100,
     align: 'center',
   },
   {
     title: '入库数量(袋)',
-    field: 'name',
+    field: 'inNum',
     width: 150,
     showOverflow: 'tooltip',
-    fixed: 'left',
   },
   {
     title: '入库重量(kg)',
-    field: 'address',
+    field: 'inWeight',
   },
-  // {
-  //   title: '出库数量(袋)',
-  //   field: 'no',
-  // },
-  // {
-  //   title: '出库重量(kg)',
-  //   field: 'no',
-  // },
-  // {
-  //   title: '结存数量(袋)',
-  //   field: 'no',
-  // },
-  // {
-  //   title: '结存重量(kg)',
-  //   field: 'no',
-  // },
-  // {
-  //   title: '库存',
-  //   field: 'no',
-  // },
+  {
+    title: '出库数量(袋)',
+    field: 'outNum',
+  },
+  {
+    title: '出库重量(kg)',
+    field: 'outWeight',
+  },
+  {
+    title: '结存数量(袋)',
+    field: 'surplusNum',
+  },
+  {
+    title: '结存重量(kg)',
+    field: 'surplusWeight',
+  },
+  {
+    title: '库存',
+    field: 'bankNo',
+  },
 ];
 
 export const vxeTableFormSchema: VxeFormItemProps[] = [
   {
-    field: 'field0',
+    field: 'stationNo',
     title: '采浆公司',
-    itemRender: {
-      name: 'ASelect',
-    },
-    titleClassName: '!mr-6',
-    className: '!mr-6',
     span: 5,
+    itemRender: { name: '$input', props: { placeholder: '请输入' } },
   },
   {
-    field: 'field1',
+    field: 'field',
     title: '血浆出库类型',
-    className: '!mr-6',
-    itemRender: {
-      name: 'ASelect',
-    },
     span: 5,
+    itemRender: {
+      name: '$select',
+      options: [
+        { value: '1', label: '男' },
+        { value: '0', label: '女' },
+      ],
+      props: {
+        clearable: true,
+        placeholder: '请选择',
+      },
+    },
   },
   {
-    field: 'field2',
+    field: 'receiptDate',
     title: '接收日期',
-    className: '!mr-6',
-    itemRender: {
-      name: 'ARangePicker',
+    span: 8,
+    slots: {
+      default: 'receiptDate',
     },
   },
   {
-    field: 'field3',
+    field: 'batchNo',
     title: '血浆批号',
-    className: '!mr-6',
-    itemRender: {
-      name: 'AInput',
-    },
     span: 5,
+    folding: true,
+    itemRender: { name: '$input', props: { placeholder: '请输入' } },
   },
   {
-    field: 'field4',
+    field: 'filed',
     title: '血浆过程状态',
-    className: '!mr-6',
-    itemRender: {
-      name: 'ASelect',
-    },
     span: 5,
+    folding: true,
+    itemRender: {
+      name: '$select',
+      options: [],
+      props: {
+        clearable: true,
+        placeholder: '请选择',
+      },
+    },
   },
   {
-    field: 'field5',
+    field: 'immuneType',
     title: '效价类型',
-    className: '!mr-6',
-    itemRender: {
-      name: 'ASelect',
-    },
     span: 5,
+    itemRender: {
+      name: '$select',
+      options: [],
+      props: {
+        clearable: true,
+        placeholder: '请选择',
+      },
+    },
   },
   {
     span: 12,
     align: 'right',
-    className: '!pr-0',
+    collapseNode: true,
     itemRender: {
-      name: 'AButtonGroup',
+      name: '$buttons',
       children: [
+        { props: { type: 'submit', content: '确定', status: 'primary' } },
         {
-          props: { type: 'primary', content: '查询', htmlType: 'submit' },
-          attrs: { class: 'mr-2' },
+          props: { type: 'reset', content: '重置' },
+          events: {
+            click: (params: any) => {
+              delete params.data.receiptDate;
+            },
+          },
         },
-        { props: { type: 'default', htmlType: 'reset', content: '重置' } },
       ],
     },
   },

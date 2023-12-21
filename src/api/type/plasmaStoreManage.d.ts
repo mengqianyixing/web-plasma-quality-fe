@@ -146,7 +146,7 @@ export type PutApiCoreBankWarehouseResponse = string;
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/warehouses`
- * @更新时间 `2023-12-12 16:55:26`
+ * @更新时间 `2023-12-19 14:09:18`
  */
 export interface GetApiCoreBankWarehousesRequest {
   /**
@@ -172,65 +172,65 @@ export interface GetApiCoreBankWarehousesRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/warehouses`
- * @更新时间 `2023-12-12 16:55:26`
+ * @更新时间 `2023-12-19 14:09:18`
  */
 export interface GetApiCoreBankWarehousesResponse {
   /**
    * 当前页码
    */
-  currPage?: number;
+  currPage: number;
   /**
    * 页大小
    */
-  pageSize?: number;
+  pageSize: number;
   /**
    * 总数量
    */
-  totalCount?: number;
+  totalCount: number;
   /**
    * 数据列表
    */
-  result?: {
+  result: {
     /**
      * 库房编号
      */
-    houseNo?: string;
+    houseNo: string;
     /**
      * 库房名称
      */
-    houseName?: string;
+    houseName: string;
     /**
      * 上级库房编号
      */
-    parentHouseId?: string;
+    parentHouseId: string;
     /**
      * 上级库房名称
      */
-    parentHouseName?: string;
+    parentHouseName: string;
     /**
      * 库房类型
      */
-    houseType?: string;
+    houseType: string;
     /**
      * 货位数量
      */
-    locationCount?: number;
+    locationCount: number;
     /**
      * 规格
      */
-    standard?: string;
+    standard: string;
     /**
      * 是否禁用，0表示启用，1表示禁用
      */
-    closed?: number;
+    closed: number;
     /**
      * 备注
      */
-    remark?: string;
+    remark: string;
     /**
      * 已使用货位数量
      */
-    locationUsedCount?: number;
+    locationUsedCount: number;
   }[];
 }
 
@@ -239,7 +239,7 @@ export interface GetApiCoreBankWarehousesResponse {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/warehouse/{houseNo}`
- * @更新时间 `2023-12-13 11:22:34`
+ * @更新时间 `2023-12-19 14:08:51`
  */
 export interface GetApiCoreBankWarehouseHouseNoRequest {
   houseNo: string;
@@ -250,63 +250,63 @@ export interface GetApiCoreBankWarehouseHouseNoRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/warehouse/{houseNo}`
- * @更新时间 `2023-12-13 11:22:34`
+ * @更新时间 `2023-12-19 14:08:51`
  */
 export interface GetApiCoreBankWarehouseHouseNoResponse {
   /**
    * 库房编号
    */
-  houseNo?: string;
+  houseNo: string;
   /**
    * 库房名称
    */
-  houseName?: string;
+  houseName: string;
   /**
    * 上级库房编号
    */
-  parentHouseNo?: string;
+  parentHouseNo: string;
   /**
    * 上级库房名称
    */
-  parentHouseName?: string;
+  parentHouseName: string;
   /**
    * 库房类别
    */
-  houseType?: string;
+  houseType: string;
   /**
    * 货位数量
    */
-  locationCount?: string;
+  locationCount: string;
   /**
    * 规格
    */
-  standard?: string;
+  standard: string;
   /**
    * 是否禁用，0表示启用，1表示禁用
    */
-  closed?: string;
+  closed: string;
   /**
    * 备注
    */
-  remark?: string;
+  remark: string;
   /**
    * 已使用货位数量
    */
-  locationUsedCount?: string;
+  locationUsedCount: string;
   /**
    * 库房区域列表
    */
-  subHouseList?: {
-    houseNo?: string;
-    houseName?: string;
-    parentHouseId?: string;
-    parentHouseName?: string;
-    houseType?: string;
-    locationCount?: number;
-    standard?: string;
-    closed?: string;
-    remark?: string;
-    locationUsedCount?: number;
+  subHouseList: {
+    houseNo: string;
+    houseName: string;
+    parentHouseId: string;
+    parentHouseName: string;
+    houseType: string;
+    locationCount: number;
+    standard: string;
+    closed: string;
+    remark: string;
+    locationUsedCount: number;
   }[];
 }
 
@@ -315,7 +315,7 @@ export interface GetApiCoreBankWarehouseHouseNoResponse {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/locations`
- * @更新时间 `2023-12-13 11:25:40`
+ * @更新时间 `2023-12-19 14:09:05`
  */
 export interface GetApiCoreBankLocationsRequest {
   /**
@@ -345,25 +345,25 @@ export interface GetApiCoreBankLocationsRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/locations`
- * @更新时间 `2023-12-13 11:25:40`
+ * @更新时间 `2023-12-19 14:09:05`
  */
 export interface GetApiCoreBankLocationsResponse {
-  currPage?: number;
-  pageSize?: number;
-  totalCount?: number;
-  result?: {
+  currPage: number;
+  pageSize: number;
+  totalCount: number;
+  result: {
     /**
      * 货位号
      */
-    locationNo?: string;
+    locationNo: string;
     /**
      * 托盘编号
      */
-    trayNo?: string;
+    trayNo: string;
     /**
      * 是否启用，0表示启用，1表示禁用
      */
-    closed?: number;
+    closed: number;
   }[];
 }
 
@@ -372,7 +372,7 @@ export interface GetApiCoreBankLocationsResponse {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/stock`
- * @更新时间 `2023-12-18 16:07:25`
+ * @更新时间 `2023-12-19 18:08:45`
  */
 export interface GetApiCoreBankStockRequest {
   /**
@@ -406,46 +406,41 @@ export interface GetApiCoreBankStockRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/stock`
- * @更新时间 `2023-12-18 16:07:25`
+ * @更新时间 `2023-12-19 18:08:45`
  */
-export interface GetApiCoreBankStockResponse {
-  currPage?: number;
-  pageSize?: number;
-  totalCount?: number;
-  result?: {
-    /**
-     * 采浆公司
-     */
-    stationNo: number;
-    /**
-     * 入库数量（袋）
-     */
-    inNum: number;
-    /**
-     * 入库重量（kg）
-     */
-    inWeight: number;
-    /**
-     * 出库数量（袋）
-     */
-    outNum: number;
-    /**
-     * 出库重量（kg）
-     */
-    outWeight: number;
-    /**
-     * 结存数量（袋）
-     */
-    surplusNum: number;
-    /**
-     * 结存重量（kg）
-     */
-    surplusWeight: number;
-    /**
-     * 库房
-     */
-    bankNo: number;
-  }[];
-}
+export type GetApiCoreBankStockResponse = {
+  /**
+   * 采浆公司
+   */
+  stationNo: string;
+  /**
+   * 入库数量（袋）
+   */
+  inNum: number;
+  /**
+   * 入库重量（kg）
+   */
+  inWeight: number;
+  /**
+   * 出库数量（袋）
+   */
+  outNum: number;
+  /**
+   * 出库重量（kg）
+   */
+  outWeight: number;
+  /**
+   * 结存数量（袋）
+   */
+  surplusNum: number;
+  /**
+   * 结存重量（kg）
+   */
+  surplusWeight: number;
+  /**
+   * 库房
+   */
+  bankNo: string;
+}[];
 
 /* prettier-ignore-end */

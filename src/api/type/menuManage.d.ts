@@ -281,7 +281,7 @@ export interface PutApiSysMenuResponse {}
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
  * @请求头 `GET /api/sys/menu/tree`
- * @更新时间 `2023-12-15 10:46:20`
+ * @更新时间 `2023-12-19 16:31:07`
  */
 export interface GetApiSysMenuTreeRequest {}
 
@@ -290,7 +290,7 @@ export interface GetApiSysMenuTreeRequest {}
  *
  * @分类 [菜单管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4408)
  * @请求头 `GET /api/sys/menu/tree`
- * @更新时间 `2023-12-15 10:46:20`
+ * @更新时间 `2023-12-19 16:31:07`
  */
 export type GetApiSysMenuTreeResponse = {
   /**
@@ -322,42 +322,9 @@ export type GetApiSysMenuTreeResponse = {
    */
   parentId?: string;
   /**
-   * 子节点
+   * &..
    */
-  children: {
-    /**
-     * 菜单id
-     */
-    menuId: string;
-    /**
-     * 菜单名称
-     */
-    menuName: string;
-    /**
-     * 菜单类型
-     */
-    menuType: number;
-    /**
-     * 菜单排序
-     */
-    menuOrder: string;
-    /**
-     * 菜单路径
-     */
-    menuPath?: string;
-    /**
-     * 菜单组件
-     */
-    component?: string;
-    /**
-     * 父菜单id
-     */
-    parentId?: string;
-    /**
-     * 子节点
-     */
-    children?: {}[];
-  }[];
+  children: GetApiSysMenuTreeResponse;
 }[];
 
 /* prettier-ignore-end */
