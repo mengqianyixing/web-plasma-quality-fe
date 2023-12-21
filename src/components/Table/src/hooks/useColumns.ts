@@ -146,7 +146,6 @@ export function useColumns(
 
   const getViewColumns = computed(() => {
     const viewColumns = sortFixedColumn(unref(getColumnsRef));
-    console.log(viewColumns, 'viewColumnsviewColumns');
 
     const mapFn = (column) => {
       const { slots, customRender, format, edit, editRow, flag } = column;
@@ -169,7 +168,6 @@ export function useColumns(
     };
 
     const columns = cloneDeep(viewColumns);
-    console.log(columns, viewColumns, 'columnscolumnscolumnscolumnscolumnscolumnscolumnscolumns');
     return columns
       .filter((column) => hasPermission(column.auth) && isIfShow(column))
       .map((column) => {
