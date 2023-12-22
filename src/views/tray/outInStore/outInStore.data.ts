@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-18 14:18:35
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-20 15:24:51
+ * @LastEditTime: 2023-12-22 16:58:30
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 
@@ -96,23 +96,23 @@ export const inStoreFormSchema: (houseChange: Function) => FormSchema[] = (house
       onChange: houseChange,
     },
   },
-  {
-    field: 'dlvType',
-    component: 'Select',
-    label: '入库类型',
-    required: true,
-    componentProps: {
-      options: [
-        { label: '投产出库', value: '0' },
-        { label: '不合格出库', value: '1' },
-        { label: '科研出库', value: '2' },
-        { label: '其他', value: '3' },
-      ],
-    },
-  },
+  // {
+  //   field: 'dlvType',
+  //   component: 'Select',
+  //   label: '入库类型',
+  //   required: true,
+  //   componentProps: {
+  //     options: [
+  //       { label: '投产出库', value: '0' },
+  //       { label: '不合格出库', value: '1' },
+  //       { label: '科研出库', value: '2' },
+  //       { label: '其他', value: '3' },
+  //     ],
+  //   },
+  // },
 ];
 export const siteNoSchema = {
-  field: 'siteNo',
+  field: 'siteId',
   component: 'Select',
   label: '出库站点',
   required: true,
@@ -120,19 +120,3 @@ export const siteNoSchema = {
     options: [],
   },
 };
-export const outFormSchema: FormSchema[] = [
-  {
-    field: 'dlvType',
-    component: 'Select',
-    label: '出库类型',
-    required: true,
-    componentProps: {
-      options: [
-        { label: '投产出库', value: '0' },
-        { label: '不合格出库', value: '1' },
-        { label: '科研出库', value: '2' },
-        { label: '其他', value: '3' },
-      ],
-    },
-  },
-];

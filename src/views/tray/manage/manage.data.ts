@@ -1,105 +1,80 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: zcc
+ * @Date: 2023-12-20 14:11:29
+ * @LastEditors: zcc
+ * @LastEditTime: 2023-12-22 14:59:30
+ */
 import { BasicColumn, FormSchema } from '@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
     title: '托盘编号',
-    dataIndex: '',
+    dataIndex: 'trayNo',
     fixed: 'left',
-  },
-  {
-    title: '使用状态',
-    dataIndex: '',
-  },
-  {
-    title: '负载状态',
-    dataIndex: '',
-  },
-  {
-    title: '已存放容量(袋)',
-    dataIndex: '',
+    slots: { customRender: 'trayNo' },
   },
   {
     title: '已存放容量(箱)',
-    dataIndex: '',
+    dataIndex: 'usedNumber',
+  },
+
+  {
+    title: '存放库房',
+    dataIndex: 'wareHouseName',
   },
   {
-    title: '打印人',
-    dataIndex: '',
+    title: '存放区域',
+    dataIndex: 'subWareHouseName',
   },
   {
-    title: '打印时间',
-    dataIndex: '',
+    title: '存放货位',
+    dataIndex: 'locationNo',
   },
   {
-    title: '存放类型',
-    dataIndex: '',
+    title: '创建人',
+    dataIndex: 'creater',
   },
   {
-    title: '存放位置',
-    dataIndex: '',
-  },
-  {
-    title: '立体库状态',
-    dataIndex: '',
-  },
-  {
-    title: '备注',
-    dataIndex: '',
+    title: '创建时间',
+    dataIndex: 'create_at',
   },
 ];
 export const searchFormSchema: FormSchema[] = [
   {
     component: 'Input',
-    field: '',
+    field: 'trayNo',
     label: '托盘编号',
     colProps: { span: 6 },
   },
   {
     component: 'Input',
-    field: '',
-    label: '血浆/样品批号',
+    field: 'batchNo',
+    label: '血浆批号',
     colProps: { span: 6 },
   },
   {
     component: 'Input',
-    field: '',
-    label: '血浆/样品袋号',
+    field: 'sampleNo',
+    label: '样品批号',
     colProps: { span: 6 },
   },
   {
     component: 'Input',
-    field: '',
-    label: '血浆/样品编号',
+    field: 'bagNo',
+    label: '浆袋编号',
     colProps: { span: 6 },
   },
   {
     component: 'Input',
-    field: '',
+    field: 'prepareNo',
     label: '投产准备号',
     colProps: { span: 6 },
   },
-  {
-    component: 'Input',
-    field: '',
-    label: '使用状态',
-    colProps: { span: 6 },
-  },
-  {
-    component: 'Input',
-    field: '',
-    label: '负载状态',
-    colProps: { span: 6 },
-  },
-  {
-    component: 'Input',
-    field: '',
-    label: '存放位置',
-    colProps: { span: 6 },
-  },
-  {
-    component: 'Input',
-    field: '',
-    label: '存放类型',
-    colProps: { span: 6 },
-  },
+];
+
+export const trayDtColumns: BasicColumn[] = [{ dataIndex: '', title: '托盘编号' }];
+export const trayDtSearchSchema: FormSchema[] = [
+  { label: '托盘编号', field: '', component: 'Input', colProps: { span: 10 } },
 ];
