@@ -3,44 +3,44 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 export const columns: BasicColumn[] = [
   {
     title: '字典名称',
-    dataIndex: 'typeFlag',
+    dataIndex: 'dictName',
   },
   {
     title: '字典编号',
-    dataIndex: 'typeFlag',
+    dataIndex: 'dictNo',
   },
   {
     title: '描述',
-    dataIndex: 'storeFlag',
+    dataIndex: 'dictDesc',
   },
   {
     title: '创建人',
-    dataIndex: 'autoFlag',
+    dataIndex: 'creater',
   },
   {
     title: '创建时间',
-    dataIndex: 'standard.maxLocationSize',
+    dataIndex: 'createAt',
   },
 
   {
     title: '修改人',
-    dataIndex: 'locationUsedCount',
+    dataIndex: 'updater',
   },
   {
     title: '修改时间',
-    dataIndex: 'closed',
+    dataIndex: 'updateAt',
   },
 ];
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'locationNo',
+    field: 'dictName',
     label: '字典名称',
     component: 'Input',
     colProps: { span: 8 },
   },
   {
-    field: 'trayNo',
+    field: 'dictNo',
     label: '字典编号',
     component: 'Input',
     colProps: { span: 8 },
@@ -49,27 +49,27 @@ export const searchFormSchema: FormSchema[] = [
 
 export const formSchema: FormSchema[] = [
   {
-    field: 'locationNo',
+    field: 'dictName',
     label: '字典名称',
     component: 'Input',
     required: true,
     colProps: { span: 24 },
   },
   {
-    field: 'trayNo',
+    field: 'dictNo',
     label: '字典编号',
     component: 'Input',
     required: true,
     colProps: { span: 24 },
   },
   {
-    field: 'trayNo',
+    field: 'dictDesc',
     label: '描述',
     component: 'InputTextArea',
     colProps: { span: 24 },
   },
   {
-    field: 'trayNo',
+    field: 'systemLevel',
     label: '系统字典',
     component: 'Switch',
     colProps: { span: 24 },
@@ -79,77 +79,80 @@ export const formSchema: FormSchema[] = [
 export const itemColumns: BasicColumn[] = [
   {
     title: '字典项名称',
-    dataIndex: 'typeFlag',
+    dataIndex: 'itemKey',
   },
   {
     title: '字典项值',
-    dataIndex: 'typeFlag',
+    dataIndex: 'itemValue',
   },
   {
     title: '排序',
-    dataIndex: 'storeFlag',
+    dataIndex: 'sort',
   },
   {
     title: '是否启用',
-    dataIndex: 'autoFlag',
+    dataIndex: 'enable',
+    customRender: ({ record }) => {
+      return record.enable ? '是' : '否';
+    },
   },
   {
     title: '描述',
-    dataIndex: 'standard.maxLocationSize',
+    dataIndex: 'itemDesc',
   },
 
   {
     title: '创建人',
-    dataIndex: 'locationUsedCount',
+    dataIndex: 'creater',
   },
   {
     title: '创建时间',
-    dataIndex: 'closed',
+    dataIndex: 'createAt',
   },
 ];
 export const itemSearchFormSchema: FormSchema[] = [
   {
-    field: 'locationNo',
+    field: 'itemKey',
     label: '字典项名称',
     component: 'Input',
     colProps: { span: 8 },
   },
   {
-    field: 'trayNo',
-    label: '字典项编号',
+    field: 'itemValue',
+    label: '字典项值',
     component: 'Input',
     colProps: { span: 8 },
   },
 ];
 export const itemFormSchema: FormSchema[] = [
   {
-    field: 'locationNo',
+    field: 'itemKey',
     label: '字典项名称',
     component: 'Input',
     required: true,
     colProps: { span: 24 },
   },
   {
-    field: 'trayNo',
+    field: 'itemValue',
     label: '字典项值',
     component: 'Input',
     required: true,
     colProps: { span: 24 },
   },
   {
-    field: 'trayNo',
+    field: 'itemDesc',
     label: '描述',
     component: 'InputTextArea',
     colProps: { span: 24 },
   },
   {
-    field: 'trayNo',
+    field: 'sort',
     label: '排序',
     component: 'InputNumber',
     colProps: { span: 24 },
   },
   {
-    field: 'trayNo',
+    field: 'enable',
     label: '是否启用',
     component: 'Switch',
     colProps: { span: 24 },

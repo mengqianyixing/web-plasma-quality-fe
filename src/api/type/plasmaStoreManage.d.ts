@@ -443,4 +443,129 @@ export type GetApiCoreBankStockResponse = {
   bankNo: string;
 }[];
 
+/**
+ * 接口 [入库查询↗](https://yapi.sharing8.cn/project/529/interface/api/31680) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/reception`
+ * @更新时间 `2023-12-20 11:10:39`
+ */
+export interface GetApiCoreBankReceptionRequest {
+  /**
+   * 当前页面
+   */
+  currPage: string;
+  /**
+   * 页数大小
+   */
+  pageSize: string;
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 接收开始日期
+   */
+  receptStartDate?: string;
+  /**
+   * 接收结束日期
+   */
+  receptEndDate?: string;
+  /**
+   * 验收发布开始日期
+   */
+  verifyPubStartDate?: string;
+  /**
+   * 验收发布结束日期
+   */
+  verifyPubEndDate?: string;
+}
+
+/**
+ * 接口 [入库查询↗](https://yapi.sharing8.cn/project/529/interface/api/31680) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/reception`
+ * @更新时间 `2023-12-20 11:10:39`
+ */
+export interface GetApiCoreBankReceptionResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 采浆公司
+     */
+    stationNo: string;
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
+    /**
+     * 采集开始日期
+     */
+    collectStartDate: string;
+    /**
+     * 采集结束日期
+     */
+    collectEndDate: string;
+    /**
+     * 浆站出库日期
+     */
+    stationOutDate: string;
+    /**
+     * 出库数量（袋）
+     */
+    outNum: number;
+    /**
+     * 出库总净重（kg）
+     */
+    outWeight: number;
+    /**
+     * 接收日期
+     */
+    receptDate: string;
+    /**
+     * 验收发布人
+     */
+    verifyPuber: string;
+    /**
+     * 验收发布日期
+     */
+    verifyPubDate: string;
+    /**
+     * 验收数量（袋）
+     */
+    verifyNum: number;
+    /**
+     * 验收总净重（kg）
+     */
+    verifyWeight: number;
+    /**
+     * 差异总袋数
+     */
+    diffNum: number;
+    /**
+     * 差异总净重（kg）
+     */
+    diffWeight: number;
+    /**
+     * 验收合格数量袋
+     */
+    verifyPassNum: number;
+    /**
+     * 验收不合格数量（袋）
+     */
+    verifyNoPassNum: number;
+    /**
+     * 不足量数量
+     */
+    shortFallNum: number;
+  }[];
+}
+
 /* prettier-ignore-end */

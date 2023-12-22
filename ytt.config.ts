@@ -70,6 +70,14 @@ export default defineConfig([
             },
             outputFilePath: 'src/api/type/tagManage.d.ts',
           },
+          {
+            id: 5250,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              // 以接口全路径生成请求函数名
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/dictionary.d.ts',
+          },
         ],
       },
       {

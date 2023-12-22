@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:29:52
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-21 18:10:37
+ * @LastEditTime: 2023-12-22 10:49:23
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
@@ -16,7 +16,7 @@
         <a-button type="primary" @click="handleCreateItem()">字典项配置</a-button>
       </template>
     </BasicTable>
-    <FormModel @register="registerDrawer" @success="reload" />
+    <FormModel @register="registerDrawer" @success="formSuccess" />
     <ItemListDrawer @register="registerItemDrawer" />
   </PageWrapper>
 </template>
@@ -28,6 +28,7 @@
   import { message, Modal } from 'ant-design-vue';
   import FormModel from './formDrawer.vue';
   import ItemListDrawer from './itemListDrawer.vue';
+  import { getDictListApi, removeDictApi } from '@/api/dictionary';
 
   defineOptions({ name: 'Dictionary' });
 
@@ -36,14 +37,14 @@
 
   const [registerTable, { getSelectRows, reload, clearSelectedRowKeys }] = useTable({
     title: '',
-    api: () => Promise.resolve({ result: [{}] }),
+    api: getDictListApi,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
       totalField: 'totalCount',
       listField: 'result',
     },
-    rowKey: 'houseNo',
+    rowKey: 'dictId',
     columns,
     size: 'small',
     formConfig: {
@@ -55,9 +56,12 @@
     bordered: true,
     rowSelection: { type: 'radio' },
   });
-
+  function formSuccess() {
+    reload();
+    clearSelectedRowKeys();
+  }
   function handleCreate() {
-    openDrawer(true, {});
+    openDrawer(true, { data: {} });
   }
   function handleUpdate() {
     const [row] = getSelectRow();
@@ -68,8 +72,9 @@
     const [row] = getSelectRow();
     if (!row) return;
     Modal.confirm({
-      content: '确定删除？',
+      content: `确定删除${row.dictName}？`,
       onOk: async () => {
+        removeDictApi({ dictId: row.dictId });
         clearSelectedRowKeys();
         reload();
       },

@@ -666,4 +666,82 @@ export interface GetSysTagHisPreviewHisNoRequest {
  */
 export type GetSysTagHisPreviewHisNoResponse = string[];
 
+/**
+ * 接口 [标签打印↗](https://yapi.sharing8.cn/project/521/interface/api/31683) 的 **请求类型**
+ *
+ * @分类 [样式管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5208)
+ * @请求头 `POST /api/sys/tag/print`
+ * @更新时间 `2023-12-20 14:33:50`
+ */
+export interface PostApiSysTagPrintRequest {
+  /**
+   * 打印类型
+   */
+  labelType: string;
+  /**
+   * 业务编号
+   */
+  bissNo: string;
+  /**
+   * 打印类容，传入类型为HashMap
+   */
+  param?: {};
+}
+
+/**
+ * 接口 [标签打印↗](https://yapi.sharing8.cn/project/521/interface/api/31683) 的 **返回类型**
+ *
+ * @分类 [样式管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5208)
+ * @请求头 `POST /api/sys/tag/print`
+ * @更新时间 `2023-12-20 14:33:50`
+ */
+export interface PostApiSysTagPrintResponse {
+  /**
+   * 打印次数
+   */
+  times: number;
+  /**
+   * 分辨率
+   */
+  resolution: number;
+  /**
+   * 打印机类型
+   */
+  printerType: string;
+  /**
+   * 打印机名称
+   */
+  printerName: string;
+  directLabel: {
+    Width: number;
+    Height: number;
+    Gap: number;
+    Data: {
+      Id: string;
+      Type: string;
+      Data: string;
+      OnlyDisplay: boolean;
+      X: number;
+      Y: number;
+      Orientation: number;
+      LineThickness: number;
+      BarcodeRatio: number;
+      Width: number;
+      Height: number;
+      Readable: boolean;
+      UseThickness: boolean;
+      TextFormat: {
+        FontName: string;
+        FontSize: number;
+        Bold: boolean;
+        Italic: boolean;
+        Underline: boolean;
+        LineWrap: boolean;
+        Revert: boolean;
+        Middle: boolean;
+      };
+    }[];
+  };
+}
+
 /* prettier-ignore-end */
