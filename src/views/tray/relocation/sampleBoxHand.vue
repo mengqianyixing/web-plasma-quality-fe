@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2023-12-21 17:19:22
+ * @LastEditors: zcc
+ * @LastEditTime: 2023-12-22 17:39:08
+-->
 <template>
   <div class="h-full">
     <BasicTable @register="registerTable">
@@ -18,7 +26,7 @@
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form';
-
+  import { bindBoxApi } from '@/api/tray/relocation';
   import { plasmaBoxHandSearchFormSchema, plasmaBoxHandColumns } from './relocation.data';
   import { BasicDrawer, useDrawer } from '@/components/Drawer';
   import { message, Modal } from 'ant-design-vue';
@@ -75,13 +83,14 @@
   }
   async function confim() {
     try {
-      const values = await validate();
-      const row = getSelectRows();
+      const { trayNo } = await validate();
+      const rows = getSelectRows();
+      const boxes = rows.map((_) => _.boxId);
       setDrawerProps({ confirmLoading: true });
+      await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: boxes });
       setDrawerProps({ confirmLoading: false });
       openDrawer(false);
       reload();
-      console.log(values, row);
     } catch (e) {
       console.log(e);
     }

@@ -7,15 +7,19 @@
     width="500px"
     @ok="handleSubmit"
   >
-    <BasicForm @register="registerForm" />
-    <BasicTable @register="registerTable">
-      <template #location="{ record }">
-        {{ record.location || record.area }}
-        <a-button v-show="state.columnLabel === '货位'" @click="selectLocation(record)"
-          >选择
-        </a-button>
-      </template>
-    </BasicTable>
+    <div class="flex flex-col h-full">
+      <BasicForm @register="registerForm" />
+      <div class="flex-1">
+        <BasicTable @register="registerTable">
+          <template #location="{ record }">
+            {{ record.location || record.area }}
+            <a-button v-show="state.columnLabel === '货位'" @click="selectLocation(record)"
+              >选择
+            </a-button>
+          </template>
+        </BasicTable>
+      </div>
+    </div>
     <LocationDrawer @register="registerLocationDrawer" @confim="confim" />
   </BasicDrawer>
 </template>
@@ -29,6 +33,7 @@
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
   import { settingListApi, areaListApi } from '@/api/plasmaStore/setting';
   import { message } from 'ant-design-vue';
+  import { submitInHouseApi } from '@/api/tray/relocation';
 
   const emit = defineEmits(['success']);
   type Record = {
@@ -47,6 +52,7 @@
   });
   const [registerTable, { reload }] = useTable({
     api: getData,
+    isCanResizeParent: true,
     fetchSetting: {
       listField: 'result',
     },
@@ -95,13 +101,25 @@
     reload();
   });
   async function handleSubmit() {
-    await validate();
-    const isValidate = state.data.every((_) => _.area || _.location);
-    if (!isValidate) return message.warning('请选择货位');
-    setDrawerProps({ confirmLoading: true });
-    setDrawerProps({ confirmLoading: false });
-    closeDrawer();
-    emit('success');
+    try {
+      const { houseNo, subWareHouseNo } = await validate();
+      const isValidate = state.data.every((_) => _.area || _.location);
+      if (!isValidate) return message.warning('请选择货位');
+      const params = {
+        recInfo: state.data.map((_) => ({
+          trayNo: _.trayNo,
+          wareHouseNo: !_.location && (subWareHouseNo || houseNo || void 0),
+          locationNo: _.location || void 0,
+        })),
+      };
+      setDrawerProps({ confirmLoading: true });
+      await submitInHouseApi(params);
+      setDrawerProps({ confirmLoading: false });
+      closeDrawer();
+      emit('success');
+    } catch {
+      setDrawerProps({ confirmLoading: false });
+    }
   }
   function clearRowsSelection(data: Record[]) {
     data.forEach((row) => {

@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2023-12-21 17:19:22
+ * @LastEditors: zcc
+ * @LastEditTime: 2023-12-22 17:36:17
+-->
 <template>
   <div class="h-full">
     <BasicTable @register="registerTable">
@@ -22,6 +30,7 @@
   import { plasmaBoxHandSearchFormSchema, plasmaBoxHandColumns } from './relocation.data';
   import { BasicDrawer, useDrawer } from '@/components/Drawer';
   import { message, Modal } from 'ant-design-vue';
+  import { bindBoxApi } from '@/api/tray/relocation';
 
   const props = defineProps({
     isBinding: {
@@ -32,7 +41,7 @@
   const [registerForm, { validate, clearValidate }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
-    schemas: [{ label: '托盘编号', required: true, component: 'Input', field: 'taryNo' }],
+    schemas: [{ label: '托盘编号', required: true, component: 'Input', field: 'trayNo' }],
     showActionButtonGroup: false,
     showResetButton: false,
   });
@@ -75,13 +84,14 @@
   }
   async function confim() {
     try {
-      const values = await validate();
-      const row = getSelectRows();
+      const { trayNo } = await validate();
+      const rows = getSelectRows();
+      const boxes = rows.map((_) => _.boxId);
       setDrawerProps({ confirmLoading: true });
+      await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: boxes });
       setDrawerProps({ confirmLoading: false });
       openDrawer(false);
       reload();
-      console.log(values, row);
     } catch (e) {
       console.log(e);
     }
