@@ -1,17 +1,25 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2023-12-19 16:45:20
+ * @LastEditors: zcc
+ * @LastEditTime: 2023-12-19 17:21:04
+-->
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
+  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
     <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增</a-button>
         <a-button type="primary" @click="handleCheckStatus('CLOSED')">禁用</a-button>
         <a-button type="primary" @click="handleCheckStatus('NORMAL')">启用</a-button>
       </template>
-      <template #houseName="{ record }">
+      <template #houseName="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
           @click.stop.self="handleDetails(record)"
         >
-          {{ record?.houseName }}
+          {{ record.houseName }}
         </span>
       </template>
     </BasicTable>
@@ -35,14 +43,14 @@
   import { ref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { columns, searchFormSchema } from './setting.data';
+  import { columns } from './setting.data';
   import { settingListApi, checkHouseApi } from '@/api/plasmaStore/setting';
-  import { SettingResp } from '@/api/plasmaStore/setting/type';
   import { useDrawer } from '@/components/Drawer';
   import { message, Modal } from 'ant-design-vue';
   import FormModel from './formModel.vue';
   import LocationModel from './locationModel.vue';
   import AreaModel from './areaModel.vue';
+  import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
 
   defineOptions({ name: 'PlasmaStoreSetting' });
 
@@ -53,7 +61,7 @@
 
   const [registerTable, { getRowSelection, findTableDataRecord, reload, clearSelectedRowKeys }] =
     useTable({
-      title: '库房列表',
+      title: '',
       api: settingListApi,
       fetchSetting: {
         pageField: 'currPage',
@@ -61,14 +69,11 @@
         totalField: 'totalCount',
         listField: 'result',
       },
-      formConfig: {
-        labelWidth: 120,
-        schemas: searchFormSchema,
-      },
       rowKey: 'houseNo',
       columns,
-      useSearchForm: true,
-      showTableSetting: true,
+      size: 'small',
+      useSearchForm: false,
+      showTableSetting: false,
       bordered: true,
       rowSelection: { type: 'checkbox' },
     });
@@ -77,10 +82,10 @@
     openDrawer(true, {});
   }
   function handleCheckStatus(action: string) {
-    const { selectedRowKeys } = getRowSelection() as { selectedRowKeys: any[] };
+    const { selectedRowKeys } = getRowSelection() as { selectedRowKeys: string[] };
     if (selectedRowKeys.length === 0) return message.warning('请选择一条数据');
     else if (selectedRowKeys.length > 1) return message.warning('只能选择一条数据');
-    const { closed, houseNo, houseName } = findTableDataRecord(selectedRowKeys[0]) as any;
+    const { closed, houseNo, houseName } = findTableDataRecord(selectedRowKeys[0]) as Recordable;
     if (closed === action) return message.warning('状态不需要变更');
     Modal.confirm({
       content: '确认' + (action ? '禁用' : '启用') + houseName + '?',
@@ -92,9 +97,9 @@
       onCancel: () => Modal.destroyAll(),
     });
   }
-  function handleDetails(row: SettingResp) {
+  function handleDetails(row: Recordable) {
     houseNo.value = row.houseNo;
-    if (row.houseType[1] === 'F') {
+    if (row.houseType[1] === STORE_FLAG.F) {
       openAreaDrawer(true, { houseNo: row.houseNo });
     } else {
       openLoactionDrawer(true, { houseNo: row.houseNo });

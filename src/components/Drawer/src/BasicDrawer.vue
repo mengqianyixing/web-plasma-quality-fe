@@ -19,6 +19,7 @@
     <ScrollContainer
       :style="getScrollContentStyle"
       v-loading="getLoading"
+      viewClass="h-full"
       :loading-tip="loadingText || t('common.loadingText')"
     >
       <slot></slot>

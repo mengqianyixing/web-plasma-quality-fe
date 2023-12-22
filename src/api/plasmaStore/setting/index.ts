@@ -20,6 +20,8 @@ import {
   PutApiCoreBankWarehouseResponse,
   PutApiCoreBankWarehouseUseRequest,
   PutApiCoreBankWarehouseUseResponse,
+  GetApiCoreBankWarehouseHouseNoResponse,
+  GetApiCoreBankWarehouseHouseNoRequest,
 } from '@/api/type/plasmaStoreManage';
 
 enum Api {
@@ -43,7 +45,8 @@ export const addHouseApi = (params: PostApiCoreBankWarehouseRequest) =>
 export const checkHouseApi = (data: PutApiCoreBankWarehouseUseRequest) =>
   defHttp.put<PutApiCoreBankWarehouseUseResponse>({ url: Api.CHECK_HOUSE, data });
 
-export const areaListApi = ({ houseNo }) => defHttp.get({ url: Api.AREA_LIST + houseNo });
+export const areaListApi = ({ houseNo }: GetApiCoreBankWarehouseHouseNoRequest) =>
+  defHttp.get<GetApiCoreBankWarehouseHouseNoResponse>({ url: Api.AREA_LIST + houseNo });
 
 export const locationListApi = (params: GetApiCoreBankLocationsRequest) =>
   defHttp.get<GetApiCoreBankLocationsResponse>({ url: Api.LOCATION_LIST, params });

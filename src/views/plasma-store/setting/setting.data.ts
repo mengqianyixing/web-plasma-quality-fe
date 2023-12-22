@@ -1,24 +1,17 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { Cell } from '@/components/CellWapper';
-
-export enum TYPE_FLAG {
-  N = '普通库',
-  F = '不合格库',
-}
-export enum STORE_FLAG {
-  S = '高架库',
-  F = '平库',
-}
-export const AUTO_FLAG = {
-  M: '否',
-  A: '是',
-};
+import {
+  TYPE_FLAG_TEXT,
+  STORE_FLAG_TEXT,
+  AUTO_FLAG_TEXT,
+  TYPE_FLAG,
+  STORE_FLAG,
+  AUTO_FLAG,
+  CLOSED,
+  CLOSED_TEXT,
+} from '@/enums/plasmaStoreEnum';
 
 export const columns: BasicColumn[] = [
-  {
-    title: '库房编号',
-    dataIndex: 'houseNo',
-  },
   {
     title: '库房名称',
     slots: { customRender: 'houseName' },
@@ -27,21 +20,21 @@ export const columns: BasicColumn[] = [
     title: '库房类别',
     dataIndex: 'typeFlag',
     customRender: ({ record }) => {
-      return TYPE_FLAG[record.houseType[0]];
+      return TYPE_FLAG_TEXT[record.houseType[0]];
     },
   },
   {
     title: '存放模式',
     dataIndex: 'storeFlag',
     customRender: ({ record }) => {
-      return STORE_FLAG[record.houseType[1]];
+      return STORE_FLAG_TEXT[record.houseType[1]];
     },
   },
   {
     title: '是否立体库',
     dataIndex: 'autoFlag',
     customRender: ({ record }) => {
-      return AUTO_FLAG[record.houseType[2]];
+      return AUTO_FLAG_TEXT[record.houseType[2]];
     },
   },
   {
@@ -60,7 +53,7 @@ export const columns: BasicColumn[] = [
     title: '是否启用',
     dataIndex: 'closed',
     customRender: ({ record }) => {
-      return record.closed === 'NORMAL' ? '是' : '否';
+      return CLOSED_TEXT[record.closed];
     },
   },
   {
@@ -69,20 +62,6 @@ export const columns: BasicColumn[] = [
   },
 ];
 
-export const searchFormSchema: FormSchema[] = [
-  {
-    field: 'houseNo',
-    label: '库房编号',
-    component: 'Input',
-    colProps: { span: 8 },
-  },
-  {
-    field: 'houseName',
-    label: '库房名称',
-    component: 'Input',
-    colProps: { span: 8 },
-  },
-];
 export const capacitySchema: FormSchema = {
   field: 'capacity',
   label: '货位数量',
@@ -113,12 +92,12 @@ export const initFormSchema: (opt: {
     component: 'Select',
     colProps: { span: 12 },
     required: true,
-    defaultValue: houseType[0] || 'N',
+    defaultValue: houseType[0] || TYPE_FLAG.N,
     componentProps: {
       disabled: !!houseType,
       options: [
-        { label: TYPE_FLAG.N, value: 'N' },
-        { label: TYPE_FLAG.F, value: 'F' },
+        { label: TYPE_FLAG_TEXT.N, value: TYPE_FLAG.N },
+        { label: TYPE_FLAG_TEXT.F, value: TYPE_FLAG.F },
       ],
     },
   },
@@ -128,15 +107,15 @@ export const initFormSchema: (opt: {
     component: 'Select',
     colProps: { span: 12 },
     required: true,
-    defaultValue: houseType[1] || 'S',
+    defaultValue: houseType[1] || STORE_FLAG.S,
     componentProps: {
       disabled: !!houseType,
       onChange: function (value) {
-        updateSchema([{ field: 'capacity', required: value !== 'F' }]);
+        updateSchema([{ field: 'capacity', required: value !== STORE_FLAG.F }]);
       },
       options: [
-        { label: STORE_FLAG.S, value: 'S' },
-        { label: STORE_FLAG.F, value: 'F' },
+        { label: STORE_FLAG_TEXT.S, value: STORE_FLAG.S },
+        { label: STORE_FLAG_TEXT.F, value: STORE_FLAG.F },
       ],
     },
   },
@@ -146,12 +125,12 @@ export const initFormSchema: (opt: {
     component: 'Select',
     colProps: { span: 12 },
     required: true,
-    defaultValue: houseType[2] || 'M',
+    defaultValue: houseType[2] || AUTO_FLAG.A,
     componentProps: {
       disabled: !!houseType,
       options: [
-        { label: AUTO_FLAG.A, value: 'A' },
-        { label: AUTO_FLAG.M, value: 'M' },
+        { label: AUTO_FLAG_TEXT.A, value: AUTO_FLAG.A },
+        { label: AUTO_FLAG_TEXT.M, value: AUTO_FLAG.M },
       ],
     },
   },
@@ -166,11 +145,11 @@ export const initFormSchema: (opt: {
     label: '是否启用',
     colProps: { span: 12 },
     required: true,
-    defaultValue: 'NORMAL',
+    defaultValue: CLOSED.NORMAL,
     componentProps: {
       options: [
-        { label: '是', value: 'NORMAL' },
-        { label: '否', value: 'CLOSED' },
+        { label: CLOSED_TEXT.NORMAL, value: CLOSED.NORMAL },
+        { label: CLOSED_TEXT.CLOSED, value: CLOSED.CLOSED },
       ],
     },
   },
@@ -194,7 +173,7 @@ export const locationColumns: BasicColumn[] = [
     title: '是否启用',
     dataIndex: 'closed',
     customRender: ({ record }) => {
-      return record.closed === 'NORMAL' ? '是' : '否';
+      return CLOSED_TEXT[record.closed];
     },
   },
 ];
@@ -215,10 +194,6 @@ export const locationSearchForSchema: FormSchema[] = [
 
 export const areaColumns: BasicColumn[] = [
   {
-    title: '区域编号',
-    dataIndex: 'houseNo',
-  },
-  {
     title: '区域名称',
     dataIndex: 'houseName',
   },
@@ -228,16 +203,19 @@ export const areaColumns: BasicColumn[] = [
     customRender: ({ record }) => {
       return record.standard.maxLocationSize;
     },
+    width: 80,
   },
   {
     title: '已使用货位数',
     dataIndex: '',
+    width: 110,
   },
   {
     title: '是否启用',
     dataIndex: '',
+    width: 100,
     customRender: ({ record }) => {
-      return record.closed === 'NORMAL' ? '是' : '否';
+      return CLOSED_TEXT[record.closed];
     },
   },
   {
@@ -246,12 +224,6 @@ export const areaColumns: BasicColumn[] = [
   },
 ];
 export const areaSearchForSchema: FormSchema[] = [
-  {
-    field: 'houseNo',
-    label: '区域编号',
-    component: 'Input',
-    colProps: { span: 8 },
-  },
   {
     field: 'houseName',
     label: '区域名称',
@@ -272,32 +244,28 @@ export const locationCell: Cell[] = [
 ];
 export const cellSchema: (locationCell: Cell[]) => Cell[] = (locationCell) => [
   {
-    field: 'houseNo',
-    label: '库房编号',
-  },
-  {
     field: 'houseName',
     label: '库房名称',
   },
   {
     field: 'houseType',
     label: '库房类别',
-    format: (data) => TYPE_FLAG[data.houseType[0]],
+    format: (data) => TYPE_FLAG_TEXT[data.houseType[0]],
   },
   {
     field: 'houseType',
     label: '存放模式',
-    format: (data) => STORE_FLAG[data.houseType[1]],
+    format: (data) => STORE_FLAG_TEXT[data.houseType[1]],
   },
   {
     field: 'houseType',
     label: '是否自动库',
-    format: (data) => AUTO_FLAG[data.houseType[2]],
+    format: (data) => AUTO_FLAG_TEXT[data.houseType[2]],
   },
   ...locationCell,
   {
     field: 'closed',
     label: '是否启用',
-    format: (data) => (data.closed === 'NORMAL' ? '是' : '否'),
+    format: (data) => CLOSED_TEXT[data.closed],
   },
 ];
