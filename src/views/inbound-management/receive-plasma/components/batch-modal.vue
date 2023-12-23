@@ -56,7 +56,7 @@
           <Button type="primary" @click="queryTable">查询</Button>
         </FormItem>
         <FormItem>
-          <Button>重置</Button>
+          <Button @click="resetQuery">重置</Button>
         </FormItem>
       </Form>
       <Table
@@ -65,7 +65,15 @@
         :row-selection="rowSelection"
         bordered
         :pagination="pagination"
-      />
+        :loading="loading"
+        row-key="batchNo"
+      >
+        <template #bodyCell="{ column, text }">
+          <template v-if="column.dataIndex === 'acceptState' || column.dataIndex === 'verifyState'">
+            {{ optsTransMap(receiveOpts, 'code', 'name')[text] }}
+          </template>
+        </template>
+      </Table>
     </div>
   </Modal>
 </template>
@@ -92,6 +100,8 @@
 
   const emit = defineEmits(['close', 'confirm']);
 
+  const loading = ref(false);
+
   // 表单数据
   const searchForm = ref({
     stationNo: '',
@@ -115,32 +125,41 @@
   const receiveOpts = ref([
     {
       code: 'W',
-      name: '等待',
+      name: '未接收',
     },
     {
       code: 'R',
-      name: '操作中',
+      name: '接收中',
     },
     {
       code: 'S',
-      name: '成功',
+      name: '已接收',
     },
   ]);
   // 验收状态备选项
   const checkOpts = ref([
     {
       code: 'W',
-      name: '等待',
+      name: '未接收',
     },
     {
       code: 'R',
-      name: '操作中',
+      name: '接收中',
     },
     {
       code: 'S',
-      name: '成功',
+      name: '已接收',
     },
   ]);
+  // 备选项转map
+  const optsTransMap = (arr: any[], code: any, name: any) => {
+    if (!arr.length) return {};
+    const obj = {};
+    for (const item of arr) {
+      obj[item[code]] = item[name];
+    }
+    return obj;
+  };
 
   const hideModal = () => {
     emit('close', false);
@@ -216,23 +235,41 @@
   const rowSelection: TableProps['rowSelection'] = {
     type: 'radio',
     onChange: (selectedRowKeys: any[], selectedRows: any[]) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
       tableSelected.value = selectedRows;
     },
   };
   // 查询列表数据
   const queryTable = async () => {
     const params = { ...searchForm.value, ...pagination.value };
-    const res = await getBatchSummary(params);
-    pagination.value.total = res.totalCount;
-    pagination.value.pageSize = res.pageSize;
-    tableData.value = res.result;
-    for (const item of tableData.value) {
-      if (item.dispatch) {
-        item.depositor = item.dispatch.depositor;
-        item.optTime = item.dispatch.optTime;
+    try {
+      loading.value = true;
+      const res = await getBatchSummary(params);
+      if (res) {
+        pagination.value.total = res.totalCount;
+        pagination.value.pageSize = res.pageSize;
+        tableData.value = res.result;
+        // dispatch 为对象，拆成两个字段作两列
+        for (const item of tableData.value) {
+          if (item.dispatch) {
+            item.depositor = item.dispatch.depositor;
+            item.optTime = item.dispatch.optTime;
+          }
+        }
       }
+    } finally {
+      loading.value = false;
     }
+  };
+
+  const resetQuery = () => {
+    searchForm.value.stationNo = '';
+    searchForm.value.batchNo = '';
+    searchForm.value.acceptState = '';
+    searchForm.value.verifyState = '';
+    pagination.value.pageSize = 10;
+    pagination.value.current = 1;
+    pagination.value.total = 0;
+    queryTable();
   };
   queryTable();
 </script>
