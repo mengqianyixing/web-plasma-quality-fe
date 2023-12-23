@@ -100,6 +100,14 @@ export default defineConfig([
             outputFilePath: 'src/api/type/plasmaStoreManage.d.ts',
           },
           {
+            id: 5243,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              // 以接口全路径生成请求函数名
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/batchManage.d.ts',
+          },
+          {
             id: 5229,
             getRequestFunctionName(interfaceInfo, changeCase) {
               // 以接口全路径生成请求函数名
