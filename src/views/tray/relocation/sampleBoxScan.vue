@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:00:48
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-22 17:40:52
+ * @LastEditTime: 2023-12-23 18:38:08
 -->
 <template>
   <div class="h-full">
@@ -26,6 +26,7 @@
     sampleBoxScanColumns,
   } from './relocation.data';
   import { bindBoxApi } from '@/api/tray/relocation';
+  import { message } from 'ant-design-vue';
 
   const [registerForm, { getFieldsValue, resetFields }] = useForm({
     labelWidth: 90,
@@ -43,7 +44,7 @@
   const columns = sampleBoxScanColumns(props.isBinding);
   const [registerTable] = useTable({
     title: '',
-    api: () => Promise.resolve({ result: [{}] }),
+    api: () => Promise.resolve({ result: [] }),
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -64,6 +65,7 @@
     const { boxId, trayNo } = getFieldsValue();
     if (!boxId || !trayNo) return;
     await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: [boxId] });
+    message.success('操作成功');
     resetFields();
   }
 </script>

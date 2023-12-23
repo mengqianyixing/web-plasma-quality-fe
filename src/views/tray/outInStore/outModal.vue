@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-18 15:55:20
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-22 17:00:36
+ * @LastEditTime: 2023-12-23 17:40:42
 -->
 <template>
   <BasicDrawer
@@ -26,7 +26,9 @@
   import { reactive } from 'vue';
   import { siteNoSchema } from './outInStore.data';
   import { submitOutHouseApi } from '@/api/tray/relocation';
+  import { getHouseSiteApi } from '@/api/plasmaStore/site';
 
+  const emit = defineEmits(['success']);
   const state = reactive({
     data: [],
     siteList: [],
@@ -54,7 +56,7 @@
     setDrawerProps({ confirmLoading: false });
     if (showSite) {
       appendSchemaByField(siteNoSchema as FormSchemaInner, void 0);
-      getSiteList();
+      getSiteList(data.houseNo);
     } else {
       removeSchemaByField(siteNoSchema.field);
     }
@@ -71,16 +73,19 @@
         siteId: values.siteId,
       };
       await submitOutHouseApi(params);
+      emit('success');
       setDrawerProps({ confirmLoading: false });
       closeDrawer();
     } catch {
       setDrawerProps({ confirmLoading: false });
     }
   }
-  function getSiteList() {
+  async function getSiteList(houseNo: string) {
+    const res = await getHouseSiteApi({ houseNo: houseNo || '16282067' });
+    console.log(res);
     updateSchema({
-      field: 'siteNo',
-      componentProps: { options: [{ label: '站点1', value: 1 }] },
+      field: 'siteId',
+      componentProps: { options: res || [] },
     });
   }
   function getData() {

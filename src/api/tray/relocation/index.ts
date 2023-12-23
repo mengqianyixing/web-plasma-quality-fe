@@ -8,10 +8,12 @@ import {
   PostApiCoreBankTrayWarehouseMoveResponse,
   PostApiCoreBankTrayBoxRequest,
   PostApiCoreBankTrayBoxResponse,
+  GetApiCoreBankWarehouseTrayTrayNoRequest,
+  GetApiCoreBankWarehouseTrayTrayNoResponse,
 } from '@/api/type/trayManage';
 
 export const submitOutHouseApi = (params: PostApiCoreBankTrayWarehouseDeliverRequest) =>
-  defHttp.get<PostApiCoreBankTrayWarehouseDeliverResponse>({
+  defHttp.post<PostApiCoreBankTrayWarehouseDeliverResponse>({
     url: '/api/core/bank/tray/warehouse/deliver',
     params,
   });
@@ -30,3 +32,8 @@ export const submitRelocationApi = (params: PostApiCoreBankTrayWarehouseMoveRequ
 
 export const bindBoxApi = (params: PostApiCoreBankTrayBoxRequest) =>
   defHttp.post<PostApiCoreBankTrayBoxResponse>({ url: '/api/core/bank/tray/box', params });
+
+export const taryHouseApi = ({ trayNo }: GetApiCoreBankWarehouseTrayTrayNoRequest) =>
+  defHttp.get<GetApiCoreBankWarehouseTrayTrayNoResponse>({
+    url: `/api/core/bank/warehouse/tray/${trayNo}`,
+  });
