@@ -3,13 +3,22 @@
     <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button type="primary" @click="handlePrint">打印</a-button>
-        <a-button type="primary" @click="handlePrint">补打</a-button>
+        <a-button type="primary" @click="handlePrintAgain">补打</a-button>
         <a-button type="primary" @click="handleDiscard">报废</a-button>
+      </template>
+      <template #trayNo="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetails(record)"
+        >
+          {{ record.trayNo }}
+        </span>
       </template>
     </BasicTable>
     <BasicDrawer @register="registerDrawer" @ok="submit" showFooter title="托盘打印">
       <BasicForm @register="registerForm" />
     </BasicDrawer>
+    <TableDrawer @register="registerTableDrawer" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
@@ -18,15 +27,19 @@
   import { columns, searchFormSchema } from './manage.data';
   import { BasicDrawer, useDrawer } from '@/components/Drawer';
   import { BasicForm, useForm } from '@/components/Form';
+  import { getListApi, disableTrayApi, createTrayLabelApi } from '@/api/tray/list';
+  import { message, Modal } from 'ant-design-vue';
+  import TableDrawer from './tableDrawer.vue';
 
   const [registerDrawer, { openDrawer, closeDrawer, setDrawerProps }] = useDrawer();
+  const [registerTableDrawer, { openDrawer: openTableDrawer }] = useDrawer();
   const [registerForm, { validate }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
     schemas: [
       {
         component: 'InputNumber',
-        field: '',
+        field: 'trayNumber',
         label: '托盘数量',
         defaultValue: 1,
         required: true,
@@ -37,8 +50,8 @@
     ],
     showActionButtonGroup: false,
   });
-  const [registerTable] = useTable({
-    api: () => Promise.resolve(),
+  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
+    api: getListApi,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -60,12 +73,35 @@
     setDrawerProps({ confirmLoading: false });
     openDrawer(true);
   }
-  function handleDiscard() {}
+  function handlePrintAgain() {}
+  function handleDiscard() {
+    const rows = getSelectRows();
+    if (rows.length > 1) return message.warning('只能选择一条数据');
+    else if (rows.length === 0) return message.warning('请选择一条数据');
+    const [row] = rows;
+    Modal.confirm({
+      content: `确认废弃${row.trayNo}吗？`,
+      onOk: async () => {
+        await disableTrayApi({ trayNo: row.trayNo });
+        clearSelectedRowKeys();
+        reload();
+      },
+      onCancel: () => Modal.destroyAll(),
+    });
+  }
 
   async function submit() {
-    setDrawerProps({ confirmLoading: true });
-    await validate();
-    setDrawerProps({ confirmLoading: false });
-    closeDrawer();
+    try {
+      setDrawerProps({ confirmLoading: true });
+      const { trayNumber } = await validate();
+      await createTrayLabelApi({ trayNumber });
+      setDrawerProps({ confirmLoading: false });
+      closeDrawer();
+    } catch {
+      setDrawerProps({ confirmLoading: false });
+    }
+  }
+  function handleDetails(row: Recordable) {
+    openTableDrawer(true, { trayNo: row.trayNo });
   }
 </script>

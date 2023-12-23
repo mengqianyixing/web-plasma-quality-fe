@@ -47,19 +47,19 @@ export const taryRelocationColumns: BasicColumn[] = [
 export const siteSchema: FormSchema = {
   label: '出库站点',
   component: 'Select',
-  field: 'siteNo',
+  field: 'siteId',
   required: true,
 };
 export const locationSchema: FormSchema = {
   label: '目标货位',
   component: 'InputSearch',
-  field: 'location',
+  field: 'locationNo',
   required: true,
 };
 export const areaSchema: FormSchema = {
   label: '目标区域',
   component: 'Select',
-  field: 'area',
+  field: 'subWareHouseNo',
   required: true,
   componentProps: {
     options: [],
@@ -95,13 +95,13 @@ export const plasmaBoxScanFormSchema: FormSchema[] = [
   {
     component: 'Input',
     label: '托盘编号',
-    field: '',
+    field: 'trayNo',
     colProps: { span: 8 },
   },
   {
     component: 'Input',
     label: '箱号',
-    field: '',
+    field: 'boxId',
     colProps: { span: 8 },
   },
 ];
@@ -109,13 +109,13 @@ export const plasmaBoxScanSearchFormSchema: FormSchema[] = [
   {
     component: 'Input',
     label: '托盘编号',
-    field: '',
+    field: 'trayNo',
     colProps: { span: 6 },
   },
   {
     component: 'Input',
     label: '箱号',
-    field: '',
+    field: 'boxId',
     colProps: { span: 6 },
   },
 ];
@@ -191,13 +191,13 @@ export const sampleBoxScanFormSchema: FormSchema[] = [
   {
     component: 'Input',
     label: '托盘编号',
-    field: '',
+    field: 'trayNo',
     colProps: { span: 8 },
   },
   {
     component: 'Input',
     label: '样品箱号',
-    field: '',
+    field: 'boxId',
     colProps: { span: 8 },
   },
 ];

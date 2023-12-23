@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 09:52:52
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-21 15:46:03
+ * @LastEditTime: 2023-12-22 17:13:29
 -->
 <template>
   <div class="h-full">
@@ -31,6 +31,7 @@
   import { settingListApi, areaListApi } from '@/api/plasmaStore/setting';
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
   import { reactive } from 'vue';
+  import { submitInHouseApi } from '@/api/tray/relocation';
   import LocationDrawer from '@/components/BusinessDrawer/locationDrawer/index.vue';
 
   const houseAreaMap: Map<string, Recordable<any>> = new Map();
@@ -50,6 +51,8 @@
       appendSchemaByField,
       removeSchemaByField,
       getFieldsValue,
+      resetFields,
+      clearValidate,
     },
   ] = useForm({
     labelWidth: 90,
@@ -135,8 +138,24 @@
     }
   }
   async function inStoreConfim() {
-    const values = await validate();
-    console.log(values);
+    try {
+      const { houseNo, subWareHouseNo, siteId, locationNo, trayNo } = await validate();
+      const params = {
+        recInfo: [
+          {
+            locationNo,
+            siteId,
+            wareHouseNo: houseNo || subWareHouseNo,
+            trayNo,
+          },
+        ],
+      };
+      await submitInHouseApi(params);
+      resetFields();
+      clearValidate();
+    } catch (e) {
+      console.log(e);
+    }
   }
   async function getAreaListFn(houseNo: string) {
     let list = houseAreaMap.get(houseNo);

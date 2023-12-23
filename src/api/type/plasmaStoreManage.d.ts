@@ -146,7 +146,7 @@ export type PutApiCoreBankWarehouseResponse = string;
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/warehouses`
- * @更新时间 `2023-12-19 14:09:18`
+ * @更新时间 `2023-12-23 11:01:32`
  */
 export interface GetApiCoreBankWarehousesRequest {
   /**
@@ -165,6 +165,10 @@ export interface GetApiCoreBankWarehousesRequest {
    * 库房名称
    */
   houseName?: string;
+  /**
+   * S表示高架库，F表示平库
+   */
+  warehouseType?: string;
 }
 
 /**
@@ -172,7 +176,7 @@ export interface GetApiCoreBankWarehousesRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/warehouses`
- * @更新时间 `2023-12-19 14:09:18`
+ * @更新时间 `2023-12-23 11:01:32`
  */
 export interface GetApiCoreBankWarehousesResponse {
   /**
@@ -567,5 +571,162 @@ export interface GetApiCoreBankReceptionResponse {
     shortFallNum: number;
   }[];
 }
+
+/**
+ * 接口 [新增库房站点↗](https://yapi.sharing8.cn/project/529/interface/api/31779) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `POST /api/core/bank/site`
+ * @更新时间 `2023-12-22 15:57:21`
+ */
+export interface PostApiCoreBankSiteRequest {
+  /**
+   * 站点编号
+   */
+  siteNo: string;
+  /**
+   * 站点名称
+   */
+  siteName: string;
+  /**
+   * 所属库房
+   */
+  fkHouseNo: string;
+  /**
+   * 1禁用,0正常
+   */
+  closed: number;
+}
+
+/**
+ * 接口 [新增库房站点↗](https://yapi.sharing8.cn/project/529/interface/api/31779) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `POST /api/core/bank/site`
+ * @更新时间 `2023-12-22 15:57:21`
+ */
+export type PostApiCoreBankSiteResponse = string;
+
+/**
+ * 接口 [修改库房站点↗](https://yapi.sharing8.cn/project/529/interface/api/31782) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `PUT /api/core/bank/site`
+ * @更新时间 `2023-12-23 14:07:26`
+ */
+export interface PutApiCoreBankSiteRequest {
+  siteNo: string;
+  siteName?: string;
+  fkHouseNo?: string;
+  closed?: number;
+  /**
+   * 未修改前的站点编号
+   */
+  siteNoOld: string;
+}
+
+/**
+ * 接口 [修改库房站点↗](https://yapi.sharing8.cn/project/529/interface/api/31782) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `PUT /api/core/bank/site`
+ * @更新时间 `2023-12-23 14:07:26`
+ */
+export type PutApiCoreBankSiteResponse = string;
+
+/**
+ * 接口 [获取库房站点列表↗](https://yapi.sharing8.cn/project/529/interface/api/31785) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `POST /api/core/bank/sites`
+ * @更新时间 `2023-12-22 16:12:02`
+ */
+export interface PostApiCoreBankSitesRequest {
+  currPage: number;
+  pageSize: number;
+  siteNo?: string;
+}
+
+/**
+ * 接口 [获取库房站点列表↗](https://yapi.sharing8.cn/project/529/interface/api/31785) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `POST /api/core/bank/sites`
+ * @更新时间 `2023-12-22 16:12:02`
+ */
+export interface PostApiCoreBankSitesResponse {
+  totalCount: number;
+  pageSize: number;
+  totalPage: number;
+  currPage: number;
+  result?: {
+    siteNo: string;
+    siteName: string;
+    fkHouseNo: string;
+    closed: number;
+    creator?: string;
+    updater?: string;
+    createAt?: string;
+    updateAt?: string;
+  }[];
+}
+
+/**
+ * 接口 [获取库房站点详情↗](https://yapi.sharing8.cn/project/529/interface/api/31788) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/site/{siteNo}`
+ * @更新时间 `2023-12-22 16:54:39`
+ */
+export interface GetApiCoreBankSiteSiteNoRequest {
+  siteNo: string;
+}
+
+/**
+ * 接口 [获取库房站点详情↗](https://yapi.sharing8.cn/project/529/interface/api/31788) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/site/{siteNo}`
+ * @更新时间 `2023-12-22 16:54:39`
+ */
+export interface GetApiCoreBankSiteSiteNoResponse {
+  siteNo: string;
+  siteName: string;
+  fkHouseNo: string;
+  closed: number;
+  creator?: string;
+  updater?: string;
+  createAt?: string;
+  updateAt?: string;
+}
+
+/**
+ * 接口 [根据库房查站点↗](https://yapi.sharing8.cn/project/529/interface/api/31797) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/site/house/{houseNo}`
+ * @更新时间 `2023-12-23 10:49:40`
+ */
+export interface GetApiCoreBankSiteHouseHouseNoRequest {
+  houseNo: string;
+}
+
+/**
+ * 接口 [根据库房查站点↗](https://yapi.sharing8.cn/project/529/interface/api/31797) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/site/house/{houseNo}`
+ * @更新时间 `2023-12-23 10:49:40`
+ */
+export type GetApiCoreBankSiteHouseHouseNoResponse = {
+  /**
+   * 库房名称
+   */
+  lable: string;
+  /**
+   * 库房编号
+   */
+  value: string;
+}[];
 
 /* prettier-ignore-end */

@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-18 15:55:20
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-20 15:37:43
+ * @LastEditTime: 2023-12-22 17:00:36
 -->
 <template>
   <BasicDrawer
@@ -24,7 +24,8 @@
   import { BasicForm, FormSchemaInner, useForm } from '@/components/Form';
   import { BasicTable, useTable } from '@/components/Table';
   import { reactive } from 'vue';
-  import { outFormSchema, siteNoSchema } from './outInStore.data';
+  import { siteNoSchema } from './outInStore.data';
+  import { submitOutHouseApi } from '@/api/tray/relocation';
 
   const state = reactive({
     data: [],
@@ -38,6 +39,7 @@
     useSearchForm: false,
     bordered: true,
     pagination: false,
+    isCanResizeParent: true,
   });
   const [
     registerForm,
@@ -45,7 +47,7 @@
   ] = useForm({
     labelWidth: 100,
     baseColProps: { span: 24 },
-    schemas: outFormSchema,
+    schemas: [],
     showActionButtonGroup: false,
   });
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(({ data, showSite }) => {
@@ -61,10 +63,19 @@
     reload();
   });
   async function handleSubmit() {
-    await validate();
-    setDrawerProps({ confirmLoading: true });
-    setDrawerProps({ confirmLoading: false });
-    closeDrawer();
+    try {
+      const values = await validate();
+      setDrawerProps({ confirmLoading: true });
+      const params = {
+        dlvInfo: state.data.map((_: Recordable) => _.trayNo),
+        siteId: values.siteId,
+      };
+      await submitOutHouseApi(params);
+      setDrawerProps({ confirmLoading: false });
+      closeDrawer();
+    } catch {
+      setDrawerProps({ confirmLoading: false });
+    }
   }
   function getSiteList() {
     updateSchema({

@@ -428,4 +428,31 @@ export interface GetApiSysUserIdResponse {
   }[];
 }
 
+/**
+ * 接口 [根据用户编号集合查询用户信息↗](https://yapi.sharing8.cn/project/521/interface/api/31773) 的 **请求类型**
+ *
+ * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
+ * @请求头 `POST /api/sys/users/byUuserNo`
+ * @更新时间 `2023-12-22 13:57:22`
+ */
+export interface PostApiSysUsersByUuserNoRequest {
+  /**
+   * 用户编号
+   */
+  userNo: string;
+  /**
+   * 用户姓名
+   */
+  username: string;
+}
+
+/**
+ * 接口 [根据用户编号集合查询用户信息↗](https://yapi.sharing8.cn/project/521/interface/api/31773) 的 **返回类型**
+ *
+ * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
+ * @请求头 `POST /api/sys/users/byUuserNo`
+ * @更新时间 `2023-12-22 13:57:22`
+ */
+export interface PostApiSysUsersByUuserNoResponse {}
+
 /* prettier-ignore-end */

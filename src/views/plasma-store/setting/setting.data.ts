@@ -111,7 +111,7 @@ export const initFormSchema: (opt: {
     componentProps: {
       disabled: !!houseType,
       onChange: function (value) {
-        updateSchema([{ field: 'capacity', required: value !== STORE_FLAG.F }]);
+        updateSchema([{ field: 'capacity', required: !!houseType || value !== STORE_FLAG.F }]);
       },
       options: [
         { label: STORE_FLAG_TEXT.S, value: STORE_FLAG.S },

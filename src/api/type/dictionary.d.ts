@@ -389,4 +389,27 @@ export interface GetApiSysDictItemDictItemIdResponse {
   updater?: string;
 }
 
+/**
+ * 接口 [根据字典编号查询字典项↗](https://yapi.sharing8.cn/project/521/interface/api/31776) 的 **请求类型**
+ *
+ * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
+ * @请求头 `GET /api/sys/dictItems/{dictNo}`
+ * @更新时间 `2023-12-22 14:59:36`
+ */
+export interface GetApiSysDictItemsDictNoRequest {
+  dictNo: string;
+}
+
+/**
+ * 接口 [根据字典编号查询字典项↗](https://yapi.sharing8.cn/project/521/interface/api/31776) 的 **返回类型**
+ *
+ * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
+ * @请求头 `GET /api/sys/dictItems/{dictNo}`
+ * @更新时间 `2023-12-22 14:59:36`
+ */
+export type GetApiSysDictItemsDictNoResponse = {
+  lable: string;
+  value: string;
+}[];
+
 /* prettier-ignore-end */
