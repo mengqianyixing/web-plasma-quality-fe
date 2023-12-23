@@ -1,61 +1,83 @@
 <template>
-  <div class="main">
-    <div class="search-bar">
+  <div class="main" v-loading="loadingRef">
+    <div class="search-bar" ref="searchBarRef">
       <Form
         layout="inline"
         :model="filterForm"
         style="margin-bottom: 16px"
         :labelCol="{ style: { width: '70px' } }"
       >
-        <FormItem label="复核人">
-          <Select
-            v-model:value="filterForm.receiveMan"
-            allowClear
-            disabled
-            style="width: 180px"
-            placeholder="请点击登录"
-          >
-            <SelectOption v-for="item in receiveManOpts" :key="item.value" :value="item.value">{{
-              item.name
-            }}</SelectOption>
-          </Select>
-          <Button @click="showRegisterModal">登录</Button>
-        </FormItem>
-        <FormItem label="托盘编号">
-          <Input v-model:value="filterForm.trayNo" placeholder="请输入" />
-        </FormItem>
-        <FormItem label="箱号">
-          <Input v-model:value="filterForm.boxNo" placeholder="请扫描" />
-        </FormItem>
-        <FormItem>
-          <Button @click="suspendModal">提交接收单</Button>
-        </FormItem>
-        <FormItem>
-          <Button>托盘入库</Button>
-        </FormItem>
-      </Form>
-      <Form layout="inline" :model="detailData">
-        <FormItem label="血浆批号">
-          <Input
-            v-model:value="detailData.batchNo"
-            disabled
-            style="width: 180px"
-            placeholder="请点击选择"
-          />
-          <Button @click="showBatchModal">选择</Button>
-        </FormItem>
-        <FormItem label="采浆公司">
-          <span>{{ detailData.stationName }}</span>
-        </FormItem>
-        <FormItem label="出库单号">
-          <span>{{ detailData.transNo }}</span>
-        </FormItem>
-        <FormItem label="血浆箱数">
-          <span>{{ detailData.boxCount }}</span>
-        </FormItem>
-        <FormItem label="血浆数量">
-          <span>{{ detailData.plasmaCount }}</span>
-        </FormItem>
+        <Row style="width: 100%">
+          <Col>
+            <FormItem label="复核人">
+              <Select
+                v-model:value="filterForm.checker"
+                allowClear
+                disabled
+                style="width: 180px"
+                placeholder="请点击登录"
+              >
+                <SelectOption v-for="item in checkerOpts" :key="item.value" :value="item.value">{{
+                  item.name
+                }}</SelectOption>
+              </Select>
+              <Button @click="showRegisterModal">登录</Button>
+            </FormItem>
+          </Col>
+          <Col>
+            <FormItem label="托盘编号">
+              <Input v-model:value="filterForm.trayNo" placeholder="请输入" />
+            </FormItem>
+          </Col>
+          <Col>
+            <FormItem label="箱号">
+              <Input v-model:value="filterForm.boxNo" placeholder="请扫描" @keyup="keyupScan" />
+            </FormItem>
+          </Col>
+          <Col>
+            <FormItem>
+              <Button @click="suspendModal">提交接收单</Button>
+            </FormItem>
+          </Col>
+          <Col>
+            <FormItem>
+              <Button>托盘入库</Button>
+            </FormItem>
+          </Col>
+        </Row>
+        <Row style="width: 100%; margin-top: 16px">
+          <Col>
+            <FormItem label="血浆批号">
+              <Input
+                v-model:value="filterForm.batchNo"
+                disabled
+                style="width: 180px"
+                placeholder="请点击选择"
+              />
+              <Button @click="showBatchModal">选择</Button>
+            </FormItem>
+          </Col>
+          <Col>
+            <FormItem label="采浆公司">
+              <span>{{ filterForm.stationName }}</span>
+            </FormItem>
+          </Col>
+          <Col>
+            <FormItem label="出库单号">
+              <span>{{ filterForm.transNo }}</span>
+            </FormItem>
+          </Col>
+          <Col>
+            <FormItem label="血浆箱数">
+              <span>{{ filterForm.boxCount }}</span>
+            </FormItem>
+          </Col>
+          <Col>
+            <FormItem label="血浆数量">
+              <span>{{ filterForm.plasmaCount }}</span>
+            </FormItem>
+          </Col>
+        </Row>
       </Form>
     </div>
     <div class="content-bar">
@@ -65,10 +87,10 @@
             :columns="noReceiveColumns"
             :data-source="unAcceptDetails"
             bordered
-            :scroll="{ y: 570 }"
+            :scroll="{ y: tableHeight }"
             :pagination="false"
           >
-            <template #title>未接收箱数：{{ detailData.unAcceptCount }}</template>
+            <template #title>未接收箱数：{{ filterForm.unAcceptCount }}</template>
           </Table>
         </Col>
         <Col :span="14" :offset="1">
@@ -76,10 +98,10 @@
             :columns="receivedColumns"
             :data-source="acceptDetails"
             bordered
-            :scroll="{ y: 570 }"
+            :scroll="{ y: tableHeight }"
             :pagination="false"
           >
-            <template #title>已接收箱数：{{ detailData.acceptCount }}</template>
+            <template #title>已接收箱数：{{ filterForm.acceptCount }}</template>
           </Table>
         </Col>
       </Row>
@@ -88,7 +110,8 @@
     <registerModal v-if="registerModalVisible" @close="closeRegister" />
     <suspendOrResumeModal
       v-if="suspendModalVisible"
-      :receiveManOpts="receiveManOpts"
+      :checkerOpts="checkerOpts"
+      :batchNo="filterForm.batchNo"
       @close="closeSuspend"
       @go-register="registerModalVisible = true"
     />
@@ -96,7 +119,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, createVNode, nextTick } from 'vue';
   import dayjs from 'dayjs';
   import {
     Form,
@@ -108,18 +131,25 @@
     Row,
     Col,
     Table,
+    Modal,
   } from 'ant-design-vue';
   import batchModal from './components/batch-modal.vue';
   import registerModal from './components/register-modal.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
-  import { getAccepts } from '@/api/inbound-management/receive-plasma.ts';
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { getAccepts, acceptPlasma } from '@/api/inbound-management/receive-plasma.ts';
+
+  const { createMessage } = useMessage();
+  const { success, warning } = createMessage;
+
+  const loadingRef = ref(false);
+  const searchBarRef = ref(null);
+  const tableHeight = ref(570); // 动态表格高度
 
   interface FilterForm {
     trayNo: string;
     boxNo: string;
-    receiveMan: string;
-  }
-  interface DetailData {
+    checker: string;
     batchNo: string;
     stationName: string;
     transNo: string;
@@ -128,23 +158,22 @@
     unAcceptCount: number;
     acceptCount: number;
   }
-  // 表单数据1
-  const filterForm = ref<FilterForm>({
+  const initFilterForm = {
     trayNo: '',
     boxNo: '',
-    receiveMan: '',
-  });
-  // 表单数据2
-  const detailData = ref<DetailData>({
+    checker: '',
     batchNo: '',
     stationName: '',
     transNo: '',
     boxCount: 0, // 血浆箱数
     plasmaCount: 0, // 血浆数量
-    unAcceptCount: 0,
-    acceptCount: 0,
-  });
-  const receiveManOpts = [
+    unAcceptCount: 0, // 未接收箱数
+    acceptCount: 0, // 已接收箱数
+  };
+  // 表单数据1
+  const filterForm = ref<FilterForm>(initFilterForm);
+
+  const checkerOpts = [
     {
       value: '1',
       name: '肚鸡熊',
@@ -173,7 +202,7 @@
       dataIndex: 'plasmaCount',
     },
   ];
-  let unAcceptDetails = [];
+  let unAcceptDetails = ref<any[]>([]);
   // 已接收数据
   const receivedColumns = [
     {
@@ -209,7 +238,7 @@
       },
     },
   ];
-  let acceptDetails = [];
+  let acceptDetails = ref<any[]>([]);
 
   // 批号框
   const batchModalVisible = ref(false);
@@ -222,9 +251,9 @@
   };
   // 确认选择批号
   const confirmBatch = (val: any) => {
-    detailData.value.batchNo = val;
+    filterForm.value.batchNo = val;
     batchModalVisible.value = false;
-    getPageData(detailData.value.batchNo);
+    getPageData(filterForm.value.batchNo);
   };
 
   // 登录框
@@ -236,9 +265,13 @@
     registerModalVisible.value = false;
   };
 
-  // 暂停继续框
+  // 申请单框
   const suspendModalVisible = ref(false);
   const suspendModal = () => {
+    if (!filterForm.value.batchNo) {
+      warning('请先选择血浆批号!');
+      return;
+    }
     suspendModalVisible.value = true;
   };
   const closeSuspend = () => {
@@ -247,28 +280,106 @@
 
   // 查询页面数据
   const getPageData = async (batchNo) => {
+    loadingRef.value = true;
     const data = await getAccepts(batchNo);
-    detailData.value.stationName = data.stationName;
-    detailData.value.transNo = data.transNo;
-    unAcceptDetails = data.acceptDetail.unAcceptDetails;
-    acceptDetails = data.acceptDetail.acceptDetails;
+    loadingRef.value = false;
+    filterForm.value.stationName = data.stationName;
+    filterForm.value.transNo = data.transNo;
+    filterForm.value.unAcceptCount = data.acceptDetail.unAcceptCount;
+    filterForm.value.acceptCount = data.acceptDetail.acceptCount;
+    filterForm.value.plasmaCount = data.acceptDetail.plasmaCount;
+    filterForm.value.boxCount = data.acceptDetail.plasmaCount;
+
+    unAcceptDetails.value = data.acceptDetail.unAcceptDetails;
+    acceptDetails.value = data.acceptDetail.acceptDetails;
+
+    // 设置表格高度
+    nextTick(() => {
+      const searchBarHeight = searchBarRef.value.clientHeight;
+      tableHeight.value = window.innerHeight - 80 - searchBarHeight - 195;
+    });
   };
 
-  // // 扫描箱号进行接收操作
-  // const keyupScan = async (e) => {
-  //   filterForm.value.boxNo = e.target.value.toUpperCase();
-  //   if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-  //     // 校验
-  //     // ...
-  //     const params = {};
-  //     const data = await acceptPlasma(params);
-  //     console.log(data);
-  //   }
-  // };
+  // 扫描箱号进行接收操作
+  const keyupScan = async (e) => {
+    // filterForm.value.boxNo = e.target.value.toUpperCase();
+    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+      if (!filterForm.value.boxNo) {
+        warning('请扫描箱号！');
+        return;
+      }
+      // if (!filterForm.value.checker) {
+      //   warning('请登录复核人！');
+      //   return;
+      // }
+      if (!filterForm.value.batchNo) {
+        warning('请选择血浆批号！');
+        return;
+      }
+      const params = {
+        ...filterForm.value,
+        batchNo: filterForm.value.batchNo,
+      };
+      try {
+        loadingRef.value = true;
+        const data = await acceptPlasma(params);
+        if (data) {
+          filterForm.value.stationName = data.stationName;
+          filterForm.value.transNo = data.transNo;
+          filterForm.value.unAcceptCount = data.acceptDetail.unAcceptCount;
+          filterForm.value.acceptCount = data.acceptDetail.acceptCount;
+          filterForm.value.plasmaCount = data.acceptDetail.plasmaCount;
+          filterForm.value.boxCount = data.acceptDetail.plasmaCount;
+
+          unAcceptDetails.value = data.acceptDetail.unAcceptDetails;
+          acceptDetails.value = data.acceptDetail.acceptDetails;
+          // 设置表格高度
+          nextTick(() => {
+            const searchBarHeight = searchBarRef.value.clientHeight;
+            tableHeight.value = window.innerHeight - 80 - searchBarHeight - 195;
+          });
+          success('接收成功');
+          if (data.acceptDetail.unAcceptCount <= 0) {
+            // 一批接收完毕 提示
+            showConfirmGoon();
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        loadingRef.value = false;
+        filterForm.value.boxNo = '';
+      }
+    }
+  };
+
+  const showConfirmGoon = () => {
+    Modal.confirm({
+      title: '是否继续接收其他批次?',
+      content: createVNode('div', { style: 'color:red;' }, '当前批已接收完成！'),
+      onOk() {
+        // 清空当前批次信息
+        filterForm.value.trayNo = '';
+        filterForm.value.batchNo = '';
+        filterForm.value.stationName = '';
+        filterForm.value.transNo = '';
+        filterForm.value.boxCount = '';
+        filterForm.value.plasmaCount = '';
+        filterForm.value.unAcceptCount = '';
+        filterForm.value.acceptCount = '';
+        unAcceptDetails.value = [];
+        acceptDetails.value = [];
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+      class: 'test',
+    });
+  };
 </script>
 <style lang="less" scoped>
   .main {
-    height: 100%;
+    // height: 100%;
     padding: 16px;
 
     .search-bar {
