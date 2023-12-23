@@ -1,5 +1,5 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { CLOSED, CLOSED_TEXT } from '@/enums/plasmaStoreEnum';
+import { CLOSED_TEXT } from '@/enums/plasmaStoreEnum';
 
 export const columns: BasicColumn[] = [
   {
@@ -12,13 +12,13 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '库房',
-    dataIndex: 'fkHouseNo',
+    dataIndex: 'houseName',
   },
   {
     title: '是否启用',
     dataIndex: '',
     customRender: ({ record }) => {
-      return CLOSED_TEXT[record.closed];
+      return record.closed ? '否' : '是';
     },
   },
 ];
@@ -36,7 +36,21 @@ export const formListSchema: FormSchema[] = [
     colProps: { span: 24 },
     required: true,
   },
-  { ...siteCodeSchema, colProps: { span: 24 }, required: true },
+  {
+    ...siteCodeSchema,
+    colProps: { span: 24 },
+    required: true,
+    rules: [
+      {
+        trigger: 'blur',
+        validator: (rule, value) => {
+          if (!value) return Promise.reject('请输入站点代码');
+          if (!/^[a-zA-Z0-9]*$/.test(value)) return Promise.reject('只能输入字母和数字');
+          return Promise.resolve();
+        },
+      },
+    ],
+  },
   {
     field: 'fkHouseNo',
     component: 'Select',
@@ -53,11 +67,11 @@ export const formListSchema: FormSchema[] = [
     label: '是否启用',
     colProps: { span: 24 },
     required: true,
-    defaultValue: CLOSED.NORMAL,
+    defaultValue: 0,
     componentProps: {
       options: [
-        { label: CLOSED_TEXT.NORMAL, value: CLOSED.NORMAL },
-        { label: CLOSED_TEXT.CLOSED, value: CLOSED.CLOSED },
+        { label: CLOSED_TEXT.NORMAL, value: 0 },
+        { label: CLOSED_TEXT.CLOSED, value: 1 },
       ],
     },
   },

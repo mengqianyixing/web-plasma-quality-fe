@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2023-12-21 17:19:22
+ * @LastEditors: zcc
+ * @LastEditTime: 2023-12-23 18:15:52
+-->
 <template>
   <BasicDrawer
     v-bind="$attrs"
@@ -16,11 +24,12 @@
   import { message } from 'ant-design-vue';
   import { reactive } from 'vue';
   import { columns, formSchema } from './trayModal.data';
+  import { getListApi } from '@/api/tray/list';
 
   const emit = defineEmits(['confim', 'register']);
   const state = reactive({ disabledKeys: [] as string[], params: {} });
   const [registerTable, { reload, getSelectRows, setPagination, clearSelectedRowKeys }] = useTable({
-    api: () => Promise.resolve({ result: [{ trayNo: '10086' }, { trayNo: '10087' }] }),
+    api: getListApi,
     isCanResizeParent: true,
     fetchSetting: {
       listField: 'result',

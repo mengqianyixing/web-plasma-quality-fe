@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-22 13:46:35
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-22 14:01:05
+ * @LastEditTime: 2023-12-23 16:58:51
  */
 /*
  * @Descripttion:
@@ -26,6 +26,8 @@ import {
   PutApiCoreBankTrayResponse,
   GetApiCoreBankTrayTrayNoRequest,
   GetApiCoreBankTrayTrayNoResponse,
+  GetApiCoreBankTrayBoxTrayNoRequest,
+  GetApiCoreBankTrayBoxTrayNoResponse,
 } from '@/api/type/trayManage';
 
 export const getListApi = (params: GetApiCoreBankTraiesRequest) =>
@@ -42,3 +44,6 @@ export const confirmTrayLabelApi = (params: PutApiCoreBankTrayRequest) =>
 
 export const trayDtListApi = ({ trayNo }: GetApiCoreBankTrayTrayNoRequest) =>
   defHttp.get<GetApiCoreBankTrayTrayNoResponse>({ url: `/api/core/bank/tray/${trayNo}` });
+
+export const trayBoxListApi = ({ trayNo }: GetApiCoreBankTrayBoxTrayNoRequest) =>
+  defHttp.get<GetApiCoreBankTrayBoxTrayNoResponse>({ url: `/api/core/bank/tray/box/${trayNo}` });

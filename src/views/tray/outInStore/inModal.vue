@@ -95,7 +95,7 @@
     resetFields();
     getHouseList();
     state.columnLabel = '';
-    const list = data.map((_: string) => ({ trayNo: _ }));
+    const list = data.map((_: Recordable) => ({ trayNo: _.trayNo }));
     clearRowsSelection(list);
     state.data = list;
     reload();
@@ -108,7 +108,7 @@
       const params = {
         recInfo: state.data.map((_) => ({
           trayNo: _.trayNo,
-          wareHouseNo: !_.location && (subWareHouseNo || houseNo || void 0),
+          wareHouseNo: (!_.location && (subWareHouseNo || houseNo)) || void 0,
           locationNo: _.location || void 0,
         })),
       };
@@ -123,7 +123,6 @@
   }
   function clearRowsSelection(data: Record[]) {
     data.forEach((row) => {
-      console.log(row);
       row.area = '';
       row.location = '';
     });

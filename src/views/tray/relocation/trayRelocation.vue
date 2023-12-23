@@ -4,12 +4,12 @@
  * @Author: zcc
  * @Date: 2023-12-21 09:52:52
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-22 17:13:29
+ * @LastEditTime: 2023-12-23 20:03:17
 -->
 <template>
   <div class="h-full">
     <div style="box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%)" class="pt-12px m-24px mt-8px">
-      <BasicForm @register="registerForm" @ok="inStoreConfim" />
+      <BasicForm @register="registerForm" @submit="inStoreConfim" />
     </div>
     <BasicTable @register="registerTable" />
     <TrayModel @register="registerTrayDrawer" @confim="trayConfim" />
@@ -30,9 +30,10 @@
   import { useDrawer } from '@/components/Drawer';
   import { settingListApi, areaListApi } from '@/api/plasmaStore/setting';
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
-  import { reactive } from 'vue';
-  import { submitInHouseApi } from '@/api/tray/relocation';
+  import { reactive, nextTick } from 'vue';
+  import { submitRelocationApi, taryHouseApi } from '@/api/tray/relocation';
   import LocationDrawer from '@/components/BusinessDrawer/locationDrawer/index.vue';
+  import { getHouseSiteApi } from '@/api/plasmaStore/site';
 
   const houseAreaMap: Map<string, Recordable<any>> = new Map();
   const state = reactive<{
@@ -66,7 +67,7 @@
 
   const [registerTable] = useTable({
     title: '',
-    api: () => Promise.resolve({ result: [{}] }),
+    api: () => Promise.resolve({ result: [] }),
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -109,24 +110,22 @@
     const values = getFieldsValue();
     removeSchemaByField(siteSchema.field);
     if (!values.houseNo || !trayNo) return;
-    const f = () =>
-      new Promise((rs) => {
-        rs({
-          houseType: trayNo === '10086' ? 'NFA' : 'NSA',
-          houseNo: trayNo === '10086' ? '16250387' : '16250388',
-        });
-      });
-    const { houseType, houseNo } = (await f()) as any;
-    // todo  接口返回为空。。。
+    // 根据托盘查询老库房
+    const res = await taryHouseApi({ trayNo });
+    if (!res) return;
+    const { houseNo, houseType } = res;
     if (!houseNo) return;
     // 高架库
     if (houseType[1] === STORE_FLAG.S && values.houseNo !== houseNo) {
-      appendSchemaByField(siteSchema, 'houseNo');
+      const res = await getHouseSiteApi({ houseNo: houseNo });
+      appendSchemaByField({ ...siteSchema, componentProps: { options: res } }, 'houseNo');
     }
   }
   async function houseChange() {
+    await nextTick();
     const values = getFieldsValue();
     searchTrayInfo(values.trayNo);
+    console.log(state.houseList, values.houseNo);
     const { houseType } = state.houseList.find((_) => _.value === values.houseNo) as Recordable;
     removeSchemaByField(areaSchema.field);
     removeSchemaByField(locationSchema.field);
@@ -140,17 +139,12 @@
   async function inStoreConfim() {
     try {
       const { houseNo, subWareHouseNo, siteId, locationNo, trayNo } = await validate();
-      const params = {
-        recInfo: [
-          {
-            locationNo,
-            siteId,
-            wareHouseNo: houseNo || subWareHouseNo,
-            trayNo,
-          },
-        ],
-      };
-      await submitInHouseApi(params);
+      await submitRelocationApi({
+        trayNo,
+        targetLocatonNo: locationNo,
+        targetSubWarehouseNo: locationNo ? void 0 : subWareHouseNo || houseNo,
+        siteId,
+      });
       resetFields();
       clearValidate();
     } catch (e) {

@@ -4,7 +4,7 @@
       <template #toolbar>
         <a-button type="primary" @click="handlePrint">打印</a-button>
         <a-button type="primary" @click="handlePrintAgain">补打</a-button>
-        <a-button type="primary" @click="handleDiscard">报废</a-button>
+        <a-button type="primary" @click="handleDiscard(1)">报废</a-button>
       </template>
       <template #trayNo="{ record }: { record: Recordable }">
         <span
@@ -14,11 +14,17 @@
           {{ record.trayNo }}
         </span>
       </template>
+      <template #totalNumber="{ record }: { record: Recordable }">
+        <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleBox(record)">
+          {{ record.totalNumber }}
+        </span>
+      </template>
     </BasicTable>
     <BasicDrawer @register="registerDrawer" @ok="submit" showFooter title="托盘打印">
       <BasicForm @register="registerForm" />
     </BasicDrawer>
     <TableDrawer @register="registerTableDrawer" />
+    <BoxTableDrawer @register="registerBoxTableDrawer" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
@@ -30,9 +36,11 @@
   import { getListApi, disableTrayApi, createTrayLabelApi } from '@/api/tray/list';
   import { message, Modal } from 'ant-design-vue';
   import TableDrawer from './tableDrawer.vue';
+  import BoxTableDrawer from './boxTableDrawer.vue';
 
   const [registerDrawer, { openDrawer, closeDrawer, setDrawerProps }] = useDrawer();
   const [registerTableDrawer, { openDrawer: openTableDrawer }] = useDrawer();
+  const [registerBoxTableDrawer, { openDrawer: openBoxTableDrawer }] = useDrawer();
   const [registerForm, { validate }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
@@ -58,7 +66,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    rowKey: 'siteNo',
+    rowKey: 'trayNo',
     columns: columns,
     size: 'small',
     useSearchForm: true,
@@ -74,11 +82,12 @@
     openDrawer(true);
   }
   function handlePrintAgain() {}
-  function handleDiscard() {
+  function handleDiscard(closed: number) {
     const rows = getSelectRows();
     if (rows.length > 1) return message.warning('只能选择一条数据');
     else if (rows.length === 0) return message.warning('请选择一条数据');
     const [row] = rows;
+    if (row.closed === closed) return message.warning('状态不需要变更');
     Modal.confirm({
       content: `确认废弃${row.trayNo}吗？`,
       onOk: async () => {
@@ -103,5 +112,8 @@
   }
   function handleDetails(row: Recordable) {
     openTableDrawer(true, { trayNo: row.trayNo });
+  }
+  function handleBox(row: Recordable) {
+    openBoxTableDrawer(true, { trayNo: row.trayNo });
   }
 </script>
