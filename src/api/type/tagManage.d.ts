@@ -12,128 +12,47 @@ type FileData = File;
  *
  * @分类 [样式管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5208)
  * @请求头 `POST /api/sys/tag`
- * @更新时间 `2023-12-15 14:49:41`
+ * @更新时间 `2023-12-23 11:40:54`
  */
 export interface PostApiSysTagRequest {
-  /**
-   * 标签名称
-   */
   tagName: string;
-  /**
-   * 标签类型
-   */
   labelType: string;
-  /**
-   * 分辨率
-   */
   resolution: number;
-  /**
-   * 打印份数
-   */
   times: number;
-  /**
-   * 打印机类型
-   */
   printerType: string;
-  /**
-   * 打印机名
-   */
   printerName: string;
-  /**
-   * 样式内容json
-   */
-  content: {
-    /**
-     * 宽度
-     */
+  content?: {
     Width: number;
-    /**
-     * 高度
-     */
     Height: number;
-    /**
-     * 标签间隙
-     */
     Gap: number;
     Data: {
-      /**
-       * 打印内容id
-       */
-      Id: string;
-      /**
-       * 类型
-       */
+      Id?: string;
       Type: string;
-      /**
-       * 打印内容前缀
-       */
       Data: string;
-      /**
-       * 只生成预览，打印不生效
-       */
       OnlyDisplay: boolean;
-      /**
-       * x坐标
-       */
       X: number;
-      /**
-       * y坐标
-       */
       Y: number;
-      /**
-       * 旋转角度
-       */
       Orientation: number;
-      /**
-       * 线条粗细
-       */
       LineThickness: number;
       BarcodeRatio: number;
-      /**
-       * 宽度
-       */
       Width: number;
-      /**
-       * 高度
-       */
       Height: number;
       Readable: boolean;
       UseThickness: boolean;
       TextFormat: {
-        /**
-         * 字体名称
-         */
         FontName: string;
-        /**
-         * 字体大小
-         */
         FontSize: number;
-        /**
-         * 是否加粗
-         */
         Bold: boolean;
-        /**
-         * 是否斜体
-         */
         Italic: boolean;
-        /**
-         * 是否下划线
-         */
         Underline: boolean;
         LineWrap: boolean;
         Revert: boolean;
         Middle: boolean;
       }[];
     }[];
-  }[];
-  /**
-   * 样式预览图base64字符串
-   */
+  };
+  state?: string;
   patternPicture?: string;
-  /**
-   * 状态
-   */
-  state: string;
 }
 
 /**
@@ -141,7 +60,7 @@ export interface PostApiSysTagRequest {
  *
  * @分类 [样式管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5208)
  * @请求头 `POST /api/sys/tag`
- * @更新时间 `2023-12-15 14:49:41`
+ * @更新时间 `2023-12-23 11:40:54`
  */
 export type PostApiSysTagResponse = string;
 
@@ -150,40 +69,16 @@ export type PostApiSysTagResponse = string;
  *
  * @分类 [样式管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5208)
  * @请求头 `PUT /api/sys/tag`
- * @更新时间 `2023-12-15 10:21:23`
+ * @更新时间 `2023-12-23 11:40:12`
  */
 export interface PutApiSysTagRequest {
-  /**
-   * 样式编号
-   */
   tagNo: string;
-  /**
-   * 标签名称
-   */
   tagName?: string;
-  /**
-   * 标签类型
-   */
   labelType?: string;
-  /**
-   * 分辨率
-   */
   resolution?: number;
-  /**
-   * 打印份数
-   */
   times?: number;
-  /**
-   * 打印机类型
-   */
   printerType?: string;
-  /**
-   * 打印机名
-   */
   printerName?: string;
-  /**
-   * 样式内容json
-   */
   content?: {
     Width: number;
     Height: number;
@@ -213,14 +108,8 @@ export interface PutApiSysTagRequest {
         Middle: boolean;
       };
     }[];
-  }[];
-  /**
-   * 式预览图base64字符串
-   */
+  };
   patternPicture?: string;
-  /**
-   * 状态
-   */
   state?: string;
 }
 
@@ -229,7 +118,7 @@ export interface PutApiSysTagRequest {
  *
  * @分类 [样式管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5208)
  * @请求头 `PUT /api/sys/tag`
- * @更新时间 `2023-12-15 10:21:23`
+ * @更新时间 `2023-12-23 11:40:12`
  */
 export type PutApiSysTagResponse = string;
 
@@ -318,7 +207,7 @@ export type PostApiSysTagsResponse = {
  *
  * @分类 [样式管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5208)
  * @请求头 `GET /api/sys/tag/{tagNo}`
- * @更新时间 `2023-12-15 14:49:07`
+ * @更新时间 `2023-12-23 11:42:45`
  */
 export interface GetApiSysTagTagNoRequest {
   tagNo: string;
@@ -329,7 +218,7 @@ export interface GetApiSysTagTagNoRequest {
  *
  * @分类 [样式管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5208)
  * @请求头 `GET /api/sys/tag/{tagNo}`
- * @更新时间 `2023-12-15 14:49:07`
+ * @更新时间 `2023-12-23 11:42:45`
  */
 export interface GetApiSysTagTagNoResponse {
   tagName: string;
@@ -345,7 +234,6 @@ export interface GetApiSysTagTagNoResponse {
     Height: number;
     Gap: number;
     Data: {
-      Id?: string;
       Type: string;
       Data: string;
       OnlyDisplay: boolean;
@@ -359,17 +247,18 @@ export interface GetApiSysTagTagNoResponse {
       Readable: boolean;
       UseThickness: boolean;
       TextFormat: {
-        FontName: string;
-        FontSize: number;
-        Bold: boolean;
-        Italic: boolean;
-        Underline: boolean;
-        LineWrap: boolean;
-        Revert: boolean;
-        Middle: boolean;
+        FontName?: string;
+        FontSize?: number;
+        Bold?: boolean;
+        Italic?: boolean;
+        Underline?: boolean;
+        LineWrap?: boolean;
+        Revert?: boolean;
+        Middle?: boolean;
       };
+      Id?: string;
     }[];
-  }[];
+  };
 }
 
 /**
@@ -513,127 +402,46 @@ export type GetApiSysTagHisReuseHisNoResponse = string;
  *
  * @分类 [样式管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5208)
  * @请求头 `POST /api/sys/tag/preview`
- * @更新时间 `2023-12-16 13:35:46`
+ * @更新时间 `2023-12-23 14:06:06`
  */
 export interface PostApiSysTagPreviewRequest {
-  /**
-   * 标签名称
-   */
-  tagName?: string;
-  /**
-   * 标签类型
-   */
-  labelType?: string;
-  /**
-   * 分辨率
-   */
-  resolution: number;
-  /**
-   * 打印份数
-   */
-  times?: number;
-  /**
-   * 打印机类型
-   */
-  printerType?: string;
-  /**
-   * 打印机名
-   */
-  printerName?: string;
-  /**
-   * 样式内容json
-   */
   content: {
-    /**
-     * 宽度
-     */
-    Width?: number;
-    /**
-     * 高度
-     */
-    Height?: number;
-    /**
-     * 标签间隙
-     */
-    Gap?: number;
     Data: {
-      /**
-       * 打印内容id
-       */
       Id: string;
-      /**
-       * 类型
-       */
       Type: string;
-      /**
-       * 打印内容前缀
-       */
       Data: string;
-      /**
-       * 只生成预览，打印不生效
-       */
       OnlyDisplay: boolean;
-      /**
-       * x坐标
-       */
       X: number;
-      /**
-       * y坐标
-       */
       Y: number;
-      /**
-       * 旋转角度
-       */
       Orientation: number;
-      /**
-       * 线条粗细
-       */
       LineThickness: number;
       BarcodeRatio: number;
-      /**
-       * 宽度
-       */
       Width: number;
-      /**
-       * 高度
-       */
       Height: number;
       Readable: boolean;
       UseThickness: boolean;
       TextFormat: {
-        /**
-         * 字体名称
-         */
         FontName: string;
-        /**
-         * 字体大小
-         */
         FontSize: number;
-        /**
-         * 是否加粗
-         */
         Bold: boolean;
-        /**
-         * 是否斜体
-         */
         Italic: boolean;
-        /**
-         * 是否下划线
-         */
         Underline: boolean;
         LineWrap: boolean;
         Revert: boolean;
         Middle: boolean;
       }[];
     }[];
-  }[];
-  /**
-   * 样式预览图base64字符串
-   */
+    Width?: number;
+    Height?: number;
+    Gap?: number;
+  };
+  resolution: number;
+  tagName?: string;
+  labelType?: string;
+  times?: number;
+  printerType?: string;
+  printerName?: string;
   patternPicture?: string;
-  /**
-   * 状态
-   */
   state?: string;
 }
 
@@ -642,7 +450,7 @@ export interface PostApiSysTagPreviewRequest {
  *
  * @分类 [样式管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5208)
  * @请求头 `POST /api/sys/tag/preview`
- * @更新时间 `2023-12-16 13:35:46`
+ * @更新时间 `2023-12-23 14:06:06`
  */
 export type PostApiSysTagPreviewResponse = string[];
 
