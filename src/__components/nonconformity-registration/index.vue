@@ -29,14 +29,16 @@
 
   import LoginModal from './LoginModal.vue';
   import { useModal } from '@/components/Modal';
+  import { nonconformityRegistration } from '@/api/nonconformity/manage';
 
-  function handleSubmit(values) {
-    console.log(values);
+  async function handleSubmit(values) {
+    await nonconformityRegistration(values);
+    resetFields();
   }
 
   function handleSuccess(nickname: string) {
     setFieldsValue({
-      check: nickname,
+      checker: nickname,
     });
   }
 
@@ -45,7 +47,7 @@
   }
 
   const [registerLoginModal, { openModal }] = useModal();
-  const [register, { setFieldsValue }] = useForm({
+  const [register, { setFieldsValue, resetFields }] = useForm({
     layout: 'horizontal',
     labelWidth: 120,
     rowProps: {
