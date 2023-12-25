@@ -32,8 +32,8 @@
   import { nonconformityRegistration } from '@/api/nonconformity/manage';
 
   async function handleSubmit(values) {
-    const res = await nonconformityRegistration(values);
-    if (res.data.code === '0') resetFields();
+    await nonconformityRegistration(values);
+    resetFields();
   }
 
   function handleSuccess(nickname: string) {
