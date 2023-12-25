@@ -6,13 +6,8 @@ enum Api {
 }
 
 export const nonconformityRegistration = (params: PostApiCoreBagUnqualifiedRequest) => {
-  return defHttp.post(
-    {
-      url: Api.NonconformityRegistration,
-      params,
-    },
-    {
-      isReturnNativeResponse: true,
-    },
-  );
+  return defHttp.post({
+    url: Api.NonconformityRegistration,
+    params,
+  });
 };

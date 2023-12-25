@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2023-12-23 16:10:59`
+ * @更新时间 `2023-12-23 20:43:42`
  */
 export interface GetApiCoreBankTraiesRequest {
   /**
@@ -43,6 +43,7 @@ export interface GetApiCoreBankTraiesRequest {
    * 投产准备号
    */
   prepareNo?: string;
+  closed?: string;
 }
 
 /**
@@ -50,7 +51,7 @@ export interface GetApiCoreBankTraiesRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2023-12-23 16:10:59`
+ * @更新时间 `2023-12-23 20:43:42`
  */
 export interface GetApiCoreBankTraiesResponse {
   /**
