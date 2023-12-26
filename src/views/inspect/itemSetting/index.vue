@@ -2,9 +2,9 @@
  * @Descripttion: 
  * @version: 
  * @Author: zcc
- * @Date: 2023-12-20 09:47:04
+ * @Date: 2023-12-25 14:30:13
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-26 10:17:57
+ * @LastEditTime: 2023-12-26 14:22:40
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
@@ -12,8 +12,17 @@
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增</a-button>
         <a-button type="primary" @click="handleUpdate">编辑</a-button>
+        <a-button type="primary" @click="handleRemove">删除</a-button>
         <a-button type="primary" @click="handleCheckStatus(1)">禁用</a-button>
         <a-button type="primary" @click="handleCheckStatus(0)">启用</a-button>
+      </template>
+      <template #projectCode="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetails(record)"
+        >
+          {{ record.projectCode }}
+        </span>
       </template>
     </BasicTable>
     <FormModal @register="registerDrawer" @success="success" />
@@ -23,10 +32,14 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { useDrawer } from '@/components/Drawer';
-  import { columns, siteCodeSchema } from './site.data';
+  import { columns, searchFormschema } from './itemSetting.data';
   import { message, Modal } from 'ant-design-vue';
   import FormModal from './formModal.vue';
-  import { getListApi, updateSiteApi } from '@/api/plasmaStore/site';
+  import {
+    getListApi,
+    updateItemSettingApi,
+    removeItemSettingApi,
+  } from '@/api/inspect/itemSetting';
 
   const [registerDrawer, { openDrawer }] = useDrawer();
 
@@ -38,7 +51,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    rowKey: 'siteNo',
+    rowKey: 'projectId',
     columns: columns,
     size: 'small',
     useSearchForm: true,
@@ -50,8 +63,9 @@
       return res;
     },
     formConfig: {
-      labelWidth: 120,
-      schemas: [siteCodeSchema],
+      labelWidth: 90,
+      baseColProps: { span: 6 },
+      schemas: searchFormschema,
     },
   });
   function getSelections(onlyOne: boolean) {
@@ -77,19 +91,36 @@
     clearSelectedRowKeys();
     reload();
   }
-  function handleCheckStatus(action: number) {
+  function handleRemove() {
     const [row] = getSelections(true);
     if (!row) return;
-    const { siteNo, siteName, fkHouseNo, closed } = row;
-    if (closed === action) return message.warning('状态不需要变更');
+    const { projectId, projectName } = row;
     Modal.confirm({
-      content: '确认' + (action ? '禁用' : '启用') + siteName + '?',
+      content: '确认删除' + projectName + '?',
       onOk: async () => {
-        await updateSiteApi({ siteNo, siteName, fkHouseNo, closed: action, siteNoOld: siteNo });
+        await removeItemSettingApi({ id: projectId });
         clearSelectedRowKeys();
         reload();
       },
       onCancel: () => Modal.destroyAll(),
     });
+  }
+  function handleCheckStatus(action: number) {
+    const [row] = getSelections(true);
+    if (!row) return;
+    const { projectName, projectId, state } = row;
+    if (state === action) return message.warning('状态不需要变更');
+    Modal.confirm({
+      content: '确认' + (action ? '禁用' : '启用') + projectName + '?',
+      onOk: async () => {
+        await updateItemSettingApi({ projectId, state: action, enableFlag: '1' });
+        clearSelectedRowKeys();
+        reload();
+      },
+      onCancel: () => Modal.destroyAll(),
+    });
+  }
+  function handleDetails(record: Recordable) {
+    openDrawer(true, { data: record, disabled: true });
   }
 </script>

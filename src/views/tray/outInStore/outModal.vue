@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-18 15:55:20
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-23 17:40:42
+ * @LastEditTime: 2023-12-26 10:04:29
 -->
 <template>
   <BasicDrawer
@@ -56,7 +56,7 @@
     setDrawerProps({ confirmLoading: false });
     if (showSite) {
       appendSchemaByField(siteNoSchema as FormSchemaInner, void 0);
-      getSiteList(data.houseNo);
+      getSiteList(data[0]['houseNo']);
     } else {
       removeSchemaByField(siteNoSchema.field);
     }
@@ -81,8 +81,7 @@
     }
   }
   async function getSiteList(houseNo: string) {
-    const res = await getHouseSiteApi({ houseNo: houseNo || '16282067' });
-    console.log(res);
+    const res = await getHouseSiteApi({ houseNo: houseNo });
     updateSchema({
       field: 'siteId',
       componentProps: { options: res || [] },

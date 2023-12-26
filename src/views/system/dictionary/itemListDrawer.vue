@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-22 11:30:24
+ * @LastEditTime: 2023-12-26 10:17:23
 -->
 <template>
   <BasicDrawer v-bind="$attrs" @register="registerDrawer" :title="dictName" width="1200px">
@@ -54,6 +54,10 @@
     bordered: true,
     beforeFetch: (params) => {
       return { ...params, dataDictId: dictId.value };
+    },
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
     },
     rowSelection: { type: 'radio' },
   });

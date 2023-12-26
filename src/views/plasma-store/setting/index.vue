@@ -76,6 +76,10 @@
       showTableSetting: false,
       bordered: true,
       rowSelection: { type: 'checkbox' },
+      afterFetch: (res) => {
+        clearSelectedRowKeys();
+        return res;
+      },
     });
 
   function handleCreate() {

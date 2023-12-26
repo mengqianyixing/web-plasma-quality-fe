@@ -194,7 +194,7 @@
     const res = await validateFields(['houseNo']);
     openLocationDrawer(true, {
       disabledKeys: state.data.filter((_) => _.location).map((_) => _.location),
-      params: { houseNo: res.houseNo },
+      params: { houseNo: res.houseNo, locationStatus: 'IDLE' },
     });
   }
 </script>

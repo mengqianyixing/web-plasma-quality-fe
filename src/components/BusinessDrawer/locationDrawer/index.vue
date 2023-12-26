@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2023-12-21 17:19:22
+ * @LastEditors: zcc
+ * @LastEditTime: 2023-12-26 10:20:32
+-->
 <template>
   <BasicDrawer
     v-bind="$attrs"
@@ -39,11 +47,18 @@
     beforeFetch: (params) => {
       return { ...params, ...state.params };
     },
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
     rowSelection: {
       type: 'radio',
-      getCheckboxProps: (record: { location: string }) => ({
-        disabled: state.disabledKeys.includes(record.location),
+      getCheckboxProps: (record: { locationNo: string }) => ({
+        disabled: state.disabledKeys.includes(record.locationNo),
       }),
+    },
+    rowClassName: (record: Recordable) => {
+      return state.disabledKeys.includes(record.locationNo) ? 'pointer-events-none' : '';
     },
   });
   const [registerDrawer] = useDrawerInner(({ disabledKeys, params }) => {
