@@ -1,6 +1,9 @@
 <template>
   <div>
     <BasicTable @register="registerTable" :searchInfo="searchInfo">
+      <template #labelType="{ record }">
+        {{ formatLabelType(record?.labelType) }}
+      </template>
       <template #toolbar>
         <div class="flex gap-2">
           <a-button type="primary" @click="handleAdd"> 新增 </a-button>
@@ -41,20 +44,37 @@
 
   import { columns, searchFormSchema } from './style.data';
 
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
 
   import { copyStyle, deleteStyle, getTagsList } from '@/api/tag/manage';
   import { useDrawer } from '@/components/Drawer';
 
   import StyleDrawer from './StyleDrawer.vue';
+  import { getTagDictionary } from '@/api/tag/encoding';
+  import { TagDictionaryType } from '@/enums/dictionaryEnum';
 
-  defineOptions({ name: 'DeptManagement' });
+  defineOptions({ name: 'TagStyle' });
 
   const searchInfo = ref<Recordable>({});
+  const labelTypeDictionary = ref<Recordable[] | undefined>([]);
+
+  onMounted(async () => {
+    const dictionaryArr = await getTagDictionary([TagDictionaryType.LabelType]);
+    if (!dictionaryArr) return;
+    labelTypeDictionary.value = dictionaryArr.find(
+      (it) => it.dictNo === TagDictionaryType.LabelType,
+    )?.dictImtes;
+    await getForm().updateSchema({
+      field: 'labelType',
+      componentProps: {
+        options: labelTypeDictionary.value,
+      },
+    });
+  });
 
   const [registerStyleDrawer, { openDrawer: openStyleDrawer }] = useDrawer();
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, getForm }] = useTable({
     title: '标签样式列表',
     api: getTagsList,
     columns,
@@ -72,16 +92,12 @@
       redo: false,
       setting: false,
     },
-    handleSearchInfoFn(info) {
-      console.log('handleSearchInfoFn', info);
-      return info;
-    },
     bordered: true,
     showIndexColumn: false,
     actionColumn: {
       title: '操作',
       dataIndex: 'action',
-      fixed: undefined,
+      fixed: 'right',
     },
     canResize: false,
   });
@@ -112,5 +128,9 @@
 
   function handleSuccess() {
     reload();
+  }
+
+  function formatLabelType(labelType: string) {
+    return labelTypeDictionary.value!.find((it) => it.value === labelType)?.label || labelType;
   }
 </script>

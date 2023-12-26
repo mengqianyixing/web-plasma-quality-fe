@@ -5,12 +5,12 @@ import {
   tagStatusValueEnum,
   tagStyleTypeMap,
   tagTypeMap,
-  tagTypeValueEnum,
 } from '@/enums/tagManageEnum';
 import { h } from 'vue';
 import { Switch } from 'ant-design-vue';
 import { useMessage } from '@/hooks/web/useMessage';
 import { disableStyle, enableStyle } from '@/api/tag/manage';
+import dayjs from 'dayjs';
 
 type CheckedType = boolean | string | number;
 export const columns: BasicColumn[] = [
@@ -57,9 +57,7 @@ export const columns: BasicColumn[] = [
     title: '标签类型',
     dataIndex: 'labelType',
     width: 100,
-    format(text) {
-      return tagTypeMap.get(<tagTypeValueEnum>text) as string;
-    },
+    slots: { customRender: 'labelType' },
   },
   {
     title: '打印分辨率',
@@ -75,6 +73,18 @@ export const columns: BasicColumn[] = [
     title: '打印份数',
     dataIndex: 'times',
     width: 100,
+  },
+  {
+    title: '创建日期',
+    dataIndex: 'createAt',
+    format: (text) => (text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-'),
+    width: 200,
+  },
+  {
+    title: '更新日期',
+    dataIndex: 'updateAt',
+    format: (text) => (text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-'),
+    width: 200,
   },
 ];
 
@@ -167,9 +177,6 @@ export const searchFormSchema: FormSchema[] = [
     label: '标签类型',
     component: 'Select',
     colProps: { span: 8 },
-    componentProps: {
-      options: [...tagTypeMap.entries()].map(([value, label]) => ({ label, value })),
-    },
   },
   {
     field: 'state',
