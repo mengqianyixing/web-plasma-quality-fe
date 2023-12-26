@@ -37,7 +37,9 @@ export const encodingDetailColumns: BasicColumn[] = [
   {
     title: '类别',
     dataIndex: 'id',
-    format: (text: Recordable) => text.id,
+    format: (_, record) => {
+      return record.id.id;
+    },
   },
   {
     title: '备注',

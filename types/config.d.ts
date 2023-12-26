@@ -159,4 +159,6 @@ export interface GlobEnvConfig {
   VITE_GLOB_API_URL_PREFIX?: string;
   // Upload url
   VITE_GLOB_UPLOAD_URL?: string;
+  // print url
+  VITE_PRINT_URL?: string;
 }
