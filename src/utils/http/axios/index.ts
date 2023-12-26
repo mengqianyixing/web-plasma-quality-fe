@@ -19,6 +19,7 @@ import { joinTimestamp, formatRequestDate } from './helper';
 import { AxiosRetry } from '@/utils/http/axios/axiosRetry';
 import axios from 'axios';
 import { BackEndErrorEnum } from '@/enums/errorResponseEnum';
+import { getAppEnvConfig } from '@/utils/env';
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
@@ -272,6 +273,13 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
   );
 }
 export const defHttp = createAxios();
+
+const { VITE_PRINT_URL } = getAppEnvConfig();
+export const printHttp = createAxios({
+  requestOptions: {
+    apiUrl: VITE_PRINT_URL,
+  },
+});
 
 // other api url
 // export const otherHttp = createAxios({
