@@ -3,8 +3,8 @@
  * @version:
  * @Author: zcc
  * @Date: 2023-12-08 09:39:00
- * @LastEditors: zcc
- * @LastEditTime: 2023-12-22 14:21:23
+ * @LastEditors: DoubleAm
+ * @LastEditTime: 2023-12-26 14:39:24
  */
 import { defineApplicationConfig } from '@vben/vite-config';
 
@@ -43,11 +43,25 @@ export default defineApplicationConfig({
           ws: true,
           rewrite: (path) => path.replace(new RegExp(`^/basic-api`), ''),
         },
+        '/api/sys': {
+          target: 'http://192.168.120.192:7002',
+          changeOrigin: true,
+          ws: true,
+        },
         '/basic-api': {
           target: 'http://192.168.1.133:7100',
           changeOrigin: true,
           ws: true,
           rewrite: (path) => path.replace(new RegExp(`^/basic-api`), ''),
+          // only https
+          // secure: false
+        },
+        '/casdoor/': {
+          target:
+            'http://192.168.110.13:7000/api/signin?code=6e008f8aaf607b5fe1e1&state=2jljs5huugy',
+          changeOrigin: true,
+          ws: true,
+          rewrite: (path) => path.replace(new RegExp(`^/casdoor/`), ''),
           // only https
           // secure: false
         },

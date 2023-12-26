@@ -15,11 +15,14 @@ import { initAppConfigStore } from '@/logics/initAppConfig';
 import { router, setupRouter } from '@/router';
 import { setupRouterGuard } from '@/router/guard';
 import { setupStore } from '@/store';
+import Casdoor from 'casdoor-vue-sdk';
 
 import App from './App.vue';
+import oauth from './api/oauth/oauth';
 
 async function bootstrap() {
   const app = createApp(App);
+  app.use(Casdoor, oauth.config);
 
   // Configure store
   // 配置 store

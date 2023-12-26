@@ -79,6 +79,7 @@
     "@zxcvbn-ts/core": "^3.0.2",
     "ant-design-vue": "^4.0.6",
     "axios": "^1.4.0",
+    "casdoor-vue-sdk": "^1.6.0",
     "codemirror": "^5.65.12",
     "cropperjs": "^1.5.13",
     "crypto-js": "^4.1.1",

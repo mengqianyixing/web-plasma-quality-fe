@@ -104,6 +104,25 @@ export const useUserStore = defineStore({
         return Promise.reject(error);
       }
     },
+    /**
+     * @description: oathLogin
+     */
+    async oathLogin(data: any): Promise<PostApiSysUserLoginResponse | null> {
+      try {
+        const { accessToken, userId, username } = data;
+        this.userInfo = {
+          userId: userId,
+          username: username,
+          homePath: '/dashboard/analysis',
+        };
+
+        // save token
+        this.setToken(accessToken);
+        return this.afterLoginAction(true);
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    },
     async afterLoginAction(goHome?: boolean): Promise<PostApiSysUserLoginResponse | null> {
       if (!this.getToken) return null;
 

@@ -54,11 +54,22 @@
       <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
         {{ t('sys.login.loginButton') }}
       </Button>
+      <Button style="margin-top: 5px" type="primary" size="large" block @click="handleCasDoorLogin">
+        CasDoor 登录
+      </Button>
     </FormItem>
   </Form>
 </template>
 <script lang="ts" setup>
-  import { reactive, ref, unref, computed, onMounted } from 'vue';
+  import {
+    reactive,
+    ref,
+    unref,
+    computed,
+    onMounted,
+    getCurrentInstance,
+    ComponentInternalInstance,
+  } from 'vue';
 
   import { Form, Input, Row, Col, Button } from 'ant-design-vue';
   import LoginFormTitle from './LoginFormTitle.vue';
@@ -71,6 +82,7 @@
   import { useDesign } from '@/hooks/web/useDesign';
   import { getSysVerifyCode } from '@/api/sys/login';
   import { buildUUID } from '@/utils/uuid';
+  import oauth from '@/api/oauth/oauth';
 
   const ACol = Col;
   const ARow = Row;
@@ -80,12 +92,31 @@
   const { notification, createErrorModal } = useMessage();
   const { prefixCls } = useDesign('login');
   const userStore = useUserStore();
+  const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
   const { getLoginState } = useLoginState();
   const { getFormRules } = useFormRules();
 
   onMounted(() => {
     getVerifyCode();
+
+    let url = window.location.href;
+    const [path, queryString] = url.split('?');
+    console.log({ url, path, queryString });
+    if (queryString && queryString.includes('code')) {
+      // @ts-ignore
+      oauth.signin(queryString).then((res) => {
+        if (res.code == 0) {
+          userStore.oathLogin(res.data);
+          window.location.href = path;
+          // alert('Login success');
+        } else {
+          alert(`Login failed: ${res.msg}`);
+        }
+      });
+    } else {
+      handleCasDoorLogin();
+    }
   });
 
   const formRef = ref();
@@ -108,6 +139,11 @@
     const b64 = await getSysVerifyCode(uuid.value);
 
     verifyCode.value = `data:image/png;base64,${b64}`;
+  }
+
+  async function handleCasDoorLogin() {
+    // @ts-ignore
+    window.location.href = proxy?.getSigninUrl();
   }
 
   async function handleLogin() {
