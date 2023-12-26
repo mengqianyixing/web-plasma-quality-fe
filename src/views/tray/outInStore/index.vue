@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-18 14:18:08
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-23 20:45:02
+ * @LastEditTime: 2023-12-26 10:13:25
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
@@ -51,6 +51,10 @@
     columns,
     useSearchForm: true,
     bordered: true,
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
     rowSelection: { type: 'checkbox' },
     beforeFetch: (p) => ({ ...p, closed: 0 }),
   });
@@ -60,9 +64,8 @@
     if (!rows.length) return false;
     if (!rows.every((_) => _.wareHouseName)) return message.warning('所选托盘存在未入库!');
     const [firstRow] = rows;
-    const notAlike = rows.some((_) => _.houseName !== firstRow.houseName);
+    const notAlike = rows.some((_) => _.wareHouseName !== firstRow.wareHouseName);
     if (notAlike) return message.warning('所选托盘不属于同一库房!');
-    firstRow.houseType = 'HSF';
     if (firstRow.houseType[1] === STORE_FLAG.S) {
       openDrawer(true, { data: rows, showSite: true });
     } else {

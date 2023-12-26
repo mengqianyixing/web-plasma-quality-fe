@@ -110,11 +110,11 @@ export interface GetApiSysUserLogoutResponse {
  *
  * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
  * @请求头 `POST /api/sys/reviewer/login`
- * @更新时间 `2023-12-23 11:37:10`
+ * @更新时间 `2023-12-23 19:25:58`
  */
 export interface PostApiSysReviewerLoginRequest {
-  password?: string;
-  account?: string;
+  password: string;
+  account: string;
 }
 
 /**
@@ -122,11 +122,11 @@ export interface PostApiSysReviewerLoginRequest {
  *
  * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
  * @请求头 `POST /api/sys/reviewer/login`
- * @更新时间 `2023-12-23 11:37:10`
+ * @更新时间 `2023-12-23 19:25:58`
  */
 export interface PostApiSysReviewerLoginResponse {
-  userId?: string;
-  username?: string;
+  userId: string;
+  username: string;
 }
 
 /* prettier-ignore-end */

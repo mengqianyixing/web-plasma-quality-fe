@@ -143,6 +143,14 @@ export default defineConfig([
             },
             outputFilePath: 'src/api/type/stationManage.d.ts',
           },
+          {
+            id: 5306,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              // 以接口全路径生成请求函数名
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/inspectManage.d.ts',
+          },
         ],
       },
     ],

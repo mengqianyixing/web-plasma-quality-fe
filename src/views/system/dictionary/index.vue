@@ -54,6 +54,10 @@
     useSearchForm: true,
     showTableSetting: false,
     bordered: true,
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
     rowSelection: { type: 'radio' },
   });
   function formSuccess() {

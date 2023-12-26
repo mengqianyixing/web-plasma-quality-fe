@@ -33,7 +33,12 @@
   import { columns, searchFormSchema } from './manage.data';
   import { BasicDrawer, useDrawer } from '@/components/Drawer';
   import { BasicForm, useForm } from '@/components/Form';
-  import { getListApi, disableTrayApi, createTrayLabelApi } from '@/api/tray/list';
+  import {
+    getListApi,
+    disableTrayApi,
+    createTrayLabelApi,
+    confirmTrayLabelApi,
+  } from '@/api/tray/list';
   import { message, Modal } from 'ant-design-vue';
   import TableDrawer from './tableDrawer.vue';
   import BoxTableDrawer from './boxTableDrawer.vue';
@@ -72,6 +77,10 @@
     useSearchForm: true,
     bordered: true,
     rowSelection: { type: 'checkbox' },
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
     formConfig: {
       labelWidth: 120,
       schemas: searchFormSchema,
@@ -103,9 +112,13 @@
     try {
       setDrawerProps({ confirmLoading: true });
       const { trayNumber } = await validate();
-      await createTrayLabelApi({ trayNumber });
+      const res = await createTrayLabelApi({ trayNumber });
+      for (const key in res) {
+        await confirmTrayLabelApi({ trayNo: key, action: 'confirm' });
+      }
       setDrawerProps({ confirmLoading: false });
       closeDrawer();
+      reload();
     } catch {
       setDrawerProps({ confirmLoading: false });
     }

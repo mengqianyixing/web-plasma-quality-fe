@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-18 14:18:35
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-23 19:40:50
+ * @LastEditTime: 2023-12-25 18:17:34
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 
@@ -35,7 +35,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '打印时间',
-    dataIndex: 'create_at',
+    dataIndex: 'createAt',
   },
   {
     title: '托盘状态',

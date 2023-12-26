@@ -76,6 +76,10 @@
     bordered: true,
     isCanResizeParent: true,
     rowSelection: { type: 'checkbox' },
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
     beforeFetch: (params) => {
       return { ...params, houseNo: state.houseNo };
     },

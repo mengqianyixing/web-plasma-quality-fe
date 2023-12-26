@@ -79,6 +79,10 @@
     bordered: true,
     size: 'small',
     rowSelection: { type: 'checkbox' },
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
     canResize: false,
     beforeFetch: () => {
       return { houseNo: state.houseNo };

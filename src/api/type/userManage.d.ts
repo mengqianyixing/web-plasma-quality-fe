@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `POST /api/sys/users`
- * @更新时间 `2023-12-15 10:44:03`
+ * @更新时间 `2023-12-25 16:55:25`
  */
 export interface PostApiSysUsersRequest {
   /**
@@ -58,7 +58,7 @@ export interface PostApiSysUsersRequest {
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `POST /api/sys/users`
- * @更新时间 `2023-12-15 10:44:03`
+ * @更新时间 `2023-12-25 16:55:25`
  */
 export interface PostApiSysUsersResponse {
   result?: {
