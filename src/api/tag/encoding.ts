@@ -5,12 +5,15 @@ import {
   GetApiSysCodingRulesResponse,
   PutApiSysCodingRuleRequest,
 } from '@/api/type/encodingManage';
-import { GetApiSysDictItemsDictNoRequest } from '@/api/type/dictionary';
+import {
+  PostApiSysDictionaryItemsRequest,
+  PostApiSysDictionaryItemsResponse,
+} from '@/api/type/dictionary';
 
 enum Api {
   CODING_RULES = '/api/sys/codingRules',
   RESTFUL_CODING_RULE = '/api/sys/codingRule',
-  CODING_DICTIONARY = '/api/sys/dictItems',
+  CODING_DICTIONARY = '/api/sys/dictionaryItems',
 }
 
 export const getEncodingRules = () =>
@@ -24,5 +27,5 @@ export const getEncodingDetail = (params: GetApiSysCodingRuleCodingTypeRequest['
 export const editEncoding = (params: PutApiSysCodingRuleRequest) =>
   defHttp.put({ url: Api.RESTFUL_CODING_RULE, params });
 
-export const getEncodingDictionary = (params: GetApiSysDictItemsDictNoRequest['dictNo']) =>
-  defHttp.get({ url: Api.CODING_DICTIONARY + '/' + params });
+export const getTagDictionary = (params: PostApiSysDictionaryItemsRequest) =>
+  defHttp.post<PostApiSysDictionaryItemsResponse>({ url: Api.CODING_DICTIONARY, params });
