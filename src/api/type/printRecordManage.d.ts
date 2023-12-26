@@ -114,30 +114,29 @@ export type GetApiSysPrintingRecordPreviewPrtNoResponse = string[];
  *
  * @分类 [打印记录↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5215)
  * @请求头 `PUT /api/sys/printingRecord/{prtNo}`
- * @更新时间 `2023-12-18 15:13:52`
+ * @更新时间 `2023-12-26 14:44:38`
  */
 export interface PutApiSysPrintingRecordPrtNoRequest {
-  /**
-   * 份数
-   */
-  times: number;
-  /**
-   * 分辨率
-   */
-  resolution: number;
-  /**
-   * 打印机名
-   */
-  printerName: string;
-  /**
-   * 打印机类型
-   */
-  printerType: string;
-  directLabel: {
-    Width: number;
-    Height: number;
-    Gap: number;
-    Data: {
+  prtNo: string;
+}
+
+/**
+ * 接口 [标签补打↗](https://yapi.sharing8.cn/project/521/interface/api/31665) 的 **返回类型**
+ *
+ * @分类 [打印记录↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5215)
+ * @请求头 `PUT /api/sys/printingRecord/{prtNo}`
+ * @更新时间 `2023-12-26 14:44:38`
+ */
+export interface PutApiSysPrintingRecordPrtNoResponse {
+  times?: number;
+  resolution?: number;
+  printerName?: string;
+  printerType?: string;
+  directLabel?: {
+    Width?: number;
+    Height?: number;
+    Gap?: number;
+    Data?: {
       Id: string;
       Type: string;
       Data: string;
@@ -152,27 +151,38 @@ export interface PutApiSysPrintingRecordPrtNoRequest {
       Readable: boolean;
       UseThickness: boolean;
       TextFormat: {
-        FontName: string;
-        FontSize: number;
-        Bold: boolean;
-        Italic: boolean;
-        Underline: boolean;
-        LineWrap: boolean;
-        Revert: boolean;
-        Middle: boolean;
+        FontName?: string;
+        FontSize?: number;
+        Bold?: boolean;
+        Italic?: boolean;
+        Underline?: boolean;
+        LineWrap?: boolean;
+        Revert?: boolean;
+        Middle?: boolean;
       };
     }[];
   };
-  prtNo: string;
 }
 
 /**
- * 接口 [标签补打↗](https://yapi.sharing8.cn/project/521/interface/api/31665) 的 **返回类型**
+ * 接口 [查询打印人↗](https://yapi.sharing8.cn/project/521/interface/api/31842) 的 **请求类型**
  *
  * @分类 [打印记录↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5215)
- * @请求头 `PUT /api/sys/printingRecord/{prtNo}`
- * @更新时间 `2023-12-18 15:13:52`
+ * @请求头 `GET /api/sys/printingRecord/creators`
+ * @更新时间 `2023-12-26 10:18:43`
  */
-export interface PutApiSysPrintingRecordPrtNoResponse {}
+export interface GetApiSysPrintingRecordCreatorsRequest {}
+
+/**
+ * 接口 [查询打印人↗](https://yapi.sharing8.cn/project/521/interface/api/31842) 的 **返回类型**
+ *
+ * @分类 [打印记录↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5215)
+ * @请求头 `GET /api/sys/printingRecord/creators`
+ * @更新时间 `2023-12-26 10:18:43`
+ */
+export type GetApiSysPrintingRecordCreatorsResponse = {
+  label: string;
+  value: string;
+}[];
 
 /* prettier-ignore-end */
