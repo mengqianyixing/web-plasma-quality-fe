@@ -151,6 +151,13 @@ export default defineConfig([
             },
             outputFilePath: 'src/api/type/inspectManage.d.ts',
           },
+          {
+            id: 5327,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/callbackManage.d.ts',
+          },
         ],
       },
     ],
