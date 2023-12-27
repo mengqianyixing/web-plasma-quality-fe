@@ -103,7 +103,7 @@ export type PostApiCoreLabProjectResponse = string;
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
  * @请求头 `PUT /api/core/lab/project`
- * @更新时间 `2023-12-26 14:17:51`
+ * @更新时间 `2023-12-26 14:24:29`
  */
 export interface PutApiCoreLabProjectRequest {
   projectName?: string;
@@ -139,7 +139,7 @@ export interface PutApiCoreLabProjectRequest {
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
  * @请求头 `PUT /api/core/lab/project`
- * @更新时间 `2023-12-26 14:17:51`
+ * @更新时间 `2023-12-26 14:24:29`
  */
 export type PutApiCoreLabProjectResponse = string;
 
