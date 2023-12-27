@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 09:52:52
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-26 14:48:40
+ * @LastEditTime: 2023-12-27 16:47:00
 -->
 <template>
   <div class="h-full">
@@ -94,11 +94,10 @@
     openLocationDrawer(false);
   }
   async function handleTraySelect(value: string, event: MouseEvent) {
-    const { houseNo } = getFieldsValue();
     if (value && event.type !== 'click') {
       searchTrayInfo(value);
     } else {
-      openTrayDrawer(true, { params: { houseNo } });
+      openTrayDrawer(true, { params: { closed: 0 } });
     }
   }
   function trayConfim([{ trayNo }]) {
@@ -125,7 +124,6 @@
     await nextTick();
     const values = getFieldsValue();
     searchTrayInfo(values.trayNo);
-    console.log(state.houseList, values.houseNo);
     const { houseType } = state.houseList.find((_) => _.value === values.houseNo) as Recordable;
     removeSchemaByField(areaSchema.field);
     removeSchemaByField(locationSchema.field);

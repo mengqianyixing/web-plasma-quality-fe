@@ -306,7 +306,7 @@ export type PostApiCoreLabMethodResponse = string;
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
  * @请求头 `PUT /api/core/lab/method`
- * @更新时间 `2023-12-27 15:38:36`
+ * @更新时间 `2023-12-27 14:39:00`
  */
 export interface PutApiCoreLabMethodRequest {
   methodAbbr?: string;
@@ -319,7 +319,6 @@ export interface PutApiCoreLabMethodRequest {
    * 主键
    */
   mId: string;
-  enableFlag?: string;
 }
 
 /**
@@ -327,7 +326,7 @@ export interface PutApiCoreLabMethodRequest {
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
  * @请求头 `PUT /api/core/lab/method`
- * @更新时间 `2023-12-27 15:38:36`
+ * @更新时间 `2023-12-27 14:39:00`
  */
 export type PutApiCoreLabMethodResponse = string;
 
