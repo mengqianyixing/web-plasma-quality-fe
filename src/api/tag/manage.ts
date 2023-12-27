@@ -1,9 +1,13 @@
 import { defHttp } from '@/utils/http/axios';
 import {
+  GetApiSysTagHisReuseHisNoRequest,
   GetApiSysTagTagNoRequest,
   GetApiSysTagTagNoResponse,
+  GetSysTagHisPreviewHisNoRequest,
   PostApiSysTagPreviewRequest,
   PostApiSysTagRequest,
+  PostApiSysTagsHisRequest,
+  PostApiSysTagsHisResponse,
   PostApiSysTagsRequest,
   PostApiSysTagsResponse,
   PutApiSysTagRequest,
@@ -16,6 +20,9 @@ enum Api {
   ENABLE_STYLE = '/api/sys/tag/enable',
   DISABLE_STYLE = '/api/sys/tag/disable',
   COPY_STYLE = '/api/sys/tag/copy',
+  HISTORY_STYLE = '/api/sys/tags/his',
+  PREVIEW_HISTORY_STYLE = '/api/sys/tag/his/preview',
+  REUSE_STYLE = '/api/sys/tag/his/reuse',
 }
 
 export const getTagsList = (params: PostApiSysTagsRequest) =>
@@ -47,3 +54,12 @@ export const disableStyle = (params: string) =>
 export const copyStyle = (params: string) => defHttp.get({ url: Api.COPY_STYLE + '/' + params });
 
 export const deleteStyle = (params: string) => defHttp.delete({ url: Api.TAG_RESTFUL + params });
+
+export const historyStyle = (params: PostApiSysTagsHisRequest) =>
+  defHttp.post<PostApiSysTagsHisResponse>({ url: Api.HISTORY_STYLE, params });
+
+export const historyStylePreview = (params: GetSysTagHisPreviewHisNoRequest['hisNo']) =>
+  defHttp.get({ url: Api.PREVIEW_HISTORY_STYLE + '/' + params });
+
+export const reuseStyle = (params: GetApiSysTagHisReuseHisNoRequest['hisNo']) =>
+  defHttp.get({ url: Api.REUSE_STYLE + '/' + params });
