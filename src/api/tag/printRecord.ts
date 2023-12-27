@@ -4,8 +4,8 @@ import {
   GetApiSysPrintingRecordPreviewPrtNoRequest,
   PostApiSysPrintingRecordsRequest,
   PostApiSysPrintingRecordsResponse,
-  PutApiSysPrintingRecordPrtNoRequest,
-  PutApiSysPrintingRecordPrtNoResponse,
+  PutApiSysPrintingRecordPrtNoReasonRequest,
+  PutApiSysPrintingRecordPrtNoReasonResponse,
 } from '@/api/type/printRecordManage';
 
 enum Api {
@@ -20,9 +20,10 @@ export const getPrintRecords = (params: PostApiSysPrintingRecordsRequest) =>
 export const previewPrintRecord = (params: GetApiSysPrintingRecordPreviewPrtNoRequest['prtNo']) =>
   defHttp.get({ url: Api.RESTFUL_PRINT_RECORD + '/preview/' + params });
 
-export const replayPrintRecord = (params: PutApiSysPrintingRecordPrtNoRequest['prtNo']) =>
-  defHttp.put<PutApiSysPrintingRecordPrtNoResponse>({
-    url: Api.RESTFUL_PRINT_RECORD + '/' + params,
+export const replayPrintRecord = (params: PutApiSysPrintingRecordPrtNoReasonRequest) =>
+  defHttp.put<PutApiSysPrintingRecordPrtNoReasonResponse>({
+    url: Api.RESTFUL_PRINT_RECORD,
+    params,
   });
 
 export const getPrinter = () =>

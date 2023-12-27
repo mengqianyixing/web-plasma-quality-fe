@@ -68,7 +68,7 @@
   const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
   const [registerReprintModal, { openModal: openReprintModal }] = useModal();
 
-  const [registerTable, { getForm }] = useTable({
+  const [registerTable, { getForm, clearSelectedRowKeys }] = useTable({
     title: '标签打印记录列表',
     api: getPrintRecords,
     columns,
@@ -142,8 +142,11 @@
   }
 
   async function handleSuccess(formData: { prtNo: string; reason: string }) {
-    console.log(formData);
-    const res = await replayPrintRecord(selectedRow.value[0].prtNo);
+    selectedRow.value = [];
+    clearSelectedRowKeys();
+    const res = await replayPrintRecord({
+      ...formData,
+    });
 
     const params = {
       ...res,

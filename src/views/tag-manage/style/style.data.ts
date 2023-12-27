@@ -88,6 +88,31 @@ export const columns: BasicColumn[] = [
   },
 ];
 
+export const columnsHistory: BasicColumn[] = [
+  {
+    title: '标签名称',
+    dataIndex: 'tagName',
+  },
+  {
+    title: '标签类型',
+    dataIndex: 'labelType',
+    width: 100,
+    slots: { customRender: 'labelType' },
+  },
+  {
+    title: '创建日期',
+    dataIndex: 'createAt',
+    format: (text) => (text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-'),
+    width: 200,
+  },
+  {
+    title: '更新日期',
+    dataIndex: 'updateAt',
+    format: (text) => (text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-'),
+    width: 200,
+  },
+];
+
 export const styleDetailColumns: BasicColumn[] = [
   {
     title: '类型',
@@ -186,6 +211,21 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       options: [...tagStatusMap.entries()].map(([value, label]) => ({ label, value })),
     },
+  },
+];
+
+export const searchHistoryFormSchema: FormSchema[] = [
+  {
+    field: 'tagName',
+    label: '标签名称',
+    component: 'Input',
+    colProps: { span: 8 },
+  },
+  {
+    field: 'labelType',
+    label: '标签类型',
+    component: 'Select',
+    colProps: { span: 8 },
   },
 ];
 

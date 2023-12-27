@@ -9,7 +9,7 @@
       >
         <Row style="width: 100%">
           <Col>
-            <FormItem label="复核人">
+            <!-- <FormItem label="复核人">
               <Select
                 v-model:value="filterForm.checker"
                 allowClear
@@ -22,7 +22,7 @@
                 }}</SelectOption>
               </Select>
               <Button @click="showRegisterModal">登录</Button>
-            </FormItem>
+            </FormItem> -->
           </Col>
           <Col>
             <FormItem label="托盘编号">
@@ -126,8 +126,8 @@
     FormItem,
     Input,
     Button,
-    Select,
-    SelectOption,
+    // Select,
+    // SelectOption,
     Row,
     Col,
     Table,
@@ -173,16 +173,7 @@
   // 表单数据1
   const filterForm = ref<FilterForm>(initFilterForm);
 
-  const checkerOpts = [
-    {
-      value: '1',
-      name: '肚鸡熊',
-    },
-    {
-      value: '2',
-      name: '上鱼',
-    },
-  ];
+  const checkerOpts = [];
 
   // 未接收数据
   const noReceiveColumns = [
@@ -226,10 +217,10 @@
       title: '接收人',
       dataIndex: 'operator',
     },
-    {
-      title: '复核人',
-      dataIndex: 'checker',
-    },
+    // {
+    //   title: '复核人',
+    //   dataIndex: 'checker',
+    // },
     {
       title: '接收日期',
       dataIndex: 'acceptAt',
@@ -258,9 +249,9 @@
 
   // 登录框
   const registerModalVisible = ref(false);
-  const showRegisterModal = () => {
-    registerModalVisible.value = true;
-  };
+  // const showRegisterModal = () => {
+  //   registerModalVisible.value = true;
+  // };
   const closeRegister = () => {
     registerModalVisible.value = false;
   };
@@ -285,10 +276,11 @@
     loadingRef.value = false;
     filterForm.value.stationName = data.stationName;
     filterForm.value.transNo = data.transNo;
+    filterForm.value.batchNo = data.batchNo;
     filterForm.value.unAcceptCount = data.acceptDetail.unAcceptCount;
     filterForm.value.acceptCount = data.acceptDetail.acceptCount;
     filterForm.value.plasmaCount = data.acceptDetail.plasmaCount;
-    filterForm.value.boxCount = data.acceptDetail.plasmaCount;
+    filterForm.value.boxCount = data.acceptDetail.boxCount;
 
     unAcceptDetails.value = data.acceptDetail.unAcceptDetails;
     acceptDetails.value = data.acceptDetail.acceptDetails;
@@ -308,14 +300,18 @@
         warning('请扫描箱号！');
         return;
       }
+      if (!filterForm.value.trayNo) {
+        warning('请输入托盘编号！');
+        return;
+      }
       // if (!filterForm.value.checker) {
       //   warning('请登录复核人！');
       //   return;
       // }
-      if (!filterForm.value.batchNo) {
-        warning('请选择血浆批号！');
-        return;
-      }
+      // if (!filterForm.value.batchNo) {
+      //   warning('请选择血浆批号！');
+      //   return;
+      // }
       const params = {
         ...filterForm.value,
         batchNo: filterForm.value.batchNo,
@@ -326,10 +322,11 @@
         if (data) {
           filterForm.value.stationName = data.stationName;
           filterForm.value.transNo = data.transNo;
+          filterForm.value.batchNo = data.batchNo;
           filterForm.value.unAcceptCount = data.acceptDetail.unAcceptCount;
           filterForm.value.acceptCount = data.acceptDetail.acceptCount;
           filterForm.value.plasmaCount = data.acceptDetail.plasmaCount;
-          filterForm.value.boxCount = data.acceptDetail.plasmaCount;
+          filterForm.value.boxCount = data.acceptDetail.boxCount;
 
           unAcceptDetails.value = data.acceptDetail.unAcceptDetails;
           acceptDetails.value = data.acceptDetail.acceptDetails;
@@ -363,10 +360,10 @@
         filterForm.value.batchNo = '';
         filterForm.value.stationName = '';
         filterForm.value.transNo = '';
-        filterForm.value.boxCount = '';
-        filterForm.value.plasmaCount = '';
-        filterForm.value.unAcceptCount = '';
-        filterForm.value.acceptCount = '';
+        filterForm.value.boxCount = 0;
+        filterForm.value.plasmaCount = 0;
+        filterForm.value.unAcceptCount = 0;
+        filterForm.value.acceptCount = 0;
         unAcceptDetails.value = [];
         acceptDetails.value = [];
       },
