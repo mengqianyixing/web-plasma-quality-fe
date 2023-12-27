@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-08 09:39:00
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-26 14:39:24
+ * @LastEditTime: 2023-12-27 18:11:11
  */
 import { defineApplicationConfig } from '@vben/vite-config';
 
@@ -33,35 +33,26 @@ export default defineApplicationConfig({
           rewrite: (p) => p.replace(new RegExp(`^/basic-api`), ''),
         },
         '/basic-api/api/sys/dict': {
-          target: 'http://192.168.1.67:7002',
+          target: 'http://192.168.120.192:7002',
           changeOrigin: true,
           rewrite: (p) => p.replace(new RegExp(`^/basic-api`), ''),
         },
         '/basic-api/sys': {
-          target: 'http://192.168.1.133:7100/api',
+          target: 'http://192.168.120.192:7002/api',
           changeOrigin: true,
           ws: true,
           rewrite: (path) => path.replace(new RegExp(`^/basic-api`), ''),
         },
-        '/api/sys': {
+        '/api/sys/': {
           target: 'http://192.168.120.192:7002',
           changeOrigin: true,
           ws: true,
         },
         '/basic-api': {
-          target: 'http://192.168.1.133:7100',
+          target: 'http://192.168.120.192:7002',
           changeOrigin: true,
           ws: true,
           rewrite: (path) => path.replace(new RegExp(`^/basic-api`), ''),
-          // only https
-          // secure: false
-        },
-        '/casdoor/': {
-          target:
-            'http://192.168.110.13:7000/api/signin?code=6e008f8aaf607b5fe1e1&state=2jljs5huugy',
-          changeOrigin: true,
-          ws: true,
-          rewrite: (path) => path.replace(new RegExp(`^/casdoor/`), ''),
           // only https
           // secure: false
         },

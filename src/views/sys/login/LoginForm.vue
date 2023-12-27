@@ -61,15 +61,7 @@
   </Form>
 </template>
 <script lang="ts" setup>
-  import {
-    reactive,
-    ref,
-    unref,
-    computed,
-    onMounted,
-    getCurrentInstance,
-    ComponentInternalInstance,
-  } from 'vue';
+  import { reactive, ref, unref, computed, onMounted } from 'vue';
 
   import { Form, Input, Row, Col, Button } from 'ant-design-vue';
   import LoginFormTitle from './LoginFormTitle.vue';
@@ -92,7 +84,7 @@
   const { notification, createErrorModal } = useMessage();
   const { prefixCls } = useDesign('login');
   const userStore = useUserStore();
-  const { proxy } = getCurrentInstance() as ComponentInternalInstance;
+  // const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
   const { getLoginState } = useLoginState();
   const { getFormRules } = useFormRules();
@@ -105,13 +97,12 @@
     console.log({ url, path, queryString });
     if (queryString && queryString.includes('code')) {
       // @ts-ignore
-      oauth.signin(queryString).then((res) => {
+      oauth.signIn(queryString).then((res) => {
         if (res.code == 0) {
-          userStore.oathLogin(res.data);
           window.location.href = path;
-          // alert('Login success');
+          userStore.oathLogin(res.data);
         } else {
-          alert(`Login failed: ${res.msg}`);
+          handleCasDoorLogin();
         }
       });
     } else {
@@ -143,7 +134,9 @@
 
   async function handleCasDoorLogin() {
     // @ts-ignore
-    window.location.href = proxy?.getSigninUrl();
+    oauth
+      .goToCasDoorLogin()
+      .then((res) => (window.location.href = res.data ?? window.location.href));
   }
 
   async function handleLogin() {
