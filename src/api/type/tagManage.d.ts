@@ -458,10 +458,10 @@ export type PostApiSysTagPreviewResponse = string[];
  * 接口 [历史样式预览↗](https://yapi.sharing8.cn/project/521/interface/api/31617) 的 **请求类型**
  *
  * @分类 [样式管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5208)
- * @请求头 `GET /sys/tag/his/preview/{hisNo}`
- * @更新时间 `2023-12-16 10:40:25`
+ * @请求头 `GET /api/sys/tag/his/preview/{hisNo}`
+ * @更新时间 `2023-12-27 14:06:49`
  */
-export interface GetSysTagHisPreviewHisNoRequest {
+export interface GetApiSysTagHisPreviewHisNoRequest {
   hisNo: string;
 }
 
@@ -469,10 +469,10 @@ export interface GetSysTagHisPreviewHisNoRequest {
  * 接口 [历史样式预览↗](https://yapi.sharing8.cn/project/521/interface/api/31617) 的 **返回类型**
  *
  * @分类 [样式管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5208)
- * @请求头 `GET /sys/tag/his/preview/{hisNo}`
- * @更新时间 `2023-12-16 10:40:25`
+ * @请求头 `GET /api/sys/tag/his/preview/{hisNo}`
+ * @更新时间 `2023-12-27 14:06:49`
  */
-export type GetSysTagHisPreviewHisNoResponse = string[];
+export type GetApiSysTagHisPreviewHisNoResponse = string[];
 
 /**
  * 接口 [标签打印↗](https://yapi.sharing8.cn/project/521/interface/api/31683) 的 **请求类型**

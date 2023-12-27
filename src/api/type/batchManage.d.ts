@@ -203,13 +203,13 @@ export interface GetApiCoreBatchSummaryResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/accept/box`
- * @更新时间 `2023-12-21 17:05:18`
+ * @更新时间 `2023-12-27 13:53:04`
  */
 export interface PostApiCoreBatchPlasmaAcceptBoxRequest {
   /**
    * 血浆批号
    */
-  batchNo: string;
+  batchNo?: string;
   /**
    * 血浆箱号
    */
@@ -217,7 +217,7 @@ export interface PostApiCoreBatchPlasmaAcceptBoxRequest {
   /**
    * 复核人
    */
-  checker: string;
+  checker?: string;
   /**
    * 托盘
    */
@@ -229,13 +229,17 @@ export interface PostApiCoreBatchPlasmaAcceptBoxRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/accept/box`
- * @更新时间 `2023-12-21 17:05:18`
+ * @更新时间 `2023-12-27 13:53:04`
  */
 export interface PostApiCoreBatchPlasmaAcceptBoxResponse {
   /**
    * 采浆公司
    */
   stationName: string;
+  /**
+   * 血浆批号
+   */
+  batchNo: string;
   /**
    * 出库单号
    */
