@@ -17,7 +17,15 @@ const inboundmanagement: AppRouteModule = {
       meta: {
         title: '血浆接收',
       },
-      component: () => import('/@/views/inbound-management/receive-plasma/index.vue'),
+      component: () => import('@/views/inbound-management/receive-plasma/index.vue'),
+    },
+    {
+      path: 'acceptplasma',
+      name: 'Acceptplasma',
+      meta: {
+        title: '血浆验收',
+      },
+      component: () => import('@/views/inbound-management/accept-plasma/index.vue'),
     },
   ],
 };

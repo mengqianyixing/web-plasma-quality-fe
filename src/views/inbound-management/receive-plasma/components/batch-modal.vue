@@ -53,7 +53,7 @@
           </Select>
         </FormItem>
         <FormItem>
-          <Button type="primary" @click="queryTable">查询</Button>
+          <Button type="primary" @click="queryTable('reset')">查询</Button>
         </FormItem>
         <FormItem>
           <Button @click="resetQuery">重置</Button>
@@ -69,8 +69,11 @@
         row-key="batchNo"
       >
         <template #bodyCell="{ column, text }">
-          <template v-if="column.dataIndex === 'acceptState' || column.dataIndex === 'verifyState'">
+          <template v-if="column.dataIndex === 'acceptState'">
             {{ optsTransMap(receiveOpts, 'code', 'name')[text] }}
+          </template>
+          <template v-else-if="column.dataIndex === 'verifyState'">
+            {{ optsTransMap(checkOpts, 'code', 'name')[text] }}
           </template>
         </template>
       </Table>
@@ -110,16 +113,7 @@
     verifyState: '',
   });
   // 采浆公司备选项
-  const companyOpts = ref([
-    {
-      stationNo: 1,
-      stationName: '分宜',
-    },
-    {
-      stationNo: 2,
-      stationName: '惠州',
-    },
-  ]);
+  const companyOpts = ref([]);
 
   // 接收状态备选项
   const receiveOpts = ref([
@@ -140,15 +134,15 @@
   const checkOpts = ref([
     {
       code: 'W',
-      name: '未接收',
+      name: '未验收',
     },
     {
       code: 'R',
-      name: '接收中',
+      name: '验收中',
     },
     {
       code: 'S',
-      name: '已接收',
+      name: '已验收',
     },
   ]);
   // 备选项转map
@@ -218,6 +212,12 @@
     pageSize: 10,
     current: 1,
     total: 0,
+    onChange: async (page, pageSize) => {
+      console.log(page, pageSize);
+      pagination.value.current = page;
+      pagination.value.pageSize = pageSize;
+      await queryTable();
+    },
   });
 
   interface DataType {
@@ -239,14 +239,23 @@
     },
   };
   // 查询列表数据
-  const queryTable = async () => {
-    const params = { ...searchForm.value, ...pagination.value };
+  const queryTable = async (reset?) => {
+    if (reset === 'reset') {
+      pagination.value.pageSize = 10;
+      pagination.value.current = 1;
+    }
+    const params = {
+      ...searchForm.value,
+      pageSize: pagination.value.pageSize,
+      currPage: pagination.value.current,
+    };
     try {
       loading.value = true;
       const res = await getBatchSummary(params);
       if (res) {
         pagination.value.total = res.totalCount;
         pagination.value.pageSize = res.pageSize;
+        pagination.value.current = res.currPage;
         tableData.value = res.result;
         // dispatch 为对象，拆成两个字段作两列
         for (const item of tableData.value) {

@@ -1,4 +1,5 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
+import { PLASMA_TYPE_LIST } from '@/enums/inspectEnum';
 
 export const columns: BasicColumn[] = [
   {
@@ -94,16 +95,9 @@ export const formListSchema: FormSchema[] = [
     field: 'plasmaType',
     component: 'Select',
     label: '血浆类型',
+
     componentProps: {
-      options: [
-        { value: 0, label: '普通' },
-        { value: 1, label: '乙免' },
-        { value: 2, label: '狂免' },
-        { value: 3, label: '破免' },
-        { value: 4, label: '破免' },
-        { value: 5, label: '炭疽' },
-        { value: 6, label: '未知' },
-      ],
+      options: PLASMA_TYPE_LIST,
     },
   },
   {
