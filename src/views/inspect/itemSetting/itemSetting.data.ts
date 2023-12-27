@@ -1,5 +1,6 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { PLASMA_TYPE_LIST } from '@/enums/inspectEnum';
+import { getInspectMethodListApi } from '@/api/inspect/inspectMethod';
 
 export const columns: BasicColumn[] = [
   {
@@ -161,11 +162,11 @@ export const formListSchema: FormSchema[] = [
   },
   {
     field: 'method',
-    component: 'Select',
+    component: 'ApiSelect',
     label: '检测方法',
     required: true,
     componentProps: {
-      options: [],
+      api: getInspectMethodListApi,
     },
   },
   {

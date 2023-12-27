@@ -3,7 +3,7 @@
     <BasicForm @register="registerForm" />
     <BasicTable @register="registerTable">
       <template #toolbar>
-        {{ fileList?.map((_) => _.name).join('') }}
+        {{ fileList.map((_) => _.name).join('') }}
         <a-upload
           :showUploadList="false"
           :before-upload="beforeUpload"
@@ -26,10 +26,10 @@
   import { importDrwaerColumns, searchFormschema } from './titer.data';
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { ref } from 'vue';
-  import type { UploadProps } from 'ant-design-vue';
   import { Upload as AUpload } from 'ant-design-vue';
+  import { defHttp } from '@/utils/http/axios';
 
-  const fileList = ref<UploadProps['fileList']>([]);
+  const fileList = ref<File[]>([]);
   const loading = ref(false);
 
   defineOptions({ name: 'ImportDrawer' });
@@ -62,11 +62,15 @@
   });
 
   function uploadClick() {
+    defHttp.uploadFile(
+      { url: 'http://192.168.1.14' },
+      { file: fileList.value[0], data: { test: '123' } },
+    );
     validate();
   }
   function downFile() {}
 
-  const beforeUpload: UploadProps['beforeUpload'] = (file) => {
+  const beforeUpload: (file: File) => boolean = (file) => {
     fileList.value = [file];
     return false;
   };
