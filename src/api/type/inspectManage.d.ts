@@ -103,7 +103,7 @@ export type PostApiCoreLabProjectResponse = string;
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
  * @请求头 `PUT /api/core/lab/project`
- * @更新时间 `2023-12-26 14:17:51`
+ * @更新时间 `2023-12-26 14:24:29`
  */
 export interface PutApiCoreLabProjectRequest {
   projectName?: string;
@@ -139,7 +139,7 @@ export interface PutApiCoreLabProjectRequest {
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
  * @请求头 `PUT /api/core/lab/project`
- * @更新时间 `2023-12-26 14:17:51`
+ * @更新时间 `2023-12-26 14:24:29`
  */
 export type PutApiCoreLabProjectResponse = string;
 
@@ -255,6 +255,170 @@ export interface PostApiCoreLabProjectsResponse {
     traceUnqualifiedReason?: string;
     creator?: string;
     createAt?: string;
+  }[];
+}
+
+/**
+ * 接口 [新增效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/31851) 的 **请求类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `POST /api/core/bag/titer/type`
+ * @更新时间 `2023-12-26 16:37:45`
+ */
+export interface PostApiCoreBagTiterTypeRequest {
+  /**
+   * 血浆类型
+   */
+  plasmaType: number;
+  /**
+   * 效价编码
+   */
+  code: string;
+  /**
+   * 效价名称
+   */
+  name: string;
+  /**
+   * 效价结果
+   */
+  result: string;
+  /**
+   * 排序
+   */
+  sort: number;
+  /**
+   * 状态
+   */
+  state: number;
+}
+
+/**
+ * 接口 [新增效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/31851) 的 **返回类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `POST /api/core/bag/titer/type`
+ * @更新时间 `2023-12-26 16:37:45`
+ */
+export type PostApiCoreBagTiterTypeResponse = string;
+
+/**
+ * 接口 [修改效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/31854) 的 **请求类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `PUT /api/core/bag/titer/type`
+ * @更新时间 `2023-12-26 16:37:52`
+ */
+export interface PutApiCoreBagTiterTypeRequest {
+  plasmaType?: number;
+  code?: string;
+  name?: string;
+  result?: string;
+  sort?: number;
+  state?: number;
+  /**
+   * 主键id
+   */
+  bttNo: string;
+  /**
+   * 是否只禁用启用
+   */
+  enableFlag?: string;
+}
+
+/**
+ * 接口 [修改效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/31854) 的 **返回类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `PUT /api/core/bag/titer/type`
+ * @更新时间 `2023-12-26 16:37:52`
+ */
+export type PutApiCoreBagTiterTypeResponse = string;
+
+/**
+ * 接口 [删除效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/31857) 的 **请求类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `DELETE /api/core/bag/titer/type/{bttNo}`
+ * @更新时间 `2023-12-26 16:38:00`
+ */
+export interface DeleteApiCoreBagTiterTypeBttNoRequest {
+  bttNo: string;
+}
+
+/**
+ * 接口 [删除效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/31857) 的 **返回类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `DELETE /api/core/bag/titer/type/{bttNo}`
+ * @更新时间 `2023-12-26 16:38:00`
+ */
+export type DeleteApiCoreBagTiterTypeBttNoResponse = string;
+
+/**
+ * 接口 [查询效价类型详情↗](https://yapi.sharing8.cn/project/529/interface/api/31860) 的 **请求类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `GET /api/core/bag/titer/type/{bttNo}`
+ * @更新时间 `2023-12-26 16:38:08`
+ */
+export interface GetApiCoreBagTiterTypeBttNoRequest {
+  bttNo: string;
+}
+
+/**
+ * 接口 [查询效价类型详情↗](https://yapi.sharing8.cn/project/529/interface/api/31860) 的 **返回类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `GET /api/core/bag/titer/type/{bttNo}`
+ * @更新时间 `2023-12-26 16:38:08`
+ */
+export interface GetApiCoreBagTiterTypeBttNoResponse {
+  plasmaType: number;
+  code: string;
+  name: string;
+  result: string;
+  sort: number;
+  state: number;
+  creator: string;
+  creatAt: string;
+}
+
+/**
+ * 接口 [查询效价列表↗](https://yapi.sharing8.cn/project/529/interface/api/31863) 的 **请求类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `POST /api/core/bag/titer/types`
+ * @更新时间 `2023-12-26 16:38:19`
+ */
+export interface PostApiCoreBagTiterTypesRequest {
+  currPage: string;
+  pageSize: string;
+  plasmaType?: number;
+  code?: string;
+  name?: string;
+}
+
+/**
+ * 接口 [查询效价列表↗](https://yapi.sharing8.cn/project/529/interface/api/31863) 的 **返回类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `POST /api/core/bag/titer/types`
+ * @更新时间 `2023-12-26 16:38:19`
+ */
+export interface PostApiCoreBagTiterTypesResponse {
+  totalCount: number;
+  totalPage: number;
+  currPage: number;
+  pageSize: number;
+  result?: {
+    plasmaType: number;
+    code: string;
+    name: string;
+    result: string;
+    sort: number;
+    state: number;
+    creator: string;
+    creatAt: string;
   }[];
 }
 

@@ -575,7 +575,7 @@ export interface GetApiCoreBatchPlasmaVerifyBoxNoResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/bag`
- * @更新时间 `2023-12-25 11:23:32`
+ * @更新时间 `2023-12-26 14:21:19`
  */
 export interface GetApiCoreBatchPlasmaVerifyBagRequest {
   /**
@@ -605,7 +605,7 @@ export interface GetApiCoreBatchPlasmaVerifyBagRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/bag`
- * @更新时间 `2023-12-25 11:23:32`
+ * @更新时间 `2023-12-26 14:21:19`
  */
 export type GetApiCoreBatchPlasmaVerifyBagResponse = {
   /**
@@ -629,11 +629,11 @@ export type GetApiCoreBatchPlasmaVerifyBagResponse = {
    */
   donorName?: string;
   /**
-   * 性别
+   * 性别 （M, F）
    */
-  sex?: string;
+  gender?: string;
   /**
-   * 血型
+   * 血型（A,B,AB,O）
    */
   bloodType?: string;
   /**
@@ -647,7 +647,7 @@ export type GetApiCoreBatchPlasmaVerifyBagResponse = {
   /**
    * 验收人
    */
-  operator?: string;
+  verifyUser?: string;
   /**
    * 复核人
    */
@@ -675,7 +675,7 @@ export type GetApiCoreBatchPlasmaVerifyBagResponse = {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/box`
- * @更新时间 `2023-12-25 11:27:15`
+ * @更新时间 `2023-12-26 14:22:23`
  */
 export interface GetApiCoreBatchPlasmaVerifyBoxRequest {
   /**
@@ -705,7 +705,7 @@ export interface GetApiCoreBatchPlasmaVerifyBoxRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/box`
- * @更新时间 `2023-12-25 11:27:15`
+ * @更新时间 `2023-12-26 14:22:23`
  */
 export type GetApiCoreBatchPlasmaVerifyBoxResponse = {
   /**
@@ -735,15 +735,15 @@ export type GetApiCoreBatchPlasmaVerifyBoxResponse = {
   /**
    * 验收复核人
    */
-  rawWeight?: number;
+  checker?: string;
   /**
    * 托盘编号
    */
-  trayNo?: number;
+  trayNo?: string;
   /**
    * 验收状态
    */
-  operator?: string;
+  verifyState?: string;
 }[];
 
 /**
@@ -844,6 +844,103 @@ export interface GetApiCoreBatchSampleAcceptResponse {
      */
     acceptState?: string;
   }[];
+}
+
+/**
+ * 接口 [血浆验收(袋)↗](https://yapi.sharing8.cn/project/529/interface/api/31848) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/verify/bag`
+ * @更新时间 `2023-12-26 16:38:10`
+ */
+export interface PostApiCoreBatchPlasmaVerifyBagRequest {
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 血浆箱号
+   */
+  boxNo?: string;
+  /**
+   * 血浆编号
+   */
+  bagNo: string;
+  /**
+   * 复核人
+   */
+  checker: string;
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+}
+
+/**
+ * 接口 [血浆验收(袋)↗](https://yapi.sharing8.cn/project/529/interface/api/31848) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/verify/bag`
+ * @更新时间 `2023-12-26 16:38:10`
+ */
+export interface PostApiCoreBatchPlasmaVerifyBagResponse {
+  /**
+   * 采浆公司
+   */
+  stationName: string;
+  /**
+   * 血浆批号
+   */
+  batchNo: string;
+  /**
+   * 已验收血浆数
+   */
+  verifyBagCount: number;
+  /**
+   * 血浆总数
+   */
+  bagCount: number;
+  /**
+   * 已验收箱数
+   */
+  verifyBoxCount: number;
+  /**
+   * 箱总数
+   */
+  boxCount: number;
+  /**
+   * 未验收血浆编号
+   */
+  unVerifyBag: string[];
+  /**
+   * 已验收血浆信息
+   */
+  verifyBag: {
+    /**
+     * 血浆编号
+     */
+    bagNo: string;
+    /**
+     * 验收时间
+     */
+    verifyAt: string;
+    /**
+     * 血浆验收结果
+     */
+    bagResult: string;
+    /**
+     * 样本验收结果
+     */
+    sampleResult: string;
+  }[];
+  /**
+   * 血浆箱号
+   */
+  boxNo: string;
+  /**
+   * 献血浆者不符合项目
+   */
+  donorFailed: string;
 }
 
 /* prettier-ignore-end */
