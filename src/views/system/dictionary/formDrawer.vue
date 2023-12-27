@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-22 10:28:15
+ * @LastEditTime: 2023-12-27 17:00:01
 -->
 <template>
   <BasicDrawer
@@ -35,18 +35,20 @@
     dictId: '',
   });
 
-  const [registerForm, { validate, setFieldsValue, clearValidate, resetFields }] = useForm({
-    labelWidth: 90,
-    baseColProps: { span: 24 },
-    schemas: formSchema,
-    showActionButtonGroup: false,
-  });
+  const [registerForm, { validate, setFieldsValue, clearValidate, resetFields, updateSchema }] =
+    useForm({
+      labelWidth: 90,
+      baseColProps: { span: 24 },
+      schemas: formSchema,
+      showActionButtonGroup: false,
+    });
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(
     async ({ isUpdate, data }) => {
       setDrawerProps({ confirmLoading: false });
       state.isUpdate = isUpdate;
       state.dictId = data.dictId;
       if (isUpdate) {
+        updateSchema({ field: 'dictNo', componentProps: { disabled: true } });
         const res = await getDictDtApi({ dictId: data.dictId });
         setFieldsValue(res);
       } else {
