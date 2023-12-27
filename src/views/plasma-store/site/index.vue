@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-20 09:47:04
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-23 14:09:38
+ * @LastEditTime: 2023-12-26 10:17:57
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
@@ -45,6 +45,10 @@
     showTableSetting: false,
     bordered: true,
     rowSelection: { type: 'checkbox' },
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
     formConfig: {
       labelWidth: 120,
       schemas: [siteCodeSchema],

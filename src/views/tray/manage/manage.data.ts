@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-20 14:11:29
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-22 14:59:30
+ * @LastEditTime: 2023-12-23 16:53:01
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 
@@ -16,10 +16,29 @@ export const columns: BasicColumn[] = [
     slots: { customRender: 'trayNo' },
   },
   {
-    title: '已存放容量(箱)',
-    dataIndex: 'usedNumber',
+    title: '负载状态',
+    dataIndex: '',
+    customRender: ({ record }) => {
+      return record.totalNumber ? '负载' : '空载';
+    },
   },
-
+  {
+    title: '已存放容量(箱)',
+    dataIndex: 'totalNumber',
+    slots: { customRender: 'totalNumber' },
+  },
+  {
+    title: '打印人姓名',
+    dataIndex: 'creater',
+  },
+  {
+    title: '打印时间',
+    dataIndex: 'createAt',
+  },
+  {
+    title: '存放类型',
+    dataIndex: 'trayType',
+  },
   {
     title: '存放库房',
     dataIndex: 'wareHouseName',
@@ -33,12 +52,15 @@ export const columns: BasicColumn[] = [
     dataIndex: 'locationNo',
   },
   {
-    title: '创建人',
-    dataIndex: 'creater',
+    title: '备注',
+    dataIndex: 'remark',
   },
   {
-    title: '创建时间',
-    dataIndex: 'create_at',
+    title: '托盘状态',
+    dataIndex: 'closed',
+    customRender: ({ record }) => {
+      return record.closed ? '停用' : '启用';
+    },
   },
 ];
 export const searchFormSchema: FormSchema[] = [
@@ -78,3 +100,5 @@ export const trayDtColumns: BasicColumn[] = [{ dataIndex: '', title: '托盘编�
 export const trayDtSearchSchema: FormSchema[] = [
   { label: '托盘编号', field: '', component: 'Input', colProps: { span: 10 } },
 ];
+
+export const trayBoxColumns: BasicColumn[] = [{ title: '血浆箱号', dataIndex: 'boxNo' }];

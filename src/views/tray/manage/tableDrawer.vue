@@ -1,6 +1,6 @@
 <template>
   <BasicDrawer v-bind="$attrs" @register="registerDrawer" showFooter title="托盘详情" width="600px">
-    <BasicTable @register="registerTable" />
+    <BasicTable @register="registerTable" v-show="false" />
   </BasicDrawer>
 </template>
 <script setup lang="ts">

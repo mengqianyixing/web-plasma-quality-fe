@@ -2,7 +2,7 @@ import { FormSchema } from '@/components/Form';
 
 export const schemas: FormSchema[] = [
   {
-    field: 'check',
+    field: 'checker',
     component: 'InputGroup',
     slot: 'check',
     label: '审核人',
@@ -10,22 +10,25 @@ export const schemas: FormSchema[] = [
     required: true,
   },
   {
-    field: 'field2',
-    component: 'ApiSelect',
+    field: 'fkFailedCode',
+    component: 'Select',
     label: '不合格原因',
-    slot: 'nonconformity',
+    // slot: 'nonconformity',
     colProps: { span: 14 },
+    componentProps: {
+      options: [{ label: '验收不合格', value: 'DSN' }],
+    },
     required: true,
   },
   {
-    field: 'field2',
+    field: 'fkBagNo',
     component: 'Input',
     label: '血浆编号',
     colProps: { span: 14 },
     required: true,
   },
   {
-    field: 'field3',
+    field: 'remark',
     component: 'InputTextArea',
     label: '备注',
     colProps: { span: 14 },
@@ -47,8 +50,8 @@ export const formSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'passwd',
-    component: 'Input',
+    field: 'password',
+    component: 'InputPassword',
     label: '密码',
     colProps: {
       span: 20,

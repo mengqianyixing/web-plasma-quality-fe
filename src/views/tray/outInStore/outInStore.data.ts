@@ -4,42 +4,45 @@
  * @Author: zcc
  * @Date: 2023-12-18 14:18:35
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-22 16:58:30
+ * @LastEditTime: 2023-12-25 18:17:34
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
     title: '托盘编号',
-    dataIndex: '',
+    dataIndex: 'trayNo',
   },
   {
-    title: '已用容量(箱)',
-    dataIndex: '',
+    title: '已存容量(箱)',
+    dataIndex: 'totalNumber',
   },
   {
     title: '所在库房',
-    dataIndex: '',
+    dataIndex: 'wareHouseName',
   },
   {
     title: '所在货位',
-    dataIndex: '',
+    dataIndex: 'subWareHouseName',
   },
   {
     title: '所在区域',
-    dataIndex: '',
+    dataIndex: 'locationNo',
   },
   {
-    title: '创建人',
-    dataIndex: '',
+    title: '打印人',
+    dataIndex: 'creater',
   },
   {
-    title: '创建时间',
-    dataIndex: '',
+    title: '打印时间',
+    dataIndex: 'createAt',
   },
   {
     title: '托盘状态',
     dataIndex: '',
+    customRender: ({ record }) => {
+      return record.closed ? '停用' : '启用';
+    },
   },
 ];
 
@@ -47,31 +50,31 @@ export const searchFormSchema: FormSchema[] = [
   {
     label: '托盘编号',
     component: 'Input',
-    field: '',
+    field: 'trayNo',
     colProps: { span: 8 },
   },
   {
     label: '血浆批次',
     component: 'Input',
-    field: '',
+    field: 'batchNo',
     colProps: { span: 8 },
   },
   {
-    label: '血浆编号',
+    label: '浆袋编号',
     component: 'Input',
-    field: '',
+    field: 'bagNo',
     colProps: { span: 8 },
   },
   {
     label: '样品批次',
     component: 'Input',
-    field: '',
+    field: 'sampleNo',
     colProps: { span: 8 },
   },
   {
     label: '投产准备号',
     component: 'Input',
-    field: '',
+    field: 'prepareNo',
     colProps: { span: 8 },
   },
 ];

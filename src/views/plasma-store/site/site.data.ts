@@ -44,7 +44,7 @@ export const formListSchema: FormSchema[] = [
       {
         trigger: 'blur',
         validator: (rule, value) => {
-          if (!value) return Promise.reject('请输入站点代码');
+          if (!value) return Promise.resolve();
           if (!/^[a-zA-Z0-9]*$/.test(value)) return Promise.reject('只能输入字母和数字');
           return Promise.resolve();
         },

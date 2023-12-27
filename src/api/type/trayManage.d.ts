@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2023-12-19 17:17:28`
+ * @更新时间 `2023-12-23 20:43:42`
  */
 export interface GetApiCoreBankTraiesRequest {
   /**
@@ -43,6 +43,7 @@ export interface GetApiCoreBankTraiesRequest {
    * 投产准备号
    */
   prepareNo?: string;
+  closed?: string;
 }
 
 /**
@@ -50,7 +51,7 @@ export interface GetApiCoreBankTraiesRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2023-12-19 17:17:28`
+ * @更新时间 `2023-12-23 20:43:42`
  */
 export interface GetApiCoreBankTraiesResponse {
   /**
@@ -72,11 +73,11 @@ export interface GetApiCoreBankTraiesResponse {
     /**
      * 托盘编号
      */
-    trayNo?: string;
+    trayNo: string;
     /**
      * 已存箱数量
      */
-    usedNumber?: string;
+    totalNumber?: number;
     /**
      * 所存放库房名称
      */
@@ -97,6 +98,26 @@ export interface GetApiCoreBankTraiesResponse {
      * 创建时间
      */
     create_at?: string;
+    /**
+     * 容量
+     */
+    capacity?: number;
+    /**
+     * 托盘存放类型
+     */
+    trayType?: string;
+    /**
+     * 0表示启用，1表示禁用
+     */
+    closed?: number;
+    /**
+     * 更新人
+     */
+    updater?: string;
+    /**
+     * 更新时间
+     */
+    updateAt?: string;
   }[];
 }
 
@@ -504,6 +525,61 @@ export interface PutApiCoreBankTrayTrayNoResponse {
    * 响应信息
    */
   msg: string;
+}
+
+/**
+ * 接口 [查询指定托盘下的所有浆箱信息↗](https://yapi.sharing8.cn/project/529/interface/api/31803) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/box/{trayNo}`
+ * @更新时间 `2023-12-23 16:57:06`
+ */
+export interface GetApiCoreBankTrayBoxTrayNoRequest {
+  /**
+   * 托盘号
+   */
+  trayNo: string;
+}
+
+/**
+ * 接口 [查询指定托盘下的所有浆箱信息↗](https://yapi.sharing8.cn/project/529/interface/api/31803) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/box/{trayNo}`
+ * @更新时间 `2023-12-23 16:57:06`
+ */
+export type GetApiCoreBankTrayBoxTrayNoResponse = {
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+}[];
+
+/**
+ * 接口 [查询指定托盘所在的库房↗](https://yapi.sharing8.cn/project/529/interface/api/31806) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/warehouse/tray/{trayNo}`
+ * @更新时间 `2023-12-23 19:13:41`
+ */
+export interface GetApiCoreBankWarehouseTrayTrayNoRequest {
+  /**
+   * 托盘号
+   */
+  trayNo: string;
+}
+
+/**
+ * 接口 [查询指定托盘所在的库房↗](https://yapi.sharing8.cn/project/529/interface/api/31806) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/warehouse/tray/{trayNo}`
+ * @更新时间 `2023-12-23 19:13:41`
+ */
+export interface GetApiCoreBankWarehouseTrayTrayNoResponse {
+  houseNo: string;
+  houseName: string;
+  houseType: string;
 }
 
 /* prettier-ignore-end */

@@ -78,6 +78,20 @@ export default defineConfig([
             },
             outputFilePath: 'src/api/type/dictionary.d.ts',
           },
+          {
+            id: 5236,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/encodingManage.d.ts',
+          },
+          {
+            id: 5215,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/printRecordManage.d.ts',
+          },
         ],
       },
       {
@@ -114,6 +128,28 @@ export default defineConfig([
               return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
             },
             outputFilePath: 'src/api/type/trayManage.d.ts',
+          },
+          {
+            id: 5299,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/nonconformityManage.d.ts',
+          },
+          {
+            id: 5313,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/stationManage.d.ts',
+          },
+          {
+            id: [5306, 5320],
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              // 以接口全路径生成请求函数名
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/inspectManage.d.ts',
           },
         ],
       },

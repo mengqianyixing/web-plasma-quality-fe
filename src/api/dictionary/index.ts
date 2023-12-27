@@ -1,3 +1,11 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: zcc
+ * @Date: 2023-12-22 09:12:00
+ * @LastEditors: zcc
+ * @LastEditTime: 2023-12-26 11:30:09
+ */
 import { defHttp } from '@/utils/http/axios';
 import {
   PostApiSysDictItemRequest,
@@ -20,6 +28,8 @@ import {
   DeleteApiSysDictDictIdResponse,
   DeleteApiSysDictItemDictItemIdRequest,
   DeleteApiSysDictItemDictItemIdResponse,
+  PostApiSysDictionaryItemsRequest,
+  PostApiSysDictionaryItemsResponse,
 } from '../type/dictionary';
 
 enum Api {
@@ -29,6 +39,7 @@ enum Api {
   DICT_ITEM_LIST = '/api/sys/dict/items',
   DICT_ITEM_FORM = '/api/sys/dict/item',
   DICT_ITEM_REMOVE = '/api/sys/dict/item/',
+  DICT_ITEM_LIST_BY_NO = '/api/sys/dictionaryItems',
 }
 
 export const getDictListApi = (params: PostApiSysDictsRequest) =>
@@ -61,4 +72,9 @@ export const removeDictItemApi = ({ dictItemId }: DeleteApiSysDictItemDictItemId
 export const getDictItemDtApi = ({ dictItemId }: GetApiSysDictItemDictItemIdRequest) =>
   defHttp.get<GetApiSysDictItemDictItemIdResponse>({
     url: `${Api.DICT_ITEM_REMOVE}${dictItemId}`,
+  });
+export const getDictItemListByNoApi = (params: PostApiSysDictionaryItemsRequest) =>
+  defHttp.post<PostApiSysDictionaryItemsResponse>({
+    url: `${Api.DICT_ITEM_LIST_BY_NO}`,
+    params,
   });

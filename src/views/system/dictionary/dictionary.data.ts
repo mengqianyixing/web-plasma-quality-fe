@@ -61,6 +61,16 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
     required: true,
     colProps: { span: 24 },
+    rules: [
+      {
+        trigger: 'blur',
+        validator: (rule, value) => {
+          if (!value) return Promise.resolve();
+          if (!/^[a-zA-Z0-9]*$/.test(value)) return Promise.reject('只能输入字母和数字');
+          return Promise.resolve();
+        },
+      },
+    ],
   },
   {
     field: 'dictDesc',

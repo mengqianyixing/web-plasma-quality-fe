@@ -4,13 +4,13 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-22 17:41:57
+ * @LastEditTime: 2023-12-23 18:43:29
 -->
 <template>
   <div class="h-full">
     <div style="box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%)" class="flex pt-12px m-24px mt-8px">
       <BasicForm @register="registerForm" class="flex-1" @submit="handleSubmit" />
-      <div class="w-100px text-[20px] text-red-400">箱数：30</div>
+      <div class="w-100px text-[20px] text-red-400">箱数：{{ count }}</div>
     </div>
     <BasicTable @register="registerTable" />
   </div>
@@ -24,7 +24,11 @@
     plasmaBoxScanColumns,
   } from './relocation.data';
   import { bindBoxApi } from '@/api/tray/relocation';
+  import { message } from 'ant-design-vue';
+  import { trayBoxListApi } from '@/api/tray/list';
+  import { ref } from 'vue';
 
+  const count = ref(0);
   const [registerForm, { getFieldsValue, resetFields }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 8 },
@@ -41,7 +45,7 @@
   const columns = plasmaBoxScanColumns(props.isBinding);
   const [registerTable] = useTable({
     title: '',
-    api: () => Promise.resolve({ result: [{}] }),
+    api: () => Promise.resolve({ result: [] }),
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -60,8 +64,14 @@
   });
   async function handleSubmit() {
     const { boxId, trayNo } = getFieldsValue();
+    if (trayNo) {
+      trayBoxListApi({ trayNo }).then((res) => {
+        count.value = res.length;
+      });
+    }
     if (!boxId || !trayNo) return;
     await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: [boxId] });
+    message.success('操作成功');
     resetFields();
   }
 </script>

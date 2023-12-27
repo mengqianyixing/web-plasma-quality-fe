@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-18 14:18:08
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-20 15:25:32
+ * @LastEditTime: 2023-12-26 10:13:25
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
@@ -14,29 +14,29 @@
         <a-button type="primary" @click="handleInStore">入库</a-button>
       </template>
     </BasicTable>
-    <OutModal @register="registerOutDrawer" @success="reload" />
-    <InModal @register="registerInDrawer" @success="reload" />
+    <OutModal @register="registerOutDrawer" @success="success" />
+    <InModal @register="registerInDrawer" @success="success" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { columns, searchFormSchema } from './outInStore.data';
-  import { settingListApi } from '@/api/plasmaStore/setting';
   import { useDrawer } from '@/components/Drawer';
   import { message } from 'ant-design-vue';
   import OutModal from './outModal.vue';
   import InModal from './inModal.vue';
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
+  import { getListApi } from '@/api/tray/list';
 
   defineOptions({ name: 'OutInStore' });
 
   const [registerOutDrawer, { openDrawer }] = useDrawer();
   const [registerInDrawer, { openDrawer: openInDrawer }] = useDrawer();
 
-  const [registerTable, { getSelectRows, reload }] = useTable({
+  const [registerTable, { getSelectRows, reload, clearSelectedRowKeys }] = useTable({
     title: '',
-    api: settingListApi,
+    api: getListApi,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -47,18 +47,24 @@
       labelWidth: 120,
       schemas: searchFormSchema,
     },
-    rowKey: 'houseNo',
+    rowKey: 'trayNo',
     columns,
     useSearchForm: true,
     bordered: true,
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
     rowSelection: { type: 'checkbox' },
+    beforeFetch: (p) => ({ ...p, closed: 0 }),
   });
 
   function handleOutStore() {
     const rows = getSelections(false);
     if (!rows.length) return false;
+    if (!rows.every((_) => _.wareHouseName)) return message.warning('所选托盘存在未入库!');
     const [firstRow] = rows;
-    const notAlike = rows.some((_) => _.houseNo !== firstRow.houseNo);
+    const notAlike = rows.some((_) => _.wareHouseName !== firstRow.wareHouseName);
     if (notAlike) return message.warning('所选托盘不属于同一库房!');
     if (firstRow.houseType[1] === STORE_FLAG.S) {
       openDrawer(true, { data: rows, showSite: true });
@@ -68,6 +74,7 @@
   }
   function handleInStore() {
     const rows = getSelections<string>(false);
+    if (rows.some((_) => _.wareHouseName)) return message.warning('所选托盘存在已入库!');
     if (!rows.length) return false;
     openInDrawer(true, { data: rows });
   }
@@ -82,5 +89,9 @@
       return [];
     }
     return rows;
+  }
+  function success() {
+    clearSelectedRowKeys();
+    reload();
   }
 </script>
