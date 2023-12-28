@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-26 17:41:03
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-27 11:20:46
+ * @LastEditTime: 2023-12-28 11:14:30
 -->
 <template>
   <BasicDrawer
@@ -24,16 +24,16 @@
   import { formListSchema } from './inspectMethod.data';
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import {
-    getTitlerTypeDtApi,
-    addTitlerTypeApi,
-    updateTitlerTypeApi,
-  } from '@/api/inspect/titerType';
+    getInspectMethodDtApi,
+    addInspectMethodApi,
+    updateInspectMethodApi,
+  } from '@/api/inspect/inspectMethod';
   import { getDictItemListByNoApi } from '@/api/dictionary';
 
   const emit = defineEmits(['success', 'register']);
 
   defineOptions({ name: 'FormModel' });
-  const state = reactive({ bttNo: '', type: '', isRequest: false });
+  const state = reactive({ dictItemId: '', type: '', isRequest: false });
 
   const [registerForm, { validate, setFieldsValue, clearValidate, resetFields, updateSchema }] =
     useForm({
@@ -43,13 +43,13 @@
       showActionButtonGroup: false,
     });
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async ({ data }) => {
-    state.bttNo = data.bttNo;
+    state.dictItemId = data.dictItemId;
     if (state.isRequest === false) {
       state.isRequest = true;
       getDict();
     }
-    if (data.bttNo) {
-      const res = await getTitlerTypeDtApi({ bttNo: data.bttNo });
+    if (data.dictItemId) {
+      const res = await getInspectMethodDtApi({ dictItemId: data.dictItemId });
       setFieldsValue(res);
       state.type = '编辑';
     } else {
@@ -62,10 +62,10 @@
     try {
       const values = await validate();
       setDrawerProps({ confirmLoading: true });
-      if (state.bttNo) {
-        await updateTitlerTypeApi({ ...values, bttNo: state.bttNo });
+      if (state.dictItemId) {
+        await updateInspectMethodApi({ ...values, dictItemId: state.dictItemId });
       } else {
-        await addTitlerTypeApi({ ...values } as any);
+        await addInspectMethodApi({ ...values } as any);
       }
       setDrawerProps({ confirmLoading: false });
       closeDrawer();
@@ -75,7 +75,7 @@
     }
   }
   async function getDict() {
-    const [res] = await getDictItemListByNoApi(['titerResult']);
-    updateSchema({ field: 'result', componentProps: { options: res.dictImtes } });
+    const [res] = await getDictItemListByNoApi(['detectionMode']);
+    updateSchema({ field: 'detectionMode', componentProps: { options: res.dictImtes } });
   }
 </script>

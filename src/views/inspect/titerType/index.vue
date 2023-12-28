@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-25 14:30:13
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-28 10:02:17
+ * @LastEditTime: 2023-12-28 11:16:06
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
@@ -13,8 +13,8 @@
         <a-button type="primary" @click="handleCreate">新增</a-button>
         <a-button type="primary" @click="handleUpdate">编辑</a-button>
         <a-button type="primary" @click="handleRemove">删除</a-button>
-        <a-button type="primary" @click="handleCheckStatus(1)">禁用</a-button>
-        <a-button type="primary" @click="handleCheckStatus(0)">启用</a-button>
+        <a-button type="primary" @click="handleCheckStatus(false)">禁用</a-button>
+        <a-button type="primary" @click="handleCheckStatus(true)">启用</a-button>
       </template>
     </BasicTable>
     <FormModal @register="registerDrawer" @success="success" />
@@ -82,9 +82,9 @@
   function handleRemove() {
     const [row] = getSelections(true);
     if (!row) return;
-    const { dictItemId, itemValue } = row;
+    const { dictItemId, itemKey } = row;
     Modal.confirm({
-      content: '确认删除' + itemValue + '?',
+      content: '确认删除' + itemKey + '?',
       onOk: async () => {
         await removeTitlerTypeApi({ dictItemId: dictItemId });
         clearSelectedRowKeys();
@@ -93,13 +93,13 @@
       onCancel: () => Modal.destroyAll(),
     });
   }
-  function handleCheckStatus(action: number) {
+  function handleCheckStatus(action: boolean) {
     const [row] = getSelections(true);
     if (!row) return;
-    const { itemValue, dictItemId, state } = row;
-    if (state === action) return message.warning('状态不需要变更');
+    const { itemKey, dictItemId, enable } = row;
+    if (enable === action) return message.warning('状态不需要变更');
     Modal.confirm({
-      content: '确认' + (action ? '禁用' : '启用') + itemValue + '?',
+      content: '确认' + (action ? '启用' : '禁用') + itemKey + '?',
       onOk: async () => {
         await updateTitlerTypeApi({ dictItemId: dictItemId, enable: action });
         clearSelectedRowKeys();

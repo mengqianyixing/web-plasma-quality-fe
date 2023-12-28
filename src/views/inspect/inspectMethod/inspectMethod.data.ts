@@ -7,13 +7,12 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '全称',
-    dataIndex: 'methodName',
+    dataIndex: 'itemKey',
   },
   {
     title: '检疫期间隔天数',
     dataIndex: 'intervalDays',
   },
-
   {
     title: '排序号',
     dataIndex: 'sort',
@@ -24,14 +23,14 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '是否启用',
-    dataIndex: 'state',
+    dataIndex: 'enable',
     customRender: ({ record }) => {
-      return record.state ? '否' : '是';
+      return record.enable ? '是' : '否';
     },
   },
   {
     title: '记录人',
-    dataIndex: 'creator',
+    dataIndex: 'creater',
   },
   {
     title: '记录时间',
@@ -46,7 +45,7 @@ export const searchFormschema: FormSchema[] = [
     label: '简称',
   },
   {
-    field: 'methodName',
+    field: 'itemKey',
     component: 'Input',
     label: '全称',
   },
@@ -59,13 +58,13 @@ export const formListSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'methodName',
+    field: 'itemKey',
     component: 'Input',
     label: '全称',
     required: true,
   },
   {
-    field: 'name',
+    field: 'intervalDays',
     component: 'InputNumber',
     label: '检疫期间隔天数',
     required: true,
@@ -90,14 +89,14 @@ export const formListSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'state',
+    field: 'enable',
     component: 'Select',
     label: '是否启用',
     required: true,
     componentProps: {
       options: [
-        { label: '是', value: 0 },
-        { label: '否', value: 1 },
+        { label: '是', value: true },
+        { label: '否', value: false },
       ],
     },
   },

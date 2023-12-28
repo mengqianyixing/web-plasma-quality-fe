@@ -782,7 +782,7 @@ export type PostApiCoreBatchSampleAcceptResponse = string;
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/accept`
- * @更新时间 `2023-12-25 21:45:55`
+ * @更新时间 `2023-12-28 11:00:14`
  */
 export interface GetApiCoreBatchSampleAcceptRequest {
   /**
@@ -796,7 +796,7 @@ export interface GetApiCoreBatchSampleAcceptRequest {
   /**
    * 样本批次号
    */
-  batchNo?: string;
+  batchSampleNo?: string;
   /**
    * 采浆公司编号
    */
@@ -808,7 +808,7 @@ export interface GetApiCoreBatchSampleAcceptRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/accept`
- * @更新时间 `2023-12-25 21:45:55`
+ * @更新时间 `2023-12-28 11:00:14`
  */
 export interface GetApiCoreBatchSampleAcceptResponse {
   /**
@@ -953,6 +953,89 @@ export interface PostApiCoreBatchPlasmaVerifyBagResponse {
    * 献血浆者不符合项目
    */
   donorFailed: string;
+}
+
+/**
+ * 接口 [查询样本批次详情信息↗](https://yapi.sharing8.cn/project/529/interface/api/31890) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/sample/accept/{batchSampleNo}`
+ * @更新时间 `2023-12-28 11:00:29`
+ */
+export interface GetApiCoreBatchSampleAcceptBatchSampleNoRequest {
+  batchSampleNo: string;
+}
+
+/**
+ * 接口 [查询样本批次详情信息↗](https://yapi.sharing8.cn/project/529/interface/api/31890) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/sample/accept/{batchSampleNo}`
+ * @更新时间 `2023-12-28 11:00:29`
+ */
+export interface GetApiCoreBatchSampleAcceptBatchSampleNoResponse {
+  /**
+   * 采浆公司编号
+   */
+  stationNo?: string;
+  /**
+   * 采浆公司名称
+   */
+  stationName?: string;
+  /**
+   * 样本批号
+   */
+  batchSampleNo?: string;
+  /**
+   * 样本类型
+   */
+  sampleType?: string;
+  /**
+   * 样本袋数
+   */
+  bagCount?: number;
+  /**
+   * 样本数量
+   */
+  totalCount?: number;
+  /**
+   * 接收状态，W-未接收，R-接收中，F-已接收
+   */
+  acceptState?: string;
+  /**
+   * 已接收列表
+   */
+  acceptedList?: {
+    /**
+     * 样本袋号
+     */
+    sampleBagNo: string;
+    /**
+     * 样本数量
+     */
+    sampleCount: string;
+  }[];
+  /**
+   * 未接收列表
+   */
+  unAcceptList: {
+    /**
+     * 样本袋号
+     */
+    sampleBagNo: string;
+    /**
+     * 样本数量
+     */
+    sampleCount: string;
+    /**
+     * 接收人
+     */
+    acceptor: string;
+    /**
+     * 接收日期
+     */
+    acceptAt: string;
+  }[];
 }
 
 /* prettier-ignore-end */

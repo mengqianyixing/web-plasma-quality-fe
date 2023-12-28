@@ -4,44 +4,55 @@
  * @Author: zcc
  * @Date: 2023-12-27 15:34:55
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-27 15:43:21
+ * @LastEditTime: 2023-12-28 11:32:05
  */
 import { defHttp } from '@/utils/http/axios';
 import {
-  GetApiCoreLabMethodsResponse,
-  GetApiCoreLabMethodsRequest,
-  PostApiCoreLabMethodRequest,
-  PostApiCoreLabMethodResponse,
-  PostApiCoreLabMethodsRequest,
-  PostApiCoreLabMethodsResponse,
-  DeleteApiCoreLabMethodMIdRequest,
-  DeleteApiCoreLabMethodMIdResponse,
-  PutApiCoreLabMethodRequest,
-  PutApiCoreLabMethodResponse,
-  GetApiCoreLabMethodMIdRequest,
-  GetApiCoreLabMethodMIdResponse,
+  PostApiSysDictItemMethodRequest,
+  PostApiSysDictItemMethodResponse,
+  PutApiSysDictItemMethodRequest,
+  PutApiSysDictItemMethodResponse,
+  DeleteApiSysDictItemMethodDictItemIdRequest,
+  DeleteApiSysDictItemMethodDictItemIdResponse,
+  PostApiSysDictItemMethodsRequest,
+  PostApiSysDictItemMethodsResponse,
+  GetApiSysDictItemMethodsRequest,
+  GetApiSysDictItemMethodsResponse,
+  GetApiSysDictItemMethodDictItemIdRequest,
+  GetApiSysDictItemMethodDictItemIdResponse,
 } from '@/api/type/inspectManage';
 
 enum Api {
-  LIST = `/api/core/lab/methods`,
-  FORM = '/api/core/lab/method',
-  DT_RE = '/api/core/lab/method/',
+  LIST = `/api/sys/dict/item/methods`,
+  FORM = '/api/sys/dict/item/method',
+  DT_RE = '/api/sys/dict/item/method/',
 }
 
-export const getListApi = (data: PostApiCoreLabMethodsRequest) =>
-  defHttp.post<PostApiCoreLabMethodsResponse>({ url: Api.LIST, data });
+export const getListApi = (data: PostApiSysDictItemMethodsRequest) =>
+  defHttp.post<PostApiSysDictItemMethodsResponse>({
+    url: Api.LIST,
+    data: { ...data, dataDictId: 'labMethod' },
+  });
 
-export const getInspectMethodListApi = (data: GetApiCoreLabMethodsRequest) =>
-  defHttp.get<GetApiCoreLabMethodsResponse>({ url: Api.LIST, data });
+export const getInspectMethodListApi = (data: GetApiSysDictItemMethodsRequest) =>
+  defHttp.get<GetApiSysDictItemMethodsResponse>({ url: Api.LIST, data });
 
-export const addTitlerTypeApi = (data: PostApiCoreLabMethodRequest) =>
-  defHttp.post<PostApiCoreLabMethodResponse>({ url: Api.FORM, data });
+export const addInspectMethodApi = (data: PostApiSysDictItemMethodRequest) =>
+  defHttp.post<PostApiSysDictItemMethodResponse>({
+    url: Api.FORM,
+    data: { ...data, dataDictId: 'labMethod' },
+  });
 
-export const updateTitlerTypeApi = (data: PutApiCoreLabMethodRequest) =>
-  defHttp.put<PutApiCoreLabMethodResponse>({ url: Api.FORM, data });
+export const updateInspectMethodApi = (data: PutApiSysDictItemMethodRequest) =>
+  defHttp.put<PutApiSysDictItemMethodResponse>({
+    url: Api.FORM,
+    data: { ...data, dataDictId: 'labMethod' },
+  });
 
-export const getTitlerTypeDtApi = ({ mId }: GetApiCoreLabMethodMIdRequest) =>
-  defHttp.get<GetApiCoreLabMethodMIdResponse>({ url: Api.DT_RE + mId });
+export const getInspectMethodDtApi = ({ dictItemId }: GetApiSysDictItemMethodDictItemIdRequest) =>
+  defHttp.get<GetApiSysDictItemMethodDictItemIdResponse>({ url: Api.DT_RE + dictItemId });
 
-export const removeTitlerTypeApi = ({ mId }: DeleteApiCoreLabMethodMIdRequest) =>
-  defHttp.delete<DeleteApiCoreLabMethodMIdResponse>({ url: Api.DT_RE + mId });
+export const removeInspectMethodApi = ({
+  dictItemId,
+}: DeleteApiSysDictItemMethodDictItemIdRequest) =>
+  defHttp.delete<DeleteApiSysDictItemMethodDictItemIdResponse>({ url: Api.DT_RE + dictItemId });
