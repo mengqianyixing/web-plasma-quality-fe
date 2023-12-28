@@ -1,3 +1,11 @@
+/*
+ * @Author: HxB
+ * @Date: 2023-12-25 16:00:06
+ * @LastEditors: DoubleAm
+ * @LastEditTime: 2023-12-28 17:59:51
+ * @Description: 首页
+ * @FilePath: \psms-fe\src\router\routes\modules\dashboard.ts
+ */
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
@@ -10,13 +18,14 @@ const dashboard: AppRouteModule = {
   redirect: '/dashboard/analysis',
   meta: {
     orderNo: 10,
-    icon: 'ion:grid-outline',
+    icon: 'bx:bx-home',
     title: t('routes.dashboard.dashboard'),
   },
   children: [
     {
       path: 'analysis',
       name: 'Analysis',
+      id: 9900,
       component: () => import('@/views/dashboard/analysis/index.vue'),
       meta: {
         // affix: true,

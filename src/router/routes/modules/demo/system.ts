@@ -16,9 +16,11 @@ const system: AppRouteModule = {
   children: [
     {
       path: 'account',
+      id: 9905,
       name: 'AccountManagement',
       meta: {
         title: t('routes.demo.system.account'),
+        icon: 'ion:settings-outline',
         ignoreKeepAlive: false,
       },
       component: () => import('@/views/system/account/index.vue'),
@@ -47,6 +49,7 @@ const system: AppRouteModule = {
     {
       path: 'role',
       name: 'RoleManagement',
+      id: 9906,
       meta: {
         title: t('routes.demo.system.role'),
         ignoreKeepAlive: true,
@@ -57,6 +60,7 @@ const system: AppRouteModule = {
     {
       path: 'menu',
       name: 'MenuManagement',
+      id: 9907,
       meta: {
         title: t('routes.demo.system.menu'),
         ignoreKeepAlive: true,
@@ -65,12 +69,23 @@ const system: AppRouteModule = {
     },
     {
       path: 'dept',
+      id: 9908,
       name: 'DeptManagement',
       meta: {
         title: t('routes.demo.system.dept'),
         ignoreKeepAlive: true,
       },
       component: () => import('@/views/system/dept/index.vue'),
+    },
+    {
+      path: 'resource',
+      id: 9909,
+      name: 'resourceViews',
+      meta: {
+        title: t('routes.demo.system.resource'),
+        ignoreKeepAlive: true,
+      },
+      component: () => import('@/views/system/resource/index.vue'),
     },
     {
       path: 'changePassword',
@@ -80,6 +95,15 @@ const system: AppRouteModule = {
         ignoreKeepAlive: true,
       },
       component: () => import('@/views/system/password/index.vue'),
+    },
+    {
+      path: 'dictionary',
+      name: '字典管理',
+      meta: {
+        title: '字典管理',
+      },
+      id: 9900,
+      component: () => import('@/views/system/dictionary/index.vue'),
     },
   ],
 };
