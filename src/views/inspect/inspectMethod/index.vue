@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-25 14:30:13
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-28 10:02:17
+ * @LastEditTime: 2023-12-27 15:25:46
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
@@ -24,7 +24,7 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { useDrawer } from '@/components/Drawer';
-  import { columns, searchFormschema } from './titerType.data';
+  import { columns, searchFormschema } from './inspectMethod.data';
   import { message, Modal } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import { getListApi, updateTitlerTypeApi, removeTitlerTypeApi } from '@/api/inspect/titerType';
@@ -39,7 +39,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    rowKey: 'dictItemId',
+    rowKey: 'bttNo',
     columns: columns,
     size: 'small',
     useSearchForm: true,
@@ -82,11 +82,11 @@
   function handleRemove() {
     const [row] = getSelections(true);
     if (!row) return;
-    const { dictItemId, itemValue } = row;
+    const { bttNo, name } = row;
     Modal.confirm({
-      content: '确认删除' + itemValue + '?',
+      content: '确认删除' + name + '?',
       onOk: async () => {
-        await removeTitlerTypeApi({ dictItemId: dictItemId });
+        await removeTitlerTypeApi({ bttNo: bttNo });
         clearSelectedRowKeys();
         reload();
       },
@@ -96,12 +96,12 @@
   function handleCheckStatus(action: number) {
     const [row] = getSelections(true);
     if (!row) return;
-    const { itemValue, dictItemId, state } = row;
+    const { name, bttNo, state } = row;
     if (state === action) return message.warning('状态不需要变更');
     Modal.confirm({
-      content: '确认' + (action ? '禁用' : '启用') + itemValue + '?',
+      content: '确认' + (action ? '禁用' : '启用') + name + '?',
       onOk: async () => {
-        await updateTitlerTypeApi({ dictItemId: dictItemId, enable: action });
+        await updateTitlerTypeApi({ bttNo, state: action, enableFlag: '1' });
         clearSelectedRowKeys();
         reload();
       },

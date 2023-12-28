@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-23 18:43:29
+ * @LastEditTime: 2023-12-27 18:25:06
 -->
 <template>
   <div class="h-full">
@@ -24,12 +24,12 @@
     plasmaBoxScanColumns,
   } from './relocation.data';
   import { bindBoxApi } from '@/api/tray/relocation';
-  import { message } from 'ant-design-vue';
+  import { message, Modal } from 'ant-design-vue';
   import { trayBoxListApi } from '@/api/tray/list';
   import { ref } from 'vue';
 
   const count = ref(0);
-  const [registerForm, { getFieldsValue, resetFields }] = useForm({
+  const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 8 },
     schemas: plasmaBoxScanFormSchema,
@@ -62,16 +62,31 @@
     bordered: true,
     size: 'small',
   });
+  async function submit() {
+    const { boxId, trayNo } = getFieldsValue();
+    await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: [boxId] });
+    setFieldsValue({ boxId: '' });
+    message.success('操作成功');
+  }
   async function handleSubmit() {
     const { boxId, trayNo } = getFieldsValue();
     if (trayNo) {
-      trayBoxListApi({ trayNo }).then((res) => {
-        count.value = res.length;
-      });
+      const list = await trayBoxListApi({ trayNo });
+      count.value = list.length;
     }
     if (!boxId || !trayNo) return;
-    await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: [boxId] });
-    message.success('操作成功');
-    resetFields();
+    if (count.value >= 24 && props.isBinding) {
+      Modal.confirm({
+        content: '托盘绑定已满24箱，继续绑定?',
+        onOk: async () => {
+          submit();
+        },
+        onCancel: () => {
+          Modal.destroyAll();
+        },
+      });
+    } else {
+      submit();
+    }
   }
 </script>

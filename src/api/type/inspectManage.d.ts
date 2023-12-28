@@ -262,10 +262,10 @@ export interface PostApiCoreLabProjectsResponse {
  * 接口 [新增检验方法↗](https://yapi.sharing8.cn/project/529/interface/api/31872) 的 **请求类型**
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
- * @请求头 `POST /api/core/lab/method`
- * @更新时间 `2023-12-27 14:37:15`
+ * @请求头 `POST /api/sys/dict/item/method`
+ * @更新时间 `2023-12-28 09:41:17`
  */
-export interface PostApiCoreLabMethodRequest {
+export interface PostApiSysDictItemMethodRequest {
   /**
    * 方法简称
    */
@@ -273,7 +273,7 @@ export interface PostApiCoreLabMethodRequest {
   /**
    * 方法全称
    */
-  methodName: string;
+  itemKey: string;
   /**
    * 检验间隔天数
    */
@@ -281,7 +281,7 @@ export interface PostApiCoreLabMethodRequest {
   /**
    * 状态:0:正常；1：禁用
    */
-  state: number;
+  enable: number;
   /**
    * 顺序
    */
@@ -290,130 +290,149 @@ export interface PostApiCoreLabMethodRequest {
    * 检测模式
    */
   detectionMode: string;
+  /**
+   * 固定值
+   */
+  dataDictId: string;
 }
 
 /**
  * 接口 [新增检验方法↗](https://yapi.sharing8.cn/project/529/interface/api/31872) 的 **返回类型**
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
- * @请求头 `POST /api/core/lab/method`
- * @更新时间 `2023-12-27 14:37:15`
+ * @请求头 `POST /api/sys/dict/item/method`
+ * @更新时间 `2023-12-28 09:41:17`
  */
-export type PostApiCoreLabMethodResponse = string;
+export type PostApiSysDictItemMethodResponse = string;
 
 /**
  * 接口 [修改检验方法↗](https://yapi.sharing8.cn/project/529/interface/api/31875) 的 **请求类型**
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
- * @请求头 `PUT /api/core/lab/method`
- * @更新时间 `2023-12-27 14:39:00`
+ * @请求头 `PUT /api/sys/dict/item/method`
+ * @更新时间 `2023-12-28 09:41:25`
  */
-export interface PutApiCoreLabMethodRequest {
+export interface PutApiSysDictItemMethodRequest {
+  /**
+   * 全程
+   */
+  itemKey?: string;
+  /**
+   * 简称
+   */
   methodAbbr?: string;
-  methodName?: string;
   intervalDays?: number;
-  state?: number;
+  enable?: number;
   sort?: number;
   detectionMode?: string;
   /**
    * 主键
    */
-  mId: string;
+  dictItemId: string;
+  enableFlag?: string;
 }
 
 /**
  * 接口 [修改检验方法↗](https://yapi.sharing8.cn/project/529/interface/api/31875) 的 **返回类型**
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
- * @请求头 `PUT /api/core/lab/method`
- * @更新时间 `2023-12-27 14:39:00`
+ * @请求头 `PUT /api/sys/dict/item/method`
+ * @更新时间 `2023-12-28 09:41:25`
  */
-export type PutApiCoreLabMethodResponse = string;
+export type PutApiSysDictItemMethodResponse = string;
 
 /**
  * 接口 [删除检验方法↗](https://yapi.sharing8.cn/project/529/interface/api/31878) 的 **请求类型**
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
- * @请求头 `DELETE /api/core/lab/method/{mId}`
- * @更新时间 `2023-12-27 14:39:15`
+ * @请求头 `DELETE /api/sys/dict/item/method/{dictItemId}`
+ * @更新时间 `2023-12-28 09:41:36`
  */
-export interface DeleteApiCoreLabMethodMIdRequest {
-  mId: string;
+export interface DeleteApiSysDictItemMethodDictItemIdRequest {
+  dictItemId: string;
 }
 
 /**
  * 接口 [删除检验方法↗](https://yapi.sharing8.cn/project/529/interface/api/31878) 的 **返回类型**
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
- * @请求头 `DELETE /api/core/lab/method/{mId}`
- * @更新时间 `2023-12-27 14:39:15`
+ * @请求头 `DELETE /api/sys/dict/item/method/{dictItemId}`
+ * @更新时间 `2023-12-28 09:41:36`
  */
-export type DeleteApiCoreLabMethodMIdResponse = string;
+export type DeleteApiSysDictItemMethodDictItemIdResponse = string;
 
 /**
  * 接口 [查询检验方法详情↗](https://yapi.sharing8.cn/project/529/interface/api/31881) 的 **请求类型**
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
- * @请求头 `GET /api/core/lab/method/{mId}`
- * @更新时间 `2023-12-27 14:48:39`
+ * @请求头 `GET /api/sys/dict/item/method/{dictItemId}`
+ * @更新时间 `2023-12-28 09:42:02`
  */
-export interface GetApiCoreLabMethodMIdRequest {
-  mId: string;
+export interface GetApiSysDictItemMethodDictItemIdRequest {
+  dictItemId: string;
 }
 
 /**
  * 接口 [查询检验方法详情↗](https://yapi.sharing8.cn/project/529/interface/api/31881) 的 **返回类型**
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
- * @请求头 `GET /api/core/lab/method/{mId}`
- * @更新时间 `2023-12-27 14:48:39`
+ * @请求头 `GET /api/sys/dict/item/method/{dictItemId}`
+ * @更新时间 `2023-12-28 09:42:02`
  */
-export interface GetApiCoreLabMethodMIdResponse {
-  methodAbbr: string;
-  methodName: string;
+export interface GetApiSysDictItemMethodDictItemIdResponse {
+  /**
+   * 全程
+   */
+  itemKey: string;
   intervalDays: number;
-  state: number;
+  enable: number;
   sort: number;
   detectionMode: string;
   creator?: string;
   createAt?: string;
+  /**
+   * 简称
+   */
+  methodAbbr: string;
+  dictItemId: string;
 }
 
 /**
  * 接口 [查询检验方法列表↗](https://yapi.sharing8.cn/project/529/interface/api/31884) 的 **请求类型**
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
- * @请求头 `POST /api/core/lab/methods`
- * @更新时间 `2023-12-27 14:50:09`
+ * @请求头 `POST /api/sys/dict/item/methods`
+ * @更新时间 `2023-12-28 09:42:14`
  */
-export interface PostApiCoreLabMethodsRequest {
+export interface PostApiSysDictItemMethodsRequest {
   currPage: number;
   pageSize: number;
   methodAbbr?: string;
-  methodName?: string;
+  itemKey?: string;
 }
 
 /**
  * 接口 [查询检验方法列表↗](https://yapi.sharing8.cn/project/529/interface/api/31884) 的 **返回类型**
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
- * @请求头 `POST /api/core/lab/methods`
- * @更新时间 `2023-12-27 14:50:09`
+ * @请求头 `POST /api/sys/dict/item/methods`
+ * @更新时间 `2023-12-28 09:42:14`
  */
-export interface PostApiCoreLabMethodsResponse {
+export interface PostApiSysDictItemMethodsResponse {
   totalCount: number;
   totalPage: number;
   currPage: number;
   pageSize: number;
   result?: {
     methodAbbr: string;
-    methodName: string;
+    itemKey: string;
     intervalDays: number;
     state: number;
     sort: number;
     detectionMode: string;
     creator?: string;
     createAt?: string;
+    dictItemId: string;
   }[];
 }
 
@@ -421,19 +440,19 @@ export interface PostApiCoreLabMethodsResponse {
  * 接口 [查询检验方法选项数据↗](https://yapi.sharing8.cn/project/529/interface/api/31887) 的 **请求类型**
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
- * @请求头 `GET /api/core/lab/methods`
- * @更新时间 `2023-12-27 14:51:20`
+ * @请求头 `GET /api/sys/dict/item/methods`
+ * @更新时间 `2023-12-28 09:42:26`
  */
-export interface GetApiCoreLabMethodsRequest {}
+export interface GetApiSysDictItemMethodsRequest {}
 
 /**
  * 接口 [查询检验方法选项数据↗](https://yapi.sharing8.cn/project/529/interface/api/31887) 的 **返回类型**
  *
  * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
- * @请求头 `GET /api/core/lab/methods`
- * @更新时间 `2023-12-27 14:51:20`
+ * @请求头 `GET /api/sys/dict/item/methods`
+ * @更新时间 `2023-12-28 09:42:26`
  */
-export type GetApiCoreLabMethodsResponse = {
+export type GetApiSysDictItemMethodsResponse = {
   label: string;
   value: string;
 }[];
@@ -442,22 +461,26 @@ export type GetApiCoreLabMethodsResponse = {
  * 接口 [新增效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/31851) 的 **请求类型**
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
- * @请求头 `POST /api/core/bag/titer/type`
- * @更新时间 `2023-12-26 16:37:45`
+ * @请求头 `POST /api/sys/dict/item/alence`
+ * @更新时间 `2023-12-27 17:08:13`
  */
-export interface PostApiCoreBagTiterTypeRequest {
+export interface PostApiSysDictItemAlenceRequest {
+  /**
+   * 固定值
+   */
+  dataDictId: string;
   /**
    * 血浆类型
    */
-  plasmaType: number;
+  plasmaType: string;
   /**
    * 效价编码
    */
-  code: string;
+  itemKey: string;
   /**
    * 效价名称
    */
-  name: string;
+  itemValue: string;
   /**
    * 效价结果
    */
@@ -469,124 +492,123 @@ export interface PostApiCoreBagTiterTypeRequest {
   /**
    * 状态
    */
-  state: number;
+  enable: number;
 }
 
 /**
  * 接口 [新增效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/31851) 的 **返回类型**
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
- * @请求头 `POST /api/core/bag/titer/type`
- * @更新时间 `2023-12-26 16:37:45`
+ * @请求头 `POST /api/sys/dict/item/alence`
+ * @更新时间 `2023-12-27 17:08:13`
  */
-export type PostApiCoreBagTiterTypeResponse = string;
+export type PostApiSysDictItemAlenceResponse = string;
 
 /**
  * 接口 [修改效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/31854) 的 **请求类型**
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
- * @请求头 `PUT /api/core/bag/titer/type`
- * @更新时间 `2023-12-26 16:37:52`
+ * @请求头 `PUT /api/sys/dict/item/alence`
+ * @更新时间 `2023-12-27 17:08:19`
  */
-export interface PutApiCoreBagTiterTypeRequest {
-  plasmaType?: number;
-  code?: string;
-  name?: string;
+export interface PutApiSysDictItemAlenceRequest {
+  itemKey?: string;
+  itemValue?: string;
   result?: string;
   sort?: number;
-  state?: number;
-  /**
-   * 主键id
-   */
-  bttNo: string;
-  /**
-   * 是否只禁用启用
-   */
-  enableFlag?: string;
+  enable?: number;
+  dataDictId?: string;
+  plasmaType?: string;
+  dictItemId: string;
 }
 
 /**
  * 接口 [修改效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/31854) 的 **返回类型**
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
- * @请求头 `PUT /api/core/bag/titer/type`
- * @更新时间 `2023-12-26 16:37:52`
+ * @请求头 `PUT /api/sys/dict/item/alence`
+ * @更新时间 `2023-12-27 17:08:19`
  */
-export type PutApiCoreBagTiterTypeResponse = string;
+export type PutApiSysDictItemAlenceResponse = string;
 
 /**
  * 接口 [删除效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/31857) 的 **请求类型**
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
- * @请求头 `DELETE /api/core/bag/titer/type/{bttNo}`
- * @更新时间 `2023-12-26 16:38:00`
+ * @请求头 `DELETE /api/sys/dict/item/alence/{dictItemId}`
+ * @更新时间 `2023-12-27 17:33:12`
  */
-export interface DeleteApiCoreBagTiterTypeBttNoRequest {
-  bttNo: string;
+export interface DeleteApiSysDictItemAlenceDictItemIdRequest {
+  dictItemId: string;
 }
 
 /**
  * 接口 [删除效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/31857) 的 **返回类型**
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
- * @请求头 `DELETE /api/core/bag/titer/type/{bttNo}`
- * @更新时间 `2023-12-26 16:38:00`
+ * @请求头 `DELETE /api/sys/dict/item/alence/{dictItemId}`
+ * @更新时间 `2023-12-27 17:33:12`
  */
-export type DeleteApiCoreBagTiterTypeBttNoResponse = string;
+export type DeleteApiSysDictItemAlenceDictItemIdResponse = string;
 
 /**
  * 接口 [查询效价类型详情↗](https://yapi.sharing8.cn/project/529/interface/api/31860) 的 **请求类型**
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
- * @请求头 `GET /api/core/bag/titer/type/{bttNo}`
- * @更新时间 `2023-12-27 10:29:51`
+ * @请求头 `GET /api/sys/dict/item/alence/{dictItemId}`
+ * @更新时间 `2023-12-27 17:08:57`
  */
-export interface GetApiCoreBagTiterTypeBttNoRequest {
-  bttNo: string;
+export interface GetApiSysDictItemAlenceDictItemIdRequest {
+  dictItemId: string;
 }
 
 /**
  * 接口 [查询效价类型详情↗](https://yapi.sharing8.cn/project/529/interface/api/31860) 的 **返回类型**
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
- * @请求头 `GET /api/core/bag/titer/type/{bttNo}`
- * @更新时间 `2023-12-27 10:29:51`
+ * @请求头 `GET /api/sys/dict/item/alence/{dictItemId}`
+ * @更新时间 `2023-12-27 17:08:57`
  */
-export interface GetApiCoreBagTiterTypeBttNoResponse {
-  plasmaType: number;
-  code: string;
-  name: string;
+export interface GetApiSysDictItemAlenceDictItemIdResponse {
+  dictItemId: string;
+  itemKey: string;
+  itemValue: string;
   result: string;
   sort: number;
-  state: number;
-  creator: string;
-  creatAt: string;
-  bttNo: string;
+  enable: number;
+  dataDictId: string;
+  plasmaType: string;
+  creator?: string;
+  createAt?: string;
 }
 
 /**
  * 接口 [查询效价列表↗](https://yapi.sharing8.cn/project/529/interface/api/31863) 的 **请求类型**
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
- * @请求头 `POST /api/core/bag/titer/types`
- * @更新时间 `2023-12-27 10:30:00`
+ * @请求头 `POST /api/sys/dict/item/alences`
+ * @更新时间 `2023-12-27 17:09:37`
  */
-export interface PostApiCoreBagTiterTypesRequest {
+export interface PostApiSysDictItemAlencesRequest {
   currPage: string;
   pageSize: string;
   plasmaType?: number;
   code?: string;
   name?: string;
+  /**
+   * 固定值
+   */
+  dataDictId?: string;
 }
 
 /**
  * 接口 [查询效价列表↗](https://yapi.sharing8.cn/project/529/interface/api/31863) 的 **返回类型**
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
- * @请求头 `POST /api/core/bag/titer/types`
- * @更新时间 `2023-12-27 10:30:00`
+ * @请求头 `POST /api/sys/dict/item/alences`
+ * @更新时间 `2023-12-27 17:09:37`
  */
-export interface PostApiCoreBagTiterTypesResponse {
+export interface PostApiSysDictItemAlencesResponse {
   totalCount: number;
   totalPage: number;
   currPage: number;
