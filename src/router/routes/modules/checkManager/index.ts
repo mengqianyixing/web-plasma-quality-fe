@@ -51,16 +51,16 @@ const checkManager: AppRouteModule = {
       id: 9900,
       component: () => import('/@/views/inspect/titerType/index.vue'),
     },
-    {
-      path: '/inspect/resultRegistration',
-      name: '检验结果登记',
-      meta: {
-        title: '检验结果登记',
-        icon: 'ant-design:taobao-outlined',
-      },
-      id: 9900,
-      component: () => import('/@/views/inspect/resultRegistration/index.vue'),
-    },
+    // {
+    //   path: '/inspect/resultRegistration',
+    //   name: '检验结果登记',
+    //   meta: {
+    //     title: '检验结果登记',
+    //     icon: 'ant-design:taobao-outlined',
+    //   },
+    //   id: 9900,
+    //   component: () => import('/@/views/inspect/resultRegistration/index.vue'),
+    // },
   ],
 };
 
