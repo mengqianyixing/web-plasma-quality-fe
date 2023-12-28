@@ -220,6 +220,7 @@ const transform: AxiosTransform = {
 };
 
 function createAxios(opt?: Partial<CreateAxiosOptions>) {
+  console.log('createAxios', opt, globSetting);
   window.localStorage.setItem('globSetting', JSON.stringify(globSetting ?? {}));
   return new VAxios(
     // 深度合并
