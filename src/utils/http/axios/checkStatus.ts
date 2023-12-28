@@ -32,7 +32,7 @@ export async function checkStatus(
       const refreshToken = userStore.getRefreshToken;
       if (refreshToken) {
         try {
-          const res: any = oauth.refresh(refreshToken);
+          const res: any = await oauth.refresh(refreshToken);
           if (res.code == 0) {
             userStore.oathLogin(res.data);
             // 重新请求接口
@@ -43,6 +43,7 @@ export async function checkStatus(
         }
       }
       userStore.setToken(undefined);
+      userStore.setRefreshToken(undefined);
       errMessage = msg || t('sys.api.errMsg401');
       if (stp === SessionTimeoutProcessingEnum.PAGE_COVERAGE) {
         userStore.setSessionTimeout(true);

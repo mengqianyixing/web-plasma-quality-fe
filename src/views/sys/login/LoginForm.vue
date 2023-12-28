@@ -99,14 +99,14 @@
       // @ts-ignore
       oauth.signIn(queryString).then((res) => {
         if (res.code == 0) {
-          window.location.href = path;
+          window.history.replaceState({}, '', path);
           userStore.oathLogin(res.data);
         } else {
           // handleCasDoorLogin();
         }
       });
     } else {
-      // handleCasDoorLogin();
+      handleCasDoorLogin();
     }
   });
 
