@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-08 09:39:00
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-27 18:11:11
+ * @LastEditTime: 2023-12-28 15:08:08
  */
 import { defineApplicationConfig } from '@vben/vite-config';
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { AppRouteRecordRaw, Menu } from '@/router/types';
 
 import { defineStore } from 'pinia';
@@ -17,7 +18,7 @@ import projectSetting from '@/settings/projectSetting';
 
 import { PermissionModeEnum } from '@/enums/appEnum';
 
-import { asyncRoutes } from '@/router/routes';
+import { asyncRoutes, basicRoutes } from '@/router/routes';
 import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic';
 
 import { filter } from '@/utils/helper/treeHelper';
@@ -121,7 +122,9 @@ export const usePermissionStore = defineStore({
 
       let routes: AppRouteRecordRaw[] = [];
       const roleList = toRaw(userStore.getRoleList) || [];
-      const { permissionMode = projectSetting.permissionMode } = appStore.getProjectConfig;
+      // @CAS_DOOR  暂时使用后端获取权限
+      const permissionMode: string = PermissionModeEnum.CAS_DOOR;
+      // const { permissionMode = projectSetting.permissionMode } = appStore.getProjectConfig;
 
       // 路由过滤器 在 函数filter 作为回调传入遍历使用
       const routeFilter = (route: AppRouteRecordRaw) => {
@@ -249,6 +252,33 @@ export const usePermissionStore = defineStore({
 
           routeList = flatMultiLevelRoutes(routeList);
           routes = [PAGE_NOT_FOUND_ROUTE, ...routeList];
+          break;
+
+        case PermissionModeEnum.CAS_DOOR:
+          const menuIds: number[] = (userStore.getUserInfo?.menuIds ?? [9900]).map((i) =>
+            Number(i),
+          );
+          console.log({ menuIds });
+          const filterRoutes = (routes: any[]): any[] => {
+            const filteredRoutes: any[] = [];
+
+            routes.forEach((item: any) => {
+              if (item.id && menuIds.includes(Number(item.id))) {
+                filteredRoutes.push(item);
+              } else if (item.children) {
+                const filteredChildren = filterRoutes(item.children);
+                if (filteredChildren.length > 0) {
+                  item.children = filteredChildren;
+                  filteredRoutes.push(item);
+                }
+              }
+            });
+
+            return filteredRoutes;
+          };
+          const tempRoutes: any = filterRoutes(asyncRoutes);
+          this.setBackMenuList(transformRouteToMenu(tempRoutes));
+          routes = [PAGE_NOT_FOUND_ROUTE, ...tempRoutes];
           break;
       }
 

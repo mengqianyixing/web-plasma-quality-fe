@@ -21,6 +21,7 @@ interface UserState {
   token?: string;
   refreshToken?: string;
   roleList: RoleEnum[];
+  menuIds?: number[];
   sessionTimeout?: boolean;
   lastUpdateTime: number;
 }
@@ -118,10 +119,11 @@ export const useUserStore = defineStore({
      */
     async oathLogin(data: any): Promise<PostApiSysUserLoginResponse | null> {
       try {
-        const { accessToken, userId, username, refreshToken } = data;
+        const { accessToken, userId, username, refreshToken, menuIds } = data;
         this.userInfo = {
           userId: userId,
           username: username,
+          menuIds: menuIds,
           homePath: '/dashboard/analysis',
         };
         this.setUserInfo(this.userInfo);

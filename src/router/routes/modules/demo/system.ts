@@ -1,3 +1,11 @@
+/*
+ * @Author: HxB
+ * @Date: 2023-12-25 16:00:06
+ * @LastEditors: DoubleAm
+ * @LastEditTime: 2023-12-28 16:45:10
+ * @Description: 系统管理
+ * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
+ */
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
@@ -16,9 +24,11 @@ const system: AppRouteModule = {
   children: [
     {
       path: 'account',
+      id: 9905,
       name: 'AccountManagement',
       meta: {
         title: t('routes.demo.system.account'),
+        icon: 'ion:settings-outline',
         ignoreKeepAlive: false,
       },
       component: () => import('@/views/system/account/index.vue'),
@@ -47,6 +57,7 @@ const system: AppRouteModule = {
     {
       path: 'role',
       name: 'RoleManagement',
+      id: 9906,
       meta: {
         title: t('routes.demo.system.role'),
         ignoreKeepAlive: true,
@@ -57,6 +68,7 @@ const system: AppRouteModule = {
     {
       path: 'menu',
       name: 'MenuManagement',
+      id: 9907,
       meta: {
         title: t('routes.demo.system.menu'),
         ignoreKeepAlive: true,
@@ -65,12 +77,23 @@ const system: AppRouteModule = {
     },
     {
       path: 'dept',
+      id: 9908,
       name: 'DeptManagement',
       meta: {
         title: t('routes.demo.system.dept'),
         ignoreKeepAlive: true,
       },
       component: () => import('@/views/system/dept/index.vue'),
+    },
+    {
+      path: 'resource',
+      id: 9909,
+      name: 'resourceViews',
+      meta: {
+        title: t('routes.demo.system.resource'),
+        ignoreKeepAlive: true,
+      },
+      component: () => import('@/views/system/resource/index.vue'),
     },
     {
       path: 'changePassword',
