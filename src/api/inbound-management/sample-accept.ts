@@ -20,5 +20,5 @@ export const getSampleAcceptDetail = (
   params: GetApiCoreBatchSampleAcceptBatchSampleNoRequest['batchSampleNo'],
 ) => defHttp.get({ url: Api.SAMPLE_ACCEPT_RESTFUL + '/' + params });
 
-export const acceptSample = (params: PostApiCoreBatchSampleAcceptRequest['batchSampleNo']) =>
-  defHttp.post({ url: Api.SAMPLE_ACCEPT_RESTFUL + '/' + params });
+export const acceptSample = (params: PostApiCoreBatchSampleAcceptRequest) =>
+  defHttp.post({ url: Api.SAMPLE_ACCEPT_RESTFUL, params });

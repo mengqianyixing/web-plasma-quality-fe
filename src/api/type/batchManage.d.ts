@@ -960,7 +960,7 @@ export interface PostApiCoreBatchPlasmaVerifyBagResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/accept/{batchSampleNo}`
- * @更新时间 `2023-12-28 15:20:01`
+ * @更新时间 `2023-12-28 19:36:21`
  */
 export interface GetApiCoreBatchSampleAcceptBatchSampleNoRequest {
   batchSampleNo: string;
@@ -971,7 +971,7 @@ export interface GetApiCoreBatchSampleAcceptBatchSampleNoRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/accept/{batchSampleNo}`
- * @更新时间 `2023-12-28 15:20:01`
+ * @更新时间 `2023-12-28 19:36:21`
  */
 export interface GetApiCoreBatchSampleAcceptBatchSampleNoResponse {
   /**
@@ -1009,7 +1009,7 @@ export interface GetApiCoreBatchSampleAcceptBatchSampleNoResponse {
   /**
    * 已接收列表
    */
-  unAcceptedList?: {
+  unAcceptList?: {
     /**
      * 样本袋号
      */
@@ -1082,7 +1082,7 @@ export interface PostApiCoreBatchPlasmaVerifyPauseResponse {}
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/pause/{batchNo}/{pattern}`
- * @更新时间 `2023-12-28 15:43:15`
+ * @更新时间 `2023-12-28 16:52:41`
  */
 export interface GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternRequest {
   /**
@@ -1100,8 +1100,37 @@ export interface GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/pause/{batchNo}/{pattern}`
- * @更新时间 `2023-12-28 15:43:15`
+ * @更新时间 `2023-12-28 16:52:41`
  */
-export interface GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternResponse {}
+export type GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternResponse = {
+  /**
+   * 箱号
+   */
+  boxNo: string;
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  /**
+   * 暂停时间
+   */
+  createAt: string;
+  /**
+   * 验收人
+   */
+  creater: string;
+  /**
+   * 复核人
+   */
+  reviewer: string;
+  /**
+   * 继续时间
+   */
+  freeAt: string;
+  /**
+   * 当前状态
+   */
+  state: string;
+}[];
 
 /* prettier-ignore-end */

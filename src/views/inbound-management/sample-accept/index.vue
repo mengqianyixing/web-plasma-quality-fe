@@ -1,6 +1,6 @@
 <template>
   <PageWrapper>
-    <Description @register="register">
+    <Description @register="register" :data="sampleBatchData">
       <template #action>
         <a-button type="primary" @click="handleAcceptSample">接收</a-button>
       </template>
@@ -10,15 +10,15 @@
       @success="handleSelectSampleBatchSuccess"
     />
 
-    <div class="flex items-center gap-1 mt-1">
-      <BasicTable @register="registerUnAcceptTable" class="w-2/5" />
-      <BasicTable @register="registerAcceptedTable" class="w-3/5" />
+    <div class="flex gap-1 mt-1">
+      <BasicTable @register="registerUnAcceptTable" class="w-2/5" :title="unAcceptTitle" />
+      <BasicTable @register="registerAcceptedTable" class="w-3/5" :title="acceptedTitle" />
     </div>
   </PageWrapper>
 </template>
 
 <script setup lang="tsx">
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue';
   import { debounce } from 'lodash-es';
 
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
@@ -31,8 +31,9 @@
   import { acceptSample, getSampleAcceptDetail } from '@/api/inbound-management/sample-accept';
   import { GetApiCoreBatchSampleAcceptBatchSampleNoResponse } from '@/api/type/batchManage';
   import { useMessage } from '@/hooks/web/useMessage';
+  import dayjs from 'dayjs';
 
-  const sampleBatchData = ref<GetApiCoreBatchSampleAcceptBatchSampleNoResponse>();
+  const sampleBatchData = ref<GetApiCoreBatchSampleAcceptBatchSampleNoResponse>({});
   const inputValue = ref('');
 
   const { createConfirm } = useMessage();
@@ -62,7 +63,7 @@
       label: '采浆公司',
     },
     {
-      field: 'email',
+      field: 'outWarehouseDate',
       label: '出库日期',
     },
     {
@@ -83,13 +84,10 @@
       width: '25%',
     },
     title: '样本批次信息',
-    data: sampleBatchData.value ?? {},
     schema: schema,
   });
 
-  const [registerUnAcceptTable] = useTable({
-    title: '未接收样本列表',
-    dataSource: sampleBatchData.value?.unAcceptedList ?? [],
+  const [registerUnAcceptTable, { setTableData: setUnAcceptedTableData }] = useTable({
     columns: [
       {
         title: '样本袋号',
@@ -105,12 +103,10 @@
     bordered: true,
     showIndexColumn: false,
     pagination: false,
-    canResize: false,
+    canResize: true,
   });
 
-  const [registerAcceptedTable] = useTable({
-    title: '接收样本列表',
-    dataSource: sampleBatchData.value?.acceptedList ?? [],
+  const [registerAcceptedTable, { setTableData: setAcceptedTableData }] = useTable({
     columns: [
       {
         title: '样本袋号',
@@ -127,6 +123,9 @@
       {
         title: '接收日期',
         dataIndex: 'acceptAt',
+        format(text) {
+          return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
+        },
       },
     ],
     size: 'small',
@@ -134,18 +133,34 @@
     bordered: true,
     showIndexColumn: false,
     pagination: false,
-    canResize: false,
+    canResize: true,
   });
 
   const [registerSelectDrawer, { openDrawer: openSelectSampleBatchDrawer }] = useDrawer();
 
   function handleSelectSampleBatch() {
-    openSelectSampleBatchDrawer(true);
+    openSelectSampleBatchDrawer(true, {
+      reload: true,
+    });
   }
+
+  const unAcceptTitle = computed(
+    () => `未接收袋数：${sampleBatchData.value?.unAcceptList?.length ?? 0}`,
+  );
+
+  const acceptedTitle = computed(
+    () => `已接收袋数：${sampleBatchData.value?.acceptedList?.length ?? 0}`,
+  );
 
   async function handleSelectSampleBatchSuccess(record: Recordable) {
     sampleBatchData.value = await getSampleAcceptDetail(record.batchSampleNo);
+    updateTableData();
     inputValue.value = record.batchSampleNo;
+  }
+
+  function updateTableData() {
+    setUnAcceptedTableData(sampleBatchData.value?.unAcceptList ?? []);
+    setAcceptedTableData(sampleBatchData.value?.acceptedList ?? []);
   }
 
   function handleSampleBatchChange(e: ChangeEvent) {
@@ -158,14 +173,16 @@
 
   async function handleAcceptSample() {
     createConfirm({
-      title: '确认接收样本？',
-      content: '接收后样本将进入库存',
+      title: '确认',
+      content: '确认接收样本',
       iconType: 'warning',
       onOk: async () => {
-        await acceptSample(sampleBatchData.value?.batchSampleNo ?? '');
+        await acceptSample({
+          batchSampleNo: inputValue.value,
+        });
+        sampleBatchData.value = await getSampleAcceptDetail(inputValue.value);
+        updateTableData();
       },
     });
-
-    sampleBatchData.value = await getSampleAcceptDetail(inputValue.value);
   }
 </script>
