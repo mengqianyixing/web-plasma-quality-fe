@@ -102,7 +102,7 @@
           window.location.href = path;
           userStore.oathLogin(res.data);
         } else {
-          handleCasDoorLogin();
+          // handleCasDoorLogin();
         }
       });
     } else {
