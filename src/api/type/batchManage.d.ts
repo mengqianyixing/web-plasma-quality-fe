@@ -960,7 +960,7 @@ export interface PostApiCoreBatchPlasmaVerifyBagResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/accept/{batchSampleNo}`
- * @更新时间 `2023-12-28 11:00:29`
+ * @更新时间 `2023-12-28 15:20:01`
  */
 export interface GetApiCoreBatchSampleAcceptBatchSampleNoRequest {
   batchSampleNo: string;
@@ -971,7 +971,7 @@ export interface GetApiCoreBatchSampleAcceptBatchSampleNoRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/accept/{batchSampleNo}`
- * @更新时间 `2023-12-28 11:00:29`
+ * @更新时间 `2023-12-28 15:20:01`
  */
 export interface GetApiCoreBatchSampleAcceptBatchSampleNoResponse {
   /**
@@ -1003,9 +1003,13 @@ export interface GetApiCoreBatchSampleAcceptBatchSampleNoResponse {
    */
   acceptState?: string;
   /**
+   * 浆站出库信息{出库人、出库时间}
+   */
+  dispatch: {};
+  /**
    * 已接收列表
    */
-  acceptedList?: {
+  unAcceptedList?: {
     /**
      * 样本袋号
      */
@@ -1013,12 +1017,12 @@ export interface GetApiCoreBatchSampleAcceptBatchSampleNoResponse {
     /**
      * 样本数量
      */
-    sampleCount: string;
+    sampleCount: number;
   }[];
   /**
    * 未接收列表
    */
-  unAcceptList: {
+  acceptedList: {
     /**
      * 样本袋号
      */
@@ -1026,7 +1030,7 @@ export interface GetApiCoreBatchSampleAcceptBatchSampleNoResponse {
     /**
      * 样本数量
      */
-    sampleCount: string;
+    sampleCount: number;
     /**
      * 接收人
      */
@@ -1037,5 +1041,67 @@ export interface GetApiCoreBatchSampleAcceptBatchSampleNoResponse {
     acceptAt: string;
   }[];
 }
+
+/**
+ * 接口 [验收暂停(箱)↗](https://yapi.sharing8.cn/project/529/interface/api/31893) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/verify/pause`
+ * @更新时间 `2023-12-28 14:43:21`
+ */
+export interface PostApiCoreBatchPlasmaVerifyPauseRequest {
+  /**
+   * 血浆批号
+   */
+  batchNo: string;
+  /**
+   * 血浆箱号
+   */
+  boxNo: string;
+  /**
+   * 复核人
+   */
+  checker: string;
+  /**
+   * 备注
+   */
+  remark: string;
+}
+
+/**
+ * 接口 [验收暂停(箱)↗](https://yapi.sharing8.cn/project/529/interface/api/31893) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/verify/pause`
+ * @更新时间 `2023-12-28 14:43:21`
+ */
+export interface PostApiCoreBatchPlasmaVerifyPauseResponse {}
+
+/**
+ * 接口 [验收暂停列表↗](https://yapi.sharing8.cn/project/529/interface/api/31896) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/plasma/verify/pause/{batchNo}/{pattern}`
+ * @更新时间 `2023-12-28 15:43:15`
+ */
+export interface GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternRequest {
+  /**
+   * 批号
+   */
+  batchNo: string;
+  /**
+   * 查询类型(箱BOX , 批BCH)
+   */
+  pattern: string;
+}
+
+/**
+ * 接口 [验收暂停列表↗](https://yapi.sharing8.cn/project/529/interface/api/31896) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/plasma/verify/pause/{batchNo}/{pattern}`
+ * @更新时间 `2023-12-28 15:43:15`
+ */
+export interface GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternResponse {}
 
 /* prettier-ignore-end */
