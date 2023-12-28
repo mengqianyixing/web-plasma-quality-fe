@@ -502,7 +502,7 @@ export interface GetApiCoreBagPlasmaResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/{boxNo}`
- * @更新时间 `2023-12-25 15:50:30`
+ * @更新时间 `2023-12-27 17:28:33`
  */
 export interface GetApiCoreBatchPlasmaVerifyBoxNoRequest {
   /**
@@ -516,13 +516,17 @@ export interface GetApiCoreBatchPlasmaVerifyBoxNoRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/{boxNo}`
- * @更新时间 `2023-12-25 15:50:30`
+ * @更新时间 `2023-12-27 17:28:33`
  */
 export interface GetApiCoreBatchPlasmaVerifyBoxNoResponse {
   /**
    * 采浆公司
    */
   stationName: string;
+  /**
+   * 采浆公司编号
+   */
+  stationNo: string;
   /**
    * 血浆批号
    */
@@ -855,7 +859,7 @@ export interface GetApiCoreBatchSampleAcceptResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/verify/bag`
- * @更新时间 `2023-12-26 16:38:10`
+ * @更新时间 `2023-12-27 17:28:54`
  */
 export interface PostApiCoreBatchPlasmaVerifyBagRequest {
   /**
@@ -885,13 +889,17 @@ export interface PostApiCoreBatchPlasmaVerifyBagRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/verify/bag`
- * @更新时间 `2023-12-26 16:38:10`
+ * @更新时间 `2023-12-27 17:28:54`
  */
 export interface PostApiCoreBatchPlasmaVerifyBagResponse {
   /**
    * 采浆公司
    */
   stationName: string;
+  /**
+   * 采浆公司编号
+   */
+  stationNo: string;
   /**
    * 血浆批号
    */

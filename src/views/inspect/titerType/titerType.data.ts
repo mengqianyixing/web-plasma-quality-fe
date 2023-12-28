@@ -11,11 +11,11 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '代码',
-    dataIndex: 'code',
+    dataIndex: 'itemKey',
   },
   {
     title: '名称',
-    dataIndex: 'name',
+    dataIndex: 'itemValue',
   },
   {
     title: '效价结果',
@@ -36,7 +36,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '记录人',
-    dataIndex: 'creator',
+    dataIndex: 'creater',
   },
   {
     title: '记录时间',
@@ -54,19 +54,19 @@ export const searchFormschema: FormSchema[] = [
     },
   },
   {
-    field: 'code',
+    field: 'itemKey',
     component: 'Input',
     label: '代码',
   },
   {
-    field: 'name',
+    field: 'itemValue',
     component: 'Input',
     label: '名称',
   },
 ];
 export const formListSchema: FormSchema[] = [
   {
-    field: 'code',
+    field: 'itemKey',
     component: 'Input',
     label: '代码',
     required: true,
@@ -91,7 +91,7 @@ export const formListSchema: FormSchema[] = [
     },
   },
   {
-    field: 'name',
+    field: 'itemValue',
     component: 'Input',
     label: '名称',
     required: true,
@@ -112,7 +112,7 @@ export const formListSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'state',
+    field: 'enable',
     component: 'Select',
     label: '是否启用',
     required: true,
@@ -120,9 +120,9 @@ export const formListSchema: FormSchema[] = [
       options: [
         {
           label: '是',
-          value: 0,
+          value: true,
         },
-        { label: '否', value: 1 },
+        { label: '否', value: false },
       ],
     },
   },

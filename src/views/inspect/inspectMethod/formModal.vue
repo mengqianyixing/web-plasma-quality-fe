@@ -21,7 +21,7 @@
 <script lang="ts" setup>
   import { reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
-  import { formListSchema } from './titerType.data';
+  import { formListSchema } from './inspectMethod.data';
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import {
     getTitlerTypeDtApi,
@@ -33,7 +33,7 @@
   const emit = defineEmits(['success', 'register']);
 
   defineOptions({ name: 'FormModel' });
-  const state = reactive({ dictItemId: '', type: '', isRequest: false });
+  const state = reactive({ bttNo: '', type: '', isRequest: false });
 
   const [registerForm, { validate, setFieldsValue, clearValidate, resetFields, updateSchema }] =
     useForm({
@@ -43,13 +43,13 @@
       showActionButtonGroup: false,
     });
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async ({ data }) => {
-    state.dictItemId = data.dictItemId;
+    state.bttNo = data.bttNo;
     if (state.isRequest === false) {
       state.isRequest = true;
       getDict();
     }
-    if (data.dictItemId) {
-      const res = await getTitlerTypeDtApi({ dictItemId: data.dictItemId });
+    if (data.bttNo) {
+      const res = await getTitlerTypeDtApi({ bttNo: data.bttNo });
       setFieldsValue(res);
       state.type = '编辑';
     } else {
@@ -62,8 +62,8 @@
     try {
       const values = await validate();
       setDrawerProps({ confirmLoading: true });
-      if (state.dictItemId) {
-        await updateTitlerTypeApi({ ...values, dictItemId: state.dictItemId });
+      if (state.bttNo) {
+        await updateTitlerTypeApi({ ...values, bttNo: state.bttNo });
       } else {
         await addTitlerTypeApi({ ...values } as any);
       }
