@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-28 15:38:14
+ * @LastEditTime: 2023-12-28 18:16:04
  * @Description: 新建文件
  * @FilePath: \psms-fe\src\router\routes\modules\inbound-management\index.ts
  */
@@ -17,7 +17,7 @@ const inboundmanagement: AppRouteModule = {
   meta: {
     orderNo: 10001,
     title: '入库管理',
-    icon: 'ion:settings-outline',
+    icon: 'ant-design:api-filled',
   },
   children: [
     {
@@ -37,6 +37,24 @@ const inboundmanagement: AppRouteModule = {
         title: '血浆验收',
       },
       component: () => import('@/views/inbound-management/accept-plasma/index.vue'),
+    },
+    {
+      path: 'sample-accept',
+      name: '样本接收',
+      meta: {
+        title: '样本接收',
+      },
+      id: 9900,
+      component: () => import('@/views/inbound-management/sample-accept/index.vue'),
+    },
+    {
+      path: 'sample-receive',
+      name: '样本验收',
+      meta: {
+        title: '样本验收',
+        id: 9900,
+        component: () => import('@/views/inbound-management/sample-receive/index.vue'),
+      },
     },
   ],
 };

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-28 16:45:10
+ * @LastEditTime: 2023-12-28 18:22:34
  * @Description: 系统管理
  * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
  */
@@ -28,7 +28,6 @@ const system: AppRouteModule = {
       name: 'AccountManagement',
       meta: {
         title: t('routes.demo.system.account'),
-        icon: 'ion:settings-outline',
         ignoreKeepAlive: false,
       },
       component: () => import('@/views/system/account/index.vue'),
@@ -103,6 +102,15 @@ const system: AppRouteModule = {
         ignoreKeepAlive: true,
       },
       component: () => import('@/views/system/password/index.vue'),
+    },
+    {
+      path: 'dictionary',
+      name: '字典管理',
+      meta: {
+        title: '字典管理',
+      },
+      id: 9900,
+      component: () => import('@/views/system/dictionary/index.vue'),
     },
   ],
 };

@@ -263,7 +263,9 @@ export const usePermissionStore = defineStore({
             const filteredRoutes: any[] = [];
 
             routes.forEach((item: any) => {
-              if (item.id && menuIds.includes(Number(item.id))) {
+              // if (item.id && menuIds.includes(Number(item.id))) {
+              // 暂时全开所有菜单
+              if (item.id) {
                 filteredRoutes.push(item);
               } else if (item.children) {
                 const filteredChildren = filterRoutes(item.children);
