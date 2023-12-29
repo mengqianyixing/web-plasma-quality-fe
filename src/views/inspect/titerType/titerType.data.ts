@@ -11,11 +11,11 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '代码',
-    dataIndex: 'itemKey',
+    dataIndex: 'itemValue',
   },
   {
     title: '名称',
-    dataIndex: 'itemValue',
+    dataIndex: 'itemKey',
   },
   {
     title: '效价结果',
@@ -29,9 +29,9 @@ export const columns: BasicColumn[] = [
 
   {
     title: '是否启用',
-    dataIndex: 'state',
+    dataIndex: 'enable',
     customRender: ({ record }) => {
-      return record.state ? '否' : '是';
+      return record.enable ? '是' : '否';
     },
   },
   {
@@ -54,19 +54,19 @@ export const searchFormschema: FormSchema[] = [
     },
   },
   {
-    field: 'itemKey',
+    field: 'itemValue',
     component: 'Input',
     label: '代码',
   },
   {
-    field: 'itemValue',
+    field: 'itemKey',
     component: 'Input',
     label: '名称',
   },
 ];
 export const formListSchema: FormSchema[] = [
   {
-    field: 'itemKey',
+    field: 'itemValue',
     component: 'Input',
     label: '代码',
     required: true,
@@ -91,7 +91,7 @@ export const formListSchema: FormSchema[] = [
     },
   },
   {
-    field: 'itemValue',
+    field: 'itemKey',
     component: 'Input',
     label: '名称',
     required: true,

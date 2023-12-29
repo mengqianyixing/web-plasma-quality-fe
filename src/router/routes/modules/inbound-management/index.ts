@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-28 18:38:33
+ * @LastEditTime: 2023-12-29 16:53:43
  * @Description: 新建文件
  * @FilePath: \psms-fe\src\router\routes\modules\inbound-management\index.ts
  */
@@ -38,15 +38,15 @@ const inboundmanagement: AppRouteModule = {
       },
       component: () => import('@/views/inbound-management/accept-plasma/index.vue'),
     },
-    // {
-    //   path: 'sample-accept',
-    //   name: '样本接收',
-    //   meta: {
-    //     title: '样本接收',
-    //   },
-    //   id: 9900,
-    //   component: () => import('@/views/inbound-management/sample-accept/index.vue'),
-    // },
+    {
+      path: 'sample-accept',
+      name: '样本接收',
+      meta: {
+        title: '样本接收',
+      },
+      id: 9900,
+      component: () => import('@/views/inbound-management/sample-accept/index.vue'),
+    },
     // {
     //   path: 'sample-receive',
     //   name: '样本验收',
