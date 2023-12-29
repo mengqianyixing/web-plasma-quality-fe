@@ -12,10 +12,17 @@
         </div>
       </template>
     </BasicTable>
+
+    <SelectStationNameModal @register="registerSelectModal" @success="handleSelectSuccess" />
+    <CallbackGenerationDrawer @register="registerGenerationDrawer" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
+  import { useModal } from '@/components/Modal';
+  import { useDrawer } from '@/components/Drawer';
+  import CallbackGenerationDrawer from '@/views/callback/list-generation/CallbackGenerationDrawer.vue';
+  import SelectStationNameModal from '@/views/callback/list-generation/SelectStationNameModal.vue';
 
   import { ref, onMounted } from 'vue';
 
@@ -42,7 +49,11 @@
     });
   });
 
-  const [registerTable, { getForm }] = useTable({
+  const [registerSelectModal, { openModal }] = useModal();
+
+  const [registerGenerationDrawer, { openDrawer: openGenerationDrawer }] = useDrawer();
+
+  const [registerTable, { getForm, reload }] = useTable({
     title: '回访名单生成列表',
     api: getCallbackListApi,
     columns,
@@ -92,18 +103,40 @@
   //   }
   // }
 
-  function handleAdd() {}
+  function handleAdd() {
+    openModal(true, {
+      record: {
+        options: stationNames.value.map((it) => ({
+          label: it.stationName,
+          value: it.stationNo,
+        })),
+      },
+    });
+  }
 
   function handleEdit() {}
 
   function handleDelete() {}
 
-  // function handleSuccess() {
-  //   reload();
-  //   selectedRow.value = [];
-  // }
+  function handleSuccess() {
+    reload();
+  }
 
   function formatStationNo(record: Recordable) {
     return stationNames.value.find((it) => it.stationNo === record.stationNo)?.stationName;
+  }
+
+  function handleSelectSuccess(id: string) {
+    openGenerationDrawer(true, {
+      isUpdate: false,
+      reload: true,
+      record: {
+        options: stationNames.value.map((it) => ({
+          label: it.stationName,
+          value: it.stationNo,
+        })),
+        stationNo: id,
+      },
+    });
   }
 </script>

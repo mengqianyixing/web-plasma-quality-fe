@@ -70,9 +70,11 @@
   onMounted(async () => {
     const dictionaryArr = await getTagDictionary([TagDictionaryType.LabelType]);
     if (!dictionaryArr) return;
+
     labelTypeDictionary.value = dictionaryArr.find(
       (it) => it.dictNo === TagDictionaryType.LabelType,
     )?.dictImtes;
+
     await getForm().updateSchema({
       field: 'labelType',
       componentProps: {
