@@ -144,6 +144,11 @@ export const formSchema: FormSchema[] = [
     component: 'InputNumber',
     colProps: { span: 12 },
     required: true,
+
+    componentProps: {
+      min: 0,
+      precision: 2,
+    },
   },
   {
     field: 'expiration',
@@ -163,10 +168,12 @@ export const formSchema: FormSchema[] = [
     label: '计划出库日期',
     component: 'DatePicker',
     colProps: { span: 12 },
+    defaultValue: dayjs(),
     componentProps: ({ formModel, formActionType }) => {
       return {
-        //能选择今天以及往后的日期
+        // 计划出库日期自动显示当天，计划投产日期自动显示当天+1
         disabledDate: (current: Dayjs) => current < dayjs().startOf('day'),
+        //能选择今天以及往后的日期
         onChange: (e: any) => {
           if (!e) return;
           formModel.planTask = undefined;
@@ -189,6 +196,7 @@ export const formSchema: FormSchema[] = [
     label: '计划投产日期',
     component: 'DatePicker',
     colProps: { span: 12 },
+    defaultValue: dayjs().add(1, 'day'),
     required: true,
   },
 ];
