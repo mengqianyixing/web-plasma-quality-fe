@@ -1,5 +1,6 @@
 import { BasicColumn } from '@/components/Table';
 import { FormSchema } from '@/components/Form';
+import { sampleReceiveStatusMap, sampleReceiveStatusValueEnum } from '@/enums/sampleEnum';
 
 export const sampleAcceptColumns: BasicColumn[] = [
   {
@@ -13,6 +14,7 @@ export const sampleAcceptColumns: BasicColumn[] = [
   {
     title: '样本类型',
     dataIndex: 'sampleType',
+    slots: { customRender: 'sampleType' },
   },
   {
     title: '样本总数',
@@ -21,6 +23,9 @@ export const sampleAcceptColumns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'acceptState',
+    format: (text) => {
+      return sampleReceiveStatusMap.get(<sampleReceiveStatusValueEnum>text) as string;
+    },
   },
 ];
 

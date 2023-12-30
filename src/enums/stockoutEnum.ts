@@ -2,6 +2,7 @@ export enum operationEnum {
   N = '普通',
   B = '乙免',
   R = '狂免',
+  A = '炭疽',
   T = '破免',
   C = '巨细胞',
 }
@@ -10,6 +11,7 @@ export enum operationValueEnum {
   N = 'N',
   B = 'B',
   R = 'R',
+  A = 'A',
   T = 'T',
   C = 'C',
 }
@@ -19,6 +21,7 @@ export const operationMap = new Map<operationValueEnum, string>();
 operationMap.set(operationValueEnum.N, operationEnum.N);
 operationMap.set(operationValueEnum.B, operationEnum.B);
 operationMap.set(operationValueEnum.R, operationEnum.R);
+operationMap.set(operationValueEnum.A, operationEnum.A);
 operationMap.set(operationValueEnum.T, operationEnum.T);
 operationMap.set(operationValueEnum.C, operationEnum.C);
 

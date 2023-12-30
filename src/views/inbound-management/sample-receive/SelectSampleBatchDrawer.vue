@@ -2,6 +2,9 @@
   <BasicDrawer v-bind="$attrs" @register="register" title="样本批次列表" width="80%">
     <PageWrapper dense contentFullHeight fixedHeight>
       <BasicTable @register="registerTable">
+        <template #sampleType="{ record }">
+          {{ formatSampleType(record?.sampleType) }}
+        </template>
         <template #toolbar>
           <a-button type="primary" @click="handleSelect">选择</a-button>
         </template>
@@ -14,19 +17,24 @@
   import { PageWrapper } from '@/components/Page';
   import { ref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
-  import { getSampleAcceptList } from '@/api/inbound-management/sample-accept';
+  import { getSampleReceiveList } from '@/api/inbound-management/sample-receive';
   import {
     sampleAcceptColumns,
     searchFormSchema,
-  } from '@/views/inbound-management/sample-accept/accept.data';
+  } from '@/views/inbound-management/sample-receive/receive.data';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  const callbackSample = 'CBK';
 
   const emit = defineEmits(['success', 'register']);
 
   const selectedRow = ref<Recordable>([]);
+  const { createMessage } = useMessage();
+  const { warning } = createMessage;
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, setSelectedRowKeys }] = useTable({
     title: '样本批次列表',
-    api: getSampleAcceptList,
+    api: getSampleReceiveList,
     columns: sampleAcceptColumns,
     formConfig: {
       labelWidth: 120,
@@ -41,7 +49,20 @@
     clickToRowSelect: false,
     rowSelection: {
       type: 'checkbox',
-      onChange: (_, selectedRows: any) => {
+      onChange: (keys, selectedRows: any) => {
+        if (keys.length > 1) {
+          warning('只能选择一条数据');
+
+          setSelectedRowKeys(selectedRow.value.map((it) => it.key));
+
+          return;
+        }
+
+        if (keys.length === 1 && selectedRows[0].sampleType !== callbackSample) {
+          warning('只能选择回访样本批次');
+
+          return;
+        }
         selectedRow.value = selectedRows;
       },
     },
@@ -60,12 +81,22 @@
     immediate: false,
   });
 
+  const sampleType = ref<Recordable[]>([]);
+
   const [register, { closeDrawer }] = useDrawerInner((data) => {
     if (data.reload) reload();
+
+    sampleType.value = data.record.sampleType;
   });
 
   function handleSelect() {
     emit('success', selectedRow.value[0]);
     closeDrawer();
+  }
+
+  function formatSampleType(value: string) {
+    return sampleType.value.length !== 0
+      ? sampleType.value.find((it) => it.value === value)?.label
+      : value;
   }
 </script>
