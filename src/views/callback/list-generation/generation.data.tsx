@@ -2,11 +2,13 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 import { CallbackStateMap, CallbackStateValueEnum } from '@/enums/callbackEnum';
 import { Button } from '@/components/Button';
 import { PLASMA_TYPE_LIST } from '@/enums/inspectEnum';
+import dayjs from 'dayjs';
 
 export const columns: BasicColumn[] = [
   {
     title: '名单编号',
     dataIndex: 'planNo',
+    width: 200,
     customRender: ({ text }) => {
       return <Button type="link">{() => text}</Button>;
     },
@@ -92,6 +94,9 @@ export const callbackDrawerColumns: BasicColumn[] = [
   {
     title: '最早待回访采浆日期',
     dataIndex: 'minCollTime',
+    format: (text) => {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
+    },
   },
   {
     title: '最早采浆血浆编号',
@@ -100,6 +105,9 @@ export const callbackDrawerColumns: BasicColumn[] = [
   {
     title: '最后采浆日期',
     dataIndex: 'maxCollectTime',
+    format: (text) => {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
+    },
   },
   {
     title: '待追踪袋数',
@@ -113,6 +121,9 @@ export const callbackDrawerSearchFromSchema: FormSchema[] = [
     label: '采浆公司',
     component: 'Select',
     colProps: { span: 8 },
+    componentProps: {
+      disabled: true,
+    },
   },
   {
     field: '[minCollectTime, maxCollectTime]',
