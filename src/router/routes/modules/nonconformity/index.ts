@@ -16,6 +16,7 @@ const nonconformity: AppRouteModule = {
     {
       path: 'nb',
       name: 'NonconformityBoxes',
+      id: 9903,
       meta: {
         title: '不合格库房管理',
       },

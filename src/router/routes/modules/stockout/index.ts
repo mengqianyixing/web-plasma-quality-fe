@@ -15,6 +15,7 @@ const nonconformity: AppRouteModule = {
     {
       path: 'po',
       name: 'ProductionOrder',
+      id: 9904,
       meta: {
         title: '生产指令',
       },

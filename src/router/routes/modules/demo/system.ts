@@ -1,3 +1,11 @@
+/*
+ * @Author: HxB
+ * @Date: 2023-12-25 16:00:06
+ * @LastEditors: DoubleAm
+ * @LastEditTime: 2023-12-28 18:22:34
+ * @Description: 系统管理
+ * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
+ */
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
@@ -20,7 +28,6 @@ const system: AppRouteModule = {
       name: 'AccountManagement',
       meta: {
         title: t('routes.demo.system.account'),
-        icon: 'ion:settings-outline',
         ignoreKeepAlive: false,
       },
       component: () => import('@/views/system/account/index.vue'),

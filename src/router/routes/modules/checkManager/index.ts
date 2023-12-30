@@ -1,3 +1,11 @@
+/*
+ * @Author: HxB
+ * @Date: 2023-12-29 16:47:29
+ * @LastEditors: DoubleAm
+ * @LastEditTime: 2023-12-29 16:51:54
+ * @Description: 新建文件
+ * @FilePath: \psms-fe\src\router\routes\modules\checkManager\index.ts
+ */
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
