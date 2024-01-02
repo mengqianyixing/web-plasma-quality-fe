@@ -56,12 +56,12 @@
   const schema: DescItem[] = [
     {
       field: 'batchSampleNo',
-      label: '样本批次',
+      label: '样本批号',
       render() {
         return (
           <div class="flex items-center gap-2 w-[300px]">
             <a-input
-              placeholder="请选择批次或输入批次编号回车"
+              placeholder="请选择批号或输入批号回车"
               value={inputValue}
               onChange={handleSampleBatchChange}
               onPressEnter={debounce(handlePressEnter, 500)}
