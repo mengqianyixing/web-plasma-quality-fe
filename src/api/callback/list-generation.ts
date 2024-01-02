@@ -1,5 +1,6 @@
 import { defHttp } from '@/utils/http/axios';
 import {
+  DeleteApiCoreDonorCallbackRequest,
   GetApiCoreDonorCallbackDetailRequest,
   GetApiCoreDonorCallbackDetailResponse,
   GetApiCoreDonorCallbackNeedRequest,
@@ -35,6 +36,9 @@ export const getCallbackDetail = (params: GetApiCoreDonorCallbackDetailRequest['
       joinParamsToUrl: true,
     },
   );
+
+export const deleteCallback = (params: DeleteApiCoreDonorCallbackRequest) =>
+  defHttp.delete({ url: Api.CALLBACK_LIST, params });
 
 export const stationNameList = () =>
   defHttp.get<GetApiCoreStationResponse>({ url: Api.STATION_NAME });

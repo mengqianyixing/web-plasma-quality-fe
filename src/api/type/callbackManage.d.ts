@@ -330,4 +330,24 @@ export interface PostApiCoreDonorCallbackRequest {
  */
 export type PostApiCoreDonorCallbackResponse = null;
 
+/**
+ * 接口 [回访名单撤销↗](https://yapi.sharing8.cn/project/529/interface/api/32004) 的 **请求类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `DELETE /api/core/donor/callback`
+ * @更新时间 `2024-01-02 14:50:09`
+ */
+export interface DeleteApiCoreDonorCallbackRequest {
+  callbackBatchNoes?: string[];
+}
+
+/**
+ * 接口 [回访名单撤销↗](https://yapi.sharing8.cn/project/529/interface/api/32004) 的 **返回类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `DELETE /api/core/donor/callback`
+ * @更新时间 `2024-01-02 14:50:09`
+ */
+export type DeleteApiCoreDonorCallbackResponse = null;
+
 /* prettier-ignore-end */

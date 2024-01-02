@@ -26,6 +26,7 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { useModal } from '@/components/Modal';
   import { useDrawer } from '@/components/Drawer';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   import CallbackGenerationDrawer from '@/views/callback/list-generation/CallbackGenerationDrawer.vue';
   import CallbackDetailDrawer from '@/views/callback/list-generation/CallbackDetailDrawer.vue';
@@ -36,12 +37,19 @@
   import { columns, searchFormSchema } from './generation.data';
 
   import { PageWrapper } from '@/components/Page';
-  import { getCallbackListApi, stationNameList } from '@/api/callback/list-generation';
+  import {
+    deleteCallback,
+    getCallbackListApi,
+    stationNameList,
+  } from '@/api/callback/list-generation';
+  import { CallbackStateMap } from '@/enums/callbackEnum';
 
   defineOptions({ name: 'CallbackListGeneration' });
 
   const selectedRow = ref<Recordable>([]);
   const stationNames = ref<Recordable>({});
+
+  const { createConfirm } = useMessage();
 
   onMounted(async () => {
     stationNames.value = await stationNameList();
@@ -99,18 +107,6 @@
     canResize: false,
   });
 
-  // function selectRowsCheck() {
-  //   if (selectedRow.value.length > 1) {
-  //     warning('只能选择一条数据');
-  //     return false;
-  //   } else if (selectedRow.value.length === 0) {
-  //     warning('请先选择一条数据');
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
-
   function handleAdd() {
     openModal(true, {
       record: {
@@ -122,7 +118,19 @@
     });
   }
 
-  function handleDelete() {}
+  async function handleDelete() {
+    createConfirm({
+      title: '确认',
+      content: '确认撤销选中的名单吗？',
+      iconType: 'warning',
+      onOk: async () => {
+        await deleteCallback({
+          callbackBatchNoes: selectedRow.value.map((it) => it.planNo),
+        });
+        await reload();
+      },
+    });
+  }
 
   function handleSuccess() {
     reload();
@@ -150,6 +158,7 @@
     openCallbackDetailDrawer(true, {
       ...record,
       stationName: formatStationNo(record),
+      state: CallbackStateMap.get(record.state),
     });
   }
 </script>

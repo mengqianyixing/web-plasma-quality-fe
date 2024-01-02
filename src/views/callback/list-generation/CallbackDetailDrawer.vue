@@ -30,12 +30,12 @@
       label: '采浆公司',
     },
     {
-      field: 'outWarehouseDate',
-      label: '最早待回访日期',
+      field: 'checker',
+      label: '确认人',
     },
     {
-      field: 'callbackState',
-      label: '名单状态',
+      field: 'checkAt',
+      label: '确认时间',
     },
     {
       field: 'creator',
@@ -44,6 +44,10 @@
     {
       field: 'createAt',
       label: '生产日期',
+    },
+    {
+      field: 'state',
+      label: '名单状态',
     },
   ];
   const [registerDescription] = useDescription({
