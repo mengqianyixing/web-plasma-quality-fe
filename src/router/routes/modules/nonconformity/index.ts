@@ -10,15 +10,26 @@ const nonconformity: AppRouteModule = {
   meta: {
     orderNo: 10000,
     title: '不合格管理',
+    icon: 'ant-design:close-outlined',
   },
   children: [
     {
       path: 'nb',
       name: 'NonconformityBoxes',
+      id: 9903,
       meta: {
         title: '不合格库房管理',
       },
       component: () => import('/@/views/nonconformity/boxes/index.vue'),
+    },
+    {
+      path: 'nonconformity-registration',
+      name: '不合格血浆登记',
+      meta: {
+        title: '不合格血浆登记',
+      },
+      id: 9903,
+      component: () => import('/@/views/nonconformity/nonconformity-registration/index.vue'),
     },
   ],
 };

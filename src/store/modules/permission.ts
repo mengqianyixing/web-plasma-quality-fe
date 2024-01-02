@@ -250,6 +250,35 @@ export const usePermissionStore = defineStore({
           routeList = flatMultiLevelRoutes(routeList);
           routes = [PAGE_NOT_FOUND_ROUTE, ...routeList];
           break;
+
+        case PermissionModeEnum.CAS_DOOR:
+          const menuIds: number[] = (userStore.getUserInfo?.menuIds ?? [9900]).map((i) =>
+            Number(i),
+          );
+          console.log({ menuIds });
+          const filterRoutes = (routes: any[]): any[] => {
+            const filteredRoutes: any[] = [];
+
+            routes.forEach((item: any) => {
+              // if (item.id && menuIds.includes(Number(item.id))) {
+              // 暂时全开所有菜单
+              if (item.id) {
+                filteredRoutes.push(item);
+              } else if (item.children) {
+                const filteredChildren = filterRoutes(item.children);
+                if (filteredChildren.length > 0) {
+                  item.children = filteredChildren;
+                  filteredRoutes.push(item);
+                }
+              }
+            });
+
+            return filteredRoutes;
+          };
+          const tempRoutes: any = filterRoutes(asyncRoutes);
+          this.setBackMenuList(transformRouteToMenu(tempRoutes));
+          routes = [PAGE_NOT_FOUND_ROUTE, ...tempRoutes];
+          break;
       }
 
       routes.push(ERROR_LOG_ROUTE);

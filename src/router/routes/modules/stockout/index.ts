@@ -9,11 +9,13 @@ const nonconformity: AppRouteModule = {
   meta: {
     orderNo: 10000,
     title: '出库管理',
+    icon: 'ant-design:to-top-outlined',
   },
   children: [
     {
       path: 'po',
       name: 'ProductionOrder',
+      id: 9904,
       meta: {
         title: '生产指令',
       },
