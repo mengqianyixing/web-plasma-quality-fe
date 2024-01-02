@@ -1090,7 +1090,7 @@ export interface PostApiCoreBatchPlasmaVerifyBoxPauseResponse {}
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/pause/{batchNo}/{pattern}`
- * @更新时间 `2023-12-28 16:52:41`
+ * @更新时间 `2023-12-29 18:02:58`
  */
 export interface GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternRequest {
   /**
@@ -1108,7 +1108,7 @@ export interface GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/pause/{batchNo}/{pattern}`
- * @更新时间 `2023-12-28 16:52:41`
+ * @更新时间 `2023-12-29 18:02:58`
  */
 export type GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternResponse = {
   /**
@@ -1139,6 +1139,18 @@ export type GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternResponse = {
    * 当前状态
    */
   state: string;
+  /**
+   * 唯一标识
+   */
+  bpId: string;
+  /**
+   * 继续人
+   */
+  freedBy: string;
+  /**
+   * 继续复核人
+   */
+  reviewBy: string;
 }[];
 
 /**
@@ -1348,40 +1360,48 @@ export interface GetApiCoreBatchSampleVerifyBatchSampleNoResponse {
 }
 
 /**
- * 接口 [样本验收↗](https://yapi.sharing8.cn/project/529/interface/api/31947) 的 **请求类型**
+ * 接口 [提交样本验收↗](https://yapi.sharing8.cn/project/529/interface/api/31947) 的 **请求类型**
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
- * @请求头 `POST /api/core/batch/sample/verify`
- * @更新时间 `2023-12-29 14:18:27`
+ * @请求头 `PUT /api/core/batch/sample/verify`
+ * @更新时间 `2024-01-01 14:53:55`
  */
-export interface PostApiCoreBatchSampleVerifyRequest {
+export interface PutApiCoreBatchSampleVerifyRequest {
   /**
    * 样本批号
    */
   batchSampleNo: string;
+  /**
+   * 样本验收单号
+   */
+  verifyNo?: string;
 }
 
 /**
- * 接口 [样本验收↗](https://yapi.sharing8.cn/project/529/interface/api/31947) 的 **返回类型**
+ * 接口 [提交样本验收↗](https://yapi.sharing8.cn/project/529/interface/api/31947) 的 **返回类型**
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
- * @请求头 `POST /api/core/batch/sample/verify`
- * @更新时间 `2023-12-29 14:18:27`
+ * @请求头 `PUT /api/core/batch/sample/verify`
+ * @更新时间 `2024-01-01 14:53:55`
  */
-export type PostApiCoreBatchSampleVerifyResponse = string;
+export type PutApiCoreBatchSampleVerifyResponse = string;
 
 /**
  * 接口 [样本验收过程中确认献血浆者不符合↗](https://yapi.sharing8.cn/project/529/interface/api/31950) 的 **请求类型**
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/sample/verify/non-conformance`
- * @更新时间 `2023-12-29 14:24:58`
+ * @更新时间 `2024-01-01 14:22:36`
  */
 export interface PostApiCoreBatchSampleVerifyNonConformanceRequest {
   /**
    * 样本编号
    */
   sampleNo: string;
+  /**
+   * 样本验收单号
+   */
+  sampleVerifyNo: string;
 }
 
 /**
@@ -1389,7 +1409,7 @@ export interface PostApiCoreBatchSampleVerifyNonConformanceRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/sample/verify/non-conformance`
- * @更新时间 `2023-12-29 14:24:58`
+ * @更新时间 `2024-01-01 14:22:36`
  */
 export type PostApiCoreBatchSampleVerifyNonConformanceResponse = string;
 
@@ -1429,7 +1449,7 @@ export type PutApiCoreBatchSampleVerifyRevokeResponse = string;
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/verify/revoke/bag`
- * @更新时间 `2023-12-29 15:47:50`
+ * @更新时间 `2024-01-02 10:39:28`
  */
 export interface PostApiCoreBatchPlasmaVerifyRevokeBagRequest {
   /**
@@ -1463,70 +1483,186 @@ export interface PostApiCoreBatchPlasmaVerifyRevokeBagRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/verify/revoke/bag`
- * @更新时间 `2023-12-29 15:47:50`
+ * @更新时间 `2024-01-02 10:39:28`
  */
-export interface PostApiCoreBatchPlasmaVerifyRevokeBagResponse {
+export interface PostApiCoreBatchPlasmaVerifyRevokeBagResponse {}
+
+/**
+ * 接口 [查询浆站缺号列表↗](https://yapi.sharing8.cn/project/529/interface/api/31965) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/sample/verify/lack/{batchSampleNo}`
+ * @更新时间 `2023-12-30 16:21:26`
+ */
+export interface GetApiCoreBatchSampleVerifyLackBatchSampleNoRequest {
   /**
-   * 采浆公司
+   * 样本批号
    */
-  stationName: string;
+  batchSampleNo: string;
+}
+
+/**
+ * 接口 [查询浆站缺号列表↗](https://yapi.sharing8.cn/project/529/interface/api/31965) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/sample/verify/lack/{batchSampleNo}`
+ * @更新时间 `2023-12-30 16:21:26`
+ */
+export type GetApiCoreBatchSampleVerifyLackBatchSampleNoResponse = {
   /**
-   * 采浆公司编号
+   * 样本编号
    */
-  stationNo: string;
+  sampleNo?: string;
+  /**
+   * 浆员名称
+   */
+  donorName?: string;
+  /**
+   * 浆员编号
+   */
+  donorNo?: string;
+  /**
+   * 采浆日期
+   */
+  collectDate?: string;
+}[];
+
+/**
+ * 接口 [批称重↗](https://yapi.sharing8.cn/project/529/interface/api/31968) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/weight`
+ * @更新时间 `2023-12-29 16:56:51`
+ */
+export interface PostApiCoreBatchPlasmaWeightRequest {
   /**
    * 血浆批号
    */
   batchNo: string;
   /**
-   * 已验收血浆数
+   * 净重
    */
-  verifyBagCount: number;
-  /**
-   * 血浆总数
-   */
-  bagCount: number;
-  /**
-   * 已验收箱数
-   */
-  verifyBoxCount: number;
-  /**
-   * 箱总数
-   */
-  boxCount: number;
-  /**
-   * 未验收血浆编号
-   */
-  unVerifyBag: string[];
-  /**
-   * 已验收血浆信息
-   */
-  verifyBag: {
-    /**
-     * 血浆编号
-     */
-    bagNo: string;
-    /**
-     * 验收时间
-     */
-    verifyAt: string;
-    /**
-     * 血浆验收结果
-     */
-    bagResult: string;
-    /**
-     * 样本验收结果
-     */
-    sampleResult: string;
-  }[];
-  /**
-   * 血浆箱号
-   */
-  boxNo: string;
-  /**
-   * 献血浆者不符合项目
-   */
-  donorFailed: string;
+  netWeight: number;
 }
+
+/**
+ * 接口 [批称重↗](https://yapi.sharing8.cn/project/529/interface/api/31968) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/weight`
+ * @更新时间 `2023-12-29 16:56:51`
+ */
+export interface PostApiCoreBatchPlasmaWeightResponse {}
+
+/**
+ * 接口 [查询血浆验收中产生的不合格样本列表↗](https://yapi.sharing8.cn/project/529/interface/api/31971) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/sample/verify/unqualified/{batchSampleNo}`
+ * @更新时间 `2023-12-30 14:05:52`
+ */
+export interface GetApiCoreBatchSampleVerifyUnqualifiedBatchSampleNoRequest {
+  /**
+   * 样本批号
+   */
+  batchSampleNo: string;
+}
+
+/**
+ * 接口 [查询血浆验收中产生的不合格样本列表↗](https://yapi.sharing8.cn/project/529/interface/api/31971) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/sample/verify/unqualified/{batchSampleNo}`
+ * @更新时间 `2023-12-30 14:05:52`
+ */
+export type GetApiCoreBatchSampleVerifyUnqualifiedBatchSampleNoResponse = {
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+  /**
+   * 浆员名称
+   */
+  donorName?: string;
+  /**
+   * 浆员编号
+   */
+  donorNo?: string;
+  /**
+   * 采浆日期
+   */
+  collectDate?: string;
+  /**
+   * 不合格原因
+   */
+  unqualifiedReason?: string;
+}[];
+
+/**
+ * 接口 [查询献血浆者不符合列表↗](https://yapi.sharing8.cn/project/529/interface/api/31992) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /sample/verify/non-conformance/{batchSampleNo}`
+ * @更新时间 `2024-01-01 13:00:01`
+ */
+export interface GetSampleVerifyNonConformanceBatchSampleNoRequest {
+  /**
+   * 样本批号
+   */
+  batchSampleNo: string;
+}
+
+/**
+ * 接口 [查询献血浆者不符合列表↗](https://yapi.sharing8.cn/project/529/interface/api/31992) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /sample/verify/non-conformance/{batchSampleNo}`
+ * @更新时间 `2024-01-01 13:00:01`
+ */
+export type GetSampleVerifyNonConformanceBatchSampleNoResponse = {
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+  /**
+   * 是否合格，0不合格，1合格
+   */
+  qualified?: number;
+  /**
+   * 字典value
+   */
+  dictItemValue?: string;
+  /**
+   * 字典key
+   */
+  dictItemKey?: string;
+}[];
+
+/**
+ * 接口 [生成样本验收单↗](https://yapi.sharing8.cn/project/529/interface/api/31995) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/sample/verify`
+ * @更新时间 `2024-01-01 14:56:02`
+ */
+export interface PostApiCoreBatchSampleVerifyRequest {
+  /**
+   * 样本批号
+   */
+  batchSampleNo: string;
+  /**
+   * 样本验收单号
+   */
+  verifyNo: string;
+}
+
+/**
+ * 接口 [生成样本验收单↗](https://yapi.sharing8.cn/project/529/interface/api/31995) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/sample/verify`
+ * @更新时间 `2024-01-01 14:56:02`
+ */
+export type PostApiCoreBatchSampleVerifyResponse = string;
 
 /* prettier-ignore-end */

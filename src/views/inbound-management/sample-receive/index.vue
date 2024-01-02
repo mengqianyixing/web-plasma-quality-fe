@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="tsx">
-  import { computed, ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import { debounce } from 'lodash-es';
 
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
@@ -28,25 +28,40 @@
   import { BasicTable, useTable } from '@/components/Table';
 
   import SelectSampleBatchDrawer from './SelectSampleBatchDrawer.vue';
-  import { acceptSample, getSampleAcceptDetail } from '@/api/inbound-management/sample-accept';
+  import {
+    receiveSample,
+    getSampleReceiveDetail,
+    getSampleDictionary,
+  } from '@/api/inbound-management/sample-receive';
   import { GetApiCoreBatchSampleAcceptBatchSampleNoResponse } from '@/api/type/batchManage';
   import { useMessage } from '@/hooks/web/useMessage';
   import dayjs from 'dayjs';
+  import { sampleDictionary } from '@/enums/sampleEnum';
 
   const sampleBatchData = ref<GetApiCoreBatchSampleAcceptBatchSampleNoResponse>({});
   const inputValue = ref('');
+  const sampleTypeDictionary = ref<Recordable[] | undefined>([]);
+
+  onMounted(async () => {
+    const dictionaryArr = await getSampleDictionary([sampleDictionary.SampleType]);
+    if (!dictionaryArr) return;
+
+    sampleTypeDictionary.value = dictionaryArr.find(
+      (it) => it.dictNo === sampleDictionary.SampleType,
+    )?.dictImtes;
+  });
 
   const { createConfirm } = useMessage();
 
   const schema: DescItem[] = [
     {
       field: 'batchSampleNo',
-      label: '样本批次',
+      label: '样本批号',
       render() {
         return (
           <div class="flex items-center gap-2 w-[300px]">
             <a-input
-              placeholder="请选择批次或输入批次编号回车"
+              placeholder="请选择批号或输入批号回车"
               value={inputValue}
               onChange={handleSampleBatchChange}
               onPressEnter={debounce(handlePressEnter, 500)}
@@ -69,6 +84,10 @@
     {
       field: 'sampleType',
       label: '样本类型',
+      render(text) {
+        const label = sampleTypeDictionary.value!.find((it) => it.value === text)?.label;
+        return <span>{label}</span>;
+      },
     },
     {
       field: 'bagCount',
@@ -141,6 +160,9 @@
   function handleSelectSampleBatch() {
     openSelectSampleBatchDrawer(true, {
       reload: true,
+      record: {
+        sampleType: sampleTypeDictionary.value,
+      },
     });
   }
 
@@ -153,7 +175,7 @@
   );
 
   async function handleSelectSampleBatchSuccess(record: Recordable) {
-    sampleBatchData.value = await getSampleAcceptDetail(record.batchSampleNo);
+    sampleBatchData.value = await getSampleReceiveDetail(record.batchSampleNo);
     updateTableData();
     inputValue.value = record.batchSampleNo;
   }
@@ -168,7 +190,7 @@
   }
 
   async function handlePressEnter() {
-    sampleBatchData.value = await getSampleAcceptDetail(inputValue.value);
+    sampleBatchData.value = await getSampleReceiveDetail(inputValue.value);
   }
 
   async function handleAcceptSample() {
@@ -177,10 +199,10 @@
       content: '确认接收样本',
       iconType: 'warning',
       onOk: async () => {
-        await acceptSample({
+        await receiveSample({
           batchSampleNo: inputValue.value,
         });
-        sampleBatchData.value = await getSampleAcceptDetail(inputValue.value);
+        sampleBatchData.value = await getSampleReceiveDetail(inputValue.value);
         updateTableData();
       },
     });

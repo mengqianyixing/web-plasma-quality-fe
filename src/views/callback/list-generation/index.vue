@@ -1,13 +1,17 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
+      <template #planNo="{ record }">
+        <a-button type="link" @click="handlePlanNoClick(record)">
+          {{ record?.planNo }}
+        </a-button>
+      </template>
       <template #stationNo="{ record }">
         {{ formatStationNo(record) }}
       </template>
       <template #toolbar>
         <div class="flex gap-2">
           <a-button type="primary" @click="handleAdd"> 新增 </a-button>
-          <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
           <a-button type="primary" @click="handleDelete"> 撤销 </a-button>
         </div>
       </template>
@@ -15,13 +19,17 @@
 
     <SelectStationNameModal @register="registerSelectModal" @success="handleSelectSuccess" />
     <CallbackGenerationDrawer @register="registerGenerationDrawer" @success="handleSuccess" />
+    <CallbackDetailDrawer @register="registerCallbackDetailDrawer" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { useModal } from '@/components/Modal';
   import { useDrawer } from '@/components/Drawer';
+  import { useMessage } from '@/hooks/web/useMessage';
+
   import CallbackGenerationDrawer from '@/views/callback/list-generation/CallbackGenerationDrawer.vue';
+  import CallbackDetailDrawer from '@/views/callback/list-generation/CallbackDetailDrawer.vue';
   import SelectStationNameModal from '@/views/callback/list-generation/SelectStationNameModal.vue';
 
   import { ref, onMounted } from 'vue';
@@ -29,12 +37,19 @@
   import { columns, searchFormSchema } from './generation.data';
 
   import { PageWrapper } from '@/components/Page';
-  import { getCallbackListApi, stationNameList } from '@/api/callback/list-generation';
+  import {
+    deleteCallback,
+    getCallbackListApi,
+    stationNameList,
+  } from '@/api/callback/list-generation';
+  import { CallbackStateMap } from '@/enums/callbackEnum';
 
   defineOptions({ name: 'CallbackListGeneration' });
 
   const selectedRow = ref<Recordable>([]);
   const stationNames = ref<Recordable>({});
+
+  const { createConfirm } = useMessage();
 
   onMounted(async () => {
     stationNames.value = await stationNameList();
@@ -52,6 +67,7 @@
   const [registerSelectModal, { openModal }] = useModal();
 
   const [registerGenerationDrawer, { openDrawer: openGenerationDrawer }] = useDrawer();
+  const [registerCallbackDetailDrawer, { openDrawer: openCallbackDetailDrawer }] = useDrawer();
 
   const [registerTable, { getForm, reload }] = useTable({
     title: '回访名单生成列表',
@@ -91,18 +107,6 @@
     canResize: false,
   });
 
-  // function selectRowsCheck() {
-  //   if (selectedRow.value.length > 1) {
-  //     warning('只能选择一条数据');
-  //     return false;
-  //   } else if (selectedRow.value.length === 0) {
-  //     warning('请先选择一条数据');
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
-
   function handleAdd() {
     openModal(true, {
       record: {
@@ -114,9 +118,19 @@
     });
   }
 
-  function handleEdit() {}
-
-  function handleDelete() {}
+  async function handleDelete() {
+    createConfirm({
+      title: '确认',
+      content: '确认撤销选中的名单吗？',
+      iconType: 'warning',
+      onOk: async () => {
+        await deleteCallback({
+          callbackBatchNoes: selectedRow.value.map((it) => it.planNo),
+        });
+        await reload();
+      },
+    });
+  }
 
   function handleSuccess() {
     reload();
@@ -137,6 +151,14 @@
         })),
         stationNo: id,
       },
+    });
+  }
+
+  function handlePlanNoClick(record: Recordable) {
+    openCallbackDetailDrawer(true, {
+      ...record,
+      stationName: formatStationNo(record),
+      state: CallbackStateMap.get(record.state),
     });
   }
 </script>

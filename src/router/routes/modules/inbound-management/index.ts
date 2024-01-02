@@ -45,7 +45,7 @@ const inboundmanagement: AppRouteModule = {
         title: '样本接收',
       },
       id: 9900,
-      component: () => import('@/views/inbound-management/sample-accept/index.vue'),
+      component: () => import('@/views/inbound-management/sample-receive/index.vue'),
     },
     // {
     //   path: 'sample-receive',

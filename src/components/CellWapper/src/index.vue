@@ -1,5 +1,11 @@
 <template>
-  <div :class="['container', 'flex', 'flex-wrap', 'm-16px']">
+  <div
+    :class="['cell-wapper', 'flex', 'flex-wrap']"
+    :style="{
+      margin: gap + 'px',
+      width: `calc(100% - ${gap}px)`,
+    }"
+  >
     <div
       :class="`item  flex`"
       :style="{ width: cellWidth }"
@@ -44,10 +50,14 @@
       type: [Number, String] as PropType<number | string>,
       default: '25%',
     },
+    gap: {
+      type: Number as PropType<number>,
+      default: 16,
+    },
   });
 </script>
 <style scoped>
-  .container {
+  .cell-wapper {
     width: calc(100% - 32px);
     border-top-width: 1px;
     border-left-width: 1px;
