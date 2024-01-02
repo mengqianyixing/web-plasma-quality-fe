@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-28 17:59:51
+ * @LastEditTime: 2024-01-02 18:29:52
  * @Description: 首页
  * @FilePath: \psms-fe\src\router\routes\modules\dashboard.ts
  */
@@ -13,6 +13,7 @@ import { t } from '@/hooks/web/useI18n';
 
 const dashboard: AppRouteModule = {
   path: '/dashboard',
+  menuWeight: 99,
   name: 'Dashboard',
   component: LAYOUT,
   redirect: '/dashboard/analysis',

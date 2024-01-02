@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-28 18:22:34
+ * @LastEditTime: 2024-01-02 18:28:49
  * @Description: 系统管理
  * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
  */
@@ -14,6 +14,7 @@ import { t } from '@/hooks/web/useI18n';
 const system: AppRouteModule = {
   path: '/system',
   name: 'System',
+  menuWeight: 98,
   component: LAYOUT,
   redirect: '/system/account',
   meta: {

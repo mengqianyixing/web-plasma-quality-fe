@@ -278,7 +278,9 @@ export const usePermissionStore = defineStore({
 
             return filteredRoutes;
           };
-          const tempRoutes: any = filterRoutes(asyncRoutes);
+          const tempRoutes: any = filterRoutes(asyncRoutes).sort((a, b) => {
+            return (b?.menuWeight || 0) - (a?.menuWeight || 0);
+          });
           this.setBackMenuList(transformRouteToMenu(tempRoutes));
           routes = [PAGE_NOT_FOUND_ROUTE, ...tempRoutes];
           break;
