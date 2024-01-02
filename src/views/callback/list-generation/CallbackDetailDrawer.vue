@@ -43,7 +43,7 @@
     },
     {
       field: 'createAt',
-      label: '生产日期',
+      label: '生成日期',
     },
     {
       field: 'state',
