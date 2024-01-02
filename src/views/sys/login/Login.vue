@@ -1,7 +1,7 @@
 <template>
   <div :class="prefixCls" class="relative w-full h-full px-4">
-    <div class="flex items-center absolute right-4 top-4">
-      <AppDarkModeToggle class="enter-x mr-2" v-if="!sessionTimeout" />
+    <div class="absolute flex items-center right-4 top-4">
+      <AppDarkModeToggle class="mr-2 enter-x" v-if="!sessionTimeout" />
       <AppLocalePicker
         class="text-white enter-x xl:text-gray-600"
         :show-text="false"
@@ -19,16 +19,16 @@
           <AppLogo class="-enter-x" />
         </div>
         <div
-          class="welcome-wrapper flex flex-col items-start justify-between p-5 relative left-17 w-3/5 h-2/5 rounded-md enter-x"
+          class="relative flex flex-col items-start justify-between w-3/5 p-5 rounded-md welcome-wrapper left-17 h-2/5 enter-x"
         >
           <img class="relative top-23%" src="../../../assets/images/welcome.png" alt="" />
-          <div class="text-white relative bottom-1/5"> v {{ prodVersion }} </div>
+          <div class="relative text-white bottom-1/5"> v {{ prodVersion }} </div>
         </div>
 
         <div class="flex items-center w-full h-full py-5 xl:h-auto xl:py-0 xl:my-0 xl:w-6/12">
           <div
             :class="`${prefixCls}-form`"
-            class="relative w-full h-3/5 bg-white px-5 py-8 mx-auto my-auto rounded-md shadow-md xl:ml-16 xl:bg-transparent sm:px-8 xl:p-4 xl:shadow-none sm:w-3/4 lg:w-2/4 xl:w-auto enter-x"
+            class="relative w-full px-5 py-8 mx-auto my-auto bg-white rounded-md shadow-md h-3/5 xl:ml-16 xl:bg-transparent sm:px-8 xl:p-4 xl:shadow-none sm:w-3/4 lg:w-2/4 xl:w-auto enter-x"
           >
             <LoginForm />
           </div>
