@@ -1,6 +1,5 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { CallbackStateMap, CallbackStateValueEnum } from '@/enums/callbackEnum';
-import { Button } from '@/components/Button';
 import { PLASMA_TYPE_LIST } from '@/enums/inspectEnum';
 import dayjs from 'dayjs';
 
@@ -8,10 +7,8 @@ export const columns: BasicColumn[] = [
   {
     title: '名单编号',
     dataIndex: 'planNo',
+    slots: { customRender: 'planNo' },
     width: 200,
-    customRender: ({ text }) => {
-      return <Button type="link">{() => text}</Button>;
-    },
   },
   {
     title: '采浆公司',
@@ -112,6 +109,81 @@ export const callbackDrawerColumns: BasicColumn[] = [
   {
     title: '待追踪袋数',
     dataIndex: 'plasmaCount',
+  },
+];
+
+export const callbackDetailDrawerColumns: BasicColumn[] = [
+  {
+    title: '浆员编号',
+    dataIndex: 'donorNo',
+  },
+  {
+    title: '浆员姓名',
+    dataIndex: 'donorName',
+  },
+  {
+    title: '性别',
+    dataIndex: 'gender',
+  },
+  {
+    title: '身份证号',
+    dataIndex: 'idcardId',
+  },
+  {
+    title: '浆员状态',
+    dataIndex: 'donatorStatus',
+  },
+  {
+    title: '拒绝日期',
+    dataIndex: 'refuseDate',
+  },
+  {
+    title: '拒绝原因',
+    dataIndex: 'refuseReason',
+  },
+  {
+    title: '最早采浆血浆编号',
+    dataIndex: 'minPlasmaNo',
+  },
+  {
+    title: '最早待回访采浆日期',
+    dataIndex: 'minCollTime',
+    format: (text) => {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
+    },
+  },
+  {
+    title: '待追踪袋数',
+    dataIndex: 'plasmaCount',
+  },
+  {
+    title: '最后采浆日期',
+    dataIndex: 'maxCollectTime',
+    format: (text) => {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
+    },
+  },
+  {
+    title: '回访日期',
+    dataIndex: 'callbackDate',
+    format: (text) => {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
+    },
+  },
+  {
+    title: '回访结果',
+    dataIndex: 'callbackResult',
+  },
+  {
+    title: '样本编号',
+    dataIndex: 'sampleNo',
+  },
+  {
+    title: '采集日期',
+    dataIndex: 'sampleCollectTime',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
+    },
   },
 ];
 

@@ -212,4 +212,122 @@ export interface PostApiCoreDonorCallbackNeedRequest {
  */
 export type PostApiCoreDonorCallbackNeedResponse = null;
 
+/**
+ * 接口 [回访批次详情↗](https://yapi.sharing8.cn/project/529/interface/api/31998) 的 **请求类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `GET /api/core/donor/callback/detail`
+ * @更新时间 `2024-01-02 10:57:44`
+ */
+export interface GetApiCoreDonorCallbackDetailRequest {
+  /**
+   * 回访批次号
+   */
+  batchNo: string;
+}
+
+/**
+ * 接口 [回访批次详情↗](https://yapi.sharing8.cn/project/529/interface/api/31998) 的 **返回类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `GET /api/core/donor/callback/detail`
+ * @更新时间 `2024-01-02 10:57:44`
+ */
+export interface GetApiCoreDonorCallbackDetailResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 浆站号
+     */
+    stationNo: string;
+    /**
+     * 浆员编号
+     */
+    donorNo: string;
+    /**
+     * 浆员姓名
+     */
+    donorName: string;
+    /**
+     * 性别
+     */
+    gender: string;
+    /**
+     * 浆员状态
+     */
+    donatorStatus: string;
+    /**
+     * 拒绝日期
+     */
+    refuseDate: string;
+    /**
+     * 拒绝原因
+     */
+    refuseReason: string;
+    /**
+     * 最早待回访日期
+     */
+    minCollTime: string;
+    /**
+     * 最早采浆血浆编号
+     */
+    minPlasmaNo: string;
+    /**
+     * 最后采浆日期
+     */
+    maxCollectTime: string;
+    /**
+     * 待追踪袋数
+     */
+    plasmaCount: number;
+    /**
+     * 身份证号
+     */
+    idcardId: string;
+    /**
+     * 回访日期
+     */
+    callbackDate?: string;
+    /**
+     * 回访结果
+     */
+    callbackResult?: string;
+    /**
+     * 样本采集日期
+     */
+    sampleCollectTime?: string;
+    /**
+     * 样本编号
+     */
+    sampleNo?: string;
+    /**
+     * 回访备注
+     */
+    remark?: string;
+  }[];
+}
+
+/**
+ * 接口 [回访批次确认↗](https://yapi.sharing8.cn/project/529/interface/api/32001) 的 **请求类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `POST /api/core/donor/callback`
+ * @更新时间 `2024-01-02 09:36:20`
+ */
+export interface PostApiCoreDonorCallbackRequest {
+  callbackBatchNoes?: string[];
+}
+
+/**
+ * 接口 [回访批次确认↗](https://yapi.sharing8.cn/project/529/interface/api/32001) 的 **返回类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `POST /api/core/donor/callback`
+ * @更新时间 `2024-01-02 09:36:20`
+ */
+export type PostApiCoreDonorCallbackResponse = null;
+
 /* prettier-ignore-end */

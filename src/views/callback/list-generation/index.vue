@@ -1,13 +1,17 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
+      <template #planNo="{ record }">
+        <a-button type="link" @click="handlePlanNoClick(record)">
+          {{ record?.planNo }}
+        </a-button>
+      </template>
       <template #stationNo="{ record }">
         {{ formatStationNo(record) }}
       </template>
       <template #toolbar>
         <div class="flex gap-2">
           <a-button type="primary" @click="handleAdd"> 新增 </a-button>
-          <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
           <a-button type="primary" @click="handleDelete"> 撤销 </a-button>
         </div>
       </template>
@@ -15,13 +19,16 @@
 
     <SelectStationNameModal @register="registerSelectModal" @success="handleSelectSuccess" />
     <CallbackGenerationDrawer @register="registerGenerationDrawer" @success="handleSuccess" />
+    <CallbackDetailDrawer @register="registerCallbackDetailDrawer" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { useModal } from '@/components/Modal';
   import { useDrawer } from '@/components/Drawer';
+
   import CallbackGenerationDrawer from '@/views/callback/list-generation/CallbackGenerationDrawer.vue';
+  import CallbackDetailDrawer from '@/views/callback/list-generation/CallbackDetailDrawer.vue';
   import SelectStationNameModal from '@/views/callback/list-generation/SelectStationNameModal.vue';
 
   import { ref, onMounted } from 'vue';
@@ -52,6 +59,7 @@
   const [registerSelectModal, { openModal }] = useModal();
 
   const [registerGenerationDrawer, { openDrawer: openGenerationDrawer }] = useDrawer();
+  const [registerCallbackDetailDrawer, { openDrawer: openCallbackDetailDrawer }] = useDrawer();
 
   const [registerTable, { getForm, reload }] = useTable({
     title: '回访名单生成列表',
@@ -114,8 +122,6 @@
     });
   }
 
-  function handleEdit() {}
-
   function handleDelete() {}
 
   function handleSuccess() {
@@ -137,6 +143,13 @@
         })),
         stationNo: id,
       },
+    });
+  }
+
+  function handlePlanNoClick(record: Recordable) {
+    openCallbackDetailDrawer(true, {
+      ...record,
+      stationName: formatStationNo(record),
     });
   }
 </script>

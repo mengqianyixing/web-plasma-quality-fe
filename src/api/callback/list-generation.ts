@@ -1,5 +1,7 @@
 import { defHttp } from '@/utils/http/axios';
 import {
+  GetApiCoreDonorCallbackDetailRequest,
+  GetApiCoreDonorCallbackDetailResponse,
   GetApiCoreDonorCallbackNeedRequest,
   GetApiCoreDonorCallbackNeedResponse,
   GetApiCoreDonorCallbackRequest,
@@ -10,6 +12,7 @@ import { GetApiCoreStationResponse } from '@/api/type/stationManage';
 
 enum Api {
   CALLBACK_LIST = '/api/core/donor/callback',
+  CALLBACK_DETAIL = '/api/core/donor/callback/detail',
   STATION_NAME = '/api/core/station',
   GENERATE_CALLBACK = '/api/core/donor/callback/need',
 }
@@ -17,6 +20,17 @@ enum Api {
 export const getCallbackListApi = (params: GetApiCoreDonorCallbackRequest) =>
   defHttp.get<GetApiCoreDonorCallbackResponse>(
     { url: Api.CALLBACK_LIST, params },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+export const getCallbackDetail = (params: GetApiCoreDonorCallbackDetailRequest['batchNo']) =>
+  defHttp.get<GetApiCoreDonorCallbackDetailResponse>(
+    {
+      url: Api.CALLBACK_DETAIL,
+      params,
+    },
     {
       joinParamsToUrl: true,
     },
