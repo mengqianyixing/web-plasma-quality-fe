@@ -141,14 +141,11 @@ export const formSchema: FormSchema[] = [
   {
     field: 'orderWeight',
     label: '投浆重量(t)',
+    slot: 'orderWeight',
     component: 'InputNumber',
     colProps: { span: 12 },
+    helpMessage: '投浆重量支持两位小数',
     required: true,
-
-    componentProps: {
-      min: 0,
-      precision: 2,
-    },
   },
   {
     field: 'expiration',
