@@ -2,8 +2,8 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-29 16:53:43
- * @Description: 新建文件
+ * @LastEditTime: 2024-01-03 09:49:30
+ * @Description: 入库管理
  * @FilePath: \psms-fe\src\router\routes\modules\inbound-management\index.ts
  */
 import type { AppRouteModule } from '@/router/types';
@@ -14,6 +14,7 @@ const inboundmanagement: AppRouteModule = {
   path: '/inboundmanagement',
   name: 'Inboundmanagement',
   component: LAYOUT,
+  id: 93,
   meta: {
     orderNo: 10001,
     title: '入库管理',
@@ -23,7 +24,7 @@ const inboundmanagement: AppRouteModule = {
     {
       path: 'receiveplasma',
       name: 'Receiveplasma',
-      id: 9901,
+      id: 9301,
       meta: {
         title: '血浆接收',
       },
@@ -32,7 +33,7 @@ const inboundmanagement: AppRouteModule = {
     {
       path: 'acceptplasma',
       name: 'Acceptplasma',
-      id: 9902,
+      id: 9302,
       meta: {
         title: '血浆验收',
       },
@@ -40,11 +41,11 @@ const inboundmanagement: AppRouteModule = {
     },
     {
       path: 'sample-accept',
-      name: '样本接收',
+      name: 'SampleAccept',
       meta: {
         title: '样本接收',
       },
-      id: 9900,
+      id: 9303,
       component: () => import('@/views/inbound-management/sample-receive/index.vue'),
     },
     // {
@@ -52,7 +53,7 @@ const inboundmanagement: AppRouteModule = {
     //   name: '样本验收',
     //   meta: {
     //     title: '样本验收',
-    //     id: 9900,
+    //     id: 9304,
     //     component: () => import('@/views/inbound-management/sample-receive/index.vue'),
     //   },
     // },
