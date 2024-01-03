@@ -25,8 +25,9 @@
   import { BasicDrawer, useDrawer } from '@/components/Drawer';
   import { BasicForm, useForm } from '@/components/Form';
   import Login from '@/components/BusinessDrawer/login/index.vue';
-  import { ref } from 'vue';
+  import { ref, nextTick } from 'vue';
   import { getCheckItemDtListApi, updateTiterCheckApi } from '@/api/inspect/resultRegistration';
+  import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
 
   const open = ref(false);
   const props = defineProps({
@@ -49,15 +50,16 @@
   });
   let userData = {};
   const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerForm, { setFieldsValue, validate }] = useForm({
+  const [registerForm, { setFieldsValue, validate, updateSchema }] = useForm({
     labelWidth: 80,
     baseColProps: { span: 24 },
     schemas: [
       {
         required: true,
         field: 'conclusion',
-        component: 'Input',
+        component: 'Select',
         label: '效价结果',
+        componentProps: {},
       },
       {
         required: true,
@@ -101,7 +103,7 @@
     showTableSetting: false,
     bordered: true,
     isCanResizeParent: true,
-    rowSelection: props.checkResult ? { type: 'checkbox' } : void 0,
+    rowSelection: props.checkResult ? { type: 'radio' } : void 0,
     beforeFetch: (p) => ({ ...p, projectId: props.projectId, bsNo: props.bsNo, type: props.type }),
     afterFetch: (res) => {
       clearSelectedRowKeys();
@@ -112,23 +114,39 @@
     const { conclusion, reason } = (await validate()) as any;
     const { username, userId } = userData as any;
     const [row] = getSelectRows();
-    await updateTiterCheckApi([
-      {
-        conclusion,
-        reason,
-        checker: userId,
-        checkeName: username,
-        bsNo: props.bsNo,
-        sampleId: row.sampleId,
-      },
-    ]);
+    await updateTiterCheckApi({
+      reason,
+      checkeName: username,
+      conclusion,
+      checker: userId,
+      bsNo: props.bsNo,
+      sampleId: row.sampleId,
+    });
     reload();
     openDrawer(false);
   }
-  function handleEdit() {
+  async function handleEdit() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
+    const [row] = rows;
     openDrawer(true);
+    await nextTick();
+    updateSchema({
+      field: 'conclusion',
+      componentProps: {
+        options: [
+          {
+            label: PLASMA_TYPE_TEXT[row.plasmaType] + '高效价',
+            value: PLASMA_TYPE_TEXT[row.plasmaType] + '高效价',
+          },
+          {
+            label: PLASMA_TYPE_TEXT[row.plasmaType] + '低效价',
+            value: PLASMA_TYPE_TEXT[row.plasmaType] + '低效价',
+          },
+          { label: '合格普通浆', value: '合格普通浆' },
+        ],
+      },
+    });
   }
   function cancel() {
     open.value = false;

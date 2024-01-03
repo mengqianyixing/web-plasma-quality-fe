@@ -1,3 +1,4 @@
+/** 血浆类型 */
 export enum PLASMA_TYPE {
   N = 'N',
   B = 'B',

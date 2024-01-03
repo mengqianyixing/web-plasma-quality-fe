@@ -17,11 +17,22 @@
           {{ record.projectAbbr }}
         </span>
       </template>
+      <template #methodAbbr="{ record }: { record: Recordable }">
+        {{ methodMap.get(record.methodAbbr) }}
+      </template>
     </BasicTable>
     <DtDrawer @register="registerDtDrawer" />
-    <NotCheck @register="registerNotCheckDrawer" @confirm="reload" />
-    <ImportDrawer @register="registerImportDrawer" />
-    <EnterRusult @register="registerEnterDrawer" @confirm="reload" />
+    <NotCheck
+      @register="registerNotCheckDrawer"
+      @close="reload"
+      @confirm="openNotCheckDrawer(false)"
+    />
+    <ImportDrawer @register="registerImportDrawer" @close="reload" />
+    <EnterRusult
+      @register="registerEnterDrawer"
+      @close="reload"
+      @confirm="openEnterDrawer(false)"
+    />
   </div>
 </template>
 <script setup lang="ts">
@@ -34,12 +45,16 @@
   import { useDrawer } from '@/components/Drawer';
   import { getTiterListApi } from '@/api/inspect/resultRegistration';
   import { watch, nextTick, onMounted, ref } from 'vue';
+  import { message } from 'ant-design-vue';
+  import { getInspectMethodListApi } from '@/api/inspect/inspectMethod';
 
   const emit = defineEmits(['reload']);
   const props = defineProps({
     bsNo: { type: String, default: '' },
   });
   const options = ref<any[]>([]);
+  const methodMap = ref(new Map());
+
   watch(
     () => props.bsNo,
     async (value) => {
@@ -73,25 +88,35 @@
     rowSelection: { type: 'checkbox' },
     beforeFetch: (p) => ({ ...p, bsNo: props.bsNo }),
     afterFetch: (data) => {
+      options.value.splice(0, options.value.length);
       options.value.push(...data.map((_) => ({ label: _.projectAbbr, value: _.projectId })));
       return data;
     },
   });
   function handleDt(record: Recordable) {
-    console.log(record);
-    openDtDrawer(true, {});
+    openDtDrawer(true, { ...record, bsNo: props.bsNo });
   }
   function handleImport() {
-    openImportDrawer(true, {});
+    const rows = getSelectRows();
+    if (rows.length === 0) return message.warning('请选择一条数据');
+    if (rows.length > 1) return message.warning('只能选择一条数据');
+    openImportDrawer(true, { ...rows[0], bsNo: props.bsNo });
   }
   function handleNotCheck() {
     const projectIds = getSelectRows().map((_) => _.projectId);
     openNotCheckDrawer(true, { projectIds, bsNo: props.bsNo, options: options.value });
   }
   function handleEnter() {
-    openEnterDrawer(true, {});
+    const rows = getSelectRows();
+    if (rows.length === 0) return message.warning('请选择一条数据');
+    if (rows.length > 1) return message.warning('只能选择一条数据');
+    openEnterDrawer(true, { ...rows[0], bsNo: props.bsNo });
   }
-  onMounted(() => {
+  onMounted(async () => {
     emit('reload', reload, '2');
+    const res = await getInspectMethodListApi();
+    res.forEach((_) => {
+      methodMap.value.set(_.value, _.label);
+    });
   });
 </script>

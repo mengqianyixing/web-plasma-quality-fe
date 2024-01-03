@@ -1,10 +1,18 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: zcc
+ * @Date: 2024-01-02 13:43:33
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-02 17:43:12
+ */
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { getDictItemListByNoApi } from '@/api/dictionary';
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 
 export const cellList = [
   {
-    field: 'stationNo',
+    field: 'stationName',
     label: '采浆公司',
   },
   {
@@ -12,7 +20,7 @@ export const cellList = [
     label: '样品批号',
   },
   {
-    field: 'sampleCode',
+    field: 'sampleTypeName',
     label: '样品类型',
   },
   {
@@ -36,11 +44,12 @@ export const batchColumns: BasicColumn[] = [
   },
   {
     title: '采浆公司',
-    dataIndex: 'stationNo',
+    dataIndex: 'stationName',
   },
   {
     title: '样品类型',
     dataIndex: 'sampleCode',
+    slots: { customRender: 'sampleCode' },
   },
   {
     title: '样品总数',
@@ -65,7 +74,7 @@ export const batchColumns: BasicColumn[] = [
 ];
 export const batchSearchScheam: FormSchema[] = [
   {
-    field: '采浆公司',
+    field: 'stationNo',
     component: 'ApiSelect',
     label: '采浆公司',
     componentProps: {
@@ -75,7 +84,7 @@ export const batchSearchScheam: FormSchema[] = [
     },
   },
   {
-    field: '样品类型',
+    field: 'sampleCode',
     component: 'ApiSelect',
     label: '样品类型',
     componentProps: {
@@ -90,7 +99,7 @@ export const batchSearchScheam: FormSchema[] = [
     },
   },
   {
-    field: '样品批号',
+    field: 'bsNo',
     component: 'Input',
     label: '样品批号',
   },

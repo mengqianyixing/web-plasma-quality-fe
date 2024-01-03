@@ -17,10 +17,21 @@
           {{ record.projectAbbr }}
         </span>
       </template>
+      <template #methodAbbr="{ record }: { record: Recordable }">
+        {{ methodMap.get(record.methodAbbr) }}
+      </template>
     </BasicTable>
     <DtDrawer @register="registerDtDrawer" />
-    <NotCheck @register="registerNotCheckDrawer" @confirm="reload" />
-    <UnqualifiedDrawer @register="registerUnqDrawer" @confirm="reload" />
+    <NotCheck
+      @register="registerNotCheckDrawer"
+      @close="reload"
+      @confirm="openNotCheckDrawer(false)"
+    />
+    <UnqualifiedDrawer
+      @register="registerUnqDrawer"
+      @close="reload"
+      @confirm="openUnqDrawer(false)"
+    />
   </div>
 </template>
 <script setup lang="ts">
@@ -33,8 +44,11 @@
   import { message, Modal } from 'ant-design-vue';
   import { watch, nextTick, onMounted, ref } from 'vue';
   import { getCheckListApi, removeCheckApi } from '@/api/inspect/resultRegistration';
+  import { getInspectMethodListApi } from '@/api/inspect/inspectMethod';
 
   const emit = defineEmits(['reload']);
+  const methodMap = ref(new Map());
+
   const props = defineProps({
     bsNo: { type: String, default: '' },
   });
@@ -72,6 +86,7 @@
     size: 'small',
     rowSelection: { type: 'checkbox' },
     afterFetch: (data) => {
+      options.value.splice(0, options.value.length);
       options.value.push(...data.map((_) => ({ label: _.projectAbbr, value: _.projectId })));
       return data;
     },
@@ -91,7 +106,7 @@
     });
   }
   function handleDt(row: Recordable) {
-    openDtDrawer(true, { ...row });
+    openDtDrawer(true, { ...row, bsNo: props.bsNo });
   }
   function handleNotCheck() {
     const projectIds = getSelectRows().map((_) => _.projectId);
@@ -100,9 +115,13 @@
   function handleUnq() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
-    openUnqDrawer(true, { ...rows[0] });
+    openUnqDrawer(true, { ...rows[0], bsNo: props.bsNo });
   }
-  onMounted(() => {
+  onMounted(async () => {
     emit('reload', reload, '1');
+    const res = await getInspectMethodListApi();
+    res.forEach((_) => {
+      methodMap.value.set(_.value, _.label);
+    });
   });
 </script>

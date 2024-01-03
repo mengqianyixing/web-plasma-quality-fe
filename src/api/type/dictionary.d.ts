@@ -394,7 +394,7 @@ export interface GetApiSysDictItemDictItemIdResponse {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dictionaryItems`
- * @更新时间 `2023-12-26 11:28:45`
+ * @更新时间 `2024-01-02 15:54:30`
  */
 export type PostApiSysDictionaryItemsRequest = string[];
 
@@ -403,12 +403,12 @@ export type PostApiSysDictionaryItemsRequest = string[];
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dictionaryItems`
- * @更新时间 `2023-12-26 11:28:45`
+ * @更新时间 `2024-01-02 15:54:30`
  */
 export type PostApiSysDictionaryItemsResponse = {
   dictNo: string;
   dictImtes?: {
-    lable: string;
+    label: string;
     value: string;
   }[];
 }[];

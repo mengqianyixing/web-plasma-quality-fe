@@ -19,9 +19,16 @@
           size="small"
           @click="registration"
           :disabled="!bsNo"
+          :loading="registrationLoading"
           >登记完成</a-button
         >
-        <a-button type="primary" size="small" @click="unRegistration" :disabled="!bsNo">
+        <a-button
+          type="primary"
+          size="small"
+          @click="unRegistration"
+          :loading="unregistrationLoading"
+          :disabled="!bsNo"
+        >
           撤销登记
         </a-button>
       </div>
@@ -52,7 +59,7 @@
   import { PageWrapper } from '@/components/Page';
   import { CellWapper, Cell } from '@/components/CellWapper';
   import { cellList } from './resultRegistration.data';
-  import { TabPane, Tabs, Modal } from 'ant-design-vue';
+  import { TabPane, Tabs, Modal, message } from 'ant-design-vue';
   import { ref, unref } from 'vue';
   import CheckPage from './check/index.vue';
   import TiterPage from './titer/index.vue';
@@ -64,9 +71,12 @@
     submitRegistrationApi,
     sumbitRevokeRegistrationApi,
   } from '@/api/inspect/resultRegistration';
+  import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
 
   const activeKey = ref('1');
   const bsNo = ref('');
+  const registrationLoading = ref(false);
+  const unregistrationLoading = ref(false);
   const rowData = ref({});
   const countData = ref({});
   const plasmaCellList = ref<Cell[]>([]);
@@ -81,7 +91,7 @@
   function handleAddItem() {
     openCIDrawer(true, { bsNo: unref(bsNo) });
   }
-  async function confirm([row]) {
+  async function confirm(row: Recordable) {
     bsNo.value = row.bsNo;
     rowData.value = row;
     openDrawer(false);
@@ -91,7 +101,7 @@
       data: {},
     };
     const { list, data } = res.reduce((t, row, i) => {
-      t.list.push({ field: i.toString(), label: row.plasmaType });
+      t.list.push({ field: i.toString(), label: PLASMA_TYPE_TEXT[row.plasmaType] });
       t.data[i] = row.count;
       return t;
     }, initValue);
@@ -99,14 +109,28 @@
     plasmaCellList.value = list;
   }
   function registration() {
-    submitRegistrationApi({ bsNo: bsNo.value });
+    registrationLoading.value = true;
+    submitRegistrationApi({ bsNo: bsNo.value })
+      .then(() => {
+        message.success('登记成功');
+      })
+      .finally(() => {
+        registrationLoading.value = false;
+      });
   }
+
   function unRegistration() {
     Modal.confirm({
       content: '确认撤销' + bsNo.value + '?',
       onOk: async () => {
-        await sumbitRevokeRegistrationApi({ bsNo: bsNo.value });
-        confirm([rowData.value]);
+        try {
+          unregistrationLoading.value = true;
+          await sumbitRevokeRegistrationApi({ bsNo: bsNo.value });
+          confirm(rowData.value);
+        } finally {
+          unregistrationLoading.value = false;
+          reloadMap.value.forEach((fn) => fn());
+        }
       },
       onCancel: () => Modal.destroyAll(),
     });

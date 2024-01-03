@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-27 15:34:55
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-28 11:32:05
+ * @LastEditTime: 2024-01-02 17:15:21
  */
 import { defHttp } from '@/utils/http/axios';
 import {
@@ -16,7 +16,6 @@ import {
   DeleteApiSysDictItemMethodDictItemIdResponse,
   PostApiSysDictItemMethodsRequest,
   PostApiSysDictItemMethodsResponse,
-  GetApiSysDictItemMethodsRequest,
   GetApiSysDictItemMethodsResponse,
   GetApiSysDictItemMethodDictItemIdRequest,
   GetApiSysDictItemMethodDictItemIdResponse,
@@ -34,8 +33,8 @@ export const getListApi = (data: PostApiSysDictItemMethodsRequest) =>
     data: { ...data, dataDictId: 'labMethod' },
   });
 
-export const getInspectMethodListApi = (data: GetApiSysDictItemMethodsRequest) =>
-  defHttp.get<GetApiSysDictItemMethodsResponse>({ url: Api.LIST, data });
+export const getInspectMethodListApi = () =>
+  defHttp.get<GetApiSysDictItemMethodsResponse>({ url: Api.LIST });
 
 export const addInspectMethodApi = (data: PostApiSysDictItemMethodRequest) =>
   defHttp.post<PostApiSysDictItemMethodResponse>({

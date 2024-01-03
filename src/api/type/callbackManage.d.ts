@@ -217,13 +217,15 @@ export type PostApiCoreDonorCallbackNeedResponse = null;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-02 10:57:44`
+ * @更新时间 `2024-01-02 17:05:16`
  */
 export interface GetApiCoreDonorCallbackDetailRequest {
   /**
    * 回访批次号
    */
   batchNo: string;
+  pageSize: string;
+  currPage: string;
 }
 
 /**
@@ -231,7 +233,7 @@ export interface GetApiCoreDonorCallbackDetailRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-02 10:57:44`
+ * @更新时间 `2024-01-02 17:05:16`
  */
 export interface GetApiCoreDonorCallbackDetailResponse {
   totalCount?: number;
@@ -329,5 +331,25 @@ export interface PostApiCoreDonorCallbackRequest {
  * @更新时间 `2024-01-02 09:36:20`
  */
 export type PostApiCoreDonorCallbackResponse = null;
+
+/**
+ * 接口 [回访名单撤销↗](https://yapi.sharing8.cn/project/529/interface/api/32004) 的 **请求类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `DELETE /api/core/donor/callback`
+ * @更新时间 `2024-01-02 14:50:09`
+ */
+export interface DeleteApiCoreDonorCallbackRequest {
+  callbackBatchNoes?: string[];
+}
+
+/**
+ * 接口 [回访名单撤销↗](https://yapi.sharing8.cn/project/529/interface/api/32004) 的 **返回类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `DELETE /api/core/donor/callback`
+ * @更新时间 `2024-01-02 14:50:09`
+ */
+export type DeleteApiCoreDonorCallbackResponse = null;
 
 /* prettier-ignore-end */

@@ -3,11 +3,11 @@
     v-bind="$attrs"
     @register="registerDrawer"
     showFooter
-    title="详情"
+    :title="projectName + '详情'"
     width="800px"
     @close="close"
+    cancelText="关闭"
     :show-ok-btn="false"
-    :cancel-button-props="{ text: '关闭' }"
   >
     <Tabs v-model:activeKey="activeKey" @change="change" class="h-full bg-white tabs" size="small">
       <TabPane key="1" tab="合格样品">
@@ -51,6 +51,7 @@
   const activeKey = ref('1');
   const pid = ref('');
   const bsno = ref('');
+  const projectName = ref('');
   const checkType = ref('2');
   const componentMap = ref({
     1: 'div',
@@ -59,6 +60,7 @@
   });
 
   const [registerDrawer] = useDrawerInner(async ({ projectId, projectAbbr, bsNo }) => {
+    projectName.value = projectAbbr;
     pid.value = projectId;
     bsno.value = bsNo;
     componentMap.value['1'] = markRaw(DtTable as any);

@@ -5,8 +5,14 @@
     showFooter
     title="未检测"
     width="400px"
-    @ok="handleSubmit"
+    cancelText="关闭"
+    okText="提交&关闭"
+    @close="emit('close')"
+    @ok="handleSubmit(true)"
   >
+    <template #appendFooter>
+      <a-button type="primary" @click="handleSubmit(false)" :loading="loading">提交&继续</a-button>
+    </template>
     <BasicForm @register="registerForm" />
     <CellWapper :data="{}" cell-width="50%" :cell-list="cellList" :gap="0" />
   </BasicDrawer>
@@ -17,8 +23,9 @@
   import { CellWapper } from '@/components/CellWapper';
   import { ref, unref } from 'vue';
   import { submitNotCheckApi, getDonorApi } from '@/api/inspect/resultRegistration';
+  import { message } from 'ant-design-vue';
 
-  const emit = defineEmits(['confirm']);
+  const emit = defineEmits(['close', 'confirm']);
 
   const cellList = [
     {
@@ -40,19 +47,22 @@
   ];
   const bsno = ref('');
   const donorData = ref({});
+  const loading = ref(false);
 
-  const [registerDrawer] = useDrawerInner(async ({ projectIds, bsNo, options }) => {
-    bsno.value = bsNo;
-    updateSchema({
-      field: 'projectIds',
-      componentProps: {
-        options: options,
-        mode: 'multiple',
-      },
-    });
-    setFieldsValue({ projectIds });
-    clearValidate();
-  });
+  const [registerDrawer, { setDrawerProps }] = useDrawerInner(
+    async ({ projectIds, bsNo, options }) => {
+      bsno.value = bsNo;
+      updateSchema({
+        field: 'projectIds',
+        componentProps: {
+          options: options,
+          mode: 'multiple',
+        },
+      });
+      setFieldsValue({ projectIds });
+      clearValidate();
+    },
+  );
   const [registerForm, { updateSchema, setFieldsValue, clearValidate, validate }] = useForm({
     labelWidth: 80,
     baseColProps: { span: 24 },
@@ -82,9 +92,22 @@
     ],
     showActionButtonGroup: false,
   });
-  async function handleSubmit() {
-    const { sampleId } = await validate();
-    await submitNotCheckApi({ sampleId, bsNo: unref(bsno) });
-    emit('confirm');
+  async function handleSubmit(close: boolean) {
+    const { sampleId, projectIds } = await validate();
+    try {
+      setDrawerProps({ confirmLoading: true });
+      loading.value = true;
+      await submitNotCheckApi({ sampleId, bsNo: unref(bsno), projectIds });
+      message.success(sampleId + '登记成功');
+      if (close === false) {
+        setFieldsValue({ sampleId: '' });
+        clearValidate();
+      } else {
+        emit('confirm');
+      }
+    } finally {
+      loading.value = false;
+      setDrawerProps({ confirmLoading: false });
+    }
   }
 </script>

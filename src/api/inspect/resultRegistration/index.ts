@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-25 16:41:07
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-02 13:42:48
+ * @LastEditTime: 2024-01-03 15:01:40
  */
 import { defHttp } from '@/utils/http/axios';
 import {
@@ -38,6 +38,8 @@ import {
   PutApiCoreLabRegistrationLabItemTiterResponse,
   GetApiCoreLabRegistrationDonorSampleIdRequest,
   GetApiCoreLabRegistrationDonorSampleIdResponse,
+  PostApiCoreLabRegistrationTiterUploadRequest,
+  PostApiCoreLabRegistrationTiterUploadResponse,
 } from '@/api/type/inspectManage';
 
 enum Api {
@@ -63,7 +65,13 @@ enum Api {
   CHECK_ITEM_DT_LIST = '/api/core/lab/registration/labItems',
 
   DONOR = '/api/core/lab/registration/donor/',
+
+  IMPORT = '/api/core/lab/registration/titer/upload',
 }
+
+export const uploadItemTiter = (data: PostApiCoreLabRegistrationTiterUploadRequest) =>
+  defHttp.uploadFile<PostApiCoreLabRegistrationTiterUploadResponse>({ url: Api.IMPORT }, data);
+
 export const getDonorApi = ({ sampleId }: GetApiCoreLabRegistrationDonorSampleIdRequest) =>
   defHttp.get<GetApiCoreLabRegistrationDonorSampleIdResponse>({ url: Api.DONOR + sampleId });
 

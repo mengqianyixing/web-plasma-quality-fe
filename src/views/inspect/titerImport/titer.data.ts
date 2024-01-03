@@ -121,3 +121,30 @@ export const dtDrwaerColumns: BasicColumn[] = [
     dataIndex: '',
   },
 ];
+
+export const cellList = [
+  {
+    field: 'filename',
+    label: '文件名称',
+  },
+  {
+    field: 'username',
+    label: '上传用户',
+  },
+  {
+    field: 'uploadAt',
+    label: '上传日期',
+  },
+  {
+    field: 'count',
+    label: '数据总数',
+  },
+  {
+    field: 'successCount',
+    label: '保存成功总数',
+  },
+  {
+    field: 'faildCount',
+    label: '保存失败总数',
+  },
+];
