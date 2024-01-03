@@ -6,11 +6,7 @@
     @ok="handleSubmit"
     width="700px"
   >
-    <BasicForm @register="registerForm">
-      <template #orderWeight>
-        <a-input-number :min="0" @change="handleNumberInput" :value="orderWeightValue" />
-      </template>
-    </BasicForm>
+    <BasicForm @register="registerForm" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -18,7 +14,6 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { formSchema } from './po.data';
-  import { InputNumber } from 'ant-design-vue';
 
   import { addProOrder, editProOrder } from '@/api/stockout/production-order';
   import {
@@ -26,14 +21,13 @@
     PutApiProductOrderRequest,
   } from '@/api/type/productionOrder';
 
-  const AInputNumber = InputNumber;
   defineOptions({ name: 'DeptModal' });
 
   const emit = defineEmits(['success', 'register']);
 
   const isUpdate = ref(true);
   const orderNo = ref('');
-  const [registerForm, { resetFields, setFieldsValue, validate, validateFields }] = useForm({
+  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
     labelWidth: 120,
     baseColProps: { span: 48 },
     schemas: formSchema,
@@ -43,7 +37,7 @@
     },
   });
 
-  const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
+  const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
     resetFields();
     setModalProps({ confirmLoading: false });
     isUpdate.value = !!data?.isUpdate;
@@ -72,12 +66,5 @@
     } finally {
       setModalProps({ confirmLoading: false });
     }
-  }
-
-  const orderWeightValue = ref('');
-  async function handleNumberInput(value: string | number) {
-    if (!value) await validateFields(['orderWeight']);
-    orderWeightValue.value = value ? Number(value).toFixed(2) : '';
-    setFieldsValue({ orderWeight: orderWeightValue.value ? Number(orderWeightValue.value) : '' });
   }
 </script>
