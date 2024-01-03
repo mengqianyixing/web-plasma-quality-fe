@@ -36,12 +36,16 @@
                 label: '历史',
                 onClick: handleHistory.bind(null, record),
               },
+              {
+                label: '预览',
+                onClick: handleStylePreview.bind(null, record),
+              },
             ]"
           />
         </template>
       </template>
     </BasicTable>
-
+    <HistoryStylePreviewModal @register="registerPreviewModal" />
     <StyleDrawer @register="registerStyleDrawer" @success="handleSuccess" />
     <StyleHistoryDrawer @register="registerStyleHistoryDrawer" @success="handleSuccess" />
   </div>
@@ -50,17 +54,20 @@
   import { BasicTable, useTable, TableAction } from '@/components/Table';
 
   import { columns, searchFormSchema } from './style.data';
+  import { useModal } from '@/components/Modal';
 
   import { onMounted, ref } from 'vue';
 
-  import { copyStyle, deleteStyle, getTagsList } from '@/api/tag/manage';
+  import { copyStyle, deleteStyle, getTagsList, getStylePreview } from '@/api/tag/manage';
   import { useDrawer } from '@/components/Drawer';
 
   import StyleDrawer from './StyleDrawer.vue';
   import StyleHistoryDrawer from './StyleHistoryDrawer.vue';
+  import HistoryStylePreviewModal from './HistoryStylePreviewModal.vue';
 
   import { getTagDictionary } from '@/api/tag/encoding';
   import { TagDictionaryType } from '@/enums/dictionaryEnum';
+  import { PostApiSysTagPreviewRequest } from '@/api/type/tagManage';
 
   defineOptions({ name: 'TagStyle' });
 
@@ -86,6 +93,7 @@
   const [registerStyleDrawer, { openDrawer: openStyleDrawer }] = useDrawer();
   const [registerStyleHistoryDrawer, { openDrawer: openStyleHistoryDrawer }] = useDrawer();
 
+  const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
   const [registerTable, { reload, getForm }] = useTable({
     title: '标签样式列表',
     api: getTagsList,
@@ -143,6 +151,25 @@
   async function handleDelete(record: Recordable) {
     await deleteStyle(record.tagNo);
     reload();
+  }
+
+  async function handleStylePreview(record: Recordable) {
+    console.log(record);
+    // record.resolution = 203;
+    const res = await getStylePreview({
+      content: record.content,
+      resolution: record.resolution,
+      tagName: record.tagName,
+      labelType: record.labelType,
+      times: record.times,
+      printerType: record.printerType,
+      printerName: record.printerName,
+      patternPicture: record.patternPicture,
+      state: record.state,
+    } as PostApiSysTagPreviewRequest);
+    openPreviewModal(true, {
+      record: res,
+    });
   }
 
   function handleSuccess() {
