@@ -11,6 +11,8 @@
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { computed, ref, unref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
+  import { useMessage } from '@/hooks/web/useMessage';
+
   import {
     callbackDrawerSearchFromSchema,
     callbackDrawerColumns,
@@ -102,15 +104,26 @@
     }
   });
 
-  async function handleSelect() {
-    const orginDonorNos = getRawDataSource().donorNos;
-    await generateCallback({
-      stationNo: stationNo.value,
-      donorNos: xor(orginDonorNos, cacheDonorNos.value),
-    });
+  const { createConfirm } = useMessage();
 
-    cacheDonorNos.value = [];
-    emit('success');
-    closeDrawer();
+  async function handleSelect() {
+    const originDonorNos = getRawDataSource().donorNos;
+    const callbackDonorNos = xor(originDonorNos, cacheDonorNos.value);
+
+    createConfirm({
+      title: '确认',
+      content: `名单共有${callbackDonorNos.length}位浆员待回访，确认生成吗？`,
+      iconType: 'warning',
+      onOk: async () => {
+        await generateCallback({
+          stationNo: stationNo.value,
+          donorNos: callbackDonorNos,
+        });
+
+        cacheDonorNos.value = [];
+        emit('success');
+        closeDrawer();
+      },
+    });
   }
 </script>

@@ -1,5 +1,10 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { CallbackStateMap, CallbackStateValueEnum } from '@/enums/callbackEnum';
+import {
+  CallbackStateMap,
+  CallbackStateValueEnum,
+  donorStatusMap,
+  donorStatusValueEnum,
+} from '@/enums/callbackEnum';
 import { PLASMA_TYPE_LIST } from '@/enums/inspectEnum';
 import dayjs from 'dayjs';
 
@@ -38,6 +43,7 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'state',
+    fixed: 'right',
     format(text) {
       return CallbackStateMap.get(text as CallbackStateValueEnum) as string;
     },
@@ -132,10 +138,16 @@ export const callbackDetailDrawerColumns: BasicColumn[] = [
   {
     title: '浆员状态',
     dataIndex: 'donatorStatus',
+    format: (text) => {
+      return donorStatusMap.get(text as donorStatusValueEnum) as string;
+    },
   },
   {
     title: '拒绝日期',
     dataIndex: 'refuseDate',
+    format: (text) => {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
+    },
   },
   {
     title: '拒绝原因',

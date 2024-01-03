@@ -11,9 +11,7 @@
       </template>
       <template #toolbar>
         <div class="flex gap-2">
-          <a-button type="primary" @click="handleAdd"> 新增 </a-button>
-          <a-button type="primary" @click="handleDelete"> 撤销 </a-button>
-          <a-button type="primary" @click="handleExport" :loading="exportLoading"> 导出 </a-button>
+          <a-button type="primary" @click="handleConfirm">确认</a-button>
         </div>
       </template>
     </BasicTable>
@@ -28,7 +26,6 @@
   import { useModal } from '@/components/Modal';
   import { useDrawer } from '@/components/Drawer';
   import { useMessage } from '@/hooks/web/useMessage';
-  import { jsonToSheetXlsx } from '@/components/Excel';
 
   import CallbackGenerationDrawer from '@/views/callback/list-generation/CallbackGenerationDrawer.vue';
   import CallbackDetailDrawer from '@/views/callback/list-generation/CallbackDetailDrawer.vue';
@@ -36,17 +33,12 @@
 
   import { ref, onMounted } from 'vue';
 
-  import { columns, searchFormSchema } from './generation.data';
+  import { columns, searchFormSchema } from './confirm.data';
 
   import { PageWrapper } from '@/components/Page';
-  import {
-    deleteCallback,
-    getCallbackDetail,
-    getCallbackListApi,
-    stationNameList,
-  } from '@/api/callback/list-generation';
-  import { CallbackStateMap, donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
-  import dayjs from 'dayjs';
+  import { getCallbackListApi, stationNameList } from '@/api/callback/list-generation';
+  import { CallbackStateMap } from '@/enums/callbackEnum';
+  import { callbackConfirm } from '@/api/callback/list-confirm';
 
   defineOptions({ name: 'CallbackListGeneration' });
 
@@ -68,12 +60,12 @@
     });
   });
 
-  const [registerSelectModal, { openModal }] = useModal();
+  const [registerSelectModal] = useModal();
 
   const [registerGenerationDrawer, { openDrawer: openGenerationDrawer }] = useDrawer();
   const [registerCallbackDetailDrawer, { openDrawer: openCallbackDetailDrawer }] = useDrawer();
 
-  const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
+  const [registerTable, { getForm, reload }] = useTable({
     title: '回访名单生成列表',
     api: getCallbackListApi,
     columns,
@@ -111,18 +103,7 @@
     canResize: false,
   });
 
-  function handleAdd() {
-    openModal(true, {
-      record: {
-        options: stationNames.value.map((it) => ({
-          label: it.stationName,
-          value: it.stationNo,
-        })),
-      },
-    });
-  }
-
-  async function handleDelete() {
+  async function handleConfirm() {
     if (!selectedRow.value.length) {
       createMessage.warn('请选择要撤销的名单');
       return;
@@ -130,65 +111,15 @@
 
     createConfirm({
       title: '确认',
-      content: '确认撤消名单吗？？',
+      content: '名单确认后，会实时下发到各采浆公司，确认操作吗？',
       iconType: 'warning',
       onOk: async () => {
-        await deleteCallback({
+        await callbackConfirm({
           callbackBatchNoes: selectedRow.value.map((it) => it.planNo),
         });
         await reload();
       },
     });
-  }
-
-  const exportLoading = ref(false);
-  async function handleExport() {
-    if (!selectedRow.value.length) {
-      createMessage.warn('请选择要导出的名单');
-      return;
-    }
-
-    exportLoading.value = true;
-    try {
-      const exportData = await getCallbackDetail({
-        currPage: '1',
-        pageSize: '999',
-        batchNo: selectedRow.value[0].planNo,
-      });
-
-      const _exportData = exportData.result!.map((it) => {
-        return {
-          donorNo: it.donorNo,
-          donorName: it.donorName,
-          donatorStatus: donorStatusMap.get(it.donatorStatus as donorStatusValueEnum),
-          minCollTime: it.minCollTime ? dayjs(it.minCollTime).format('YYYY-MM-DD') : '',
-          maxCollectTime: it.maxCollectTime ? dayjs(it.maxCollectTime).format('YYYY-MM-DD') : '',
-          refuseDate: it.refuseDate ? dayjs(it.refuseDate).format('YYYY-MM-DD') : '',
-          refuseReason: it.refuseReason,
-        };
-      });
-
-      jsonToSheetXlsx({
-        header: {
-          donorNo: '浆员编号',
-          minCollTime: '采浆日期',
-          maxCollectTime: '最后采浆日期',
-          donorName: '浆员姓名',
-          donatorStatus: '浆员状态',
-          refuseDate: '拒绝日期',
-          refuseReason: '拒绝原因',
-        },
-        filename: `回访名单${selectedRow.value[0].planNo}-${dayjs().format('YYYY-MM-DD')}.xlsx`,
-        data: _exportData,
-      });
-
-      createMessage.success('导出成功');
-      clearSelectedRowKeys();
-    } catch (e) {
-      createMessage.error('导出失败，请重试 :(');
-    } finally {
-      exportLoading.value = false;
-    }
   }
 
   function handleSuccess() {

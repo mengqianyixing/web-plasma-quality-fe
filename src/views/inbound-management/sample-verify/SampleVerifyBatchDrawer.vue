@@ -17,12 +17,12 @@
   import { PageWrapper } from '@/components/Page';
   import { ref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
-  import { getSampleReceiveList } from '@/api/inbound-management/sample-receive';
   import {
-    sampleAcceptColumns,
+    sampleVerifyColumns,
     searchFormSchema,
-  } from '@/views/inbound-management/sample-receive/receive.data';
+  } from '@/views/inbound-management/sample-verify/verify.data';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { getSampleVerifyList } from '@/api/inbound-management/sample-verify';
   import { sampleTypeEnum } from '@/enums/sampleEnum';
 
   const emit = defineEmits(['success', 'register']);
@@ -32,9 +32,9 @@
   const { warning } = createMessage;
 
   const [registerTable, { reload, setSelectedRowKeys }] = useTable({
-    title: '样本批次列表',
-    api: getSampleReceiveList,
-    columns: sampleAcceptColumns,
+    title: '样本验收批次列表',
+    api: getSampleVerifyList,
+    columns: sampleVerifyColumns,
     formConfig: {
       labelWidth: 120,
       schemas: searchFormSchema,
@@ -57,8 +57,12 @@
           return;
         }
 
-        if (keys.length === 1 && selectedRows[0].sampleType !== sampleTypeEnum.CallbackSample) {
-          warning('只能选择回访样本批次');
+        if (
+          keys.length === 1 &&
+          selectedRows[0].sampleType !== sampleTypeEnum.CallbackSample &&
+          selectedRows[0].sampleType !== sampleTypeEnum.PlasmaSample
+        ) {
+          warning('只能选择回访样本批次或血浆样本批次');
 
           setSelectedRowKeys(selectedRow.value.map((it) => it.key));
 
