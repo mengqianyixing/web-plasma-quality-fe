@@ -2,10 +2,10 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 
 export const columns: BasicColumn[] = [
   { title: '检测项目', dataIndex: 'projectAbbr', slots: { customRender: 'projectAbbr' } },
-  { title: '检测方法', dataIndex: 'methodAbbr' },
-  { title: '合格样品数', dataIndex: 'totalQualified' },
-  { title: '不合格样品数', dataIndex: 'totalUnqualified' },
-  { title: '未检出样品数', dataIndex: 'totalNotCheck' },
+  { title: '检测方法', dataIndex: 'methodAbbr', slots: { customRender: 'methodAbbr' } },
+  { title: '合格样品总数', dataIndex: 'totalQualified' },
+  { title: '不合格样品总数', dataIndex: 'totalUnqualified' },
+  { title: '未检测样品总数', dataIndex: 'totalNotCheck' },
 ];
 export const checkItemMappding = {
   TP: '1',

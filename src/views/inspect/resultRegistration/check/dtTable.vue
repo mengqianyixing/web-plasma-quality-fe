@@ -26,6 +26,14 @@
       type: String,
       default: '',
     },
+    type: {
+      type: String,
+      default: '',
+    },
+    bsNo: {
+      type: String,
+      default: '',
+    },
   });
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     immediate: true,
@@ -43,7 +51,7 @@
     showTableSetting: false,
     bordered: true,
     isCanResizeParent: true,
-    beforeFetch: (p) => ({ ...p, projectId: props.projectId, type: props.checkResult }),
+    beforeFetch: (p) => ({ ...p, projectId: props.projectId, type: props.type, bsNo: props.bsNo }),
     rowSelection: props.checkType ? { type: 'checkbox' } : void 0,
     afterFetch: (res) => {
       clearSelectedRowKeys();

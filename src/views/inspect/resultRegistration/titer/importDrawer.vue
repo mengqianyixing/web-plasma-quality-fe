@@ -4,14 +4,19 @@
  * @Author: zcc
  * @Date: 2023-12-29 15:52:07
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-29 17:16:42
+ * @LastEditTime: 2024-01-03 17:13:34
 -->
 <template>
-  <BasicDrawer v-bind="$attrs" @register="registerDrawer" title="效价导入" width="1200px">
+  <BasicDrawer
+    v-bind="$attrs"
+    @register="registerDrawer"
+    title="效价导入"
+    width="1200px"
+    @close="emit('close')"
+  >
     <div class="flex flex-col h-full">
-      <div class="title"
-        >导入汇总
-
+      <div class="title">
+        导入汇总
         <div class="float-right">
           <a-upload
             size="small"
@@ -29,14 +34,15 @@
             size="small"
             @click="uploadClick"
             :loading="loading"
+            :disabled="!hasFile"
             >开始上传</a-button
           >
-          <a-button type="primary" class="mr-10px" size="small" @click="downFile"
-            >下载模板</a-button
-          >
+          <a-button type="primary" class="mr-10px" size="small" @click="downFile">
+            <a href="/resource/file/效价导入.xls" download>下载模板</a>
+          </a-button>
         </div>
       </div>
-      <CellWapper :data="{}" cell-width="25%" :cell-list="cellList" :gap="0" />
+      <CellWapper :data="cellData" cell-width="33%" :cell-list="cellList" :gap="0" />
       <div class="flex-1 mt-8px">
         <div class="h-6/10">
           <BasicTable @register="registerTable" />
@@ -53,25 +59,41 @@
   import { CellWapper } from '@/components/CellWapper';
   import { importSuccessColumns, importFailColumns, cellList } from './data';
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
-  import { ref } from 'vue';
-  import { Upload as AUpload } from 'ant-design-vue';
-  import { defHttp } from '@/utils/http/axios';
+  import { ref, reactive } from 'vue';
+  import { Upload as AUpload, message } from 'ant-design-vue';
+  import { uploadItemTiter } from '@/api/inspect/resultRegistration';
+  import { PostApiCoreLabRegistrationTiterUploadResponse } from '@/api/type/inspectManage';
 
   const fileList = ref<File[]>([]);
   const loading = ref(false);
+  const pid = ref('');
+  const bsno = ref('');
+  const hasFile = ref(false);
+
+  const emit = defineEmits(['close']);
+
+  const cellData = ref<PostApiCoreLabRegistrationTiterUploadResponse['summary']>({
+    filename: '',
+    uploadAt: '',
+    username: '',
+    count: '',
+    successCount: '',
+    faildCount: '',
+  });
+  const dataSource = reactive<{
+    dataSaved: PostApiCoreLabRegistrationTiterUploadResponse['dataSaved'];
+    dataFaild: PostApiCoreLabRegistrationTiterUploadResponse['dataFaild'];
+  }>({
+    dataSaved: [],
+    dataFaild: [],
+  });
 
   defineOptions({ name: 'ImportDrawer' });
 
   const [registerTable] = useTable({
-    api: () => Promise.resolve({ result: [{}] }),
-    immediate: true,
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    rowKey: 'projectId',
+    dataSource: dataSource.dataSaved,
+    immediate: false,
+    pagination: false,
     columns: importSuccessColumns,
     size: 'small',
     useSearchForm: false,
@@ -80,34 +102,51 @@
     isCanResizeParent: true,
   });
   const [registerFailTable] = useTable({
-    api: () => Promise.resolve({ result: [{}] }),
-    immediate: true,
+    dataSource: dataSource.dataFaild,
+    immediate: false,
     isCanResizeParent: true,
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    rowKey: 'projectId',
     columns: importFailColumns,
     size: 'small',
+    pagination: false,
     useSearchForm: false,
     showTableSetting: false,
     bordered: true,
   });
-  const [registerDrawer] = useDrawerInner(() => {});
+  const [registerDrawer] = useDrawerInner(({ projectId, bsNo }) => {
+    pid.value = projectId;
+    bsno.value = bsNo;
+  });
 
-  function uploadClick() {
-    defHttp.uploadFile(
-      { url: 'http://192.168.1.14' },
-      { file: fileList.value[0], data: { test: '123' } },
-    );
+  async function uploadClick() {
+    try {
+      loading.value = true;
+      const res = await uploadItemTiter({
+        file: fileList.value[0],
+        data: { projectId: pid.value, bsNo: bsno.value },
+      } as any);
+      const { summary, dataSaved, dataFaild } = (res.data as any)
+        .data as PostApiCoreLabRegistrationTiterUploadResponse;
+      for (const key in cellData.value) {
+        if (key === 'filename') continue;
+        cellData.value[key] = summary[key];
+      }
+      dataSource.dataFaild.splice(0, dataSource.dataFaild.length, ...dataFaild);
+      dataSource.dataSaved.splice(0, dataSource.dataSaved.length, ...dataSaved);
+      message.success('导入成功');
+    } finally {
+      loading.value = false;
+      hasFile.value = false;
+    }
   }
   function downFile() {}
 
   const beforeUpload: (file: File) => boolean = (file) => {
     fileList.value = [file];
+    for (const key in cellData.value) {
+      cellData.value[key] = '';
+    }
+    cellData.value.filename = file.name;
+    hasFile.value = true;
     return false;
   };
 </script>

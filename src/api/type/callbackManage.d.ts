@@ -217,7 +217,7 @@ export type PostApiCoreDonorCallbackNeedResponse = null;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-02 16:56:34`
+ * @更新时间 `2024-01-02 17:05:16`
  */
 export interface GetApiCoreDonorCallbackDetailRequest {
   /**
@@ -233,7 +233,7 @@ export interface GetApiCoreDonorCallbackDetailRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-02 16:56:34`
+ * @更新时间 `2024-01-02 17:05:16`
  */
 export interface GetApiCoreDonorCallbackDetailResponse {
   totalCount?: number;

@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-26 15:27:18
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-27 14:48:50
+ * @LastEditTime: 2024-01-03 17:00:26
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
@@ -22,8 +22,8 @@
         </span>
       </template>
     </BasicTable>
-    <DtDrawer @register="registerDtDrawer" @success="success" />
-    <ImportDrawer @register="registerImportDrawer" @success="success" />
+    <DtDrawer @register="registerDtDrawer" />
+    <ImportDrawer @register="registerImportDrawer" @close="success" />
   </PageWrapper>
 </template>
 <script setup lang="ts">

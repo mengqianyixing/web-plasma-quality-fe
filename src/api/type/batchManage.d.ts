@@ -1643,17 +1643,13 @@ export type GetSampleVerifyNonConformanceBatchSampleNoResponse = {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/sample/verify`
- * @更新时间 `2024-01-01 14:56:02`
+ * @更新时间 `2024-01-03 10:02:39`
  */
 export interface PostApiCoreBatchSampleVerifyRequest {
   /**
    * 样本批号
    */
   batchSampleNo: string;
-  /**
-   * 样本验收单号
-   */
-  verifyNo: string;
 }
 
 /**
@@ -1661,7 +1657,7 @@ export interface PostApiCoreBatchSampleVerifyRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/sample/verify`
- * @更新时间 `2024-01-01 14:56:02`
+ * @更新时间 `2024-01-03 10:02:39`
  */
 export type PostApiCoreBatchSampleVerifyResponse = string;
 

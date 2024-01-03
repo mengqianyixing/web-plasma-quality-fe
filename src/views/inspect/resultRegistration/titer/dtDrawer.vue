@@ -4,17 +4,17 @@
  * @Author: zcc
  * @Date: 2023-12-29 15:36:12
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-02 13:47:26
+ * @LastEditTime: 2024-01-02 19:16:32
 -->
 <template>
   <BasicDrawer
     v-bind="$attrs"
     @register="registerDrawer"
     showFooter
-    title="详情"
+    :title="projectName + '详情'"
     :width="isFull ? '100%' : '800px'"
     :show-ok-btn="false"
-    :cancel-button-props="{ text: '关闭' }"
+    cancelText="关闭"
     @ok="handleSubmit"
     @close="close"
   >
@@ -47,14 +47,16 @@
   const activeKey = ref('1');
   const pid = ref('');
   const bsno = ref('');
+  const projectName = ref('');
   const componentMap = ref({
     1: 'div',
     2: 'div',
     3: 'div',
   });
-  const [registerDrawer] = useDrawerInner(async ({ projectId, bsNo }) => {
+  const [registerDrawer] = useDrawerInner(async ({ projectId, bsNo, projectAbbr }) => {
     pid.value = projectId;
     bsno.value = bsNo;
+    projectName.value = projectAbbr;
     componentMap.value['1'] = markRaw(DtTable) as any;
   });
   function change(activeKey) {
