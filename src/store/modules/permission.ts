@@ -255,17 +255,15 @@ export const usePermissionStore = defineStore({
           break;
 
         case PermissionModeEnum.CAS_DOOR:
-          const menuIds: number[] = (userStore.getUserInfo?.menuIds ?? [9900]).map((i) =>
-            Number(i),
-          );
+          const menuIds: number[] = [99] // 默认首页
+            .concat(userStore.getUserInfo?.menuIds ?? [])
+            .map((i) => Number(i));
           console.log({ menuIds });
           const filterRoutes = (routes: any[]): any[] => {
             const filteredRoutes: any[] = [];
 
             routes.forEach((item: any) => {
-              // if (item.id && menuIds.includes(Number(item.id))) {
-              // 暂时全开所有菜单
-              if (item.id) {
+              if (item.id && menuIds.includes(Number(item.id))) {
                 filteredRoutes.push(item);
               } else if (item.children) {
                 const filteredChildren = filterRoutes(item.children);
