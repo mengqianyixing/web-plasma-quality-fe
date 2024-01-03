@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-25 16:41:07
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-03 15:01:40
+ * @LastEditTime: 2024-01-03 20:33:20
  */
 import { defHttp } from '@/utils/http/axios';
 import {
@@ -36,8 +36,8 @@ import {
   PostApiCoreLabRegistrationLabItemsResponse,
   PutApiCoreLabRegistrationLabItemTiterRequest,
   PutApiCoreLabRegistrationLabItemTiterResponse,
-  GetApiCoreLabRegistrationDonorSampleIdRequest,
-  GetApiCoreLabRegistrationDonorSampleIdResponse,
+  GetApiCoreLabRegistrationDonorSampleNoRequest,
+  GetApiCoreLabRegistrationDonorSampleNoResponse,
   PostApiCoreLabRegistrationTiterUploadRequest,
   PostApiCoreLabRegistrationTiterUploadResponse,
 } from '@/api/type/inspectManage';
@@ -72,8 +72,8 @@ enum Api {
 export const uploadItemTiter = (data: PostApiCoreLabRegistrationTiterUploadRequest) =>
   defHttp.uploadFile<PostApiCoreLabRegistrationTiterUploadResponse>({ url: Api.IMPORT }, data);
 
-export const getDonorApi = ({ sampleId }: GetApiCoreLabRegistrationDonorSampleIdRequest) =>
-  defHttp.get<GetApiCoreLabRegistrationDonorSampleIdResponse>({ url: Api.DONOR + sampleId });
+export const getDonorApi = ({ sampleNo }: GetApiCoreLabRegistrationDonorSampleNoRequest) =>
+  defHttp.get<GetApiCoreLabRegistrationDonorSampleNoResponse>({ url: Api.DONOR + sampleNo });
 
 export const updateTiterCheckApi = (data: PutApiCoreLabRegistrationLabItemTiterRequest) =>
   defHttp.put<PutApiCoreLabRegistrationLabItemTiterResponse>({ url: Api.TITER_CHECK, data });

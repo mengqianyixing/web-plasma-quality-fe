@@ -6,43 +6,43 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    slots: { customRender: 'projectCode' },
   },
   {
     title: '样品批号',
-    dataIndex: 'projectAbbr',
+    dataIndex: 'sampleBatchNo',
+    slots: { customRender: 'sampleBatchNo' },
   },
   {
     title: '检测类型',
-    dataIndex: 'plasmaType',
+    dataIndex: 'type',
     customRender: ({ record }) => {
-      return PLASMA_TYPE_TEXT[record.plasmaType];
+      return PLASMA_TYPE_TEXT[record.type];
     },
   },
   {
     title: '样品总数',
-    dataIndex: 'method',
+    dataIndex: 'sampleTotal',
   },
 
   {
     title: '高效价总数',
-    dataIndex: 'standard',
+    dataIndex: 'highTiterNum',
   },
   {
     title: '低效价总数',
-    dataIndex: 'sort',
+    dataIndex: 'lowTiterNum',
   },
   {
     title: '无效价总数',
-    dataIndex: 'state',
+    dataIndex: 'noTiterNum',
   },
   {
     title: '记录人',
-    dataIndex: 'creator',
+    dataIndex: 'recorder',
   },
   {
     title: '记录时间',
-    dataIndex: 'createAt',
+    dataIndex: 'recordTime',
   },
 ];
 
@@ -53,13 +53,12 @@ export const searchFormschema: FormSchema[] = [
     field: 'stationNo',
     componentProps: {
       api: stationNameSearchApi,
-      resultField: 'result',
       labelField: 'stationName',
       valueField: 'stationNo',
     },
   },
   {
-    field: 'projectName',
+    field: 'type',
     component: 'Select',
     label: '检测类型',
     componentProps: {
@@ -67,14 +66,15 @@ export const searchFormschema: FormSchema[] = [
     },
   },
   {
-    field: 'projectAbbr',
+    field: 'sampleBatchNo',
     component: 'Input',
-    label: '样品编号',
+    label: '样品批号',
   },
   {
-    field: '记录日期',
-    component: 'Input',
-    label: '样品编号',
+    field: "['recordStartDate','recordEndDate']",
+    component: 'RangePicker',
+    label: '记录日期',
+    componentProps: { class: 'w-full' },
   },
 ];
 export const importDrwaerColumns: BasicColumn[] = [
@@ -119,6 +119,18 @@ export const dtDrwaerColumns: BasicColumn[] = [
   {
     title: '检测日期',
     dataIndex: '',
+  },
+];
+export const dtCheckboxDrwaerColumns: BasicColumn[] = [
+  {
+    title: '效价类型名称',
+    dataIndex: 't',
+    width: 100,
+  },
+  {
+    title: '数量',
+    dataIndex: '',
+    width: 60,
   },
 ];
 

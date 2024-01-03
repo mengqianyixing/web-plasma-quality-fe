@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-27 16:52:13
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-03 16:53:45
+ * @LastEditTime: 2024-01-03 22:17:14
 -->
 <template>
   <BasicDrawer
@@ -62,19 +62,22 @@
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { ref, reactive } from 'vue';
   import { Upload as AUpload } from 'ant-design-vue';
-  import { defHttp } from '@/utils/http/axios';
   import { CellWapper } from '@/components/CellWapper';
+  import { importTiterFileApi } from '@/api/inspect/titerImport';
+  import { PostApiCoreLabTiterExcelImportResponse } from '@/api/type/inspectManage';
+  import { useUserStore } from '@/store/modules/user';
 
   defineOptions({ name: 'ImportDrawer' });
   const emit = defineEmits(['close']);
-
+  const userStore = useUserStore();
+  console.log(userStore);
   const fileList = ref<File[]>([]);
   const loading = ref(false);
   const hasFile = ref(false);
   const cellData = ref({
     filename: '',
     uploadAt: '',
-    username: '',
+    username: userStore.userInfo,
     count: '',
     successCount: '',
     faildCount: '',
@@ -114,12 +117,18 @@
     clearValidate();
   });
 
-  function uploadClick() {
-    defHttp.uploadFile(
-      { url: 'http://192.168.1.14' },
-      { file: fileList.value[0], data: { test: '123' } },
-    );
-    validate();
+  async function uploadClick() {
+    const { stationNo, type } = await validate();
+    const res = await importTiterFileApi({
+      file: fileList.value[0],
+      data: { stationNo, type },
+    } as any);
+    const { detailVOS, failedNos } = res.data as PostApiCoreLabTiterExcelImportResponse;
+    for (const key in cellData.value) {
+      if (key === 'filename') continue;
+    }
+    dataSource.dataFaild.splice(0, dataSource.dataFaild.length, ...detailVOS);
+    dataSource.dataSaved.splice(0, dataSource.dataSaved.length, ...failedNos);
   }
   function downFile() {}
 

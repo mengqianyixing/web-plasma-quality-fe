@@ -32,6 +32,19 @@
       @close="reload"
       @confirm="openUnqDrawer(false)"
     />
+    <Modal
+      :open="open"
+      @cancel="open = false"
+      @ok="confirmRemove"
+      okText="提交"
+      width="300px"
+      :confirmLoading="confirmLoading"
+      title="删除原因"
+    >
+      <div class="m-20px">
+        <BasicForm @register="registerForm" />
+      </div>
+    </Modal>
   </div>
 </template>
 <script setup lang="ts">
@@ -45,6 +58,7 @@
   import { watch, nextTick, onMounted, ref } from 'vue';
   import { getCheckListApi, removeCheckApi } from '@/api/inspect/resultRegistration';
   import { getInspectMethodListApi } from '@/api/inspect/inspectMethod';
+  import { BasicForm, useForm } from '@/components/Form';
 
   const emit = defineEmits(['reload']);
   const methodMap = ref(new Map());
@@ -53,6 +67,8 @@
     bsNo: { type: String, default: '' },
   });
   const options = ref<any[]>([]);
+  const open = ref(false);
+  const confirmLoading = ref(false);
   watch(
     () => props.bsNo,
     async (value) => {
@@ -67,8 +83,21 @@
   const [registerDtDrawer, { openDrawer: openDtDrawer }] = useDrawer();
   const [registerNotCheckDrawer, { openDrawer: openNotCheckDrawer }] = useDrawer();
   const [registerUnqDrawer, { openDrawer: openUnqDrawer }] = useDrawer();
+  const [registerForm, { resetFields, clearValidate, validate }] = useForm({
+    labelWidth: 60,
+    baseColProps: { span: 24 },
+    schemas: [
+      {
+        field: 'cause',
+        component: 'Input',
+        label: '原因',
+        required: true,
+      },
+    ],
+    showActionButtonGroup: false,
+  });
 
-  const [registerTable, { getSelectRows, reload, clearSelectedRowKeys }] = useTable({
+  const [registerTable, { getSelectRows, reload }] = useTable({
     title: '',
     immediate: false,
     api: getCheckListApi,
@@ -91,19 +120,27 @@
       return data;
     },
   });
+  async function confirmRemove() {
+    const { cause } = await validate();
+    try {
+      const rows = getSelectRows();
+      const { projectId } = rows[0];
+      confirmLoading.value = true;
+      await removeCheckApi({ projectId, bsNo: props.bsNo, cause });
+      message.success('删除成功');
+      open.value = false;
+      reload();
+    } finally {
+      confirmLoading.value = false;
+    }
+  }
   function handleRemove() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
-    const { projectId, projectAbbr } = rows[0];
-    Modal.confirm({
-      content: '确认删除' + projectAbbr + '?',
-      onOk: async () => {
-        await removeCheckApi({ projectId, bsNo: props.bsNo });
-        clearSelectedRowKeys();
-        reload();
-      },
-      onCancel: () => Modal.destroyAll(),
-    });
+    if (rows.length > 1) return message.warning('只能选择一条数据');
+    open.value = true;
+    resetFields();
+    clearValidate();
   }
   function handleDt(row: Recordable) {
     openDtDrawer(true, { ...row, bsNo: props.bsNo });
@@ -115,6 +152,7 @@
   function handleUnq() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
+    if (rows.length > 1) return message.warning('只能选择一条数据');
     openUnqDrawer(true, { ...rows[0], bsNo: props.bsNo });
   }
   onMounted(async () => {

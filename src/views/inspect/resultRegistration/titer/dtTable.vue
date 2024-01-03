@@ -96,7 +96,7 @@
       baseColProps: { span: 12 },
       schemas: dtSearchSchema,
     },
-    rowKey: 'sampleId',
+    rowKey: 'sampleNo',
     columns: dtColumns(props.checkResult),
     size: 'small',
     useSearchForm: !!props.checkResult,
@@ -120,7 +120,7 @@
       conclusion,
       checker: userId,
       bsNo: props.bsNo,
-      sampleId: row.sampleId,
+      sampleNo: row.sampleNo,
     });
     reload();
     openDrawer(false);

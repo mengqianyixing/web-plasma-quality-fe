@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-03 09:40:39
+ * @LastEditTime: 2024-01-03 20:29:46
 -->
 <template>
   <BasicDrawer
@@ -76,14 +76,21 @@
     schemas: [
       {
         required: true,
-        field: 'sampleId',
-        component: 'Input',
+        field: 'sampleNo',
+        component: 'InputSearch',
         label: '样品编号',
         componentProps: {
+          'enter-button': '查询',
+          onSearch: (value) => {
+            if (!value) return;
+            getDonorApi({ sampleNo: value }).then((res) => {
+              donorData.value = res;
+            });
+          },
           onBlur: (e) => {
             const { value } = e.target;
             if (!value) return;
-            getDonorApi({ sampleId: value }).then((res) => {
+            getDonorApi({ sampleNo: value }).then((res) => {
               donorData.value = res;
             });
           },
@@ -99,15 +106,15 @@
     showActionButtonGroup: false,
   });
   async function handleSubmit(close: boolean) {
-    const { sampleId, projectIds } = await validate();
+    const { sampleNo, projectIds } = await validate();
     try {
       setDrawerProps({ confirmLoading: true });
       loading.value = true;
-      await submitNotCheckApi({ sampleId, bsNo: unref(bsno), projectIds });
-      message.success(sampleId + '登记成功');
+      await submitNotCheckApi({ sampleNo, bsNo: unref(bsno), projectIds });
+      message.success(sampleNo + '登记成功');
       emit('confirm');
       if (close === false) {
-        setFieldsValue({ sampleId: '' });
+        setFieldsValue({ sampleNo: '' });
         clearValidate();
       } else {
         emit('confirm');

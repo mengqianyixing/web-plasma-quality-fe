@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-02 21:14:04
+ * @LastEditTime: 2024-01-03 21:58:31
 -->
 <template>
   <BasicDrawer
@@ -65,7 +65,7 @@
 
   const state = ref<CheckGrop[] & GetApiCoreLabRegistrationLabProjectsBsNoResponse>([]);
   const bsno = ref('');
-  const [registerDrawer] = useDrawerInner(async ({ bsNo }) => {
+  const [registerDrawer, { setDrawerProps }] = useDrawerInner(async ({ bsNo }) => {
     bsno.value = bsNo;
     const res = await getCheckItemListApi({ bsNo });
     if (res.length === 0) {
@@ -104,7 +104,13 @@
       t.push(...l);
       return t;
     }, [] as unknown[]);
-    await addItemApi(list);
+    try {
+      setDrawerProps({ confirmLoading: true });
+      await addItemApi(list);
+      message.success('项目添加成功');
+    } finally {
+      setDrawerProps({ confirmLoading: false });
+    }
     emit('confirm');
   }
   function allChange(event: any, item: CheckGrop) {
