@@ -26,7 +26,7 @@ export const getCallbackListApi = (params: GetApiCoreDonorCallbackRequest) =>
     },
   );
 
-export const getCallbackDetail = (params: GetApiCoreDonorCallbackDetailRequest['batchNo']) =>
+export const getCallbackDetail = (params: GetApiCoreDonorCallbackDetailRequest) =>
   defHttp.get<GetApiCoreDonorCallbackDetailResponse>(
     {
       url: Api.CALLBACK_DETAIL,

@@ -43,6 +43,7 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'state',
+    fixed: 'right',
     format(text) {
       return CallbackStateMap.get(text as CallbackStateValueEnum) as string;
     },
@@ -144,6 +145,9 @@ export const callbackDetailDrawerColumns: BasicColumn[] = [
   {
     title: '拒绝日期',
     dataIndex: 'refuseDate',
+    format: (text) => {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
+    },
   },
   {
     title: '拒绝原因',

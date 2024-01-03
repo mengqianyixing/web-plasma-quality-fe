@@ -40,7 +40,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     field: 'surplusWeight',
   },
   {
-    title: '库存',
+    title: '库房',
     field: 'bankNo',
   },
 ];
