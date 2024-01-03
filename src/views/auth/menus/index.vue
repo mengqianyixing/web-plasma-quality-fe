@@ -50,7 +50,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    columns: columns.sort((a, b) => a.width ?? 0 - b.width ?? 0),
+    columns: columns,
     formConfig: {
       labelWidth: 120,
       schemas: searchFormSchema,

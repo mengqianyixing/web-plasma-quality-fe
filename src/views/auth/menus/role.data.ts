@@ -7,13 +7,11 @@ export const columns: BasicColumn[] = [
     title: '角色 id',
     dataIndex: 'name',
     width: 100,
-    fixed: 'left',
   },
   {
     title: '角色名称',
     dataIndex: 'displayName',
     width: 200,
-    fixed: 'left',
   },
   {
     title: '归属',
