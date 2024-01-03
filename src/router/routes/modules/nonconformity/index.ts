@@ -7,6 +7,7 @@ const nonconformity: AppRouteModule = {
   name: 'Nonconformity',
   component: LAYOUT,
   redirect: '/nonconformity/nb',
+  id: 95,
   meta: {
     orderNo: 10000,
     title: '不合格管理',
@@ -16,7 +17,7 @@ const nonconformity: AppRouteModule = {
     {
       path: 'nb',
       name: 'NonconformityBoxes',
-      id: 9903,
+      id: 9501,
       meta: {
         title: '不合格库房管理',
       },
@@ -24,11 +25,11 @@ const nonconformity: AppRouteModule = {
     },
     {
       path: 'nonconformity-registration',
-      name: '不合格血浆登记',
+      name: 'NonconformityRegistration',
       meta: {
         title: '不合格血浆登记',
       },
-      id: 9903,
+      id: 9502,
       component: () => import('/@/views/nonconformity/nonconformity-registration/index.vue'),
     },
   ],
