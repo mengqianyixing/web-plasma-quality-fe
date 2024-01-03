@@ -9,6 +9,8 @@ import {
   statusValueEnum,
 } from '@/enums/stockoutEnum';
 import dayjs, { Dayjs } from 'dayjs';
+import { h } from 'vue';
+import { InputNumber } from 'ant-design-vue';
 
 export const columns: BasicColumn[] = [
   {
@@ -140,14 +142,23 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'orderWeight',
-    label: '投浆重量(t)',
     component: 'InputNumber',
+    label: '投浆重量(t)',
     colProps: { span: 12 },
-    required: true,
-
-    componentProps: {
-      min: 0,
-      precision: 2,
+    rules: [{ required: true }],
+    helpMessage: '投浆重量支持两位小数',
+    render: ({ model, field }) => {
+      return h(InputNumber, {
+        placeholder: '请输入',
+        value: model[field],
+        onChange: (e) => {
+          if (e && e.toString().includes('.')) {
+            model[field] = Number(e.toString().match(/^\d+(?:\.\d{0,2})?/));
+          } else {
+            model[field] = e;
+          }
+        },
+      });
     },
   },
   {
