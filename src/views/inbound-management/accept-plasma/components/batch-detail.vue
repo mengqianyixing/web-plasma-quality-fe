@@ -223,7 +223,7 @@
     },
     {
       title: '血浆验收结果',
-      dataIndex: 'bagVerifyResult',
+      dataIndex: 'bagResult',
     },
     {
       title: '样本验收结果',

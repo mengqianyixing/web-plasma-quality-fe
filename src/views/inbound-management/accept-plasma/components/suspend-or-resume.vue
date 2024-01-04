@@ -86,7 +86,7 @@
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
 
-  const emit = defineEmits(['close', 'goRegister', 'clearInfo']);
+  const emit = defineEmits(['close', 'goRegister', 'clearInfo', 'refresh-data']);
   // const props = defineProps({
   //   remark: String as PropType<any>,
   // });
@@ -109,13 +109,6 @@
 
   const columns = ref([
     {
-      title: '暂停时间',
-      dataIndex: 'createAt',
-      customRender: ({ text }) => {
-        return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
-      },
-    },
-    {
       title: '验收人',
       dataIndex: 'creater',
     },
@@ -124,19 +117,26 @@
       dataIndex: 'reviewer',
     },
     {
-      title: '继续时间',
-      dataIndex: 'freeAt',
+      title: '暂停操作时间',
+      dataIndex: 'createAt',
       customRender: ({ text }) => {
         return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
       },
     },
     {
-      title: '当前状态',
-      dataIndex: 'state',
+      title: '继续操作时间',
+      dataIndex: 'freeAt',
       customRender: ({ text }) => {
-        return boxSuspendEnum[text];
+        return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
       },
     },
+    // {
+    //   title: '当前状态',
+    //   dataIndex: 'state',
+    //   customRender: ({ text }) => {
+    //     return boxSuspendEnum[text];
+    //   },
+    // },
   ]);
 
   let tableData = ref<any[]>([]);
@@ -144,7 +144,9 @@
   // 动态列
   const addCols = () => {
     if (searchForm.value.pattern === 'BCH') {
-      columns.value.push(
+      columns.value.splice(
+        3,
+        0,
         {
           title: '继续操作人',
           dataIndex: 'freedBy',
@@ -155,14 +157,14 @@
         },
       );
     } else if (searchForm.value.pattern === 'BOX') {
-      columns.value.push(
-        {
-          title: '血浆箱号',
-          dataIndex: 'boxNo',
-        },
+      columns.value.unshift(
         {
           title: '托盘编号',
           dataIndex: 'trayNo',
+        },
+        {
+          title: '血浆箱号',
+          dataIndex: 'boxNo',
         },
         {
           title: '当前状态',
@@ -259,6 +261,14 @@
     onChange: (selectedRowKeys: any[], selectedRows: any[]) => {
       tableSelected.value = selectedRows;
     },
+    getCheckboxProps: (record: any) => ({
+      disabled:
+        searchForm.value.pattern == 'BCH'
+          ? !!record.freedBy
+          : searchForm.value.pattern == 'BOX'
+            ? boxSuspendEnum[record.state] != '已暂停'
+            : undefined,
+    }),
   };
   // 继续
   const clickResume = async () => {
@@ -286,6 +296,8 @@
         }
       } finally {
         resumeLoading.value = false;
+        emit('refresh-data');
+        hideModal();
       }
     } else if (searchForm.value.pattern === 'BCH') {
       try {
@@ -303,6 +315,8 @@
         }
       } finally {
         resumeLoading.value = false;
+        emit('refresh-data');
+        hideModal();
       }
     }
   };

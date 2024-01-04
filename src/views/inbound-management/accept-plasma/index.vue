@@ -16,13 +16,13 @@
                   item.name
                 }}</SelectOption>
               </Select>
-              <Button @click="showRegisterModal">登录</Button>
+              <Button :disabled="!!filterForm.checker" @click="showRegisterModal">登录</Button>
             </FormItem>
           </Col>
           <Col>
             <FormItem label="托盘编号">
               <Input v-model:value="filterForm.trayNo" placeholder="请输入" style="width: 180px" />
-              <Button @click="showBatchModal">更改</Button>
+              <!-- <Button @click="showBatchModal">更改</Button> -->
             </FormItem>
           </Col>
           <Col>
@@ -152,7 +152,7 @@
       @confirm="confirmBatch"
       mode="accept"
     />
-    <registerModal v-if="registerModalVisible" @close="closeRegister" />
+    <registerModal v-if="registerModalVisible" @close="closeRegister" @login-data="handleLogin" />
     <batchDetail
       v-if="batchDetailVisible"
       @close="closeBatchDetail"
@@ -162,6 +162,7 @@
     <boxDetail
       v-if="boxDetailVisible"
       @close="closeBoxDetail"
+      @show-box-detail="showBoxDetail"
       ref="boxDetailRef"
       :checkOpts="checkOpts"
     />
@@ -172,6 +173,7 @@
       @close="closeSuspend"
       @clear-info="clearInfo"
       @go-register="registerModalVisible = true"
+      @refresh-data="getPageData(filterForm.batchNo)"
     />
     <revokeModal
       v-if="revokeModalVisible"
@@ -238,7 +240,7 @@
     trayNo: '',
     boxNo: '',
     bagNo: '',
-    checker: '123',
+    checker: '',
     batchNo: '',
     verifyBagCount: 0,
     bagCount: 0,
@@ -318,6 +320,9 @@
   };
   const closeRegister = () => {
     registerModalVisible.value = false;
+  };
+  const handleLogin = (res) => {
+    filterForm.value.checker = res.username;
   };
 
   // 批号框
@@ -402,8 +407,34 @@
       boxDetailRef.value.queryTable();
     });
   };
+
+  const showBoxDetail = (row) => {
+    console.log({ row });
+    filterForm.value.boxNo = row.boxNo;
+    closeBoxDetail();
+    showBatchDetailModal('needBoxNo');
+  };
+
   const closeBoxDetail = () => {
     boxDetailVisible.value = false;
+  };
+
+  const _setReChecker = (val) => {
+    if (val && filterForm.value.checker != val) {
+      if (!filterForm.value.checker) {
+        filterForm.value.checker = val;
+      } else {
+        Modal.confirm({
+          title: '确认是否替换当前复核人？',
+          content: `替换复核人为：【${val}】`,
+          onOk() {
+            filterForm.value.checker = val;
+          },
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          onCancel() {},
+        });
+      }
+    }
   };
 
   // 查询页面数据
@@ -414,6 +445,7 @@
       filterForm.value.stationName = data.stationName;
       filterForm.value.batchNo = data.batchNo;
       filterForm.value.boxNo = data.boxNo;
+      _setReChecker(data.checker);
       filterForm.value.verifyBagCount = data.verifyBagCount;
       filterForm.value.bagCount = data.bagCount;
       filterForm.value.verifyBoxCount = data.verifyBoxCount;
@@ -466,6 +498,7 @@
           filterForm.value.batchNo = data.batchNo;
           filterForm.value.verifyBagCount = data.verifyBagCount;
           filterForm.value.bagCount = data.bagCount;
+          _setReChecker(data.checker);
           filterForm.value.verifyBoxCount = data.verifyBoxCount;
           filterForm.value.boxCount = data.boxCount;
           filterForm.value.trayNo = data.trayNo;

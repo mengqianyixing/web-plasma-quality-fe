@@ -29,8 +29,9 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { Modal, Form, FormItem, Input, InputPassword } from 'ant-design-vue';
+  import { reCheckLogin } from '@/api/sys/login';
 
-  const emit = defineEmits(['close']);
+  const emit = defineEmits(['close', 'login-data']);
 
   interface SearchForm {
     username: string;
@@ -49,7 +50,13 @@
     formRef.value
       .validate()
       .then(() => {
-        console.log('校验通过！！');
+        reCheckLogin({
+          account: searchForm.value.username,
+          password: searchForm.value.password,
+        }).then((res: any) => {
+          emit('login-data', res);
+          hideModal();
+        });
       })
       .catch((error) => {
         console.log('error', error);
