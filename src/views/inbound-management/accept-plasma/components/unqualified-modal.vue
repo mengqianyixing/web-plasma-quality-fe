@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <Modal
     v-bind="$attrs"
     v-on="$attrs"
@@ -105,4 +105,4 @@
   .content {
     padding: 12px;
   }
-</style> -->
+</style>
