@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-26 15:27:18
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-03 17:00:26
+ * @LastEditTime: 2024-01-03 22:11:56
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
@@ -13,12 +13,9 @@
         <a-button type="primary" @click="openImportDrawer(true)">新增</a-button>
         <a-button type="primary" @click="handleRemove">删除</a-button>
       </template>
-      <template #projectCode="{ record }: { record: Recordable }">
-        <span
-          class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="openDtDrawer(true, record)"
-        >
-          {{ record.projectCode }}
+      <template #sampleBatchNo="{ record }: { record: Recordable }">
+        <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleDt(record)">
+          {{ record.sampleBatchNo }}
         </span>
       </template>
     </BasicTable>
@@ -34,7 +31,7 @@
   import { message, Modal } from 'ant-design-vue';
   import DtDrawer from './dtDrawer.vue';
   import ImportDrawer from './importDrawer.vue';
-  import { getListApi, removeItemSettingApi } from '@/api/inspect/itemSetting';
+  import { getListApi, deleteTiterApi } from '@/api/inspect/titerImport';
 
   const [registerDtDrawer, { openDrawer: openDtDrawer }] = useDrawer();
   const [registerImportDrawer, { openDrawer: openImportDrawer }] = useDrawer();
@@ -53,7 +50,7 @@
     useSearchForm: true,
     showTableSetting: false,
     bordered: true,
-    rowSelection: { type: 'checkbox' },
+    rowSelection: { type: 'radio' },
     afterFetch: (res) => {
       clearSelectedRowKeys();
       return res;
@@ -64,6 +61,9 @@
       schemas: searchFormschema,
     },
   });
+  function handleDt(record: Recordable) {
+    openDtDrawer(true, record);
+  }
   function getSelections(onlyOne: boolean) {
     const rows = getSelectRows();
     if (rows.length === 0) {
@@ -83,11 +83,11 @@
   function handleRemove() {
     const [row] = getSelections(true);
     if (!row) return;
-    const { projectId, projectName } = row;
+    const { bsNo } = row;
     Modal.confirm({
-      content: '确认删除' + projectName + '?',
+      content: '确认删除' + bsNo + '?',
       onOk: async () => {
-        await removeItemSettingApi({ id: projectId });
+        await deleteTiterApi({ bsNo });
         clearSelectedRowKeys();
         reload();
       },

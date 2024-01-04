@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-29 15:52:07
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-03 17:13:34
+ * @LastEditTime: 2024-01-03 21:53:43
 -->
 <template>
   <BasicDrawer
@@ -124,8 +124,7 @@
         file: fileList.value[0],
         data: { projectId: pid.value, bsNo: bsno.value },
       } as any);
-      const { summary, dataSaved, dataFaild } = (res.data as any)
-        .data as PostApiCoreLabRegistrationTiterUploadResponse;
+      const { summary, dataSaved, dataFaild } = res;
       for (const key in cellData.value) {
         if (key === 'filename') continue;
         cellData.value[key] = summary[key];

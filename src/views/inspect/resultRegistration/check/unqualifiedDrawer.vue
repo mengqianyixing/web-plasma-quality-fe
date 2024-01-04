@@ -69,7 +69,7 @@
       const formSchemaList = [...notCheckFormSchema];
       formSchemaList.splice(1, 0, ...formSchemaMap[checkItemMappding[projectAbbr]]);
       fieldList = formSchemaList.map((_) => _.field);
-      appendSchemaByField(formSchemaList, 'sampleId');
+      appendSchemaByField(formSchemaList, 'sampleNo');
       updateSchema({
         field: 'account',
         componentProps: {
@@ -90,13 +90,13 @@
     clearValidate();
   }
   async function handleSubmit(close: boolean) {
-    const { sampleId, unqualified, od, cutoff, ct } = await validate();
+    const { sampleNo, unqualified, od, cutoff, ct } = await validate();
     const { username, userId } = userData as any;
     try {
       setDrawerProps({ confirmLoading: true });
       loading.value = true;
       await summitUnqualifiedApi({
-        sampleId,
+        sampleNo,
         unqualified,
         od,
         cutoff,
@@ -106,7 +106,7 @@
         checkeName: username,
         projectIds: [pid],
       });
-      message.success(sampleId + '登记成功');
+      message.success(sampleNo + '登记成功');
       if (close === false) {
         reloadPage();
       } else {

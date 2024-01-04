@@ -46,7 +46,7 @@ type getColumns = (checkResult: string, checkType: string) => BasicColumn[];
 export const dtColumns: getColumns = (checkResult, checkType) => [
   {
     title: '样品编号',
-    dataIndex: 'sampleId',
+    dataIndex: 'sampleNo',
   },
   {
     title: '浆员编号',
@@ -96,7 +96,7 @@ export const formSchemaMap: Record<number, FormSchema[]> = {
 };
 export const notCheckFormSchema: FormSchema[] = [
   {
-    field: 'sampleId',
+    field: 'sampleNo',
     component: 'Input',
     label: '样品编号',
     required: true,

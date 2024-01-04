@@ -943,7 +943,7 @@ export type DeleteApiCoreLabRegistrationLabItemLabReportBsNoResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `DELETE /api/core/lab/registration/labItem`
- * @更新时间 `2023-12-30 15:23:34`
+ * @更新时间 `2024-01-03 19:04:01`
  */
 export interface DeleteApiCoreLabRegistrationLabItemRequest {
   /**
@@ -954,6 +954,7 @@ export interface DeleteApiCoreLabRegistrationLabItemRequest {
    * 样本批号
    */
   bsNo: string;
+  cause: string;
 }
 
 /**
@@ -961,7 +962,7 @@ export interface DeleteApiCoreLabRegistrationLabItemRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `DELETE /api/core/lab/registration/labItem`
- * @更新时间 `2023-12-30 15:23:34`
+ * @更新时间 `2024-01-03 19:04:01`
  */
 export type DeleteApiCoreLabRegistrationLabItemResponse = string;
 
@@ -970,13 +971,13 @@ export type DeleteApiCoreLabRegistrationLabItemResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem`
- * @更新时间 `2024-01-03 09:48:21`
+ * @更新时间 `2024-01-03 20:10:27`
  */
 export interface PutApiCoreLabRegistrationLabItemRequest {
   /**
    * 样品编号
    */
-  sampleId: string;
+  sampleNo: string;
   /**
    * 不合格
    */
@@ -1013,7 +1014,7 @@ export interface PutApiCoreLabRegistrationLabItemRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem`
- * @更新时间 `2024-01-03 09:48:21`
+ * @更新时间 `2024-01-03 20:10:27`
  */
 export type PutApiCoreLabRegistrationLabItemResponse = string;
 
@@ -1022,10 +1023,10 @@ export type PutApiCoreLabRegistrationLabItemResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem/notCheck`
- * @更新时间 `2024-01-02 20:16:20`
+ * @更新时间 `2024-01-03 20:10:34`
  */
 export interface PutApiCoreLabRegistrationLabItemNotCheckRequest {
-  sampleId: string;
+  sampleNo: string;
   bsNo: string;
   projectIds: string[];
 }
@@ -1035,7 +1036,7 @@ export interface PutApiCoreLabRegistrationLabItemNotCheckRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem/notCheck`
- * @更新时间 `2024-01-02 20:16:20`
+ * @更新时间 `2024-01-03 20:10:34`
  */
 export type PutApiCoreLabRegistrationLabItemNotCheckResponse = string;
 
@@ -1044,13 +1045,13 @@ export type PutApiCoreLabRegistrationLabItemNotCheckResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/labItem/titer`
- * @更新时间 `2024-01-02 16:21:14`
+ * @更新时间 `2024-01-03 20:10:48`
  */
 export type PostApiCoreLabRegistrationLabItemTiterRequest = {
   /**
    * 样品编号
    */
-  sampleId: string;
+  sampleNo: string;
   /**
    * 检测日期
    */
@@ -1070,7 +1071,7 @@ export type PostApiCoreLabRegistrationLabItemTiterRequest = {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/labItem/titer`
- * @更新时间 `2024-01-02 16:21:14`
+ * @更新时间 `2024-01-03 20:10:48`
  */
 export type PostApiCoreLabRegistrationLabItemTiterResponse = string;
 
@@ -1079,7 +1080,7 @@ export type PostApiCoreLabRegistrationLabItemTiterResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/labItems`
- * @更新时间 `2024-01-02 15:58:56`
+ * @更新时间 `2024-01-03 20:11:05`
  */
 export interface PostApiCoreLabRegistrationLabItemsRequest {
   pageSize: number;
@@ -1115,7 +1116,7 @@ export interface PostApiCoreLabRegistrationLabItemsRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/labItems`
- * @更新时间 `2024-01-02 15:58:56`
+ * @更新时间 `2024-01-03 20:11:05`
  */
 export interface PostApiCoreLabRegistrationLabItemsResponse {
   totalCount: number;
@@ -1126,7 +1127,7 @@ export interface PostApiCoreLabRegistrationLabItemsResponse {
     /**
      * 样品编号
      */
-    sampleId: string;
+    sampleNo: string;
     /**
      * 浆员编号
      */
@@ -1174,21 +1175,21 @@ export interface PostApiCoreLabRegistrationLabItemsResponse {
  * 接口 [根据样本编号获取浆员信息↗](https://yapi.sharing8.cn/project/529/interface/api/31983) 的 **请求类型**
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
- * @请求头 `GET /api/core/lab/registration/donor/{sampleId}`
- * @更新时间 `2023-12-30 19:16:37`
+ * @请求头 `GET /api/core/lab/registration/donor/{sampleNo}`
+ * @更新时间 `2024-01-03 20:11:19`
  */
-export interface GetApiCoreLabRegistrationDonorSampleIdRequest {
-  sampleId: string;
+export interface GetApiCoreLabRegistrationDonorSampleNoRequest {
+  sampleNo: string;
 }
 
 /**
  * 接口 [根据样本编号获取浆员信息↗](https://yapi.sharing8.cn/project/529/interface/api/31983) 的 **返回类型**
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
- * @请求头 `GET /api/core/lab/registration/donor/{sampleId}`
- * @更新时间 `2023-12-30 19:16:37`
+ * @请求头 `GET /api/core/lab/registration/donor/{sampleNo}`
+ * @更新时间 `2024-01-03 20:11:19`
  */
-export interface GetApiCoreLabRegistrationDonorSampleIdResponse {
+export interface GetApiCoreLabRegistrationDonorSampleNoResponse {
   /**
    * 浆员编号
    */
@@ -1212,7 +1213,7 @@ export interface GetApiCoreLabRegistrationDonorSampleIdResponse {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem/titer`
- * @更新时间 `2024-01-02 16:20:50`
+ * @更新时间 `2024-01-03 20:11:30`
  */
 export interface PutApiCoreLabRegistrationLabItemTiterRequest {
   reason?: string;
@@ -1220,7 +1221,7 @@ export interface PutApiCoreLabRegistrationLabItemTiterRequest {
   checker?: string;
   bsNo?: string;
   conclusion?: string;
-  sampleId?: string;
+  sampleNo?: string;
 }
 
 /**
@@ -1228,7 +1229,7 @@ export interface PutApiCoreLabRegistrationLabItemTiterRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem/titer`
- * @更新时间 `2024-01-02 16:20:50`
+ * @更新时间 `2024-01-03 20:11:30`
  */
 export interface PutApiCoreLabRegistrationLabItemTiterResponse {}
 
@@ -1237,7 +1238,7 @@ export interface PutApiCoreLabRegistrationLabItemTiterResponse {}
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/sample`
- * @更新时间 `2023-12-30 19:48:10`
+ * @更新时间 `2024-01-03 20:11:46`
  */
 export interface PostApiCoreLabRegistrationSampleRequest {
   bsNo: string;
@@ -1251,10 +1252,10 @@ export interface PostApiCoreLabRegistrationSampleRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/sample`
- * @更新时间 `2023-12-30 19:48:10`
+ * @更新时间 `2024-01-03 20:11:46`
  */
 export type PostApiCoreLabRegistrationSampleResponse = {
-  SampleId: string;
+  sampleNo: string;
   donorNo: string;
   name: string;
 }[];
@@ -1461,5 +1462,106 @@ export interface GetApiCoreLabTiterResponse {
     recordTime: string;
   }[];
 }
+
+/**
+ * 接口 [效价导入列表批次详情效价类↗](https://yapi.sharing8.cn/project/529/interface/api/32052) 的 **请求类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `GET /api/core/lab/titer/name-count/{bsNo}`
+ * @更新时间 `2024-01-03 21:17:36`
+ */
+export interface GetApiCoreLabTiterNameCountBsNoRequest {
+  /**
+   * 批次号
+   */
+  bsNo: string;
+}
+
+/**
+ * 接口 [效价导入列表批次详情效价类↗](https://yapi.sharing8.cn/project/529/interface/api/32052) 的 **返回类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `GET /api/core/lab/titer/name-count/{bsNo}`
+ * @更新时间 `2024-01-03 21:17:36`
+ */
+export type GetApiCoreLabTiterNameCountBsNoResponse = {
+  /**
+   * 效价类型名称
+   */
+  titerType: string;
+  /**
+   * 数量
+   */
+  count: number;
+}[];
+
+/**
+ * 接口 [效价导入批次详情↗](https://yapi.sharing8.cn/project/529/interface/api/32055) 的 **请求类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `GET /api/core/lab/titer/detail`
+ * @更新时间 `2024-01-03 20:35:40`
+ */
+export interface GetApiCoreLabTiterDetailRequest {
+  pageSize: string;
+  currPage: string;
+  batchNo: string;
+  /**
+   * 效价类型名称
+   */
+  titerType?: string;
+}
+
+/**
+ * 接口 [效价导入批次详情↗](https://yapi.sharing8.cn/project/529/interface/api/32055) 的 **返回类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `GET /api/core/lab/titer/detail`
+ * @更新时间 `2024-01-03 20:35:40`
+ */
+export interface GetApiCoreLabTiterDetailResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 样本编号
+     */
+    sampleNo: string;
+    /**
+     * 效价结果值
+     */
+    titerResult: string;
+    /**
+     * od值
+     */
+    od: string;
+    /**
+     * 检测日期
+     */
+    checkTime: string;
+  }[];
+}
+
+/**
+ * 接口 [效价删除↗](https://yapi.sharing8.cn/project/529/interface/api/32058) 的 **请求类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `DELETE /api/core/lab/titer/{bsNo}`
+ * @更新时间 `2024-01-03 21:17:13`
+ */
+export interface DeleteApiCoreLabTiterBsNoRequest {
+  bsNo: string;
+}
+
+/**
+ * 接口 [效价删除↗](https://yapi.sharing8.cn/project/529/interface/api/32058) 的 **返回类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `DELETE /api/core/lab/titer/{bsNo}`
+ * @更新时间 `2024-01-03 21:17:13`
+ */
+export type DeleteApiCoreLabTiterBsNoResponse = null;
 
 /* prettier-ignore-end */

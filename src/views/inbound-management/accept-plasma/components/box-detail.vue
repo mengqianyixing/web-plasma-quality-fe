@@ -6,36 +6,15 @@
     @cancel="hideModal"
     :footer="null"
     width="1600px"
-    title="选择批号"
+    title="本批详情"
   >
     <div class="content">
       <Form layout="inline" :model="searchForm" style="margin-bottom: 16px">
         <FormItem label="采浆公司">
-          <Select
-            v-model:value="searchForm.stationNo"
-            allowClear
-            style="width: 180px"
-            placeholder="请选择"
-          >
-            <SelectOption
-              v-for="item in companyOpts"
-              :key="item.stationNo"
-              :value="item.stationNo"
-              >{{ item.stationName }}</SelectOption
-            >
-          </Select>
+          <Input v-model:value="searchForm.stationName" disabled style="width: 180px" />
         </FormItem>
         <FormItem label="血浆批号">
-          <Select
-            v-model:value="searchForm.batchNo"
-            allowClear
-            style="width: 180px"
-            placeholder="请选择"
-          >
-            <SelectOption v-for="item in batchNoOpts" :key="item.code" :value="item.code">{{
-              item.name
-            }}</SelectOption>
-          </Select>
+          <Input v-model:value="searchForm.batchNo" placeholder="请输入" style="width: 180px" />
         </FormItem>
         <FormItem label="血浆箱号">
           <Input v-model:value="searchForm.boxNo" placeholder="请输入" style="width: 180px" />
@@ -47,19 +26,7 @@
             style="width: 180px"
             placeholder="请选择"
           >
-            <SelectOption v-for="item in checkOpts" :key="item.code" :value="item.code">{{
-              item.name
-            }}</SelectOption>
-          </Select>
-        </FormItem>
-        <FormItem label="验收结果">
-          <Select
-            v-model:value="searchForm.verifyResult"
-            allowClear
-            style="width: 180px"
-            placeholder="请选择"
-          >
-            <SelectOption v-for="item in verifyResultOpts" :key="item.code" :value="item.code">{{
+            <SelectOption v-for="item in props.checkOpts" :key="item.code" :value="item.code">{{
               item.name
             }}</SelectOption>
           </Select>
@@ -76,14 +43,19 @@
         :data-source="tableData"
         bordered
         :loading="loading"
+        :pagination="false"
         style="margin-bottom: 16px"
+        :scroll="{ y: 550 }"
       >
         <template #footer>
-          <div style="text-align: right"> 血浆总箱数：100 </div>
+          <div style="text-align: right"> 血浆总箱数：{{ tableData.length }} </div>
         </template>
-        <template #bodyCell="{ column, text }">
-          <template v-if="column.dataIndex === 'acceptState' || column.dataIndex === 'verifyState'">
-            {{ optsTransMap(verifyResultOpts, 'code', 'name')[text] }}
+        <template #bodyCell="{ text, record, column }">
+          <template v-if="column.dataIndex === 'verifyState'">
+            {{ optsTransMap(checkOpts, 'code', 'name')[text] }}
+          </template>
+          <template v-if="column.dataIndex === 'boxNo'">
+            <Button type="link" @click="showBatchDetail(record)">{{ text }}</Button>
           </template>
         </template>
       </Table>
@@ -104,41 +76,28 @@
     Table,
   } from 'ant-design-vue';
   import { getPlasmaBox } from '@/api/inbound-management/accept-plasma.ts';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  const { createMessage } = useMessage();
+  const { warning } = createMessage;
 
   const emit = defineEmits(['close']);
+  const props = defineProps({
+    checkOpts: Array as PropType<any>,
+  });
 
   const loading = ref(false);
 
   // 表单数据
   const initSearchForm = {
     stationNo: '',
+    stationName: '',
     batchNo: '',
     boxNo: '',
     verifyState: '',
-    verifyResult: '',
   };
-  const searchForm = ref(initSearchForm);
-  // 采浆公司备选项
-  const companyOpts = ref([]);
-  // 批号备选项
-  const batchNoOpts = ref([]);
-  // 验收结果备选项
-  const verifyResultOpts = ref([]);
-  // 验收状态备选项
-  const checkOpts = ref([
-    {
-      code: 'W',
-      name: '未接收',
-    },
-    {
-      code: 'R',
-      name: '接收中',
-    },
-    {
-      code: 'S',
-      name: '已接收',
-    },
-  ]);
+  const searchForm = ref({ ...initSearchForm });
+
   // 备选项转map
   const optsTransMap = (arr: any[], code: any, name: any) => {
     if (!arr.length) return {};
@@ -195,19 +154,23 @@
 
   // 查询列表数据
   const queryTable = async () => {
+    if (!searchForm.value.batchNo) {
+      warning('请选择批号!');
+      return;
+    }
     const params = { ...searchForm.value };
+    delete (params as any).stationName;
+    delete (params as any).stationNo;
+    for (const key of Object.keys(params)) {
+      if (params[key] === '') {
+        delete params[key];
+      }
+    }
     try {
       loading.value = true;
       const res = await getPlasmaBox(params);
       if (res) {
-        tableData.value = res.result;
-        // dispatch 为对象，拆成两个字段作两列
-        for (const item of tableData.value) {
-          if (item.dispatch) {
-            item.depositor = item.dispatch.depositor;
-            item.optTime = item.dispatch.optTime;
-          }
-        }
+        tableData.value = res;
       }
     } finally {
       loading.value = false;
@@ -218,7 +181,14 @@
     searchForm.value = { ...initSearchForm };
     queryTable();
   };
-  queryTable();
+
+  const showBatchDetail = (row) => {
+    console.log(row);
+  };
+  defineExpose({
+    searchForm,
+    queryTable,
+  });
 </script>
 <style lang="less" scoped>
   .content {

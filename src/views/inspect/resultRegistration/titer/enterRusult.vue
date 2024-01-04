@@ -63,7 +63,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    rowKey: 'sampleId',
+    rowKey: 'sampleNo',
     columns: enterColumns,
     size: 'small',
     useSearchForm: false,
@@ -123,7 +123,7 @@
         bsNo: unref(bsno),
         conclusion,
         checkAt,
-        sampleId: _.sampleId,
+        sampleNo: _.sampleNo,
       }));
       setDrawerProps({ confirmLoading: true });
       loading.value = true;

@@ -47,7 +47,7 @@ type getColumns = (checkResult: string) => BasicColumn[];
 export const dtColumns: getColumns = (checkResult) => [
   {
     title: '样品编号',
-    dataIndex: 'sampleId',
+    dataIndex: 'sampleNo',
   },
   {
     title: '浆员编号',
@@ -65,7 +65,7 @@ export const dtColumns: getColumns = (checkResult) => [
 ];
 export const dtSearchSchema: FormSchema[] = [
   {
-    field: 'sampleId',
+    field: 'sampleNo',
     label: '样品编号',
     component: 'Input',
   },
@@ -111,7 +111,7 @@ export const enterFormSchema: FormSchema[] = [
 export const enterColumns: BasicColumn[] = [
   {
     title: '样品编号',
-    dataIndex: 'sampleId',
+    dataIndex: 'sampleNo',
   },
   {
     title: '浆员编号',
@@ -150,7 +150,7 @@ export const cellList = [
   },
 ];
 export const importSuccessColumns: BasicColumn[] = [
-  { title: '样品编号', dataIndex: 'sampleId' },
+  { title: '样品编号', dataIndex: 'sampleNo' },
   { title: '浆员编号', dataIndex: 'donorNo' },
   { title: '浆员姓名', dataIndex: 'name' },
   {

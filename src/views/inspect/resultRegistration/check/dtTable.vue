@@ -44,7 +44,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    rowKey: 'sampleId',
+    rowKey: 'sampleNo',
     columns: dtColumns(props.checkResult, props.checkType),
     size: 'small',
     useSearchForm: false,

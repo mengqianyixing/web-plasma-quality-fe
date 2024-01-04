@@ -102,6 +102,9 @@
   const { warning } = createMessage;
 
   const emit = defineEmits(['close', 'confirm']);
+  const props = defineProps({
+    mode: String as PropType<any>,
+  });
 
   const loading = ref(false);
 
@@ -163,6 +166,10 @@
       warning('请先选择一条数据!');
       return;
     }
+    if (props.mode === 'receive' && tableSelected.value[0].acceptState === 'S') {
+      warning('当前批次已接收!');
+      return;
+    }
     const firstSelectedItem = tableSelected.value[0];
     if (firstSelectedItem && 'batchNo' in firstSelectedItem) {
       emit('confirm', firstSelectedItem.batchNo);
@@ -213,7 +220,6 @@
     current: 1,
     total: 0,
     onChange: async (page, pageSize) => {
-      console.log(page, pageSize);
       pagination.value.current = page;
       pagination.value.pageSize = pageSize;
       await queryTable();

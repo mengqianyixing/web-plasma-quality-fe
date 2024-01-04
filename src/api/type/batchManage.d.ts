@@ -1391,7 +1391,7 @@ export type PutApiCoreBatchSampleVerifyResponse = string;
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/sample/verify/non-conformance`
- * @更新时间 `2024-01-01 14:22:36`
+ * @更新时间 `2024-01-03 21:24:59`
  */
 export interface PostApiCoreBatchSampleVerifyNonConformanceRequest {
   /**
@@ -1402,6 +1402,10 @@ export interface PostApiCoreBatchSampleVerifyNonConformanceRequest {
    * 样本验收单号
    */
   sampleVerifyNo: string;
+  /**
+   * 样本批号
+   */
+  batchSampleNo: string;
 }
 
 /**
@@ -1409,7 +1413,7 @@ export interface PostApiCoreBatchSampleVerifyNonConformanceRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/sample/verify/non-conformance`
- * @更新时间 `2024-01-01 14:22:36`
+ * @更新时间 `2024-01-03 21:24:59`
  */
 export type PostApiCoreBatchSampleVerifyNonConformanceResponse = string;
 
@@ -1602,10 +1606,10 @@ export type GetApiCoreBatchSampleVerifyUnqualifiedBatchSampleNoResponse = {
  * 接口 [查询献血浆者不符合列表↗](https://yapi.sharing8.cn/project/529/interface/api/31992) 的 **请求类型**
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
- * @请求头 `GET /sample/verify/non-conformance/{batchSampleNo}`
- * @更新时间 `2024-01-01 13:00:01`
+ * @请求头 `GET /api/core/batch/sample/verify/non-conformance/{batchSampleNo}`
+ * @更新时间 `2024-01-03 21:17:17`
  */
-export interface GetSampleVerifyNonConformanceBatchSampleNoRequest {
+export interface GetApiCoreBatchSampleVerifyNonConformanceBatchSampleNoRequest {
   /**
    * 样本批号
    */
@@ -1616,10 +1620,10 @@ export interface GetSampleVerifyNonConformanceBatchSampleNoRequest {
  * 接口 [查询献血浆者不符合列表↗](https://yapi.sharing8.cn/project/529/interface/api/31992) 的 **返回类型**
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
- * @请求头 `GET /sample/verify/non-conformance/{batchSampleNo}`
- * @更新时间 `2024-01-01 13:00:01`
+ * @请求头 `GET /api/core/batch/sample/verify/non-conformance/{batchSampleNo}`
+ * @更新时间 `2024-01-03 21:17:17`
  */
-export type GetSampleVerifyNonConformanceBatchSampleNoResponse = {
+export type GetApiCoreBatchSampleVerifyNonConformanceBatchSampleNoResponse = {
   /**
    * 样本编号
    */
@@ -1660,5 +1664,44 @@ export interface PostApiCoreBatchSampleVerifyRequest {
  * @更新时间 `2024-01-03 10:02:39`
  */
 export type PostApiCoreBatchSampleVerifyResponse = string;
+
+/**
+ * 接口 [血浆验收中的不合格样本登记↗](https://yapi.sharing8.cn/project/529/interface/api/32049) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/sample/unqualified`
+ * @更新时间 `2024-01-03 21:27:40`
+ */
+export interface PostApiCoreBatchSampleUnqualifiedRequest {
+  /**
+   * 复核人
+   */
+  checker: string;
+  /**
+   * 样本编号
+   */
+  sampleNo: string;
+  /**
+   * 不合格原因code
+   */
+  unqualifiedReasonCode: string;
+  /**
+   * 验收单号
+   */
+  verifyNo: string;
+  /**
+   * 样本批号
+   */
+  batchSampleNo: string;
+}
+
+/**
+ * 接口 [血浆验收中的不合格样本登记↗](https://yapi.sharing8.cn/project/529/interface/api/32049) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/sample/unqualified`
+ * @更新时间 `2024-01-03 21:27:40`
+ */
+export type PostApiCoreBatchSampleUnqualifiedResponse = string;
 
 /* prettier-ignore-end */
