@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-29 15:36:12
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-03 09:40:16
+ * @LastEditTime: 2024-01-04 14:08:20
 -->
 <template>
   <BasicDrawer
@@ -124,6 +124,7 @@
         conclusion,
         checkAt,
         sampleNo: _.sampleNo,
+        projectId: pid.value,
       }));
       setDrawerProps({ confirmLoading: true });
       loading.value = true;

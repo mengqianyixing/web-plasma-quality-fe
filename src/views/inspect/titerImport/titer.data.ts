@@ -71,65 +71,71 @@ export const searchFormschema: FormSchema[] = [
     label: '样品批号',
   },
   {
-    field: "['recordStartDate','recordEndDate']",
+    field: '[recordStartDate,recordEndDate]',
     component: 'RangePicker',
     label: '记录日期',
-    componentProps: { class: 'w-full' },
+    componentProps: {
+      class: 'w-full',
+      format: 'YYYY-MM-DD',
+    },
   },
 ];
 export const importDrwaerColumns: BasicColumn[] = [
   {
     title: '样品批号',
-    dataIndex: '',
+    dataIndex: 'batchNo',
   },
   {
     title: '样品编号',
-    dataIndex: '',
+    dataIndex: 'sampleNo',
   },
   {
     title: '效价类型',
-    dataIndex: '',
+    dataIndex: 'type',
+    customRender: ({ record }) => {
+      return PLASMA_TYPE_TEXT[record.type];
+    },
   },
   {
     title: '效价结果值',
-    dataIndex: '',
+    dataIndex: 'titerResult',
   },
   {
     title: 'OD值',
-    dataIndex: '',
+    dataIndex: 'od',
   },
   {
     title: '检测日期',
-    dataIndex: '',
+    dataIndex: 'checkTime',
   },
 ];
 export const dtDrwaerColumns: BasicColumn[] = [
   {
     title: '样品编号',
-    dataIndex: '',
+    dataIndex: 'sampleNo',
   },
   {
     title: '效价结果值',
-    dataIndex: '',
+    dataIndex: 'titerResult',
   },
   {
     title: 'OD值',
-    dataIndex: '',
+    dataIndex: 'od',
   },
   {
     title: '检测日期',
-    dataIndex: '',
+    dataIndex: 'checkTime',
   },
 ];
 export const dtCheckboxDrwaerColumns: BasicColumn[] = [
   {
     title: '效价类型名称',
-    dataIndex: 't',
+    dataIndex: 'titerType',
     width: 100,
   },
   {
     title: '数量',
-    dataIndex: '',
+    dataIndex: 'count',
     width: 60,
   },
 ];

@@ -144,7 +144,7 @@ export default defineConfig([
             outputFilePath: 'src/api/type/stationManage.d.ts',
           },
           {
-            id: [5306, 5320, 5341],
+            id: [5306, 5320, 5341, 5362],
             getRequestFunctionName(interfaceInfo, changeCase) {
               // 以接口全路径生成请求函数名
               return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
