@@ -22,8 +22,9 @@
   const state = reactive({
     bsNo: '',
     titerType: '',
+    type: '',
   });
-  const [registerTable, { reload, setPagination }] = useTable({
+  const [registerTable, { reload, setPagination, setTableData }] = useTable({
     immediate: false,
     api: getTiterDtList,
     fetchSetting: {
@@ -32,20 +33,17 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    rowKey: 'projectId',
     columns: dtDrwaerColumns,
     size: 'small',
     useSearchForm: false,
     showTableSetting: false,
     bordered: true,
-    beforeFetch: (p) => ({ ...p, batchNo: state.bsNo }),
+    beforeFetch: (p) => ({ ...p, batchNo: state.bsNo, titerType: state.titerType }),
   });
-  const [registerCheckboxTable, { clearSelectedRowKeys }] = useTable({
+  const [registerCheckboxTable, { reload: reloadCheck, clearSelectedRowKeys }] = useTable({
     immediate: false,
     api: getTiterDtCountList,
-    fetchSetting: { listField: 'result' },
     pagination: false,
-    rowKey: 'projectId',
     columns: dtCheckboxDrwaerColumns,
     size: 'small',
     useSearchForm: false,
@@ -58,10 +56,15 @@
   function selectionChange({ rows }) {
     state.titerType = rows[0].titerTypeName;
     setPagination({ current: 1 });
+
     reload();
   }
-  const [registerDrawer] = useDrawerInner(({ bsNo }) => {
-    state.bsNo = bsNo;
+  const [registerDrawer] = useDrawerInner(({ sampleBatchNo, type }) => {
+    state.bsNo = sampleBatchNo;
+    state.type = type;
+    setPagination({ total: 0 });
+    setTableData([]);
     clearSelectedRowKeys();
+    reloadCheck();
   });
 </script>

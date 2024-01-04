@@ -4,13 +4,13 @@
  * @Author: zcc
  * @Date: 2023-12-26 15:27:18
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-03 22:11:56
+ * @LastEditTime: 2024-01-04 10:53:09
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="openImportDrawer(true)">新增</a-button>
+        <a-button type="primary" @click="openImportDrawer(true, {})">新增</a-button>
         <a-button type="primary" @click="handleRemove">删除</a-button>
       </template>
       <template #sampleBatchNo="{ record }: { record: Recordable }">
@@ -44,13 +44,17 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    rowKey: 'projectId',
     columns: columns,
     size: 'small',
     useSearchForm: true,
     showTableSetting: false,
     bordered: true,
     rowSelection: { type: 'radio' },
+    beforeFetch: (p) => ({
+      ...p,
+      recordStartDate: p.recordStartDate && p.recordStartDate.slice(0, 10),
+      recordEndDate: p.recordEndDate && p.recordEndDate.slice(0, 10),
+    }),
     afterFetch: (res) => {
       clearSelectedRowKeys();
       return res;
@@ -83,11 +87,11 @@
   function handleRemove() {
     const [row] = getSelections(true);
     if (!row) return;
-    const { bsNo } = row;
+    const { bsNo, type } = row;
     Modal.confirm({
       content: '确认删除' + bsNo + '?',
       onOk: async () => {
-        await deleteTiterApi({ bsNo });
+        await deleteTiterApi({ bsNo, type });
         clearSelectedRowKeys();
         reload();
       },

@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-27 16:52:13
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-03 22:17:14
+ * @LastEditTime: 2024-01-04 09:55:39
 -->
 <template>
   <BasicDrawer
@@ -66,23 +66,27 @@
   import { importTiterFileApi } from '@/api/inspect/titerImport';
   import { PostApiCoreLabTiterExcelImportResponse } from '@/api/type/inspectManage';
   import { useUserStore } from '@/store/modules/user';
+  import dayjs from 'dayjs';
 
   defineOptions({ name: 'ImportDrawer' });
   const emit = defineEmits(['close']);
   const userStore = useUserStore();
-  console.log(userStore);
+
   const fileList = ref<File[]>([]);
   const loading = ref(false);
   const hasFile = ref(false);
   const cellData = ref({
     filename: '',
     uploadAt: '',
-    username: userStore.userInfo,
+    username: '',
     count: '',
     successCount: '',
     faildCount: '',
   });
-  const dataSource = reactive({
+  const dataSource = reactive<{
+    dataSaved: PostApiCoreLabTiterExcelImportResponse['detailVOS'];
+    dataFaild: Recordable[];
+  }>({
     dataSaved: [],
     dataFaild: [],
   });
@@ -94,18 +98,21 @@
   });
 
   const [registerTable] = useTable({
+    dataSource: dataSource.dataSaved,
     immediate: false,
     columns: importDrwaerColumns,
     size: 'small',
+    pagination: false,
     useSearchForm: false,
     showTableSetting: false,
+    isCanResizeParent: true,
     bordered: true,
   });
   const [registerFailTable] = useTable({
     dataSource: dataSource.dataFaild,
     immediate: false,
     isCanResizeParent: true,
-    columns: [],
+    columns: [{ title: '无法保存数据', dataIndex: 'sampleNo' }],
     size: 'small',
     pagination: false,
     useSearchForm: false,
@@ -119,16 +126,33 @@
 
   async function uploadClick() {
     const { stationNo, type } = await validate();
-    const res = await importTiterFileApi({
-      file: fileList.value[0],
-      data: { stationNo, type },
-    } as any);
-    const { detailVOS, failedNos } = res.data as PostApiCoreLabTiterExcelImportResponse;
-    for (const key in cellData.value) {
-      if (key === 'filename') continue;
+    try {
+      loading.value = true;
+      const res = await importTiterFileApi({
+        file: fileList.value[0],
+        data: { stationNo, type },
+      } as any);
+      const { detailVOS, failedNos } = res;
+      const CellData = {
+        uploadAt: dayjs().format('YYYY-MM-DD'),
+        username: userStore.getUserInfo.username,
+        count: detailVOS.length + failedNos.length,
+        successCount: detailVOS.length,
+        faildCount: failedNos.length,
+      };
+      for (const key in CellData) {
+        cellData.value[key] = CellData[key];
+      }
+      dataSource.dataFaild.splice(
+        0,
+        dataSource.dataFaild.length,
+        ...failedNos.map((_) => ({ sampleNo: _ })),
+      );
+      dataSource.dataSaved.splice(0, dataSource.dataSaved.length, ...detailVOS);
+    } finally {
+      loading.value = false;
+      hasFile.value = false;
     }
-    dataSource.dataFaild.splice(0, dataSource.dataFaild.length, ...detailVOS);
-    dataSource.dataSaved.splice(0, dataSource.dataSaved.length, ...failedNos);
   }
   function downFile() {}
 

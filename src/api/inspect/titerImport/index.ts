@@ -4,26 +4,26 @@ import {
   PostApiCoreLabTiterExcelImportResponse,
   GetApiCoreLabTiterRequest,
   GetApiCoreLabTiterResponse,
-  GetApiCoreLabTiterNameCountBsNoRequest,
-  GetApiCoreLabTiterNameCountBsNoResponse,
+  GetApiCoreLabTiterNameCountRequest,
+  GetApiCoreLabTiterNameCountResponse,
   GetApiCoreLabTiterDetailRequest,
   GetApiCoreLabTiterDetailResponse,
-  DeleteApiCoreLabTiterBsNoRequest,
-  DeleteApiCoreLabTiterBsNoResponse,
+  DeleteApiCoreLabTiterRequest,
+  DeleteApiCoreLabTiterResponse,
 } from '@/api/type/inspectManage';
 
 enum Api {
   LIST = `/api/core/lab/titer`,
   IMPORT = '/api/core/lab/titer/excel/import',
-  DT_COUNT = '/api/core/lab/titer/name-count/',
+  DT_COUNT = '/api/core/lab/titer/name-count',
   DT = '/api/core/lab/titer/detail',
-  REMOVE = '/api/core/lab/titer/',
+  REMOVE = '/api/core/lab/titer',
 }
 
-export const getListApi = (data: GetApiCoreLabTiterRequest) =>
+export const getListApi = (params: GetApiCoreLabTiterRequest) =>
   defHttp.get<GetApiCoreLabTiterResponse>({
     url: Api.LIST,
-    data: data,
+    params,
   });
 
 export const importTiterFileApi = (data: PostApiCoreLabTiterExcelImportRequest) =>
@@ -33,11 +33,11 @@ export const importTiterFileApi = (data: PostApiCoreLabTiterExcelImportRequest) 
     },
     data,
   );
-export const getTiterDtCountList = ({ bsNo }: GetApiCoreLabTiterNameCountBsNoRequest) =>
-  defHttp.get<GetApiCoreLabTiterNameCountBsNoResponse>({ url: Api.DT_COUNT + bsNo });
+export const getTiterDtCountList = (data: GetApiCoreLabTiterNameCountRequest) =>
+  defHttp.get<GetApiCoreLabTiterNameCountResponse>({ url: Api.DT_COUNT, data });
 
-export const getTiterDtList = (data: GetApiCoreLabTiterDetailRequest) =>
-  defHttp.get<GetApiCoreLabTiterDetailResponse>({ url: Api.DT, data });
+export const getTiterDtList = (params: GetApiCoreLabTiterDetailRequest) =>
+  defHttp.get<GetApiCoreLabTiterDetailResponse>({ url: Api.DT, params });
 
-export const deleteTiterApi = ({ bsNo }: DeleteApiCoreLabTiterBsNoRequest) =>
-  defHttp.delete<DeleteApiCoreLabTiterBsNoResponse>({ url: Api.REMOVE + bsNo });
+export const deleteTiterApi = (data: DeleteApiCoreLabTiterRequest) =>
+  defHttp.delete<DeleteApiCoreLabTiterResponse>({ url: Api.REMOVE, data });
