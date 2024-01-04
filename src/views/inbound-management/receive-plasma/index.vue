@@ -36,7 +36,9 @@
           </Col>
           <Col>
             <FormItem>
-              <Button>托盘入库</Button>
+              <Button @click="openDrawer(true, filterForm)" :disabled="!filterForm.batchNo"
+                >托盘入库</Button
+              >
             </FormItem>
           </Col>
         </Row>
@@ -115,6 +117,7 @@
       @close="closeSuspend"
       @go-register="registerModalVisible = true"
     />
+    <InStoreDrawer @register="registerDrawer" />
   </div>
 </template>
 
@@ -138,6 +141,10 @@
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { getAccepts, acceptPlasma } from '@/api/inbound-management/receive-plasma.ts';
+  import InStoreDrawer from '../components/inStoreDrawer/index.vue';
+  import { useDrawer } from '@/components/Drawer';
+
+  const [registerDrawer, { openDrawer }] = useDrawer();
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;

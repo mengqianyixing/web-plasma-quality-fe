@@ -104,12 +104,16 @@
           </Col>
           <Col>
             <FormItem>
-              <Button>托盘入库</Button>
+              <Button @click="openInDrawer(true, filterForm)" :disabled="!filterForm.batchNo"
+                >托盘入库</Button
+              >
             </FormItem>
           </Col>
           <Col>
             <FormItem>
-              <Button>托盘出库</Button>
+              <Button @click="openOutDrawer(true, filterForm)" :disabled="!filterForm.batchNo"
+                >托盘出库</Button
+              >
             </FormItem>
           </Col>
         </Row>
@@ -181,6 +185,8 @@
       ref="revokeModalRef"
       @query="getPageData"
     />
+    <InStoreDrawer @register="registerInDrawer" />
+    <OutStoreDrawer @register="registerOutDrawer" />
   </div>
 </template>
 
@@ -206,8 +212,14 @@
   import boxDetail from './components/box-detail.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import revokeModal from './components/revoke-modal.vue';
+  import InStoreDrawer from '../components/inStoreDrawer/index.vue';
+  import OutStoreDrawer from '../components/outStoreDrawer/index.vue';
+  import { useDrawer } from '@/components/Drawer';
 
   import { getPlasmaVerify, plasmaVerifyBag } from '@/api/inbound-management/accept-plasma.ts';
+
+  const [registerInDrawer, { openDrawer: openInDrawer }] = useDrawer();
+  const [registerOutDrawer, { openDrawer: openOutDrawer }] = useDrawer();
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
