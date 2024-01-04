@@ -1,6 +1,6 @@
 export enum sampleTypeEnum {
-  CallbackSample = 'CBK',
-  PlasmaSample = 'PLA',
+  CallbackSample = 'CAB',
+  PlasmaSample = 'NOR',
 }
 
 export enum nonconformityReasonEnum {
