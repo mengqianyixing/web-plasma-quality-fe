@@ -2,9 +2,12 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #planNo="{ record }">
-        <a-button type="link" @click="handlePlanNoClick(record)">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handlePlanNoClick(record)"
+        >
           {{ record?.planNo }}
-        </a-button>
+        </span>
       </template>
       <template #stationNo="{ record }">
         {{ formatStationNo(record) }}
@@ -12,6 +15,7 @@
       <template #toolbar>
         <div class="flex gap-2">
           <a-button type="primary" @click="handleAdd"> 新增 </a-button>
+          <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
           <a-button type="primary" @click="handleDelete"> 撤销 </a-button>
           <a-button type="primary" @click="handleExport" :loading="exportLoading"> 导出 </a-button>
         </div>
@@ -40,12 +44,18 @@
 
   import { PageWrapper } from '@/components/Page';
   import {
+    createCallbackBatch,
     deleteCallback,
     getCallbackDetail,
     getCallbackListApi,
     stationNameList,
   } from '@/api/callback/list-generation';
-  import { CallbackStateMap, donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
+  import {
+    CallbackStateEnum,
+    CallbackStateMap,
+    donorStatusMap,
+    donorStatusValueEnum,
+  } from '@/enums/callbackEnum';
   import dayjs from 'dayjs';
 
   defineOptions({ name: 'CallbackListGeneration' });
@@ -90,14 +100,14 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    clickToRowSelect: false,
+    clickToRowSelect: true,
     rowSelection: {
-      type: 'checkbox',
+      type: 'radio',
       onChange: (_, selectedRows: any) => {
         selectedRow.value = selectedRows;
       },
     },
-    size: 'small',
+    size: 'middle',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,
@@ -108,7 +118,7 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    canResize: true,
   });
 
   function handleAdd() {
@@ -122,15 +132,34 @@
     });
   }
 
+  function handleEdit() {
+    if (selectedRow.value.length === 0) {
+      createMessage.warn('请选择要编辑的名单');
+      return;
+    }
+
+    openGenerationDrawer(true, {
+      isUpdate: true,
+      record: {
+        batchNo: selectedRow.value[0].planNo,
+      },
+    });
+  }
+
   async function handleDelete() {
-    if (!selectedRow.value.length) {
+    if (selectedRow.value.length === 0) {
       createMessage.warn('请选择要撤销的名单');
+      return;
+    }
+
+    if (selectedRow.value[0].state !== CallbackStateEnum.WIT) {
+      createMessage.warn('该状态不允许撤销');
       return;
     }
 
     createConfirm({
       title: '确认',
-      content: '确认撤消名单吗？？',
+      content: '确认撤消名单吗？',
       iconType: 'warning',
       onOk: async () => {
         await deleteCallback({
@@ -151,12 +180,10 @@
     exportLoading.value = true;
     try {
       const exportData = await getCallbackDetail({
-        currPage: '1',
-        pageSize: '999',
         batchNo: selectedRow.value[0].planNo,
       });
 
-      const _exportData = exportData.result!.map((it) => {
+      const _exportData = exportData!.map((it) => {
         return {
           donorNo: it.donorNo,
           donorName: it.donorName,
@@ -199,7 +226,12 @@
     return stationNames.value.find((it) => it.stationNo === record.stationNo)?.stationName;
   }
 
-  function handleSelectSuccess(id: string) {
+  const batchNo = ref('');
+  async function handleSelectSuccess(id: string) {
+    batchNo.value = await createCallbackBatch({
+      stationNo: id,
+    });
+
     openGenerationDrawer(true, {
       isUpdate: false,
       reload: true,
@@ -209,6 +241,7 @@
           value: it.stationNo,
         })),
         stationNo: id,
+        batchNo: batchNo.value,
       },
     });
   }

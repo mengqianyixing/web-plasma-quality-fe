@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2023-12-23 20:43:42`
+ * @更新时间 `2024-01-04 16:15:50`
  */
 export interface GetApiCoreBankTraiesRequest {
   /**
@@ -38,12 +38,19 @@ export interface GetApiCoreBankTraiesRequest {
   /**
    * 样本批次
    */
-  sampleNo?: string;
+  batchSampleNo?: string;
   /**
    * 投产准备号
    */
   prepareNo?: string;
+  /**
+   * 是否禁用，0表示启用，1表示禁用
+   */
   closed?: string;
+  /**
+   * 血浆箱号
+   */
+  boxNo?: string;
 }
 
 /**
@@ -51,7 +58,7 @@ export interface GetApiCoreBankTraiesRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2023-12-23 20:43:42`
+ * @更新时间 `2024-01-04 16:15:50`
  */
 export interface GetApiCoreBankTraiesResponse {
   /**
@@ -79,17 +86,25 @@ export interface GetApiCoreBankTraiesResponse {
      */
     totalNumber?: number;
     /**
+     * 已存血浆数量
+     */
+    totalBagNumber?: string;
+    /**
      * 所存放库房名称
      */
-    wareHouseName?: string;
-    /**
-     * 所存放区域名称
-     */
-    subWareHouseName?: string;
+    houseName?: string;
     /**
      * 所存放货位号
      */
     locationNo?: string;
+    /**
+     * 库房编号
+     */
+    houseNo?: string;
+    /**
+     * 库房类型
+     */
+    houseType?: string;
     /**
      * 创建人
      */
@@ -98,14 +113,6 @@ export interface GetApiCoreBankTraiesResponse {
      * 创建时间
      */
     create_at?: string;
-    /**
-     * 容量
-     */
-    capacity?: number;
-    /**
-     * 托盘存放类型
-     */
-    trayType?: string;
     /**
      * 0表示启用，1表示禁用
      */

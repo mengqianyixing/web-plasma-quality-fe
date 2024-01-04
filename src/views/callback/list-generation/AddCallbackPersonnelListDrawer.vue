@@ -7,57 +7,51 @@
     showFooter
     @ok="handleOk"
   >
-    <BasicTable @register="registerTable" ref="table">
-      <template #toolbar>
-        <a-button type="primary" @click="handleAdd">新增</a-button>
-        <a-button type="primary" @click="handleDelete">撤销</a-button>
-      </template>
-    </BasicTable>
-
-    <AddCallbackPersonnelListDrawer @register="registerAddDrawer" @success="reload" />
+    <BasicTable @register="registerTable" ref="table" />
   </BasicDrawer>
 </template>
 <script lang="ts" setup>
-  import { BasicDrawer, useDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { computed, ref, unref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
   import { useMessage } from '@/hooks/web/useMessage';
 
-  import AddCallbackPersonnelListDrawer from '@/views/callback/list-generation/AddCallbackPersonnelListDrawer.vue';
   import {
     callbackDrawerSearchFromSchema,
     callbackDrawerColumns,
   } from '@/views/callback/list-generation/generation.data';
-  import { getCallbackDetail, revokeCallback } from '@/api/callback/list-generation';
+  import { generateCallback, getNeedCallbackList } from '@/api/callback/list-generation';
   import dayjs from 'dayjs';
 
   const emit = defineEmits(['success', 'register']);
 
-  const selectedRow = ref<Recordable>([]);
+  const selectedRow = ref<Recordable[]>([]);
   const isUpdate = ref(false);
   const stationNo = ref('');
-  const batchNo = ref('');
 
-  const { createConfirm } = useMessage();
-
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { setSelectedRowKeys, reload }] = useTable({
     title: '样本批次列表',
-    api: getCallbackDetail,
+    api: getNeedCallbackList,
     columns: callbackDrawerColumns,
+    beforeFetch: (params) => {
+      return {
+        ...params,
+        stationNo: stationNo.value,
+        batchNo: batchNo.value,
+      };
+    },
     formConfig: {
-      showAdvancedButton: false,
       labelWidth: 150,
+      showAdvancedButton: false,
       schemas: callbackDrawerSearchFromSchema,
       transformDateFunc(date) {
         return dayjs(date).format('YYYY-MM-DD');
       },
     },
-    pagination: false,
-    beforeFetch: (params) => {
-      return {
-        ...params,
-        batchNo: batchNo.value,
-      };
+    afterFetch: (data) => {
+      const allDonorNos = data.map((it) => it.donorNo);
+      selectedRow.value = allDonorNos;
+      setSelectedRowKeys(allDonorNos);
     },
     rowKey: 'donorNo',
     clickToRowSelect: true,
@@ -82,13 +76,14 @@
       width: 80,
     },
     immediate: false,
+    pagination: false,
   });
 
-  const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '生成名单'));
+  const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '选择名单'));
 
   const table = ref(null);
-  const [registerAddDrawer, { openDrawer }] = useDrawer();
-  const [register, { setDrawerProps, closeDrawer }] = useDrawerInner((data) => {
+  const batchNo = ref('');
+  const [register, { closeDrawer, setDrawerProps }] = useDrawerInner((data) => {
     setDrawerProps({
       maskClosable: false,
     });
@@ -100,35 +95,22 @@
     reload();
   });
 
-  async function handleAdd() {
-    openDrawer(true, {
-      reload: true,
-      record: {
-        stationNo: stationNo.value,
-        batchNo: batchNo.value,
-      },
-    });
-  }
+  const { createConfirm } = useMessage();
 
-  async function handleDelete() {
+  async function handleOk() {
     createConfirm({
-      iconType: 'warning',
       title: '确认',
-      content: '确认撤消选中名单吗？',
+      content: `名单共有${selectedRow.value.length}位浆员待回访，确认添加吗？`,
+      iconType: 'warning',
       onOk: async () => {
-        await revokeCallback({
+        await generateCallback({
           batchNo: batchNo.value,
           donorNos: selectedRow.value.map((it) => it.donorNo),
         });
 
-        closeDrawer();
         emit('success');
+        closeDrawer();
       },
     });
-  }
-
-  function handleOk() {
-    emit('success');
-    closeDrawer();
   }
 </script>

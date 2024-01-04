@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper>
+  <PageWrapper contentFullHeight fixedHeight>
     <Description @register="register" :data="sampleBatchData">
       <template #action>
         <a-button type="primary" @click="handleAcceptSample">接收</a-button>
@@ -99,8 +99,11 @@
     },
   ];
   const [register] = useDescription({
+    bordered: true,
+    column: 6,
     contentStyle: {
-      width: '25%',
+      width: '100px',
+      padding: '10px',
     },
     title: '样本批次信息',
     schema: schema,

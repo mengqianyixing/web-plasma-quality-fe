@@ -1,5 +1,6 @@
 import { defHttp } from '@/utils/http/axios';
 import {
+  DeleteApiCoreDonorCallbackDetailRequest,
   DeleteApiCoreDonorCallbackRequest,
   GetApiCoreDonorCallbackDetailRequest,
   GetApiCoreDonorCallbackDetailResponse,
@@ -7,15 +8,18 @@ import {
   GetApiCoreDonorCallbackNeedResponse,
   GetApiCoreDonorCallbackRequest,
   GetApiCoreDonorCallbackResponse,
+  PostApiCoreDonorCallbackBatchRequest,
+  PostApiCoreDonorCallbackBatchResponse,
   PostApiCoreDonorCallbackNeedRequest,
 } from '@/api/type/callbackManage';
 import { GetApiCoreStationResponse } from '@/api/type/stationManage';
 
 enum Api {
   CALLBACK_LIST = '/api/core/donor/callback',
-  CALLBACK_DETAIL = '/api/core/donor/callback/detail',
+  CALLBACK_RESTFUL = '/api/core/donor/callback/detail',
   STATION_NAME = '/api/core/station',
   GENERATE_CALLBACK = '/api/core/donor/callback/need',
+  CREATE_CALLBACK_BATCH = '/api/core/donor/callback/batch',
 }
 
 export const getCallbackListApi = (params: GetApiCoreDonorCallbackRequest) =>
@@ -29,7 +33,7 @@ export const getCallbackListApi = (params: GetApiCoreDonorCallbackRequest) =>
 export const getCallbackDetail = (params: GetApiCoreDonorCallbackDetailRequest) =>
   defHttp.get<GetApiCoreDonorCallbackDetailResponse>(
     {
-      url: Api.CALLBACK_DETAIL,
+      url: Api.CALLBACK_RESTFUL,
       params,
     },
     {
@@ -53,3 +57,9 @@ export const getNeedCallbackList = (params: GetApiCoreDonorCallbackNeedRequest) 
 
 export const generateCallback = (params: PostApiCoreDonorCallbackNeedRequest) =>
   defHttp.post({ url: Api.GENERATE_CALLBACK, params });
+
+export const createCallbackBatch = (params: PostApiCoreDonorCallbackBatchRequest) =>
+  defHttp.post<PostApiCoreDonorCallbackBatchResponse>({ url: Api.CREATE_CALLBACK_BATCH, params });
+
+export const revokeCallback = (params: DeleteApiCoreDonorCallbackDetailRequest) =>
+  defHttp.delete({ url: Api.CALLBACK_RESTFUL, params });

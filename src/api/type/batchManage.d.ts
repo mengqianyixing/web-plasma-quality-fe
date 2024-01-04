@@ -1051,7 +1051,7 @@ export interface GetApiCoreBatchSampleAcceptBatchSampleNoResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/verify/box/pause`
- * @更新时间 `2023-12-29 10:40:32`
+ * @更新时间 `2024-01-04 17:14:43`
  */
 export interface PostApiCoreBatchPlasmaVerifyBoxPauseRequest {
   /**
@@ -1071,9 +1071,13 @@ export interface PostApiCoreBatchPlasmaVerifyBoxPauseRequest {
    */
   remark: string;
   /**
-   * 类型(暂停-PAUSE  继续-RESTORE)
+   * 操作类型(暂停-PAUSE  继续-RESTORE)
    */
-  pauseType: string;
+  state: string;
+  /**
+   * 类型 ACC(接收) VER(验收)
+   */
+  type: string;
 }
 
 /**
@@ -1081,7 +1085,7 @@ export interface PostApiCoreBatchPlasmaVerifyBoxPauseRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/verify/box/pause`
- * @更新时间 `2023-12-29 10:40:32`
+ * @更新时间 `2024-01-04 17:14:43`
  */
 export interface PostApiCoreBatchPlasmaVerifyBoxPauseResponse {}
 
@@ -1089,10 +1093,10 @@ export interface PostApiCoreBatchPlasmaVerifyBoxPauseResponse {}
  * 接口 [验收暂停列表↗](https://yapi.sharing8.cn/project/529/interface/api/31896) 的 **请求类型**
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
- * @请求头 `GET /api/core/batch/plasma/verify/pause/{batchNo}/{pattern}`
- * @更新时间 `2023-12-29 18:02:58`
+ * @请求头 `GET /api/core/batch/plasma/verify/pause/{batchNo}/{pattern}/{pauseType}`
+ * @更新时间 `2024-01-04 17:08:53`
  */
-export interface GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternRequest {
+export interface GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternPauseTypeRequest {
   /**
    * 批号
    */
@@ -1101,16 +1105,20 @@ export interface GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternRequest {
    * 查询类型(箱BOX , 批BCH)
    */
   pattern: string;
+  /**
+   * ACC(接收) VER(验收)
+   */
+  pauseType: string;
 }
 
 /**
  * 接口 [验收暂停列表↗](https://yapi.sharing8.cn/project/529/interface/api/31896) 的 **返回类型**
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
- * @请求头 `GET /api/core/batch/plasma/verify/pause/{batchNo}/{pattern}`
- * @更新时间 `2023-12-29 18:02:58`
+ * @请求头 `GET /api/core/batch/plasma/verify/pause/{batchNo}/{pattern}/{pauseType}`
+ * @更新时间 `2024-01-04 17:08:53`
  */
-export type GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternResponse = {
+export type GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternPauseTypeResponse = {
   /**
    * 箱号
    */
@@ -1158,7 +1166,7 @@ export type GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternResponse = {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/verify/batch/pause`
- * @更新时间 `2023-12-29 10:40:38`
+ * @更新时间 `2024-01-04 17:14:54`
  */
 export interface PostApiCoreBatchPlasmaVerifyBatchPauseRequest {
   /**
@@ -1174,9 +1182,13 @@ export interface PostApiCoreBatchPlasmaVerifyBatchPauseRequest {
    */
   remark: string;
   /**
-   * 类型(暂停-PAUSE  继续-RESTORE)
+   * 操作类型(暂停-PAUSE  继续-RESTORE)
    */
-  pauseType: string;
+  state: string;
+  /**
+   * 类型 ACC(接收) VER(验收)
+   */
+  type: string;
 }
 
 /**
@@ -1184,7 +1196,7 @@ export interface PostApiCoreBatchPlasmaVerifyBatchPauseRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/verify/batch/pause`
- * @更新时间 `2023-12-29 10:40:38`
+ * @更新时间 `2024-01-04 17:14:54`
  */
 export interface PostApiCoreBatchPlasmaVerifyBatchPauseResponse {}
 
@@ -1707,5 +1719,44 @@ export interface PostApiCoreBatchSampleUnqualifiedRequest {
  * @更新时间 `2024-01-03 21:27:40`
  */
 export type PostApiCoreBatchSampleUnqualifiedResponse = string;
+
+/**
+ * 接口 [接收暂停↗](https://yapi.sharing8.cn/project/529/interface/api/32064) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/accept/batch/pause`
+ * @更新时间 `2024-01-04 17:45:40`
+ */
+export interface PostApiCoreBatchPlasmaAcceptBatchPauseRequest {
+  /**
+   * 批号
+   */
+  batchNo: string;
+  /**
+   * 复核人
+   */
+  checker: string;
+  /**
+   * 备注
+   */
+  remark: string;
+  /**
+   * 操作类型(暂停-PAUSE  继续-RESTORE)
+   */
+  state: string;
+  /**
+   * 类型 ACC(接收) VER(验收)
+   */
+  type: string;
+}
+
+/**
+ * 接口 [接收暂停↗](https://yapi.sharing8.cn/project/529/interface/api/32064) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/accept/batch/pause`
+ * @更新时间 `2024-01-04 17:45:40`
+ */
+export interface PostApiCoreBatchPlasmaAcceptBatchPauseResponse {}
 
 /* prettier-ignore-end */

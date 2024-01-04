@@ -51,6 +51,7 @@
     },
   ];
   const [registerDescription] = useDescription({
+    bordered: false,
     contentStyle: {
       width: '25%',
     },
@@ -105,7 +106,7 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    canResize: true,
     immediate: true,
   });
 

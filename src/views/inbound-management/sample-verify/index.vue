@@ -215,8 +215,9 @@
     },
   ];
   const [register] = useDescription({
+    column: 6,
     contentStyle: {
-      width: '20%',
+      width: '100px',
     },
     title: '样本验收批次信息',
     schema: schema,
