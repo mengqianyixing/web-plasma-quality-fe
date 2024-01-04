@@ -2,6 +2,10 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 import { getDictItemListByNoApi } from '@/api/dictionary';
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 
+enum STATE {
+  UND = '未发布',
+  PUD = '已发布',
+}
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
@@ -39,14 +43,9 @@ export const columns: BasicColumn[] = [
   {
     title: '当前状态',
     dataIndex: '',
-  },
-  {
-    title: '生成人',
-    dataIndex: '',
-  },
-  {
-    title: '生成时间',
-    dataIndex: '',
+    customRender: ({ record }) => {
+      return STATE[record.state];
+    },
   },
   {
     title: '复核人',
@@ -94,9 +93,15 @@ export const searchFormschema: FormSchema[] = [
   },
 
   {
-    field: '',
+    field: 'state',
     component: 'Select',
     label: '样品状态',
+    componentProps: {
+      options: [
+        { value: 'UND', label: '未发布' },
+        { value: 'PUD', label: '已发布' },
+      ],
+    },
   },
   {
     field: '[begnIssueAt, endIssueAt]',
