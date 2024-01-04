@@ -31,7 +31,7 @@
   const { createMessage } = useMessage();
   const { warning } = createMessage;
 
-  const [registerTable, { reload, setSelectedRowKeys }] = useTable({
+  const [registerTable, { reload, setSelectedRowKeys, clearSelectedRowKeys }] = useTable({
     title: '样本验收批次列表',
     api: getSampleVerifyList,
     columns: sampleVerifyColumns,
@@ -45,7 +45,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    clickToRowSelect: false,
+    clickToRowSelect: true,
     rowSelection: {
       type: 'checkbox',
       onChange: (keys, selectedRows: any) => {
@@ -96,6 +96,7 @@
 
   function handleSelect() {
     emit('success', selectedRow.value[0]);
+    clearSelectedRowKeys();
     closeDrawer();
   }
 

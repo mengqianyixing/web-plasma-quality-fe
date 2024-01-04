@@ -45,3 +45,51 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
 ];
+
+export const missingNumberListColumns: BasicColumn[] = [
+  {
+    title: '样本编号',
+    dataIndex: 'sampleNo',
+  },
+  {
+    title: '浆员姓名',
+    dataIndex: 'donorName',
+  },
+  {
+    title: '浆员编号',
+    dataIndex: 'donorNo',
+  },
+  {
+    title: '采浆日期',
+    dataIndex: 'collectDate',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
+  },
+];
+
+export const plasmaUnqualifiedColumns: BasicColumn[] = [
+  {
+    title: '样本编号',
+    dataIndex: 'sampleNo',
+  },
+  {
+    title: '浆员姓名',
+    dataIndex: 'donorName',
+  },
+  {
+    title: '浆员编号',
+    dataIndex: 'donorNo',
+  },
+  {
+    title: '采浆日期',
+    dataIndex: 'collectDate',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
+  },
+  {
+    title: '不合格原因',
+    dataIndex: 'unqualifiedReason',
+  },
+];
