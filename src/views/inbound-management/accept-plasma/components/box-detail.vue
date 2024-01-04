@@ -55,7 +55,7 @@
             {{ optsTransMap(checkOpts, 'code', 'name')[text] }}
           </template>
           <template v-if="column.dataIndex === 'boxNo'">
-            <Button type="link" @click="showBatchDetail(record)">{{ text }}</Button>
+            <Button type="link" @click="showBoxDetail(record)">{{ text }}</Button>
           </template>
         </template>
       </Table>
@@ -81,7 +81,7 @@
   const { createMessage } = useMessage();
   const { warning } = createMessage;
 
-  const emit = defineEmits(['close']);
+  const emit = defineEmits(['close', 'show-box-detail']);
   const props = defineProps({
     checkOpts: Array as PropType<any>,
   });
@@ -182,8 +182,8 @@
     queryTable();
   };
 
-  const showBatchDetail = (row) => {
-    console.log(row);
+  const showBoxDetail = (row) => {
+    emit('show-box-detail', row);
   };
   defineExpose({
     searchForm,
