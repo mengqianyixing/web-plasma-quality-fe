@@ -1,12 +1,7 @@
 <template>
   <div class="main" v-loading="loadingRef">
     <div class="search-bar" ref="searchBarRef">
-      <Form
-        layout="inline"
-        :model="filterForm"
-        style="margin-bottom: 16px"
-        :labelCol="{ style: { width: '70px' } }"
-      >
+      <Form layout="inline" :model="filterForm" :labelCol="{ style: { width: '70px' } }">
         <Row style="width: 100%">
           <Col>
             <!-- <FormItem label="复核人">
@@ -106,7 +101,12 @@
         </Col>
       </Row>
     </div>
-    <batchModal v-if="batchModalVisible" @close="closeBatch" @confirm="confirmBatch" />
+    <batchModal
+      v-if="batchModalVisible"
+      @close="closeBatch"
+      @confirm="confirmBatch"
+      mode="receive"
+    />
     <registerModal v-if="registerModalVisible" @close="closeRegister" />
     <suspendOrResumeModal
       v-if="suspendModalVisible"
