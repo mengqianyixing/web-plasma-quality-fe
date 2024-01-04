@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-26 15:27:18
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-04 10:53:09
+ * @LastEditTime: 2024-01-04 19:20:01
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
@@ -17,6 +17,9 @@
         <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleDt(record)">
           {{ record.sampleBatchNo }}
         </span>
+      </template>
+      <template #stationName="{ record }: { record: Recordable }">
+        {{ stationMap.get(record.stationNo) }}
       </template>
     </BasicTable>
     <DtDrawer @register="registerDtDrawer" />
@@ -32,6 +35,10 @@
   import DtDrawer from './dtDrawer.vue';
   import ImportDrawer from './importDrawer.vue';
   import { getListApi, deleteTiterApi } from '@/api/inspect/titerImport';
+  import { onMounted, ref } from 'vue';
+  import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
+
+  const stationMap = ref(new Map());
 
   const [registerDtDrawer, { openDrawer: openDtDrawer }] = useDrawer();
   const [registerImportDrawer, { openDrawer: openImportDrawer }] = useDrawer();
@@ -52,8 +59,8 @@
     rowSelection: { type: 'radio' },
     beforeFetch: (p) => ({
       ...p,
-      recordStartDate: p.recordStartDate && p.recordStartDate.slice(0, 10),
-      recordEndDate: p.recordEndDate && p.recordEndDate.slice(0, 10),
+      recordStartDate: p.recordStartDate?.slice(0, 10),
+      recordEndDate: p.recordEndDate?.slice(0, 10),
     }),
     afterFetch: (res) => {
       clearSelectedRowKeys();
@@ -98,4 +105,10 @@
       onCancel: () => Modal.destroyAll(),
     });
   }
+  onMounted(async () => {
+    const res = await stationNameSearchApi();
+    res.forEach((_) => {
+      stationMap.value.set(_.stationNo, _.stationName);
+    });
+  });
 </script>
