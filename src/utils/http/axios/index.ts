@@ -157,11 +157,6 @@ const transform: AxiosTransform = {
       (config as Recordable).headers['access-token'] = options.authenticationScheme
         ? `${options.authenticationScheme} ${token}`
         : token;
-      // @deprecated since 20231228
-      // access_token 替换为 'access-token' 兼容一个版本的 access_token
-      (config as Recordable).headers['access_token'] = options.authenticationScheme
-        ? `${options.authenticationScheme} ${token}`
-        : token;
     }
     return config;
   },
