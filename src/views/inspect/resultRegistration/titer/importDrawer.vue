@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-29 15:52:07
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-03 21:53:43
+ * @LastEditTime: 2024-01-04 14:13:50
 -->
 <template>
   <BasicDrawer
@@ -38,7 +38,7 @@
             >开始上传</a-button
           >
           <a-button type="primary" class="mr-10px" size="small" @click="downFile">
-            <a href="/resource/file/效价导入.xls" download>下载模板</a>
+            <a href="/manage/tmp/titer.xlsx" download>下载模板</a>
           </a-button>
         </div>
       </div>

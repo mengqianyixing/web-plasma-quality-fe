@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-27 16:52:13
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-04 09:55:39
+ * @LastEditTime: 2024-01-04 14:12:34
 -->
 <template>
   <BasicDrawer
@@ -38,9 +38,9 @@
             :disabled="!hasFile"
             >开始上传</a-button
           >
-          <a-button type="primary" class="mr-10px" size="small" @click="downFile"
-            >下载模板</a-button
-          >
+          <a-button type="primary" class="mr-10px" size="small" @click="downFile">
+            <a href="/manage/tmp/titerImport.xlsx" download>下载模板</a>
+          </a-button>
         </div>
       </div>
       <CellWapper :data="cellData" cell-width="33%" :cell-list="cellList" :gap="0" />
