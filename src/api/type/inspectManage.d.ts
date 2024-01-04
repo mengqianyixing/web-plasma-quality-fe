@@ -1045,7 +1045,7 @@ export type PutApiCoreLabRegistrationLabItemNotCheckResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/labItem/titer`
- * @更新时间 `2024-01-03 20:10:48`
+ * @更新时间 `2024-01-04 13:36:13`
  */
 export type PostApiCoreLabRegistrationLabItemTiterRequest = {
   /**
@@ -1064,6 +1064,10 @@ export type PostApiCoreLabRegistrationLabItemTiterRequest = {
    * 当前批次
    */
   bsNo: string;
+  /**
+   * 项目id
+   */
+  projectId: string;
 }[];
 
 /**
@@ -1071,7 +1075,7 @@ export type PostApiCoreLabRegistrationLabItemTiterRequest = {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/labItem/titer`
- * @更新时间 `2024-01-03 20:10:48`
+ * @更新时间 `2024-01-04 13:36:13`
  */
 export type PostApiCoreLabRegistrationLabItemTiterResponse = string;
 
@@ -1665,13 +1669,9 @@ export type PutApiCoreLabReportReviewRevokeResponse = string;
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `PUT /api/core/lab/report/review/release/{reportNo}`
- * @更新时间 `2024-01-02 17:08:54`
+ * @更新时间 `2024-01-04 13:54:27`
  */
 export interface PutApiCoreLabReportReviewReleaseReportNoRequest {
-  /**
-   * 发布人姓名
-   */
-  issuer: string;
   reportNo: string;
 }
 
@@ -1680,7 +1680,7 @@ export interface PutApiCoreLabReportReviewReleaseReportNoRequest {
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `PUT /api/core/lab/report/review/release/{reportNo}`
- * @更新时间 `2024-01-02 17:08:54`
+ * @更新时间 `2024-01-04 13:54:27`
  */
 export interface PutApiCoreLabReportReviewReleaseReportNoResponse {}
 
@@ -1730,7 +1730,7 @@ export interface PutApiCoreLabReportMadeRevokeResponse {}
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/reports`
- * @更新时间 `2024-01-04 10:28:12`
+ * @更新时间 `2024-01-04 13:35:42`
  */
 export interface PostApiCoreLabReportsRequest {
   /**
@@ -1766,7 +1766,7 @@ export interface PostApiCoreLabReportsRequest {
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/reports`
- * @更新时间 `2024-01-04 10:28:12`
+ * @更新时间 `2024-01-04 13:35:42`
  */
 export interface PostApiCoreLabReportsResponse {
   totalCount: number;
@@ -1822,6 +1822,7 @@ export interface PostApiCoreLabReportsResponse {
      * 发布日期
      */
     issueAt: string;
+    reportNo: string;
   }[];
 }
 

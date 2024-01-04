@@ -1,91 +1,105 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
+import { getDictItemListByNoApi } from '@/api/dictionary';
+import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: 'methodAbbr',
+    dataIndex: 'stationName',
   },
   {
     title: '样品批号',
-    dataIndex: 'itemKey',
+    dataIndex: 'bsNo',
   },
   {
     title: '样品类型',
-    dataIndex: 'intervalDays',
+    dataIndex: 'sampleCode',
+    slots: { customRender: 'sampleCode' },
   },
   {
     title: '合格样品总数',
-    dataIndex: 'sort',
+    dataIndex: 'totalQualified',
   },
   {
     title: '不合格样品总数',
-    dataIndex: 'detectionMode',
+    dataIndex: 'totalUnqualified',
   },
   {
     title: '高效价总数',
-    dataIndex: 'enable',
+    dataIndex: 'totalHighTiter',
   },
   {
     title: '低效价总数',
-    dataIndex: 'creater',
+    dataIndex: 'totalLowTiter',
   },
   {
     title: '无效价总数',
-    dataIndex: 'createAt',
+    dataIndex: 'totalNormal',
   },
   {
     title: '当前状态',
-    dataIndex: 'createAt',
+    dataIndex: '',
   },
   {
     title: '生成人',
-    dataIndex: 'createAt',
+    dataIndex: '',
   },
   {
     title: '生成时间',
-    dataIndex: 'createAt',
+    dataIndex: '',
   },
   {
     title: '复核人',
-    dataIndex: 'createAt',
+    dataIndex: 'reviewer',
   },
   {
     title: '复核日期',
-    dataIndex: 'createAt',
+    dataIndex: 'reviewAt',
   },
   {
     title: '发布人',
-    dataIndex: 'createAt',
+    dataIndex: 'issuer',
   },
   {
     title: '发布日期',
-    dataIndex: 'createAt',
+    dataIndex: 'issueAt',
   },
 ];
 
 export const searchFormschema: FormSchema[] = [
   {
-    field: 'methodAbbr',
-    component: 'Select',
+    field: 'stationNo',
+    component: 'ApiSelect',
     label: '采浆公司',
+    componentProps: {
+      api: stationNameSearchApi,
+      labelField: 'stationName',
+      valueField: 'stationNo',
+    },
   },
   {
-    field: 'itemKey',
-    component: 'Input',
-    label: '样品批号',
-  },
-  {
-    field: 'itemKey',
-    component: 'Select',
+    field: 'sampleCode',
+    component: 'ApiSelect',
     label: '样品类型',
+    componentProps: {
+      api: () =>
+        new Promise((rs, rj) => {
+          getDictItemListByNoApi(['sampleType'])
+            .then((res) => {
+              rs(res[0]['dictImtes']);
+            })
+            .catch(rj);
+        }),
+    },
   },
+
   {
-    field: 'itemKey',
+    field: '',
     component: 'Select',
     label: '样品状态',
   },
   {
-    field: '[createStartDate, createEndDate]',
+    field: '[begnIssueAt, endIssueAt]',
     component: 'RangePicker',
     label: '发布时间',
     componentProps: {

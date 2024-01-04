@@ -1422,7 +1422,7 @@ export type PostApiCoreBatchSampleVerifyNonConformanceResponse = string;
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `PUT /api/core/batch/sample/verify/revoke`
- * @更新时间 `2023-12-29 14:30:52`
+ * @更新时间 `2024-01-04 11:35:06`
  */
 export interface PutApiCoreBatchSampleVerifyRevokeRequest {
   /**
@@ -1437,6 +1437,10 @@ export interface PutApiCoreBatchSampleVerifyRevokeRequest {
    * 撤销原因
    */
   revokeReason: string;
+  /**
+   * 样本批号
+   */
+  batchSampleNo: string;
 }
 
 /**
@@ -1444,7 +1448,7 @@ export interface PutApiCoreBatchSampleVerifyRevokeRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `PUT /api/core/batch/sample/verify/revoke`
- * @更新时间 `2023-12-29 14:30:52`
+ * @更新时间 `2024-01-04 11:35:06`
  */
 export type PutApiCoreBatchSampleVerifyRevokeResponse = string;
 
