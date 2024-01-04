@@ -18,10 +18,6 @@
                 onClick: handleEdit.bind(null, record),
               },
               {
-                label: '复制',
-                onClick: handleCopy.bind(null, record),
-              },
-              {
                 label: '删除',
                 color: 'error',
                 popConfirm: {
@@ -31,12 +27,23 @@
                 },
               },
             ]"
+            :dropDownActions="[
+              {
+                label: '复制',
+                onClick: handleCopy.bind(null, record),
+              },
+              {
+                label: '历史',
+                onClick: handleHistory.bind(null, record),
+              },
+            ]"
           />
         </template>
       </template>
     </BasicTable>
 
     <StyleDrawer @register="registerStyleDrawer" @success="handleSuccess" />
+    <StyleHistoryDrawer @register="registerStyleHistoryDrawer" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -50,6 +57,8 @@
   import { useDrawer } from '@/components/Drawer';
 
   import StyleDrawer from './StyleDrawer.vue';
+  import StyleHistoryDrawer from './StyleHistoryDrawer.vue';
+
   import { getTagDictionary } from '@/api/tag/encoding';
   import { TagDictionaryType } from '@/enums/dictionaryEnum';
 
@@ -61,9 +70,11 @@
   onMounted(async () => {
     const dictionaryArr = await getTagDictionary([TagDictionaryType.LabelType]);
     if (!dictionaryArr) return;
+
     labelTypeDictionary.value = dictionaryArr.find(
       (it) => it.dictNo === TagDictionaryType.LabelType,
     )?.dictImtes;
+
     await getForm().updateSchema({
       field: 'labelType',
       componentProps: {
@@ -73,6 +84,7 @@
   });
 
   const [registerStyleDrawer, { openDrawer: openStyleDrawer }] = useDrawer();
+  const [registerStyleHistoryDrawer, { openDrawer: openStyleHistoryDrawer }] = useDrawer();
 
   const [registerTable, { reload, getForm }] = useTable({
     title: '标签样式列表',
@@ -113,6 +125,13 @@
     openStyleDrawer(true, {
       record,
       isUpdate: true,
+    });
+  }
+
+  function handleHistory(record: Recordable) {
+    openStyleHistoryDrawer(true, {
+      record,
+      labelTypeOptions: labelTypeDictionary.value,
     });
   }
 

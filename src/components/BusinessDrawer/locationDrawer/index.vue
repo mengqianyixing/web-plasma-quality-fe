@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-26 10:20:32
+ * @LastEditTime: 2023-12-27 17:37:05
 -->
 <template>
   <BasicDrawer
@@ -42,8 +42,14 @@
     immediate: false,
     rowKey: 'locationNo',
     columns: [{ title: '货位号', dataIndex: 'locationNo' }],
-    useSearchForm: false,
+    useSearchForm: true,
     bordered: true,
+    formConfig: {
+      baseColProps: {
+        span: 16,
+      },
+      schemas: [{ field: 'locationNo', component: 'Input', label: '货位号' }],
+    },
     beforeFetch: (params) => {
       return { ...params, ...state.params };
     },

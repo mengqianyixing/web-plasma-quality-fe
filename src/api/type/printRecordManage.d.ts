@@ -113,25 +113,22 @@ export type GetApiSysPrintingRecordPreviewPrtNoResponse = string[];
  * 接口 [标签补打↗](https://yapi.sharing8.cn/project/521/interface/api/31665) 的 **请求类型**
  *
  * @分类 [打印记录↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5215)
- * @请求头 `PUT /api/sys/printingRecord/{prtNo}{reason}`
- * @更新时间 `2023-12-27 09:38:41`
+ * @请求头 `PUT /api/sys/printingRecord`
+ * @更新时间 `2023-12-27 10:18:05`
  */
-export interface PutApiSysPrintingRecordPrtNoReasonRequest {
+export interface PutApiSysPrintingRecordRequest {
   prtNo: string;
-  /**
-   * 打印原因
-   */
-  reason: string;
+  reason?: string;
 }
 
 /**
  * 接口 [标签补打↗](https://yapi.sharing8.cn/project/521/interface/api/31665) 的 **返回类型**
  *
  * @分类 [打印记录↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5215)
- * @请求头 `PUT /api/sys/printingRecord/{prtNo}{reason}`
- * @更新时间 `2023-12-27 09:38:41`
+ * @请求头 `PUT /api/sys/printingRecord`
+ * @更新时间 `2023-12-27 10:18:05`
  */
-export interface PutApiSysPrintingRecordPrtNoReasonResponse {
+export interface PutApiSysPrintingRecordResponse {
   times?: number;
   resolution?: number;
   printerName?: string;

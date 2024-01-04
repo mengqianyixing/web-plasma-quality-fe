@@ -9,6 +9,8 @@ export type Component<T = any> =
 
 // @ts-ignore
 export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
+  menuWeight?: number; // 菜单排序权重，越高越前面。
+  id?: number;
   name: string;
   meta: RouteMeta;
   component?: Component | string;

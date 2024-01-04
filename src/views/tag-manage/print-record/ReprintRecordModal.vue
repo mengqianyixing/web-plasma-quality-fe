@@ -24,7 +24,8 @@
     schemas: ReprintRecordFormSchema,
     showActionButtonGroup: false,
   });
-  const [registerModal, { setModalProps }] = useModalInner(async (data) => {
+
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: false });
     updateSchema({
       field: 'reason',
@@ -45,6 +46,7 @@
       emit('success', values);
     } finally {
       setModalProps({ confirmLoading: false });
+      closeModal();
     }
   }
 </script>

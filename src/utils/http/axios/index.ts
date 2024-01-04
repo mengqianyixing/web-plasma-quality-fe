@@ -153,7 +153,7 @@ const transform: AxiosTransform = {
     const token = getToken();
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
-      (config as Recordable).headers['access_token'] = options.authenticationScheme
+      (config as Recordable).headers['access-token'] = options.authenticationScheme
         ? `${options.authenticationScheme} ${token}`
         : token;
     }

@@ -75,6 +75,7 @@
 
   #detail {
     width: 500px;
+    margin-right: 10px;
   }
 
   #sum {

@@ -27,15 +27,17 @@
 
   const isUpdate = ref(true);
   const orderNo = ref('');
-
   const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
-    labelWidth: 100,
+    labelWidth: 120,
     baseColProps: { span: 48 },
     schemas: formSchema,
     showActionButtonGroup: false,
+    transformDateFunc(date) {
+      return date ? date.format('YYYY-MM-DD') : '';
+    },
   });
 
-  const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
+  const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
     resetFields();
     setModalProps({ confirmLoading: false });
     isUpdate.value = !!data?.isUpdate;

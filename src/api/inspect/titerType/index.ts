@@ -1,34 +1,43 @@
 import { defHttp } from '@/utils/http/axios';
 import {
-  GetApiCoreBagTiterTypeBttNoRequest,
-  GetApiCoreBagTiterTypeBttNoResponse,
-  PutApiCoreBagTiterTypeRequest,
-  PutApiCoreBagTiterTypeResponse,
-  PostApiCoreBagTiterTypeRequest,
-  PostApiCoreBagTiterTypeResponse,
-  DeleteApiCoreBagTiterTypeBttNoRequest,
-  DeleteApiCoreBagTiterTypeBttNoResponse,
-  PostApiCoreBagTiterTypesRequest,
-  PostApiCoreBagTiterTypesResponse,
+  GetApiSysDictItemAlenceDictItemIdResponse,
+  GetApiSysDictItemAlenceDictItemIdRequest,
+  PostApiSysDictItemAlencesRequest,
+  PostApiSysDictItemAlencesResponse,
+  PostApiSysDictItemAlenceRequest,
+  PostApiSysDictItemAlenceResponse,
+  PutApiSysDictItemAlenceRequest,
+  PutApiSysDictItemAlenceResponse,
+  DeleteApiSysDictItemAlenceDictItemIdRequest,
+  DeleteApiSysDictItemAlenceDictItemIdResponse,
 } from '@/api/type/inspectManage';
 
 enum Api {
-  LIST = `/api/core/bag/titer/types`,
-  FORM = '/api/core/bag/titer/type',
-  DT_RE = '/api/core/bag/titer/type/',
+  LIST = `/api/sys/dict/item/alences`,
+  FORM = '/api/sys/dict/item/alence',
+  DT_RE = '/api/sys/dict/item/alence/',
 }
 
-export const getListApi = (data: PostApiCoreBagTiterTypesRequest) =>
-  defHttp.post<PostApiCoreBagTiterTypesResponse>({ url: Api.LIST, data });
+export const getListApi = (data: PostApiSysDictItemAlencesRequest) =>
+  defHttp.post<PostApiSysDictItemAlencesResponse>({
+    url: Api.LIST,
+    data: { ...data, dataDictId: 'alenceType' },
+  });
 
-export const addTitlerTypeApi = (data: PostApiCoreBagTiterTypeRequest) =>
-  defHttp.post<PostApiCoreBagTiterTypeResponse>({ url: Api.FORM, data });
+export const addTitlerTypeApi = (data: PostApiSysDictItemAlenceRequest) =>
+  defHttp.post<PostApiSysDictItemAlenceResponse>({
+    url: Api.FORM,
+    data: { ...data, dataDictId: 'alenceType' },
+  });
 
-export const updateTitlerTypeApi = (data: PutApiCoreBagTiterTypeRequest) =>
-  defHttp.put<PutApiCoreBagTiterTypeResponse>({ url: Api.FORM, data });
+export const updateTitlerTypeApi = (data: PutApiSysDictItemAlenceRequest) =>
+  defHttp.put<PutApiSysDictItemAlenceResponse>({
+    url: Api.FORM,
+    data: { ...data, dataDictId: 'alenceType' },
+  });
 
-export const getTitlerTypeDtApi = ({ bttNo }: GetApiCoreBagTiterTypeBttNoRequest) =>
-  defHttp.get<GetApiCoreBagTiterTypeBttNoResponse>({ url: Api.DT_RE + bttNo });
+export const getTitlerTypeDtApi = ({ dictItemId }: GetApiSysDictItemAlenceDictItemIdRequest) =>
+  defHttp.get<GetApiSysDictItemAlenceDictItemIdResponse>({ url: Api.DT_RE + dictItemId });
 
-export const removeTitlerTypeApi = ({ bttNo }: DeleteApiCoreBagTiterTypeBttNoRequest) =>
-  defHttp.delete<DeleteApiCoreBagTiterTypeBttNoResponse>({ url: Api.DT_RE + bttNo });
+export const removeTitlerTypeApi = ({ dictItemId }: DeleteApiSysDictItemAlenceDictItemIdRequest) =>
+  defHttp.delete<DeleteApiSysDictItemAlenceDictItemIdResponse>({ url: Api.DT_RE + dictItemId });

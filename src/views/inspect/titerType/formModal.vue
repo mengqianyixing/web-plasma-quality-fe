@@ -33,7 +33,7 @@
   const emit = defineEmits(['success', 'register']);
 
   defineOptions({ name: 'FormModel' });
-  const state = reactive({ bttNo: '', type: '', isRequest: false });
+  const state = reactive({ dictItemId: '', type: '', isRequest: false });
 
   const [registerForm, { validate, setFieldsValue, clearValidate, resetFields, updateSchema }] =
     useForm({
@@ -43,13 +43,13 @@
       showActionButtonGroup: false,
     });
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async ({ data }) => {
-    state.bttNo = data.bttNo;
+    state.dictItemId = data.dictItemId;
     if (state.isRequest === false) {
       state.isRequest = true;
       getDict();
     }
-    if (data.bttNo) {
-      const res = await getTitlerTypeDtApi({ bttNo: data.bttNo });
+    if (data.dictItemId) {
+      const res = await getTitlerTypeDtApi({ dictItemId: data.dictItemId });
       setFieldsValue(res);
       state.type = '编辑';
     } else {
@@ -62,8 +62,8 @@
     try {
       const values = await validate();
       setDrawerProps({ confirmLoading: true });
-      if (state.bttNo) {
-        await updateTitlerTypeApi({ ...values, bttNo: state.bttNo });
+      if (state.dictItemId) {
+        await updateTitlerTypeApi({ ...values, dictItemId: state.dictItemId });
       } else {
         await addTitlerTypeApi({ ...values } as any);
       }
