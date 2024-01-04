@@ -44,8 +44,8 @@ export const plasmaPauseBatch = (params: any) => {
 };
 
 // 血浆验收-暂停箱/批列表
-export const plasmaPauseBoxList = (batchNo: any, pattern: any) => {
-  return defHttp.get<any>({ url: `${Api.PlasmaPauseBoxList}/${batchNo}/${pattern}` });
+export const plasmaPauseBoxList = (batchNo: any, pattern: any, pauseType = 'ACC') => {
+  return defHttp.get<any>({ url: `${Api.PlasmaPauseBoxList}/${batchNo}/${pattern}/${pauseType}` });
 };
 
 // 血浆验收-撤销验收
