@@ -207,7 +207,7 @@
     }
     if (searchForm.value.pattern === 'BOX') {
       try {
-        const params = { ...searchForm.value, pauseType: 'PAUSE' };
+        const params = { ...searchForm.value, state: 'PAUSE', type: 'VER' };
         submitLoading.value = true;
         const data = await plasmaPauseBox(params);
         if (data === null) {
@@ -224,7 +224,8 @@
           batchNo: searchForm.value.batchNo,
           checker: searchForm.value.checker,
           remark: searchForm.value.remark,
-          pauseType: 'PAUSE',
+          state: 'PAUSE',
+          type: 'VER',
         };
         submitLoading.value = true;
         const data = await plasmaPauseBatch(params);
@@ -245,6 +246,7 @@
       const data = await plasmaPauseBoxList(
         searchForm.value.batchNo || null,
         searchForm.value.pattern,
+        'VER',
       );
       if (data) {
         tableData.value = data;
@@ -285,7 +287,8 @@
           batchNo: searchForm.value.batchNo,
           boxNo: firstSelectedItem.boxNo,
           checker: searchForm.value.checker, // 传登录的复核人
-          pauseType: 'RESTORE',
+          state: 'RESTORE',
+          type: 'VER',
         };
         resumeLoading.value = true;
         const data = await plasmaPauseBox(params);
@@ -304,7 +307,8 @@
         const params = {
           batchNo: searchForm.value.batchNo,
           checker: searchForm.value.checker, // 传登录的复核人
-          pauseType: 'RESTORE',
+          state: 'RESTORE',
+          type: 'VER',
         };
         resumeLoading.value = true;
         const data = await plasmaPauseBatch(params);
