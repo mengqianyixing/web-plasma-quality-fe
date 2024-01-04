@@ -6,36 +6,15 @@
     @cancel="hideModal"
     :footer="null"
     width="1600px"
-    title="选择批号"
+    title="验收详情"
   >
     <div class="content">
       <Form layout="inline" :model="searchForm" style="margin-bottom: 16px">
         <FormItem label="采浆公司">
-          <Select
-            v-model:value="searchForm.stationNo"
-            allowClear
-            style="width: 180px"
-            placeholder="请选择"
-          >
-            <SelectOption
-              v-for="item in companyOpts"
-              :key="item.stationNo"
-              :value="item.stationNo"
-              >{{ item.stationName }}</SelectOption
-            >
-          </Select>
+          <Input v-model:value="searchForm.stationName" disabled style="width: 180px" />
         </FormItem>
         <FormItem label="血浆批号">
-          <Select
-            v-model:value="searchForm.batchNo"
-            allowClear
-            style="width: 180px"
-            placeholder="请选择"
-          >
-            <SelectOption v-for="item in batchNoOpts" :key="item.code" :value="item.code">{{
-              item.name
-            }}</SelectOption>
-          </Select>
+          <Input v-model:value="searchForm.batchNo" placeholder="请输入" style="width: 180px" />
         </FormItem>
         <FormItem label="血浆箱号">
           <Input v-model:value="searchForm.boxNo" placeholder="请输入" style="width: 180px" />
@@ -75,15 +54,17 @@
         :columns="columns"
         :data-source="tableData"
         bordered
+        :pagination="false"
         :loading="loading"
         style="margin-bottom: 16px"
+        :scroll="{ y: 550 }"
       >
         <template #footer>
-          <div style="text-align: right"> 血浆总袋数：3000 </div>
+          <div style="text-align: right"> 血浆总袋数：{{ tableData.length }} </div>
         </template>
         <template #bodyCell="{ column, text }">
-          <template v-if="column.dataIndex === 'acceptState' || column.dataIndex === 'verifyState'">
-            {{ optsTransMap(verifyResultOpts, 'code', 'name')[text] }}
+          <template v-if="column.dataIndex === 'verifyState'">
+            {{ optsTransMap(props.checkOptsEnum, 'code', 'name')[text] }}
           </template>
         </template>
       </Table>
@@ -92,7 +73,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, defineExpose } from 'vue';
   import {
     Modal,
     Button,
@@ -105,39 +86,58 @@
   } from 'ant-design-vue';
   import dayjs from 'dayjs';
   import { getPlasmaBag } from '@/api/inbound-management/accept-plasma.ts';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  const { createMessage } = useMessage();
+  const { warning } = createMessage;
 
   const emit = defineEmits(['close']);
+  const props = defineProps({
+    checkOptsEnum: Array as PropType<any>,
+  });
 
   const loading = ref(false);
 
+  interface SearchForm {
+    stationNo: string;
+    stationName: string;
+    batchNo: string;
+    boxNo: string;
+    verifyState: string;
+    verifyResult: string;
+  }
+
   // 表单数据
-  const initSearchForm = {
+  const initSearchForm: SearchForm = {
     stationNo: '',
+    stationName: '',
     batchNo: '',
     boxNo: '',
     verifyState: '',
     verifyResult: '',
   };
-  const searchForm = ref(initSearchForm);
-  // 采浆公司备选项
-  const companyOpts = ref([]);
-  // 批号备选项
-  const batchNoOpts = ref([]);
+  const searchForm = ref<SearchForm>({ ...initSearchForm });
+
   // 验收结果备选项
-  const verifyResultOpts = ref([]);
+  const verifyResultOpts = ref([
+    {
+      code: 'FAIL',
+      name: '不合格',
+    },
+    {
+      code: 'PASS',
+      name: '合格',
+    },
+  ]);
   // 验收状态备选项
   const checkOpts = ref([
     {
-      code: 'W',
-      name: '未接收',
+      code: 'WAIT',
+      name: '未验收',
     },
     {
-      code: 'R',
-      name: '接收中',
-    },
-    {
-      code: 'S',
-      name: '已接收',
+      code: 'PASS',
+      name: '已验收',
     },
   ]);
   // 备选项转map
@@ -181,6 +181,14 @@
     {
       title: '性别',
       dataIndex: 'gender',
+      customRender: ({ text }) => {
+        if (text === 'M') {
+          return '男';
+        } else if (text === 'F') {
+          return '女';
+        }
+        return '';
+      },
     },
     {
       title: '血型',
@@ -226,7 +234,19 @@
 
   // 查询列表数据
   const queryTable = async () => {
+    if (!searchForm.value.batchNo) {
+      warning('请选择批号!');
+      return;
+    }
     const params = { ...searchForm.value };
+    delete (params as any).stationName;
+    delete (params as any).stationNo;
+    // 删除所有为空字符串的属性
+    for (const key of Object.keys(params)) {
+      if (params[key] === '') {
+        delete params[key];
+      }
+    }
     try {
       loading.value = true;
       const res = await getPlasmaBag(params);
@@ -242,7 +262,10 @@
     searchForm.value = { ...initSearchForm };
     queryTable();
   };
-  queryTable();
+  defineExpose({
+    searchForm,
+    queryTable,
+  });
 </script>
 <style lang="less" scoped>
   .content {

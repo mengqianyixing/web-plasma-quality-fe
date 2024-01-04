@@ -6,6 +6,11 @@ enum Api {
   GetPlasmaBox = '/api/core/batch/plasma/verify/box',
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   PlasmaVerifyBag = '/api/core/batch/plasma/verify/bag',
+  PlasmaPauseBox = '/api/core/batch/plasma/verify/box/pause',
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+  PlasmaPauseBoxList = '/api/core/batch/plasma/verify/pause',
+  PlasmaPauseBatch = '/api/core/batch/plasma/verify/batch/pause',
+  PlasmaRevokeBag = '/api/core/batch/plasma/verify/revoke/bag',
 }
 
 // 获取血浆验收记录信息
@@ -26,4 +31,24 @@ export const getPlasmaBox = (params: any) => {
 // 血浆验收
 export const plasmaVerifyBag = (params: any) => {
   return defHttp.post({ url: Api.PlasmaVerifyBag, params });
+};
+
+// 血浆验收-暂停/继续箱
+export const plasmaPauseBox = (params: any) => {
+  return defHttp.post({ url: Api.PlasmaPauseBox, params });
+};
+
+// 血浆验收-暂停/继续批
+export const plasmaPauseBatch = (params: any) => {
+  return defHttp.post({ url: Api.PlasmaPauseBatch, params });
+};
+
+// 血浆验收-暂停箱/批列表
+export const plasmaPauseBoxList = (batchNo: any, pattern: any) => {
+  return defHttp.get<any>({ url: `${Api.PlasmaPauseBoxList}/${batchNo}/${pattern}` });
+};
+
+// 血浆验收-撤销验收
+export const plasmaRevokeBag = (params: any) => {
+  return defHttp.post({ url: Api.PlasmaRevokeBag, params });
 };

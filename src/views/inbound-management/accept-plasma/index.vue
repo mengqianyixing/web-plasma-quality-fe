@@ -1,12 +1,7 @@
 <template>
   <div class="main" v-loading="loadingRef">
     <div class="search-bar" ref="searchBarRef">
-      <Form
-        layout="inline"
-        :model="filterForm"
-        style="margin-bottom: 16px"
-        :labelCol="{ style: { width: '70px' } }"
-      >
+      <Form layout="inline" :model="filterForm" :labelCol="{ style: { width: '70px' } }">
         <Row style="width: 100%">
           <Col>
             <FormItem label="复核人">
@@ -26,7 +21,8 @@
           </Col>
           <Col>
             <FormItem label="托盘编号">
-              <Input v-model:value="filterForm.trayNo" placeholder="请输入" />
+              <Input v-model:value="filterForm.trayNo" placeholder="请输入" style="width: 180px" />
+              <Button @click="showBatchModal">更改</Button>
             </FormItem>
           </Col>
           <Col>
@@ -54,9 +50,12 @@
           </Col>
           <Col>
             <FormItem label="当前箱号">
-              <Button v-if="filterForm.batchNo" type="link" @click="showBatchDetailModal">{{
-                filterForm.boxNo
-              }}</Button>
+              <Button
+                v-if="filterForm.batchNo && filterForm.boxNo"
+                type="link"
+                @click="showBatchDetailModal('needBoxNo')"
+                >{{ filterForm.boxNo }}</Button
+              >
               <span v-else>{{ filterForm.boxNo }}</span>
             </FormItem>
           </Col>
@@ -71,9 +70,9 @@
           <Col>
             <FormItem label="已验收箱">
               <Button v-if="filterForm.batchNo" type="link" @click="showBoxDetailModal"
-                >{{ filterForm.verifyBagCount }}/{{ filterForm.bagCount }}</Button
+                >{{ filterForm.verifyBoxCount }}/{{ filterForm.boxCount }}</Button
               >
-              <span v-else>{{ filterForm.verifyBagCount }}/{{ filterForm.bagCount }}</span>
+              <span v-else>{{ filterForm.verifyBoxCount }}/{{ filterForm.boxCount }}</span>
             </FormItem>
           </Col>
         </Row>
@@ -95,12 +94,12 @@
           </Col>
           <Col>
             <FormItem>
-              <Button>暂停箱验收</Button>
+              <Button @click="suspendModal('BOX')">暂停箱记录</Button>
             </FormItem>
           </Col>
           <Col>
             <FormItem>
-              <Button>暂停批验收</Button>
+              <Button @click="suspendModal('BCH')">暂停批记录</Button>
             </FormItem>
           </Col>
           <Col>
@@ -138,19 +137,48 @@
             :pagination="false"
           >
             <template #title>本箱已验收（袋）：{{ verifyBagData.length }}</template>
-            <template #bodyCell="{ column }">
+            <template #bodyCell="{ record, column }">
               <template v-if="column.key === 'operation'">
-                <Button type="link" block>撤销</Button>
+                <Button type="link" block @click="showRevokeModal(record)">撤销</Button>
               </template>
             </template>
           </Table>
         </Col>
       </Row>
     </div>
-    <batchModal v-if="batchModalVisible" @close="closeBatch" @confirm="confirmBatch" />
+    <batchModal
+      v-if="batchModalVisible"
+      @close="closeBatch"
+      @confirm="confirmBatch"
+      mode="accept"
+    />
     <registerModal v-if="registerModalVisible" @close="closeRegister" />
-    <batchDetail v-if="batchDetailVisible" @close="closeBatchDetail" />
-    <boxDetail v-if="boxDetailVisible" @close="closeBoxDetail" />
+    <batchDetail
+      v-if="batchDetailVisible"
+      @close="closeBatchDetail"
+      ref="batchDetailRef"
+      :checkOptsEnum="checkOpts"
+    />
+    <boxDetail
+      v-if="boxDetailVisible"
+      @close="closeBoxDetail"
+      ref="boxDetailRef"
+      :checkOpts="checkOpts"
+    />
+    <suspendOrResumeModal
+      v-if="suspendModalVisible"
+      :checkerOpts="checkerOpts"
+      ref="suspendOrResumeRef"
+      @close="closeSuspend"
+      @clear-info="clearInfo"
+      @go-register="registerModalVisible = true"
+    />
+    <revokeModal
+      v-if="revokeModalVisible"
+      @close="closeRevoke"
+      ref="revokeModalRef"
+      @query="getPageData"
+    />
   </div>
 </template>
 
@@ -174,40 +202,50 @@
   import registerModal from '../receive-plasma/components/register-modal.vue';
   import batchDetail from './components/batch-detail.vue';
   import boxDetail from './components/box-detail.vue';
+  import suspendOrResumeModal from './components/suspend-or-resume.vue';
+  import revokeModal from './components/revoke-modal.vue';
+
   import { getPlasmaVerify, plasmaVerifyBag } from '@/api/inbound-management/accept-plasma.ts';
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
 
   const loadingRef = ref(false);
-  const searchBarRef = ref(null);
+  const searchBarRef = ref<any>(null);
   const tableHeight = ref(570); // 动态表格高度
+
+  const batchDetailRef = ref<any>('');
+  const boxDetailRef = ref<any>('');
+  const suspendOrResumeRef = ref<any>('');
+  const revokeModalRef = ref<any>('');
 
   interface FilterForm {
     trayNo: string;
     boxNo: string; // 当前箱号
     bagNo: string; // 血浆编号
-    checker: string;
+    checker: string; // 复核人
     batchNo: string;
-    stationName: string;
+    stationName: string | null;
     donorFailed?: string; // 献血浆者不符合项目
     verifyBagCount: number; // 已验收血浆数
     bagCount: number; // 血浆总数
     verifyBoxCount: number; // 已验收箱数
     boxCount: number; // 箱总数
+    stationNo?: string | null;
   }
   // 表单数据
   const filterForm = ref<FilterForm>({
     trayNo: '',
     boxNo: '',
     bagNo: '',
-    checker: '',
+    checker: '123',
     batchNo: '',
-    stationName: '',
     verifyBagCount: 0,
     bagCount: 0,
     verifyBoxCount: 0,
     boxCount: 0,
+    stationNo: null,
+    stationName: null,
   });
 
   const checkerOpts = [];
@@ -223,7 +261,7 @@
     },
     {
       title: '血浆编号',
-      dataIndex: 'unVerifyBag',
+      dataIndex: 'bagNo',
     },
   ];
   let unVerifyBagDate = ref<any[]>([]);
@@ -257,6 +295,22 @@
   ];
   let verifyBagData = ref<any[]>([]);
 
+  // 验收状态备选项
+  const checkOpts = ref([
+    {
+      code: 'W',
+      name: '未验收',
+    },
+    {
+      code: 'R',
+      name: '验收中',
+    },
+    {
+      code: 'S',
+      name: '已验收',
+    },
+  ]);
+
   // 登录框
   const registerModalVisible = ref(false);
   const showRegisterModal = () => {
@@ -268,14 +322,12 @@
 
   // 批号框
   const batchModalVisible = ref(false);
-
   const showBatchModal = () => {
     batchModalVisible.value = true;
   };
   const closeBatch = () => {
     batchModalVisible.value = false;
   };
-
   // 确认选择批号
   const confirmBatch = (val: any) => {
     filterForm.value.batchNo = val;
@@ -283,10 +335,57 @@
     getPageData(filterForm.value.batchNo);
   };
 
+  // 暂停/继续框
+  const suspendModalVisible = ref(false);
+  const suspendModal = (pattern) => {
+    // if (!filterForm.value.batchNo) {
+    //   warning('请先进行验收!');
+    //   return;
+    // }
+    suspendModalVisible.value = true;
+    nextTick(() => {
+      suspendOrResumeRef.value.searchForm.batchNo = filterForm.value.batchNo;
+      suspendOrResumeRef.value.searchForm.boxNo = filterForm.value.boxNo;
+      suspendOrResumeRef.value.searchForm.checker = filterForm.value.checker;
+      suspendOrResumeRef.value.searchForm.pattern = pattern;
+      suspendOrResumeRef.value.getList();
+    });
+  };
+  const closeSuspend = () => {
+    suspendModalVisible.value = false;
+  };
+  const clearInfo = () => {
+    filterForm.value.boxNo = '';
+    unVerifyBagDate.value = [];
+    verifyBagData.value = [];
+  };
+
+  // 撤销验收
+  const revokeModalVisible = ref(false);
+  const showRevokeModal = (row) => {
+    revokeModalVisible.value = true;
+    console.log(row, '111111111111111111111');
+
+    nextTick(() => {
+      revokeModalRef.value.rowInfow = { ...filterForm.value, ...row };
+      console.log(revokeModalRef.value.rowInfow, '222222222222222222222222');
+    });
+  };
+  const closeRevoke = () => {
+    revokeModalVisible.value = false;
+  };
+
   // 批详情
   const batchDetailVisible = ref(false);
-  const showBatchDetailModal = () => {
+  const showBatchDetailModal = (params) => {
     batchDetailVisible.value = true;
+    nextTick(() => {
+      batchDetailRef.value.searchForm.batchNo = filterForm.value.batchNo;
+      batchDetailRef.value.searchForm.stationNo = filterForm.value.stationNo;
+      batchDetailRef.value.searchForm.stationName = filterForm.value.stationName;
+      if (params === 'needBoxNo') batchDetailRef.value.searchForm.boxNo = filterForm.value.boxNo;
+      batchDetailRef.value.queryTable();
+    });
   };
   const closeBatchDetail = () => {
     batchDetailVisible.value = false;
@@ -296,31 +395,46 @@
   const boxDetailVisible = ref(false);
   const showBoxDetailModal = () => {
     boxDetailVisible.value = true;
+    nextTick(() => {
+      boxDetailRef.value.searchForm.batchNo = filterForm.value.batchNo;
+      boxDetailRef.value.searchForm.stationNo = filterForm.value.stationNo;
+      boxDetailRef.value.searchForm.stationName = filterForm.value.stationName;
+      boxDetailRef.value.queryTable();
+    });
   };
   const closeBoxDetail = () => {
     boxDetailVisible.value = false;
   };
 
   // 查询页面数据
-  const getPageData = async (boxNo) => {
-    loadingRef.value = true;
-    const data = await getPlasmaVerify(boxNo);
-    loadingRef.value = false;
-    filterForm.value.stationName = data.stationName;
-    filterForm.value.batchNo = data.batchNo;
-    filterForm.value.boxNo = data.boxNo;
-    filterForm.value.verifyBagCount = data.verifyBagCount;
-    filterForm.value.bagCount = data.bagCount;
-    filterForm.value.verifyBoxCount = data.verifyBoxCount;
-    filterForm.value.boxCount = data.boxCount;
+  const getPageData = async (batchNo) => {
+    try {
+      loadingRef.value = true;
+      const data = await getPlasmaVerify(batchNo);
+      filterForm.value.stationName = data.stationName;
+      filterForm.value.batchNo = data.batchNo;
+      filterForm.value.boxNo = data.boxNo;
+      filterForm.value.verifyBagCount = data.verifyBagCount;
+      filterForm.value.bagCount = data.bagCount;
+      filterForm.value.verifyBoxCount = data.verifyBoxCount;
+      filterForm.value.boxCount = data.boxCount;
+      filterForm.value.trayNo = data.trayNo;
+      filterForm.value.stationNo = data.stationNo;
 
-    unVerifyBagDate.value = data.unVerifyBag;
-    verifyBagData.value = data.verifyBag;
-    // 设置表格高度
-    nextTick(() => {
-      const searchBarHeight = searchBarRef.value.clientHeight;
-      tableHeight.value = window.innerHeight - 80 - searchBarHeight - 195;
-    });
+      unVerifyBagDate.value = data.unVerifyBag.map((item) => {
+        return {
+          bagNo: item,
+        };
+      });
+      verifyBagData.value = data.verifyBag;
+      // 设置表格高度
+      nextTick(() => {
+        const searchBarHeight = searchBarRef.value.clientHeight;
+        tableHeight.value = window.innerHeight - 80 - searchBarHeight - 195;
+      });
+    } finally {
+      loadingRef.value = false;
+    }
   };
 
   // 扫描血浆进行验收操作
@@ -335,10 +449,6 @@
       //   warning('请登录复核人！');
       //   return;
       // }
-      // if (!filterForm.value.batchNo) {
-      //   warning('请选择血浆批号！');
-      //   return;
-      // }
       const params = {
         batchNo: filterForm.value.batchNo,
         boxNo: filterForm.value.boxNo,
@@ -346,6 +456,8 @@
         checker: filterForm.value.checker,
         trayNo: filterForm.value.trayNo,
       };
+      // 没有选择批号直接扫码进行的验收操作，将批次信息回填，不作为实际验收操作,相当于查询此批信息
+      const realAccept = !!filterForm.value.batchNo;
       try {
         loadingRef.value = true;
         const data = await plasmaVerifyBag(params);
@@ -356,10 +468,15 @@
           filterForm.value.bagCount = data.bagCount;
           filterForm.value.verifyBoxCount = data.verifyBoxCount;
           filterForm.value.boxCount = data.boxCount;
+          filterForm.value.trayNo = data.trayNo;
+          filterForm.value.stationNo = data.stationNo;
           filterForm.value.boxNo = data.boxNo;
-          filterForm.value.donorFailed = data.donorFailed; // 献血浆者不符合
 
-          unVerifyBagDate.value = data.unVerifyBag;
+          unVerifyBagDate.value = data.unVerifyBag.map((item) => {
+            return {
+              bagNo: item,
+            };
+          });
           verifyBagData.value = data.verifyBag;
 
           // 设置表格高度
@@ -367,22 +484,25 @@
             const searchBarHeight = searchBarRef.value.clientHeight;
             tableHeight.value = window.innerHeight - 80 - searchBarHeight - 195;
           });
-          if (data.donorFailed) {
-            Modal.confirm({
-              title: '提示?',
-              content: createVNode(
-                'div',
-                { style: 'color:red;' },
-                '献血浆者于xx年xx月xx日检测xxx不合格，血浆验收不合格',
-              ),
-              onOk() {},
-              onCancel() {
-                console.log('Cancel');
-              },
-              class: 'test',
-            });
+          if (realAccept) {
+            success('验收成功');
+            filterForm.value.donorFailed = data.donorFailed; // 献血浆者不符合
+            if (data.donorFailed) {
+              Modal.confirm({
+                title: '提示?',
+                content: createVNode(
+                  'div',
+                  { style: 'color:red;' },
+                  '献血浆者于xx年xx月xx日检测xxx不合格，血浆验收不合格',
+                ),
+                onOk() {},
+                onCancel() {
+                  console.log('Cancel');
+                },
+                class: 'test',
+              });
+            }
           }
-          success('验收成功');
 
           // if (data.acceptDetail.unAcceptCount <= 0) {
           //   // 一批接收完毕 提示
@@ -393,7 +513,6 @@
         console.log(error);
       } finally {
         loadingRef.value = false;
-        filterForm.value.boxNo = '';
       }
     }
   };
