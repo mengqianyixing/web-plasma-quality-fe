@@ -23,6 +23,10 @@
         </FormItem>
       </Form>
     </div>
+    <template #footer>
+      <a-button @click="hideModal">取消</a-button>
+      <a-button type="primary" :loading="loading" @click="confirm">登录</a-button>
+    </template>
   </Modal>
 </template>
 
@@ -45,18 +49,24 @@
   });
 
   const formRef = ref();
+  const loading = ref<boolean>(false);
 
   const confirm = () => {
+    loading.value = true;
     formRef.value
       .validate()
       .then(() => {
-        reCheckLogin({
-          account: searchForm.value.username,
-          password: searchForm.value.password,
-        }).then((res: any) => {
-          emit('login-data', res);
-          hideModal();
-        });
+        try {
+          reCheckLogin({
+            account: searchForm.value.username,
+            password: searchForm.value.password,
+          }).then((res: any) => {
+            emit('login-data', res);
+            hideModal();
+          });
+        } finally {
+          loading.value = false;
+        }
       })
       .catch((error) => {
         console.log('error', error);

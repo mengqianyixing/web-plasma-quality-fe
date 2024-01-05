@@ -5,7 +5,7 @@
         <Row style="width: 100%">
           <Col>
             <FormItem label="复核人">
-              <Select
+              <!-- <Select
                 v-model:value="filterForm.checker"
                 allowClear
                 disabled
@@ -15,7 +15,13 @@
                 <SelectOption v-for="item in checkerOpts" :key="item.value" :value="item.value">{{
                   item.name
                 }}</SelectOption>
-              </Select>
+              </Select> -->
+              <Input
+                v-model:value="filterForm.checker"
+                disabled
+                placeholder="请点击登录"
+                style="width: 180px"
+              />
               <Button :disabled="!!filterForm.checker" @click="showRegisterModal">登录</Button>
             </FormItem>
           </Col>
@@ -148,6 +154,7 @@
     </div>
     <batchModal
       v-if="batchModalVisible"
+      ref="batchRef"
       @close="closeBatch"
       @confirm="confirmBatch"
       mode="accept"
@@ -191,8 +198,8 @@
     FormItem,
     Input,
     Button,
-    Select,
-    SelectOption,
+    // Select,
+    // SelectOption,
     Row,
     Col,
     Table,
@@ -207,7 +214,7 @@
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import revokeModal from './components/revoke-modal.vue';
 
-  import { getPlasmaVerify, plasmaVerifyBag } from '@/api/inbound-management/accept-plasma.ts';
+  import { getPlasmaVerify, plasmaVerifyBag } from '@/api/inbound-management/accept-plasma';
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
@@ -216,6 +223,7 @@
   const searchBarRef = ref<any>(null);
   const tableHeight = ref(570); // 动态表格高度
 
+  const batchRef = ref<any>('');
   const batchDetailRef = ref<any>('');
   const boxDetailRef = ref<any>('');
   const suspendOrResumeRef = ref<any>('');
@@ -322,13 +330,23 @@
     registerModalVisible.value = false;
   };
   const handleLogin = (res) => {
-    filterForm.value.checker = res.username;
+    // 暂停批的确认登录
+    if (suspendModalVisible.value && suspendOrResumeRef.value.searchForm.pattern === 'BCH') {
+      suspendOrResumeRef.value.searchForm.checker = res.username;
+    } else {
+      filterForm.value.checker = res.username;
+    }
   };
 
   // 批号框
   const batchModalVisible = ref(false);
   const showBatchModal = () => {
     batchModalVisible.value = true;
+    nextTick(() => {
+      batchRef.value.searchForm.acceptState = ['R', 'S']; // 接收状态
+      batchRef.value.searchForm.verifyState = ['W', 'R'];
+      batchRef.value.queryTable();
+    });
   };
   const closeBatch = () => {
     batchModalVisible.value = false;
@@ -351,7 +369,10 @@
     nextTick(() => {
       suspendOrResumeRef.value.searchForm.batchNo = filterForm.value.batchNo;
       suspendOrResumeRef.value.searchForm.boxNo = filterForm.value.boxNo;
-      suspendOrResumeRef.value.searchForm.checker = filterForm.value.checker;
+      // 箱暂停使用已登录的复核人，批暂停需要单独登录
+      if (pattern === 'BOX') {
+        suspendOrResumeRef.value.searchForm.checker = filterForm.value.checker;
+      }
       suspendOrResumeRef.value.searchForm.pattern = pattern;
       suspendOrResumeRef.value.getList();
     });
@@ -369,11 +390,9 @@
   const revokeModalVisible = ref(false);
   const showRevokeModal = (row) => {
     revokeModalVisible.value = true;
-    console.log(row, '111111111111111111111');
 
     nextTick(() => {
       revokeModalRef.value.rowInfow = { ...filterForm.value, ...row };
-      console.log(revokeModalRef.value.rowInfow, '222222222222222222222222');
     });
   };
   const closeRevoke = () => {

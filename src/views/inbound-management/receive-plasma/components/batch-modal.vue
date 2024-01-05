@@ -33,6 +33,7 @@
             v-model:value="searchForm.acceptState"
             allowClear
             style="width: 180px"
+            mode="multiple"
             placeholder="请选择"
           >
             <SelectOption v-for="item in receiveOpts" :key="item.code" :value="item.code">{{
@@ -45,6 +46,7 @@
             v-model:value="searchForm.verifyState"
             allowClear
             style="width: 180px"
+            mode="multiple"
             placeholder="请选择"
           >
             <SelectOption v-for="item in checkOpts" :key="item.code" :value="item.code">{{
@@ -82,7 +84,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, defineExpose } from 'vue';
   import {
     Modal,
     Button,
@@ -96,6 +98,7 @@
   } from 'ant-design-vue';
   import dayjs from 'dayjs';
   import { getBatchSummary } from '@/api/inbound-management/receive-plasma';
+  import { stationNameList } from '@/api/callback/list-generation';
   import { useMessage } from '@/hooks/web/useMessage';
 
   const { createMessage } = useMessage();
@@ -110,13 +113,20 @@
 
   // 表单数据
   const searchForm = ref({
-    stationNo: '',
-    batchNo: '',
-    acceptState: '',
-    verifyState: '',
+    stationNo: undefined,
+    batchNo: undefined,
+    acceptState: [], // 接收状态
+    verifyState: [],
   });
   // 采浆公司备选项
-  const companyOpts = ref([]);
+  const companyOpts = ref<any>([]);
+
+  const getStationNameList = async () => {
+    const data = await stationNameList();
+    if (data) {
+      companyOpts.value = data;
+    }
+  };
 
   // 接收状态备选项
   const receiveOpts = ref([
@@ -255,6 +265,7 @@
       pageSize: pagination.value.pageSize,
       currPage: pagination.value.current,
     };
+
     try {
       loading.value = true;
       const res = await getBatchSummary(params);
@@ -277,16 +288,21 @@
   };
 
   const resetQuery = () => {
-    searchForm.value.stationNo = '';
-    searchForm.value.batchNo = '';
-    searchForm.value.acceptState = '';
-    searchForm.value.verifyState = '';
+    searchForm.value.stationNo = undefined;
+    searchForm.value.batchNo = undefined;
+    searchForm.value.acceptState = [];
+    searchForm.value.verifyState = [];
     pagination.value.pageSize = 10;
     pagination.value.current = 1;
     pagination.value.total = 0;
     queryTable();
   };
-  queryTable();
+  // queryTable();
+  getStationNameList();
+  defineExpose({
+    searchForm,
+    queryTable,
+  });
 </script>
 <style lang="less" scoped>
   .content {
