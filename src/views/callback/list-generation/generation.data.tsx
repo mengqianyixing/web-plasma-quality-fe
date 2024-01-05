@@ -222,7 +222,7 @@ export const addCallbackDrawerSearchFromSchema: FormSchema[] = [
   },
   {
     field: 'gapDays',
-    label: '浆员距今未采浆天数',
+    label: '距今未采浆天数',
     component: 'InputNumber',
     colProps: { span: 5 },
   },
@@ -246,7 +246,7 @@ export const callbackDrawerSearchFromSchema: FormSchema[] = [
   },
   {
     field: 'gapDays',
-    label: '浆员距今未采浆天数',
+    label: '距今未采浆天数',
     component: 'InputNumber',
     colProps: { span: 5 },
   },
