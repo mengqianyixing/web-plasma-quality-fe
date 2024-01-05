@@ -134,6 +134,7 @@ export const callbackDetailDrawerColumns: BasicColumn[] = [
   {
     title: '身份证号',
     dataIndex: 'idcardId',
+    width: 200,
   },
   {
     title: '浆员状态',

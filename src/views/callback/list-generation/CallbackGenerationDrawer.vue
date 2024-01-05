@@ -6,6 +6,7 @@
     width="85%"
     showFooter
     @ok="handleOk"
+    @close="handleCancel"
   >
     <BasicTable @register="registerTable" ref="table">
       <template #toolbar>
@@ -129,6 +130,11 @@
   }
 
   function handleOk() {
+    emit('success');
+    closeDrawer();
+  }
+
+  function handleCancel() {
     emit('success');
     closeDrawer();
   }
