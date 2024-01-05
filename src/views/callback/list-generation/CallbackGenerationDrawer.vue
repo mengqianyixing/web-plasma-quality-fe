@@ -3,9 +3,8 @@
     v-bind="$attrs"
     @register="register"
     :title="getTitle"
-    width="85%"
     showFooter
-    @ok="handleOk"
+    width="85%"
     @close="handleCancel"
   >
     <BasicTable @register="registerTable" ref="table">
@@ -14,6 +13,10 @@
         <a-button type="primary" @click="handleDelete">撤销</a-button>
       </template>
     </BasicTable>
+
+    <template #footer>
+      <a-button type="primary" @click="handleOk">确定</a-button>
+    </template>
 
     <AddCallbackPersonnelListDrawer @register="registerAddDrawer" @success="reload" />
   </BasicDrawer>
