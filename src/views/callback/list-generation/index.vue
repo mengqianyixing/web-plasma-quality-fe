@@ -17,6 +17,7 @@
           <a-button type="primary" @click="handleAdd"> 新增 </a-button>
           <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
           <a-button type="primary" @click="handleDelete"> 撤销 </a-button>
+          <a-button type="primary" @click="handleEnter">确认</a-button>
           <a-button type="primary" @click="handleExport" :loading="exportLoading"> 导出 </a-button>
         </div>
       </template>
@@ -51,12 +52,13 @@
     stationNameList,
   } from '@/api/callback/list-generation';
   import {
-    CallbackStateEnum,
     CallbackStateMap,
+    CallbackStateValueEnum,
     donorStatusMap,
     donorStatusValueEnum,
   } from '@/enums/callbackEnum';
   import dayjs from 'dayjs';
+  import { callbackConfirm } from '@/api/callback/list-confirm';
 
   defineOptions({ name: 'CallbackListGeneration' });
 
@@ -102,7 +104,7 @@
     },
     clickToRowSelect: true,
     rowSelection: {
-      type: 'radio',
+      type: 'checkbox',
       onChange: (_, selectedRows: any) => {
         selectedRow.value = selectedRows;
       },
@@ -138,12 +140,20 @@
       return;
     }
 
+    if (selectedRow.value[0].state !== CallbackStateValueEnum.WIT) {
+      console.log(selectedRow.value[0].state);
+      createMessage.warn('该状态不允许编辑');
+      return;
+    }
+
     openGenerationDrawer(true, {
       isUpdate: true,
       record: {
         batchNo: selectedRow.value[0].planNo,
       },
     });
+
+    clearSelectedRowKeys();
   }
 
   async function handleDelete() {
@@ -152,7 +162,7 @@
       return;
     }
 
-    if (selectedRow.value[0].state !== CallbackStateEnum.WIT) {
+    if (selectedRow.value[0].state !== CallbackStateValueEnum.WIT) {
       createMessage.warn('该状态不允许撤销');
       return;
     }
@@ -165,6 +175,8 @@
         await deleteCallback({
           callbackBatchNoes: selectedRow.value.map((it) => it.planNo),
         });
+
+        clearSelectedRowKeys();
         await reload();
       },
     });
@@ -251,6 +263,24 @@
       ...record,
       stationName: formatStationNo(record),
       state: CallbackStateMap.get(record.state),
+    });
+  }
+
+  async function handleEnter() {
+    if (selectedRow.value.length === 0) {
+      createMessage.warn('请选择要确认的名单');
+      return;
+    }
+    createConfirm({
+      title: '确认',
+      content: '名单确认后，会实时下发到各采浆公司，确认操作吗？',
+      iconType: 'warning',
+      onOk: async () => {
+        await callbackConfirm({
+          callbackBatchNoes: selectedRow.value.map((it) => it.planNo),
+        });
+        await reload();
+      },
     });
   }
 </script>

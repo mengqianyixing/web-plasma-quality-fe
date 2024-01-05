@@ -121,7 +121,8 @@
           donorNos: selectedRow.value.map((it) => it.donorNo),
         });
 
-        closeDrawer();
+        await reload();
+
         emit('success');
       },
     });
