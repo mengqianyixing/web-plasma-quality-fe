@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper contentFullHeight fixedHeight>
+  <PageWrapper>
     <Description @register="register" :data="sampleBatchData">
       <template #action>
         <a-button type="error" @click="handleNonconformityRegister" class="mr-2">
@@ -31,7 +31,7 @@
       v-bind="gridOptionsAccept"
       :data="acceptList"
       :loading="tableLoading"
-      class="w-4/5 mt-1 inline-block"
+      class="inline-block w-[80%]"
     >
       <template #toolbar>
         <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
@@ -126,7 +126,7 @@
   const unAcceptList = computed(() => sampleBatchData.value.unVerifyList);
 
   const acceptList = computed(() => {
-    if (!isEmpty(unref(verifyNonconformityData)) && !isEmpty(sampleBatchData.value.verifyedList)) {
+    if (isEmpty(unref(verifyNonconformityData)) && isEmpty(unref(sampleBatchData).verifyedList)) {
       return [];
     }
 
@@ -144,7 +144,7 @@
       label: '样本批号',
       render() {
         return (
-          <div class="flex items-center gap-2 w-[300px]">
+          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
             <a-input
               placeholder="请选择批号或输入批号回车"
               value={inputValue}
@@ -190,9 +190,9 @@
       label: '浆站缺号数量',
       render(text) {
         return (
-          <a-button type="link" onClick={handleLackCountClick}>
+          <span onClick={handleLackCountClick} class="underline text-red-400 cursor-pointer">
             <span>{text}</span>
-          </a-button>
+          </span>
         );
       },
       show(data) {
@@ -204,9 +204,12 @@
       label: '血浆验收不合格数量',
       render(text) {
         return (
-          <a-button type="link" onClick={handlePlasmaAcceptUnqualifiedCountClick}>
+          <span
+            onClick={handlePlasmaAcceptUnqualifiedCountClick}
+            class="underline text-red-400 cursor-pointer"
+          >
             {text}
-          </a-button>
+          </span>
         );
       },
       show(data) {
@@ -215,9 +218,10 @@
     },
   ];
   const [register] = useDescription({
-    column: 6,
+    bordered: false,
+    column: 3,
     contentStyle: {
-      width: '100px',
+      width: '80px',
     },
     title: '样本验收批次信息',
     schema: schema,
@@ -230,7 +234,7 @@
 
   const gridOptionsUnaccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
     border: true,
-    height: 'auto',
+    height: '760px',
     showOverflow: true,
     exportConfig: {},
     columnConfig: {
@@ -238,6 +242,7 @@
     },
     scrollY: {
       enabled: true,
+      gt: 0,
     },
     pagerConfig: {
       enabled: false,
@@ -262,13 +267,14 @@
 
   const gridOptionsAccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
     border: true,
-    height: 'auto',
+    height: '760px',
     showOverflow: true,
     columnConfig: {
       resizable: true,
     },
     scrollY: {
       enabled: true,
+      gt: 0,
     },
     pagerConfig: {
       enabled: false,

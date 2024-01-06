@@ -8,15 +8,14 @@
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { computed, ref, unref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
+
   import { callbackDetailDrawerColumns } from '@/views/callback/list-generation/generation.data';
   import { getCallbackDetail } from '@/api/callback/list-generation';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
 
-  const selectedRow = ref<Recordable>([]);
   const isUpdate = ref(false);
   const batchNo = ref('');
-  const cacheDonorNos = ref<string[]>([]);
 
   const descriptionData = ref({});
 
@@ -76,26 +75,8 @@
       };
     },
     rowKey: 'donorNo',
-    clickToRowSelect: true,
-    rowSelection: {
-      type: 'checkbox',
-      onChange: (_, selectedRows: any) => {
-        selectedRow.value = selectedRows;
-      },
-      onSelect(record, selected) {
-        if (!selected) {
-          cacheDonorNos.value.push(record.donorNo);
-        } else {
-          cacheDonorNos.value = cacheDonorNos.value.filter((it) => it !== record.donorNo);
-        }
-      },
-      onSelectAll(selected, _, changeRows) {
-        if (!selected) {
-          cacheDonorNos.value.push(...changeRows.map((it) => it.donorNo));
-        }
-      },
-    },
-    size: 'small',
+    clickToRowSelect: false,
+    size: 'large',
     striped: false,
     useSearchForm: false,
     showTableSetting: true,

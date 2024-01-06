@@ -71,7 +71,7 @@
         selectedRow.value = selectedRows;
       },
     },
-    size: 'small',
+    size: 'large',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,
@@ -82,7 +82,7 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    canResize: true,
     immediate: false,
   });
 

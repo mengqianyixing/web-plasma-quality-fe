@@ -109,7 +109,7 @@
         selectedRow.value = selectedRows;
       },
     },
-    size: 'middle',
+    size: 'large',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,
