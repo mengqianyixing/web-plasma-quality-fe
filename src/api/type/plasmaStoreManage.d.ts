@@ -729,4 +729,30 @@ export type GetApiCoreBankSiteHouseHouseNoResponse = {
   value: string;
 }[];
 
+/**
+ * 接口 [查询库房列表名称（前端作下拉表单）↗](https://yapi.sharing8.cn/project/529/interface/api/32160) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/warehouses/name`
+ * @更新时间 `2024-01-06 17:45:08`
+ */
+export interface GetApiCoreBankWarehousesNameRequest {
+  /**
+   * 库房类型
+   */
+  houseType: string;
+}
+
+/**
+ * 接口 [查询库房列表名称（前端作下拉表单）↗](https://yapi.sharing8.cn/project/529/interface/api/32160) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/warehouses/name`
+ * @更新时间 `2024-01-06 17:45:08`
+ */
+export type GetApiCoreBankWarehousesNameResponse = {
+  bankName?: string;
+  bankNo?: string;
+}[];
+
 /* prettier-ignore-end */
