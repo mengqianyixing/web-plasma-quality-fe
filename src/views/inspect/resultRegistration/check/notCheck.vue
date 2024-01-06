@@ -14,7 +14,7 @@
       <a-button type="primary" @click="handleSubmit(false)" :loading="loading">提交&继续</a-button>
     </template>
     <BasicForm @register="registerForm" />
-    <CellWapper :data="{}" cell-width="50%" :cell-list="cellList" :gap="0" />
+    <CellWapper :data="donorData" cell-width="50%" :cell-list="cellList" :gap="0" />
   </BasicDrawer>
 </template>
 <script setup lang="ts">
@@ -39,6 +39,7 @@
     {
       field: 'collectAt',
       label: '采集日期',
+      format: ({ collectAt }) => collectAt?.slice(0, 10),
     },
     {
       field: 'bloodType',
