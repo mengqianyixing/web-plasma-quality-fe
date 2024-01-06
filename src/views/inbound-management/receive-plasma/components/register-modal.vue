@@ -24,16 +24,21 @@
       </Form>
     </div>
     <template #footer>
-      <a-button @click="hideModal">取消</a-button>
-      <a-button type="primary" :loading="loading" @click="confirm">登录</a-button>
+      <Button @click="hideModal">取消</Button>
+      <Button type="primary" :loading="loading" @click="confirm">登录</Button>
     </template>
   </Modal>
 </template>
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { Modal, Form, FormItem, Input, InputPassword } from 'ant-design-vue';
+  import { Modal, Form, FormItem, Input, InputPassword, Button } from 'ant-design-vue';
   import { reCheckLogin } from '@/api/sys/login';
+  import { useUserStore } from '@/store/modules/user';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  const { createMessage } = useMessage();
+  const { warning } = createMessage;
 
   const emit = defineEmits(['close', 'login-data']);
 
@@ -49,20 +54,26 @@
   });
 
   const formRef = ref();
-  const loading = ref<boolean>(false);
+  const loading = ref(false);
+  const userInfo = useUserStore();
 
   const confirm = () => {
-    loading.value = true;
     formRef.value
       .validate()
-      .then(() => {
+      .then(async () => {
         try {
-          reCheckLogin({
+          loading.value = true;
+          await reCheckLogin({
             account: searchForm.value.username,
             password: searchForm.value.password,
           }).then((res: any) => {
-            emit('login-data', res);
-            hideModal();
+            if (res.username === userInfo.getUserInfo.username) {
+              warning('复核人不能与当前登录人相同');
+              return;
+            } else {
+              emit('login-data', res);
+              hideModal();
+            }
           });
         } finally {
           loading.value = false;

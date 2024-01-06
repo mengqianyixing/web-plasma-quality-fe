@@ -85,11 +85,7 @@
     Table,
   } from 'ant-design-vue';
   import dayjs from 'dayjs';
-  import { getPlasmaBag } from '@/api/inbound-management/accept-plasma.ts';
-  import { useMessage } from '@/hooks/web/useMessage';
-
-  const { createMessage } = useMessage();
-  const { warning } = createMessage;
+  import { getPlasmaBag } from '@/api/inbound-management/accept-plasma.js';
 
   const emit = defineEmits(['close']);
   const props = defineProps({
@@ -167,7 +163,10 @@
       title: '采集日期',
       dataIndex: 'collectAt',
       customRender: ({ text }) => {
-        return dayjs(text).format('YYYY-MM-DD');
+        if (text) {
+          return dayjs(text).format('YYYY-MM-DD');
+        }
+        return '';
       },
     },
     {
@@ -214,7 +213,10 @@
       title: '验收时间',
       dataIndex: 'verifyAt',
       customRender: ({ text }) => {
-        return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+        if (text) {
+          return dayjs(text).format('YYYY-MM-DD');
+        }
+        return '';
       },
     },
     {
@@ -234,10 +236,10 @@
 
   // 查询列表数据
   const queryTable = async () => {
-    if (!searchForm.value.batchNo) {
-      warning('请选择批号!');
-      return;
-    }
+    // if (!searchForm.value.batchNo) {
+    //   warning('请选择批号!');
+    //   return;
+    // }
     const params = { ...searchForm.value };
     delete (params as any).stationName;
     delete (params as any).stationNo;

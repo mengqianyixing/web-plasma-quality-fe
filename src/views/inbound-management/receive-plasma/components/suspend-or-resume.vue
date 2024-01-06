@@ -113,14 +113,20 @@
       title: '暂停操作时间',
       dataIndex: 'createAt',
       customRender: ({ text }) => {
-        return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+        if (text) {
+          return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+        }
+        return '';
       },
     },
     {
       title: '继续操作时间',
       dataIndex: 'freeAt',
       customRender: ({ text }) => {
-        return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+        if (text) {
+          return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+        }
+        return '';
       },
     },
     {
