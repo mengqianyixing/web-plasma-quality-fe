@@ -166,12 +166,25 @@
       warning('请先选择一条数据!');
       return;
     }
-    if (props.mode === 'receive' && tableSelected.value[0].acceptState === 'S') {
-      warning('当前批次已接收!');
-      return;
-    }
+    // if (props.mode === 'receive' && tableSelected.value[0].acceptState === 'S') {
+    //   warning('当前批次已接收!');
+    //   return;
+    // }
     const firstSelectedItem = tableSelected.value[0];
     if (firstSelectedItem && 'batchNo' in firstSelectedItem) {
+      if (props.mode === 'receive') {
+        if (firstSelectedItem.acceptState === 'S') {
+          warning('当前批次已接收');
+        }
+      }
+      if (props.mode === 'accept') {
+        if (firstSelectedItem.acceptState === 'W') {
+          warning('当前批次未接收');
+        }
+        if (firstSelectedItem.verifyState === 'S') {
+          warning('当前批次已验收');
+        }
+      }
       emit('confirm', firstSelectedItem.batchNo);
     }
   };
@@ -205,7 +218,10 @@
       title: '出库日期',
       dataIndex: 'optTime',
       customRender: ({ text }) => {
-        return dayjs(text).format('YYYY-MM-DD');
+        if (text) {
+          return dayjs(text).format('YYYY-MM-DD');
+        }
+        return '';
       },
     },
     {

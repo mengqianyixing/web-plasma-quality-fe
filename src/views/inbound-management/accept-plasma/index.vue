@@ -5,17 +5,12 @@
         <Row style="width: 100%">
           <Col>
             <FormItem label="复核人">
-              <Select
+              <Input
                 v-model:value="filterForm.checker"
-                allowClear
                 disabled
-                style="width: 180px"
                 placeholder="请点击登录"
-              >
-                <SelectOption v-for="item in checkerOpts" :key="item.value" :value="item.value">{{
-                  item.name
-                }}</SelectOption>
-              </Select>
+                style="width: 180px"
+              />
               <Button :disabled="!!filterForm.checker" @click="showRegisterModal">登录</Button>
             </FormItem>
           </Col>
@@ -192,18 +187,7 @@
 
 <script lang="ts" setup>
   import { ref, nextTick, createVNode } from 'vue';
-  import {
-    Form,
-    FormItem,
-    Input,
-    Button,
-    Select,
-    SelectOption,
-    Row,
-    Col,
-    Table,
-    Modal,
-  } from 'ant-design-vue';
+  import { Form, FormItem, Input, Button, Row, Col, Table, Modal } from 'ant-design-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import dayjs from 'dayjs';
   import batchModal from '../receive-plasma/components/batch-modal.vue';
@@ -216,7 +200,7 @@
   import OutStoreDrawer from '../components/outStoreDrawer/index.vue';
   import { useDrawer } from '@/components/Drawer';
 
-  import { getPlasmaVerify, plasmaVerifyBag } from '@/api/inbound-management/accept-plasma.ts';
+  import { getPlasmaVerify, plasmaVerifyBag } from '@/api/inbound-management/accept-plasma';
 
   const [registerInDrawer, { openDrawer: openInDrawer }] = useDrawer();
   const [registerOutDrawer, { openDrawer: openOutDrawer }] = useDrawer();
@@ -294,7 +278,10 @@
       title: '验收时间',
       dataIndex: 'verifyAt',
       customRender: ({ text }) => {
-        return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+        if (text) {
+          return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+        }
+        return '';
       },
     },
     {
@@ -333,8 +320,13 @@
   const closeRegister = () => {
     registerModalVisible.value = false;
   };
-  const handleLogin = (res) => {
-    filterForm.value.checker = res.username;
+  const handleLogin = (res: { username: string }) => {
+    // 暂停批的确认登录
+    if (suspendModalVisible.value && suspendOrResumeRef.value.searchForm.pattern === 'BCH') {
+      suspendOrResumeRef.value.searchForm.checker = res.username;
+    } else {
+      filterForm.value.checker = res.username;
+    }
   };
 
   // 批号框
@@ -354,7 +346,7 @@
 
   // 暂停/继续框
   const suspendModalVisible = ref(false);
-  const suspendModal = (pattern) => {
+  const suspendModal = (pattern: string) => {
     // if (!filterForm.value.batchNo) {
     //   warning('请先进行验收!');
     //   return;
@@ -379,7 +371,7 @@
 
   // 撤销验收
   const revokeModalVisible = ref(false);
-  const showRevokeModal = (row) => {
+  const showRevokeModal = (row: any) => {
     revokeModalVisible.value = true;
     console.log(row, '111111111111111111111');
 
@@ -400,6 +392,7 @@
       batchDetailRef.value.searchForm.batchNo = filterForm.value.batchNo;
       batchDetailRef.value.searchForm.stationNo = filterForm.value.stationNo;
       batchDetailRef.value.searchForm.stationName = filterForm.value.stationName;
+      // needBoxNo => 点击箱号需要带入参数
       if (params === 'needBoxNo') batchDetailRef.value.searchForm.boxNo = filterForm.value.boxNo;
       batchDetailRef.value.queryTable();
     });
@@ -419,19 +412,22 @@
       boxDetailRef.value.queryTable();
     });
   };
-
-  const showBoxDetail = (row) => {
-    console.log({ row });
-    filterForm.value.boxNo = row.boxNo;
-    closeBoxDetail();
-    showBatchDetailModal('needBoxNo');
+  // 批详情打开箱详情
+  const showBoxDetail = (row: any) => {
+    batchDetailVisible.value = true;
+    nextTick(() => {
+      batchDetailRef.value.searchForm.stationNo = filterForm.value.stationNo;
+      batchDetailRef.value.searchForm.stationName = filterForm.value.stationName;
+      batchDetailRef.value.searchForm.boxNo = row.boxNo;
+      batchDetailRef.value.queryTable();
+    });
   };
 
   const closeBoxDetail = () => {
     boxDetailVisible.value = false;
   };
 
-  const _setReChecker = (val) => {
+  const _setReChecker = (val: string) => {
     if (val && filterForm.value.checker != val) {
       if (!filterForm.value.checker) {
         filterForm.value.checker = val;
@@ -450,7 +446,7 @@
   };
 
   // 查询页面数据
-  const getPageData = async (batchNo) => {
+  const getPageData = async (batchNo: string) => {
     try {
       loadingRef.value = true;
       const data = await getPlasmaVerify(batchNo);
@@ -465,7 +461,7 @@
       filterForm.value.trayNo = data.trayNo;
       filterForm.value.stationNo = data.stationNo;
 
-      unVerifyBagDate.value = data.unVerifyBag.map((item) => {
+      unVerifyBagDate.value = data.unVerifyBag.map((item: any) => {
         return {
           bagNo: item,
         };
@@ -482,7 +478,7 @@
   };
 
   // 扫描血浆进行验收操作
-  const keyupScan = async (e) => {
+  const keyupScan = async (e: { code: string }) => {
     // filterForm.value.bagNo = e.target.value.toUpperCase();
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
       if (!filterForm.value.bagNo) {
@@ -517,7 +513,7 @@
           filterForm.value.stationNo = data.stationNo;
           filterForm.value.boxNo = data.boxNo;
 
-          unVerifyBagDate.value = data.unVerifyBag.map((item) => {
+          unVerifyBagDate.value = data.unVerifyBag.map((item: any) => {
             return {
               bagNo: item,
             };
@@ -535,11 +531,7 @@
             if (data.donorFailed) {
               Modal.confirm({
                 title: '提示?',
-                content: createVNode(
-                  'div',
-                  { style: 'color:red;' },
-                  '献血浆者于xx年xx月xx日检测xxx不合格，血浆验收不合格',
-                ),
+                content: createVNode('div', { style: 'color:red;' }, data.donorFailed),
                 onOk() {},
                 onCancel() {
                   console.log('Cancel');
@@ -547,41 +539,24 @@
                 class: 'test',
               });
             }
+            if (
+              filterForm.value.verifyBagCount == filterForm.value.bagCount &&
+              filterForm.value.verifyBagCount
+            ) {
+              success('当前批验收完成');
+            } else if (!unVerifyBagDate.value.length) {
+              success('当前箱验收完成');
+            }
           }
-
-          // if (data.acceptDetail.unAcceptCount <= 0) {
-          //   // 一批接收完毕 提示
-          //   showConfirmGoon();
-          // }
         }
       } catch (error) {
         console.log(error);
       } finally {
         loadingRef.value = false;
+        filterForm.value.bagNo = '';
       }
     }
   };
-
-  // const showConfirmGoon = () => {
-  //   Modal.confirm({
-  //     title: '是否继续接收其他批次?',
-  //     content: createVNode('div', { style: 'color:red;' }, '当前批已接收完成！'),
-  //     onOk() {
-  //       // 清空当前批次信息
-  //       filterForm.value.trayNo = '';
-  //       filterForm.value.batchNo = '';
-  //       filterForm.value.stationName = '';
-  //       filterForm.value.boxCount = '';
-  //       filterForm.value.plasmaCount = '';
-  //       unVerifyBagDate.value = [];
-  //       verifyBagData.value = [];
-  //     },
-  //     onCancel() {
-  //       console.log('Cancel');
-  //     },
-  //     class: 'test',
-  //   });
-  // };
 </script>
 <style lang="less" scoped>
   .main {
