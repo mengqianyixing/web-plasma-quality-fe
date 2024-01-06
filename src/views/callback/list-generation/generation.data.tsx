@@ -200,6 +200,34 @@ export const callbackDetailDrawerColumns: BasicColumn[] = [
   },
 ];
 
+export const addCallbackDrawerSearchFromSchema: FormSchema[] = [
+  {
+    field: '[minCollectTime, maxCollectTime]',
+    label: '最早待回访日期',
+    component: 'RangePicker',
+    defaultValue: [
+      dayjs().subtract(1, 'year').add(1, 'day').format('YYYY-MM-DD'),
+      dayjs().subtract(180, 'day').format('YYYY-MM-DD'),
+    ],
+    colProps: { span: 7 },
+  },
+  {
+    field: 'immType',
+    label: '血浆类型',
+    component: 'Select',
+    colProps: { span: 5 },
+    componentProps: {
+      options: PLASMA_TYPE_LIST,
+    },
+  },
+  {
+    field: 'gapDays',
+    label: '距今未采浆天数',
+    component: 'InputNumber',
+    colProps: { span: 5 },
+  },
+];
+
 export const callbackDrawerSearchFromSchema: FormSchema[] = [
   {
     field: '[minCollectTime, maxCollectTime]',
@@ -218,7 +246,7 @@ export const callbackDrawerSearchFromSchema: FormSchema[] = [
   },
   {
     field: 'gapDays',
-    label: '浆员距今未采浆天数',
+    label: '距今未采浆天数',
     component: 'InputNumber',
     colProps: { span: 5 },
   },

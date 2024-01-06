@@ -17,8 +17,8 @@
   import { useMessage } from '@/hooks/web/useMessage';
 
   import {
-    callbackDrawerSearchFromSchema,
     callbackDrawerColumns,
+    addCallbackDrawerSearchFromSchema,
   } from '@/views/callback/list-generation/generation.data';
   import { generateCallback, getNeedCallbackList } from '@/api/callback/list-generation';
   import dayjs from 'dayjs';
@@ -43,7 +43,7 @@
     formConfig: {
       labelWidth: 150,
       showAdvancedButton: false,
-      schemas: callbackDrawerSearchFromSchema,
+      schemas: addCallbackDrawerSearchFromSchema,
       transformDateFunc(date) {
         return dayjs(date).format('YYYY-MM-DD');
       },

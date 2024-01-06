@@ -11,21 +11,44 @@
     />
 
     <div class="flex gap-1 mt-1">
-      <BasicTable @register="registerUnAcceptTable" class="w-2/5" :title="unAcceptTitle" />
-      <BasicTable @register="registerAcceptedTable" class="w-3/5" :title="acceptedTitle" />
+      <vxe-grid
+        v-bind="gridOptionsUnaccept"
+        :data="unAcceptList"
+        class="w-2/5 inline-block pr-2"
+        :loading="tableLoading"
+      >
+        <template #toolbar>
+          <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
+            <span>未验收数：</span>
+            <span>{{ unAcceptList?.length }}</span>
+          </div>
+        </template>
+      </vxe-grid>
+      <vxe-grid
+        v-bind="gridOptionsAccept"
+        :data="acceptList"
+        :loading="tableLoading"
+        class="inline-block w-3/5"
+      >
+        <template #toolbar>
+          <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
+            <span>已验收数：</span>
+            <span>{{ acceptList?.length }}</span>
+          </div>
+        </template>
+      </vxe-grid>
     </div>
   </PageWrapper>
 </template>
 
 <script setup lang="tsx">
-  import { computed, onMounted, ref } from 'vue';
+  import { computed, reactive, ref, onMounted } from 'vue';
   import { debounce } from 'lodash-es';
 
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
   import { useDrawer } from '@/components/Drawer';
-  import { BasicTable, useTable } from '@/components/Table';
 
   import SelectSampleBatchDrawer from './SelectSampleBatchDrawer.vue';
   import {
@@ -37,10 +60,13 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import dayjs from 'dayjs';
   import { sampleDictionary } from '@/enums/sampleEnum';
+  import { VxeGridProps } from 'vxe-table';
+  import { GetApiCoreBankStockRequest } from '@/api/type/plasmaStoreManage';
 
   const sampleBatchData = ref<GetApiCoreBatchSampleAcceptBatchSampleNoResponse>({});
   const inputValue = ref('');
   const sampleTypeDictionary = ref<Recordable[] | undefined>([]);
+  const tableLoading = ref(false);
 
   onMounted(async () => {
     const dictionaryArr = await getSampleDictionary([sampleDictionary.SampleType]);
@@ -57,9 +83,10 @@
     {
       field: 'batchSampleNo',
       label: '样本批号',
+      contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center gap-2 w-[300px]">
+          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
             <a-input
               placeholder="请选择批号或输入批号回车"
               value={inputValue}
@@ -99,63 +126,13 @@
     },
   ];
   const [register] = useDescription({
-    bordered: true,
-    column: 6,
+    bordered: false,
+    column: 3,
     contentStyle: {
-      width: '100px',
-      padding: '10px',
+      width: '80px',
     },
     title: '样本批次信息',
     schema: schema,
-  });
-
-  const [registerUnAcceptTable, { setTableData: setUnAcceptedTableData }] = useTable({
-    columns: [
-      {
-        title: '样本袋号',
-        dataIndex: 'sampleBagNo',
-      },
-      {
-        title: '样本数量',
-        dataIndex: 'sampleCount',
-      },
-    ],
-    size: 'small',
-    striped: false,
-    bordered: true,
-    showIndexColumn: false,
-    pagination: false,
-    canResize: true,
-  });
-
-  const [registerAcceptedTable, { setTableData: setAcceptedTableData }] = useTable({
-    columns: [
-      {
-        title: '样本袋号',
-        dataIndex: 'sampleBagNo',
-      },
-      {
-        title: '样本数量',
-        dataIndex: 'sampleCount',
-      },
-      {
-        title: '接收人',
-        dataIndex: 'acceptor',
-      },
-      {
-        title: '接收日期',
-        dataIndex: 'acceptAt',
-        format(text) {
-          return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
-        },
-      },
-    ],
-    size: 'small',
-    striped: false,
-    bordered: true,
-    showIndexColumn: false,
-    pagination: false,
-    canResize: true,
   });
 
   const [registerSelectDrawer, { openDrawer: openSelectSampleBatchDrawer }] = useDrawer();
@@ -169,23 +146,97 @@
     });
   }
 
-  const unAcceptTitle = computed(
-    () => `未接收袋数：${sampleBatchData.value?.unAcceptList?.length ?? 0}`,
-  );
+  const unAcceptList = computed(() => sampleBatchData.value?.unAcceptList ?? []);
+  const acceptList = computed(() => sampleBatchData.value?.acceptedList ?? []);
+  const gridOptionsUnaccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
+    border: true,
+    height: '760px',
+    showOverflow: true,
+    exportConfig: {},
+    columnConfig: {
+      resizable: true,
+    },
+    scrollY: {
+      enabled: true,
+      gt: 0,
+    },
+    pagerConfig: {
+      enabled: false,
+    },
+    formConfig: {
+      enabled: false,
+    },
+    toolbarConfig: {
+      refresh: false,
+      loading: false,
+      export: false,
+      custom: false,
+    },
+    columns: [
+      {
+        field: 'sampleBagNo',
+        title: '样本袋号',
+      },
+      {
+        field: 'sampleCount',
+        title: '样本数量',
+      },
+    ],
+    showFooter: false,
+  });
 
-  const acceptedTitle = computed(
-    () => `已接收袋数：${sampleBatchData.value?.acceptedList?.length ?? 0}`,
-  );
+  const gridOptionsAccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
+    border: true,
+    height: '760px',
+    showOverflow: true,
+    columnConfig: {
+      resizable: true,
+    },
+    scrollY: {
+      enabled: true,
+      gt: 0,
+    },
+    pagerConfig: {
+      enabled: false,
+    },
+    formConfig: {
+      enabled: false,
+    },
+    toolbarConfig: {
+      refresh: false,
+      loading: false,
+      export: false,
+      custom: false,
+    },
+    columns: [
+      {
+        field: 'sampleBagNo',
+        title: '样本袋号',
+        width: 200,
+      },
+      {
+        field: 'sampleCount',
+        title: '样本数量',
+      },
+      {
+        title: '接收人',
+        field: 'acceptor',
+      },
+      {
+        title: '接收日期',
+        field: 'acceptAt',
+        width: 200,
+        formatter(params) {
+          return params.cellValue ? dayjs(params.cellValue).format('YYYY-MM-DD HH:mm:ss') : '-';
+        },
+      },
+    ],
+    showFooter: false,
+  });
 
   async function handleSelectSampleBatchSuccess(record: Recordable) {
     sampleBatchData.value = await getSampleReceiveDetail(record.batchSampleNo);
-    updateTableData();
     inputValue.value = record.batchSampleNo;
-  }
-
-  function updateTableData() {
-    setUnAcceptedTableData(sampleBatchData.value?.unAcceptList ?? []);
-    setAcceptedTableData(sampleBatchData.value?.acceptedList ?? []);
   }
 
   function handleSampleBatchChange(e: ChangeEvent) {
@@ -206,7 +257,6 @@
           batchSampleNo: inputValue.value,
         });
         sampleBatchData.value = await getSampleReceiveDetail(inputValue.value);
-        updateTableData();
       },
     });
   }

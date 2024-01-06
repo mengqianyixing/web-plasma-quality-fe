@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-03 09:48:50
+ * @LastEditTime: 2024-01-06 09:58:27
 -->
 <template>
   <BasicDrawer
@@ -74,6 +74,8 @@
         field: 'account',
         componentProps: {
           'enter-button': '登录',
+          placeholder: '请点击登录按钮',
+          readonly: true,
           onSearch: () => {
             open.value = true;
           },

@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2024-01-02 13:43:33
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-06 10:01:28
+-->
 <template>
   <BasicDrawer
     v-bind="$attrs"
@@ -31,7 +39,7 @@
       </TabPane>
       <TabPane key="3" tab="未检测样品">
         <component
-          :is="componentMap['2']"
+          :is="componentMap['3']"
           checkResult="未检测"
           :projectId="pid"
           type="TO_BE_TESTED"

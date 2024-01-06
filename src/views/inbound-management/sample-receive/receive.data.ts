@@ -17,7 +17,7 @@ export const sampleAcceptColumns: BasicColumn[] = [
     slots: { customRender: 'sampleType' },
   },
   {
-    title: '样本总数',
+    title: '样本数量',
     dataIndex: 'totalCount',
   },
   {

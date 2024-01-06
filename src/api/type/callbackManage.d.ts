@@ -88,7 +88,7 @@ export interface GetApiCoreDonorCallbackResponse {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/need`
- * @更新时间 `2024-01-04 19:48:20`
+ * @更新时间 `2024-01-04 21:02:16`
  */
 export interface GetApiCoreDonorCallbackNeedRequest {
   stationNo: string;
@@ -111,6 +111,10 @@ export interface GetApiCoreDonorCallbackNeedRequest {
    * 血浆状态 ：首次 反复
    */
   plasmaType?: string;
+  /**
+   * 批次号
+   */
+  batchNo: string;
 }
 
 /**
@@ -118,7 +122,7 @@ export interface GetApiCoreDonorCallbackNeedRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/need`
- * @更新时间 `2024-01-04 19:48:20`
+ * @更新时间 `2024-01-04 21:02:16`
  */
 export type GetApiCoreDonorCallbackNeedResponse = {
   stationNo: string;
