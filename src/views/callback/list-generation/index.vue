@@ -141,7 +141,6 @@
     }
 
     if (selectedRow.value[0].state !== CallbackStateValueEnum.WIT) {
-      console.log(selectedRow.value[0].state);
       createMessage.warn('该状态不允许编辑');
       return;
     }

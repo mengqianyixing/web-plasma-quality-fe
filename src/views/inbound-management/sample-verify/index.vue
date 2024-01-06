@@ -1,13 +1,6 @@
 <template>
   <PageWrapper>
-    <Description @register="register" :data="sampleBatchData">
-      <template #action>
-        <a-button type="error" @click="handleNonconformityRegister" class="mr-2">
-          不合格登记
-        </a-button>
-        <a-button type="primary" @click="handleCompleteVerify">完成验收</a-button>
-      </template>
-    </Description>
+    <Description @register="register" :data="sampleBatchData" />
 
     <SampleVerifyBatchDrawer
       @register="registerSampleVerifyBatchDrawer"
@@ -21,7 +14,7 @@
       :loading="tableLoading"
     >
       <template #toolbar>
-        <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
+        <div class="p-4 font-medium text-[16px] bg-[#ffffff] rounded">
           <span>未验收数：</span>
           <span>{{ unAcceptList?.length }}</span>
         </div>
@@ -34,9 +27,15 @@
       class="inline-block w-[80%]"
     >
       <template #toolbar>
-        <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
-          <span>已验收数：</span>
-          <span>{{ sampleBatchData.verifyedList?.length }}</span>
+        <div class="flex justify-between items-center bg-[#ffffff] p-2">
+          <div class="font-medium text-[16px] bg-[#ffffff] rounded">
+            <span>已验收数：</span>
+            <span>{{ sampleBatchData.verifyedList?.length }}</span>
+          </div>
+          <div class="text-[16px] bg-[#ffffff] rounded">
+            <a-button @click="handleNonconformityRegister" class="mr-2"> 不合格登记 </a-button>
+            <a-button type="primary" @click="handleCompleteVerify">完成验收</a-button>
+          </div>
         </div>
       </template>
       <template #action="{ row }">
@@ -190,7 +189,7 @@
       label: '浆站缺号数量',
       render(text) {
         return (
-          <span onClick={handleLackCountClick} class="underline text-red-400 cursor-pointer">
+          <span onClick={handleLackCountClick} class="underline text-#2d5cf6 cursor-pointer">
             <span>{text}</span>
           </span>
         );
@@ -206,7 +205,7 @@
         return (
           <span
             onClick={handlePlasmaAcceptUnqualifiedCountClick}
-            class="underline text-red-400 cursor-pointer"
+            class="underline text-#2d5cf6 cursor-pointer"
           >
             {text}
           </span>

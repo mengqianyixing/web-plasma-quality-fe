@@ -1,10 +1,6 @@
 <template>
   <PageWrapper contentFullHeight fixedHeight>
-    <Description @register="register" :data="sampleBatchData">
-      <template #action>
-        <a-button type="primary" @click="handleAcceptSample">接收</a-button>
-      </template>
-    </Description>
+    <Description @register="register" :data="sampleBatchData" />
     <SelectSampleBatchDrawer
       @register="registerSelectDrawer"
       @success="handleSelectSampleBatchSuccess"
@@ -31,9 +27,14 @@
         class="inline-block w-3/5"
       >
         <template #toolbar>
-          <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
-            <span>已验收数：</span>
-            <span>{{ acceptList?.length }}</span>
+          <div class="flex items-center justify-between bg-[#ffffff]">
+            <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
+              <span>已验收数：</span>
+              <span>{{ acceptList?.length }}</span>
+            </div>
+            <div>
+              <a-button type="primary" @click="handleAcceptSample">接收</a-button>
+            </div>
           </div>
         </template>
       </vxe-grid>
