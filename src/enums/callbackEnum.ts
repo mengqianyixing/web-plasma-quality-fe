@@ -1,22 +1,19 @@
 export enum CallbackStateEnum {
-  WIT = '待复核',
+  WIT = '待确认',
   COF = '已确认',
-  ISU = '已下发',
-  END = '已结束',
+  REK = '已撤销',
 }
 export enum CallbackStateValueEnum {
   WIT = 'WIT',
   COF = 'COF',
-  ISU = 'ISU',
-  END = 'END',
+  REK = 'REK',
 }
 
 export const CallbackStateMap = new Map<CallbackStateValueEnum, string>();
 
 CallbackStateMap.set(CallbackStateValueEnum.WIT, CallbackStateEnum.WIT);
 CallbackStateMap.set(CallbackStateValueEnum.COF, CallbackStateEnum.COF);
-CallbackStateMap.set(CallbackStateValueEnum.ISU, CallbackStateEnum.ISU);
-CallbackStateMap.set(CallbackStateValueEnum.END, CallbackStateEnum.END);
+CallbackStateMap.set(CallbackStateValueEnum.REK, CallbackStateEnum.REK);
 
 export enum donorStatusEnum {
   RFF = '永拒',

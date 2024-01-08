@@ -54,13 +54,13 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'stationNo',
     label: '采浆公司',
-    colProps: { span: 8 },
+    colProps: { span: 6 },
     component: 'Select',
   },
   {
     field: '[createStartDate, createEndDate]',
     label: '生成日期',
-    colProps: { span: 8 },
+    colProps: { span: 7 },
     component: 'RangePicker',
     componentProps: {
       format: 'YYYY-MM-DD',
@@ -69,7 +69,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'state',
     label: '状态',
-    colProps: { span: 8 },
+    colProps: { span: 5 },
     component: 'Select',
     componentProps: {
       options: [...CallbackStateMap.entries()].map(([key, value]) => ({
@@ -134,6 +134,7 @@ export const callbackDetailDrawerColumns: BasicColumn[] = [
   {
     title: '身份证号',
     dataIndex: 'idcardId',
+    width: 200,
   },
   {
     title: '浆员状态',
@@ -199,35 +200,54 @@ export const callbackDetailDrawerColumns: BasicColumn[] = [
   },
 ];
 
-export const callbackDrawerSearchFromSchema: FormSchema[] = [
-  {
-    field: 'stationNo',
-    label: '采浆公司',
-    component: 'Select',
-    colProps: { span: 8 },
-    componentProps: {
-      disabled: true,
-    },
-  },
+export const addCallbackDrawerSearchFromSchema: FormSchema[] = [
   {
     field: '[minCollectTime, maxCollectTime]',
     label: '最早待回访日期',
     component: 'RangePicker',
-    colProps: { span: 8 },
+    defaultValue: [
+      dayjs().subtract(1, 'year').add(1, 'day').format('YYYY-MM-DD'),
+      dayjs().subtract(180, 'day').format('YYYY-MM-DD'),
+    ],
+    colProps: { span: 7 },
   },
   {
     field: 'immType',
     label: '血浆类型',
     component: 'Select',
-    colProps: { span: 8 },
+    colProps: { span: 5 },
     componentProps: {
       options: PLASMA_TYPE_LIST,
     },
   },
   {
     field: 'gapDays',
-    label: '浆员距今未采浆天数',
+    label: '距今未采浆天数',
     component: 'InputNumber',
-    colProps: { span: 8 },
+    colProps: { span: 5 },
+  },
+];
+
+export const callbackDrawerSearchFromSchema: FormSchema[] = [
+  {
+    field: '[minCollectTime, maxCollectTime]',
+    label: '最早待回访日期',
+    component: 'RangePicker',
+    colProps: { span: 7 },
+  },
+  {
+    field: 'immType',
+    label: '血浆类型',
+    component: 'Select',
+    colProps: { span: 5 },
+    componentProps: {
+      options: PLASMA_TYPE_LIST,
+    },
+  },
+  {
+    field: 'gapDays',
+    label: '距今未采浆天数',
+    component: 'InputNumber',
+    colProps: { span: 5 },
   },
 ];

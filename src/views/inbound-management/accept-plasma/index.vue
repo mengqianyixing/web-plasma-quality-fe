@@ -5,17 +5,6 @@
         <Row style="width: 100%">
           <Col>
             <FormItem label="复核人">
-              <!-- <Select
-                v-model:value="filterForm.checker"
-                allowClear
-                disabled
-                style="width: 180px"
-                placeholder="请点击登录"
-              >
-                <SelectOption v-for="item in checkerOpts" :key="item.value" :value="item.value">{{
-                  item.name
-                }}</SelectOption>
-              </Select> -->
               <Input
                 v-model:value="filterForm.checker"
                 disabled
@@ -115,12 +104,16 @@
           </Col>
           <Col>
             <FormItem>
-              <Button>托盘入库</Button>
+              <Button @click="openInDrawer(true, filterForm)" :disabled="!filterForm.batchNo"
+                >托盘入库</Button
+              >
             </FormItem>
           </Col>
           <Col>
             <FormItem>
-              <Button>托盘出库</Button>
+              <Button @click="openOutDrawer(true, filterForm)" :disabled="!filterForm.batchNo"
+                >托盘出库</Button
+              >
             </FormItem>
           </Col>
         </Row>
@@ -159,7 +152,6 @@
     </div>
     <batchModal
       v-if="batchModalVisible"
-      ref="batchRef"
       @close="closeBatch"
       @confirm="confirmBatch"
       mode="accept"
@@ -194,23 +186,14 @@
       ref="revokeModalRef"
       @query="getPageData"
     />
+    <InStoreDrawer @register="registerInDrawer" />
+    <OutStoreDrawer @register="registerOutDrawer" />
   </div>
 </template>
 
 <script lang="ts" setup>
   import { ref, nextTick, createVNode } from 'vue';
-  import {
-    Form,
-    FormItem,
-    Input,
-    Button,
-    // Select,
-    // SelectOption,
-    Row,
-    Col,
-    Table,
-    Modal,
-  } from 'ant-design-vue';
+  import { Form, FormItem, Input, Button, Row, Col, Table, Modal } from 'ant-design-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import dayjs from 'dayjs';
   import batchModal from '../receive-plasma/components/batch-modal.vue';
@@ -219,8 +202,14 @@
   import boxDetail from './components/box-detail.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import revokeModal from './components/revoke-modal.vue';
+  import InStoreDrawer from '../components/inStoreDrawer/index.vue';
+  import OutStoreDrawer from '../components/outStoreDrawer/index.vue';
+  import { useDrawer } from '@/components/Drawer';
 
   import { getPlasmaVerify, plasmaVerifyBag } from '@/api/inbound-management/accept-plasma';
+
+  const [registerInDrawer, { openDrawer: openInDrawer }] = useDrawer();
+  const [registerOutDrawer, { openDrawer: openOutDrawer }] = useDrawer();
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
@@ -229,7 +218,6 @@
   const searchBarRef = ref<any>(null);
   const tableHeight = ref(570); // 动态表格高度
 
-  const batchRef = ref<any>('');
   const batchDetailRef = ref<any>('');
   const boxDetailRef = ref<any>('');
   const suspendOrResumeRef = ref<any>('');
@@ -354,11 +342,6 @@
   const batchModalVisible = ref(false);
   const showBatchModal = () => {
     batchModalVisible.value = true;
-    nextTick(() => {
-      batchRef.value.searchForm.acceptState = ['R', 'S']; // 接收状态
-      batchRef.value.searchForm.verifyState = ['W', 'R'];
-      batchRef.value.queryTable();
-    });
   };
   const closeBatch = () => {
     batchModalVisible.value = false;
@@ -381,10 +364,7 @@
     nextTick(() => {
       suspendOrResumeRef.value.searchForm.batchNo = filterForm.value.batchNo;
       suspendOrResumeRef.value.searchForm.boxNo = filterForm.value.boxNo;
-      // 箱暂停使用已登录的复核人，批暂停需要单独登录
-      if (pattern === 'BOX') {
-        suspendOrResumeRef.value.searchForm.checker = filterForm.value.checker;
-      }
+      suspendOrResumeRef.value.searchForm.checker = filterForm.value.checker;
       suspendOrResumeRef.value.searchForm.pattern = pattern;
       suspendOrResumeRef.value.getList();
     });

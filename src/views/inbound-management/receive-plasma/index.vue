@@ -36,12 +36,14 @@
           </Col>
           <Col>
             <FormItem>
-              <Button @click="suspendModal">暂停接收</Button>
+              <Button @click="suspendModal">提交接收单</Button>
             </FormItem>
           </Col>
           <Col>
             <FormItem>
-              <Button>托盘入库</Button>
+              <Button @click="openDrawer(true, filterForm)" :disabled="!filterForm.batchNo"
+                >托盘入库</Button
+              >
             </FormItem>
           </Col>
         </Row>
@@ -108,21 +110,19 @@
     </div>
     <batchModal
       v-if="batchModalVisible"
-      ref="batchRef"
       @close="closeBatch"
       @confirm="confirmBatch"
       mode="receive"
     />
-    <registerModal v-if="registerModalVisible" @close="closeRegister" @login-data="handleLogin" />
+    <registerModal v-if="registerModalVisible" @close="closeRegister" />
     <suspendOrResumeModal
       v-if="suspendModalVisible"
       :checkerOpts="checkerOpts"
       :batchNo="filterForm.batchNo"
-      ref="suspendOrResumeRef"
-      @clear-info="clearInfo"
       @close="closeSuspend"
       @go-register="registerModalVisible = true"
     />
+    <InStoreDrawer @register="registerDrawer" />
   </div>
 </template>
 
@@ -145,15 +145,17 @@
   import registerModal from './components/register-modal.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import { useMessage } from '@/hooks/web/useMessage';
-  import { getAccepts, acceptPlasma } from '@/api/inbound-management/receive-plasma';
+  import { getAccepts, acceptPlasma } from '@/api/inbound-management/receive-plasma.ts';
+  import InStoreDrawer from '../components/inStoreDrawer/index.vue';
+  import { useDrawer } from '@/components/Drawer';
+
+  const [registerDrawer, { openDrawer }] = useDrawer();
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
 
-  const batchRef = ref<any>('');
   const loadingRef = ref(false);
-  const searchBarRef = ref<any>(null);
-  const suspendOrResumeRef = ref<any>('');
+  const searchBarRef = ref(null);
   const tableHeight = ref(570); // 动态表格高度
 
   interface FilterForm {
@@ -246,10 +248,6 @@
 
   const showBatchModal = () => {
     batchModalVisible.value = true;
-    nextTick(() => {
-      batchRef.value.searchForm.acceptState = ['W', 'R']; // 接收状态
-      batchRef.value.queryTable();
-    });
   };
   const closeBatch = () => {
     batchModalVisible.value = false;
@@ -269,11 +267,8 @@
   const closeRegister = () => {
     registerModalVisible.value = false;
   };
-  const handleLogin = (res) => {
-    suspendOrResumeRef.value.searchForm.checker = res.username;
-  };
 
-  // 暂停继续框
+  // 申请单框
   const suspendModalVisible = ref(false);
   const suspendModal = () => {
     if (!filterForm.value.batchNo) {
@@ -281,17 +276,9 @@
       return;
     }
     suspendModalVisible.value = true;
-    nextTick(() => {
-      suspendOrResumeRef.value.searchForm.batchNo = filterForm.value.batchNo;
-      suspendOrResumeRef.value.getList();
-    });
   };
   const closeSuspend = () => {
     suspendModalVisible.value = false;
-  };
-  const clearInfo = () => {
-    unAcceptDetails.value = [];
-    acceptDetails.value = [];
   };
 
   // 查询页面数据

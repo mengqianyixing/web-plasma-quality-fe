@@ -110,7 +110,7 @@
       loading.value = true;
       const res = await api(props.params);
       isFirstLoaded.value = true;
-      if (Array.isArray(res)) {
+      if (Array.isArray(res) && !props.resultField) {
         optionsRef.value = res;
         emitChange();
         return;
