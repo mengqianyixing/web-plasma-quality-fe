@@ -99,7 +99,7 @@ export interface GetApiCoreBankUnqualifiedBoxesResponse {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `POST /api/core/bank/unqualified/box`
- * @更新时间 `2024-01-06 17:59:34`
+ * @更新时间 `2024-01-08 10:42:08`
  */
 export interface PostApiCoreBankUnqualifiedBoxRequest {
   /**
@@ -122,7 +122,7 @@ export interface PostApiCoreBankUnqualifiedBoxRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `POST /api/core/bank/unqualified/box`
- * @更新时间 `2024-01-06 17:59:34`
+ * @更新时间 `2024-01-08 10:42:08`
  */
 export interface PostApiCoreBankUnqualifiedBoxResponse {}
 

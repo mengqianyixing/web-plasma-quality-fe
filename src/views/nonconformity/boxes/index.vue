@@ -22,6 +22,7 @@
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import BoxModal from '@/views/nonconformity/boxes/BoxModal.vue';
   import { deleteBox, nonconformityBoxList } from '@/api/nonconformity/manage';
+  import { getPrintRecord } from '@/api/tag/printRecord';
 
   const { createMessage, createConfirm } = useMessage();
 
@@ -101,7 +102,13 @@
     });
   }
 
-  function handleLabelPrint() {}
+  async function handleLabelPrint() {
+    const res = await getPrintRecord({
+      labelType: 'PLAIN_BOX',
+      bissNo: selectedRowsRef.value[0].boxNo,
+    });
+    console.log(res);
+  }
 
   function handleSuccess() {
     clearSelectedRowKeys();

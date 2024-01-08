@@ -1,8 +1,5 @@
 import { defHttp } from '@/utils/http/axios';
-import {
-  PostApiSysDictionaryItemsRequest,
-  PostApiSysDictionaryItemsResponse,
-} from '@/api/type/dictionary';
+import { PostApiSysDictionaryItemsResponse } from '@/api/type/dictionary';
 
 enum Api {
   DICTIONARY = '/api/sys/dictionaryItems',
@@ -10,7 +7,8 @@ enum Api {
 
 export enum DictionaryEnum {
   SampleUnqualifiedReason = 'checkUnqualifiedReason',
+  SampleType = 'sampleType',
 }
 
-export const geSampleUnqualifiedReasonDictionary = (params: PostApiSysDictionaryItemsRequest) =>
+export const getSysDictionary = (params: DictionaryEnum[]) =>
   defHttp.post<PostApiSysDictionaryItemsResponse>({ url: Api.DICTIONARY, params });
