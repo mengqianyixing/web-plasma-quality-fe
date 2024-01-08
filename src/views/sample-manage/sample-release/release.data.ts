@@ -1,5 +1,6 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import dayjs from 'dayjs';
+import { sampleVerifyStatusMap, sampleVerifyStatusValueEnum } from '@/enums/sampleEnum';
 
 export const columns: BasicColumn[] = [
   {
@@ -13,6 +14,7 @@ export const columns: BasicColumn[] = [
   {
     title: '样本类型',
     dataIndex: 'sampleType',
+    slots: { customRender: 'sampleType' },
   },
   {
     title: '浆站出库日期',
@@ -43,7 +45,7 @@ export const columns: BasicColumn[] = [
   {
     title: '不合格样本数量',
     dataIndex: 'unqualifiedCount',
-    slots: { default: 'unqualifiedCount' },
+    slots: { customRender: 'unqualifiedCount' },
   },
   {
     title: '验收人',
@@ -72,7 +74,10 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '验收状态',
-    dataIndex: 'verifyStatus',
+    dataIndex: 'verifyState',
+    format(text) {
+      return sampleVerifyStatusMap.get(<sampleVerifyStatusValueEnum>text) as string;
+    },
   },
 ];
 
@@ -81,43 +86,49 @@ export const searchReleaseSchema: FormSchema[] = [
     field: 'stationNo',
     component: 'Select',
     label: '采浆公司',
-    colProps: { span: 7 },
+    colProps: { span: 6 },
   },
   {
     field: 'batchSampleNo',
     component: 'Input',
     label: '样本批号',
-    colProps: { span: 7 },
+    colProps: { span: 6 },
   },
   {
     field: 'sampleType',
     component: 'Select',
     label: '样本类型',
-    colProps: { span: 7 },
+    colProps: { span: 6 },
   },
   {
-    field: 'verifyStatus',
+    field: 'verifyState',
     component: 'Select',
     label: '验收状态',
-    colProps: { span: 7 },
+    colProps: { span: 6 },
+    componentProps: {
+      options: [...sampleVerifyStatusMap.entries()].map(([key, value]) => ({
+        value: key,
+        label: value,
+      })),
+    },
   },
   {
     field: '[verifyBeginAt, verifyEndAt]',
     component: 'RangePicker',
     label: '验收日期',
-    colProps: { span: 7 },
+    colProps: { span: 6 },
   },
   {
     field: '[titerExpiredBeginAt, titerExpiredEndAt]',
     component: 'RangePicker',
     label: '效价有效期',
-    colProps: { span: 7 },
+    colProps: { span: 6 },
   },
   {
     field: '[othersExpiredBeginAt, othersExpiredEndAt]',
     component: 'RangePicker',
     label: '其他有效期',
-    colProps: { span: 7 },
+    colProps: { span: 6 },
   },
 ];
 

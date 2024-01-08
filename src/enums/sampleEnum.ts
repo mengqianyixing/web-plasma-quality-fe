@@ -34,12 +34,14 @@ export enum sampleVerifyStatusEnum {
   W = '未验收',
   R = '验收中',
   S = '已验收',
+  H = '已发布',
 }
 
 export enum sampleVerifyStatusValueEnum {
   W = 'W',
   R = 'R',
   S = 'S',
+  H = 'H',
 }
 
 export const sampleVerifyStatusMap = new Map<sampleVerifyStatusValueEnum, string>();
@@ -47,6 +49,7 @@ export const sampleVerifyStatusMap = new Map<sampleVerifyStatusValueEnum, string
 sampleVerifyStatusMap.set(sampleVerifyStatusValueEnum.W, sampleVerifyStatusEnum.W);
 sampleVerifyStatusMap.set(sampleVerifyStatusValueEnum.R, sampleVerifyStatusEnum.R);
 sampleVerifyStatusMap.set(sampleVerifyStatusValueEnum.S, sampleVerifyStatusEnum.S);
+sampleVerifyStatusMap.set(sampleVerifyStatusValueEnum.H, sampleVerifyStatusEnum.H);
 
 export enum sampleVerifyResultEnum {
   Unqualified = '不合格',
