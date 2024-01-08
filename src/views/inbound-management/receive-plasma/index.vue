@@ -26,7 +26,12 @@
           </Col>
           <Col>
             <FormItem label="箱号">
-              <Input v-model:value="filterForm.boxNo" placeholder="请扫描" @keyup="keyupScan" />
+              <Input
+                v-model:value="filterForm.boxNo"
+                :disabled="loadingRef"
+                placeholder="请扫描"
+                @keyup="keyupScan"
+              />
             </FormItem>
           </Col>
           <Col>
@@ -386,6 +391,8 @@
         filterForm.value.acceptCount = 0;
         unAcceptDetails.value = [];
         acceptDetails.value = [];
+        // 打开批号选择框
+        showBatchModal();
       },
       onCancel() {
         console.log('Cancel');
