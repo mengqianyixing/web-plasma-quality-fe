@@ -5,7 +5,7 @@ import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 enum STATE {
   TBG = '报告待生成',
   TBR = '待复核',
-  UND = '未发布',
+  UND = '待发布',
   PUD = '已发布',
 }
 const stateList = (() => Object.keys(STATE).map((_) => ({ label: STATE[_], value: _ })))();
@@ -50,6 +50,14 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return STATE[record.state];
     },
+  },
+  {
+    title: '报告人',
+    dataIndex: 'producer',
+  },
+  {
+    title: '报告日期',
+    dataIndex: 'productionAt',
   },
   {
     title: '复核人',

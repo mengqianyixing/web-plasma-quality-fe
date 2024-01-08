@@ -10,11 +10,11 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate()">报告制作</a-button>
-        <a-button type="primary" @click="handleUnCreate()">取消制作</a-button>
-        <a-button type="primary" @click="handleProcess()">审核</a-button>
-        <a-button type="primary" @click="handleUnProcess()">取消审核</a-button>
-        <a-button type="primary" @click="handleRelease">结果发布</a-button>
+        <a-button type="primary" @click="handleCreate">报告生成</a-button>
+        <a-button type="primary" @click="handleUnCreate">撤销生成</a-button>
+        <a-button type="primary" @click="handleProcess">复核</a-button>
+        <a-button type="primary" @click="handleUnProcess">撤销复核</a-button>
+        <a-button type="primary" @click="handleRelease">发布</a-button>
         <a-button type="primary" @click="handlePrint">打印</a-button>
       </template>
       <template #sampleCode="{ record }: { record: Recordable }">
