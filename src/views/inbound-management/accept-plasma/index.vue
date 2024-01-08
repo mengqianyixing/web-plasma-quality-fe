@@ -22,7 +22,12 @@
           </Col>
           <Col>
             <FormItem label="血浆编号">
-              <Input v-model:value="filterForm.bagNo" placeholder="请扫描" @keyup="keyupScan" />
+              <Input
+                v-model:value="filterForm.bagNo"
+                :disabled="loadingRef"
+                placeholder="请扫描"
+                @keyup="keyupScan"
+              />
             </FormItem>
           </Col>
         </Row>
@@ -177,6 +182,7 @@
     <revokeModal
       v-if="revokeModalVisible"
       @close="closeRevoke"
+      @go-register="registerModalVisible = true"
       ref="revokeModalRef"
       @query="getPageData"
     />
@@ -324,6 +330,9 @@
     // 暂停批的确认登录
     if (suspendModalVisible.value && suspendOrResumeRef.value.searchForm.pattern === 'BCH') {
       suspendOrResumeRef.value.searchForm.checker = res.username;
+    } else if (revokeModalVisible.value) {
+      // 撤销验收登录
+      revokeModalRef.value.searchForm.checker = res.username;
     } else {
       filterForm.value.checker = res.username;
     }
@@ -347,10 +356,10 @@
   // 暂停/继续框
   const suspendModalVisible = ref(false);
   const suspendModal = (pattern: string) => {
-    // if (!filterForm.value.batchNo) {
-    //   warning('请先进行验收!');
-    //   return;
-    // }
+    if (!filterForm.value.batchNo) {
+      warning('请先进行验收!');
+      return;
+    }
     suspendModalVisible.value = true;
     nextTick(() => {
       suspendOrResumeRef.value.searchForm.batchNo = filterForm.value.batchNo;
@@ -373,11 +382,8 @@
   const revokeModalVisible = ref(false);
   const showRevokeModal = (row: any) => {
     revokeModalVisible.value = true;
-    console.log(row, '111111111111111111111');
-
     nextTick(() => {
       revokeModalRef.value.rowInfow = { ...filterForm.value, ...row };
-      console.log(revokeModalRef.value.rowInfow, '222222222222222222222222');
     });
   };
   const closeRevoke = () => {
@@ -509,9 +515,24 @@
           _setReChecker(data.checker);
           filterForm.value.verifyBoxCount = data.verifyBoxCount;
           filterForm.value.boxCount = data.boxCount;
-          filterForm.value.trayNo = data.trayNo;
           filterForm.value.stationNo = data.stationNo;
           filterForm.value.boxNo = data.boxNo;
+          // 更改托盘编号
+          if (filterForm.value.trayNo && data.trayNo && filterForm.value.trayNo != data.trayNo) {
+            Modal.confirm({
+              title: '提示?',
+              content: createVNode('div', { style: 'color:red;' }, '托盘编号不一致，需要替换吗?'),
+              onOk() {
+                filterForm.value.trayNo = data.trayNo;
+              },
+              onCancel() {
+                console.log('Cancel');
+              },
+              class: 'test',
+            });
+          } else if (data.trayNo) {
+            filterForm.value.trayNo = data.trayNo;
+          }
 
           unVerifyBagDate.value = data.unVerifyBag.map((item: any) => {
             return {

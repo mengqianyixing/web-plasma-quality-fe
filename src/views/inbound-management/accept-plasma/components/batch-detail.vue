@@ -86,6 +86,10 @@
   } from 'ant-design-vue';
   import dayjs from 'dayjs';
   import { getPlasmaBag } from '@/api/inbound-management/accept-plasma.js';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  const { createMessage } = useMessage();
+  const { warning } = createMessage;
 
   const emit = defineEmits(['close']);
   const props = defineProps({
@@ -99,8 +103,8 @@
     stationName: string;
     batchNo: string;
     boxNo: string;
-    verifyState: string;
-    verifyResult: string;
+    verifyState: string | undefined;
+    verifyResult: string | undefined;
   }
 
   // 表单数据
@@ -109,8 +113,8 @@
     stationName: '',
     batchNo: '',
     boxNo: '',
-    verifyState: '',
-    verifyResult: '',
+    verifyState: undefined,
+    verifyResult: undefined,
   };
   const searchForm = ref<SearchForm>({ ...initSearchForm });
 
@@ -156,7 +160,7 @@
       dataIndex: 'boxNo',
     },
     {
-      title: '袋号',
+      title: '血浆编号',
       dataIndex: 'bagNo',
     },
     {
@@ -236,10 +240,10 @@
 
   // 查询列表数据
   const queryTable = async () => {
-    // if (!searchForm.value.batchNo) {
-    //   warning('请选择批号!');
-    //   return;
-    // }
+    if (!searchForm.value.batchNo && !searchForm.value.boxNo) {
+      warning('请选择批号或箱号!');
+      return;
+    }
     const params = { ...searchForm.value };
     delete (params as any).stationName;
     delete (params as any).stationNo;

@@ -94,7 +94,7 @@
     stationName: '',
     batchNo: '',
     boxNo: '',
-    verifyState: '',
+    verifyState: undefined,
   };
   const searchForm = ref({ ...initSearchForm });
 
