@@ -266,7 +266,7 @@
 
   const resetQuery = () => {
     searchForm.value = { ...initSearchForm };
-    queryTable();
+    // queryTable();
   };
   defineExpose({
     searchForm,

@@ -311,7 +311,7 @@
     pagination.value.pageSize = 10;
     pagination.value.current = 1;
     pagination.value.total = 0;
-    queryTable();
+    // queryTable();
   };
   // queryTable();
   getStationNameList();
