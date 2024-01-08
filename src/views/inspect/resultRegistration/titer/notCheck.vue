@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-06 09:50:23
+ * @LastEditTime: 2024-01-08 15:07:08
 -->
 <template>
   <BasicDrawer
@@ -67,7 +67,8 @@
           mode: 'multiple',
         },
       });
-      setFieldsValue({ projectIds });
+      donorData.value = {};
+      setFieldsValue({ projectIds, sampleNo: '' });
       clearValidate();
     },
   );
@@ -113,7 +114,6 @@
       loading.value = true;
       await submitNotCheckApi({ sampleNo, bsNo: unref(bsno), projectIds });
       message.success(sampleNo + '登记成功');
-      emit('confirm');
       if (close === false) {
         setFieldsValue({ sampleNo: '' });
         clearValidate();

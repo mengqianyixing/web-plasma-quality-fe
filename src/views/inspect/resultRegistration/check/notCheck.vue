@@ -60,7 +60,8 @@
           mode: 'multiple',
         },
       });
-      setFieldsValue({ projectIds });
+      donorData.value = {};
+      setFieldsValue({ projectIds, sampleNo: '' });
       clearValidate();
     },
   );

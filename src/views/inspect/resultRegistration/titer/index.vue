@@ -2,7 +2,13 @@
   <div class="h-full">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleImport" size="small" :disabled="!props.bsNo">
+        <a-button
+          type="primary"
+          @click="handleImport"
+          size="small"
+          :disabled="!props.bsNo"
+          v-if="false"
+        >
           效价导入
         </a-button>
         <a-button type="primary" @click="handleEnter" size="small" :disabled="!props.bsNo">
@@ -25,13 +31,19 @@
     <NotCheck
       @register="registerNotCheckDrawer"
       @close="reload"
-      @confirm="openNotCheckDrawer(false)"
+      @confirm="
+        openNotCheckDrawer(false);
+        reload();
+      "
     />
     <ImportDrawer @register="registerImportDrawer" @close="reload" />
     <EnterRusult
       @register="registerEnterDrawer"
       @close="reload"
-      @confirm="openEnterDrawer(false)"
+      @confirm="
+        openEnterDrawer(false);
+        reload();
+      "
     />
   </div>
 </template>

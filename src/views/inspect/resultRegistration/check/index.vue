@@ -17,20 +17,23 @@
           {{ record.projectAbbr }}
         </span>
       </template>
-      <template #methodAbbr="{ record }: { record: Recordable }">
-        {{ methodMap.get(record.methodAbbr) }}
-      </template>
     </BasicTable>
     <DtDrawer @register="registerDtDrawer" />
     <NotCheck
       @register="registerNotCheckDrawer"
       @close="reload"
-      @confirm="openNotCheckDrawer(false)"
+      @confirm="
+        openNotCheckDrawer(false);
+        reload();
+      "
     />
     <UnqualifiedDrawer
       @register="registerUnqDrawer"
       @close="reload"
-      @confirm="openUnqDrawer(false)"
+      @confirm="
+        openUnqDrawer(false);
+        reload();
+      "
     />
     <Modal
       :open="open"
@@ -57,11 +60,9 @@
   import { message, Modal } from 'ant-design-vue';
   import { watch, nextTick, onMounted, ref } from 'vue';
   import { getCheckListApi, removeCheckApi } from '@/api/inspect/resultRegistration';
-  import { getInspectMethodListApi } from '@/api/inspect/inspectMethod';
   import { BasicForm, useForm } from '@/components/Form';
 
   const emit = defineEmits(['reload']);
-  const methodMap = ref(new Map());
 
   const props = defineProps({
     bsNo: { type: String, default: '' },
@@ -157,9 +158,5 @@
   }
   onMounted(async () => {
     emit('reload', reload, '1');
-    const res = await getInspectMethodListApi();
-    res.forEach((_) => {
-      methodMap.value.set(_.value, _.label);
-    });
   });
 </script>

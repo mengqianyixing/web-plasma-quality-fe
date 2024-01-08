@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-03 21:58:31
+ * @LastEditTime: 2024-01-08 15:17:54
 -->
 <template>
   <BasicDrawer
@@ -56,12 +56,10 @@
     options: {
       label: string;
       value: string;
-      disabled: boolean;
+      disabled?: boolean;
     }[];
   };
   const emit = defineEmits(['confirm']);
-
-  const defaultProject = 'CMV-NT';
 
   const state = ref<CheckGrop[] & GetApiCoreLabRegistrationLabProjectsBsNoResponse>([]);
   const bsno = ref('');
@@ -74,16 +72,14 @@
     }
     state.value = res
       .map((_) => {
-        const item = _.labProjects.find((_) => _.projectAbbr === defaultProject);
         return {
           ..._,
           checkAll: false,
           indeterminate: false,
-          values: item ? [item.projectId] : [],
+          values: [],
           options: _.labProjects.map((_) => ({
             value: _.projectId,
             label: _.projectAbbr,
-            disabled: _.projectAbbr === defaultProject,
           })),
         };
       })
@@ -118,13 +114,7 @@
     if (event.target.checked) {
       item.values = item.options.map((_) => _.value);
     } else {
-      const it = item.options.find((_) => _.label === defaultProject);
-      if (it) {
-        item.indeterminate = true;
-        item.values.splice(0, item.values.length, it.value);
-      } else {
-        item.values.splice(0, item.values.length);
-      }
+      item.values.splice(0, item.values.length);
     }
   }
   function change(values: any[], item: CheckGrop) {
