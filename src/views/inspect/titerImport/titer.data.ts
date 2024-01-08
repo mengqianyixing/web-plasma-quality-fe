@@ -6,6 +6,7 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    slots: { customRender: 'stationName' },
   },
   {
     title: '样品批号',

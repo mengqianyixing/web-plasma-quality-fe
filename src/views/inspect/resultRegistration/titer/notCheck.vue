@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-03 20:29:46
+ * @LastEditTime: 2024-01-06 09:50:23
 -->
 <template>
   <BasicDrawer
@@ -47,6 +47,7 @@
     {
       field: 'collectAt',
       label: '采集日期',
+      format: ({ collectAt }) => collectAt?.slice(0, 10),
     },
     {
       field: 'bloodType',

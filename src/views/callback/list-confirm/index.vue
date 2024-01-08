@@ -66,7 +66,7 @@
   const [registerCallbackDetailDrawer, { openDrawer: openCallbackDetailDrawer }] = useDrawer();
 
   const [registerTable, { getForm, reload }] = useTable({
-    title: '回访名单生成列表',
+    title: '回访名单确认列表',
     api: getCallbackListApi,
     columns,
     formConfig: {
@@ -89,7 +89,7 @@
         selectedRow.value = selectedRows;
       },
     },
-    size: 'small',
+    size: 'middle',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,
@@ -100,7 +100,6 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
   });
 
   async function handleConfirm() {

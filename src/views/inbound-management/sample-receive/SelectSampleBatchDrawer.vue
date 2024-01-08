@@ -45,7 +45,8 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    clickToRowSelect: false,
+    clickToRowSelect: true,
+    clearSelectOnPageChange: true,
     rowSelection: {
       type: 'checkbox',
       onChange: (keys, selectedRows: any) => {
@@ -67,7 +68,7 @@
         selectedRow.value = selectedRows;
       },
     },
-    size: 'small',
+    size: 'large',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,
@@ -78,7 +79,7 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    canResize: true,
     immediate: false,
   });
 
@@ -91,6 +92,10 @@
   });
 
   function handleSelect() {
+    if (selectedRow.value.length === 0) {
+      createMessage.warn('请选择一条数据');
+      return;
+    }
     emit('success', selectedRow.value[0]);
     closeDrawer();
   }

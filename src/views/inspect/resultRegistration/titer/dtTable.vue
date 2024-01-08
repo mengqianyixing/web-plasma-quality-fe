@@ -68,6 +68,8 @@
         label: '复核人',
         componentProps: {
           'enter-button': '登录',
+          placeholder: '请点击登录按钮',
+          readonly: true,
           onSearch: () => {
             open.value = true;
           },

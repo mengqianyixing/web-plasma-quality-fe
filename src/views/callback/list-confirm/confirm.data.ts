@@ -47,13 +47,13 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'stationNo',
     label: '采浆公司',
-    colProps: { span: 8 },
+    colProps: { span: 5 },
     component: 'Select',
   },
   {
     field: '[createStartDate, createEndDate]',
     label: '生成日期',
-    colProps: { span: 8 },
+    colProps: { span: 7 },
     component: 'RangePicker',
     componentProps: {
       format: 'YYYY-MM-DD',
@@ -62,7 +62,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'state',
     label: '状态',
-    colProps: { span: 8 },
+    colProps: { span: 5 },
     component: 'Select',
     defaultValue: CallbackStateValueEnum.WIT,
     componentProps: {
