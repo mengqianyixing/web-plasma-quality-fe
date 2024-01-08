@@ -110,6 +110,7 @@
     </div>
     <batchModal
       v-if="batchModalVisible"
+      ref="batchModalRef"
       @close="closeBatch"
       @confirm="confirmBatch"
       mode="receive"
@@ -145,7 +146,7 @@
   import registerModal from './components/register-modal.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import { useMessage } from '@/hooks/web/useMessage';
-  import { getAccepts, acceptPlasma } from '@/api/inbound-management/receive-plasma.ts';
+  import { getAccepts, acceptPlasma } from '@/api/inbound-management/receive-plasma';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import { useDrawer } from '@/components/Drawer';
 
@@ -155,8 +156,9 @@
   const { success, warning } = createMessage;
 
   const loadingRef = ref(false);
-  const searchBarRef = ref(null);
+  const searchBarRef = ref<any>('');
   const tableHeight = ref(570); // 动态表格高度
+  const batchModalRef = ref<any>('');
 
   interface FilterForm {
     trayNo: string;
@@ -245,9 +247,12 @@
 
   // 批号框
   const batchModalVisible = ref(false);
-
   const showBatchModal = () => {
     batchModalVisible.value = true;
+    nextTick(() => {
+      batchModalRef.value.searchForm.acceptState = ['R', 'W']; // 接收状态
+      batchModalRef.value.queryTable();
+    });
   };
   const closeBatch = () => {
     batchModalVisible.value = false;

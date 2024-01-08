@@ -1,4 +1,5 @@
 import { defHttp } from '@/utils/http/axios';
+import qs from 'qs';
 
 enum Api {
   GetAccepts = '/api/core/batch/plasma/accept',
@@ -15,7 +16,13 @@ export const getAccepts = (params: any) => {
 
 // 获取批次列表
 export const getBatchSummary = (params: any) => {
-  return defHttp.get<any>({ url: Api.GetBatchSummary, params });
+  return defHttp.get<any>({
+    url: Api.GetBatchSummary,
+    params,
+    paramsSerializer: (params) => {
+      return qs.stringify(params, { indices: false });
+    },
+  });
 };
 
 // 血浆接收
