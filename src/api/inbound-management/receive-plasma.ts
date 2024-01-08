@@ -17,8 +17,6 @@ export const getAccepts = (params: any) => {
 
 // 获取批次列表
 export const getBatchSummary = (params: any) => {
-  console.log('2131231111', params);
-
   return defHttp.get<any>({
     url: Api.GetBatchSummary,
     params,

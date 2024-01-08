@@ -152,6 +152,7 @@
     </div>
     <batchModal
       v-if="batchModalVisible"
+      ref="batchModalRef"
       @close="closeBatch"
       @confirm="confirmBatch"
       mode="accept"
@@ -222,6 +223,7 @@
   const boxDetailRef = ref<any>('');
   const suspendOrResumeRef = ref<any>('');
   const revokeModalRef = ref<any>('');
+  const batchModalRef = ref<any>('');
 
   interface FilterForm {
     trayNo: string;
@@ -342,6 +344,11 @@
   const batchModalVisible = ref(false);
   const showBatchModal = () => {
     batchModalVisible.value = true;
+    nextTick(() => {
+      batchModalRef.value.searchForm.acceptState = ['R', 'S']; // 接收状态
+      batchModalRef.value.searchForm.verifyState = ['R', 'W'];
+      batchModalRef.value.queryTable();
+    });
   };
   const closeBatch = () => {
     batchModalVisible.value = false;
