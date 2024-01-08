@@ -130,7 +130,7 @@ export default defineConfig([
             outputFilePath: 'src/api/type/trayManage.d.ts',
           },
           {
-            id: 5299,
+            id: [5299, 5369],
             getRequestFunctionName(interfaceInfo, changeCase) {
               return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
             },
