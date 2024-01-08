@@ -105,14 +105,20 @@
       title: '创建时间',
       dataIndex: 'createAt',
       customRender: ({ text }) => {
-        return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+        if (text) {
+          return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+        }
+        return '';
       },
     },
     {
       title: '提交时间',
       dataIndex: 'commitAt',
       customRender: ({ text }) => {
-        return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+        if (text) {
+          return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+        }
+        return '';
       },
     },
     {

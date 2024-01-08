@@ -75,7 +75,7 @@
     Input,
     Table,
   } from 'ant-design-vue';
-  import { getPlasmaBox } from '@/api/inbound-management/accept-plasma.ts';
+  import { getPlasmaBox } from '@/api/inbound-management/accept-plasma';
   import { useMessage } from '@/hooks/web/useMessage';
 
   const { createMessage } = useMessage();

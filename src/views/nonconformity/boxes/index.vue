@@ -1,69 +1,110 @@
 <template>
-  <div>
+  <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
-      <template #headerTop>
-        <div class="flex gap-2">
-          <a-button type="primary" @click="handleAdd"> 新增 </a-button>
-          <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
-          <a-button type="primary" @click="handleDelete"> 删除 </a-button>
-          <a-button type="primary" @click="handleLabelPrint"> 标签打印 </a-button>
-        </div>
+      <template #toolbar>
+        <a-button type="primary" @click="handleAdd"> 新增 </a-button>
+        <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
+        <a-button type="primary" @click="handleDelete"> 撤销 </a-button>
+        <a-button type="primary" @click="handleLabelPrint"> 标签打印 </a-button>
       </template>
     </BasicTable>
-  </div>
+
+    <BoxModal @register="registerBoxModal" @success="handleSuccess" />
+  </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
-  import { deleteDept, getDeptList } from '@/api/systemServer/system';
   import { columns, searchFormSchema } from './boxes.data';
+  import { useModal } from '@/components/Modal';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  import { ref } from 'vue';
+  import PageWrapper from '@/components/Page/src/PageWrapper.vue';
+  import BoxModal from '@/views/nonconformity/boxes/BoxModal.vue';
+  import { deleteBox, nonconformityBoxList } from '@/api/nonconformity/manage';
+
+  const { createMessage, createConfirm } = useMessage();
 
   defineOptions({ name: 'NonconformityBoxes' });
 
-  // const [registerModal, { openModal }] = useModal();
-
-  const [registerTable, { reload }] = useTable({
-    api: getDeptList,
+  const selectedRowsRef = ref<Recordable>([]);
+  const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
+    title: '不合格库房管理列表',
+    api: nonconformityBoxList,
     columns,
     formConfig: {
       labelWidth: 120,
       schemas: searchFormSchema,
     },
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    clickToRowSelect: true,
     rowSelection: {
-      type: 'checkbox',
-      onSelect(record, selected, selectedRows) {
-        console.log(record, selected, selectedRows);
+      type: 'radio',
+      onChange(_, selectedRows) {
+        selectedRowsRef.value = selectedRows;
       },
     },
-    pagination: true,
+    size: 'large',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,
     tableSetting: {
       size: false,
+      redo: false,
+      setting: false,
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    canResize: true,
   });
 
-  function handleAdd() {}
+  const [registerBoxModal, { openModal: openBoxModal }] = useModal();
 
-  function handleEdit(record: Recordable) {
-    console.log(record);
-    // openModal(true, {
-    //   record,
-    //   isUpdate: true,
-    // });
+  function handleAdd() {
+    openBoxModal(true, {
+      isUpdate: false,
+    });
   }
 
-  async function handleDelete(record: Recordable) {
-    await deleteDept(record.deptId);
-    handleSuccess();
+  function handleEdit() {
+    if (!selectedRowsRef.value.length) {
+      createMessage.warn('请选择一条记录');
+      return;
+    }
+
+    openBoxModal(true, {
+      isUpdate: true,
+      record: selectedRowsRef.value[0],
+    });
+  }
+
+  async function handleDelete() {
+    if (!selectedRowsRef.value.length) {
+      createMessage.warn('请选择一条记录');
+      return;
+    }
+
+    createConfirm({
+      title: '撤销',
+      content: '确认撤销该箱号？',
+      iconType: 'warning',
+      onOk: async () => {
+        await deleteBox(selectedRowsRef.value[0].boxNo);
+
+        handleSuccess();
+      },
+    });
   }
 
   function handleLabelPrint() {}
 
   function handleSuccess() {
+    clearSelectedRowKeys();
     reload();
   }
 </script>
