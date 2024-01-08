@@ -3,41 +3,58 @@
     <BasicTable @register="registerTable">
       <template #unqualifiedCount="{ record }">
         <span
+          v-if="record.unqualifiedCount"
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleOpenUnqualifiedDrawer(record)"
+          @click.stop.self="handleOpenUnqualifiedDrawer(record.batchSampleNo)"
         >
-          {{ record?.batchSampleNo }}
+          {{ record?.unqualifiedCount }}
         </span>
+        <span v-else>-</span>
       </template>
+      <template #sampleType="{ record }"> {{ formatSampleType(record?.sampleType) }} </template>
       <template #toolbar>
         <a-button type="primary" @click="handleRelease">发布</a-button>
       </template>
     </BasicTable>
 
-    <UnqualifiedDrawer @register="registerUnqualifiedDrawer" />
+    <UnqualifiedModal @register="registerUnqualifiedModal" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { useDrawer } from '@/components/Drawer';
+  import { useModal } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
   import { columns, searchReleaseSchema } from './release.data';
   import { getSampleBatchesList, sampleRelease } from '@/api/sample-manage/sample-release';
 
-  import UnqualifiedDrawer from '@/views/sample-manage/sample-release/unqualifiedDrawer.vue';
+  import UnqualifiedModal from '@/views/sample-manage/sample-release/unqualifiedModal.vue';
   import { onMounted, ref } from 'vue';
   import { stationNameList } from '@/api/callback/list-generation';
+  import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
 
   const { createMessage, createConfirm } = useMessage();
 
-  const [registerUnqualifiedDrawer, { openDrawer: openUnqualifyiedDrawer }] = useDrawer();
+  const [registerUnqualifiedModal, { openModal: openUnqualifiedModal }] = useModal();
 
   const selectedRow = ref<Recordable>([]);
   const stationNames = ref<Recordable>({});
+  const sampleTypeDictionary = ref<Recordable[] | undefined>([]);
 
   onMounted(async () => {
     stationNames.value = await stationNameList();
+
+    sampleTypeDictionary.value = (await getSysDictionary([DictionaryEnum.SampleType])).find(
+      (it) => it.dictNo === DictionaryEnum.SampleType,
+    )?.dictImtes;
+
+    await getForm().updateSchema({
+      field: 'sampleType',
+      componentProps: {
+        options: sampleTypeDictionary.value,
+      },
+    });
+
     await getForm().updateSchema({
       field: 'stationNo',
       componentProps: {
@@ -78,11 +95,13 @@
         return date ? date.format('YYYY-MM-DD') : '';
       },
     },
+    showIndexColumn: false,
     canResize: true,
   });
 
   function handleOpenUnqualifiedDrawer(batchSampleNo: string) {
-    openUnqualifyiedDrawer(true, {
+    console.log(batchSampleNo, 'batchSampleNo');
+    openUnqualifiedModal(true, {
       record: {
         batchSampleNo,
       },
@@ -108,5 +127,9 @@
         await reload();
       },
     });
+  }
+
+  function formatSampleType(sampleType: string) {
+    return sampleTypeDictionary.value?.find((it) => it.value === sampleType)?.label;
   }
 </script>

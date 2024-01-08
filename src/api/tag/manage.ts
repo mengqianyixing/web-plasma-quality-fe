@@ -1,9 +1,9 @@
 import { defHttp } from '@/utils/http/axios';
 import {
+  GetApiSysTagHisPreviewHisNoRequest,
   GetApiSysTagHisReuseHisNoRequest,
   GetApiSysTagTagNoRequest,
   GetApiSysTagTagNoResponse,
-  GetSysTagHisPreviewHisNoRequest,
   PostApiSysTagPreviewRequest,
   PostApiSysTagRequest,
   PostApiSysTagsHisRequest,
@@ -58,7 +58,7 @@ export const deleteStyle = (params: string) => defHttp.delete({ url: Api.TAG_RES
 export const historyStyle = (params: PostApiSysTagsHisRequest) =>
   defHttp.post<PostApiSysTagsHisResponse>({ url: Api.HISTORY_STYLE, params });
 
-export const historyStylePreview = (params: GetSysTagHisPreviewHisNoRequest['hisNo']) =>
+export const historyStylePreview = (params: GetApiSysTagHisPreviewHisNoRequest['hisNo']) =>
   defHttp.get({ url: Api.PREVIEW_HISTORY_STYLE + '/' + params });
 
 export const reuseStyle = (params: GetApiSysTagHisReuseHisNoRequest['hisNo']) =>
