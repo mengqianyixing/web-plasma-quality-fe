@@ -9,11 +9,15 @@
     title="撤销验收"
   >
     <div class="content">
-      <Form layout="inline" :model="searchForm">
+      <Form :model="searchForm">
+        <FormItem label="复核人" name="checker" :rules="[{ required: true }]">
+          <Input v-model:value="searchForm.checker" disabled style="width: 180px" />
+          <Button @click="goRegister">登录</Button>
+        </FormItem>
         <FormItem label="原因" :rules="[{ required: true }]">
           <Textarea v-model:value="searchForm.remark" :cols="40" />
         </FormItem>
-        <FormItem>
+        <FormItem :wrapperCol="{ offset: 20 }">
           <Button type="primary" @click="confirm" :loading="loading">提交</Button>
         </FormItem>
       </Form>
@@ -23,17 +27,18 @@
 
 <script lang="ts" setup>
   import { ref, defineExpose } from 'vue';
-  import { Modal, Textarea, Form, FormItem, Button } from 'ant-design-vue';
+  import { Modal, Textarea, Form, FormItem, Button, Input } from 'ant-design-vue';
   import { useMessage } from '@/hooks/web/useMessage';
-  import { plasmaRevokeBag } from '@/api/inbound-management/accept-plasma.ts';
+  import { plasmaRevokeBag } from '@/api/inbound-management/accept-plasma.js';
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
 
-  const emit = defineEmits(['close', 'query']);
+  const emit = defineEmits(['close', 'query', 'goRegister']);
 
   const searchForm = ref({
     remark: '',
+    checker: '',
   });
 
   const rowInfow = ref<any>({});
@@ -45,6 +50,10 @@
   const loading = ref(false);
 
   const confirm = async () => {
+    if (!searchForm.value.checker) {
+      warning('请登录复核人!');
+      return;
+    }
     if (!searchForm.value.remark) {
       warning('请填写原因!');
       return;
@@ -55,8 +64,8 @@
         batchNo: rowInfow.value.batchNo,
         boxNo: rowInfow.value.boxNo,
         bagNo: rowInfow.value.bagNo,
-        checker: rowInfow.value.checker,
         trayNo: rowInfow.value.trayNo,
+        checker: searchForm.value.checker,
         remark: searchForm.value.remark,
       };
       loading.value = true;
@@ -69,6 +78,9 @@
     } finally {
       loading.value = false;
     }
+  };
+  const goRegister = () => {
+    emit('goRegister');
   };
 
   defineExpose({
