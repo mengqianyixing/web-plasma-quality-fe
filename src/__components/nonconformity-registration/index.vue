@@ -29,7 +29,7 @@
 
   import LoginModal from './LoginModal.vue';
   import { useModal } from '@/components/Modal';
-  import { nonconformityRegistration } from '@/api/nonconformity/manage';
+  import { nonconformityRegistration } from '@/api/nonconformity/box-manage';
 
   async function handleSubmit(values) {
     await nonconformityRegistration(values);

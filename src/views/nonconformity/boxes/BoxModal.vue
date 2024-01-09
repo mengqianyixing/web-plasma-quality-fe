@@ -18,7 +18,7 @@
 
   import BasicModal from '@/components/Modal/src/BasicModal.vue';
   import { BasicForm, useForm } from '@/components/Form';
-  import { addBox, editBoxDetail, getBankName } from '@/api/nonconformity/manage';
+  import { addBox, editBoxDetail, getBankName } from '@/api/nonconformity/box-manage';
   import {
     PostApiCoreBankUnqualifiedBoxRequest,
     PutApiCoreBankUnqualifiedBoxRequest,
