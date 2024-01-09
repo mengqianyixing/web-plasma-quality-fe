@@ -634,11 +634,9 @@ export interface PostApiSysDictItemAlencesResponse {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/batchSamples`
- * @更新时间 `2023-12-30 20:20:02`
+ * @更新时间 `2024-01-09 17:47:28`
  */
 export interface PostApiCoreLabRegistrationBatchSamplesRequest {
-  currPage: number;
-  pageSize: number;
   stationNo?: string;
   sampleCode?: string;
   bsNo?: string;
@@ -649,48 +647,18 @@ export interface PostApiCoreLabRegistrationBatchSamplesRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/batchSamples`
- * @更新时间 `2023-12-30 20:20:02`
+ * @更新时间 `2024-01-09 17:47:28`
  */
-export interface PostApiCoreLabRegistrationBatchSamplesResponse {
-  totalCount: number;
-  totalPage: number;
-  currPage: number;
-  pageSize: number;
-  result?: {
-    /**
-     * 样品批号
-     */
-    bsNo: string;
-    /**
-     * 采浆公司
-     */
-    stationNo: string;
-    /**
-     * 样品类型
-     */
-    sampleCode: string;
-    /**
-     * 样品总数
-     */
-    totalCount: string;
-    /**
-     * 接收日期
-     */
-    accepted: string;
-    /**
-     * 出库时间
-     */
-    outDate: string;
-    /**
-     * 登记情况
-     */
-    status: string;
-    /**
-     * 合格样品数
-     */
-    totalQualified: string;
-  }[];
-}
+export type PostApiCoreLabRegistrationBatchSamplesResponse = {
+  bsNo: string;
+  stationNo: string;
+  sampleCode?: string;
+  totalCount?: string;
+  accepted?: string;
+  outDate?: string;
+  status?: string;
+  totalQualified?: string;
+}[];
 
 /**
  * 接口 [获取血浆类型统计数据↗](https://yapi.sharing8.cn/project/529/interface/api/31911) 的 **请求类型**
