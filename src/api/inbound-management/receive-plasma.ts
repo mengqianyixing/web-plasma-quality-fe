@@ -7,6 +7,7 @@ enum Api {
   AcceptPlasma = '/api/core/batch/plasma/accept/box',
   CommitAcceptation = '/api/core/batch/commit/acceptation',
   GetAcceptationList = '/api/core/batch/acceptation',
+  ReceivePause = '/api/core/batch/plasma/accept/batch/pause',
 }
 
 // 获取血浆接收详情
@@ -30,12 +31,17 @@ export const acceptPlasma = (params: any) => {
   return defHttp.post({ url: Api.AcceptPlasma, params });
 };
 
-// 血浆接收-提交申请单
-export const commitAcceptation = (params: any) => {
-  return defHttp.put<any>({ url: `${Api.CommitAcceptation}/${params}` });
-};
+// // 血浆接收-提交申请单
+// export const commitAcceptation = (params: any) => {
+//   return defHttp.put<any>({ url: `${Api.CommitAcceptation}/${params}` });
+// };
 
 // 血浆接收-获取申请单列表
 export const getAcceptationList = (params: any) => {
   return defHttp.get<any>({ url: `${Api.GetAcceptationList}/${params}` });
+};
+
+// 血浆接收-暂停/继续
+export const receivePause = (params: any) => {
+  return defHttp.post({ url: Api.ReceivePause, params });
 };
