@@ -1730,7 +1730,7 @@ export interface PutApiCoreLabReportMadeRevokeResponse {}
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/reports`
- * @更新时间 `2024-01-04 13:35:42`
+ * @更新时间 `2024-01-08 18:07:42`
  */
 export interface PostApiCoreLabReportsRequest {
   /**
@@ -1766,7 +1766,7 @@ export interface PostApiCoreLabReportsRequest {
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/reports`
- * @更新时间 `2024-01-04 13:35:42`
+ * @更新时间 `2024-01-08 18:07:42`
  */
 export interface PostApiCoreLabReportsResponse {
   totalCount: number;
@@ -1823,6 +1823,14 @@ export interface PostApiCoreLabReportsResponse {
      */
     issueAt: string;
     reportNo: string;
+    /**
+     * 制作人
+     */
+    producer: string;
+    /**
+     * 制作时间
+     */
+    productionAt: string;
   }[];
 }
 
