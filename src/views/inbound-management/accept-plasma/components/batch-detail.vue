@@ -121,22 +121,22 @@
   // 验收结果备选项
   const verifyResultOpts = ref([
     {
-      code: 'FAIL',
+      code: 0,
       name: '不合格',
     },
     {
-      code: 'PASS',
+      code: 1,
       name: '合格',
     },
   ]);
   // 验收状态备选项
   const checkOpts = ref([
     {
-      code: 'WAIT',
+      code: 0,
       name: '未验收',
     },
     {
-      code: 'PASS',
+      code: 1,
       name: '已验收',
     },
   ]);

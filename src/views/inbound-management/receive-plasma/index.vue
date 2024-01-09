@@ -36,7 +36,7 @@
           </Col>
           <Col>
             <FormItem>
-              <Button @click="suspendModal">提交接收单</Button>
+              <Button @click="suspendModal">暂停接收</Button>
             </FormItem>
           </Col>
           <Col>
@@ -113,13 +113,16 @@
       ref="batchModalRef"
       @close="closeBatch"
       @confirm="confirmBatch"
+      @login-data="handleLogin"
       mode="receive"
     />
-    <registerModal v-if="registerModalVisible" @close="closeRegister" />
+    <registerModal v-if="registerModalVisible" @close="closeRegister" @login-data="handleLogin" />
     <suspendOrResumeModal
       v-if="suspendModalVisible"
       :checkerOpts="checkerOpts"
       :batchNo="filterForm.batchNo"
+      ref="suspendOrResumeRef"
+      @clear-info="clearInfo"
       @close="closeSuspend"
       @go-register="registerModalVisible = true"
     />
@@ -157,6 +160,7 @@
 
   const loadingRef = ref(false);
   const searchBarRef = ref<any>('');
+  const suspendOrResumeRef = ref<any>('');
   const tableHeight = ref(570); // 动态表格高度
   const batchModalRef = ref<any>('');
 
@@ -272,8 +276,11 @@
   const closeRegister = () => {
     registerModalVisible.value = false;
   };
+  const handleLogin = (res) => {
+    suspendOrResumeRef.value.searchForm.checker = res.username;
+  };
 
-  // 申请单框
+  // 暂停继续框
   const suspendModalVisible = ref(false);
   const suspendModal = () => {
     if (!filterForm.value.batchNo) {
@@ -281,9 +288,17 @@
       return;
     }
     suspendModalVisible.value = true;
+    nextTick(() => {
+      suspendOrResumeRef.value.searchForm.batchNo = filterForm.value.batchNo;
+      suspendOrResumeRef.value.getList();
+    });
   };
   const closeSuspend = () => {
     suspendModalVisible.value = false;
+  };
+  const clearInfo = () => {
+    unAcceptDetails.value = [];
+    acceptDetails.value = [];
   };
 
   // 查询页面数据
