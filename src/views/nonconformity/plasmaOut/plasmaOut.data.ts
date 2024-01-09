@@ -1,5 +1,6 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import dayjs from 'dayjs';
+import { getDictItemListByNoApi } from '@/api/dictionary';
 
 export enum USE_TO {
   DET = 'DET',
@@ -208,8 +209,29 @@ export const dtSearchFormSchema: FormSchema[] = [
   },
   {
     field: 'fkFailedCode',
-    component: 'Input',
+    component: 'ApiSelect',
     label: '不合格原因',
+    componentProps: {
+      api: () =>
+        new Promise((rs, rj) => {
+          getDictItemListByNoApi([
+            'sampleUnqualifiedReason',
+            'traceUnqualifiedReason',
+            '1004',
+            '1003',
+            '1002',
+          ])
+            .then((res) => {
+              rs(
+                res.reduce((pre, cur) => {
+                  pre.push(...(cur.dictImtes || []));
+                  return [...pre];
+                }, [] as any),
+              );
+            })
+            .catch(rj);
+        }),
+    },
   },
 ];
 
