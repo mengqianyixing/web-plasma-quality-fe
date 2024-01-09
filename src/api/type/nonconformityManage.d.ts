@@ -289,7 +289,7 @@ export interface DeleteApiCoreBagUnqualifiedProcessBagNoResponse {}
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified/{bagNo}`
- * @更新时间 `2024-01-08 11:43:46`
+ * @更新时间 `2024-01-08 14:35:05`
  */
 export interface GetApiCoreBagUnqualifiedBagNoRequest {
   bagNo: string;
@@ -300,7 +300,7 @@ export interface GetApiCoreBagUnqualifiedBagNoRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified/{bagNo}`
- * @更新时间 `2024-01-08 11:43:46`
+ * @更新时间 `2024-01-08 14:35:05`
  */
 export interface GetApiCoreBagUnqualifiedBagNoResponse {
   /**
@@ -335,11 +335,226 @@ export interface GetApiCoreBagUnqualifiedBagNoResponse {
    * 性别
    */
   gender?: string;
+  /**
+   * 血型
+   */
   bloodType?: string;
   /**
    * 采浆日期
    */
   collDate?: string;
+  /**
+   * 浆站重量
+   */
+  stationWeight?: string;
+  /**
+   * 验收净重
+   */
+  accpetWeight?: string;
+  /**
+   * 不合格原因
+   */
+  unqReason?: string;
+  /**
+   * 血浆流程状态
+   */
+  plasmaState?: string;
+  /**
+   * 存放位置
+   */
+  bankName?: string;
+  /**
+   * 不合格登记日期
+   */
+  registerDate?: string;
+  /**
+   * 登记人
+   */
+  register?: string;
+  /**
+   * 登记复核人
+   */
+  reigsterReviewer?: string;
+  /**
+   * 挑浆日期
+   */
+  pickDate?: string;
+  /**
+   * 挑浆人
+   */
+  picker?: string;
+  /**
+   * 挑浆复核人
+   */
+  pickReviewer?: string;
+  /**
+   * 入库日期
+   */
+  instoreDate?: string;
+  /**
+   * 入库人
+   */
+  instoreOpt?: string;
+  /**
+   * 入库复核人
+   */
+  instoreReviewer?: string;
+  /**
+   * 入库审核日期
+   */
+  processDate?: string;
+  /**
+   * 审核人
+   */
+  processer?: string;
+  /**
+   * 出库申请单号
+   */
+  outStoreOrderNo?: string;
+  /**
+   * 出库日期
+   */
+  outStoreDate?: string;
+  /**
+   * 出库人
+   */
+  outStoreOpt?: string;
+  /**
+   * 申请人
+   */
+  proposer?: string;
+  /**
+   * 申请单位
+   */
+  applicantCompany?: string;
+  /**
+   * 出库申请日期
+   */
+  outReviewDate?: string;
+  /**
+   * 出库审核人
+   */
+  outReviewer?: string;
+  /**
+   * 出库用途
+   */
+  outPurpose?: string;
+  /**
+   * 不合格出库日期
+   */
+  unqOutDate?: string;
+  /**
+   * 不合格操作人
+   */
+  unqOutOpt?: string;
+}
+
+/**
+ * 接口 [不合格血浆列表↗](https://yapi.sharing8.cn/project/529/interface/api/32181) 的 **请求类型**
+ *
+ * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
+ * @请求头 `GET /api/core/bag/unqualified`
+ * @更新时间 `2024-01-09 16:06:03`
+ */
+export interface GetApiCoreBagUnqualifiedRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 采浆公司编号
+   */
+  stationNo?: string;
+  /**
+   * 血浆批次号
+   */
+  batchNo?: string;
+  /**
+   * 浆袋号
+   */
+  bagNo?: string;
+  /**
+   * 浆员编号
+   */
+  donorNo?: string;
+  /**
+   * 浆员姓名
+   */
+  donorName?: string;
+  /**
+   * 不合格原因
+   */
+  unqReason?: string;
+  /**
+   * 状态
+   */
+  state?: string;
+  /**
+   * 入库时间
+   */
+  inStoreStartDate?: string;
+  /**
+   * 入库时间
+   */
+  inStoreEndDate?: string;
+  /**
+   * 出库时间
+   */
+  outStoreStartDate?: string;
+  /**
+   * 出库时间
+   */
+  outStoreEndDate?: string;
+}
+
+/**
+ * 接口 [不合格血浆列表↗](https://yapi.sharing8.cn/project/529/interface/api/32181) 的 **返回类型**
+ *
+ * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
+ * @请求头 `GET /api/core/bag/unqualified`
+ * @更新时间 `2024-01-09 16:06:03`
+ */
+export interface GetApiCoreBagUnqualifiedResponse {
+  totalCount?: number;
+  pageSize?: null;
+  currPage?: null;
+  totalPage?: null;
+  result?: {
+    /**
+     * 浆站编码
+     */
+    stationNo: string;
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
+    /**
+     * 浆袋号
+     */
+    bagNo: string;
+    /**
+     * 浆员编号
+     */
+    donorNo: string;
+    /**
+     * 浆员姓名
+     */
+    donorName: string;
+    /**
+     * 不合格原因
+     */
+    unqReason: string;
+    /**
+     * 状态
+     */
+    state: string;
+    /**
+     * 入库日期
+     */
+    inStoreDate?: string;
+    /**
+     * 出库日期
+     */
+    outStoreDate?: string;
+  }[];
 }
 
 /**

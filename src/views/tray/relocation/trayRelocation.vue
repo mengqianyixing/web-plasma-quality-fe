@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 09:52:52
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-27 16:47:00
+ * @LastEditTime: 2024-01-09 17:10:18
 -->
 <template>
   <div class="h-full">
@@ -29,7 +29,7 @@
   import TrayModel from './component/trayModal.vue';
   import { useDrawer } from '@/components/Drawer';
   import { settingListApi, areaListApi } from '@/api/plasmaStore/setting';
-  import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
+  import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
   import { reactive, nextTick } from 'vue';
   import { submitRelocationApi, taryHouseApi } from '@/api/tray/relocation';
   import LocationDrawer from '@/components/BusinessDrawer/locationDrawer/index.vue';
@@ -164,7 +164,7 @@
   }
   async function getHouseList() {
     try {
-      const res = await settingListApi({ pageSize: '9999', currPage: '1' });
+      const res = await settingListApi({ pageSize: '9999', currPage: '1', closed: CLOSED.NORMAL });
       const data = res.result || [];
       const options = data.map((_) => ({
         value: _.houseNo,
