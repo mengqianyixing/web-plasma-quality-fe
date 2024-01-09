@@ -371,7 +371,10 @@
     nextTick(() => {
       suspendOrResumeRef.value.searchForm.batchNo = filterForm.value.batchNo;
       suspendOrResumeRef.value.searchForm.boxNo = filterForm.value.boxNo;
-      suspendOrResumeRef.value.searchForm.checker = filterForm.value.checker;
+      // 箱暂停使用已登录的复核人，批暂停需要单独登录
+      if (pattern === 'BOX') {
+        suspendOrResumeRef.value.searchForm.checker = filterForm.value.checker;
+      }
       suspendOrResumeRef.value.searchForm.pattern = pattern;
       suspendOrResumeRef.value.getList();
     });
