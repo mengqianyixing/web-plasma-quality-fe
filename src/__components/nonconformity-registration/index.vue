@@ -29,11 +29,16 @@
 
   import LoginModal from './LoginModal.vue';
   import { useModal } from '@/components/Modal';
+  import { useMessage } from '@/hooks/web/useMessage';
   import { nonconformityRegistration } from '@/api/nonconformity/box-manage';
+
+  const { createMessage } = useMessage();
 
   async function handleSubmit(values) {
     await nonconformityRegistration(values);
-    resetFields();
+    await resetFields();
+
+    createMessage.success('登记成功');
   }
 
   function handleSuccess(nickname: string) {
