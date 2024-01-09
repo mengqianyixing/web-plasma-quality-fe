@@ -152,6 +152,7 @@
     </div>
     <batchModal
       v-if="batchModalVisible"
+      ref="batchModalRef"
       @close="closeBatch"
       @confirm="confirmBatch"
       mode="accept"
@@ -222,6 +223,7 @@
   const boxDetailRef = ref<any>('');
   const suspendOrResumeRef = ref<any>('');
   const revokeModalRef = ref<any>('');
+  const batchModalRef = ref<any>('');
 
   interface FilterForm {
     trayNo: string;
@@ -342,6 +344,11 @@
   const batchModalVisible = ref(false);
   const showBatchModal = () => {
     batchModalVisible.value = true;
+    nextTick(() => {
+      batchModalRef.value.searchForm.acceptState = ['R', 'S']; // 接收状态
+      batchModalRef.value.searchForm.verifyState = ['R', 'W'];
+      batchModalRef.value.queryTable();
+    });
   };
   const closeBatch = () => {
     batchModalVisible.value = false;
@@ -364,7 +371,10 @@
     nextTick(() => {
       suspendOrResumeRef.value.searchForm.batchNo = filterForm.value.batchNo;
       suspendOrResumeRef.value.searchForm.boxNo = filterForm.value.boxNo;
-      suspendOrResumeRef.value.searchForm.checker = filterForm.value.checker;
+      // 箱暂停使用已登录的复核人，批暂停需要单独登录
+      if (pattern === 'BOX') {
+        suspendOrResumeRef.value.searchForm.checker = filterForm.value.checker;
+      }
       suspendOrResumeRef.value.searchForm.pattern = pattern;
       suspendOrResumeRef.value.getList();
     });

@@ -36,7 +36,7 @@
           </Col>
           <Col>
             <FormItem>
-              <Button @click="suspendModal">提交接收单</Button>
+              <Button @click="suspendModal">暂停接收</Button>
             </FormItem>
           </Col>
           <Col>
@@ -110,15 +110,19 @@
     </div>
     <batchModal
       v-if="batchModalVisible"
+      ref="batchModalRef"
       @close="closeBatch"
       @confirm="confirmBatch"
+      @login-data="handleLogin"
       mode="receive"
     />
-    <registerModal v-if="registerModalVisible" @close="closeRegister" />
+    <registerModal v-if="registerModalVisible" @close="closeRegister" @login-data="handleLogin" />
     <suspendOrResumeModal
       v-if="suspendModalVisible"
       :checkerOpts="checkerOpts"
       :batchNo="filterForm.batchNo"
+      ref="suspendOrResumeRef"
+      @clear-info="clearInfo"
       @close="closeSuspend"
       @go-register="registerModalVisible = true"
     />
@@ -145,7 +149,7 @@
   import registerModal from './components/register-modal.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import { useMessage } from '@/hooks/web/useMessage';
-  import { getAccepts, acceptPlasma } from '@/api/inbound-management/receive-plasma.ts';
+  import { getAccepts, acceptPlasma } from '@/api/inbound-management/receive-plasma';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import { useDrawer } from '@/components/Drawer';
 
@@ -155,8 +159,10 @@
   const { success, warning } = createMessage;
 
   const loadingRef = ref(false);
-  const searchBarRef = ref(null);
+  const searchBarRef = ref<any>('');
+  const suspendOrResumeRef = ref<any>('');
   const tableHeight = ref(570); // 动态表格高度
+  const batchModalRef = ref<any>('');
 
   interface FilterForm {
     trayNo: string;
@@ -245,9 +251,12 @@
 
   // 批号框
   const batchModalVisible = ref(false);
-
   const showBatchModal = () => {
     batchModalVisible.value = true;
+    nextTick(() => {
+      batchModalRef.value.searchForm.acceptState = ['R', 'W']; // 接收状态
+      batchModalRef.value.queryTable();
+    });
   };
   const closeBatch = () => {
     batchModalVisible.value = false;
@@ -267,8 +276,11 @@
   const closeRegister = () => {
     registerModalVisible.value = false;
   };
+  const handleLogin = (res) => {
+    suspendOrResumeRef.value.searchForm.checker = res.username;
+  };
 
-  // 申请单框
+  // 暂停继续框
   const suspendModalVisible = ref(false);
   const suspendModal = () => {
     if (!filterForm.value.batchNo) {
@@ -276,9 +288,17 @@
       return;
     }
     suspendModalVisible.value = true;
+    nextTick(() => {
+      suspendOrResumeRef.value.searchForm.batchNo = filterForm.value.batchNo;
+      suspendOrResumeRef.value.getList();
+    });
   };
   const closeSuspend = () => {
     suspendModalVisible.value = false;
+  };
+  const clearInfo = () => {
+    unAcceptDetails.value = [];
+    acceptDetails.value = [];
   };
 
   // 查询页面数据

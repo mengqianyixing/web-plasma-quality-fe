@@ -289,7 +289,7 @@ export interface DeleteApiCoreBagUnqualifiedProcessBagNoResponse {}
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified/{bagNo}`
- * @更新时间 `2024-01-08 14:35:05`
+ * @更新时间 `2024-01-09 20:04:51`
  */
 export interface GetApiCoreBagUnqualifiedBagNoRequest {
   bagNo: string;
@@ -300,7 +300,7 @@ export interface GetApiCoreBagUnqualifiedBagNoRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified/{bagNo}`
- * @更新时间 `2024-01-08 14:35:05`
+ * @更新时间 `2024-01-09 20:04:51`
  */
 export interface GetApiCoreBagUnqualifiedBagNoResponse {
   /**
@@ -374,7 +374,7 @@ export interface GetApiCoreBagUnqualifiedBagNoResponse {
   /**
    * 登记复核人
    */
-  reigsterReviewer?: string;
+  registerReviewer?: string;
   /**
    * 挑浆日期
    */

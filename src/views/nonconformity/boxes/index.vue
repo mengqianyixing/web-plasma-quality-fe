@@ -21,7 +21,7 @@
   import { ref } from 'vue';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import BoxModal from '@/views/nonconformity/boxes/BoxModal.vue';
-  import { deleteBox, nonconformityBoxList } from '@/api/nonconformity/manage';
+  import { deleteBox, nonconformityBoxList } from '@/api/nonconformity/box-manage';
   import { getPrintRecord } from '@/api/tag/printRecord';
 
   const { createMessage, createConfirm } = useMessage();

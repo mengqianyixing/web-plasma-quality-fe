@@ -6,6 +6,7 @@ enum Api {
 }
 
 export enum DictionaryEnum {
+  PlasmaUnqualifiedReason = '1006',
   SampleUnqualifiedReason = 'checkUnqualifiedReason',
   SampleType = 'sampleType',
 }
