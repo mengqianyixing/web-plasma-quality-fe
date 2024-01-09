@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, defineExpose } from 'vue';
+  import { ref } from 'vue';
   import { Modal, Textarea, Form, FormItem, Button, Input } from 'ant-design-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { plasmaRevokeBag } from '@/api/inbound-management/accept-plasma.js';

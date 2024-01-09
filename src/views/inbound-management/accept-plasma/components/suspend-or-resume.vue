@@ -23,11 +23,7 @@
           <Input v-model:value="searchForm.boxNo" disabled />
         </FormItem>
         <FormItem v-if="searchForm.pattern === 'BCH'" label="复核人" name="checker">
-          <Select v-model:value="searchForm.checker" allowClear disabled style="width: 180px">
-            <SelectOption v-for="item in receiveManOpts" :key="item.value" :value="item.value">{{
-              item.name
-            }}</SelectOption>
-          </Select>
+          <Input v-model:value="searchForm.checker" disabled style="width: 180px" />
           <Button @click="goRegister">登录</Button>
         </FormItem>
         <FormItem label="复核人" v-if="searchForm.pattern === 'BOX'" name="checker">
@@ -62,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, defineExpose } from 'vue';
+  import { ref } from 'vue';
   import {
     Modal,
     Form,
@@ -71,15 +67,15 @@
     Table,
     Textarea,
     Button,
-    Select,
-    SelectOption,
+    // Select,
+    // SelectOption,
   } from 'ant-design-vue';
   import dayjs from 'dayjs';
   import {
     plasmaPauseBox,
     plasmaPauseBoxList,
     plasmaPauseBatch,
-  } from '@/api/inbound-management/accept-plasma.ts';
+  } from '@/api/inbound-management/accept-plasma';
 
   import { useMessage } from '@/hooks/web/useMessage';
 
@@ -191,9 +187,6 @@
     emit('close', false);
   };
 
-  // 复核人登录备选项
-  const receiveManOpts = ref([]);
-
   // 箱暂停状态枚举
   const boxSuspendEnum = {
     W: '未验收',
@@ -207,6 +200,10 @@
   };
   // 暂停
   const confirm = async () => {
+    if (!searchForm.value.checker) {
+      warning('请登录复核人');
+      return;
+    }
     if (!searchForm.value.remark) {
       warning('请填写备注!');
       return;
@@ -284,9 +281,11 @@
       warning('请先选择一条数据!');
       return;
     }
+    if (!searchForm.value.checker) {
+      warning('请登录复核人');
+      return;
+    }
     const firstSelectedItem = tableSelected.value[0];
-    console.log(firstSelectedItem);
-
     if (searchForm.value.pattern === 'BOX') {
       try {
         const params = {
@@ -295,6 +294,7 @@
           checker: searchForm.value.checker, // 传登录的复核人
           state: 'RESTORE',
           type: 'VER',
+          remark: searchForm.value.remark,
         };
         resumeLoading.value = true;
         const data = await plasmaPauseBox(params);
@@ -313,6 +313,7 @@
         const params = {
           batchNo: searchForm.value.batchNo,
           checker: searchForm.value.checker, // 传登录的复核人
+          remark: searchForm.value.remark,
           state: 'RESTORE',
           type: 'VER',
         };

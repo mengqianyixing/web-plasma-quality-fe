@@ -73,7 +73,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, defineExpose } from 'vue';
+  import { ref } from 'vue';
   import {
     Modal,
     Button,
