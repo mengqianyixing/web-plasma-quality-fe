@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-25 14:30:13
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-28 14:09:56
+ * @LastEditTime: 2024-01-09 20:01:39
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
@@ -15,6 +15,14 @@
         <a-button type="primary" @click="handleRemove">删除</a-button>
         <a-button type="primary" @click="handleCheckStatus(false)">禁用</a-button>
         <a-button type="primary" @click="handleCheckStatus(true)">启用</a-button>
+      </template>
+      <template #itemKey="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="openDrawer(true, { data: record, disabled: true })"
+        >
+          {{ record.itemKey }}
+        </span>
       </template>
     </BasicTable>
     <FormModal @register="registerDrawer" @success="success" />
