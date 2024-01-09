@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-25 14:30:13
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-28 11:16:06
+ * @LastEditTime: 2024-01-09 16:06:41
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
@@ -15,6 +15,14 @@
         <a-button type="primary" @click="handleRemove">删除</a-button>
         <a-button type="primary" @click="handleCheckStatus(false)">禁用</a-button>
         <a-button type="primary" @click="handleCheckStatus(true)">启用</a-button>
+      </template>
+      <template #itemValue="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetails(record)"
+        >
+          {{ record.itemValue }}
+        </span>
       </template>
     </BasicTable>
     <FormModal @register="registerDrawer" @success="success" />
@@ -92,6 +100,9 @@
       },
       onCancel: () => Modal.destroyAll(),
     });
+  }
+  function handleDetails(row) {
+    openDrawer(true, { data: row, disabled: true });
   }
   function handleCheckStatus(action: boolean) {
     const [row] = getSelections(true);

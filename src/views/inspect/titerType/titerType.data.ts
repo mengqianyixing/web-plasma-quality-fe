@@ -12,6 +12,7 @@ export const columns: BasicColumn[] = [
   {
     title: '代码',
     dataIndex: 'itemValue',
+    slots: { customRender: 'itemValue' },
   },
   {
     title: '名称',
