@@ -1,3 +1,3 @@
 export enum HoseType {
-  Nonconformity = 'FFM',
+  Nonconformity = 'FSA',
 }
