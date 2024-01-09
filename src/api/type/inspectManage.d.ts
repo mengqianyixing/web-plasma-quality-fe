@@ -465,7 +465,7 @@ export type GetApiSysDictItemMethodsResponse = {
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
  * @请求头 `POST /api/sys/dict/item/alence`
- * @更新时间 `2023-12-28 11:06:08`
+ * @更新时间 `2024-01-09 19:37:16`
  */
 export interface PostApiSysDictItemAlenceRequest {
   /**
@@ -496,6 +496,14 @@ export interface PostApiSysDictItemAlenceRequest {
    * 状态
    */
   enable: boolean;
+  /**
+   * 优先级
+   */
+  priority: string;
+  /**
+   * 默认标记
+   */
+  defaultTag: boolean;
 }
 
 /**
@@ -503,7 +511,7 @@ export interface PostApiSysDictItemAlenceRequest {
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
  * @请求头 `POST /api/sys/dict/item/alence`
- * @更新时间 `2023-12-28 11:06:08`
+ * @更新时间 `2024-01-09 19:37:16`
  */
 export type PostApiSysDictItemAlenceResponse = string;
 
@@ -512,7 +520,7 @@ export type PostApiSysDictItemAlenceResponse = string;
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
  * @请求头 `PUT /api/sys/dict/item/alence`
- * @更新时间 `2023-12-28 10:18:49`
+ * @更新时间 `2024-01-09 19:17:15`
  */
 export interface PutApiSysDictItemAlenceRequest {
   itemKey?: string;
@@ -523,6 +531,8 @@ export interface PutApiSysDictItemAlenceRequest {
   dataDictId?: string;
   plasmaType?: string;
   dictItemId: string;
+  defaultTag?: string;
+  priority?: string;
 }
 
 /**
@@ -530,7 +540,7 @@ export interface PutApiSysDictItemAlenceRequest {
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
  * @请求头 `PUT /api/sys/dict/item/alence`
- * @更新时间 `2023-12-28 10:18:49`
+ * @更新时间 `2024-01-09 19:17:15`
  */
 export type PutApiSysDictItemAlenceResponse = string;
 
@@ -559,7 +569,7 @@ export type DeleteApiSysDictItemAlenceDictItemIdResponse = string;
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
  * @请求头 `GET /api/sys/dict/item/alence/{dictItemId}`
- * @更新时间 `2023-12-28 10:08:34`
+ * @更新时间 `2024-01-09 19:17:37`
  */
 export interface GetApiSysDictItemAlenceDictItemIdRequest {
   dictItemId: string;
@@ -570,7 +580,7 @@ export interface GetApiSysDictItemAlenceDictItemIdRequest {
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
  * @请求头 `GET /api/sys/dict/item/alence/{dictItemId}`
- * @更新时间 `2023-12-28 10:08:34`
+ * @更新时间 `2024-01-09 19:17:37`
  */
 export interface GetApiSysDictItemAlenceDictItemIdResponse {
   dictItemId: string;
@@ -583,6 +593,8 @@ export interface GetApiSysDictItemAlenceDictItemIdResponse {
   plasmaType: string;
   creater?: string;
   createAt?: string;
+  defaultTag?: string;
+  priority?: string;
 }
 
 /**
@@ -590,7 +602,7 @@ export interface GetApiSysDictItemAlenceDictItemIdResponse {
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
  * @请求头 `POST /api/sys/dict/item/alences`
- * @更新时间 `2023-12-28 10:08:12`
+ * @更新时间 `2024-01-09 19:17:51`
  */
 export interface PostApiSysDictItemAlencesRequest {
   currPage: string;
@@ -609,7 +621,7 @@ export interface PostApiSysDictItemAlencesRequest {
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
  * @请求头 `POST /api/sys/dict/item/alences`
- * @更新时间 `2023-12-28 10:08:12`
+ * @更新时间 `2024-01-09 19:17:51`
  */
 export interface PostApiSysDictItemAlencesResponse {
   totalCount: number;
@@ -626,6 +638,8 @@ export interface PostApiSysDictItemAlencesResponse {
     creater: string;
     creatAt: string;
     dictItemId: string;
+    defaultTag: string;
+    priority: string;
   }[];
 }
 

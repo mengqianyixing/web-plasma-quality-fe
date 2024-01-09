@@ -27,7 +27,18 @@ export const columns: BasicColumn[] = [
     title: '排序号',
     dataIndex: 'sort',
   },
+  {
+    title: '优先级',
+    dataIndex: 'priority',
+  },
 
+  {
+    title: '默认标记',
+    dataIndex: 'defaultTag',
+    customRender: ({ record }) => {
+      return record.defaultTag ? '是' : '否';
+    },
+  },
   {
     title: '是否启用',
     dataIndex: 'enable',
@@ -111,6 +122,28 @@ export const formListSchema: FormSchema[] = [
     component: 'InputNumber',
     label: '排序号',
     required: true,
+  },
+  {
+    field: 'priority',
+    component: 'InputNumber',
+    label: '优先级',
+    required: true,
+  },
+  {
+    field: 'defaultTag',
+    component: 'Select',
+    label: '默认标记',
+    required: true,
+    defaultValue: false,
+    componentProps: {
+      options: [
+        {
+          label: '是',
+          value: true,
+        },
+        { label: '否', value: false },
+      ],
+    },
   },
   {
     field: 'enable',
