@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2024-01-05 17:23:44
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-09 17:16:29
+-->
 <template>
   <BasicDrawer
     v-bind="$attrs"
@@ -78,6 +86,7 @@
   async function handleSubmit() {
     const { bagNo } = getFieldsValue();
     await scanApi({ bagNo, no: state.no });
+    resetFields();
     reloadLeft();
     reloadRight();
   }
