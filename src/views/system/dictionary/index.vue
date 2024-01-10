@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-21 17:29:52
  * @LastEditors: zcc
@@ -36,7 +36,7 @@
   const [registerItemDrawer, { openDrawer: openItemDrawer }] = useDrawer();
 
   const [registerTable, { getSelectRows, reload, clearSelectedRowKeys }] = useTable({
-    title: '',
+    title: '字典列表',
     api: getDictListApi,
     fetchSetting: {
       pageField: 'currPage',
@@ -45,8 +45,12 @@
       listField: 'result',
     },
     rowKey: 'dictId',
+    indexColumnProps: {
+      title: '序号',
+      width: 80,
+    },
     columns,
-    size: 'small',
+    size: 'large',
     formConfig: {
       labelWidth: 80,
       schemas: searchFormSchema,
@@ -59,6 +63,7 @@
       return res;
     },
     rowSelection: { type: 'radio' },
+    canResize: true,
   });
   function formSuccess() {
     reload();
