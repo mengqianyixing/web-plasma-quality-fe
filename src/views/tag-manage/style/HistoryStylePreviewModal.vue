@@ -1,5 +1,5 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="registerModal" title="预览" width="400px">
+  <BasicModal v-bind="$attrs" @register="registerModal" title="预览" width="400px" @ok="closeModal">
     <img class="w-[350px]" :src="previewUrl" alt="" />
   </BasicModal>
 </template>
@@ -11,8 +11,8 @@
 
   const previewUrl = ref('');
 
-  const [registerModal, { setModalProps }] = useModalInner(async (data) => {
-    setModalProps({ confirmLoading: false });
-    previewUrl.value = `data:image/png;base64,${data.record}`;
+  const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data) => {
+    setModalProps({ confirmLoading: false }),
+      (previewUrl.value = `data:image/png;base64,${data.record}`);
   });
 </script>

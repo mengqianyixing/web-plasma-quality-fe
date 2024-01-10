@@ -47,7 +47,6 @@ statusMap.set(statusValueEnum.TBR, statusEnum.TBR);
 statusMap.set(statusValueEnum.RVD, statusEnum.RVD);
 statusMap.set(statusValueEnum.AED, statusEnum.AED);
 statusMap.set(statusValueEnum.ROD, statusEnum.ROD);
-statusMap.set(statusValueEnum.FED, statusEnum.FED);
 
 //审核结果
 export enum auditResultEnum {
