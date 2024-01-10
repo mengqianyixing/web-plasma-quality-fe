@@ -41,7 +41,7 @@
   import { useDrawer } from '@/components/Drawer';
   import FormDrawer from './formDrawer.vue';
   import OutDrawer from './outDrawer.vue';
-  import { columns, searchFormschema } from './plasmaOut.data';
+  import { columns, searchFormschema, PROCESS_STATE_TEXT } from './plasmaOut.data';
   import {
     getListApi,
     removeFormApi,
@@ -117,6 +117,7 @@
   function handleEdit() {
     const [row] = getSelections(true);
     if (!row) return;
+    if (row.state !== PROCESS_STATE_TEXT.AUT) return message.warning('已审核的数据不可修改');
     openDrawer(true, { ...row });
   }
   function handleDt(record: Recordable) {
