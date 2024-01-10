@@ -25,6 +25,13 @@ export const columns: BasicColumn[] = [
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
+  {
+    title: '更新时间',
+    dataIndex: 'updateTime',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
+  },
 ];
 
 export const searchFormSchema: FormSchema[] = [

@@ -94,7 +94,7 @@ export type PutApiSysParamResponse = string;
  *
  * @分类 [系统参数↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5397)
  * @请求头 `GET /api/sys/params`
- * @更新时间 `2024-01-10 17:08:57`
+ * @更新时间 `2024-01-10 18:49:31`
  */
 export interface GetApiSysParamsRequest {
   /**
@@ -128,7 +128,7 @@ export interface GetApiSysParamsRequest {
  *
  * @分类 [系统参数↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5397)
  * @请求头 `GET /api/sys/params`
- * @更新时间 `2024-01-10 17:08:57`
+ * @更新时间 `2024-01-10 18:49:31`
  */
 export interface GetApiSysParamsResponse {
   /**
@@ -179,6 +179,10 @@ export interface GetApiSysParamsResponse {
      * 创建时间
      */
     createTime?: string;
+    /**
+     * 更新时间
+     */
+    updateTime?: string;
   }[];
 }
 
