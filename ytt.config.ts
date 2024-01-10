@@ -92,6 +92,13 @@ export default defineConfig([
             },
             outputFilePath: 'src/api/type/printRecordManage.d.ts',
           },
+          {
+            id: 5397,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/systemParamsManage.d.ts',
+          },
         ],
       },
       {
