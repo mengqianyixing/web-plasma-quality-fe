@@ -52,6 +52,7 @@
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
     setDrawerProps({ confirmLoading: false });
     hisNo.value = data.record.tagNo;
+    reload();
     await getForm().updateSchema({
       field: 'labelType',
       componentProps: {
@@ -59,7 +60,7 @@
       },
     });
   });
-  const [registerTable, { getForm }] = useTable({
+  const [registerTable, { getForm, reload }] = useTable({
     title: '历史标签列表',
     api: historyStyle,
     columns: columnsHistory,
@@ -89,6 +90,7 @@
       fixed: 'right',
     },
     canResize: false,
+    immediate: false,
   });
 
   function handleSubmit() {
