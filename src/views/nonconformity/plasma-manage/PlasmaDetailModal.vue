@@ -12,6 +12,8 @@
   import { detailSchema } from './manage.data';
   import { ref } from 'vue';
   import { nonconformityPlasmaDetail } from '@/api/nonconformity/plasma-manage';
+  import { genderMap, genderValueEnum } from '@/enums/commonEnum';
+  import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
 
   defineOptions({ name: 'PickPlasmaModal' });
 
@@ -20,11 +22,21 @@
   const [registerPlasmaDetail] = useDescription({
     title: '不合格血浆详情',
     schema: detailSchema,
-    column: 2,
+    column: 3,
   });
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-    detailRef.value = await nonconformityPlasmaDetail(data.record);
+    const detailData = await nonconformityPlasmaDetail(data.record.bagNo);
+
+    detailRef.value = {
+      ...detailData,
+      gender: genderMap.get(detailData.gender as genderValueEnum),
+      unqReason: data.record.plasmaUnqualifiedDictionary?.find(
+        (it: Recordable) => it.value === detailData.unqReason,
+      )?.label,
+      donorStatus: donorStatusMap.get(detailData.donorStatus as donorStatusValueEnum),
+    };
+
     setModalProps({ confirmLoading: false });
   });
 

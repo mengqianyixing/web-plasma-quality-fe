@@ -289,7 +289,7 @@ export interface DeleteApiCoreBagUnqualifiedProcessBagNoResponse {}
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified/{bagNo}`
- * @更新时间 `2024-01-09 20:04:51`
+ * @更新时间 `2024-01-10 11:16:08`
  */
 export interface GetApiCoreBagUnqualifiedBagNoRequest {
   bagNo: string;
@@ -300,7 +300,7 @@ export interface GetApiCoreBagUnqualifiedBagNoRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified/{bagNo}`
- * @更新时间 `2024-01-09 20:04:51`
+ * @更新时间 `2024-01-10 11:16:08`
  */
 export interface GetApiCoreBagUnqualifiedBagNoResponse {
   /**
@@ -350,7 +350,7 @@ export interface GetApiCoreBagUnqualifiedBagNoResponse {
   /**
    * 验收净重
    */
-  accpetWeight?: string;
+  acceptWeight?: string;
   /**
    * 不合格原因
    */
@@ -390,15 +390,15 @@ export interface GetApiCoreBagUnqualifiedBagNoResponse {
   /**
    * 入库日期
    */
-  instoreDate?: string;
+  inStoreDate?: string;
   /**
    * 入库人
    */
-  instoreOpt?: string;
+  inStoreOpt?: string;
   /**
    * 入库复核人
    */
-  instoreReviewer?: string;
+  inStoreReviewer?: string;
   /**
    * 入库审核日期
    */
@@ -406,7 +406,7 @@ export interface GetApiCoreBagUnqualifiedBagNoResponse {
   /**
    * 审核人
    */
-  processer?: string;
+  processor?: string;
   /**
    * 出库申请单号
    */
@@ -454,7 +454,7 @@ export interface GetApiCoreBagUnqualifiedBagNoResponse {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-01-09 16:06:03`
+ * @更新时间 `2024-01-10 11:16:30`
  */
 export interface GetApiCoreBagUnqualifiedRequest {
   pageSize: string;
@@ -474,7 +474,7 @@ export interface GetApiCoreBagUnqualifiedRequest {
   /**
    * 浆员编号
    */
-  donorNo?: string;
+  fkDonorNo?: string;
   /**
    * 浆员姓名
    */
@@ -510,7 +510,7 @@ export interface GetApiCoreBagUnqualifiedRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-01-09 16:06:03`
+ * @更新时间 `2024-01-10 11:16:30`
  */
 export interface GetApiCoreBagUnqualifiedResponse {
   totalCount?: number;
