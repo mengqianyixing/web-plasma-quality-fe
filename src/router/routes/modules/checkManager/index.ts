@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-29 16:47:29
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-03 09:47:22
+ * @LastEditTime: 2024-01-10 18:23:50
  * @Description: 检验管理
  * @FilePath: \psms-fe\src\router\routes\modules\checkManager\index.ts
  */
@@ -59,6 +59,15 @@ const checkManager: AppRouteModule = {
       },
       id: 9104,
       component: () => import('/@/views/inspect/titerType/index.vue'),
+    },
+    {
+      path: '/inspect/reportRelease',
+      name: 'reportRelease',
+      meta: {
+        title: '检验报告生成',
+      },
+      id: 9106,
+      component: () => import('/@/views/inspect/reportRelease/index.vue'),
     },
     {
       path: '/inspect/resultRegistration',
