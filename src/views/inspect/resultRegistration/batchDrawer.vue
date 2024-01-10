@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-29 16:24:20
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-02 19:26:23
+ * @LastEditTime: 2024-01-09 18:09:04
 -->
 <template>
   <BasicDrawer
@@ -36,11 +36,13 @@
   const emit = defineEmits(['confirm', 'register']);
   const sampleTypeMap = ref(new Map());
 
+  let rawData: Recordable[] = [];
+
   const [registerTable, { clearSelectedRowKeys, reload, setPagination, getSelectRows }] = useTable({
+    api: getData,
     title: '',
     immediate: false,
     size: 'small',
-    api: getBatchListApi,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -65,11 +67,31 @@
       return res;
     },
   });
-  const [registerDrawer] = useDrawerInner(() => {
+  const [registerDrawer] = useDrawerInner(async () => {
     setPagination({ current: 1 });
     clearSelectedRowKeys();
+    const res = await getBatchListApi({});
+    rawData = res;
     reload();
   });
+  function getData(params) {
+    return new Promise((rs) => {
+      const { pageSize, currPage, stationName, sampleCode, bsNo } = params;
+      const fields = [
+        { key: 'stationName', value: stationName },
+        { key: 'sampleCode', value: sampleCode },
+        { key: 'bsNo', value: bsNo },
+      ].filter((_) => _.value);
+      const filterData = fields.reduce(
+        (pre, cur) => pre.filter((_) => cur.value === _[cur.key]),
+        rawData,
+      );
+      rs({
+        result: filterData.slice((currPage - 1) * pageSize, currPage * pageSize),
+        totalCount: filterData.length,
+      });
+    });
+  }
   function handleSubmit() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');

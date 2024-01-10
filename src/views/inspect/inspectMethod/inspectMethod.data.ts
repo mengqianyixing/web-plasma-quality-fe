@@ -2,12 +2,13 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
-    title: '简称',
-    dataIndex: 'methodAbbr',
-  },
-  {
     title: '全称',
     dataIndex: 'itemKey',
+    slots: { customRender: 'itemKey' },
+  },
+  {
+    title: '简称',
+    dataIndex: 'methodAbbr',
   },
   {
     title: '检疫期间隔天数',
@@ -52,15 +53,15 @@ export const searchFormschema: FormSchema[] = [
 ];
 export const formListSchema: FormSchema[] = [
   {
-    field: 'methodAbbr',
-    component: 'Input',
-    label: '简称',
-    required: true,
-  },
-  {
     field: 'itemKey',
     component: 'Input',
     label: '全称',
+    required: true,
+  },
+  {
+    field: 'methodAbbr',
+    component: 'Input',
+    label: '简称',
     required: true,
   },
   {

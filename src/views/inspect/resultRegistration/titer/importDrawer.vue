@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-29 15:52:07
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-04 14:13:50
+ * @LastEditTime: 2024-01-08 15:14:17
 -->
 <template>
   <BasicDrawer
@@ -115,6 +115,11 @@
   const [registerDrawer] = useDrawerInner(({ projectId, bsNo }) => {
     pid.value = projectId;
     bsno.value = bsNo;
+    dataSource.dataFaild.splice(0, dataSource.dataFaild.length);
+    dataSource.dataSaved.splice(0, dataSource.dataSaved.length);
+    for (const key in cellData.value) {
+      cellData.value[key] = '';
+    }
   });
 
   async function uploadClick() {

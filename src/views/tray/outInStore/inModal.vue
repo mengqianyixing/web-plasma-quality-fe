@@ -30,9 +30,8 @@
   import { reactive } from 'vue';
   import { inStoreAreaSchema, inStoreFormSchema } from './outInStore.data';
   import LocationDrawer from '@/components/BusinessDrawer/locationDrawer/index.vue';
-  import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
+  import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
   import { settingListApi, areaListApi } from '@/api/plasmaStore/setting';
-  import { message } from 'ant-design-vue';
   import { submitInHouseApi } from '@/api/tray/relocation';
 
   const emit = defineEmits(['success']);
@@ -103,8 +102,6 @@
   async function handleSubmit() {
     try {
       const { houseNo, subWareHouseNo } = await validate();
-      const isValidate = state.data.every((_) => _.area || _.location);
-      if (!isValidate) return message.warning('请选择货位');
       const params = {
         recInfo: state.data.map((_) => ({
           trayNo: _.trayNo,
@@ -170,7 +167,7 @@
   async function getHouseList() {
     try {
       if (state.houseList.length) return;
-      const res = await settingListApi({ pageSize: '9999', currPage: '1' });
+      const res = await settingListApi({ pageSize: '9999', currPage: '1', closed: CLOSED.NORMAL });
       const options = (res.result || []).map((_) => ({
         value: _.houseNo,
         label: _.houseName,

@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-20 14:11:29
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-23 16:53:01
+ * @LastEditTime: 2024-01-09 16:52:45
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 
@@ -36,17 +36,10 @@ export const columns: BasicColumn[] = [
     dataIndex: 'createAt',
   },
   {
-    title: '存放类型',
-    dataIndex: 'trayType',
-  },
-  {
     title: '存放库房',
     dataIndex: 'wareHouseName',
   },
-  {
-    title: '存放区域',
-    dataIndex: 'subWareHouseName',
-  },
+
   {
     title: '存放货位',
     dataIndex: 'locationNo',

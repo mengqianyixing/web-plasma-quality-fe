@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, defineExpose } from 'vue';
+  import { ref } from 'vue';
   import {
     Modal,
     Form,
@@ -281,9 +281,11 @@
       warning('请先选择一条数据!');
       return;
     }
+    if (!searchForm.value.checker) {
+      warning('请登录复核人');
+      return;
+    }
     const firstSelectedItem = tableSelected.value[0];
-    console.log(firstSelectedItem);
-
     if (searchForm.value.pattern === 'BOX') {
       try {
         const params = {
@@ -292,6 +294,7 @@
           checker: searchForm.value.checker, // 传登录的复核人
           state: 'RESTORE',
           type: 'VER',
+          remark: searchForm.value.remark,
         };
         resumeLoading.value = true;
         const data = await plasmaPauseBox(params);
@@ -314,6 +317,7 @@
         const params = {
           batchNo: searchForm.value.batchNo,
           checker: searchForm.value.checker, // 传登录的复核人
+          remark: searchForm.value.remark,
           state: 'RESTORE',
           type: 'VER',
         };

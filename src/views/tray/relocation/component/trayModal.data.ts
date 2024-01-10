@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-27 16:26:56
+ * @LastEditTime: 2024-01-09 17:02:10
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 
@@ -25,14 +25,6 @@ export const columns: BasicColumn[] = [
     title: '库房',
     dataIndex: 'wareHouseName',
   },
-  {
-    title: '存放类型',
-    dataIndex: 'trayType',
-  },
-  // {
-  //   title: '血浆批次范围',
-  //   dataIndex: '',
-  // },
 ];
 
 export const formSchema: FormSchema[] = [

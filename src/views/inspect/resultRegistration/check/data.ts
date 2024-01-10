@@ -2,21 +2,20 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 
 export const columns: BasicColumn[] = [
   { title: '检测项目', dataIndex: 'projectAbbr', slots: { customRender: 'projectAbbr' } },
-  { title: '检测方法', dataIndex: 'methodAbbr', slots: { customRender: 'methodAbbr' } },
+  { title: '检测方法', dataIndex: 'methodAbbr' },
   { title: '合格样品总数', dataIndex: 'totalQualified' },
   { title: '不合格样品总数', dataIndex: 'totalUnqualified' },
   { title: '未检测样品总数', dataIndex: 'totalNotCheck' },
 ];
-export const checkItemMappding = {
-  TP: '1',
-  ALT: '1',
-  TP抗体: '1',
-  'HIV-1/HIV-2抗体': '2',
-  HCV抗体: '2',
-  HBsAg: '2',
-  'HIV-RNA': '3',
-  'HCV-RNA': '3',
-  'HBV-DNA': '3',
+export const methodsMappding = {
+  NAT: '3',
+  'PCR-荧光法': '3',
+  双缩脲法: '1',
+  速率法: '1',
+  ELISA: '2',
+  赖氏法: '2',
+  细胞病变抑制法: '2',
+  硫酸铜法: '2',
 };
 export const dtColumnsMap = {
   '1': [

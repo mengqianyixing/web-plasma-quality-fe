@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-27 17:00:01
+ * @LastEditTime: 2024-01-09 19:10:30
 -->
 <template>
   <BasicDrawer
@@ -47,8 +47,8 @@
       setDrawerProps({ confirmLoading: false });
       state.isUpdate = isUpdate;
       state.dictId = data.dictId;
+      updateSchema({ field: 'dictNo', componentProps: { disabled: !!isUpdate } });
       if (isUpdate) {
-        updateSchema({ field: 'dictNo', componentProps: { disabled: true } });
         const res = await getDictDtApi({ dictId: data.dictId });
         setFieldsValue(res);
       } else {

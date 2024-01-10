@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-20 10:01:47
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-23 14:08:24
+ * @LastEditTime: 2024-01-09 17:08:17
 -->
 <template>
   <BasicDrawer
@@ -25,7 +25,7 @@
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { addSiteApi, updateSiteApi, getSiteDtApi } from '@/api/plasmaStore/site';
   import { settingListApi } from '@/api/plasmaStore/setting';
-  import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
+  import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -55,6 +55,7 @@
       warehouseType: STORE_FLAG.S,
       currPage: '1',
       pageSize: '1000',
+      closed: CLOSED.NORMAL,
     });
     const options = res.result.map((_) => ({ value: _.houseNo, label: _.houseName }));
     updateSchema([{ field: 'fkHouseNo', componentProps: { options: options } }]);

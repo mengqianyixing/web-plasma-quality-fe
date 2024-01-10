@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2023-12-26 14:31:37
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-09 19:58:40
+-->
 <template>
   <BasicDrawer
     v-bind="$attrs"
@@ -46,19 +54,23 @@
         });
         getDict(list.map((_) => _.field));
       }
-      formListSchema.forEach((_) => {
-        updateSchema({ field: _.field, componentProps: { disabled: !!disabled } });
-      });
+      const disabledOptions = formListSchema.map((_) => ({
+        field: _.field,
+        componentProps: { disabled: false },
+      }));
       if (data.projectId) {
         const res = await getItemSettingDtApi({ id: data.projectId });
         setFieldsValue(res);
         state.type = '编辑';
+        disabledOptions.slice(0, 2).forEach((_) => (_.componentProps.disabled = true));
       } else if (disabled) {
         state.type = '查看';
+        disabledOptions.forEach((_) => (_.componentProps.disabled = true));
       } else {
         state.type = '新增';
         resetFields();
       }
+      updateSchema(disabledOptions);
       clearValidate();
     },
   );

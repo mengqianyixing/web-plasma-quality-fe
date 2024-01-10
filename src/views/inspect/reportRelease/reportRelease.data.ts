@@ -3,9 +3,13 @@ import { getDictItemListByNoApi } from '@/api/dictionary';
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 
 enum STATE {
-  UND = '未发布',
+  TBG = '报告待生成',
+  TBR = '待复核',
+  UND = '待发布',
   PUD = '已发布',
 }
+const stateList = (() => Object.keys(STATE).map((_) => ({ label: STATE[_], value: _ })))();
+
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
@@ -46,6 +50,14 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return STATE[record.state];
     },
+  },
+  {
+    title: '报告人',
+    dataIndex: 'producer',
+  },
+  {
+    title: '报告日期',
+    dataIndex: 'productionAt',
   },
   {
     title: '复核人',
@@ -97,10 +109,7 @@ export const searchFormschema: FormSchema[] = [
     component: 'Select',
     label: '样品状态',
     componentProps: {
-      options: [
-        { value: 'UND', label: '未发布' },
-        { value: 'PUD', label: '已发布' },
-      ],
+      options: stateList,
     },
   },
   {

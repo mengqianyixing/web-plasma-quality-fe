@@ -1,24 +1,21 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: zcc
- * @Date: 2024-01-02 13:43:33
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-04 13:58:08
--->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">报告生成</a-button>
-        <a-button type="primary" @click="handleUnCreate">撤销生成</a-button>
-        <a-button type="primary" @click="handleProcess">复核</a-button>
-        <a-button type="primary" @click="handleUnProcess">撤销复核</a-button>
-        <a-button type="primary" @click="handleRelease">发布</a-button>
-        <a-button type="primary" @click="handlePrint">打印</a-button>
+        <a-button type="primary" @click="openDrawer(true, {})">新增</a-button>
+        <a-button type="primary" @click="handleEdit">编辑</a-button>
+        <a-button type="primary" @click="handleRemove">删除</a-button>
+        <a-button type="primary" @click="handleProcess">审核</a-button>
+        <a-button type="primary" @click="handleUnProcess">取消审核</a-button>
+        <a-button type="primary" @click="handleScan">出库扫描</a-button>
+        <a-button type="primary" @click="handlePrint">转移记录打印</a-button>
+        <a-button type="primary" @click="handlePrint">不合格原料血浆信息清单打印</a-button>
+        <a-button type="primary" @click="handlePrint">不合格原理血浆销毁处理申请审批表</a-button>
       </template>
-      <template #sampleCode="{ record }: { record: Recordable }">
-        {{ sampleTypeMap.get(record.sampleCode) }}
+      <template #dlvNo="{ record }: { record: Recordable }">
+        <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleDt(record)">
+          {{ record.dlvNo }}
+        </span>
       </template>
     </BasicTable>
     <Modal
@@ -28,36 +25,41 @@
       okText="提交"
       width="300px"
       :confirmLoading="confirmLoading"
-      title="取消原因"
+      :title="type + '原因'"
     >
       <div class="m-20px">
         <BasicForm @register="registerForm" />
       </div>
     </Modal>
+    <FormDrawer @register="registerDrawer" @close="reload" />
+    <OutDrawer @register="registerOutDrawer" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { columns, searchFormschema } from './reportRelease.data';
+  import { useDrawer } from '@/components/Drawer';
+  import FormDrawer from './formDrawer.vue';
+  import OutDrawer from './outDrawer.vue';
+  import { columns, searchFormschema, PROCESS_STATE_TEXT } from './plasmaOut.data';
   import {
     getListApi,
-    createReportApi,
-    revokeReportApi,
-    processReportApi,
-    precessRevokeApi,
-    releaseReportApi,
-  } from '@/api/inspect/reportRelease';
-  import { getDictItemListByNoApi } from '@/api/dictionary';
-  import { onMounted, ref } from 'vue';
+    removeFormApi,
+    processApi,
+    unProcessApi,
+  } from '@/api/nonconformity/plasmaOut';
+  import { ref } from 'vue';
   import { message, Modal } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
 
-  const sampleTypeMap = ref(new Map());
   const open = ref(false);
   const confirmLoading = ref(false);
-  let revokeApi = revokeReportApi;
+  const type = ref('');
 
+  let api = removeFormApi;
+
+  const [registerDrawer, { openDrawer }] = useDrawer();
+  const [registerOutDrawer, { openDrawer: openOutDrawer }] = useDrawer();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,
     fetchSetting: {
@@ -74,21 +76,21 @@
     rowSelection: { type: 'radio' },
     beforeFetch: (p) => ({
       ...p,
-      begnIssueAt: p.begnIssueAt?.slice(0, 10),
-      endIssueAt: p.endIssueAt?.slice(0, 10),
+      endDate: p.endDate?.slice(0, 10),
+      begnDate: p.begnDate?.slice(0, 10),
     }),
     afterFetch: (res) => {
       clearSelectedRowKeys();
       return res;
     },
     formConfig: {
-      labelWidth: 90,
+      labelWidth: 120,
       baseColProps: { span: 6 },
       schemas: searchFormschema,
     },
   });
   const [registerForm, { resetFields, clearValidate, validate }] = useForm({
-    labelWidth: 60,
+    labelWidth: 80,
     baseColProps: { span: 24 },
     schemas: [
       {
@@ -111,18 +113,22 @@
     }
     return rows;
   }
-  async function handleCreate() {
+
+  function handleEdit() {
     const [row] = getSelections(true);
     if (!row) return;
-    await createReportApi({ reportNo: row.reportNo });
-    message.success('制作成功');
-    reload();
+    if (row.state !== PROCESS_STATE_TEXT.AUT) return message.warning('已审核的数据不可修改');
+    openDrawer(true, { ...row });
   }
-  function handleUnCreate() {
+  function handleDt(record: Recordable) {
+    openDrawer(true, { ...record, disabled: true });
+  }
+  function handleRemove() {
     const [row] = getSelections(true);
     if (!row) return;
+    type.value = '删除';
     open.value = true;
-    revokeApi = revokeReportApi;
+    api = removeFormApi;
     resetFields();
     clearValidate();
   }
@@ -131,9 +137,9 @@
     const [row] = getSelections(true);
     try {
       confirmLoading.value = true;
-      await revokeApi({ reportNo: row.reportNo, cause });
+      await api({ no: row.dlvNo, cause });
       open.value = false;
-      message.success('取消成功');
+      message.success(type.value + '成功');
       reload();
     } finally {
       confirmLoading.value = false;
@@ -142,32 +148,34 @@
   async function handleProcess() {
     const [row] = getSelections(true);
     if (!row) return;
-    await processReportApi({ reportNo: row.reportNo });
-    reload();
-    message.success('审核成功');
+    Modal.confirm({
+      content: '确认审核' + row.dlvNo + '?',
+      onOk: async () => {
+        await processApi({ no: row.dlvNo });
+        message.success('审核成功');
+        clearSelectedRowKeys();
+        reload();
+      },
+      onCancel: () => Modal.destroyAll(),
+    });
   }
   async function handleUnProcess() {
     const [row] = getSelections(true);
     if (!row) return;
+    type.value = '取消审核';
     open.value = true;
-    revokeApi = precessRevokeApi;
+    api = unProcessApi;
     resetFields();
     clearValidate();
   }
-  async function handleRelease() {
+  async function handleScan() {
     const [row] = getSelections(true);
     if (!row) return;
-    await releaseReportApi({ reportNo: row.reportNo });
-    message.success('发布成功');
+
+    openOutDrawer(true, row);
   }
   function handlePrint() {
     const [row] = getSelections(true);
     if (!row) return;
   }
-  onMounted(async () => {
-    const [res] = await getDictItemListByNoApi(['sampleType']);
-    res.dictImtes?.forEach((_) => {
-      sampleTypeMap.value.set(_.value, _.label);
-    });
-  });
 </script>

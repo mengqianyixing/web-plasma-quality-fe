@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-06 10:01:28
+ * @LastEditTime: 2024-01-06 15:56:21
 -->
 <template>
   <BasicDrawer
@@ -54,7 +54,7 @@
   import { TabPane, Tabs } from 'ant-design-vue';
   import { ref, markRaw } from 'vue';
   import DtTable from './dtTable.vue';
-  import { checkItemMappding } from './data';
+  import { methodsMappding } from './data';
 
   const activeKey = ref('1');
   const pid = ref('');
@@ -67,12 +67,12 @@
     3: 'div',
   });
 
-  const [registerDrawer] = useDrawerInner(async ({ projectId, projectAbbr, bsNo }) => {
+  const [registerDrawer] = useDrawerInner(async ({ projectId, projectAbbr, bsNo, methodAbbr }) => {
     projectName.value = projectAbbr;
     pid.value = projectId;
     bsno.value = bsNo;
+    checkType.value = methodsMappding[methodAbbr];
     componentMap.value['1'] = markRaw(DtTable as any);
-    checkType.value = checkItemMappding[projectAbbr];
   });
   function change(activeKey) {
     componentMap.value[activeKey] = markRaw(DtTable);

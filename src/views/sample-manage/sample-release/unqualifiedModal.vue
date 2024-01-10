@@ -1,14 +1,10 @@
 <template>
-  <BasicDrawer v-bind="$attrs" @register="register" title="明细" showFooter width="85%">
-    <BasicTable @register="registerTable" ref="table">
-      <template #footer>
-        <a-button @click="handleCancel">取消</a-button>
-      </template>
-    </BasicTable>
-  </BasicDrawer>
+  <BasicModal v-bind="$attrs" @register="register" title="明细" showFooter width="85%">
+    <BasicTable @register="registerTable" ref="table" />
+  </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { ref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
 
@@ -20,11 +16,16 @@
     title: '不合格数量列表',
     api: getSampleUnqualifiedList,
     columns: unqualifiedColumns,
-    pagination: false,
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
     beforeFetch: (params) => {
       return {
         ...params,
-        batchNo: batchSampleNo.value,
+        batchSampleNo: batchSampleNo.value,
       };
     },
     size: 'large',
@@ -44,8 +45,8 @@
     immediate: false,
   });
 
-  const [register, { setDrawerProps, closeDrawer }] = useDrawerInner((data) => {
-    setDrawerProps({
+  const [register, { setModalProps }] = useModalInner((data) => {
+    setModalProps({
       maskClosable: false,
     });
 
@@ -53,8 +54,4 @@
 
     reload();
   });
-
-  function handleCancel() {
-    closeDrawer();
-  }
 </script>

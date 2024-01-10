@@ -28,7 +28,7 @@
 <script setup lang="ts">
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { BasicForm, useForm } from '@/components/Form';
-  import { formSchemaMap, notCheckFormSchema, checkItemMappding } from './data';
+  import { formSchemaMap, notCheckFormSchema, methodsMappding } from './data';
   import Login from '@/components/BusinessDrawer/login/index.vue';
   import { ref } from 'vue';
   import { summitUnqualifiedApi } from '@/api/inspect/resultRegistration';
@@ -61,13 +61,13 @@
     showActionButtonGroup: false,
   });
   const [registerDrawer, { setDrawerProps }] = useDrawerInner(
-    async ({ projectAbbr, projectId, bsNo }) => {
+    async ({ projectAbbr, projectId, bsNo, methodAbbr }) => {
       pid = projectId;
       bsno = bsNo;
       reloadPage();
       projectName.value = projectAbbr;
       const formSchemaList = [...notCheckFormSchema];
-      formSchemaList.splice(1, 0, ...formSchemaMap[checkItemMappding[projectAbbr]]);
+      formSchemaList.splice(1, 0, ...formSchemaMap[methodsMappding[methodAbbr]]);
       fieldList = formSchemaList.map((_) => _.field);
       appendSchemaByField(formSchemaList, 'sampleNo');
       updateSchema({
