@@ -90,6 +90,7 @@ export const formSchema: FormSchema[] = [
     field: 'systemLevel',
     label: '系统字典',
     component: 'Switch',
+    defaultValue: false,
     colProps: { span: 24 },
   },
 ];
