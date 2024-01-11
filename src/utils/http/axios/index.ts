@@ -151,7 +151,6 @@ const transform: AxiosTransform = {
   requestInterceptors: (config, options) => {
     // 请求之前处理config
     const token = getToken();
-    console.log('请求拦截器处理', config, options);
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
       (config as Recordable).headers['access-token'] = options.authenticationScheme
@@ -221,7 +220,6 @@ const transform: AxiosTransform = {
 };
 
 function createAxios(opt?: Partial<CreateAxiosOptions>) {
-  console.log('createAxios', opt, globSetting);
   window.localStorage.setItem('globSetting', JSON.stringify(globSetting ?? {}));
   return new VAxios(
     // 深度合并

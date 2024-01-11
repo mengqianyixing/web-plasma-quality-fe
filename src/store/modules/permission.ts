@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { AppRouteRecordRaw, Menu } from '@/router/types';
 
 import { defineStore } from 'pinia';
 import { store } from '@/store';
 import { useI18n } from '@/hooks/web/useI18n';
 import { useUserStore } from './user';
-import { useAppStoreWithOut } from './app';
 import { toRaw } from 'vue';
 import {
   transformObjToRoute,
@@ -14,11 +12,9 @@ import {
 } from '@/router/helper/routeHelper';
 import { transformRouteToMenu } from '@/router/helper/menuHelper';
 
-import projectSetting from '@/settings/projectSetting';
-
 import { PermissionModeEnum } from '@/enums/appEnum';
 
-import { asyncRoutes, basicRoutes } from '@/router/routes';
+import { asyncRoutes } from '@/router/routes';
 import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic';
 
 import { filter } from '@/utils/helper/treeHelper';
@@ -118,7 +114,6 @@ export const usePermissionStore = defineStore({
     async buildRoutesAction(): Promise<AppRouteRecordRaw[]> {
       const { t } = useI18n();
       const userStore = useUserStore();
-      const appStore = useAppStoreWithOut();
 
       let routes: AppRouteRecordRaw[] = [];
       const roleList = toRaw(userStore.getRoleList) || [];
@@ -258,7 +253,6 @@ export const usePermissionStore = defineStore({
           const menuIds: number[] = [99] // 默认首页
             .concat(userStore.getUserInfo?.menuIds ?? [])
             .map((i) => Number(i));
-          console.log({ menuIds });
           const filterRoutes = (routes: any[]): any[] => {
             const filteredRoutes: any[] = [];
 
