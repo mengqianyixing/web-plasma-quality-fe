@@ -14,7 +14,9 @@
           :treeData="treeData"
           :fieldNames="{ title: 'title', key: 'id' }"
           checkable
-          title="菜单分配"
+          checkStrictly
+          @check="handleTreeSelect"
+          title="菜单/权限分配"
         />
       </template>
       <template #users="{ model, field }">
@@ -46,7 +48,7 @@
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
   import { BasicTree, TreeItem } from '@/components/Tree';
   import { Select, SelectOption } from 'ant-design-vue';
-  import { asyncRoutes } from '@/router/routes';
+  import { modulesRouteList } from '@/router/routes';
   import {
     getCasDoorUsers,
     addCasDoorRole,
@@ -64,7 +66,7 @@
     console.log({ res });
     userOptions.value = res.map((item) => {
       return {
-        label: item.owner + item.name + '(' + item.displayName + ')',
+        label: item.owner + '/' + item.name + '(' + item.displayName + ')',
         value: item.owner + '/' + item.name,
       };
     });
@@ -81,20 +83,38 @@
     const filteredRoutes: any[] = [];
 
     routes.forEach((item: any) => {
-      if (item.id && !item.children) {
+      if (item.id && !item.children && !item.authElements) {
+        if (`${item?.id}`.includes('E_')) {
+          item.class = 'auth-element-tree-node';
+        }
         filteredRoutes.push({
           ...item,
-          title: item?.meta?.title ?? item.name,
+          title: item?.meta?.title ?? item.title ?? item.name,
         });
-      } else if (item.children) {
+        return;
+      }
+      if (item.children) {
         const filteredChildren = filterRoutes(item.children);
         if (filteredChildren.length > 0) {
           item.children = filteredChildren;
           filteredRoutes.push({
             ...item,
-            title: item?.meta?.title ?? item.name,
+            title: item?.meta?.title ?? item.title ?? item.name,
           });
         }
+        return;
+      }
+      if (item.authElements) {
+        const filteredChildren = filterRoutes(item.authElements);
+        if (filteredChildren.length > 0) {
+          // 将 authElements 导入到菜单
+          item.children = filteredChildren;
+          filteredRoutes.push({
+            ...item,
+            title: item?.meta?.title ?? item.title ?? item.name,
+          });
+        }
+        return;
       }
     });
 
@@ -108,7 +128,8 @@
     setDrawerProps({ confirmLoading: false });
     // 需要在setFieldsValue之前先填充treeData，否则Tree组件可能会报key not exist警告
     if (unref(treeData).length === 0) {
-      treeData.value = filterRoutes(asyncRoutes);
+      treeData.value = filterRoutes(modulesRouteList);
+      console.log({ treeData, modulesRouteList });
     }
     isUpdate.value = !!data?.isUpdate;
 
@@ -120,11 +141,10 @@
       // } catch (e) {
       //   res = [];
       // }
-      console.log({ data });
       setFieldsValue({
         // ...res,
         ...data.record,
-        domains: (data?.record?.domains ?? []).map((it) => Number(it)),
+        domains: (data?.record?.domains ?? []).map((it) => (isNaN(Number(it)) ? it : Number(it))),
         oldName: data.record.name,
       });
     }
@@ -137,6 +157,11 @@
     return option.key.toLowerCase().indexOf(input.toLowerCase()) >= 0;
   };
 
+  function handleTreeSelect(keys, nodes) {
+    console.log({ keys, nodes });
+    // @TODO 半选父组件
+  }
+
   async function handleSubmit() {
     try {
       const values = await validate();
@@ -147,6 +172,7 @@
         if (unref(isUpdate)) {
           await setCasDoorRoles({
             ...values,
+            domains: values?.domains?.checked ?? [],
             oldName: roleId.value,
           });
         } else {
@@ -163,3 +189,20 @@
     }
   }
 </script>
+
+<style lang="scss">
+  .auth-element-tree-node {
+    flex-direction: row-reverse;
+
+    .vben-tree__title {
+      justify-content: end;
+      color: chocolate;
+    }
+
+    .ant-tree-checkbox.ant-tree-checkbox-checked ~ .ant-tree-node-content-wrapper {
+      .vben-tree__title {
+        font-weight: bolder;
+      }
+    }
+  }
+</style>

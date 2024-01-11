@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-11 09:18:48
+ * @LastEditTime: 2024-01-11 17:52:52
  * @Description: 系统管理
  * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
  */
@@ -103,6 +103,18 @@ const system: AppRouteModule = {
         ignoreKeepAlive: true,
       },
       component: () => import('@/views/auth/menus/index.vue'),
+      authElements: [
+        {
+          id: 'E_123',
+          name: 'addRole',
+          title: '新增角色',
+        },
+        {
+          id: 'E_456',
+          name: 'editRole',
+          title: '编辑角色',
+        },
+      ],
     },
     {
       path: 'params',
