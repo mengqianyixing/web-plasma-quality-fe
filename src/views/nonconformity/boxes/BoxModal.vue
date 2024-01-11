@@ -96,7 +96,7 @@
         component: 'ApiSelect',
         componentProps: {
           api: getSysDictionary,
-          params: [DictionaryEnum.SampleUnqualifiedReason],
+          params: [DictionaryEnum.PlasmaUnqualifiedReason],
           resultField: '[0].dictImtes',
           labelField: 'label',
           valueField: 'value',

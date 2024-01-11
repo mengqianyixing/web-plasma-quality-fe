@@ -1,4 +1,5 @@
 import { FormSchema } from '@/components/Form';
+import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
 
 export const schemas: FormSchema[] = [
   {
@@ -11,11 +12,15 @@ export const schemas: FormSchema[] = [
   },
   {
     field: 'fkFailedCode',
-    component: 'Select',
+    component: 'ApiSelect',
     label: '不合格原因',
     colProps: { span: 14 },
     componentProps: {
-      options: [{ label: '验收不合格', value: 'DSN' }],
+      api: getSysDictionary,
+      params: [DictionaryEnum.PlasmaUnqualifiedReason],
+      resultField: '[0].dictImtes',
+      labelField: 'label',
+      valueField: 'value',
     },
     required: true,
   },
