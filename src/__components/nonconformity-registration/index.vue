@@ -7,7 +7,7 @@
         v-model:value="model[field]"
         style="width: calc(100% - 80px)"
       />
-      <a-button type="primary" @click="handleLogin" class="ml-3">登录</a-button>
+      <a-button type="primary" @click="handleLogin" size="large" class="ml-3">登录</a-button>
     </template>
     <template #nonconformity="{ model, field }">
       <ApiSelect
@@ -29,11 +29,16 @@
 
   import LoginModal from './LoginModal.vue';
   import { useModal } from '@/components/Modal';
-  import { nonconformityRegistration } from '@/api/nonconformity/manage';
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { nonconformityRegistration } from '@/api/nonconformity/box-manage';
+
+  const { createMessage } = useMessage();
 
   async function handleSubmit(values) {
     await nonconformityRegistration(values);
-    resetFields();
+    await resetFields();
+
+    createMessage.success('登记成功');
   }
 
   function handleSuccess(nickname: string) {
@@ -50,15 +55,18 @@
   const [register, { setFieldsValue, resetFields }] = useForm({
     layout: 'horizontal',
     labelWidth: 120,
+    labelCol: {
+      offset: 3,
+    },
     rowProps: {
       justify: 'center',
     },
     wrapperCol: {
-      span: 12,
+      span: 9,
     },
     schemas,
     size: 'large',
-    actionColOptions: { span: 24 },
+    actionColOptions: { span: 24, offset: 6 },
     showActionButtonGroup: true,
     submitButtonOptions: {
       text: '确定',

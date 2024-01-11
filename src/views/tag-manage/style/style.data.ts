@@ -6,51 +6,20 @@ import {
   tagStyleTypeMap,
   tagTypeMap,
 } from '@/enums/tagManageEnum';
-import { h } from 'vue';
-import { Switch } from 'ant-design-vue';
-import { useMessage } from '@/hooks/web/useMessage';
-import { disableStyle, enableStyle } from '@/api/tag/manage';
 import dayjs from 'dayjs';
 
-type CheckedType = boolean | string | number;
 export const columns: BasicColumn[] = [
   {
     title: '标签名称',
     dataIndex: 'tagName',
+    width: 140,
   },
   {
     title: '状态',
     dataIndex: 'state',
     width: 80,
     customRender: ({ record }) => {
-      if (!Reflect.has(record, 'pendingStatus')) {
-        record.pendingStatus = false;
-      }
-      return h(Switch, {
-        checked: record.state === tagStatusValueEnum.EAB,
-        checkedChildren: '停用',
-        unCheckedChildren: '启用',
-        loading: record.pendingStatus,
-        onChange: async (checked: CheckedType) => {
-          record.pendingStatus = true;
-          const { createMessage } = useMessage();
-          try {
-            if (checked) {
-              await enableStyle(record.tagNo);
-              record.state = tagStatusValueEnum.EAB;
-            } else {
-              await disableStyle(record.tagNo);
-              record.state = tagStatusValueEnum.DSB;
-            }
-
-            createMessage.success('已成功修改角色状态');
-          } catch (e) {
-            createMessage.error('修改角色状态失败');
-          } finally {
-            record.pendingStatus = false;
-          }
-        },
-      });
+      return record.state == tagStatusValueEnum.DSB ? '禁用' : '启用';
     },
   },
   {
@@ -195,19 +164,19 @@ export const searchFormSchema: FormSchema[] = [
     field: 'tagName',
     label: '标签名称',
     component: 'Input',
-    colProps: { span: 8 },
+    colProps: { span: 5 },
   },
   {
     field: 'labelType',
     label: '标签类型',
     component: 'Select',
-    colProps: { span: 8 },
+    colProps: { span: 5 },
   },
   {
     field: 'state',
     label: '状态',
     component: 'Select',
-    colProps: { span: 8 },
+    colProps: { span: 5 },
     componentProps: {
       options: [...tagStatusMap.entries()].map(([value, label]) => ({ label, value })),
     },

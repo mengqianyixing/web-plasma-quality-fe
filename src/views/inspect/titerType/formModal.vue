@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-26 17:41:03
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-27 11:20:46
+ * @LastEditTime: 2024-01-09 16:14:44
 -->
 <template>
   <BasicDrawer
@@ -42,22 +42,34 @@
       schemas: formListSchema,
       showActionButtonGroup: false,
     });
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async ({ data }) => {
-    state.dictItemId = data.dictItemId;
-    if (state.isRequest === false) {
-      state.isRequest = true;
-      getDict();
-    }
-    if (data.dictItemId) {
-      const res = await getTitlerTypeDtApi({ dictItemId: data.dictItemId });
-      setFieldsValue(res);
-      state.type = '编辑';
-    } else {
-      state.type = '新增';
-      resetFields();
-    }
-    clearValidate();
-  });
+  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(
+    async ({ data, disabled }) => {
+      state.dictItemId = data.dictItemId;
+      if (state.isRequest === false) {
+        state.isRequest = true;
+        getDict();
+      }
+      const disabledOptions = formListSchema.map((_) => ({
+        field: _.field,
+        componentProps: { disabled: false },
+      }));
+      if (data.dictItemId) {
+        const res = await getTitlerTypeDtApi({ dictItemId: data.dictItemId });
+        setFieldsValue(res);
+        state.type = '编辑';
+        disabledOptions.slice(0, 3).forEach((_) => (_.componentProps.disabled = true));
+      } else {
+        state.type = '新增';
+        resetFields();
+      }
+      if (disabled) {
+        state.type = '查看';
+        disabledOptions.forEach((_) => (_.componentProps.disabled = true));
+      }
+      updateSchema(disabledOptions);
+      clearValidate();
+    },
+  );
   async function handleSubmit() {
     try {
       const values = await validate();

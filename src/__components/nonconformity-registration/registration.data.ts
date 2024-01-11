@@ -5,7 +5,7 @@ export const schemas: FormSchema[] = [
     field: 'checker',
     component: 'InputGroup',
     slot: 'check',
-    label: '审核人',
+    label: '复核人',
     colProps: { span: 14 },
     required: true,
   },
@@ -13,7 +13,6 @@ export const schemas: FormSchema[] = [
     field: 'fkFailedCode',
     component: 'Select',
     label: '不合格原因',
-    // slot: 'nonconformity',
     colProps: { span: 14 },
     componentProps: {
       options: [{ label: '验收不合格', value: 'DSN' }],
@@ -26,16 +25,6 @@ export const schemas: FormSchema[] = [
     label: '血浆编号',
     colProps: { span: 14 },
     required: true,
-  },
-  {
-    field: 'remark',
-    component: 'InputTextArea',
-    label: '备注',
-    colProps: { span: 14 },
-    componentProps: {
-      placeholder: '请输入',
-      rows: 4,
-    },
   },
 ];
 

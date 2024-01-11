@@ -42,22 +42,34 @@
       schemas: formListSchema,
       showActionButtonGroup: false,
     });
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async ({ data }) => {
-    state.dictItemId = data.dictItemId;
-    if (state.isRequest === false) {
-      state.isRequest = true;
-      getDict();
-    }
-    if (data.dictItemId) {
-      const res = await getInspectMethodDtApi({ dictItemId: data.dictItemId });
-      setFieldsValue(res);
-      state.type = '编辑';
-    } else {
-      state.type = '新增';
-      resetFields();
-    }
-    clearValidate();
-  });
+  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(
+    async ({ data, disabled }) => {
+      state.dictItemId = data.dictItemId;
+      if (state.isRequest === false) {
+        state.isRequest = true;
+        getDict();
+      }
+      const disabledOptions = formListSchema.map((_) => ({
+        field: _.field,
+        componentProps: { disabled: false },
+      }));
+      if (data.dictItemId) {
+        const res = await getInspectMethodDtApi({ dictItemId: data.dictItemId });
+        setFieldsValue(res);
+        state.type = '编辑';
+        disabledOptions.slice(0, 1).forEach((_) => (_.componentProps.disabled = true));
+      } else {
+        state.type = '新增';
+        resetFields();
+      }
+      if (disabled) {
+        state.type = '查看';
+        disabledOptions.forEach((_) => (_.componentProps.disabled = true));
+      }
+      updateSchema(disabledOptions);
+      clearValidate();
+    },
+  );
   async function handleSubmit() {
     try {
       const values = await validate();

@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-02 17:43:12
+ * @LastEditTime: 2024-01-09 17:46:44
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { getDictItemListByNoApi } from '@/api/dictionary';
@@ -74,13 +74,13 @@ export const batchColumns: BasicColumn[] = [
 ];
 export const batchSearchScheam: FormSchema[] = [
   {
-    field: 'stationNo',
+    field: 'stationName',
     component: 'ApiSelect',
     label: '采浆公司',
     componentProps: {
       api: stationNameSearchApi,
       labelField: 'stationName',
-      valueField: 'stationNo',
+      valueField: 'stationName',
     },
   },
   {

@@ -1,10 +1,10 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-21 17:29:52
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-22 10:49:23
+ * @LastEditTime: 2024-01-09 19:07:16
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
@@ -36,7 +36,7 @@
   const [registerItemDrawer, { openDrawer: openItemDrawer }] = useDrawer();
 
   const [registerTable, { getSelectRows, reload, clearSelectedRowKeys }] = useTable({
-    title: '',
+    title: '字典列表',
     api: getDictListApi,
     fetchSetting: {
       pageField: 'currPage',
@@ -45,8 +45,12 @@
       listField: 'result',
     },
     rowKey: 'dictId',
+    indexColumnProps: {
+      title: '序号',
+      width: 80,
+    },
     columns,
-    size: 'small',
+    size: 'large',
     formConfig: {
       labelWidth: 80,
       schemas: searchFormSchema,
@@ -59,6 +63,7 @@
       return res;
     },
     rowSelection: { type: 'radio' },
+    canResize: true,
   });
   function formSuccess() {
     reload();
@@ -70,11 +75,13 @@
   function handleUpdate() {
     const [row] = getSelectRow();
     if (!row) return;
+    if (row.systemLevel) return message.warning('系统字典不可修改');
     openDrawer(true, { data: row, isUpdate: true });
   }
   function handleRemove() {
     const [row] = getSelectRow();
     if (!row) return;
+    if (row.systemLevel) return message.warning('系统字典不可删除');
     Modal.confirm({
       content: `确定删除${row.dictName}？`,
       onOk: async () => {

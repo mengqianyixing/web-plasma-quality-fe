@@ -10,6 +10,7 @@ export const columns: BasicColumn[] = [
   {
     title: '样本批号',
     dataIndex: 'batchSampleNo',
+    width: 200,
   },
   {
     title: '样本类型',

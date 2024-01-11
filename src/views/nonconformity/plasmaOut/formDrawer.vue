@@ -85,6 +85,9 @@
   });
   const [registerDrawer] = useDrawerInner(async ({ disabled, dlvNo }) => {
     state.dlvNo = dlvNo;
+    updateSchema(
+      formSchema.slice(1).map((_) => ({ ..._, componentProps: { disabled: !!disabled } })),
+    );
     if (dlvNo) {
       dtFormApi({ no: dlvNo }).then((res) => {
         setFieldsValue(res);
@@ -93,15 +96,14 @@
       setPagination({ current: 1 });
       reload();
       state.title = '编辑';
+      updateSchema([{ field: 'useTo', componentProps: { disabled: true } }]);
     } else {
       setPagination({ total: 0 });
       setTableData([]);
       state.title = '新增';
     }
     if (disabled) state.title = '查看';
-    updateSchema(
-      formSchema.slice(1).map((_) => ({ ..._, componentProps: { disabled: !!disabled } })),
-    );
+
     resetFields();
     clearValidate();
   });

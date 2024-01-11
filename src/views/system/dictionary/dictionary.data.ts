@@ -90,6 +90,7 @@ export const formSchema: FormSchema[] = [
     field: 'systemLevel',
     label: '系统字典',
     component: 'Switch',
+    defaultValue: false,
     colProps: { span: 24 },
   },
 ];
@@ -98,6 +99,7 @@ export const itemColumns: BasicColumn[] = [
   {
     title: '字典项名称',
     dataIndex: 'itemKey',
+    width: 300,
   },
   {
     title: '字典项值',
@@ -126,6 +128,7 @@ export const itemColumns: BasicColumn[] = [
   {
     title: '创建时间',
     dataIndex: 'createAt',
+    width: 200,
   },
 ];
 export const itemSearchFormSchema: FormSchema[] = [

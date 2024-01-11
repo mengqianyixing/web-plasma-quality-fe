@@ -583,7 +583,7 @@ export interface GetApiCoreBatchPlasmaVerifyBoxNoResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/bag`
- * @更新时间 `2023-12-29 13:43:38`
+ * @更新时间 `2024-01-09 14:02:50`
  */
 export interface GetApiCoreBatchPlasmaVerifyBagRequest {
   /**
@@ -599,11 +599,11 @@ export interface GetApiCoreBatchPlasmaVerifyBagRequest {
    */
   boxNo?: string;
   /**
-   * 验收状态(WAIT-未验收  PASS-已验收)
+   * 验收状态 0-未验收  1-已验收
    */
   verifyState?: string;
   /**
-   * 验收结果(PASS-合格 FAIL-不合格)
+   * 验收结果 0-不合格 1-合格
    */
   verifyResult?: string;
 }
@@ -613,7 +613,7 @@ export interface GetApiCoreBatchPlasmaVerifyBagRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/bag`
- * @更新时间 `2023-12-29 13:43:38`
+ * @更新时间 `2024-01-09 14:02:50`
  */
 export type GetApiCoreBatchPlasmaVerifyBagResponse = {
   /**

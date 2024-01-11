@@ -4,17 +4,19 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-26 10:17:23
+ * @LastEditTime: 2024-01-09 19:09:14
 -->
 <template>
   <BasicDrawer v-bind="$attrs" @register="registerDrawer" :title="dictName" width="1200px">
     <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button type="primary" @click="handleUpdate">编辑</a-button>
-        <a-button type="primary" @click="handleRemove">删除</a-button>
-        <a-button type="primary" @click="handleSwitch(true)">启用</a-button>
-        <a-button type="primary" @click="handleSwitch(false)">禁用</a-button>
+        <template v-if="!systemLevel">
+          <a-button type="primary" @click="handleUpdate">编辑</a-button>
+          <a-button type="primary" @click="handleRemove">删除</a-button>
+          <a-button type="primary" @click="handleSwitch(true)">启用</a-button>
+          <a-button type="primary" @click="handleSwitch(false)">禁用</a-button>
+        </template>
       </template>
     </BasicTable>
     <ItemFormDrawer @register="registerItemFormDrawer" @success="formSuccess" />
@@ -31,6 +33,7 @@
 
   const dictId = ref('');
   const dictName = ref('');
+  const systemLevel = ref(false);
   const [registerItemFormDrawer, { openDrawer }] = useDrawer();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     title: '',
@@ -64,6 +67,7 @@
   const [registerDrawer, { setDrawerProps }] = useDrawerInner(({ data }) => {
     dictId.value = data.dictId;
     dictName.value = data.dictName;
+    systemLevel.value = data.systemLevel;
     setDrawerProps({ confirmLoading: false });
     reload();
   });

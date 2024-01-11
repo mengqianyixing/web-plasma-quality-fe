@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-08 15:17:54
+ * @LastEditTime: 2024-01-09 16:17:11
 -->
 <template>
   <BasicDrawer
@@ -14,7 +14,6 @@
     title="选择检测项目"
     :width="(state.length || 1) * 200 + 50 + 'px'"
     cancelText="关闭"
-    :mask="!!state.length"
     @ok="handleSubmit"
   >
     <div class="flex h-full ml-20px mr-20px">
