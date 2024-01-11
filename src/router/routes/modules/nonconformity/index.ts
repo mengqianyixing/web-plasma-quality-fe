@@ -11,7 +11,7 @@ const nonconformity: AppRouteModule = {
   meta: {
     orderNo: 10000,
     title: '不合格管理',
-    icon: 'ant-design:close-outlined',
+    icon: 'ant-design:windows-outlined',
   },
   children: [
     {

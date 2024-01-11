@@ -19,7 +19,7 @@ const system: AppRouteModule = {
   redirect: '/system/account',
   meta: {
     orderNo: 2000,
-    icon: 'ion:settings-outline',
+    icon: 'ant-design:windows-outlined',
     title: '系统管理',
   },
   children: [

@@ -17,14 +17,14 @@ const callManager: AppRouteModule = {
   component: LAYOUT,
   meta: {
     title: '回访管理',
-    icon: 'ant-design:phone-outlined',
+    icon: 'ant-design:windows-outlined',
   },
   children: [
     {
       path: 'list-generation',
       name: 'CallbackGeneration',
       meta: {
-        title: '回访名单生成',
+        title: '回访名单',
       },
       id: 9001,
       component: () => import('/@/views/callback/list-generation/index.vue'),

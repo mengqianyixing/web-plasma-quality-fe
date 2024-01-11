@@ -11,7 +11,7 @@ const sampleManager: AppRouteModule = {
   meta: {
     orderNo: 30001,
     title: '样本管理',
-    icon: 'ant-design:close-outlined',
+    icon: 'ant-design:windows-outlined',
   },
   children: [
     {

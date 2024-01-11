@@ -17,7 +17,7 @@ const labelManager: AppRouteModule = {
   id: 94,
   meta: {
     title: '标签管理',
-    icon: 'ant-design:appstore-filled',
+    icon: 'ant-design:windows-outlined',
   },
   children: [
     {

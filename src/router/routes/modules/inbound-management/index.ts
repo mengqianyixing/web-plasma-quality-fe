@@ -18,7 +18,7 @@ const inboundmanagement: AppRouteModule = {
   meta: {
     orderNo: 10001,
     title: '入库管理',
-    icon: 'ant-design:api-filled',
+    icon: 'ant-design:windows-outlined',
   },
   children: [
     {
@@ -53,9 +53,9 @@ const inboundmanagement: AppRouteModule = {
       name: '样本验收',
       meta: {
         title: '样本验收',
-        id: 9304,
-        component: () => import('@/views/inbound-management/sample-verify/index.vue'),
       },
+      id: 9304,
+      component: () => import('@/views/inbound-management/sample-verify/index.vue'),
     },
   ],
 };
