@@ -197,7 +197,7 @@
   import { Form, FormItem, Input, Button, Row, Col, Table, Modal } from 'ant-design-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import dayjs from 'dayjs';
-  import batchModal from '../receive-plasma/components/batch-modal.vue';
+  import batchModal from './components/batch-modal.vue';
   import registerModal from '../receive-plasma/components/register-modal.vue';
   import batchDetail from './components/batch-detail.vue';
   import boxDetail from './components/box-detail.vue';

@@ -1,429 +1,341 @@
 <template>
-  <div class="main" v-loading="loadingRef">
-    <div class="search-bar" ref="searchBarRef">
-      <Form layout="inline" :model="filterForm" :labelCol="{ style: { width: '70px' } }">
-        <Row style="width: 100%">
-          <Col>
-            <!-- <FormItem label="复核人">
-              <Select
-                v-model:value="filterForm.checker"
-                allowClear
-                disabled
-                style="width: 180px"
-                placeholder="请点击登录"
+  <PageWrapper contentFullHeight fixedHeight>
+    <Description @register="register" :data="filterForm" />
+    <div class="flex gap-1 mt-1">
+      <vxe-grid
+        v-bind="gridOptionsUnaccept"
+        :data="unAcceptList"
+        class="w-2/5 inline-block pr-2"
+        :loading="tableLoading"
+      >
+        <template #toolbar>
+          <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
+            <span>未接收箱数：</span>
+            <span>{{ unAcceptList?.length }}</span>
+          </div>
+        </template>
+      </vxe-grid>
+      <vxe-grid
+        v-bind="gridOptionsAccept"
+        :data="acceptList"
+        :loading="tableLoading"
+        class="inline-block w-3/5"
+      >
+        <template #toolbar>
+          <div class="flex items-center justify-between bg-[#ffffff]">
+            <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
+              <span>已接收箱数：</span>
+              <span>{{ acceptList?.length }}</span>
+            </div>
+            <div>
+              <a-button @click="susModal">暂停接收</a-button>
+              <a-button @click="openDrawer(true, filterForm)" :disabled="!filterForm.batchNo"
+                >托盘入库</a-button
               >
-                <SelectOption v-for="item in checkerOpts" :key="item.value" :value="item.value">{{
-                  item.name
-                }}</SelectOption>
-              </Select>
-              <Button @click="showRegisterModal">登录</Button>
-            </FormItem> -->
-          </Col>
-          <Col>
-            <FormItem label="托盘编号">
-              <Input v-model:value="filterForm.trayNo" placeholder="请输入" />
-            </FormItem>
-          </Col>
-          <Col>
-            <FormItem label="箱号">
-              <Input
-                v-model:value="filterForm.boxNo"
-                :disabled="loadingRef"
-                placeholder="请扫描"
-                @keyup="keyupScan"
-              />
-            </FormItem>
-          </Col>
-          <Col>
-            <FormItem>
-              <Button @click="suspendModal">暂停接收</Button>
-            </FormItem>
-          </Col>
-          <Col>
-            <FormItem>
-              <Button @click="openDrawer(true, filterForm)" :disabled="!filterForm.batchNo"
-                >托盘入库</Button
-              >
-            </FormItem>
-          </Col>
-        </Row>
-        <Row style="width: 100%; margin-top: 16px">
-          <Col>
-            <FormItem label="血浆批号">
-              <Input
-                v-model:value="filterForm.batchNo"
-                disabled
-                style="width: 180px"
-                placeholder="请点击选择"
-              />
-              <Button @click="showBatchModal">选择</Button>
-            </FormItem>
-          </Col>
-          <Col>
-            <FormItem label="采浆公司">
-              <span>{{ filterForm.stationName }}</span>
-            </FormItem>
-          </Col>
-          <Col>
-            <FormItem label="出库单号">
-              <span>{{ filterForm.transNo }}</span>
-            </FormItem>
-          </Col>
-          <Col>
-            <FormItem label="血浆箱数">
-              <span>{{ filterForm.boxCount }}</span>
-            </FormItem>
-          </Col>
-          <Col>
-            <FormItem label="血浆数量">
-              <span>{{ filterForm.plasmaCount }}</span>
-            </FormItem>
-          </Col>
-        </Row>
-      </Form>
+            </div>
+          </div>
+        </template>
+      </vxe-grid>
     </div>
-    <div class="content-bar">
-      <Row>
-        <Col :span="9">
-          <Table
-            :columns="noReceiveColumns"
-            :data-source="unAcceptDetails"
-            bordered
-            :scroll="{ y: tableHeight }"
-            :pagination="false"
-          >
-            <template #title>未接收箱数：{{ filterForm.unAcceptCount }}</template>
-          </Table>
-        </Col>
-        <Col :span="14" :offset="1">
-          <Table
-            :columns="receivedColumns"
-            :data-source="acceptDetails"
-            bordered
-            :scroll="{ y: tableHeight }"
-            :pagination="false"
-          >
-            <template #title>已接收箱数：{{ filterForm.acceptCount }}</template>
-          </Table>
-        </Col>
-      </Row>
-    </div>
-    <batchModal
-      v-if="batchModalVisible"
-      ref="batchModalRef"
-      @close="closeBatch"
-      @confirm="confirmBatch"
-      @login-data="handleLogin"
-      mode="receive"
-    />
-    <registerModal v-if="registerModalVisible" @close="closeRegister" @login-data="handleLogin" />
+    <BatchModal @register="registerBoxModal" @success="batchModalSuccess" />
     <suspendOrResumeModal
-      v-if="suspendModalVisible"
-      :checkerOpts="checkerOpts"
-      :batchNo="filterForm.batchNo"
-      ref="suspendOrResumeRef"
+      @register="registerSusModal"
+      @success="batchModalSuccess"
       @clear-info="clearInfo"
-      @close="closeSuspend"
-      @go-register="registerModalVisible = true"
     />
     <InStoreDrawer @register="registerDrawer" />
-  </div>
+  </PageWrapper>
 </template>
-
-<script lang="ts" setup>
-  import { ref, createVNode, nextTick } from 'vue';
-  import dayjs from 'dayjs';
-  import {
-    Form,
-    FormItem,
-    Input,
-    Button,
-    // Select,
-    // SelectOption,
-    Row,
-    Col,
-    Table,
-    Modal,
-  } from 'ant-design-vue';
-  import batchModal from './components/batch-modal.vue';
-  import registerModal from './components/register-modal.vue';
-  import suspendOrResumeModal from './components/suspend-or-resume.vue';
-  import { useMessage } from '@/hooks/web/useMessage';
+<script setup lang="tsx">
+  import { ref, computed, reactive, createVNode } from 'vue';
+  import { debounce } from 'lodash-es';
   import { getAccepts, acceptPlasma } from '@/api/inbound-management/receive-plasma';
-  import InStoreDrawer from '../components/inStoreDrawer/index.vue';
+  import PageWrapper from '@/components/Page/src/PageWrapper.vue';
+  import Description from '@/components/Description/src/Description.vue';
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { VxeGridProps } from 'vxe-table';
+  import { DescItem, useDescription } from '@/components/Description';
+  import { useModal } from '@/components/Modal';
+  import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal-receive.vue';
+  import suspendOrResumeModal from './components/suspend-or-resume.vue';
+  import { Modal } from 'ant-design-vue';
   import { useDrawer } from '@/components/Drawer';
-
-  const [registerDrawer, { openDrawer }] = useDrawer();
+  import InStoreDrawer from '../components/inStoreDrawer/index.vue';
+  import dayjs from 'dayjs';
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
+  const [registerDrawer, { openDrawer }] = useDrawer();
 
-  const loadingRef = ref(false);
-  const searchBarRef = ref<any>('');
-  const suspendOrResumeRef = ref<any>('');
-  const tableHeight = ref(570); // 动态表格高度
-  const batchModalRef = ref<any>('');
+  const filterForm = ref<any>({}); // 本批数据
+  const trayNo = ref(''); // 托盘编号
+  const boxNo = ref(''); // 当前箱号
+  const batchNo = ref(''); // 当前批号
+  const tableLoading = ref(false);
 
-  interface FilterForm {
-    trayNo: string;
-    boxNo: string;
-    checker: string;
-    batchNo: string;
-    stationName: string;
-    transNo: string;
-    boxCount: number;
-    plasmaCount: number;
-    unAcceptCount: number;
-    acceptCount: number;
-  }
-  const initFilterForm = {
-    trayNo: '',
-    boxNo: '',
-    checker: '',
-    batchNo: '',
-    stationName: '',
-    transNo: '',
-    boxCount: 0, // 血浆箱数
-    plasmaCount: 0, // 血浆数量
-    unAcceptCount: 0, // 未接收箱数
-    acceptCount: 0, // 已接收箱数
-  };
-  // 表单数据1
-  const filterForm = ref<FilterForm>(initFilterForm);
-
-  const checkerOpts = [];
-
-  // 未接收数据
-  const noReceiveColumns = [
+  // 血浆批次信息
+  const schema: DescItem[] = [
     {
-      title: '序号',
-      dataIndex: 'index',
-      customRender: ({ index }) => {
-        return `${index + 1}`;
+      field: 'batchNo',
+      label: '血浆批号',
+      contentMinWidth: 100,
+      render() {
+        return (
+          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
+            <a-input placeholder="请选择" value={batchNo} disabled />
+            <a-button type="primary" onClick={selectBatchModal}>
+              选择
+            </a-button>
+          </div>
+        );
       },
     },
     {
-      title: '箱号',
-      dataIndex: 'boxNo',
+      field: 'trayNo',
+      label: '托盘编号',
+      contentMinWidth: 100,
+      render() {
+        return (
+          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
+            <a-input
+              placeholder="请输入"
+              onChange={(event) => (trayNo.value = event.target.value)}
+              value={trayNo}
+            />
+          </div>
+        );
+      },
     },
     {
-      title: '血浆数量',
-      dataIndex: 'plasmaCount',
-    },
-  ];
-  let unAcceptDetails = ref<any[]>([]);
-  // 已接收数据
-  const receivedColumns = [
-    {
-      title: '序号',
-      dataIndex: 'index',
-      customRender: ({ index }) => `${index + 1}`,
-    },
-    {
-      title: '托盘编号',
-      dataIndex: 'trayNo',
-    },
-    {
-      title: '箱号',
-      dataIndex: 'boxNo',
+      field: 'boxNo',
+      label: '箱号',
+      contentMinWidth: 100,
+      render() {
+        return (
+          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
+            <a-input
+              placeholder="请扫描"
+              value={boxNo}
+              disabled={tableLoading.value}
+              onChange={(event) => (boxNo.value = event.target.value)}
+              onPressEnter={debounce(handlePressEnter, 500)}
+            />
+          </div>
+        );
+      },
     },
     {
-      title: '血浆数量',
-      dataIndex: 'plasmaCount',
+      field: 'stationName',
+      label: '采浆公司',
     },
     {
-      title: '接收人',
-      dataIndex: 'operator',
+      field: 'transNo',
+      label: '出库单号',
+      render(text) {
+        return <span>{text}</span>;
+      },
     },
-    // {
-    //   title: '复核人',
-    //   dataIndex: 'checker',
-    // },
     {
-      title: '接收日期',
-      dataIndex: 'acceptAt',
-      customRender: ({ text }) => {
-        return dayjs(text).format('YYYY-MM-DD');
+      field: 'boxCount',
+      label: '血浆箱数',
+      render() {
+        return <span>{filterForm.value.acceptDetail?.boxCount}</span>;
+      },
+    },
+    {
+      field: 'plasmaCount',
+      label: '血浆数量',
+      render() {
+        return <span>{filterForm.value.acceptDetail?.plasmaCount}</span>;
       },
     },
   ];
-  let acceptDetails = ref<any[]>([]);
+  const [register] = useDescription({
+    bordered: false,
+    column: 4,
+    contentStyle: {
+      width: '80px',
+    },
+    title: '血浆接收信息',
+    schema: schema,
+  });
 
-  // 批号框
-  const batchModalVisible = ref(false);
-  const showBatchModal = () => {
-    batchModalVisible.value = true;
-    nextTick(() => {
-      batchModalRef.value.searchForm.acceptState = ['R', 'W']; // 接收状态
-      batchModalRef.value.queryTable();
-    });
-  };
-  const closeBatch = () => {
-    batchModalVisible.value = false;
-  };
-  // 确认选择批号
-  const confirmBatch = (val: any) => {
-    filterForm.value.batchNo = val;
-    batchModalVisible.value = false;
-    getPageData(filterForm.value.batchNo);
-  };
-
-  // 登录框
-  const registerModalVisible = ref(false);
-  // const showRegisterModal = () => {
-  //   registerModalVisible.value = true;
-  // };
-  const closeRegister = () => {
-    registerModalVisible.value = false;
-  };
-  const handleLogin = (res) => {
-    suspendOrResumeRef.value.searchForm.checker = res.username;
-  };
-
-  // 暂停继续框
-  const suspendModalVisible = ref(false);
-  const suspendModal = () => {
-    if (!filterForm.value.batchNo) {
-      warning('请先选择血浆批号!');
+  // 箱号扫描
+  async function handlePressEnter() {
+    if (!boxNo.value) {
+      warning('请扫描箱号!');
       return;
     }
-    suspendModalVisible.value = true;
-    nextTick(() => {
-      suspendOrResumeRef.value.searchForm.batchNo = filterForm.value.batchNo;
-      suspendOrResumeRef.value.getList();
-    });
-  };
-  const closeSuspend = () => {
-    suspendModalVisible.value = false;
-  };
-  const clearInfo = () => {
-    unAcceptDetails.value = [];
-    acceptDetails.value = [];
-  };
-
-  // 查询页面数据
-  const getPageData = async (batchNo) => {
-    loadingRef.value = true;
-    const data = await getAccepts(batchNo);
-    loadingRef.value = false;
-    filterForm.value.stationName = data.stationName;
-    filterForm.value.transNo = data.transNo;
-    filterForm.value.batchNo = data.batchNo;
-    filterForm.value.unAcceptCount = data.acceptDetail.unAcceptCount;
-    filterForm.value.acceptCount = data.acceptDetail.acceptCount;
-    filterForm.value.plasmaCount = data.acceptDetail.plasmaCount;
-    filterForm.value.boxCount = data.acceptDetail.boxCount;
-
-    unAcceptDetails.value = data.acceptDetail.unAcceptDetails;
-    acceptDetails.value = data.acceptDetail.acceptDetails;
-
-    // 设置表格高度
-    nextTick(() => {
-      const searchBarHeight = searchBarRef.value.clientHeight;
-      tableHeight.value = window.innerHeight - 80 - searchBarHeight - 195;
-    });
-  };
-
-  // 扫描箱号进行接收操作
-  const keyupScan = async (e) => {
-    // filterForm.value.boxNo = e.target.value.toUpperCase();
-    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-      if (!filterForm.value.boxNo) {
-        warning('请扫描箱号！');
-        return;
-      }
-      if (!filterForm.value.trayNo) {
-        warning('请输入托盘编号！');
-        return;
-      }
-      // if (!filterForm.value.checker) {
-      //   warning('请登录复核人！');
-      //   return;
-      // }
-      // if (!filterForm.value.batchNo) {
-      //   warning('请选择血浆批号！');
-      //   return;
-      // }
-      const params = {
-        ...filterForm.value,
-        batchNo: filterForm.value.batchNo,
-      };
-      try {
-        loadingRef.value = true;
-        const data = await acceptPlasma(params);
-        if (data) {
-          filterForm.value.stationName = data.stationName;
-          filterForm.value.transNo = data.transNo;
-          filterForm.value.batchNo = data.batchNo;
-          filterForm.value.unAcceptCount = data.acceptDetail.unAcceptCount;
-          filterForm.value.acceptCount = data.acceptDetail.acceptCount;
-          filterForm.value.plasmaCount = data.acceptDetail.plasmaCount;
-          filterForm.value.boxCount = data.acceptDetail.boxCount;
-
-          unAcceptDetails.value = data.acceptDetail.unAcceptDetails;
-          acceptDetails.value = data.acceptDetail.acceptDetails;
-          // 设置表格高度
-          nextTick(() => {
-            const searchBarHeight = searchBarRef.value.clientHeight;
-            tableHeight.value = window.innerHeight - 80 - searchBarHeight - 195;
-          });
-          success('接收成功');
-          if (data.acceptDetail.unAcceptCount <= 0) {
-            // 一批接收完毕 提示
-            showConfirmGoon();
-          }
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        loadingRef.value = false;
-        filterForm.value.boxNo = '';
-      }
+    if (!trayNo.value) {
+      warning('请输入托盘编号!');
+      return;
     }
-  };
+    const params = {
+      boxNo: boxNo.value,
+      trayNo: trayNo.value,
+      batchNo: batchNo.value,
+    };
+    try {
+      tableLoading.value = true;
+      const data = await acceptPlasma(params);
+      if (data) {
+        success('接收成功!');
+        filterForm.value = data;
 
-  const showConfirmGoon = () => {
+        if (data.acceptDetail?.unAcceptCount <= 0) {
+          // 一批接收完毕 提示
+          showConfirmGoon();
+        }
+      }
+    } finally {
+      tableLoading.value = false;
+      boxNo.value = '';
+    }
+  }
+
+  function showConfirmGoon() {
     Modal.confirm({
       title: '是否继续接收其他批次?',
       content: createVNode('div', { style: 'color:red;' }, '当前批已接收完成！'),
       onOk() {
         // 清空当前批次信息
-        filterForm.value.trayNo = '';
-        filterForm.value.batchNo = '';
-        filterForm.value.stationName = '';
-        filterForm.value.transNo = '';
-        filterForm.value.boxCount = 0;
-        filterForm.value.plasmaCount = 0;
-        filterForm.value.unAcceptCount = 0;
-        filterForm.value.acceptCount = 0;
-        unAcceptDetails.value = [];
-        acceptDetails.value = [];
+        filterForm.value = {};
+        trayNo.value = '';
+        boxNo.value = '';
+        batchNo.value = '';
         // 打开批号选择框
-        showBatchModal();
+        openBatchModal(true, {
+          fresh: true,
+        });
       },
       onCancel() {
         console.log('Cancel');
       },
       class: 'test',
     });
-  };
-</script>
-<style lang="less" scoped>
-  .main {
-    // height: 100%;
-    padding: 16px;
-
-    .search-bar {
-      margin-bottom: 16px;
-      padding: 16px;
-      border-radius: 2px;
-      background-color: @white;
-    }
-
-    .content-bar {
-      padding: 16px;
-      border-radius: 2px;
-      background-color: @white;
-    }
   }
-</style>
+
+  // 表格数据
+  const unAcceptList = computed(() => filterForm.value?.acceptDetail?.unAcceptDetails ?? []);
+  const acceptList = computed(() => filterForm.value?.acceptDetail?.acceptDetails ?? []);
+  const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
+    border: true,
+    height: '760px',
+    showOverflow: true,
+    exportConfig: {},
+    columnConfig: {
+      resizable: true,
+    },
+    scrollY: {
+      enabled: true,
+      gt: 0,
+    },
+    pagerConfig: {
+      enabled: false,
+    },
+    formConfig: {
+      enabled: false,
+    },
+    toolbarConfig: {
+      refresh: false,
+      loading: false,
+      export: false,
+      custom: false,
+    },
+    columns: [
+      {
+        field: 'index',
+        title: '序号',
+        type: 'seq',
+      },
+      {
+        field: 'boxNo',
+        title: '箱号',
+      },
+      {
+        field: 'plasmaCount',
+        title: '血浆数量',
+      },
+    ],
+    showFooter: false,
+  });
+  const gridOptionsAccept = reactive<VxeGridProps<any>>({
+    border: true,
+    height: '760px',
+    showOverflow: true,
+    columnConfig: {
+      resizable: true,
+    },
+    scrollY: {
+      enabled: true,
+      gt: 0,
+    },
+    pagerConfig: {
+      enabled: false,
+    },
+    formConfig: {
+      enabled: false,
+    },
+    toolbarConfig: {
+      refresh: false,
+      loading: false,
+      export: false,
+      custom: false,
+    },
+    columns: [
+      {
+        field: 'index',
+        title: '序号',
+        type: 'seq',
+      },
+      {
+        field: 'trayNo',
+        title: '托盘编号',
+      },
+      {
+        title: '箱号',
+        field: 'boxNo',
+      },
+      {
+        title: '血浆数量',
+        field: 'plasmaCount',
+      },
+      {
+        title: '接收人',
+        field: 'operator',
+      },
+      {
+        title: '接收日期',
+        field: 'acceptAt',
+        width: 200,
+        formatter(params) {
+          return params.cellValue ? dayjs(params.cellValue).format('YYYY-MM-DD') : '-';
+        },
+      },
+    ],
+    showFooter: false,
+  });
+
+  const [registerBoxModal, { openModal: openBatchModal }] = useModal();
+  const [registerSusModal, { openModal: openSusModal }] = useModal();
+
+  function selectBatchModal() {
+    openBatchModal(true, {});
+  }
+
+  // 打开暂停记录框
+  function susModal() {
+    openSusModal(true, {
+      batchNo: batchNo.value,
+    });
+  }
+  function clearInfo() {
+    filterForm.value.acceptDetail.unAcceptDetails = [];
+    filterForm.value.acceptDetail.acceptDetails = [];
+  }
+  // 批号框确认
+  async function batchModalSuccess(data) {
+    batchNo.value = data;
+    filterForm.value = await getAccepts(data);
+  }
+</script>

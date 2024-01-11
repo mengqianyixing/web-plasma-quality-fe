@@ -246,11 +246,12 @@
   const getList = async () => {
     try {
       loading.value = true;
-      const data = await plasmaPauseBoxList(
-        searchForm.value.batchNo || null,
-        searchForm.value.pattern,
-        'VER',
-      );
+      const params = {
+        batchNo: searchForm.value.batchNo || null,
+        pattern: searchForm.value.pattern,
+        pauseType: 'VER',
+      };
+      const data = await plasmaPauseBoxList(params);
       if (data) {
         tableData.value = data;
         addCols();
