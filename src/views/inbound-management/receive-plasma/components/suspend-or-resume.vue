@@ -3,7 +3,6 @@
     v-bind="$attrs"
     @register="registerModal"
     title="接收暂停记录"
-    @ok="closeModalThis"
     @cancel="closeModalThis"
     :maskClosable="false"
     width="85%"
@@ -43,7 +42,11 @@
   const emit = defineEmits(['clearInfo']);
   const userInfo = useUserStore();
 
-  const [registerModal, { closeModal }] = useModalInner((data) => {
+  const [registerModal, { closeModal, setModalProps }] = useModalInner((data) => {
+    setModalProps({
+      showCancelBtn: false,
+      showOkBtn: false,
+    });
     setFieldsValue({
       batchNo: data.batchNo,
     });
