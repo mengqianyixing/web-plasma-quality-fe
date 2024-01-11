@@ -5,24 +5,22 @@
         <a-button type="primary" @click="handleAdd"> 新增 </a-button>
         <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
         <a-button type="primary" @click="handleDelete"> 撤销 </a-button>
-        <a-button type="primary" @click="handleLabelPrint"> 标签打印 </a-button>
       </template>
     </BasicTable>
 
-    <BoxModal @register="registerBoxModal" @success="handleSuccess" />
+    <EditParamsModal @register="registerParamsModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
-  import { columns, searchFormSchema } from './boxes.data';
+  import { columns, searchFormSchema } from './params.data';
   import { useModal } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
 
   import { ref } from 'vue';
   import { PageWrapper } from '@/components/Page';
-  import BoxModal from '@/views/nonconformity/boxes/BoxModal.vue';
-  import { deleteBox, nonconformityBoxList } from '@/api/nonconformity/box-manage';
-  import { getPrintRecord } from '@/api/tag/printRecord';
+  import EditParamsModal from '@/views/system/params/EditParamsModal.vue';
+  import { deleteSysParams, getSysParamsList } from '@/api/systemServer/params';
 
   const { createMessage, createConfirm } = useMessage();
 
@@ -30,8 +28,8 @@
 
   const selectedRowsRef = ref<Recordable>([]);
   const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
-    title: '不合格库房管理列表',
-    api: nonconformityBoxList,
+    title: '系统参数列表',
+    api: getSysParamsList,
     columns,
     formConfig: {
       labelWidth: 120,
@@ -64,10 +62,10 @@
     canResize: true,
   });
 
-  const [registerBoxModal, { openModal: openBoxModal }] = useModal();
+  const [registerParamsModal, { openModal: openParamsModal }] = useModal();
 
   function handleAdd() {
-    openBoxModal(true, {
+    openParamsModal(true, {
       isUpdate: false,
     });
   }
@@ -78,7 +76,7 @@
       return;
     }
 
-    openBoxModal(true, {
+    openParamsModal(true, {
       isUpdate: true,
       record: selectedRowsRef.value[0],
     });
@@ -92,22 +90,13 @@
 
     createConfirm({
       title: '撤销',
-      content: '确认撤销该箱号？',
+      content: '确认撤销该系统参数？',
       iconType: 'warning',
       onOk: async () => {
-        await deleteBox(selectedRowsRef.value[0].boxNo);
-
+        await deleteSysParams(selectedRowsRef.value[0].id);
         handleSuccess();
       },
     });
-  }
-
-  async function handleLabelPrint() {
-    const res = await getPrintRecord({
-      labelType: 'PLAIN_BOX',
-      bissNo: selectedRowsRef.value[0].boxNo,
-    });
-    console.log(res);
   }
 
   function handleSuccess() {

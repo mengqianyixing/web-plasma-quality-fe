@@ -99,6 +99,7 @@ export const itemColumns: BasicColumn[] = [
   {
     title: '字典项名称',
     dataIndex: 'itemKey',
+    width: 300,
   },
   {
     title: '字典项值',
@@ -127,6 +128,7 @@ export const itemColumns: BasicColumn[] = [
   {
     title: '创建时间',
     dataIndex: 'createAt',
+    width: 200,
   },
 ];
 export const itemSearchFormSchema: FormSchema[] = [

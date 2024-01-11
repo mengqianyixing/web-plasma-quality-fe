@@ -1,6 +1,9 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
+      <template #unqReason="{ record }">
+        {{ formatUnqReason(record?.unqReason) }}
+      </template>
       <template #bagNo="{ record }">
         <span
           class="text-blue-500 underline cursor-pointer"
@@ -61,7 +64,6 @@
     plasmaUnqualifiedDictionary.value = dictionaryArr.find(
       (it) => it.dictNo === DictionaryEnum.PlasmaUnqualifiedReason,
     )?.dictImtes;
-    console.log(plasmaUnqualifiedDictionary.value, 'value');
 
     await getForm().updateSchema({
       field: 'unqReason',
@@ -158,9 +160,16 @@
     return stationNames.value.find((it) => it.stationNo === stationNo)?.stationName;
   }
 
+  function formatUnqReason(unqReason: string) {
+    return plasmaUnqualifiedDictionary.value?.find((it) => it.value === unqReason)?.label;
+  }
+
   function handleBagNoClick(record: Recordable) {
     openDetailModal(true, {
-      record: record?.bagNo,
+      record: {
+        bagNo: record?.bagNo,
+        plasmaUnqualifiedDictionary: plasmaUnqualifiedDictionary.value,
+      },
     });
   }
 </script>
