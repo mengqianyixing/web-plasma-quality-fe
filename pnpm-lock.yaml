@@ -65,6 +65,9 @@ importers:
       exceljs:
         specifier: ^4.3.0
         version: 4.4.0
+      js-xxx:
+        specifier: ^2.1.0
+        version: 2.1.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -8469,6 +8472,12 @@ packages:
   /js-tokens@8.0.2:
     resolution: {integrity: sha512-Olnt+V7xYdvGze9YTbGFZIfQXuGV4R3nQwwl8BrtgaPE/wq8UFpUHWuTNc05saowhSr1ZO6tx+V6RjE9D5YQog==}
     dev: true
+
+  /js-xxx@2.1.0:
+    resolution: {integrity: sha512-ohQFtOoeCfw8ymoo19lDaqKRKObEADk4CY/JKqDbn4GpbbbrnOAcKxJdfGwyRfu5hOSdwlJbJIdi50q+XduTWA==}
+    dependencies:
+      crypto-js: 4.2.0
+    dev: false
 
   /js-yaml@3.14.1:
     resolution: {integrity: sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==}
