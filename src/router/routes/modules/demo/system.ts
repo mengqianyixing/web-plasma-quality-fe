@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-03 10:44:40
+ * @LastEditTime: 2024-01-11 09:18:48
  * @Description: 系统管理
  * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
  */
@@ -103,6 +103,15 @@ const system: AppRouteModule = {
         ignoreKeepAlive: true,
       },
       component: () => import('@/views/auth/menus/index.vue'),
+    },
+    {
+      path: 'params',
+      name: 'Params',
+      id: 9208,
+      meta: {
+        title: '系统参数',
+      },
+      component: () => import('@/views/system/params/index.vue'),
     },
     // {
     //   path: 'changePassword',
