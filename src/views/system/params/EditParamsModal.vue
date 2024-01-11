@@ -26,62 +26,27 @@
   const emit = defineEmits(['success']);
 
   const isUpdate = ref(false);
+  const paramsId = ref('');
   const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
     setModalProps({
       maskClosable: false,
     });
 
     isUpdate.value = !!data?.isUpdate;
-    updateSchema([
-      {
-        field: 'unqReason',
-        componentProps: {
-          disabled: isUpdate.value,
-        },
+    updateSchema({
+      field: 'paramKey',
+      componentProps: {
+        disabled: unref(isUpdate),
       },
-      {
-        field: 'houseNo',
-        componentProps: {
-          disabled: isUpdate.value,
-        },
-      },
-    ]);
+    });
 
     if (unref(isUpdate)) {
-      appendSchemaByField(
-        {
-          label: '箱号',
-          field: 'boxNo',
-          component: 'Input',
-          colProps: { span: 20 },
-          componentProps: {
-            disabled: true,
-          },
-          required: true,
-        },
-        void 0,
-        true,
-      );
-
-      setFieldsValue({
-        ...data.record,
-      });
-    } else {
-      removeSchemaByField('boxNo');
+      paramsId.value = data.record.id;
+      setFieldsValue(data.record);
     }
   });
 
-  const [
-    registerForm,
-    {
-      setFieldsValue,
-      updateSchema,
-      appendSchemaByField,
-      validate,
-      resetFields,
-      removeSchemaByField,
-    },
-  ] = useForm({
+  const [registerForm, { validate, resetFields, setFieldsValue, updateSchema }] = useForm({
     labelWidth: 120,
     baseColProps: { span: 24 },
     schemas: [
@@ -110,8 +75,10 @@
         label: '备注',
         field: 'remark',
         component: 'InputTextArea',
+        componentProps: {
+          rows: 4,
+        },
         colProps: { span: 20 },
-        required: true,
       },
       {
         label: '状态',
@@ -137,7 +104,10 @@
       if (!unref(isUpdate)) {
         await addSysParams(values);
       } else {
-        await editSysParams(values);
+        await editSysParams({
+          ...values,
+          id: paramsId.value,
+        });
       }
 
       await resetFields();
