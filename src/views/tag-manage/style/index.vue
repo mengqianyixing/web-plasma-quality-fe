@@ -6,24 +6,24 @@
       </template>
       <template #toolbar>
         <div class="flex gap-2">
+          <a-button type="primary" @click="handleAdd"> 新增 </a-button>
+          <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
+          <a-button type="primary" @click="handleDelete"> 撤销 </a-button>
+          <a-button type="primary" @click="handleCopy"> 复制 </a-button>
+          <a-button type="primary" @click="handleHistory"> 历史 </a-button>
+          <a-button type="primary" @click="handleStylePreview"> 预览 </a-button>
           <a-button type="primary" @click="handleCheckStatus(tagStatusValueEnum.EAB)">
             启用
           </a-button>
           <a-button type="primary" @click="handleCheckStatus(tagStatusValueEnum.DSB)">
             禁用
           </a-button>
-          <a-button type="primary" @click="handleAdd"> 新增 </a-button>
-          <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
-          <a-button type="primary" @click="handleDelete"> 删除 </a-button>
-          <a-button type="primary" @click="handleCopy"> 复制 </a-button>
-          <a-button type="primary" @click="handleHistory"> 历史 </a-button>
-          <a-button type="primary" @click="handleStylePreview"> 预览 </a-button>
         </div>
       </template>
     </BasicTable>
     <HistoryStylePreviewModal @register="registerPreviewModal" />
-    <StyleDrawer @register="registerStyleDrawer" @success="handleSuccess" />
-    <StyleHistoryDrawer @register="registerStyleHistoryDrawer" @success="handleSuccess" />
+    <StyleModal @register="registerStyleModal" @success="handleSuccess" />
+    <StyleHistoryModal @register="registerStyleHistoryModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -42,10 +42,9 @@
     disableStyle,
     enableStyle,
   } from '@/api/tag/manage';
-  import { useDrawer } from '@/components/Drawer';
 
-  import StyleDrawer from './StyleDrawer.vue';
-  import StyleHistoryDrawer from './StyleHistoryDrawer.vue';
+  import StyleModal from './StyleModal.vue';
+  import StyleHistoryModal from './StyleHistoryModal.vue';
   import HistoryStylePreviewModal from './HistoryStylePreviewModal.vue';
   import { message, Modal } from 'ant-design-vue';
 
@@ -76,8 +75,8 @@
     });
   });
 
-  const [registerStyleDrawer, { openDrawer: openStyleDrawer }] = useDrawer();
-  const [registerStyleHistoryDrawer, { openDrawer: openStyleHistoryDrawer }] = useDrawer();
+  const [registerStyleModal, { openModal: openStyleModal }] = useModal();
+  const [registerStyleHistoryModal, { openModal: openStyleHistoryModal }] = useModal();
 
   const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, getForm }] = useTable({
@@ -111,7 +110,7 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    canResize: true,
   });
 
   function getSelections(onlyOne: boolean) {
@@ -161,7 +160,7 @@
   }
 
   function handleAdd(record: Recordable) {
-    openStyleDrawer(true, {
+    openStyleModal(true, {
       record,
       isUpdate: false,
     });
@@ -173,7 +172,7 @@
     const action = stateAction(row);
     if (action) return;
 
-    openStyleDrawer(true, {
+    openStyleModal(true, {
       record: selectedRow.value[0],
       isUpdate: true,
     });
@@ -183,7 +182,7 @@
     const [row] = getSelections(true);
     if (!row) return;
 
-    openStyleHistoryDrawer(true, {
+    openStyleHistoryModal(true, {
       record: selectedRow.value[0],
       labelTypeOptions: labelTypeDictionary.value,
     });
@@ -207,7 +206,7 @@
 
     const { tagName } = row;
     Modal.confirm({
-      content: '确认删除' + tagName + '?',
+      content: '确认撤销' + tagName + '?',
       onOk: async () => {
         await deleteStyle(row.tagNo);
         clearSelectedRowKeys();

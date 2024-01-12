@@ -1,32 +1,54 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2024-01-03 22:22:57
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-12 17:38:11
+-->
 <template>
-  <BasicDrawer v-bind="$attrs" @register="registerDrawer" title="详情" width="1000px">
-    <div class="flex">
-      <div class="w-280px">
-        <BasicTable @register="registerCheckboxTable" @selection-change="selectionChange" />
-      </div>
-      <div class="w-700px">
-        <BasicTable @register="registerTable" />
+  <BasicModal
+    v-bind="$attrs"
+    @register="registerModal"
+    title="详情"
+    width="1000px"
+    :minHeight="520"
+    @fullscreen="
+      redoHeight();
+      redoHeight2();
+    "
+  >
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute flex w-full h-full">
+        <div class="w-280px">
+          <BasicTable @register="registerCheckboxTable" @selection-change="selectionChange" />
+        </div>
+        <div style="width: calc(100% - 280px)">
+          <BasicTable @register="registerTable" />
+        </div>
       </div>
     </div>
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { dtDrwaerColumns, dtCheckboxDrwaerColumns } from './titer.data';
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { getTiterDtCountList, getTiterDtList } from '@/api/inspect/titerImport';
   import { reactive } from 'vue';
 
-  defineOptions({ name: 'DtDrawer' });
+  defineOptions({ name: 'DtModal' });
 
   const state = reactive({
     bsNo: '',
     titerType: '',
     type: '',
   });
-  const [registerTable, { reload, setPagination, setTableData }] = useTable({
+  const [registerTable, { reload, setPagination, setTableData, redoHeight }] = useTable({
     immediate: false,
     api: getTiterDtList,
+    isCanResizeParent: true,
+    inset: true,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -40,9 +62,14 @@
     bordered: true,
     beforeFetch: (p) => ({ ...p, batchNo: state.bsNo, titerType: state.titerType }),
   });
-  const [registerCheckboxTable, { reload: reloadCheck, clearSelectedRowKeys }] = useTable({
+  const [
+    registerCheckboxTable,
+    { reload: reloadCheck, clearSelectedRowKeys, redoHeight: redoHeight2 },
+  ] = useTable({
     immediate: false,
     api: getTiterDtCountList,
+    isCanResizeParent: true,
+    inset: true,
     pagination: false,
     columns: dtCheckboxDrwaerColumns,
     size: 'small',
@@ -59,7 +86,7 @@
 
     reload();
   }
-  const [registerDrawer] = useDrawerInner(({ sampleBatchNo, type }) => {
+  const [registerModal] = useModalInner(({ sampleBatchNo, type }) => {
     state.bsNo = sampleBatchNo;
     state.type = type;
     setPagination({ total: 0 });

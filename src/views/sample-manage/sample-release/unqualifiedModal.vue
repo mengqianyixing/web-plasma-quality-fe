@@ -1,6 +1,15 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="register" title="明细" showFooter width="85%">
+  <BasicModal
+    v-bind="$attrs"
+    @register="register"
+    title="不合格样本数量列表"
+    showFooter
+    width="85%"
+  >
     <BasicTable @register="registerTable" ref="table" />
+    <template #footer>
+      <a-button @click="closeModal">关闭</a-button>
+    </template>
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -13,7 +22,7 @@
 
   const batchSampleNo = ref('');
   const [registerTable, { reload }] = useTable({
-    title: '不合格数量列表',
+    title: '',
     api: getSampleUnqualifiedList,
     columns: unqualifiedColumns,
     fetchSetting: {
@@ -43,9 +52,10 @@
       width: 80,
     },
     immediate: false,
+    canResize: false,
   });
 
-  const [register, { setModalProps }] = useModalInner((data) => {
+  const [register, { setModalProps, closeModal }] = useModalInner((data) => {
     setModalProps({
       maskClosable: false,
     });

@@ -4,6 +4,7 @@
     @register="registerModal"
     :title="getTitle"
     @ok="handleSubmit"
+    @close="resetFields"
     width="700px"
   >
     <BasicForm @register="registerForm" />

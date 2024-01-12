@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 09:52:52
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-09 17:10:18
+ * @LastEditTime: 2024-01-12 16:05:31
 -->
 <template>
   <div class="h-full">
@@ -12,8 +12,8 @@
       <BasicForm @register="registerForm" @submit="inStoreConfim" />
     </div>
     <BasicTable @register="registerTable" />
-    <TrayModel @register="registerTrayDrawer" @confim="trayConfim" />
-    <LocationDrawer @register="registerLocationDrawer" @confim="locationConfim" />
+    <TrayModel @register="registerTrayModal" @confim="trayConfim" />
+    <LocationModal @register="registerLocationModal" @confim="locationConfim" />
   </div>
 </template>
 <script setup lang="ts">
@@ -27,12 +27,12 @@
     areaSchema,
   } from './relocation.data';
   import TrayModel from './component/trayModal.vue';
-  import { useDrawer } from '@/components/Drawer';
+  import { useModal } from '@/components/Modal';
   import { settingListApi, areaListApi } from '@/api/plasmaStore/setting';
   import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
   import { reactive, nextTick } from 'vue';
   import { submitRelocationApi, taryHouseApi } from '@/api/tray/relocation';
-  import LocationDrawer from '@/components/BusinessDrawer/locationDrawer/index.vue';
+  import LocationModal from '@/components/BusinessDrawer/locationDrawer/index.vue';
   import { getHouseSiteApi } from '@/api/plasmaStore/site';
 
   const houseAreaMap: Map<string, Recordable<any>> = new Map();
@@ -40,8 +40,8 @@
     houseList: Recordable[];
   }>({ houseList: [] });
 
-  const [registerTrayDrawer, { openDrawer: openTrayDrawer }] = useDrawer();
-  const [registerLocationDrawer, { openDrawer: openLocationDrawer }] = useDrawer();
+  const [registerTrayModal, { openModal: openTrayModal }] = useModal();
+  const [registerLocationModal, { openModal: openLocationModal }] = useModal();
 
   const [
     registerForm,
@@ -87,23 +87,24 @@
   async function handleLoacationSelect(value: string, event: MouseEvent) {
     if (value && event.type !== 'click') return;
     const { houseNo } = getFieldsValue();
-    openLocationDrawer(true, { params: { houseNo, locationStatus: 'IDLE' } });
+    openLocationModal(true, { params: { houseNo, locationStatus: 'IDLE' } });
   }
   function locationConfim([{ locationNo }]) {
     setFieldsValue({ [locationSchema.field]: locationNo });
-    openLocationDrawer(false);
+    openLocationModal(false);
   }
   async function handleTraySelect(value: string, event: MouseEvent) {
+    openTrayModal(true, { params: { closed: 0 } });
     if (value && event.type !== 'click') {
       searchTrayInfo(value);
     } else {
-      openTrayDrawer(true, { params: { closed: 0 } });
+      openTrayModal(true, { params: { closed: 0 } });
     }
   }
   function trayConfim([{ trayNo }]) {
     setFieldsValue({ trayNo });
     searchTrayInfo(trayNo);
-    openTrayDrawer(false);
+    openTrayModal(false);
   }
   async function searchTrayInfo(trayNo: string) {
     const values = getFieldsValue();

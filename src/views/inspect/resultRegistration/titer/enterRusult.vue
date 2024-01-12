@@ -4,33 +4,37 @@
  * @Author: zcc
  * @Date: 2023-12-29 15:36:12
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-04 14:08:20
+ * @LastEditTime: 2024-01-12 18:06:12
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     :title="projectName + '录入效价结果'"
     width="800px"
     okText="提交&关闭"
     cancelText="关闭"
+    :minHeight="520"
     @close="close"
+    @fullscreen="redoHeight"
     @ok="handleSubmit(true)"
   >
     <template #appendFooter>
       <a-button type="primary" @click="handleSubmit(false)" :loading="loading">提交&继续</a-button>
     </template>
-    <div class="flex flex-col h-full">
-      <BasicForm @register="registerForm" />
-      <div class="flex-1">
-        <BasicTable @register="registerTable" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <BasicForm @register="registerForm" />
+        <div class="flex-1 shrink-1" style="height: calc(100% - 56px)">
+          <BasicTable @register="registerTable" />
+        </div>
       </div>
     </div>
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { enterColumns, enterFormSchema } from './data';
   import { BasicTable, useTable } from '@/components/Table';
@@ -54,7 +58,10 @@
     schemas: enterFormSchema,
     showActionButtonGroup: false,
   });
-  const [registerTable, { clearSelectedRowKeys, getSelectRows, reload, setPagination }] = useTable({
+  const [
+    registerTable,
+    { clearSelectedRowKeys, getSelectRows, reload, setPagination, redoHeight },
+  ] = useTable({
     immediate: true,
     api: getCheckItemDtListApi,
     fetchSetting: {
@@ -77,7 +84,7 @@
       return res;
     },
   });
-  const [registerDrawer, { setDrawerProps }] = useDrawerInner(
+  const [registerModal, { setModalProps }] = useModalInner(
     async ({ bsNo, projectId, plasmaType, projectAbbr }) => {
       bsno.value = bsNo;
       pid.value = projectId;
@@ -126,7 +133,7 @@
         sampleNo: _.sampleNo,
         projectId: pid.value,
       }));
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       loading.value = true;
       await submitTiterCheckApi(data);
       message.success('录入成功');
@@ -136,7 +143,7 @@
         emit('confirm');
       }
     } finally {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
       loading.value = false;
     }
   }

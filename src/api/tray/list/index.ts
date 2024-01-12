@@ -2,17 +2,9 @@
  * @Descripttion:
  * @version:
  * @Author: zcc
- * @Date: 2023-12-22 13:46:35
+ * @Date: 2023-12-23 20:54:41
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-23 16:58:51
- */
-/*
- * @Descripttion:
- * @version:
- * @Author: zcc
- * @Date: 2023-12-22 13:46:35
- * @LastEditors: zcc
- * @LastEditTime: 2023-12-22 13:59:39
+ * @LastEditTime: 2024-01-09 19:23:43
  */
 import { defHttp } from '@/utils/http/axios';
 import {

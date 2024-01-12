@@ -2,13 +2,7 @@
   <div class="h-full">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button
-          type="primary"
-          @click="handleImport"
-          size="small"
-          :disabled="!props.bsNo"
-          v-if="false"
-        >
+        <a-button type="primary" @click="handleImport" size="small" :disabled="!props.bsNo">
           效价导入
         </a-button>
         <a-button type="primary" @click="handleEnter" size="small" :disabled="!props.bsNo">
@@ -27,21 +21,21 @@
         {{ methodMap.get(record.methodAbbr) }}
       </template>
     </BasicTable>
-    <DtDrawer @register="registerDtDrawer" />
+    <DtModal @register="registerDtModal" />
     <NotCheck
-      @register="registerNotCheckDrawer"
+      @register="registerNotCheckModal"
       @close="reload"
       @confirm="
-        openNotCheckDrawer(false);
+        openNotCheckModal(false);
         reload();
       "
     />
-    <ImportDrawer @register="registerImportDrawer" @close="reload" />
+    <ImportModal @register="registerImportModal" @close="reload" />
     <EnterRusult
-      @register="registerEnterDrawer"
+      @register="registerEnterModal"
       @close="reload"
       @confirm="
-        openEnterDrawer(false);
+        openEnterModal(false);
         reload();
       "
     />
@@ -50,11 +44,11 @@
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { columns } from './data';
-  import DtDrawer from './dtDrawer.vue';
+  import DtModal from './dtDrawer.vue';
   import NotCheck from './notCheck.vue';
   import EnterRusult from './enterRusult.vue';
-  import ImportDrawer from './importDrawer.vue';
-  import { useDrawer } from '@/components/Drawer';
+  import ImportModal from './importDrawer.vue';
+  import { useModal } from '@/components/Modal';
   import { getTiterListApi } from '@/api/inspect/resultRegistration';
   import { watch, nextTick, onMounted, ref } from 'vue';
   import { message } from 'ant-design-vue';
@@ -77,10 +71,10 @@
       immediate: true,
     },
   );
-  const [registerDtDrawer, { openDrawer: openDtDrawer }] = useDrawer();
-  const [registerNotCheckDrawer, { openDrawer: openNotCheckDrawer }] = useDrawer();
-  const [registerEnterDrawer, { openDrawer: openEnterDrawer }] = useDrawer();
-  const [registerImportDrawer, { openDrawer: openImportDrawer }] = useDrawer();
+  const [registerDtModal, { openModal: openDtModal }] = useModal();
+  const [registerNotCheckModal, { openModal: openNotCheckModal }] = useModal();
+  const [registerEnterModal, { openModal: openEnterModal }] = useModal();
+  const [registerImportModal, { openModal: openImportModal }] = useModal();
 
   const [registerTable, { reload, getSelectRows }] = useTable({
     title: '',
@@ -106,23 +100,23 @@
     },
   });
   function handleDt(record: Recordable) {
-    openDtDrawer(true, { ...record, bsNo: props.bsNo });
+    openDtModal(true, { ...record, bsNo: props.bsNo });
   }
   function handleImport() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     if (rows.length > 1) return message.warning('只能选择一条数据');
-    openImportDrawer(true, { ...rows[0], bsNo: props.bsNo });
+    openImportModal(true, { ...rows[0], bsNo: props.bsNo });
   }
   function handleNotCheck() {
     const projectIds = getSelectRows().map((_) => _.projectId);
-    openNotCheckDrawer(true, { projectIds, bsNo: props.bsNo, options: options.value });
+    openNotCheckModal(true, { projectIds, bsNo: props.bsNo, options: options.value });
   }
   function handleEnter() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     if (rows.length > 1) return message.warning('只能选择一条数据');
-    openEnterDrawer(true, { ...rows[0], bsNo: props.bsNo });
+    openEnterModal(true, { ...rows[0], bsNo: props.bsNo });
   }
   onMounted(async () => {
     emit('reload', reload, '2');

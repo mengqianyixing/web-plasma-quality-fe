@@ -2,7 +2,7 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="openDrawer(true, {})">新增</a-button>
+        <a-button type="primary" @click="openModal(true, {})">新增</a-button>
         <a-button type="primary" @click="handleEdit">编辑</a-button>
         <a-button type="primary" @click="handleRemove">删除</a-button>
         <a-button type="primary" @click="handleProcess">审核</a-button>
@@ -31,16 +31,16 @@
         <BasicForm @register="registerForm" />
       </div>
     </Modal>
-    <FormDrawer @register="registerDrawer" @close="reload" />
-    <OutDrawer @register="registerOutDrawer" />
+    <FormModal @register="registerModal" @close="reload" />
+    <OutModal @register="registerOutModal" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { useDrawer } from '@/components/Drawer';
-  import FormDrawer from './formDrawer.vue';
-  import OutDrawer from './outDrawer.vue';
+  import { useModal } from '@/components/Modal';
+  import FormModal from './formDrawer.vue';
+  import OutModal from './outDrawer.vue';
   import { columns, searchFormschema, PROCESS_STATE_TEXT } from './plasmaOut.data';
   import {
     getListApi,
@@ -58,8 +58,8 @@
 
   let api = removeFormApi;
 
-  const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerOutDrawer, { openDrawer: openOutDrawer }] = useDrawer();
+  const [registerModal, { openModal }] = useModal();
+  const [registerOutModal, { openModal: openOutModal }] = useModal();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,
     fetchSetting: {
@@ -118,10 +118,10 @@
     const [row] = getSelections(true);
     if (!row) return;
     if (row.state !== PROCESS_STATE_TEXT.AUT) return message.warning('已审核的数据不可修改');
-    openDrawer(true, { ...row });
+    openModal(true, { ...row });
   }
   function handleDt(record: Recordable) {
-    openDrawer(true, { ...record, disabled: true });
+    openModal(true, { ...record, disabled: true });
   }
   function handleRemove() {
     const [row] = getSelections(true);
@@ -172,7 +172,7 @@
     const [row] = getSelections(true);
     if (!row) return;
 
-    openOutDrawer(true, row);
+    openOutModal(true, row);
   }
   function handlePrint() {
     const [row] = getSelections(true);

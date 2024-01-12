@@ -4,6 +4,7 @@
     @register="registerModal"
     :title="getTitle"
     @ok="handleSubmit"
+    @cancel="handleClose"
     width="500px"
   >
     <BasicForm @register="registerForm" />
@@ -21,22 +22,24 @@
   const emit = defineEmits(['success', 'register']);
   const isUpdate = ref(false);
 
-  const [registerForm, { resetFields, validate, setFieldsValue }] = useForm({
+  const [registerForm, { resetFields, updateSchema, validate, setFieldsValue }] = useForm({
     labelWidth: 170,
     baseColProps: { span: 48 },
     schemas: editStyleFormSchema,
     showActionButtonGroup: false,
   });
 
-  const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
+  const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
     resetFields();
     setModalProps({ confirmLoading: false });
 
     isUpdate.value = !!data.isUpdate;
 
-    setFieldsValue({
-      ...data.record,
-    });
+    if (unref(isUpdate)) {
+      setFieldsValue({
+        ...data.record,
+      });
+    }
   });
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑样式' : '新增样式'));
@@ -55,5 +58,18 @@
     } finally {
       setModalProps({ confirmLoading: false });
     }
+  }
+
+  function handleClose() {
+    updateSchema([
+      { field: 'TextFormat.FontName', show: false },
+      { field: 'TextFormat.FontSize', show: false },
+      { field: 'TextFormat.Bold', show: false },
+      { field: 'TextFormat.Italic', show: false },
+      { field: 'TextFormat.Underline', show: false },
+      { field: 'TextFormat.LineWrap', show: false },
+      { field: 'TextFormat.Revert', show: false },
+      { field: 'TextFormat.Middle', show: false },
+    ]);
   }
 </script>

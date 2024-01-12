@@ -4,13 +4,13 @@
  * @Author: zcc
  * @Date: 2023-12-26 15:27:18
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-04 19:20:01
+ * @LastEditTime: 2024-01-11 14:45:59
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="openImportDrawer(true, {})">新增</a-button>
+        <a-button type="primary" @click="openImportModal(true, {})">新增</a-button>
         <a-button type="primary" @click="handleRemove">删除</a-button>
       </template>
       <template #sampleBatchNo="{ record }: { record: Recordable }">
@@ -22,26 +22,26 @@
         {{ stationMap.get(record.stationNo) }}
       </template>
     </BasicTable>
-    <DtDrawer @register="registerDtDrawer" />
-    <ImportDrawer @register="registerImportDrawer" @close="success" />
+    <DtModal @register="registerDtModal" />
+    <ImportModal @register="registerImportModal" @close="success" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { useDrawer } from '@/components/Drawer';
+  import { useModal } from '@/components/Modal';
   import { columns, searchFormschema } from './titer.data';
   import { message, Modal } from 'ant-design-vue';
-  import DtDrawer from './dtDrawer.vue';
-  import ImportDrawer from './importDrawer.vue';
+  import DtModal from './dtDrawer.vue';
+  import ImportModal from './importDrawer.vue';
   import { getListApi, deleteTiterApi } from '@/api/inspect/titerImport';
   import { onMounted, ref } from 'vue';
   import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 
   const stationMap = ref(new Map());
 
-  const [registerDtDrawer, { openDrawer: openDtDrawer }] = useDrawer();
-  const [registerImportDrawer, { openDrawer: openImportDrawer }] = useDrawer();
+  const [registerDtModal, { openModal: openDtModal }] = useModal();
+  const [registerImportModal, { openModal: openImportModal }] = useModal();
 
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,
@@ -73,7 +73,7 @@
     },
   });
   function handleDt(record: Recordable) {
-    openDtDrawer(true, record);
+    openDtModal(true, record);
   }
   function getSelections(onlyOne: boolean) {
     const rows = getSelectRows();

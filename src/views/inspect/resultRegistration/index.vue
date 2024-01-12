@@ -50,8 +50,8 @@
         <TiterPage :bs-no="bsNo" @reload="saveReload" />
       </TabPane>
     </Tabs>
-    <BatchDrawer @register="registerDrawer" @confirm="confirm" />
-    <CheckItemDrawer @register="registerCIDrawer" @confirm="confirm2" />
+    <BatchModal @register="registerModal" @confirm="confirm" />
+    <CheckItemModal @register="registerCIModal" @confirm="confirm2" />
   </PageWrapper>
 </template>
 
@@ -63,9 +63,9 @@
   import { ref, unref } from 'vue';
   import CheckPage from './check/index.vue';
   import TiterPage from './titer/index.vue';
-  import BatchDrawer from './batchDrawer.vue';
-  import CheckItemDrawer from './checkItemDrawer.vue';
-  import { useDrawer } from '@/components/Drawer';
+  import BatchModal from './batchDrawer.vue';
+  import CheckItemModal from './checkItemDrawer.vue';
+  import { useModal } from '@/components/Modal';
   import {
     getPlasmaCountApi,
     submitRegistrationApi,
@@ -82,19 +82,19 @@
   const plasmaCellList = ref<Cell[]>([]);
   const reloadMap = ref<Map<string, Function>>(new Map());
 
-  const [registerDrawer, { openDrawer: openDrawer }] = useDrawer();
-  const [registerCIDrawer, { openDrawer: openCIDrawer }] = useDrawer();
+  const [registerModal, { openModal: openModal }] = useModal();
+  const [registerCIModal, { openModal: openCIModal }] = useModal();
 
   function handleSelect() {
-    openDrawer(true, {});
+    openModal(true, {});
   }
   function handleAddItem() {
-    openCIDrawer(true, { bsNo: unref(bsNo) });
+    openCIModal(true, { bsNo: unref(bsNo) });
   }
   async function confirm(row: Recordable) {
     bsNo.value = row.bsNo;
     rowData.value = row;
-    openDrawer(false);
+    openModal(false);
     const res = await getPlasmaCountApi({ bsNo: row.bsNo });
     const initValue: { list: Cell[]; data: Record<number, number> } = {
       list: [],
@@ -136,7 +136,7 @@
     });
   }
   function confirm2() {
-    openCIDrawer(false);
+    openCIModal(false);
     reloadMap.value.forEach((fn) => fn());
   }
   function saveReload(fn: Function, activeKey: string) {

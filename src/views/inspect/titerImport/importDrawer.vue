@@ -7,9 +7,9 @@
  * @LastEditTime: 2024-01-04 14:12:34
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     title="新增"
     width="1200px"
     @close="emit('close')"
@@ -53,13 +53,13 @@
         </div>
       </div>
     </div>
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form';
   import { importDrwaerColumns, searchFormschema, cellList } from './titer.data';
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { ref, reactive } from 'vue';
   import { Upload as AUpload } from 'ant-design-vue';
   import { CellWapper } from '@/components/CellWapper';
@@ -68,7 +68,7 @@
   import { useUserStore } from '@/store/modules/user';
   import dayjs from 'dayjs';
 
-  defineOptions({ name: 'ImportDrawer' });
+  defineOptions({ name: 'ImportModal' });
   const emit = defineEmits(['close']);
   const userStore = useUserStore();
 
@@ -119,7 +119,7 @@
     showTableSetting: false,
     bordered: true,
   });
-  const [registerDrawer] = useDrawerInner(() => {
+  const [registerModal] = useModalInner(() => {
     resetFields();
     clearValidate();
   });

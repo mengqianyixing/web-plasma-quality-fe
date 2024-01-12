@@ -18,6 +18,7 @@
 <script lang="ts" setup>
   import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   import LoginModal from './LoginModal.vue';
   import { revokeSampleVerify } from '@/api/inbound-management/sample-verify';
@@ -25,6 +26,7 @@
   import { ref } from 'vue';
 
   const emit = defineEmits(['success', 'register']);
+  const { createMessage } = useMessage();
 
   defineOptions({ name: 'FormModel' });
 
@@ -71,7 +73,10 @@
   });
 
   const batchSampleNo = ref('');
-  const [registerModal, { closeModal }] = useModalInner((data) => {
+  const [registerModal, { closeModal, setModalProps }] = useModalInner((data) => {
+    setModalProps({
+      maskClosable: false,
+    });
     batchSampleNo.value = data.record.batchSampleNo;
     setFieldsValue({
       sampleNo: data.record.sampleNo,
@@ -84,6 +89,8 @@
       ...values,
       batchSampleNo: batchSampleNo.value,
     } as PutApiCoreBatchSampleVerifyRevokeRequest);
+
+    createMessage.success('撤销成功');
 
     closeModal();
     emit('success');

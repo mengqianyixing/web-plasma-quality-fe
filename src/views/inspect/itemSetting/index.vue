@@ -25,13 +25,13 @@
         </span>
       </template>
     </BasicTable>
-    <FormModal @register="registerDrawer" @success="success" />
+    <FormModal @register="registerModal" @success="success" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { useDrawer } from '@/components/Drawer';
+  import { useModal } from '@/components/Modal';
   import { columns, searchFormschema } from './itemSetting.data';
   import { message, Modal } from 'ant-design-vue';
   import FormModal from './formModal.vue';
@@ -41,7 +41,7 @@
     removeItemSettingApi,
   } from '@/api/inspect/itemSetting';
 
-  const [registerDrawer, { openDrawer }] = useDrawer();
+  const [registerModal, { openModal }] = useModal();
 
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,
@@ -80,12 +80,12 @@
     return rows;
   }
   function handleCreate() {
-    openDrawer(true, { isUpdate: false, data: {} });
+    openModal(true, { isUpdate: false, data: {} });
   }
   function handleUpdate() {
     const [row] = getSelections(true);
     if (!row) return;
-    openDrawer(true, { data: row, isUpdata: true });
+    openModal(true, { data: row, isUpdata: true });
   }
   function success() {
     clearSelectedRowKeys();
@@ -121,6 +121,6 @@
     });
   }
   function handleDetails(record: Recordable) {
-    openDrawer(true, { data: record, disabled: true });
+    openModal(true, { data: record, disabled: true });
   }
 </script>

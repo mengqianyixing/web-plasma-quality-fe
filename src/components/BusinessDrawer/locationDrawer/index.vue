@@ -4,22 +4,28 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-27 17:37:05
+ * @LastEditTime: 2024-01-12 16:31:45
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     title="货位选择"
-    width="600px"
+    width="800px"
+    :minHeight="520"
+    @fullscreen="redoHeight"
     @ok="handleSubmit"
   >
-    <BasicTable @register="registerTable" />
-  </BasicDrawer>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <BasicTable @register="registerTable" />
+      </div>
+    </div>
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { message } from 'ant-design-vue';
   import { reactive } from 'vue';
@@ -30,7 +36,10 @@
     disabledKeys: string[];
     params: Recordable;
   }>({ disabledKeys: [] as string[], params: {} });
-  const [registerTable, { reload, getSelectRows, setPagination, clearSelectedRowKeys }] = useTable({
+  const [
+    registerTable,
+    { reload, getSelectRows, setPagination, clearSelectedRowKeys, redoHeight },
+  ] = useTable({
     api: locationListApi,
     isCanResizeParent: true,
     fetchSetting: {
@@ -67,7 +76,7 @@
       return state.disabledKeys.includes(record.locationNo) ? 'pointer-events-none' : '';
     },
   });
-  const [registerDrawer] = useDrawerInner(({ disabledKeys, params }) => {
+  const [registerModal] = useModalInner(({ disabledKeys, params }) => {
     state.disabledKeys = disabledKeys || [];
     state.params = params;
     setPagination({ current: 1 });

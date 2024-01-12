@@ -3,6 +3,7 @@ import { BasicColumn } from '@/components/Table';
 import {
   tagStatusMap,
   tagStatusValueEnum,
+  tagStyleTypeEnum,
   tagStyleTypeMap,
   tagTypeMap,
 } from '@/enums/tagManageEnum';
@@ -128,34 +129,58 @@ export const styleDetailColumns: BasicColumn[] = [
   {
     title: '字体名',
     dataIndex: 'TextFormat.FontName',
+    format(_, record) {
+      return record.TextFormat?.FontName;
+    },
   },
   {
     title: '字体大小',
     dataIndex: 'TextFormat.FontSize',
+    format(_, record) {
+      return record.TextFormat?.FontSize;
+    },
   },
   {
     title: '是否粗体',
     dataIndex: 'TextFormat.Bold',
+    format(_, record) {
+      return record.TextFormat?.Bold ? '是' : '否';
+    },
   },
   {
     title: '是否斜体',
     dataIndex: 'TextFormat.Italic',
+    format(_, record) {
+      return record.TextFormat?.Italic ? '是' : '否';
+    },
   },
   {
     title: '是否加下划线',
     dataIndex: 'TextFormat.Underline',
+    format(_, record) {
+      return record.TextFormat?.Underline ? '是' : '否';
+    },
   },
   {
     title: '是否自动换行',
     dataIndex: 'TextFormat.LineWrap',
+    format(_, record) {
+      return record.TextFormat?.LineWrap ? '是' : '否';
+    },
   },
   {
     title: '是否黑底白字',
     dataIndex: 'TextFormat.Revert',
+    format(_, record) {
+      return record.TextFormat?.Revert ? '是' : '否';
+    },
   },
   {
     title: '是否居中',
     dataIndex: 'TextFormat.Middle',
+    format(_, record) {
+      return record.TextFormat?.Middle ? '是' : '否';
+    },
   },
 ];
 
@@ -279,8 +304,22 @@ export const editStyleFormSchema: FormSchema[] = [
     label: '类型',
     component: 'Select',
     colProps: { span: 20 },
-    componentProps: {
-      options: [...tagStyleTypeMap.values()].map((item) => ({ label: item, value: item })),
+    componentProps: ({ formActionType }) => {
+      return {
+        options: [...tagStyleTypeMap.values()].map((item) => ({ label: item, value: item })),
+        onChange: (e: string) => {
+          formActionType.updateSchema([
+            { field: 'TextFormat.FontName', show: e === tagStyleTypeEnum.Text },
+            { field: 'TextFormat.FontSize', show: e === tagStyleTypeEnum.Text },
+            { field: 'TextFormat.Bold', show: e === tagStyleTypeEnum.Text },
+            { field: 'TextFormat.Italic', show: e === tagStyleTypeEnum.Text },
+            { field: 'TextFormat.Underline', show: e === tagStyleTypeEnum.Text },
+            { field: 'TextFormat.LineWrap', show: e === tagStyleTypeEnum.Text },
+            { field: 'TextFormat.Revert', show: e === tagStyleTypeEnum.Text },
+            { field: 'TextFormat.Middle', show: e === tagStyleTypeEnum.Text },
+          ]);
+        },
+      };
     },
     required: true,
   },
@@ -335,6 +374,100 @@ export const editStyleFormSchema: FormSchema[] = [
     label: '线条粗细',
     component: 'InputNumber',
     colProps: { span: 20 },
+  },
+  {
+    field: 'TextFormat.FontName',
+    label: '字体名',
+    component: 'Input',
+    colProps: { span: 20 },
+    required: true,
+    show: false,
+  },
+  {
+    field: 'TextFormat.FontSize',
+    label: '字体大小',
+    component: 'InputNumber',
+    colProps: { span: 20 },
+    required: true,
+    show: false,
+  },
+  {
+    field: 'TextFormat.Bold',
+    label: '是否粗体',
+    component: 'RadioGroup',
+    required: true,
+    show: false,
+    componentProps: {
+      options: [
+        { label: '是', value: true },
+        { label: '否', value: false },
+      ],
+    },
+  },
+  {
+    field: 'TextFormat.Italic',
+    label: '是否斜体',
+    component: 'RadioGroup',
+    required: true,
+    show: false,
+    componentProps: {
+      options: [
+        { label: '是', value: true },
+        { label: '否', value: false },
+      ],
+    },
+  },
+  {
+    field: 'TextFormat.Underline',
+    label: '是否加下划线',
+    component: 'RadioGroup',
+    required: true,
+    show: false,
+    componentProps: {
+      options: [
+        { label: '是', value: true },
+        { label: '否', value: false },
+      ],
+    },
+  },
+  {
+    field: 'TextFormat.LineWrap',
+    label: '是否自动换行',
+    component: 'RadioGroup',
+    required: true,
+    show: false,
+    componentProps: {
+      options: [
+        { label: '是', value: true },
+        { label: '否', value: false },
+      ],
+    },
+  },
+  {
+    field: 'TextFormat.Revert',
+    label: '是否黑底白字',
+    component: 'RadioGroup',
+    required: true,
+    show: false,
+    componentProps: {
+      options: [
+        { label: '是', value: true },
+        { label: '否', value: false },
+      ],
+    },
+  },
+  {
+    field: 'TextFormat.Middle',
+    label: '是否居中',
+    component: 'RadioGroup',
+    required: true,
+    show: false,
+    componentProps: {
+      options: [
+        { label: '是', value: true },
+        { label: '否', value: false },
+      ],
+    },
   },
   {
     field: 'OnlyDisplay',

@@ -118,7 +118,7 @@
         componentProps: {
           api: getBankName,
           params: {
-            houseType: HoseType.Nonconformity,
+            houseTypeLike: HoseType.HoseTypeLike,
           },
           labelField: 'bankName',
           valueField: 'bankNo',

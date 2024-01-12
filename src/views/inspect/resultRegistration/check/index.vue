@@ -18,20 +18,20 @@
         </span>
       </template>
     </BasicTable>
-    <DtDrawer @register="registerDtDrawer" />
+    <DtModal @register="registerDtModal" />
     <NotCheck
-      @register="registerNotCheckDrawer"
+      @register="registerNotCheckModal"
       @close="reload"
       @confirm="
-        openNotCheckDrawer(false);
+        openNotCheckModal(false);
         reload();
       "
     />
-    <UnqualifiedDrawer
-      @register="registerUnqDrawer"
+    <UnqualifiedModal
+      @register="registerUnqModal"
       @close="reload"
       @confirm="
-        openUnqDrawer(false);
+        openUnqModal(false);
         reload();
       "
     />
@@ -53,10 +53,10 @@
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { columns } from './data';
-  import DtDrawer from './dtDrawer.vue';
+  import DtModal from './dtDrawer.vue';
   import NotCheck from './notCheck.vue';
-  import UnqualifiedDrawer from './unqualifiedDrawer.vue';
-  import { useDrawer } from '@/components/Drawer';
+  import UnqualifiedModal from './unqualifiedDrawer.vue';
+  import { useModal } from '@/components/Modal';
   import { message, Modal } from 'ant-design-vue';
   import { watch, nextTick, onMounted, ref } from 'vue';
   import { getCheckListApi, removeCheckApi } from '@/api/inspect/resultRegistration';
@@ -81,9 +81,9 @@
     },
   );
 
-  const [registerDtDrawer, { openDrawer: openDtDrawer }] = useDrawer();
-  const [registerNotCheckDrawer, { openDrawer: openNotCheckDrawer }] = useDrawer();
-  const [registerUnqDrawer, { openDrawer: openUnqDrawer }] = useDrawer();
+  const [registerDtModal, { openModal: openDtModal }] = useModal();
+  const [registerNotCheckModal, { openModal: openNotCheckModal }] = useModal();
+  const [registerUnqModal, { openModal: openUnqModal }] = useModal();
   const [registerForm, { resetFields, clearValidate, validate }] = useForm({
     labelWidth: 60,
     baseColProps: { span: 24 },
@@ -144,17 +144,17 @@
     clearValidate();
   }
   function handleDt(row: Recordable) {
-    openDtDrawer(true, { ...row, bsNo: props.bsNo });
+    openDtModal(true, { ...row, bsNo: props.bsNo });
   }
   function handleNotCheck() {
     const projectIds = getSelectRows().map((_) => _.projectId);
-    openNotCheckDrawer(true, { projectIds, bsNo: props.bsNo, options: options.value });
+    openNotCheckModal(true, { projectIds, bsNo: props.bsNo, options: options.value });
   }
   function handleUnq() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     if (rows.length > 1) return message.warning('只能选择一条数据');
-    openUnqDrawer(true, { ...rows[0], bsNo: props.bsNo });
+    openUnqModal(true, { ...rows[0], bsNo: props.bsNo });
   }
   onMounted(async () => {
     emit('reload', reload, '1');

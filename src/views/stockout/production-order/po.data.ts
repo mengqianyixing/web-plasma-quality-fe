@@ -24,7 +24,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'orderType',
     width: 100,
     format(text) {
-      return `${text}, ${operationMap.get(<operationValueEnum>text)}`;
+      return `${text}，${operationMap.get(<operationValueEnum>text)}`;
     },
   },
   {
@@ -71,6 +71,31 @@ export const columns: BasicColumn[] = [
   {
     title: '申请日期',
     dataIndex: 'createAt',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
+    },
+  },
+  {
+    title: '复核人',
+    dataIndex: 'reviewer',
+  },
+  {
+    title: '复核日期',
+    dataIndex: 'reviewAt',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
+    },
+  },
+  {
+    title: '审核人',
+    dataIndex: 'checker',
+  },
+  {
+    title: '审核日期',
+    dataIndex: 'checkAt',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
+    },
   },
 ];
 
@@ -79,13 +104,13 @@ export const searchFormSchema: FormSchema[] = [
     field: 'mesId',
     label: '制造批号',
     component: 'Input',
-    colProps: { span: 8 },
+    colProps: { span: 4 },
   },
   {
     field: 'orderType',
     label: '投产类型',
     component: 'Select',
-    colProps: { span: 8 },
+    colProps: { span: 4 },
     componentProps: {
       options: [...operationMap.entries()].map(([key, value]) => ({
         value: key,
@@ -97,7 +122,7 @@ export const searchFormSchema: FormSchema[] = [
     field: 'expiration',
     label: '血浆效期',
     component: 'Select',
-    colProps: { span: 8 },
+    colProps: { span: 4 },
     componentProps: {
       options: [...expirationMap.entries()].map(([key, value]) => ({
         value: key,
@@ -109,7 +134,7 @@ export const searchFormSchema: FormSchema[] = [
     field: 'state',
     label: '状态',
     component: 'Select',
-    colProps: { span: 8 },
+    colProps: { span: 4 },
     componentProps: {
       options: [...statusMap.entries()].map(([key, value]) => ({
         value: key,
@@ -194,7 +219,7 @@ export const formSchema: FormSchema[] = [
             field: 'planTask',
             defaultValue: dayjs(e).add(1, 'day').format('YYYY-MM-DD'),
             componentProps: {
-              disabledDate: (current: any) => current && current < dayjs(e).add(1, 'day'),
+              disabledDate: (current: any) => current && current < dayjs().startOf('day'),
             },
           });
         },

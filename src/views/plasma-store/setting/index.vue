@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-19 16:45:20
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-19 17:21:04
+ * @LastEditTime: 2024-01-12 17:15:17
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
@@ -23,16 +23,16 @@
         </span>
       </template>
     </BasicTable>
-    <FormModel @register="registerDrawer" @success="reload" />
+    <FormModel @register="registerModal" @success="reload" />
     <LocationModel
-      @register="registerLoactionDrawer"
+      @register="registerLoactionModal"
       @close="reload"
       :showOkBtn="false"
       cancelText="关闭"
       :houseNo="houseNo"
     />
     <AreaModel
-      @register="registerAreaDrawer"
+      @register="registerAreaModal"
       :showOkBtn="false"
       cancelText="关闭"
       :houseNo="houseNo"
@@ -45,7 +45,7 @@
   import { PageWrapper } from '@/components/Page';
   import { columns } from './setting.data';
   import { settingListApi, checkHouseApi } from '@/api/plasmaStore/setting';
-  import { useDrawer } from '@/components/Drawer';
+  import { useModal } from '@/components/Modal';
   import { message, Modal } from 'ant-design-vue';
   import FormModel from './formModel.vue';
   import LocationModel from './locationModel.vue';
@@ -54,9 +54,9 @@
 
   defineOptions({ name: 'PlasmaStoreSetting' });
 
-  const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerLoactionDrawer, { openDrawer: openLoactionDrawer }] = useDrawer();
-  const [registerAreaDrawer, { openDrawer: openAreaDrawer }] = useDrawer();
+  const [registerModal, { openModal }] = useModal();
+  const [registerLoactionModal, { openModal: openLoactionModal }] = useModal();
+  const [registerAreaModal, { openModal: openAreaModal }] = useModal();
   const houseNo = ref('');
 
   const [registerTable, { getRowSelection, findTableDataRecord, reload, clearSelectedRowKeys }] =
@@ -75,7 +75,7 @@
       useSearchForm: false,
       showTableSetting: false,
       bordered: true,
-      rowSelection: { type: 'checkbox' },
+      rowSelection: { type: 'radio' },
       afterFetch: (res) => {
         clearSelectedRowKeys();
         return res;
@@ -83,7 +83,7 @@
     });
 
   function handleCreate() {
-    openDrawer(true, {});
+    openModal(true, {});
   }
   function handleCheckStatus(action: string) {
     const { selectedRowKeys } = getRowSelection() as { selectedRowKeys: string[] };
@@ -104,9 +104,9 @@
   function handleDetails(row: Recordable) {
     houseNo.value = row.houseNo;
     if (row.houseType[1] === STORE_FLAG.F) {
-      openAreaDrawer(true, { houseNo: row.houseNo });
+      openAreaModal(true, { houseNo: row.houseNo });
     } else {
-      openLoactionDrawer(true, { houseNo: row.houseNo });
+      openLoactionModal(true, { houseNo: row.houseNo });
     }
   }
 </script>

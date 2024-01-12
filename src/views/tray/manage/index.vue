@@ -4,7 +4,7 @@
       <template #toolbar>
         <a-button type="primary" @click="handlePrint">打印</a-button>
         <a-button type="primary" @click="handlePrintAgain">补打</a-button>
-        <a-button type="primary" @click="handleDiscard(1)">报废</a-button>
+        <a-button type="primary" @click="handleDiscard(1)">停用</a-button>
       </template>
       <template #trayNo="{ record }: { record: Recordable }">
         <span
@@ -20,32 +20,38 @@
         </span>
       </template>
     </BasicTable>
-    <BasicDrawer @register="registerDrawer" @ok="submit" showFooter title="托盘打印">
+    <BasicModal @register="registerModal" @ok="submit" showFooter title="托盘打印">
       <BasicForm @register="registerForm" />
-    </BasicDrawer>
-    <TableDrawer @register="registerTableDrawer" />
-    <BoxTableDrawer @register="registerBoxTableDrawer" />
+    </BasicModal>
+    <TableModal @register="registerTableModal" />
+    <BoxTableModal @register="registerBoxTableModal" />
+    <Login :open="open" @cancel="open = false" @login="login" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { columns, searchFormSchema } from './manage.data';
-  import { BasicDrawer, useDrawer } from '@/components/Drawer';
+  import { BasicModal, useModal } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
+  import Login from '@/components/BusinessDrawer/login/index.vue';
+
   import {
     getListApi,
     disableTrayApi,
     createTrayLabelApi,
     confirmTrayLabelApi,
   } from '@/api/tray/list';
-  import { message, Modal } from 'ant-design-vue';
-  import TableDrawer from './tableDrawer.vue';
-  import BoxTableDrawer from './boxTableDrawer.vue';
+  import { message } from 'ant-design-vue';
+  import TableModal from './tableDrawer.vue';
+  import BoxTableModal from './boxTableDrawer.vue';
+  import { ref } from 'vue';
 
-  const [registerDrawer, { openDrawer, closeDrawer, setDrawerProps }] = useDrawer();
-  const [registerTableDrawer, { openDrawer: openTableDrawer }] = useDrawer();
-  const [registerBoxTableDrawer, { openDrawer: openBoxTableDrawer }] = useDrawer();
+  const open = ref(false);
+
+  const [registerModal, { openModal, closeModal, setModalProps }] = useModal();
+  const [registerTableModal, { openModal: openTableModal }] = useModal();
+  const [registerBoxTableModal, { openModal: openBoxTableModal }] = useModal();
   const [registerForm, { validate }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
@@ -87,8 +93,8 @@
     },
   });
   function handlePrint() {
-    setDrawerProps({ confirmLoading: false });
-    openDrawer(true);
+    setModalProps({ confirmLoading: false });
+    openModal(true);
   }
   function handlePrintAgain() {}
   function handleDiscard(closed: number) {
@@ -97,36 +103,35 @@
     else if (rows.length === 0) return message.warning('请选择一条数据');
     const [row] = rows;
     if (row.closed === closed) return message.warning('状态不需要变更');
-    Modal.confirm({
-      content: `确认废弃${row.trayNo}吗？`,
-      onOk: async () => {
-        await disableTrayApi({ trayNo: row.trayNo });
-        clearSelectedRowKeys();
-        reload();
-      },
-      onCancel: () => Modal.destroyAll(),
-    });
+    open.value = false;
   }
-
+  async function login() {
+    open.value = false;
+    const rows = getSelectRows();
+    const [row] = rows;
+    await disableTrayApi({ trayNo: row.trayNo });
+    clearSelectedRowKeys();
+    reload();
+  }
   async function submit() {
     try {
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       const { trayNumber } = await validate();
       const res = await createTrayLabelApi({ trayNumber });
       for (const key in res) {
         await confirmTrayLabelApi({ trayNo: key, action: 'confirm' });
       }
-      setDrawerProps({ confirmLoading: false });
-      closeDrawer();
+      setModalProps({ confirmLoading: false });
+      closeModal();
       reload();
     } catch {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
   }
   function handleDetails(row: Recordable) {
-    openTableDrawer(true, { trayNo: row.trayNo });
+    openTableModal(true, { trayNo: row.trayNo });
   }
   function handleBox(row: Recordable) {
-    openBoxTableDrawer(true, { trayNo: row.trayNo });
+    openBoxTableModal(true, { trayNo: row.trayNo });
   }
 </script>

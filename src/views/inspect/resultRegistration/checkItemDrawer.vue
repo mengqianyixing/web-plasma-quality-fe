@@ -4,20 +4,21 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-09 16:17:11
+ * @LastEditTime: 2024-01-12 17:47:27
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     title="选择检测项目"
-    :width="(state.length || 1) * 200 + 50 + 'px'"
+    :minHeight="400"
+    :width="(state.length || 1) * 200 + 100 + 'px'"
     cancelText="关闭"
     @ok="handleSubmit"
   >
     <div class="flex h-full ml-20px mr-20px">
-      <div class="container flex-1 w-160px" v-for="item in state" :key="item.plasmaType">
+      <div class="container flex-1 h-full w-160px" v-for="item in state" :key="item.plasmaType">
         <div class="text-center text-white title bg-slate-100">
           {{ PLASMA_TYPE_TEXT[item.plasmaType] }}
         </div>
@@ -30,17 +31,19 @@
             全选
           </a-checkbox>
         </div>
-        <a-checkbox-group
-          v-model:value="item.values"
-          :options="item.options"
-          @change="(values) => change(values, item)"
-        />
+        <div style="height: calc(100% - 120px); overflow: auto">
+          <a-checkbox-group
+            v-model:value="item.values"
+            :options="item.options"
+            @change="(values) => change(values, item)"
+          />
+        </div>
       </div>
     </div>
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { ref, unref } from 'vue';
   import { CheckboxGroup as ACheckboxGroup, message, Checkbox as ACheckbox } from 'ant-design-vue';
   import { getCheckItemListApi, addItemApi } from '@/api/inspect/resultRegistration';
@@ -62,7 +65,7 @@
 
   const state = ref<CheckGrop[] & GetApiCoreLabRegistrationLabProjectsBsNoResponse>([]);
   const bsno = ref('');
-  const [registerDrawer, { setDrawerProps }] = useDrawerInner(async ({ bsNo }) => {
+  const [registerModal, { setModalProps }] = useModalInner(async ({ bsNo }) => {
     bsno.value = bsNo;
     const res = await getCheckItemListApi({ bsNo });
     if (res.length === 0) {
@@ -100,11 +103,11 @@
       return t;
     }, [] as unknown[]);
     try {
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       await addItemApi(list);
       message.success('项目添加成功');
     } finally {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
     emit('confirm');
   }
@@ -131,6 +134,7 @@
 </script>
 <style scoped>
   .container {
+    max-width: 300px;
     height: 100%;
     margin: 0 5px;
     overflow: hidden;

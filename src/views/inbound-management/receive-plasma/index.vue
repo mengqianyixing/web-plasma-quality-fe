@@ -5,7 +5,7 @@
       <vxe-grid
         v-bind="gridOptionsUnaccept"
         :data="unAcceptList"
-        class="w-2/5 inline-block pr-2"
+        class="inline-block w-2/5 pr-2"
         :loading="tableLoading"
       >
         <template #toolbar>
@@ -29,7 +29,7 @@
             </div>
             <div>
               <a-button @click="susModal">暂停接收</a-button>
-              <a-button @click="openDrawer(true, filterForm)" :disabled="!filterForm.batchNo"
+              <a-button @click="openModal(true, filterForm)" :disabled="!filterForm.batchNo"
                 >托盘入库</a-button
               >
             </div>
@@ -43,11 +43,11 @@
       @success="batchModalSuccess"
       @clear-info="clearInfo"
     />
-    <InStoreDrawer @register="registerDrawer" />
+    <InStoreDrawer @register="registerModal" />
   </PageWrapper>
 </template>
 <script setup lang="tsx">
-  import { ref, computed, reactive, createVNode } from 'vue';
+  import { ref, computed, reactive, createVNode, nextTick } from 'vue';
   import { debounce } from 'lodash-es';
   import { getAccepts, acceptPlasma } from '@/api/inbound-management/receive-plasma';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
@@ -56,22 +56,22 @@
   import { VxeGridProps } from 'vxe-table';
   import { DescItem, useDescription } from '@/components/Description';
   import { useModal } from '@/components/Modal';
-  import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal-receive.vue';
+  import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import { Modal } from 'ant-design-vue';
-  import { useDrawer } from '@/components/Drawer';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import dayjs from 'dayjs';
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
-  const [registerDrawer, { openDrawer }] = useDrawer();
+  const [registerModal, { openModal }] = useModal();
 
   const filterForm = ref<any>({}); // 本批数据
   const trayNo = ref(''); // 托盘编号
   const boxNo = ref(''); // 当前箱号
   const batchNo = ref(''); // 当前批号
   const tableLoading = ref(false);
+  const boxNoRef = ref<any>(null);
 
   // 血浆批次信息
   const schema: DescItem[] = [
@@ -115,6 +115,7 @@
           <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
             <a-input
               placeholder="请扫描"
+              ref={boxNoRef}
               value={boxNo}
               disabled={tableLoading.value}
               onChange={(event) => (boxNo.value = event.target.value)}
@@ -181,7 +182,6 @@
       if (data) {
         success('接收成功!');
         filterForm.value = data;
-
         if (data.acceptDetail?.unAcceptCount <= 0) {
           // 一批接收完毕 提示
           showConfirmGoon();
@@ -190,6 +190,9 @@
     } finally {
       tableLoading.value = false;
       boxNo.value = '';
+      nextTick(() => {
+        boxNoRef.value.focus();
+      });
     }
   }
 
