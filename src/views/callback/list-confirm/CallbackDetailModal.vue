@@ -1,14 +1,14 @@
 <template>
-  <BasicDrawer v-bind="$attrs" @register="register" :title="getTitle" width="85%">
+  <BasicModal v-bind="$attrs" @register="register" :title="getTitle" width="85%">
     <Description @register="registerDescription" :data="descriptionData" />
     <BasicTable @register="registerTable" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="tsx" setup>
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { computed, ref, unref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
-  import { callbackDetailDrawerColumns } from '@/views/callback/list-generation/generation.data';
+  import { callbackDetailModalColumns } from '@/views/callback/list-generation/generation.data';
   import { getCallbackDetail } from '@/api/callback/list-generation';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
@@ -61,7 +61,7 @@
   const [registerTable, { reload }] = useTable({
     title: '回访名单详情列表',
     api: getCallbackDetail,
-    columns: callbackDetailDrawerColumns,
+    columns: callbackDetailModalColumns,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -111,7 +111,7 @@
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '生成名单'));
 
-  const [register] = useDrawerInner((data) => {
+  const [register] = useModalInner((data) => {
     isUpdate.value = data.isUpdate;
     batchNo.value = data.planNo;
     descriptionData.value = data;
