@@ -134,7 +134,7 @@
   const previewUrl = computed(() => `data:image/png;base64,${unref(previewStyle)}`);
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-    resetFields();
+    await resetFields();
     setModalProps({ confirmLoading: false });
     isUpdate.value = !!data?.isUpdate;
 
@@ -151,12 +151,18 @@
       });
       setTableData(originDetailData.value?.content?.Data);
 
-      setFieldsValue({
+      await setFieldsValue({
         ...data.record,
         width: originDetailData.value.content.Width,
         height: originDetailData.value.content.Height,
         gap: originDetailData.value.content.Gap,
       });
+    } else {
+      tagNo.value = '';
+      state.value = '';
+      JsonValue.value = '';
+      previewStyle.value = '';
+      setTableData([]);
     }
   });
 
