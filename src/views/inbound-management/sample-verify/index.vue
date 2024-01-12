@@ -366,7 +366,7 @@
   }
 
   async function handleNonconformityRegister() {
-    if (!sampleVerifyNo.value) {
+    if (!sampleVerifyNo.value && inputValue.value) {
       await getSampleVerifyNo(inputValue.value);
     }
     openNonconformityModal(true, {
