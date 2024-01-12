@@ -54,17 +54,24 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'stationNo',
     label: '采浆公司',
-    colProps: { span: 6 },
+    colProps: { span: 5 },
     component: 'Select',
   },
   {
     field: '[createStartDate, createEndDate]',
     label: '生成日期',
     colProps: { span: 7 },
+    defaultValue: [dayjs(), dayjs().add(1, 'month')],
     component: 'RangePicker',
     componentProps: {
       format: 'YYYY-MM-DD',
     },
+  },
+  {
+    field: 'batchNo',
+    label: '名单编号',
+    colProps: { span: 5 },
+    component: 'Input',
   },
   {
     field: 'state',
