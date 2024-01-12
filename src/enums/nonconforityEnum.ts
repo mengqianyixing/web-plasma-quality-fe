@@ -1,4 +1,5 @@
 export enum HoseType {
+  HoseTypeLike = 'F',
   Nonconformity = 'FSA',
   Stage = 'VRT',
 }
