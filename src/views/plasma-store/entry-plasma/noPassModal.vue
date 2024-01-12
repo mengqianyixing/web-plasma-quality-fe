@@ -1,25 +1,26 @@
 <template>
-  <BasicDrawer
-    wrapClassName="noPassModal"
+  <BasicModal
+    wrapClassName="no-pass-modal"
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerNoPass"
     showFooter
     title="验收不合格详情"
-    width="1000px"
+    width="1200px"
     :isDetail="true"
     :showDetailBack="false"
+    @ok="closeModal"
   >
-    <BasicTable @register="registerTable" />
-  </BasicDrawer>
+    <BasicTable id="noPass" @register="registerTable" />
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { useTable, BasicTable } from '@/components/Table';
   import { noPassSearchFormSchema, noPassModalColums } from './entrySearch.data';
   import { verifyNoPassNumApi } from '@/api/plasmaStore/entryPlasma';
   import { reactive } from 'vue';
 
-  defineOptions({ name: 'NoPassModel' });
+  defineOptions({ name: 'NoPassModal' });
 
   const state = reactive({
     verifyNoPassNum: '',
@@ -31,6 +32,7 @@
     title: '明细',
     immediate: false,
     api: verifyNoPassNumApi,
+
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -51,7 +53,7 @@
       return { ...params, batchNo: state.batchNo, bagVerify: state.bagVerify };
     },
   });
-  const [registerDrawer] = useDrawerInner(({ batchNo, bagVerify }) => {
+  const [registerNoPass, { closeModal }] = useModalInner(({ batchNo, bagVerify }) => {
     // state.bagVerify = bagVerify;
     state.batchNo = batchNo;
     state.bagVerify = bagVerify;
@@ -62,8 +64,12 @@
     clearSelectedRowKeys();
   });
 </script>
-<style>
+<style scoped>
   .locationModal .scrollbar__view {
     height: 100%;
+  }
+
+  #no-pass-modal {
+    height: 600px;
   }
 </style>

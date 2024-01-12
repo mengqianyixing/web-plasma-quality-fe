@@ -1,23 +1,23 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     wrapClassName="horFallModal"
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerHortFall"
     showFooter
-    title="血浆批次详情"
+    title="不足量详情"
     width="800px"
     :isDetail="true"
     :showDetailBack="false"
   >
     <BasicTable @register="registerTable" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { useTable, BasicTable } from '@/components/Table';
   import { hortFallNumModalColums } from './entrySearch.data';
 
-  const [registerDrawer] = useDrawerInner();
+  const [registerHortFall] = useModalInner();
   const [registerTable] = useTable({
     title: '明细',
     immediate: true,

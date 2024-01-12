@@ -1,20 +1,21 @@
 <template>
-  <BasicDrawer
-    wrapClassName="batchNoModal"
+  <BasicModal
+    wrapClassName="batch-num-modal"
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="register"
     showFooter
     title="血浆批次详情"
-    width="800px"
+    width="1500px"
     :isDetail="true"
     :showDetailBack="false"
+    @ok="closeModal"
   >
-    <BasicTable @register="registerTable" />
-  </BasicDrawer>
+    <BasicTable @register="registerTable" id="batchNoTable" />
+  </BasicModal>
 </template>
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { useTable, BasicTable } from '@/components/Table';
   import { entryDetailModalColumns } from './entrySearch.data';
   import { bagPlasmaDetailApi } from '@/api/plasmaStore/entryPlasma';
@@ -50,14 +51,18 @@
     });
   }
 
-  const [registerDrawer] = useDrawerInner(async ({ batchNo }) => {
+  const [register, { closeModal }] = useModalInner(async ({ batchNo }) => {
     batchNoRef.value = batchNo;
     const pager = getPaginationRef();
     getBatchDetail(pager);
   });
 </script>
-<style>
+<style scoped>
   .locationModal .scrollbar__view {
     height: 100%;
+  }
+
+  #batch-num-modal {
+    height: 600px;
   }
 </style>
