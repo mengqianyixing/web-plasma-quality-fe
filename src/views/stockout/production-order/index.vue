@@ -126,6 +126,11 @@
       return;
     }
 
+    if (selectedRow.value[0]?.state === statusValueEnum.AED) {
+      warning('该生产指令已审核，不可编辑');
+      return;
+    }
+
     openModal(true, {
       record: selectedRow.value[0],
       isUpdate: true,
@@ -137,6 +142,11 @@
 
     if (selectedRow.value[0]?.state === statusValueEnum.RVD) {
       warning('该生产指令已复核，不可撤销');
+      return;
+    }
+
+    if (selectedRow.value[0]?.state === statusValueEnum.AED) {
+      warning('该生产指令已审核，不可撤销');
       return;
     }
 
