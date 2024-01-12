@@ -1,5 +1,5 @@
 <template>
-  <BasicDrawer v-bind="$attrs" @register="register" title="Drawer Title" width="50%">
+  <BasicModal v-bind="$attrs" @register="register" title="生产指令详情" width="65%">
     <PageWrapper>
       <Description :column="2" :data="detailData" :schema="schema" />
       <a-timeline class="ml-3 mt-[40px]">
@@ -21,10 +21,10 @@
         </a-timeline-item>
       </a-timeline>
     </PageWrapper>
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { PageWrapper } from '@/components/Page';
   import { DescItem, Description } from '@/components/Description';
   import { ref, watch } from 'vue';
@@ -49,7 +49,7 @@
     },
   );
 
-  const [register] = useDrawerInner((data) => {
+  const [register] = useModalInner((data) => {
     orderNo.value = data.orderNo;
   });
 
@@ -62,7 +62,7 @@
       field: 'orderType',
       label: '投产类型',
       render: (curVal) => {
-        return `${operationMap.get(curVal)}`;
+        return `${curVal}，${operationMap.get(curVal)}`;
       },
     },
     {

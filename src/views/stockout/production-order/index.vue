@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BasicTable @register="registerTable" :searchInfo="searchInfo">
+    <BasicTable @register="registerTable">
       <template #mesId="{ record }">
         <div class="z-999">
           <a-button type="link" @click="handleMesClick(record)">
@@ -21,7 +21,7 @@
       </template>
     </BasicTable>
 
-    <DetailDrawer @register="registerDetailDrawer" />
+    <DetailModal @register="registerDetailModal" />
     <CreateModal @register="registerModal" @success="handleSuccess" />
     <CheckModal @register="registerCheckModal" @success="handleSuccess" />
   </div>
@@ -30,7 +30,6 @@
   import { BasicTable, useTable } from '@/components/Table';
 
   import { useModal } from '@/components/Modal';
-  import { useDrawer } from '@/components/Drawer';
 
   import { columns, searchFormSchema } from './po.data';
 
@@ -45,7 +44,7 @@
   } from '@/api/stockout/production-order';
   import { createVNode, ref } from 'vue';
 
-  import DetailDrawer from './DetailDrawer.vue';
+  import DetailModal from './DetailModal.vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { statusValueEnum } from '@/enums/stockoutEnum';
 
@@ -53,9 +52,8 @@
 
   const [registerModal, { openModal }] = useModal();
   const [registerCheckModal, { openModal: openCheckModal }] = useModal();
-  const [registerDetailDrawer, { openDrawer: openDetailDrawer, setDrawerProps }] = useDrawer();
+  const [registerDetailModal, { openModal: openDetailModal }] = useModal();
 
-  const searchInfo = ref<Recordable>({});
   const selectedRow = ref<Recordable>([]);
 
   const { createMessage, createConfirm } = useMessage();
@@ -77,12 +75,12 @@
     },
     clickToRowSelect: false,
     rowSelection: {
-      type: 'checkbox',
+      type: 'radio',
       onChange: (_, selectedRows: any) => {
         selectedRow.value = selectedRows;
       },
     },
-    size: 'small',
+    size: 'large',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,
@@ -91,13 +89,9 @@
       redo: false,
       setting: false,
     },
-    handleSearchInfoFn(info) {
-      console.log('handleSearchInfoFn', info);
-      return info;
-    },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    canResize: true,
   });
 
   function selectRowsCheck() {
@@ -113,11 +107,8 @@
   }
 
   function handleMesClick(record: Recordable) {
-    openDetailDrawer(true, {
+    openDetailModal(true, {
       orderNo: record?.orderNo,
-    });
-    setDrawerProps({
-      title: '生产指令详情',
     });
   }
 
