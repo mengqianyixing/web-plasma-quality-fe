@@ -86,6 +86,7 @@
       width: 80,
     },
     immediate: false,
+    canResize: false,
   });
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '生成名单'));

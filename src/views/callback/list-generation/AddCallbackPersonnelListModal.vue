@@ -77,6 +77,7 @@
     },
     immediate: false,
     pagination: false,
+    canResize: false,
   });
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '选择名单'));

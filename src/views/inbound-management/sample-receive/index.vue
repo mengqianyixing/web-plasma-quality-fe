@@ -1,8 +1,8 @@
 <template>
   <PageWrapper contentFullHeight fixedHeight>
     <Description @register="register" :data="sampleBatchData" />
-    <SelectSampleBatchDrawer
-      @register="registerSelectDrawer"
+    <SelectSampleBatchModal
+      @register="registerSelectModal"
       @success="handleSelectSampleBatchSuccess"
     />
 
@@ -49,9 +49,9 @@
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
-  import { useDrawer } from '@/components/Drawer';
+  import { useModal } from '@/components/Modal';
 
-  import SelectSampleBatchDrawer from './SelectSampleBatchDrawer.vue';
+  import SelectSampleBatchModal from './SelectSampleBatchModal.vue';
   import {
     receiveSample,
     getSampleReceiveDetail,
@@ -136,10 +136,10 @@
     schema: schema,
   });
 
-  const [registerSelectDrawer, { openDrawer: openSelectSampleBatchDrawer }] = useDrawer();
+  const [registerSelectModal, { openModal: openSelectSampleBatchModal }] = useModal();
 
   function handleSelectSampleBatch() {
-    openSelectSampleBatchDrawer(true, {
+    openSelectSampleBatchModal(true, {
       reload: true,
       record: {
         sampleType: sampleTypeDictionary.value,

@@ -87,7 +87,7 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: true,
+    canResize: false,
     immediate: true,
   });
 
