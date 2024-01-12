@@ -130,13 +130,13 @@
       field: 'stationName',
       label: '采浆公司',
     },
-    {
-      field: 'transNo',
-      label: '出库单号',
-      render(text) {
-        return <span>{text}</span>;
-      },
-    },
+    // {
+    //   field: 'transNo',
+    //   label: '出库单号',
+    //   render(text) {
+    //     return <span>{text}</span>;
+    //   },
+    // },
     {
       field: 'boxCount',
       label: '血浆箱数',
@@ -154,7 +154,7 @@
   ];
   const [register] = useDescription({
     bordered: false,
-    column: 4,
+    column: 3,
     contentStyle: {
       width: '80px',
     },
