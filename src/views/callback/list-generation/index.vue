@@ -86,7 +86,7 @@
   const [registerCallbackDetailDrawer, { openDrawer: openCallbackDetailDrawer }] = useDrawer();
 
   const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
-    title: '回访名单生成列表',
+    title: '回访名单列表',
     api: getCallbackListApi,
     columns,
     formConfig: {
@@ -104,7 +104,7 @@
     },
     clickToRowSelect: true,
     rowSelection: {
-      type: 'checkbox',
+      type: 'radio',
       onChange: (_, selectedRows: any) => {
         selectedRow.value = selectedRows;
       },
