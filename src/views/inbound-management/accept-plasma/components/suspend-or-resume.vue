@@ -314,6 +314,10 @@
         hideModal();
       }
     } else if (searchForm.value.pattern === 'BCH') {
+      if (!searchForm.value.checker) {
+        warning('请登录复核人');
+        return;
+      }
       try {
         const params = {
           batchNo: searchForm.value.batchNo,

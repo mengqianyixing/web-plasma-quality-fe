@@ -4,7 +4,6 @@ import { defineStore } from 'pinia';
 import { store } from '@/store';
 import { useI18n } from '@/hooks/web/useI18n';
 import { useUserStore } from './user';
-import { useAppStoreWithOut } from './app';
 import { toRaw } from 'vue';
 import {
   transformObjToRoute,
@@ -12,8 +11,6 @@ import {
   convertMenuArrToRouterObject,
 } from '@/router/helper/routeHelper';
 import { transformRouteToMenu } from '@/router/helper/menuHelper';
-
-import projectSetting from '@/settings/projectSetting';
 
 import { PermissionModeEnum } from '@/enums/appEnum';
 
@@ -117,11 +114,12 @@ export const usePermissionStore = defineStore({
     async buildRoutesAction(): Promise<AppRouteRecordRaw[]> {
       const { t } = useI18n();
       const userStore = useUserStore();
-      const appStore = useAppStoreWithOut();
 
       let routes: AppRouteRecordRaw[] = [];
       const roleList = toRaw(userStore.getRoleList) || [];
-      const { permissionMode = projectSetting.permissionMode } = appStore.getProjectConfig;
+      // @CAS_DOOR  暂时使用后端获取权限
+      const permissionMode: string = PermissionModeEnum.CAS_DOOR;
+      // const { permissionMode = projectSetting.permissionMode } = appStore.getProjectConfig;
 
       // 路由过滤器 在 函数filter 作为回调传入遍历使用
       const routeFilter = (route: AppRouteRecordRaw) => {
@@ -252,17 +250,14 @@ export const usePermissionStore = defineStore({
           break;
 
         case PermissionModeEnum.CAS_DOOR:
-          const menuIds: number[] = (userStore.getUserInfo?.menuIds ?? [9900]).map((i) =>
-            Number(i),
-          );
-          console.log({ menuIds });
+          const menuIds: number[] = [99] // 默认首页
+            .concat(userStore.getUserInfo?.menuIds ?? [])
+            .map((i) => Number(i));
           const filterRoutes = (routes: any[]): any[] => {
             const filteredRoutes: any[] = [];
 
             routes.forEach((item: any) => {
-              // if (item.id && menuIds.includes(Number(item.id))) {
-              // 暂时全开所有菜单
-              if (item.id) {
+              if (item.id && menuIds.includes(Number(item.id))) {
                 filteredRoutes.push(item);
               } else if (item.children) {
                 const filteredChildren = filterRoutes(item.children);
@@ -275,7 +270,9 @@ export const usePermissionStore = defineStore({
 
             return filteredRoutes;
           };
-          const tempRoutes: any = filterRoutes(asyncRoutes);
+          const tempRoutes: any = filterRoutes(asyncRoutes).sort((a, b) => {
+            return (b?.menuWeight || 0) - (a?.menuWeight || 0);
+          });
           this.setBackMenuList(transformRouteToMenu(tempRoutes));
           routes = [PAGE_NOT_FOUND_ROUTE, ...tempRoutes];
           break;

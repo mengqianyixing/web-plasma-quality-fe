@@ -17,7 +17,7 @@ const storeManager: AppRouteModule = {
   id: 97,
   meta: {
     title: '库房管理',
-    icon: 'ant-design:alipay-circle-filled',
+    icon: 'ant-design:windows-outlined',
   },
   children: [
     {

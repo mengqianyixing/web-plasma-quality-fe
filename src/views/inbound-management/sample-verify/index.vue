@@ -172,7 +172,7 @@
       field: 'sampleType',
       label: '样本类型',
       render(text) {
-        const label = sampleTypeDictionary.value!.find((it) => it.value === text)?.label;
+        const label = sampleTypeDictionary.value?.find((it) => it.value === text)?.label;
         return <span>{label}</span>;
       },
     },

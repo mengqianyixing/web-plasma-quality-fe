@@ -54,6 +54,9 @@
       <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
         {{ t('sys.login.loginButton') }}
       </Button>
+      <Button style="margin-top: 5px" type="primary" size="large" block @click="handleCasDoorLogin">
+        CasDoor 登录
+      </Button>
     </FormItem>
   </Form>
 </template>
@@ -71,6 +74,7 @@
   import { useDesign } from '@/hooks/web/useDesign';
   import { getSysVerifyCode } from '@/api/sys/login';
   import { buildUUID } from '@/utils/uuid';
+  import oauth from '@/api/oauth/oauth';
 
   const ACol = Col;
   const ARow = Row;
@@ -80,12 +84,30 @@
   const { notification, createErrorModal } = useMessage();
   const { prefixCls } = useDesign('login');
   const userStore = useUserStore();
+  // const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
   const { getLoginState } = useLoginState();
   const { getFormRules } = useFormRules();
 
   onMounted(() => {
     getVerifyCode();
+
+    let url = window.location.href;
+    const [path, queryString] = url.split('?');
+    console.log({ url, path, queryString });
+    if (queryString && queryString.includes('code')) {
+      // @ts-ignore
+      oauth.signIn(queryString).then((res) => {
+        if (res.code == 0) {
+          window.history.replaceState({}, '', path);
+          userStore.oathLogin(res.data);
+        } else {
+          // handleCasDoorLogin();
+        }
+      });
+    } else {
+      handleCasDoorLogin();
+    }
   });
 
   const formRef = ref();
@@ -108,6 +130,13 @@
     const b64 = await getSysVerifyCode(uuid.value);
 
     verifyCode.value = `data:image/png;base64,${b64}`;
+  }
+
+  async function handleCasDoorLogin() {
+    // @ts-ignore
+    oauth
+      .goToCasDoorLogin()
+      .then((res) => (window.location.href = res.data ?? window.location.href));
   }
 
   async function handleLogin() {

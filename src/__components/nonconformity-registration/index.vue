@@ -9,22 +9,13 @@
       />
       <a-button type="primary" @click="handleLogin" size="large" class="ml-3">登录</a-button>
     </template>
-    <template #nonconformity="{ model, field }">
-      <ApiSelect
-        mode="multiple"
-        @change="(value) => (model[field] = value)"
-        resultField="result"
-        labelField="roleName"
-        valueField="roleId"
-      />
-    </template>
   </BasicForm>
 
   <LoginModal @register="registerLoginModal" @success="handleSuccess" />
 </template>
 
 <script setup lang="ts">
-  import { ApiSelect, BasicForm, useForm } from '@/components/Form';
+  import { BasicForm, useForm } from '@/components/Form';
   import { schemas } from './registration.data';
 
   import LoginModal from './LoginModal.vue';

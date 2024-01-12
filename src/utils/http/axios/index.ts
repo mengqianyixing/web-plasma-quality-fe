@@ -220,6 +220,7 @@ const transform: AxiosTransform = {
 };
 
 function createAxios(opt?: Partial<CreateAxiosOptions>) {
+  window.localStorage.setItem('globSetting', JSON.stringify(globSetting ?? {}));
   return new VAxios(
     // 深度合并
     deepMerge(
@@ -252,7 +253,10 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           // 消息提示类型
           errorMessageMode: 'message',
           // 接口地址
-          apiUrl: globSetting.apiUrl,
+          apiUrl:
+            !globSetting.apiUrl || globSetting.apiUrl == '/'
+              ? window.location.origin
+              : globSetting.apiUrl,
           // 接口拼接地址
           urlPrefix: urlPrefix,
           //  是否加入时间戳

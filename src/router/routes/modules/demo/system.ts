@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-03 09:54:16
+ * @LastEditTime: 2024-01-11 09:18:48
  * @Description: 系统管理
  * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
  */
@@ -19,7 +19,7 @@ const system: AppRouteModule = {
   redirect: '/system/account',
   meta: {
     orderNo: 2000,
-    icon: 'ion:settings-outline',
+    icon: 'ant-design:windows-outlined',
     title: '系统管理',
   },
   children: [
@@ -55,7 +55,6 @@ const system: AppRouteModule = {
       },
       component: () => import('@/views/system/role/index.vue'),
     },
-
     {
       path: 'menu',
       name: 'MenuManagement',
@@ -94,6 +93,25 @@ const system: AppRouteModule = {
       },
       id: 9206,
       component: () => import('@/views/system/dictionary/index.vue'),
+    },
+    {
+      path: 'auth_menus',
+      name: 'AuthMenus',
+      id: 9207,
+      meta: {
+        title: '权限管理',
+        ignoreKeepAlive: true,
+      },
+      component: () => import('@/views/auth/menus/index.vue'),
+    },
+    {
+      path: 'params',
+      name: 'Params',
+      id: 9208,
+      meta: {
+        title: '系统参数',
+      },
+      component: () => import('@/views/system/params/index.vue'),
     },
     // {
     //   path: 'changePassword',

@@ -37,6 +37,7 @@ export interface ErrorLogInfo {
 export interface UserInfo {
   userId: string;
   username: string;
+  menuIds?: number[];
   desc?: string;
   homePath?: string;
 }

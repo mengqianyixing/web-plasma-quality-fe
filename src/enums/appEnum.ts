@@ -35,6 +35,8 @@ export enum PermissionModeEnum {
   // black
   // 后端
   BACK = 'BACK',
+  // 后端
+  CAS_DOOR = 'CAS_DOOR',
   // route mapping
   // 路由映射
   ROUTE_MAPPING = 'ROUTE_MAPPING',

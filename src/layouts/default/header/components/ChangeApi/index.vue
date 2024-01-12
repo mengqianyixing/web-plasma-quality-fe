@@ -21,7 +21,7 @@
   import { useI18n } from '@/hooks/web/useI18n';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
-  import { ref } from 'vue';
+  // import { ref } from 'vue';
   import { useAppStore } from '@/store/modules/app';
   import type { ApiAddress } from '#/store';
 
@@ -32,7 +32,7 @@
     initData();
   });
   // perf 能读取所有.env.xxx文件最好, 另外key与--mode XXX最好相同
-  const addresses = ref('http://192.168.1.133:7100');
+  // const addresses = ref('http://192.168.1.133:7100');
   // const radioStyle = ref({
   //   display: 'flex',
   //   height: '30px',
@@ -47,7 +47,7 @@
         colProps: {
           span: 24,
         },
-        defaultValue: addresses.value, // 当前环境
+        // defaultValue: addresses.value, // 当前环境
         required: true,
         component: 'Input',
       },
