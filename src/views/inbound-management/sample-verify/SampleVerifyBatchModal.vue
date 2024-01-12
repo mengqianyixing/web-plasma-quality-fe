@@ -46,16 +46,8 @@
     },
     clickToRowSelect: true,
     rowSelection: {
-      type: 'checkbox',
+      type: 'radio',
       onChange: (keys, selectedRows: any) => {
-        if (keys.length > 1) {
-          warning('只能选择一条数据');
-
-          setSelectedRowKeys(selectedRow.value.map((it) => it.key));
-
-          return;
-        }
-
         if (
           keys.length === 1 &&
           selectedRows[0].sampleType !== sampleTypeEnum.CallbackSample &&

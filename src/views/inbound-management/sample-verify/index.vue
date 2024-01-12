@@ -103,7 +103,7 @@
   const sampleTypeDictionary = ref<Recordable[] | undefined>([]);
   const sampleNonconformityDictionary = ref<Recordable[] | undefined>([]);
 
-  const { createConfirm } = useMessage();
+  const { createConfirm, createMessage } = useMessage();
 
   onMounted(async () => {
     const dictionaryArr = await getSampleDictionary([
@@ -379,10 +379,22 @@
   }
 
   async function handleCompleteVerify() {
-    await receiveSample({
-      batchSampleNo: sampleBatchData.value.batchSampleNo!,
+    if (isEmpty(unref(sampleBatchData))) {
+      createMessage.warn('请选择样本批号');
+      return;
+    }
+
+    createConfirm({
+      title: '提示',
+      content: `样本批号：${sampleBatchData.value.batchSampleNo}是否完成验收？`,
+      iconType: 'warning',
+      onOk: async () => {
+        await receiveSample({
+          batchSampleNo: sampleBatchData.value.batchSampleNo!,
+        });
+        await updateTableData();
+      },
     });
-    await updateTableData();
   }
 
   const createActions = (record: {
