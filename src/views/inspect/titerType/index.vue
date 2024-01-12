@@ -25,19 +25,19 @@
         </span>
       </template>
     </BasicTable>
-    <FormModal @register="registerDrawer" @success="success" />
+    <FormModal @register="registerModal" @success="success" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { useDrawer } from '@/components/Drawer';
+  import { useModal } from '@/components/Modal';
   import { columns, searchFormschema } from './titerType.data';
   import { message, Modal } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import { getListApi, updateTitlerTypeApi, removeTitlerTypeApi } from '@/api/inspect/titerType';
 
-  const [registerDrawer, { openDrawer }] = useDrawer();
+  const [registerModal, { openModal }] = useModal();
 
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,
@@ -76,12 +76,12 @@
     return rows;
   }
   function handleCreate() {
-    openDrawer(true, { isUpdate: false, data: {} });
+    openModal(true, { isUpdate: false, data: {} });
   }
   function handleUpdate() {
     const [row] = getSelections(true);
     if (!row) return;
-    openDrawer(true, { data: row, isUpdata: true });
+    openModal(true, { data: row, isUpdata: true });
   }
   function success() {
     clearSelectedRowKeys();
@@ -102,7 +102,7 @@
     });
   }
   function handleDetails(row) {
-    openDrawer(true, { data: row, disabled: true });
+    openModal(true, { data: row, disabled: true });
   }
   function handleCheckStatus(action: boolean) {
     const [row] = getSelections(true);

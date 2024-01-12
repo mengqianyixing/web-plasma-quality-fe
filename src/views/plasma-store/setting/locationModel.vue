@@ -1,30 +1,34 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     wrapClassName="locationModal"
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     title="货位列表"
     width="1000px"
     :isDetail="true"
     :showDetailBack="false"
+    :minHeight="520"
     @close="close"
+    @fullscreen="redoHeight"
   >
-    <div class="flex flex-col h-full">
-      <CellWapper :row-count="3" :data="state" :cell-list="cellSchema(locationCell)" />
-      <div class="flex-1">
-        <BasicTable @register="registerTable">
-          <template #toolbar>
-            <a-button type="primary" @click="handleCheckStatus('CLOSED')">禁用</a-button>
-            <a-button type="primary" @click="handleCheckStatus('NORMAL')">启用</a-button>
-          </template>
-        </BasicTable>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <CellWapper :row-count="3" :data="state" :cell-list="cellSchema(locationCell)" />
+        <div class="flex-1 shrink-1" style="height: calc(100% - 111px)">
+          <BasicTable @register="registerTable">
+            <template #toolbar>
+              <a-button type="primary" @click="handleCheckStatus('CLOSED')">禁用</a-button>
+              <a-button type="primary" @click="handleCheckStatus('NORMAL')">启用</a-button>
+            </template>
+          </BasicTable>
+        </div>
       </div>
     </div>
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { locationListApi, checkLoactionApi, areaListApi } from '@/api/plasmaStore/setting';
   import {
@@ -54,7 +58,14 @@
 
   const [
     registerTable,
-    { getRowSelection, findTableDataRecord, clearSelectedRowKeys, reload, setPagination },
+    {
+      getRowSelection,
+      findTableDataRecord,
+      clearSelectedRowKeys,
+      reload,
+      setPagination,
+      redoHeight,
+    },
   ] = useTable({
     title: '',
     immediate: false,
@@ -84,7 +95,7 @@
       return { ...params, houseNo: state.houseNo };
     },
   });
-  const [registerDrawer] = useDrawerInner(({ houseNo }) => {
+  const [registerModal] = useModalInner(({ houseNo }) => {
     state.houseNo = houseNo;
     setPagination({ current: 1 });
     clearSelectedRowKeys();

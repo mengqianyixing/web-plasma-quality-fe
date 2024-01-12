@@ -5,7 +5,7 @@
       <vxe-grid
         v-bind="gridOptionsUnaccept"
         :data="unAcceptList"
-        class="w-2/5 inline-block pr-2"
+        class="inline-block w-2/5 pr-2"
         :loading="tableLoading"
       >
         <template #toolbar>
@@ -29,7 +29,7 @@
             </div>
             <div>
               <a-button @click="susModal">暂停接收</a-button>
-              <a-button @click="openDrawer(true, filterForm)" :disabled="!filterForm.batchNo"
+              <a-button @click="openModal(true, filterForm)" :disabled="!filterForm.batchNo"
                 >托盘入库</a-button
               >
             </div>
@@ -43,7 +43,7 @@
       @success="batchModalSuccess"
       @clear-info="clearInfo"
     />
-    <InStoreDrawer @register="registerDrawer" />
+    <InStoreDrawer @register="registerModal" />
   </PageWrapper>
 </template>
 <script setup lang="tsx">
@@ -59,13 +59,12 @@
   import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import { Modal } from 'ant-design-vue';
-  import { useDrawer } from '@/components/Drawer';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import dayjs from 'dayjs';
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
-  const [registerDrawer, { openDrawer }] = useDrawer();
+  const [registerModal, { openModal }] = useModal();
 
   const filterForm = ref<any>({}); // 本批数据
   const trayNo = ref(''); // 托盘编号

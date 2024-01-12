@@ -1,9 +1,18 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: zcc
+ * @Date: 2023-12-08 09:39:00
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-12 15:14:26
+ */
 import { computed, Ref, ref, unref } from 'vue';
 
 export interface UseFullScreenContext {
   wrapClassName: Ref<string | undefined>;
   modalWrapperRef: Ref<ComponentRef>;
   extHeightRef: Ref<number>;
+  emit: (arg: 'fullscreen') => void;
 }
 
 export function useFullScreen(context: UseFullScreenContext) {
@@ -18,6 +27,7 @@ export function useFullScreen(context: UseFullScreenContext) {
   function handleFullScreen(e: Event) {
     e && e.stopPropagation();
     fullScreenRef.value = !unref(fullScreenRef);
+    setTimeout(() => context.emit('fullscreen'));
 
     // const modalWrapper = unref(context.modalWrapperRef);
 

@@ -7,9 +7,9 @@
  * @LastEditTime: 2024-01-09 17:16:29
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     title="挑浆"
     width="1200px"
     @close="emit('close')"
@@ -25,10 +25,10 @@
         </div>
       </div>
     </div>
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { outLeftColumns, outRightColumns } from './plasmaOut.data';
   import { BasicTable, useTable } from '@/components/Table';
@@ -90,7 +90,7 @@
     reloadLeft();
     reloadRight();
   }
-  const [registerDrawer] = useDrawerInner(({ dlvNo }) => {
+  const [registerModal] = useModalInner(({ dlvNo }) => {
     state.no = dlvNo;
     resetFields();
     clearValidate();

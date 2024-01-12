@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-20 09:47:04
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-26 10:17:57
+ * @LastEditTime: 2024-01-10 15:30:12
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
@@ -16,19 +16,19 @@
         <a-button type="primary" @click="handleCheckStatus(0)">启用</a-button>
       </template>
     </BasicTable>
-    <FormModal @register="registerDrawer" @success="success" />
+    <FormModal @register="registerModal" @success="success" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { useDrawer } from '@/components/Drawer';
+  import { useModal } from '@/components/Modal';
   import { columns, siteCodeSchema } from './site.data';
   import { message, Modal } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import { getListApi, updateSiteApi } from '@/api/plasmaStore/site';
 
-  const [registerDrawer, { openDrawer }] = useDrawer();
+  const [registerModal, { openModal }] = useModal();
 
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,
@@ -44,7 +44,7 @@
     useSearchForm: true,
     showTableSetting: false,
     bordered: true,
-    rowSelection: { type: 'checkbox' },
+    rowSelection: { type: 'radio' },
     afterFetch: (res) => {
       clearSelectedRowKeys();
       return res;
@@ -66,12 +66,12 @@
     return rows;
   }
   function handleCreate() {
-    openDrawer(true, { isUpdate: false, data: {} });
+    openModal(true, { isUpdate: false, data: {} });
   }
   function handleUpdate() {
     const [row] = getSelections(true);
     if (!row) return;
-    openDrawer(true, { data: row, isUpdata: true });
+    openModal(true, { data: row, isUpdata: true });
   }
   function success() {
     clearSelectedRowKeys();

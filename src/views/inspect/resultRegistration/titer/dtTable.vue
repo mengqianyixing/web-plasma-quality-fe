@@ -5,9 +5,9 @@
         <a-button type="primary" @click="handleEdit" v-if="checkResult">编辑</a-button>
       </template>
     </BasicTable>
-    <BasicDrawer
+    <BasicModal
       v-bind="$attrs"
-      @register="registerDrawer"
+      @register="registerModal"
       showFooter
       title="效价结果编辑"
       width="400px"
@@ -15,14 +15,14 @@
     >
       <BasicForm @register="registerForm" />
       <Login :open="open" @cancel="cancel" @login="login" />
-    </BasicDrawer>
+    </BasicModal>
   </div>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { message } from 'ant-design-vue';
   import { dtColumns, dtSearchSchema } from './data';
-  import { BasicDrawer, useDrawer } from '@/components/Drawer';
+  import { BasicModal, useModal } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import Login from '@/components/BusinessDrawer/login/index.vue';
   import { ref, nextTick } from 'vue';
@@ -49,7 +49,7 @@
     },
   });
   let userData = {};
-  const [registerDrawer, { openDrawer }] = useDrawer();
+  const [registerModal, { openModal }] = useModal();
   const [registerForm, { setFieldsValue, validate, updateSchema }] = useForm({
     labelWidth: 80,
     baseColProps: { span: 24 },
@@ -125,13 +125,13 @@
       sampleNo: row.sampleNo,
     });
     reload();
-    openDrawer(false);
+    openModal(false);
   }
   async function handleEdit() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     const [row] = rows;
-    openDrawer(true);
+    openModal(true);
     await nextTick();
     updateSchema({
       field: 'conclusion',

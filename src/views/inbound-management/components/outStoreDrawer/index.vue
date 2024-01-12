@@ -4,26 +4,32 @@
  * @Author: zcc
  * @Date: 2024-01-04 16:30:55
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-04 19:14:54
+ * @LastEditTime: 2024-01-12 18:11:38
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     :title="'血浆批号【' + state + '】托盘出库'"
     width="1060px"
     @close="emit('close')"
+    :minHeight="520"
+    @fullscreen="redoHeight"
   >
-    <BasicTable @register="registerTable" ref="tableRef">
-      <template #toolbar>
-        <a-button type="primary" @click="handleOut">出库</a-button>
-      </template>
-    </BasicTable>
-    <OutModal @register="registerInDrawer" @success="rePage" />
-  </BasicDrawer>
+    <div class="flex h-inherit max-h-inherit min-h-inherit">
+      <div class="flex-1 w-full">
+        <BasicTable @register="registerTable" ref="tableRef">
+          <template #toolbar>
+            <a-button type="primary" @click="handleOut">出库</a-button>
+          </template>
+        </BasicTable>
+      </div>
+    </div>
+    <OutModal @register="registerInModal" @success="rePage" />
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner, useDrawer } from '@/components/Drawer';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchForm } from './data';
   import { message } from 'ant-design-vue';
@@ -36,15 +42,18 @@
   const state = ref('');
 
   const emit = defineEmits(['register', 'close']);
-  defineOptions({ name: 'OutStoreDrawer' });
+  defineOptions({ name: 'OutStoreModal' });
 
-  const [registerInDrawer, { openDrawer: openOutDrawer }] = useDrawer();
+  const [registerInModal, { openModal: openOutModal }] = useModal();
 
-  const [registerDrawer] = useDrawerInner(async ({ batchNo }) => {
+  const [registerModal] = useModalInner(async ({ batchNo }) => {
     state.value = batchNo;
     rePage();
   });
-  const [registerTable, { getSelectRows, reload, clearSelectedRowKeys, setPagination }] = useTable({
+  const [
+    registerTable,
+    { getSelectRows, reload, clearSelectedRowKeys, setPagination, redoHeight },
+  ] = useTable({
     immediate: false,
     title: '',
     api: getListApi,
@@ -85,9 +94,9 @@
     const notAlike = rows.some((_) => _.wareHouseName !== firstRow.wareHouseName);
     if (notAlike) return message.warning('所选托盘不属于同一库房!');
     if (firstRow.houseType[1] === STORE_FLAG.S) {
-      openOutDrawer(true, { data: rows, showSite: true });
+      openOutModal(true, { data: rows, showSite: true });
     } else {
-      openOutDrawer(true, { data: rows, showSite: false });
+      openOutModal(true, { data: rows, showSite: false });
     }
   }
 

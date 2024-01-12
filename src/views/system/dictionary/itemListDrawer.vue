@@ -4,29 +4,41 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-09 19:09:14
+ * @LastEditTime: 2024-01-12 17:33:35
 -->
 <template>
-  <BasicDrawer v-bind="$attrs" @register="registerDrawer" :title="dictName" width="1200px">
-    <BasicTable @register="registerTable">
-      <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增</a-button>
-        <template v-if="!systemLevel">
-          <a-button type="primary" @click="handleUpdate">编辑</a-button>
-          <a-button type="primary" @click="handleRemove">删除</a-button>
-          <a-button type="primary" @click="handleSwitch(true)">启用</a-button>
-          <a-button type="primary" @click="handleSwitch(false)">禁用</a-button>
-        </template>
-      </template>
-    </BasicTable>
-    <ItemFormDrawer @register="registerItemFormDrawer" @success="formSuccess" />
-  </BasicDrawer>
+  <BasicModal
+    v-bind="$attrs"
+    @register="registerModal"
+    :title="dictName"
+    width="1200px"
+    :minHeight="520"
+    @fullscreen="redoHeight"
+  >
+    <div class="flex h-inherit max-h-inherit min-h-inherit">
+      <div class="flex-1 w-full">
+        <BasicTable @register="registerTable">
+          <template #toolbar>
+            <a-button type="primary" @click="handleCreate">新增</a-button>
+            <template v-if="!systemLevel">
+              <a-button type="primary" @click="handleUpdate">编辑</a-button>
+              <a-button type="primary" @click="handleRemove">删除</a-button>
+              <a-button type="primary" @click="handleSwitch(true)">启用</a-button>
+              <a-button type="primary" @click="handleSwitch(false)">禁用</a-button>
+            </template>
+          </template>
+        </BasicTable>
+      </div>
+    </div>
+
+    <ItemFormModal @register="registerItemFormModal" @success="formSuccess" />
+  </BasicModal>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { itemColumns, itemSearchFormSchema } from './dictionary.data';
-  import { BasicDrawer, useDrawerInner, useDrawer } from '@/components/Drawer';
-  import ItemFormDrawer from './itemFormDrawer.vue';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
+  import ItemFormModal from './itemFormDrawer.vue';
   import { message, Modal } from 'ant-design-vue';
   import { getDictItemListApi, removeDictItemApi, updateDictItemApi } from '@/api/dictionary';
   import { ref } from 'vue';
@@ -34,8 +46,8 @@
   const dictId = ref('');
   const dictName = ref('');
   const systemLevel = ref(false);
-  const [registerItemFormDrawer, { openDrawer }] = useDrawer();
-  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
+  const [registerItemFormModal, { openModal }] = useModal();
+  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, redoHeight }] = useTable({
     title: '',
     isCanResizeParent: true,
     api: getDictItemListApi,
@@ -64,11 +76,11 @@
     },
     rowSelection: { type: 'radio' },
   });
-  const [registerDrawer, { setDrawerProps }] = useDrawerInner(({ data }) => {
+  const [registerModal, { setModalProps }] = useModalInner(({ data }) => {
     dictId.value = data.dictId;
     dictName.value = data.dictName;
     systemLevel.value = data.systemLevel;
-    setDrawerProps({ confirmLoading: false });
+    setModalProps({ confirmLoading: false });
     reload();
   });
   function formSuccess() {
@@ -84,12 +96,12 @@
     return rows;
   }
   function handleCreate() {
-    openDrawer(true, { data: { dictId: dictId.value } });
+    openModal(true, { data: { dictId: dictId.value } });
   }
   function handleUpdate() {
     const [row] = getSelectRow();
     if (!row) return;
-    openDrawer(true, { data: { ...row, dictId: dictId.value }, isUpdate: true });
+    openModal(true, { data: { ...row, dictId: dictId.value }, isUpdate: true });
   }
   function handleRemove() {
     const [row] = getSelectRow();

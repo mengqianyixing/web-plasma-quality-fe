@@ -4,25 +4,31 @@
  * @Author: zcc
  * @Date: 2024-01-04 16:30:55
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-04 19:04:35
+ * @LastEditTime: 2024-01-12 18:12:59
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     :title="'血浆批号【' + state + '】托盘入库'"
     width="1060px"
     @close="emit('close')"
+    :minHeight="520"
+    @fullscreen="redoHeight"
   >
-    <BasicTable @register="registerTable" ref="tableRef">
-      <template #toolbar>
-        <a-button type="primary" @click="handleIn">入库</a-button>
-        <a-button type="primary" @click="handleReBind">托盘重绑</a-button>
-      </template>
-    </BasicTable>
-    <InModal @register="registerInDrawer" @success="rePage" />
-    <BasicDrawer
-      @register="registerBindDrawer"
+    <div class="flex h-inherit max-h-inherit min-h-inherit">
+      <div class="flex-1 w-full">
+        <BasicTable @register="registerTable" ref="tableRef">
+          <template #toolbar>
+            <a-button type="primary" @click="handleIn">入库</a-button>
+            <a-button type="primary" @click="handleReBind">托盘重绑</a-button>
+          </template>
+        </BasicTable>
+      </div>
+    </div>
+    <InModal @register="registerInModal" @success="rePage" />
+    <BasicModal
+      @register="registerBindModal"
       showFooter
       title="托盘重绑"
       width="360px"
@@ -30,11 +36,11 @@
       @close="emit('close')"
     >
       <BasicForm @register="registerForm" />
-    </BasicDrawer>
-  </BasicDrawer>
+    </BasicModal>
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner, useDrawer } from '@/components/Drawer';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchForm } from './data';
   import { message, Modal } from 'ant-design-vue';
@@ -45,7 +51,7 @@
   import { bindBoxApi } from '@/api/tray/relocation';
 
   const emit = defineEmits(['register', 'close']);
-  defineOptions({ name: 'InStoreDrawer' });
+  defineOptions({ name: 'InStoreModal' });
 
   const state = ref('');
 
@@ -59,15 +65,18 @@
     showActionButtonGroup: false,
   });
 
-  const [registerInDrawer, { openDrawer: openInDrawer }] = useDrawer();
-  const [registerBindDrawer, { openDrawer }] = useDrawer();
+  const [registerInModal, { openModal: openInModal }] = useModal();
+  const [registerBindModal, { openModal }] = useModal();
 
-  const [registerDrawer] = useDrawerInner(async ({ batchNo }) => {
+  const [registerModal] = useModalInner(async ({ batchNo }) => {
     state.value = batchNo;
     rePage();
   });
 
-  const [registerTable, { getSelectRows, reload, clearSelectedRowKeys, setPagination }] = useTable({
+  const [
+    registerTable,
+    { getSelectRows, reload, clearSelectedRowKeys, setPagination, redoHeight },
+  ] = useTable({
     immediate: false,
     title: '',
     api: getListApi,
@@ -104,13 +113,13 @@
     const rows = getSelections(false);
     if (rows.length === 0) return;
     if (rows.some((_) => _.wareHouseName)) return message.warning('所选托盘存在已入库!');
-    openInDrawer(true, { data: rows });
+    openInModal(true, { data: rows });
   }
 
   async function handleReBind() {
     const rows = getSelections(true);
     if (rows.length === 0) return;
-    openDrawer();
+    openModal();
     await nextTick();
     setFieldsValue({ trayNo: rows[0].trayNo });
     clearValidate();

@@ -19,19 +19,19 @@
       <template #itemKey="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="openDrawer(true, { data: record, disabled: true })"
+          @click.stop.self="openModal(true, { data: record, disabled: true })"
         >
           {{ record.itemKey }}
         </span>
       </template>
     </BasicTable>
-    <FormModal @register="registerDrawer" @success="success" />
+    <FormModal @register="registerModal" @success="success" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { useDrawer } from '@/components/Drawer';
+  import { useModal } from '@/components/Modal';
   import { columns, searchFormschema } from './inspectMethod.data';
   import { message, Modal } from 'ant-design-vue';
   import FormModal from './formModal.vue';
@@ -41,7 +41,7 @@
     removeInspectMethodApi,
   } from '@/api/inspect/inspectMethod';
 
-  const [registerDrawer, { openDrawer }] = useDrawer();
+  const [registerModal, { openModal }] = useModal();
 
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,
@@ -80,12 +80,12 @@
     return rows;
   }
   function handleCreate() {
-    openDrawer(true, { isUpdate: false, data: {} });
+    openModal(true, { isUpdate: false, data: {} });
   }
   function handleUpdate() {
     const [row] = getSelections(true);
     if (!row) return;
-    openDrawer(true, { data: row, isUpdata: true });
+    openModal(true, { data: row, isUpdata: true });
   }
   function success() {
     clearSelectedRowKeys();
