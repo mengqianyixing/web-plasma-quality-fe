@@ -71,6 +71,31 @@ export const columns: BasicColumn[] = [
   {
     title: '申请日期',
     dataIndex: 'createAt',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
+    },
+  },
+  {
+    title: '复核人',
+    dataIndex: 'reviewer',
+  },
+  {
+    title: '复核日期',
+    dataIndex: 'reviewAt',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
+    },
+  },
+  {
+    title: '审核人',
+    dataIndex: 'checker',
+  },
+  {
+    title: '审核日期',
+    dataIndex: 'checkAt',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
+    },
   },
 ];
 
