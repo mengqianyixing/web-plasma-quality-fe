@@ -24,7 +24,7 @@
         </FormItem>
         <FormItem v-if="searchForm.pattern === 'BCH'" label="复核人" name="checker">
           <Input v-model:value="searchForm.checker" disabled style="width: 180px" />
-          <Button @click="goRegister">登录</Button>
+          <Button @click="handleLogin">登录</Button>
         </FormItem>
         <FormItem label="复核人" v-if="searchForm.pattern === 'BOX'" name="checker">
           <Input v-model:value="searchForm.checker" disabled />
@@ -54,6 +54,7 @@
         </template>
       </Table>
     </div>
+    <LoginModal @register="registerLoginModal" @success="handleSuccess" />
   </Modal>
 </template>
 
@@ -76,13 +77,15 @@
     plasmaPauseBoxList,
     plasmaPauseBatch,
   } from '@/api/inbound-management/accept-plasma';
+  import LoginModal from '@/__components/nonconformity-registration/LoginModal.vue';
+  import { useModal } from '@/components/Modal';
 
   import { useMessage } from '@/hooks/web/useMessage';
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
 
-  const emit = defineEmits(['close', 'goRegister', 'clearInfo', 'refresh-data']);
+  const emit = defineEmits(['close', 'clearInfo', 'refresh-data']);
   // const props = defineProps({
   //   remark: String as PropType<any>,
   // });
@@ -195,9 +198,6 @@
     P: '已暂停',
   };
 
-  const goRegister = () => {
-    emit('goRegister');
-  };
   // 暂停
   const confirm = async () => {
     if (!searchForm.value.checker) {
@@ -286,6 +286,10 @@
       warning('请登录复核人');
       return;
     }
+    if (!searchForm.value.remark) {
+      warning('请填写备注!');
+      return;
+    }
     const firstSelectedItem = tableSelected.value[0];
     if (searchForm.value.pattern === 'BOX') {
       try {
@@ -336,6 +340,18 @@
       }
     }
   };
+
+  const [registerLoginModal, { openModal }] = useModal();
+
+  // 点击登录按钮
+  function handleLogin() {
+    openModal(true);
+  }
+
+  // 登录成功事件
+  function handleSuccess(nickname: string) {
+    searchForm.value.checker = nickname;
+  }
 
   defineExpose({
     searchForm,

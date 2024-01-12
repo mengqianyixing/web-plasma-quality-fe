@@ -1,41 +1,45 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     :title="state.title"
     width="1200px"
+    :minHeight="520"
+    @fullscreen="redoHeight"
     @close="emit('close')"
   >
-    <div class="flex flex-col">
-      <BasicForm @register="registerForm" />
-      <div class="flex justify-end line">
-        <a-button
-          type="primary"
-          v-if="state.title !== '查看'"
-          @click="methods.submit"
-          :loading="state.loading"
-        >
-          保存申请单
-        </a-button>
-      </div>
-      <div class="flex-1">
-        <BasicTable @register="registerTable">
-          <template #toolbar v-if="state.title !== '查看'">
-            <a-button type="primary" @click="methods.addClick">添加</a-button>
-            <a-button type="primary" @click="methods.removeClick">移除</a-button>
-          </template>
-        </BasicTable>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <BasicForm @register="registerForm" />
+        <div class="flex justify-end line">
+          <a-button
+            type="primary"
+            v-if="state.title !== '查看'"
+            @click="methods.submit"
+            :loading="state.loading"
+          >
+            保存申请单
+          </a-button>
+        </div>
+        <div class="flex-1 shrink-1" style="height: calc(100% - 170px)">
+          <BasicTable @register="registerTable">
+            <template #toolbar v-if="state.title !== '查看'">
+              <a-button type="primary" @click="methods.addClick">添加</a-button>
+              <a-button type="primary" @click="methods.removeClick">移除</a-button>
+            </template>
+          </BasicTable>
+        </div>
       </div>
     </div>
-    <PlasmaDtDrawer @register="registerDtDrawer" @close="methods.close" />
-  </BasicDrawer>
+    <PlasmaDtModal @register="registerDtModal" @close="methods.close" />
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner, useDrawer } from '@/components/Drawer';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { formSchema, dtColumns } from './plasmaOut.data';
   import { BasicTable, useTable } from '@/components/Table';
-  import PlasmaDtDrawer from './plasmaDtDrawer.vue';
+  import PlasmaDtModal from './plasmaDtDrawer.vue';
   import {
     addFormApi,
     updateFormApi,
@@ -49,7 +53,7 @@
   const emit = defineEmits(['close']);
 
   const state = reactive({ dlvNo: '', loading: false, title: '' });
-  const [registerDtDrawer, { openDrawer }] = useDrawer();
+  const [registerDtModal, { openModal }] = useModal();
   const [registerForm, { validate, clearValidate, resetFields, updateSchema, setFieldsValue }] =
     useForm({
       labelWidth: 90,
@@ -59,7 +63,7 @@
     });
   const [
     registerTable,
-    { getSelectRows, clearSelectedRowKeys, reload, setPagination, setTableData },
+    { getSelectRows, clearSelectedRowKeys, reload, setPagination, setTableData, redoHeight },
   ] = useTable({
     api: dtTableApi,
     immediate: false,
@@ -83,7 +87,7 @@
       return res;
     },
   });
-  const [registerDrawer] = useDrawerInner(async ({ disabled, dlvNo }) => {
+  const [registerModal] = useModalInner(async ({ disabled, dlvNo }) => {
     state.dlvNo = dlvNo;
     updateSchema(
       formSchema.slice(1).map((_) => ({ ..._, componentProps: { disabled: !!disabled } })),
@@ -111,7 +115,7 @@
   const methods = {
     addClick: () => {
       if (!state.dlvNo) return message.warning('请先保存申请单');
-      openDrawer(true, state);
+      openModal(true, state);
     },
     removeClick: () => {
       const rows = getSelectRows();
@@ -144,7 +148,7 @@
       }
     },
     close: () => {
-      openDrawer(false);
+      openModal(false);
       setPagination({ current: 1 });
       reload();
     },

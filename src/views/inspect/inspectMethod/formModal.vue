@@ -7,22 +7,22 @@
  * @LastEditTime: 2023-12-28 11:14:30
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     :title="state.type"
     width="800px"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { formListSchema } from './inspectMethod.data';
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import {
     getInspectMethodDtApi,
     addInspectMethodApi,
@@ -42,7 +42,7 @@
       schemas: formListSchema,
       showActionButtonGroup: false,
     });
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(
     async ({ data, disabled }) => {
       state.dictItemId = data.dictItemId;
       if (state.isRequest === false) {
@@ -73,17 +73,17 @@
   async function handleSubmit() {
     try {
       const values = await validate();
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       if (state.dictItemId) {
         await updateInspectMethodApi({ ...values, dictItemId: state.dictItemId });
       } else {
         await addInspectMethodApi({ ...values } as any);
       }
-      setDrawerProps({ confirmLoading: false });
-      closeDrawer();
+      setModalProps({ confirmLoading: false });
+      closeModal();
       emit('success');
     } finally {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
   }
   async function getDict() {

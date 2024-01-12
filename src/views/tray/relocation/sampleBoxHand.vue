@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-22 17:39:08
+ * @LastEditTime: 2024-01-10 15:57:45
 -->
 <template>
   <div class="h-full">
@@ -18,9 +18,9 @@
         </a-button>
       </template>
     </BasicTable>
-    <BasicDrawer @register="registerDrawer" width="600px" @ok="confim" :show-footer="true">
+    <BasicModal @register="registerModal" width="600px" @ok="confim" :show-footer="true">
       <BasicForm @register="registerForm" />
-    </BasicDrawer>
+    </BasicModal>
   </div>
 </template>
 <script setup lang="ts">
@@ -28,7 +28,7 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { bindBoxApi } from '@/api/tray/relocation';
   import { plasmaBoxHandSearchFormSchema, plasmaBoxHandColumns } from './relocation.data';
-  import { BasicDrawer, useDrawer } from '@/components/Drawer';
+  import { BasicModal, useModal } from '@/components/Modal';
   import { message, Modal } from 'ant-design-vue';
 
   const props = defineProps({
@@ -36,7 +36,7 @@
       type: Boolean,
     },
   });
-  const [registerDrawer, { openDrawer, setDrawerProps }] = useDrawer();
+  const [registerModal, { openModal, setModalProps }] = useModal();
   const [registerForm, { validate, clearValidate }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
@@ -79,17 +79,17 @@
     const row = getSelectRows();
     if (row.length === 0) return message.warning('请选择数据');
     clearValidate();
-    openDrawer(true);
+    openModal(true);
   }
   async function confim() {
     try {
       const { trayNo } = await validate();
       const rows = getSelectRows();
       const boxes = rows.map((_) => _.boxId);
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: boxes });
-      setDrawerProps({ confirmLoading: false });
-      openDrawer(false);
+      setModalProps({ confirmLoading: false });
+      openModal(false);
       reload();
     } catch (e) {
       console.log(e);

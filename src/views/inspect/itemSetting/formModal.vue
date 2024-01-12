@@ -7,22 +7,22 @@
  * @LastEditTime: 2024-01-09 19:58:40
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     :title="state.type + '检验项目'"
     width="800px"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
   import { BasicForm, FormSchema, useForm } from '@/components/Form';
   import { formListSchema } from './itemSetting.data';
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import {
     getItemSettingDtApi,
     addItemSettingApi,
@@ -42,7 +42,7 @@
       schemas: formListSchema,
       showActionButtonGroup: false,
     });
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(
     async ({ data, disabled }) => {
       state.projectId = data.projectId;
       if (state.isRequest === false) {
@@ -77,17 +77,17 @@
   async function handleSubmit() {
     try {
       const values = await validate();
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       if (state.projectId) {
         await updateItemSettingApi({ ...values, projectId: state.projectId });
       } else {
         await addItemSettingApi({ ...values } as any);
       }
-      setDrawerProps({ confirmLoading: false });
-      closeDrawer();
+      setModalProps({ confirmLoading: false });
+      closeModal();
       emit('success');
     } finally {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
   }
   async function getDict(dictNos: string[]) {

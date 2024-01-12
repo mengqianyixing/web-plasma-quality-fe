@@ -4,53 +4,63 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-06 15:56:21
+ * @LastEditTime: 2024-01-12 17:52:29
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     :title="projectName + '详情'"
     width="800px"
     @close="close"
+    :min-height="520"
     cancelText="关闭"
     :show-ok-btn="false"
   >
-    <Tabs v-model:activeKey="activeKey" @change="change" class="h-full bg-white tabs" size="small">
-      <TabPane key="1" tab="合格样品">
-        <component
-          :is="componentMap['1']"
-          checkResult="合格"
-          :projectId="pid"
-          type="QUALIFIED"
-          :bsNo="bsno"
-        />
-      </TabPane>
-      <TabPane key="2" tab="不合格样品">
-        <component
-          :is="componentMap['2']"
-          checkResult="不合格"
-          :checkType="checkType"
-          :projectId="pid"
-          type="UNQUALIFIED"
-          :bsNo="bsno"
-        />
-      </TabPane>
-      <TabPane key="3" tab="未检测样品">
-        <component
-          :is="componentMap['3']"
-          checkResult="未检测"
-          :projectId="pid"
-          type="TO_BE_TESTED"
-          :bsNo="bsno"
-        />
-      </TabPane>
-    </Tabs>
-  </BasicDrawer>
+    <div class="flex h-inherit max-h-inherit min-h-inherit">
+      <div class="flex-1 w-full">
+        <Tabs
+          v-model:activeKey="activeKey"
+          @change="change"
+          class="h-full bg-white tabs"
+          size="small"
+        >
+          <TabPane key="1" tab="合格样品">
+            <component
+              :is="componentMap['1']"
+              checkResult="合格"
+              :projectId="pid"
+              type="QUALIFIED"
+              :bsNo="bsno"
+            />
+          </TabPane>
+          <TabPane key="2" tab="不合格样品">
+            <component
+              :is="componentMap['2']"
+              checkResult="不合格"
+              :checkType="checkType"
+              :projectId="pid"
+              type="UNQUALIFIED"
+              :bsNo="bsno"
+            />
+          </TabPane>
+          <TabPane key="3" tab="未检测样品">
+            <component
+              :is="componentMap['3']"
+              checkResult="未检测"
+              :projectId="pid"
+              type="TO_BE_TESTED"
+              :bsNo="bsno"
+            />
+          </TabPane>
+        </Tabs>
+      </div>
+    </div>
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { TabPane, Tabs } from 'ant-design-vue';
   import { ref, markRaw } from 'vue';
   import DtTable from './dtTable.vue';
@@ -67,7 +77,7 @@
     3: 'div',
   });
 
-  const [registerDrawer] = useDrawerInner(async ({ projectId, projectAbbr, bsNo, methodAbbr }) => {
+  const [registerModal] = useModalInner(async ({ projectId, projectAbbr, bsNo, methodAbbr }) => {
     projectName.value = projectAbbr;
     pid.value = projectId;
     bsno.value = bsNo;

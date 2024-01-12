@@ -4,25 +4,25 @@
  * @Author: zcc
  * @Date: 2023-12-12 15:49:25
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-19 11:41:14
+ * @LastEditTime: 2024-01-10 15:20:40
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     :title="'新增' + getNodeType"
-    width="500px"
+    width="600px"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
   import { computed, reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { initFormSchema } from './setting.data';
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { addHouseApi } from '@/api/plasmaStore/setting';
 
   const emit = defineEmits(['success', 'register']);
@@ -42,7 +42,7 @@
     schemas: formSchema,
     showActionButtonGroup: false,
   });
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(
     ({ parentHouseType, parentHouseNo }) => {
       state.parentHouseNo = parentHouseNo || 'ROOT';
       const formSchema = initFormSchema({
@@ -50,7 +50,7 @@
         houseType: parentHouseType || '',
         updateSchema,
       });
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
       updateSchema(formSchema);
       setFieldsValue(
         formSchema.reduce((t, c) => {
@@ -66,7 +66,7 @@
     try {
       const { houseName, typeFlag, storeFlag, autoFlag, capacity, remark, closed } =
         await validate();
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       await addHouseApi({
         closed,
         houseName,
@@ -75,10 +75,10 @@
         houseType: typeFlag + storeFlag + autoFlag,
         remark,
       });
-      closeDrawer();
+      closeModal();
       emit('success');
     } finally {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
   }
 </script>

@@ -1,29 +1,35 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     title="区域列表"
     width="860px"
+    :minHeight="520"
+    @fullscreen="redoHeight"
     @close="emit('close')"
   >
-    <div class="flex flex-col h-full">
-      <CellWapper :data="state" cell-width="33.33%" :cell-list="cellSchema([])" />
-      <BasicTable @register="registerTable" @fetch-success="fetchSuccess">
-        <template #toolbar>
-          <a-button type="primary" @click="handleAdd">新增</a-button>
-          <a-button type="primary" @click="handleCapacityAdd">扩容</a-button>
-          <a-button type="primary" @click="handleCheckStatus('CLOSED')">禁用</a-button>
-          <a-button type="primary" @click="handleCheckStatus('NORMAL')">启用</a-button>
-        </template>
-      </BasicTable>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <CellWapper :data="state" cell-width="33.33%" :cell-list="cellSchema([])" />
+        <div class="flex-1 shrink-1" style="height: calc(100% - 111px)">
+          <BasicTable @register="registerTable" @fetch-success="fetchSuccess">
+            <template #toolbar>
+              <a-button type="primary" @click="handleAdd">新增</a-button>
+              <a-button type="primary" @click="handleCapacityAdd">扩容</a-button>
+              <a-button type="primary" @click="handleCheckStatus('CLOSED')">禁用</a-button>
+              <a-button type="primary" @click="handleCheckStatus('NORMAL')">启用</a-button>
+            </template>
+          </BasicTable>
+        </div>
+      </div>
     </div>
-    <CapacityModel @register="registerCapacityDrawer" @success="reload" />
-    <FormModel @register="registerFormDrawer" @success="reload" />
-  </BasicDrawer>
+    <CapacityModel @register="registerCapacityModal" @success="reload" />
+    <FormModel @register="registerFormModal" @success="reload" />
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner, useDrawer } from '@/components/Drawer';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { areaListApi, checkHouseApi } from '@/api/plasmaStore/setting';
   import { areaColumns as columns, cellSchema } from './setting.data';
@@ -46,14 +52,14 @@
     closed: '',
     locationUsedCount: '',
   });
-  const [registerDrawer] = useDrawerInner(({ houseNo }) => {
+  const [registerModal] = useModalInner(({ houseNo }) => {
     state.houseNo = houseNo;
     setPagination({ current: 1 });
     reload();
   });
-  const [registerFormDrawer, { openDrawer }] = useDrawer();
+  const [registerFormModal, { openModal }] = useModal();
 
-  const [registerCapacityDrawer, { openDrawer: openCapacityDrawer }] = useDrawer();
+  const [registerCapacityModal, { openModal: openCapacityModal }] = useModal();
 
   const [
     registerTable,
@@ -64,6 +70,7 @@
       clearSelectedRowKeys,
       getRawDataSource,
       setPagination,
+      redoHeight,
     },
   ] = useTable({
     immediate: false,
@@ -89,13 +96,13 @@
     },
   });
   function handleAdd() {
-    openDrawer(true, { parentHouseType: state.houseType, parentHouseNo: state.houseNo });
+    openModal(true, { parentHouseType: state.houseType, parentHouseNo: state.houseNo });
   }
   function handleCapacityAdd() {
     const { houseNo, closed } = getOnlyOneRow();
     if (closed === CLOSED.CLOSED) return message.warning('禁用状态不可扩容');
     if (!houseNo) return;
-    openCapacityDrawer(true, { houseNo });
+    openCapacityModal(true, { houseNo });
   }
   function getOnlyOneRow() {
     const { selectedRowKeys } = getRowSelection() as { selectedRowKeys: string[] };

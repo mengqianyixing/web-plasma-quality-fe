@@ -84,6 +84,7 @@
     'ok',
     'register',
     'update:open',
+    'fullscreen',
   ]);
 
   const attrs = useAttrs();
@@ -123,6 +124,7 @@
     modalWrapperRef,
     extHeightRef,
     wrapClassName: toRef(getMergeProps.value, 'wrapClassName'),
+    emit,
   });
 
   // modal component does not need title and origin buttons

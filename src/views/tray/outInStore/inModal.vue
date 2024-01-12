@@ -1,35 +1,40 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     title="托盘入库"
     width="500px"
+    :minHeight="400"
     @ok="handleSubmit"
+    @fullscreen="redoHeight"
   >
-    <div class="flex flex-col h-full">
-      <BasicForm @register="registerForm" />
-      <div class="flex-1">
-        <BasicTable @register="registerTable">
-          <template #location="{ record }">
-            {{ record.location || record.area }}
-            <a-button v-show="state.columnLabel === '货位'" @click="selectLocation(record)"
-              >选择
-            </a-button>
-          </template>
-        </BasicTable>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <BasicForm @register="registerForm" />
+        <div class="flex-1 shrink-1" style="height: calc(100% - 56px)">
+          <BasicTable @register="registerTable">
+            <template #location="{ record }">
+              {{ record.location || record.area }}
+              <a-button v-show="state.columnLabel === '货位'" @click="selectLocation(record)">
+                选择
+              </a-button>
+            </template>
+          </BasicTable>
+        </div>
       </div>
     </div>
-    <LocationDrawer @register="registerLocationDrawer" @confim="confim" />
-  </BasicDrawer>
+
+    <LocationModal @register="registerLocationModal" @confim="confim" />
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner, useDrawer } from '@/components/Drawer';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { BasicTable, useTable } from '@/components/Table';
   import { reactive } from 'vue';
   import { inStoreAreaSchema, inStoreFormSchema } from './outInStore.data';
-  import LocationDrawer from '@/components/BusinessDrawer/locationDrawer/index.vue';
+  import LocationModal from '@/components/BusinessDrawer/locationDrawer/index.vue';
   import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
   import { settingListApi, areaListApi } from '@/api/plasmaStore/setting';
   import { submitInHouseApi } from '@/api/tray/relocation';
@@ -41,7 +46,7 @@
     trayNo: string;
   };
   type Select = { value: string; label: string; houseType: string };
-  const [registerLocationDrawer, { openDrawer: openLocationDrawer }] = useDrawer();
+  const [registerLocationModal, { openModal: openLocationModal }] = useModal();
   const houseAreaMap: Map<string, Recordable<any>> = new Map();
   const state = reactive({
     data: [] as Record[],
@@ -49,9 +54,11 @@
     columnLabel: '',
     record: {} as Record,
   });
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, redoHeight }] = useTable({
     api: getData,
+    inset: true,
     isCanResizeParent: true,
+    // canResize:true,
     fetchSetting: {
       listField: 'result',
     },
@@ -89,8 +96,8 @@
     schemas: schemas,
     showActionButtonGroup: false,
   });
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(({ data }) => {
-    setDrawerProps({ confirmLoading: false });
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(({ data }) => {
+    setModalProps({ confirmLoading: false });
     resetFields();
     getHouseList();
     state.columnLabel = '';
@@ -109,13 +116,13 @@
           locationNo: _.location || void 0,
         })),
       };
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       await submitInHouseApi(params);
-      setDrawerProps({ confirmLoading: false });
-      closeDrawer();
+      setModalProps({ confirmLoading: false });
+      closeModal();
       emit('success');
     } catch {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
   }
   function clearRowsSelection(data: Record[]) {
@@ -183,13 +190,13 @@
     return new Promise((rs) => rs({ result: state.data }));
   }
   function confim([location]) {
-    openLocationDrawer(false);
+    openLocationModal(false);
     state.record.location = location.locationNo;
   }
   async function selectLocation(record: Record) {
     state.record = record;
     const res = await validateFields(['houseNo']);
-    openLocationDrawer(true, {
+    openLocationModal(true, {
       disabledKeys: state.data.filter((_) => _.location).map((_) => _.location),
       params: { houseNo: res.houseNo, locationStatus: 'IDLE' },
     });

@@ -33,7 +33,7 @@ enum Api {
 }
 
 // 获取血浆验收记录信息
-export const getPlasmaVerify = (params: GetApiCoreBatchPlasmaVerifyBoxNoRequest) => {
+export const getPlasmaVerify = (params: GetApiCoreBatchPlasmaVerifyBoxNoRequest['boxNo']) => {
   return defHttp.get<GetApiCoreBatchPlasmaVerifyBoxNoResponse>({
     url: `${Api.GetPlasmaVerify}/${params}`,
   });

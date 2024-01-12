@@ -7,9 +7,9 @@
  * @LastEditTime: 2024-01-08 15:14:17
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     title="效价导入"
     width="1200px"
     @close="emit('close')"
@@ -52,13 +52,13 @@
         </div>
       </div>
     </div>
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { CellWapper } from '@/components/CellWapper';
   import { importSuccessColumns, importFailColumns, cellList } from './data';
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { ref, reactive } from 'vue';
   import { Upload as AUpload, message } from 'ant-design-vue';
   import { uploadItemTiter } from '@/api/inspect/resultRegistration';
@@ -88,7 +88,7 @@
     dataFaild: [],
   });
 
-  defineOptions({ name: 'ImportDrawer' });
+  defineOptions({ name: 'ImportModal' });
 
   const [registerTable] = useTable({
     dataSource: dataSource.dataSaved,
@@ -112,7 +112,7 @@
     showTableSetting: false,
     bordered: true,
   });
-  const [registerDrawer] = useDrawerInner(({ projectId, bsNo }) => {
+  const [registerModal] = useModalInner(({ projectId, bsNo }) => {
     pid.value = projectId;
     bsno.value = bsNo;
     dataSource.dataFaild.splice(0, dataSource.dataFaild.length);

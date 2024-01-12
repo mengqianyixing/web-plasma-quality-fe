@@ -1,12 +1,13 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     title="未检测"
-    width="400px"
+    width="520px"
     cancelText="关闭"
     okText="提交&关闭"
+    :min-height="300"
     @close="emit('close')"
     @ok="handleSubmit(true)"
   >
@@ -15,10 +16,10 @@
     </template>
     <BasicForm @register="registerForm" />
     <CellWapper :data="donorData" cell-width="50%" :cell-list="cellList" :gap="0" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { CellWapper } from '@/components/CellWapper';
   import { ref, unref } from 'vue';
@@ -50,7 +51,7 @@
   const donorData = ref({});
   const loading = ref(false);
 
-  const [registerDrawer, { setDrawerProps }] = useDrawerInner(
+  const [registerModal, { setModalProps }] = useModalInner(
     async ({ projectIds, bsNo, options }) => {
       bsno.value = bsNo;
       updateSchema({
@@ -103,7 +104,7 @@
   async function handleSubmit(close: boolean) {
     const { sampleNo, projectIds } = await validate();
     try {
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       loading.value = true;
       await submitNotCheckApi({ sampleNo, bsNo: unref(bsno), projectIds });
       message.success(sampleNo + '登记成功');
@@ -115,7 +116,7 @@
       }
     } finally {
       loading.value = false;
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
   }
 </script>
