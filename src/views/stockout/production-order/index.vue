@@ -120,6 +120,12 @@
 
   function handleEdit() {
     if (!selectRowsCheck()) return;
+
+    if (selectedRow.value[0]?.state === statusValueEnum.RVD) {
+      warning('该生产指令已复核，不可编辑');
+      return;
+    }
+
     openModal(true, {
       record: selectedRow.value[0],
       isUpdate: true,
@@ -128,6 +134,11 @@
 
   async function handleDelete() {
     if (!selectRowsCheck()) return;
+
+    if (selectedRow.value[0]?.state === statusValueEnum.RVD) {
+      warning('该生产指令已复核，不可撤销');
+      return;
+    }
 
     createConfirm({
       iconType: 'warning',
@@ -155,6 +166,7 @@
       warning('该指令不是待复核的状态');
       return;
     }
+
     createConfirm({
       iconType: 'warning',
       title: '复核',
