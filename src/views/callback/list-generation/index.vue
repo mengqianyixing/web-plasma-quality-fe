@@ -203,18 +203,20 @@
           maxCollectTime: it.maxCollectTime ? dayjs(it.maxCollectTime).format('YYYY-MM-DD') : '',
           refuseDate: it.refuseDate ? dayjs(it.refuseDate).format('YYYY-MM-DD') : '',
           refuseReason: it.refuseReason,
+          remainDay: dayjs(it.minCollTime).add(1, 'year').diff(dayjs(), 'day'),
         };
       });
 
-      jsonToSheetXlsx({
+      jsonToSheetXlsx<any>({
         header: {
           donorNo: '浆员编号',
-          minCollTime: '采浆日期',
-          maxCollectTime: '最后采浆日期',
+          minCollTime: '最早采浆日期',
+          maxCollectTime: '最晚采浆日期',
           donorName: '浆员姓名',
           donatorStatus: '浆员状态',
           refuseDate: '拒绝日期',
           refuseReason: '拒绝原因',
+          remainDay: '剩余天数',
         },
         filename: `回访名单${selectedRow.value[0].planNo}-${dayjs().format('YYYY-MM-DD')}.xlsx`,
         data: _exportData,
