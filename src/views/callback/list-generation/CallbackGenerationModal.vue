@@ -1,5 +1,5 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
     @register="register"
     :title="getTitle"
@@ -18,19 +18,19 @@
       <a-button type="primary" @click="handleOk">确定</a-button>
     </template>
 
-    <AddCallbackPersonnelListDrawer @register="registerAddDrawer" @success="reload" />
-  </BasicDrawer>
+    <AddCallbackPersonnelListModal @register="registerAddModal" @success="reload" />
+  </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { BasicDrawer, useDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { computed, ref, unref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
   import { useMessage } from '@/hooks/web/useMessage';
 
-  import AddCallbackPersonnelListDrawer from '@/views/callback/list-generation/AddCallbackPersonnelListDrawer.vue';
+  import AddCallbackPersonnelListModal from '@/views/callback/list-generation/AddCallbackPersonnelListModal.vue';
   import {
-    callbackDrawerSearchFromSchema,
-    callbackDrawerColumns,
+    callbackModalSearchFromSchema,
+    callbackModalColumns,
   } from '@/views/callback/list-generation/generation.data';
   import { getCallbackDetail, revokeCallback } from '@/api/callback/list-generation';
   import dayjs from 'dayjs';
@@ -47,11 +47,11 @@
   const [registerTable, { reload }] = useTable({
     title: '样本批次列表',
     api: getCallbackDetail,
-    columns: callbackDrawerColumns,
+    columns: callbackModalColumns,
     formConfig: {
       showAdvancedButton: false,
       labelWidth: 150,
-      schemas: callbackDrawerSearchFromSchema,
+      schemas: callbackModalSearchFromSchema,
       transformDateFunc(date) {
         return dayjs(date).format('YYYY-MM-DD');
       },
@@ -91,9 +91,9 @@
   const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '生成名单'));
 
   const table = ref(null);
-  const [registerAddDrawer, { openDrawer }] = useDrawer();
-  const [register, { setDrawerProps, closeDrawer }] = useDrawerInner((data) => {
-    setDrawerProps({
+  const [registerAddModal, { openModal }] = useModal();
+  const [register, { setModalProps, closeModal }] = useModalInner((data) => {
+    setModalProps({
       maskClosable: false,
     });
 
@@ -105,7 +105,7 @@
   });
 
   async function handleAdd() {
-    openDrawer(true, {
+    openModal(true, {
       reload: true,
       record: {
         stationNo: stationNo.value,
@@ -134,11 +134,11 @@
 
   function handleOk() {
     emit('success');
-    closeDrawer();
+    closeModal();
   }
 
   function handleCancel() {
     emit('success');
-    closeDrawer();
+    closeModal();
   }
 </script>

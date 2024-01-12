@@ -80,7 +80,7 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
-export const callbackDrawerColumns: BasicColumn[] = [
+export const callbackModalColumns: BasicColumn[] = [
   {
     title: '浆员编号',
     dataIndex: 'donorNo',
@@ -118,7 +118,7 @@ export const callbackDrawerColumns: BasicColumn[] = [
   },
 ];
 
-export const callbackDetailDrawerColumns: BasicColumn[] = [
+export const callbackDetailModalColumns: BasicColumn[] = [
   {
     title: '浆员编号',
     dataIndex: 'donorNo',
@@ -200,7 +200,7 @@ export const callbackDetailDrawerColumns: BasicColumn[] = [
   },
 ];
 
-export const addCallbackDrawerSearchFromSchema: FormSchema[] = [
+export const addCallbackModalSearchFromSchema: FormSchema[] = [
   {
     field: '[minCollectTime, maxCollectTime]',
     label: '最早待回访日期',
@@ -228,7 +228,7 @@ export const addCallbackDrawerSearchFromSchema: FormSchema[] = [
   },
 ];
 
-export const callbackDrawerSearchFromSchema: FormSchema[] = [
+export const callbackModalSearchFromSchema: FormSchema[] = [
   {
     field: '[minCollectTime, maxCollectTime]',
     label: '最早待回访日期',
