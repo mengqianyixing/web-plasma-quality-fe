@@ -195,7 +195,7 @@
               value={bagNo}
               disabled={tableLoading.value}
               onChange={(event) => (bagNo.value = event.target.value)}
-              onPressEnter={debounce(handlePressEnter, 500)}
+              onkeyup={debounce(handlePressEnter, 500)}
             />
           </div>
         );
@@ -380,94 +380,96 @@
   });
 
   // 血浆扫描
-  async function handlePressEnter() {
-    if (!bagNo.value) {
-      warning('请扫描袋号！');
-      return;
-    }
-    if (!checker.value) {
-      warning('请登录复核人！');
-      return;
-    }
+  async function handlePressEnter(e) {
+    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+      if (!bagNo.value) {
+        warning('请扫描袋号！');
+        return;
+      }
+      if (!checker.value) {
+        warning('请登录复核人！');
+        return;
+      }
 
-    const params = {
-      batchNo: batchNo.value,
-      boxNo: filterForm.value.boxNo,
-      bagNo: bagNo.value,
-      checker: checker.value,
-      trayNo: trayNo.value,
-    };
+      const params = {
+        batchNo: batchNo.value,
+        boxNo: filterForm.value.boxNo,
+        bagNo: bagNo.value,
+        checker: checker.value,
+        trayNo: trayNo.value,
+      };
 
-    // 没有选择批号直接扫码进行的验收操作，将批次信息回填，不作为实际验收操作,相当于查询此批信息
-    const realAccept = !!filterForm.value.batchNo;
-    try {
-      tableLoading.value = true;
-      const data = await plasmaVerifyBag(params);
-      if (data) {
-        filterForm.value.stationName = data.stationName;
-        filterForm.value.batchNo = data.batchNo;
-        filterForm.value.verifyBagCount = data.verifyBagCount;
-        filterForm.value.bagCount = data.bagCount;
-        _setReChecker(data.checker);
-        filterForm.value.verifyBoxCount = data.verifyBoxCount;
-        filterForm.value.boxCount = data.boxCount;
-        filterForm.value.stationNo = data.stationNo;
-        filterForm.value.boxNo = data.boxNo;
-        // 更改托盘编号
-        if (trayNo.value && data.trayNo && trayNo.value != data.trayNo) {
-          Modal.confirm({
-            title: '提示?',
-            content: createVNode('div', { style: 'color:red;' }, '托盘编号不一致，需要替换吗?'),
-            onOk() {
-              trayNo.value = data.trayNo;
-            },
-            onCancel() {
-              console.log('Cancel');
-            },
-            class: 'test',
-          });
-        } else if (data.trayNo) {
-          filterForm.value.trayNo = data.trayNo;
-        }
-
-        filterForm.value.unVerifyBag = data.unVerifyBag.map((item: any) => {
-          return {
-            bagNo: item,
-          };
-        });
-
-        filterForm.value.verifyBag = data.verifyBag;
-
-        if (realAccept) {
-          success('验收成功');
-          donorFailed.value = data.donorFailed; // 献血浆者不符合
-          if (data.donorFailed) {
+      // 没有选择批号直接扫码进行的验收操作，将批次信息回填，不作为实际验收操作,相当于查询此批信息
+      const realAccept = !!filterForm.value.batchNo;
+      try {
+        tableLoading.value = true;
+        const data = await plasmaVerifyBag(params);
+        if (data) {
+          filterForm.value.stationName = data.stationName;
+          filterForm.value.batchNo = data.batchNo;
+          filterForm.value.verifyBagCount = data.verifyBagCount;
+          filterForm.value.bagCount = data.bagCount;
+          _setReChecker(data.checker);
+          filterForm.value.verifyBoxCount = data.verifyBoxCount;
+          filterForm.value.boxCount = data.boxCount;
+          filterForm.value.stationNo = data.stationNo;
+          filterForm.value.boxNo = data.boxNo;
+          // 更改托盘编号
+          if (trayNo.value && data.trayNo && trayNo.value != data.trayNo) {
             Modal.confirm({
               title: '提示?',
-              content: createVNode('div', { style: 'color:red;' }, data.donorFailed),
-              onOk() {},
+              content: createVNode('div', { style: 'color:red;' }, '托盘编号不一致，需要替换吗?'),
+              onOk() {
+                trayNo.value = data.trayNo;
+              },
               onCancel() {
                 console.log('Cancel');
               },
               class: 'test',
             });
+          } else if (data.trayNo) {
+            filterForm.value.trayNo = data.trayNo;
           }
-          if (
-            filterForm.value.verifyBagCount == filterForm.value.bagCount &&
-            filterForm.value.verifyBagCount
-          ) {
-            success('当前批验收完成');
-          } else if (!filterForm.value.unVerifyBag.length) {
-            success('当前箱验收完成');
+
+          filterForm.value.unVerifyBag = data.unVerifyBag.map((item: any) => {
+            return {
+              bagNo: item,
+            };
+          });
+
+          filterForm.value.verifyBag = data.verifyBag;
+
+          if (realAccept) {
+            success('验收成功');
+            donorFailed.value = data.donorFailed; // 献血浆者不符合
+            if (data.donorFailed) {
+              Modal.confirm({
+                title: '提示?',
+                content: createVNode('div', { style: 'color:red;' }, data.donorFailed),
+                onOk() {},
+                onCancel() {
+                  console.log('Cancel');
+                },
+                class: 'test',
+              });
+            }
+            if (
+              filterForm.value.verifyBagCount == filterForm.value.bagCount &&
+              filterForm.value.verifyBagCount
+            ) {
+              success('当前批验收完成');
+            } else if (!filterForm.value.unVerifyBag.length) {
+              success('当前箱验收完成');
+            }
           }
         }
+      } finally {
+        tableLoading.value = false;
+        bagNo.value = '';
+        nextTick(() => {
+          bagNoRef.value.focus();
+        });
       }
-    } finally {
-      tableLoading.value = false;
-      bagNo.value = '';
-      nextTick(() => {
-        bagNoRef.value.focus();
-      });
     }
   }
   // 接口返回设置复核人
