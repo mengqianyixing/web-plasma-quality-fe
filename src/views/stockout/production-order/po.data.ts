@@ -219,7 +219,7 @@ export const formSchema: FormSchema[] = [
             field: 'planTask',
             defaultValue: dayjs(e).add(1, 'day').format('YYYY-MM-DD'),
             componentProps: {
-              disabledDate: (current: any) => current && current < dayjs(e).add(1, 'day'),
+              disabledDate: (current: any) => current && current < dayjs().startOf('day'),
             },
           });
         },
