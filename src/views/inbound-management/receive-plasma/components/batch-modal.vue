@@ -35,8 +35,29 @@
   const { createMessage } = useMessage();
   const { warning } = createMessage;
 
+  const mode = ref('receive');
+
   const emit = defineEmits(['success']);
-  const [registerModal, { closeModal }] = useModalInner((data) => {
+  const [registerModal, { closeModal }] = useModalInner(async (data) => {
+    // 验收页面打开
+    if (data.isAccept) {
+      mode.value = 'accept';
+      // 设置接收状态默认值
+      await getForm().updateSchema({
+        field: 'acceptState',
+        defaultValue: ['R', 'S'],
+      });
+      await getForm().updateSchema({
+        field: 'verifyState',
+        defaultValue: ['R', 'W'],
+      });
+    } else {
+      // 验收页面打开
+      await getForm().updateSchema({
+        field: 'acceptState',
+        defaultValue: ['R', 'W'],
+      });
+    }
     if (data.fresh) {
       setTimeout(() => {
         reload();
@@ -130,6 +151,7 @@
       },
     },
   ];
+
   // 表单搜索列
   const searchFormSchema: FormSchema[] = [
     {
@@ -155,10 +177,10 @@
       label: '接收状态',
       component: 'Select',
       colProps: { span: 5 },
+      defaultValue: [],
       componentProps: {
         mode: 'multiple',
         options: receiveOpts,
-        defaultValue: ['R', 'W'],
       },
     },
     {
@@ -166,10 +188,10 @@
       label: '验收状态',
       component: 'Select',
       colProps: { span: 5 },
+      defaultValue: [],
       componentProps: {
         mode: 'multiple',
         options: checkOpts,
-        // defaultValue: ['W', 'R'],
       },
     },
   ];
@@ -177,13 +199,14 @@
   const selectedRow = ref<any>([]);
   const searchInfo = ref<any>({});
 
-  const [registerTable, { clearSelectedRowKeys, reload }] = useTable({
+  const [registerTable, { clearSelectedRowKeys, reload, getForm }] = useTable({
     api: getBatchSummary,
     columns,
     formConfig: {
       labelWidth: 75,
       schemas: searchFormSchema,
     },
+    immediate: true,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -223,10 +246,19 @@
     }
     const firstSelectedItem = selectedRow.value[0];
     if (firstSelectedItem && 'batchNo' in firstSelectedItem) {
-      if (firstSelectedItem.acceptState === 'S') {
-        warning('当前批次已接收');
+      if (mode.value === 'receive') {
+        if (firstSelectedItem.acceptState === 'S') {
+          warning('当前批次已接收');
+        }
       }
-      // emit('confirm', firstSelectedItem.batchNo);
+      if (mode.value === 'accept') {
+        if (firstSelectedItem.acceptState === 'W') {
+          warning('当前批次未接收');
+        }
+        if (firstSelectedItem.verifyState === 'S') {
+          warning('当前批次已验收');
+        }
+      }
       emit('success', firstSelectedItem.batchNo);
       resetField();
     }

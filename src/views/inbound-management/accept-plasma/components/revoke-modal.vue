@@ -12,7 +12,7 @@
       <Form :model="searchForm">
         <FormItem label="复核人" name="checker" :rules="[{ required: true }]">
           <Input v-model:value="searchForm.checker" disabled style="width: 180px" />
-          <Button @click="goRegister">登录</Button>
+          <Button @click="handleLogin">登录</Button>
         </FormItem>
         <FormItem label="原因" :rules="[{ required: true }]">
           <Textarea v-model:value="searchForm.remark" :cols="40" />
@@ -22,6 +22,7 @@
         </FormItem>
       </Form>
     </div>
+    <LoginModal @register="registerLoginModal" @success="handleSuccess" />
   </Modal>
 </template>
 
@@ -30,6 +31,8 @@
   import { Modal, Textarea, Form, FormItem, Button, Input } from 'ant-design-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { plasmaRevokeBag } from '@/api/inbound-management/accept-plasma.js';
+  import LoginModal from '@/__components/nonconformity-registration/LoginModal.vue';
+  import { useModal } from '@/components/Modal';
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
@@ -79,9 +82,18 @@
       loading.value = false;
     }
   };
-  const goRegister = () => {
-    emit('goRegister');
-  };
+
+  const [registerLoginModal, { openModal }] = useModal();
+
+  // 点击登录按钮
+  function handleLogin() {
+    openModal(true);
+  }
+
+  // 登录成功事件
+  function handleSuccess(nickname: string) {
+    searchForm.value.checker = nickname;
+  }
 
   defineExpose({
     searchForm,

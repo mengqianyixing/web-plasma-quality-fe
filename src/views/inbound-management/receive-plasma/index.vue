@@ -47,7 +47,7 @@
   </PageWrapper>
 </template>
 <script setup lang="tsx">
-  import { ref, computed, reactive, createVNode } from 'vue';
+  import { ref, computed, reactive, createVNode, nextTick } from 'vue';
   import { debounce } from 'lodash-es';
   import { getAccepts, acceptPlasma } from '@/api/inbound-management/receive-plasma';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
@@ -56,7 +56,7 @@
   import { VxeGridProps } from 'vxe-table';
   import { DescItem, useDescription } from '@/components/Description';
   import { useModal } from '@/components/Modal';
-  import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal-receive.vue';
+  import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import { Modal } from 'ant-design-vue';
   import { useDrawer } from '@/components/Drawer';
@@ -72,6 +72,7 @@
   const boxNo = ref(''); // 当前箱号
   const batchNo = ref(''); // 当前批号
   const tableLoading = ref(false);
+  const boxNoRef = ref<any>(null);
 
   // 血浆批次信息
   const schema: DescItem[] = [
@@ -115,6 +116,7 @@
           <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
             <a-input
               placeholder="请扫描"
+              ref={boxNoRef}
               value={boxNo}
               disabled={tableLoading.value}
               onChange={(event) => (boxNo.value = event.target.value)}
@@ -181,7 +183,6 @@
       if (data) {
         success('接收成功!');
         filterForm.value = data;
-
         if (data.acceptDetail?.unAcceptCount <= 0) {
           // 一批接收完毕 提示
           showConfirmGoon();
@@ -190,6 +191,9 @@
     } finally {
       tableLoading.value = false;
       boxNo.value = '';
+      nextTick(() => {
+        boxNoRef.value.focus();
+      });
     }
   }
 
