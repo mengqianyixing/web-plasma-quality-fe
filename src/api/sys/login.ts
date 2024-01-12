@@ -2,13 +2,13 @@ import { defHttp } from '@/utils/http/axios';
 import {
   GetApiSysCaptchaUuidRequest,
   GetApiSysCaptchaUuidResponse,
-  PostApiSysReviewerLoginRequest,
-  PostApiSysReviewerLoginResponse,
+  PostApiSysReviewerCasdoorLoginRequest,
+  PostApiSysReviewerCasdoorLoginResponse,
 } from '@/api/type/login';
 
 enum Api {
   GetSysVerifyCode = '/api/sys/captcha',
-  ReCheckLogin = '/api/sys/reviewer/login',
+  ReCheckLogin = '/api/sys/reviewer/casdoor-login',
 }
 
 /**
@@ -21,8 +21,8 @@ export const getSysVerifyCode = (uuid: GetApiSysCaptchaUuidRequest['uuid']) => {
   });
 };
 
-export const reCheckLogin = (params: PostApiSysReviewerLoginRequest) =>
-  defHttp.post<PostApiSysReviewerLoginResponse>({
+export const reCheckLogin = (params: PostApiSysReviewerCasdoorLoginRequest) =>
+  defHttp.post<PostApiSysReviewerCasdoorLoginResponse>({
     url: Api.ReCheckLogin,
     params,
   });
