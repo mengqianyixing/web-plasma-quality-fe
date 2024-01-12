@@ -50,7 +50,7 @@
     columns: callbackModalColumns,
     formConfig: {
       showAdvancedButton: false,
-      labelWidth: 150,
+      labelWidth: 130,
       schemas: callbackModalSearchFromSchema,
       transformDateFunc(date) {
         return dayjs(date).format('YYYY-MM-DD');
