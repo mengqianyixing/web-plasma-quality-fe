@@ -2,11 +2,12 @@
   <div>
     <BasicTable @register="registerTable">
       <template #mesId="{ record }">
-        <div class="z-999">
-          <a-button type="link" @click="handleMesClick(record)">
-            {{ record?.mesId }}
-          </a-button>
-        </div>
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleMesClick(record)"
+        >
+          {{ record?.mesId }}
+        </span>
       </template>
       <template #toolbar>
         <div class="flex gap-2">
@@ -73,7 +74,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    clickToRowSelect: false,
+    clickToRowSelect: true,
     rowSelection: {
       type: 'radio',
       onChange: (_, selectedRows: any) => {
