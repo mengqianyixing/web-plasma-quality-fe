@@ -589,4 +589,38 @@ export interface GetApiCoreBankWarehouseTrayTrayNoResponse {
   houseType: string;
 }
 
+/**
+ * 接口 [托盘重绑（血浆验收）↗](https://yapi.sharing8.cn/project/529/interface/api/32242) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/box/verify`
+ * @更新时间 `2024-01-13 09:38:06`
+ */
+export interface PostApiCoreBankTrayBoxVerifyRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  /**
+   * bind-绑定，unbind-解绑
+   */
+  type: string;
+  /**
+   * 箱号列表
+   */
+  boxes: string[];
+}
+
+/**
+ * 接口 [托盘重绑（血浆验收）↗](https://yapi.sharing8.cn/project/529/interface/api/32242) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/box/verify`
+ * @更新时间 `2024-01-13 09:38:06`
+ */
+export interface PostApiCoreBankTrayBoxVerifyResponse {
+  code: string;
+  msg: string;
+}
+
 /* prettier-ignore-end */
