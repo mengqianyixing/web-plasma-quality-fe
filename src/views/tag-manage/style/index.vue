@@ -140,7 +140,6 @@
 
     const { tagName, state } = row;
     if (state === action) return message.warning('状态不需要变更');
-    console.log(state, action);
     Modal.confirm({
       content: '确认' + (action == tagStatusValueEnum.DSB ? '禁用' : '启用') + tagName + '?',
 
@@ -148,11 +147,11 @@
         if (action == tagStatusValueEnum.EAB) {
           await enableStyle(row.tagNo);
           clearSelectedRowKeys();
-          reload();
+          await reload();
         } else {
           await disableStyle(row.tagNo);
           clearSelectedRowKeys();
-          reload();
+          await reload();
         }
       },
       onCancel: () => Modal.destroyAll(),
@@ -193,7 +192,7 @@
     if (!row) return;
 
     await copyStyle(row.tagNo);
-    reload();
+    await reload();
   }
 
   async function handleDelete() {
@@ -210,11 +209,10 @@
       onOk: async () => {
         await deleteStyle(row.tagNo);
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
       onCancel: () => Modal.destroyAll(),
     });
-    reload();
   }
 
   async function handleStylePreview() {
