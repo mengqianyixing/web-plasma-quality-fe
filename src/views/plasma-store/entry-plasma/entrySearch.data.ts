@@ -116,25 +116,21 @@ export const searchFormSchema: FormSchema[] = [
       labelField: 'stationName',
       valueField: 'stationNo',
     },
-    colProps: { span: 5 },
   },
   {
     label: '血浆批号',
     component: 'Input',
     field: 'batchNo',
-    colProps: { span: 5 },
   },
   {
     label: '接收日期',
     component: 'RangePicker',
     field: '[receptStartDate, receptEndDate]',
-    colProps: { span: 6 },
   },
   {
     label: '验收日期',
     component: 'RangePicker',
     field: '[verifyPubStartDate, verifyPubEndDate]',
-    colProps: { span: 6 },
   },
 ];
 
@@ -352,19 +348,16 @@ export const noPassSearchFormSchema: FormSchema[] = [
     label: '浆站箱号',
     component: 'Input',
     field: 'boxNo',
-    colProps: { span: 6 },
   },
   {
     label: '血浆编号',
     component: 'Input',
     field: 'bagNo',
-    colProps: { span: 6 },
   },
   {
     label: '验收人',
     component: 'Input',
     field: '',
-    colProps: { span: 6 },
   },
 ];
 

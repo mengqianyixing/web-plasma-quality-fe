@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-25 14:30:13
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-09 16:06:41
+ * @LastEditTime: 2024-01-13 16:23:33
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
@@ -59,8 +59,6 @@
       return res;
     },
     formConfig: {
-      labelWidth: 90,
-      baseColProps: { span: 6 },
       schemas: searchFormschema,
     },
   });

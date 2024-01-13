@@ -84,8 +84,6 @@
       return res;
     },
     formConfig: {
-      labelWidth: 120,
-      baseColProps: { span: 6 },
       schemas: searchFormschema,
     },
   });

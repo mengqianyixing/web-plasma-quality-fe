@@ -68,7 +68,6 @@
       return params;
     },
     formConfig: {
-      labelWidth: 120,
       schemas: searchHistoryFormSchema,
     },
     clickToRowSelect: false,

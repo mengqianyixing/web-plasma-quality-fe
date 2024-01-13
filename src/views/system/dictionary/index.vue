@@ -52,7 +52,6 @@
     columns,
     size: 'large',
     formConfig: {
-      labelWidth: 80,
       schemas: searchFormSchema,
     },
     useSearchForm: true,

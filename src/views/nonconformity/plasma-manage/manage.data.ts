@@ -65,37 +65,32 @@ export const searchSchema: FormSchema[] = [
     field: 'stationNo',
     label: '采浆公司',
     component: 'Select',
-    colProps: { span: 6 },
   },
   {
     field: 'batchNo',
     label: '血浆批号',
     component: 'Input',
-    colProps: { span: 6 },
   },
   {
     field: 'bagNo',
     label: '血浆编号',
     component: 'Input',
-    colProps: { span: 6 },
   },
   {
     field: 'fkDonorNo',
     label: '浆员编号',
     component: 'Input',
-    colProps: { span: 6 },
   },
   {
     field: 'unqReason',
     label: '不合格原因',
     component: 'Select',
-    colProps: { span: 6 },
   },
   {
     field: 'state',
     label: '状态',
     component: 'Select',
-    colProps: { span: 6 },
+
     componentProps: {
       options: [...nonconformityPlasmaMap.entries()].map(([value, label]) => ({
         label,
@@ -107,13 +102,11 @@ export const searchSchema: FormSchema[] = [
     field: '[inStoreStartDate, inStoreEndDate]',
     label: '不合格入库日期',
     component: 'RangePicker',
-    colProps: { span: 6 },
   },
   {
     field: '[outStoreEndDate, outStoreEndDate]',
     label: '不合格出库日期',
     component: 'RangePicker',
-    colProps: { span: 6 },
   },
 ];
 

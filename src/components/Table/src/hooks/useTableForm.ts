@@ -14,7 +14,10 @@ export function useTableForm(
     const { formConfig } = unref(propsRef);
     const { submitButtonOptions } = formConfig || {};
     return {
-      showAdvancedButton: true,
+      labelWidth: 140,
+      showAdvancedButton: false,
+      baseColProps: { flex: '0 0 360px' },
+      actionColOptions: { flex: '1 1 200px', style: 'max-width:unset;' },
       ...formConfig,
       submitButtonOptions: { loading: unref(getLoading), ...submitButtonOptions },
       compact: true,

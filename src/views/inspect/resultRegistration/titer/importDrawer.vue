@@ -4,14 +4,16 @@
  * @Author: zcc
  * @Date: 2023-12-29 15:52:07
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-08 15:14:17
+ * @LastEditTime: 2024-01-13 17:22:14
 -->
 <template>
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
     title="效价导入"
-    width="1200px"
+    width="1000px"
+    :show-ok-btn="false"
+    cancelText="关闭"
     @close="emit('close')"
   >
     <div class="flex flex-col h-full">
@@ -19,25 +21,23 @@
         导入汇总
         <div class="float-right">
           <a-upload
-            size="small"
             :showUploadList="false"
             :before-upload="beforeUpload"
             :maxCount="1"
             accept=".xlsx,.xls"
             class="mr-10px"
           >
-            <a-button size="small"> 选择文件 </a-button>
+            <a-button> 选择文件 </a-button>
           </a-upload>
           <a-button
             type="primary"
             class="mr-10px"
-            size="small"
             @click="uploadClick"
             :loading="loading"
             :disabled="!hasFile"
             >开始上传</a-button
           >
-          <a-button type="primary" class="mr-10px" size="small" @click="downFile">
+          <a-button type="primary" class="mr-10px" @click="downFile">
             <a href="/manage/tmp/titer.xlsx" download>下载模板</a>
           </a-button>
         </div>

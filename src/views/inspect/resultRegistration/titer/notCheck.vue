@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 18:07:42
+ * @LastEditTime: 2024-01-13 17:24:49
 -->
 <template>
   <BasicModal
@@ -12,7 +12,7 @@
     @register="registerModal"
     showFooter
     title="未检测"
-    width="520px"
+    width="360px"
     okText="提交&关闭"
     cancelText="关闭"
     :min-height="300"

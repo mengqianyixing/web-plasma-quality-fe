@@ -1,14 +1,20 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2024-01-12 19:08:05
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-13 17:37:51
+-->
 <template>
   <div class="h-full">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleImport" size="small" :disabled="!props.bsNo">
-          效价导入
-        </a-button>
-        <a-button type="primary" @click="handleEnter" size="small" :disabled="!props.bsNo">
+        <a-button type="primary" @click="handleImport" :disabled="!props.bsNo"> 效价导入 </a-button>
+        <a-button type="primary" @click="handleEnter" :disabled="!props.bsNo">
           录入效价结果
         </a-button>
-        <a-button type="primary" @click="handleNotCheck" size="small" :disabled="!props.bsNo">
+        <a-button type="primary" @click="handleNotCheck" :disabled="!props.bsNo">
           未检测登记
         </a-button>
       </template>

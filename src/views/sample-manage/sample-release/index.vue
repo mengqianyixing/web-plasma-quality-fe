@@ -88,8 +88,6 @@
       },
     },
     formConfig: {
-      alwaysShowLines: 3,
-      labelWidth: 120,
       schemas: searchReleaseSchema,
       transformDateFunc(date) {
         return date ? date.format('YYYY-MM-DD') : '';

@@ -110,13 +110,11 @@ export const plasmaBoxScanSearchFormSchema: FormSchema[] = [
     component: 'Input',
     label: '托盘编号',
     field: 'trayNo',
-    colProps: { span: 6 },
   },
   {
     component: 'Input',
     label: '箱号',
     field: 'boxId',
-    colProps: { span: 6 },
   },
 ];
 export const plasmaBoxScanColumns: (isBinding: boolean) => BasicColumn[] = (isBinding) => [
@@ -143,7 +141,6 @@ export const plasmaBoxHandSearchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '采浆公司',
     field: '',
-    colProps: { span: 6 },
     componentProps: {
       options: [],
     },
@@ -152,13 +149,11 @@ export const plasmaBoxHandSearchFormSchema: FormSchema[] = [
     component: 'Input',
     label: '批号',
     field: '',
-    colProps: { span: 6 },
   },
   {
     component: 'Input',
     label: '投产准备号',
     field: '',
-    colProps: { span: 6 },
   },
 ];
 export const plasmaBoxHandColumns: BasicColumn[] = [
@@ -206,13 +201,11 @@ export const sampleBoxScanSearchFormSchema: FormSchema[] = [
     component: 'Input',
     label: '托盘编号',
     field: '',
-    colProps: { span: 6 },
   },
   {
     component: 'Input',
     label: '样本箱号',
     field: '',
-    colProps: { span: 6 },
   },
 ];
 export const sampleBoxScanColumns: (isBinding: boolean) => BasicColumn[] = (isBinding) => [

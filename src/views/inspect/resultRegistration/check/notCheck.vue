@@ -4,7 +4,7 @@
     @register="registerModal"
     showFooter
     title="未检测"
-    width="520px"
+    width="360px"
     cancelText="关闭"
     okText="提交&关闭"
     :min-height="300"

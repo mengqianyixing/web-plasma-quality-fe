@@ -65,8 +65,6 @@
     },
     rowKey: 'trayNo',
     formConfig: {
-      labelWidth: 80,
-      baseColProps: { span: 6 },
       schemas: searchForm,
     },
     columns,

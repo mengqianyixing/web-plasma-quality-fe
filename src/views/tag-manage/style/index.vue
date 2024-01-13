@@ -84,7 +84,6 @@
     api: getTagsList,
     columns,
     formConfig: {
-      labelWidth: 120,
       schemas: searchFormSchema,
     },
     clickToRowSelect: true,

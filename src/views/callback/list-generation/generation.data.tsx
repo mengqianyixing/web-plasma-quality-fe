@@ -54,13 +54,11 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'stationNo',
     label: '采浆公司',
-    colProps: { span: 5 },
     component: 'Select',
   },
   {
     field: '[createStartDate, createEndDate]',
     label: '生成日期',
-    colProps: { span: 7 },
     defaultValue: [dayjs().subtract(1, 'month'), dayjs()],
     component: 'RangePicker',
     componentProps: {
@@ -70,13 +68,11 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'batchNo',
     label: '名单编号',
-    colProps: { span: 5 },
     component: 'Input',
   },
   {
     field: 'state',
     label: '状态',
-    colProps: { span: 5 },
     component: 'Select',
     componentProps: {
       options: [...CallbackStateMap.entries()].map(([key, value]) => ({

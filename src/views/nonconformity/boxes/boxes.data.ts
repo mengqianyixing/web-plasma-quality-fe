@@ -30,6 +30,5 @@ export const searchFormSchema: FormSchema[] = [
     field: 'boxNo',
     label: '箱号',
     component: 'Input',
-    colProps: { span: 8 },
   },
 ];

@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-26 17:41:03
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 14:33:53
+ * @LastEditTime: 2024-01-13 15:50:29
 -->
 <template>
   <BasicModal
@@ -40,8 +40,9 @@
     registerForm,
     { validate, setFieldsValue, clearValidate, resetFields, updateSchema, getFieldsValue },
   ] = useForm({
-    labelWidth: 120,
-    baseColProps: { span: 12 },
+    labelWidth: 200,
+    baseColProps: { flex: '0 1 440px' },
+    actionColOptions: { flex: '0 1 300px' },
     schemas: formListSchema,
     showActionButtonGroup: false,
   });

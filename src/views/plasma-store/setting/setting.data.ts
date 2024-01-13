@@ -189,13 +189,11 @@ export const locationSearchForSchema: FormSchema[] = [
     field: 'locationNo',
     label: '货位编号',
     component: 'Input',
-    colProps: { span: 8 },
   },
   {
     field: 'trayNo',
     label: '托盘号',
     component: 'Input',
-    colProps: { span: 8 },
   },
 ];
 

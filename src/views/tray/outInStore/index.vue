@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-18 14:18:08
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-10 15:48:44
+ * @LastEditTime: 2024-01-13 18:01:14
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
@@ -44,7 +44,6 @@
       listField: 'result',
     },
     formConfig: {
-      labelWidth: 120,
       schemas: searchFormSchema,
     },
     rowKey: 'trayNo',

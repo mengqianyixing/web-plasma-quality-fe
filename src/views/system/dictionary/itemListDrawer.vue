@@ -61,7 +61,6 @@
     columns: itemColumns,
     size: 'small',
     formConfig: {
-      labelWidth: 80,
       schemas: itemSearchFormSchema,
     },
     useSearchForm: true,

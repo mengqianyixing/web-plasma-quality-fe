@@ -50,7 +50,6 @@
       return res;
     },
     formConfig: {
-      labelWidth: 120,
       schemas: [siteCodeSchema],
     },
   });

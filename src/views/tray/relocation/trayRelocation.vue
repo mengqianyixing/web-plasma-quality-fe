@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 09:52:52
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 10:22:29
+ * @LastEditTime: 2024-01-13 18:02:10
 -->
 <template>
   <div class="h-full">
@@ -74,8 +74,7 @@
       listField: 'result',
     },
     formConfig: {
-      labelWidth: 60,
-      schemas: [{ label: '托盘编号', component: 'Input', field: 'trayNo', colProps: { span: 6 } }],
+      schemas: [{ label: '托盘编号', component: 'Input', field: 'trayNo' }],
     },
     rowKey: 'houseNo',
     columns: taryRelocationColumns,

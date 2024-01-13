@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-10 15:57:45
+ * @LastEditTime: 2024-01-13 18:03:12
 -->
 <template>
   <div class="h-full">
@@ -54,7 +54,6 @@
       listField: 'result',
     },
     formConfig: {
-      labelWidth: 100,
       schemas: plasmaBoxHandSearchFormSchema,
     },
     rowKey: 'houseNo',

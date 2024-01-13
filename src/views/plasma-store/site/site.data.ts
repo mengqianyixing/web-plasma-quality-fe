@@ -1,3 +1,11 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: zcc
+ * @Date: 2024-01-08 13:40:06
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-13 17:59:52
+ */
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { CLOSED_TEXT } from '@/enums/plasmaStoreEnum';
 
@@ -26,7 +34,6 @@ export const siteCodeSchema: FormSchema = {
   field: 'siteNo',
   component: 'Input',
   label: '站点代码',
-  colProps: { span: 6 },
 };
 export const formListSchema: FormSchema[] = [
   {

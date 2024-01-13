@@ -3,20 +3,13 @@
     <div class="title">
       基本信息
       <div class="float-right">
-        <a-button class="mr-15px" type="primary" size="small" @click="handleSelect">选择</a-button>
-        <a-button
-          class="mr-15px"
-          type="primary"
-          size="small"
-          @click="handleAddItem"
-          :disabled="!bsNo"
-        >
+        <a-button class="mr-15px" type="primary" @click="handleSelect">选择</a-button>
+        <a-button class="mr-15px" type="primary" @click="handleAddItem" :disabled="!bsNo">
           新增检测项目
         </a-button>
         <a-button
           class="mr-15px"
           type="primary"
-          size="small"
           @click="registration"
           :disabled="!bsNo"
           :loading="registrationLoading"
@@ -24,7 +17,6 @@
         >
         <a-button
           type="primary"
-          size="small"
           @click="unRegistration"
           :loading="unregistrationLoading"
           :disabled="!bsNo"
@@ -42,7 +34,7 @@
       :gap="0"
       :style="`width: ${(plasmaCellList.length / cellList.length) * 100}%`"
     />
-    <Tabs v-model:activeKey="activeKey" class="flex-1 bg-white" size="small">
+    <Tabs v-model:activeKey="activeKey" class="flex-1 bg-white">
       <TabPane key="1" tab="检测明细">
         <CheckPage :bs-no="bsNo" @reload="saveReload" />
       </TabPane>
@@ -152,17 +144,19 @@
     justify-content: space-between;
     margin: 14px 0;
     margin-left: 10px;
-    color: #000;
+    color: #333;
     font-size: 16px;
+    font-weight: 600;
 
     &::after {
       content: '';
       display: block;
       position: absolute;
-      top: 20%;
+      top: 50%;
       left: -10px;
       width: 2px;
-      height: 60%;
+      height: 16px;
+      margin-top: -8px;
       background: @primary-color;
     }
   }

@@ -189,19 +189,16 @@ export const searchFormSchema: FormSchema[] = [
     field: 'tagName',
     label: '标签名称',
     component: 'Input',
-    colProps: { span: 5 },
   },
   {
     field: 'labelType',
     label: '标签类型',
     component: 'Select',
-    colProps: { span: 5 },
   },
   {
     field: 'state',
     label: '状态',
     component: 'Select',
-    colProps: { span: 5 },
     componentProps: {
       options: [...tagStatusMap.entries()].map(([value, label]) => ({ label, value })),
     },
@@ -213,13 +210,11 @@ export const searchHistoryFormSchema: FormSchema[] = [
     field: 'tagName',
     label: '标签名称',
     component: 'Input',
-    colProps: { span: 8 },
   },
   {
     field: 'labelType',
     label: '标签类型',
     component: 'Select',
-    colProps: { span: 8 },
   },
 ];
 

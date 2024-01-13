@@ -65,7 +65,6 @@
     api: getProOrders,
     columns,
     formConfig: {
-      labelWidth: 120,
       schemas: searchFormSchema,
     },
     fetchSetting: {

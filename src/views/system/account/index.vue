@@ -61,7 +61,6 @@
     rowKey: 'id',
     columns,
     formConfig: {
-      labelWidth: 120,
       schemas: searchFormSchema,
       autoSubmitOnEnter: true,
     },

@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2024-01-12 18:31:46
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-13 17:48:32
+-->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
@@ -109,8 +117,6 @@
       },
     },
     formConfig: {
-      alwaysShowLines: 3,
-      labelWidth: 120,
       schemas: searchSchema,
       transformDateFunc(date) {
         return date ? date.format('YYYY-MM-DD') : '';

@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-20 14:11:29
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 10:31:37
+ * @LastEditTime: 2024-01-13 18:00:49
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 
@@ -56,37 +56,32 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Input',
     field: 'trayNo',
     label: '托盘编号',
-    colProps: { span: 6 },
   },
   {
     component: 'Input',
     field: 'batchNo',
     label: '血浆批号',
-    colProps: { span: 6 },
   },
   {
     component: 'Input',
     field: 'sampleNo',
     label: '样本批号',
-    colProps: { span: 6 },
   },
   {
     component: 'Input',
     field: 'bagNo',
     label: '浆袋编号',
-    colProps: { span: 6 },
   },
   {
     component: 'Input',
     field: 'prepareNo',
     label: '投产准备号',
-    colProps: { span: 6 },
   },
 ];
 
 export const trayDtColumns: BasicColumn[] = [{ dataIndex: '', title: '托盘编号' }];
 export const trayDtSearchSchema: FormSchema[] = [
-  { label: '托盘编号', field: '', component: 'Input', colProps: { span: 10 } },
+  { label: '托盘编号', field: '', component: 'Input' },
 ];
 
 export const trayBoxColumns: BasicColumn[] = [{ title: '血浆箱号', dataIndex: 'boxNo' }];
