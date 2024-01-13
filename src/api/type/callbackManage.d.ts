@@ -92,7 +92,7 @@ export interface GetApiCoreDonorCallbackResponse {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/need`
- * @更新时间 `2024-01-04 21:02:16`
+ * @更新时间 `2024-01-13 11:09:01`
  */
 export interface GetApiCoreDonorCallbackNeedRequest {
   stationNo: string;
@@ -126,7 +126,7 @@ export interface GetApiCoreDonorCallbackNeedRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/need`
- * @更新时间 `2024-01-04 21:02:16`
+ * @更新时间 `2024-01-13 11:09:01`
  */
 export type GetApiCoreDonorCallbackNeedResponse = {
   stationNo: string;
@@ -174,6 +174,7 @@ export type GetApiCoreDonorCallbackNeedResponse = {
    * 待追踪袋数
    */
   plasmaCount: number;
+  immType?: string;
   callbackDate?: string;
   callbackResult?: string;
   sampleCollectTime?: string;
@@ -213,7 +214,7 @@ export type PostApiCoreDonorCallbackNeedResponse = null;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-12 18:51:06`
+ * @更新时间 `2024-01-13 11:09:50`
  */
 export interface GetApiCoreDonorCallbackDetailRequest {
   /**
@@ -235,7 +236,7 @@ export interface GetApiCoreDonorCallbackDetailRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-12 18:51:06`
+ * @更新时间 `2024-01-13 11:09:50`
  */
 export type GetApiCoreDonorCallbackDetailResponse = {
   stationNo: string;
@@ -244,6 +245,7 @@ export type GetApiCoreDonorCallbackDetailResponse = {
   idcardId: string;
   gender: string;
   donatorStatus: string;
+  immType: string;
   refuseDate?: string | null;
   refuseReason?: string | null;
   minCollTime: string;

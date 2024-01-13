@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-04 16:30:55
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 10:08:29
+ * @LastEditTime: 2024-01-13 18:50:42
 -->
 <template>
   <BasicModal
@@ -48,7 +48,7 @@
   import InModal from '@/views/tray/outInStore/inModal.vue';
   import { nextTick, ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
-  import { bindBoxApi } from '@/api/tray/relocation';
+  import { bindVerifyBoxApi } from '@/api/tray/relocation';
 
   const emit = defineEmits(['register', 'close']);
   defineOptions({ name: 'InStoreModal' });
@@ -126,7 +126,7 @@
   async function okFunction() {
     const values = await validate();
 
-    let list;
+    let list: any[] = [];
     if (isAcceptNow) {
       import('@/api/tray/list').then(async (module) => {
         const { trayBoxListApi } = module;
@@ -138,6 +138,7 @@
         list = await trayBoxListApiAccept({ trayNo: values.trayNo });
       });
     }
+    console.log(isAcceptNow);
 
     if (list.length >= 24) {
       Modal.confirm({
@@ -155,7 +156,7 @@
   }
   async function submit() {
     const { boxId, trayNo } = getFieldsValue();
-    await bindBoxApi({ boxes: [boxId], trayNo, type: 'bind' });
+    await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind' });
     setFieldsValue({ boxId: '', trayNo: '' });
     message.success('操作成功');
     reload();

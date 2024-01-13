@@ -436,4 +436,38 @@ export type GetApiSysDictItemsDictNoResponse = {
   itemValue: string;
 }[];
 
+/**
+ * 接口 [根据链接编号查询字典项↗](https://yapi.sharing8.cn/project/521/interface/api/32247) 的 **请求类型**
+ *
+ * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
+ * @请求头 `GET /api/sys/dict/linkData/{fkLink}`
+ * @更新时间 `2024-01-13 17:56:25`
+ */
+export interface GetApiSysDictLinkDataFkLinkRequest {
+  fkLink: string;
+}
+
+/**
+ * 接口 [根据链接编号查询字典项↗](https://yapi.sharing8.cn/project/521/interface/api/32247) 的 **返回类型**
+ *
+ * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
+ * @请求头 `GET /api/sys/dict/linkData/{fkLink}`
+ * @更新时间 `2024-01-13 17:56:25`
+ */
+export type GetApiSysDictLinkDataFkLinkResponse = {
+  dictId: string;
+  dictName: string;
+  dictNo: string;
+  systemLevel: string;
+  header?: {
+    name: string;
+    key: string;
+    type: string;
+    /**
+     * 下一级
+     */
+    linkedDict?: string;
+  }[];
+}[];
+
 /* prettier-ignore-end */

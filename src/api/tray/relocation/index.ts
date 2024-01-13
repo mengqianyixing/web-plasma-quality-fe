@@ -1,3 +1,11 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: zcc
+ * @Date: 2023-12-23 20:54:41
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-13 18:40:34
+ */
 import { defHttp } from '@/utils/http/axios';
 import {
   PostApiCoreBankTrayWarehouseDeliverRequest,
@@ -32,6 +40,9 @@ export const submitRelocationApi = (params: PostApiCoreBankTrayWarehouseMoveRequ
 
 export const bindBoxApi = (params: PostApiCoreBankTrayBoxRequest) =>
   defHttp.post<PostApiCoreBankTrayBoxResponse>({ url: '/api/core/bank/tray/box', params });
+
+export const bindVerifyBoxApi = (params: PostApiCoreBankTrayBoxRequest) =>
+  defHttp.post<PostApiCoreBankTrayBoxResponse>({ url: '/api/core/bank/tray/box/verify', params });
 
 export const taryHouseApi = ({ trayNo }: GetApiCoreBankWarehouseTrayTrayNoRequest) =>
   defHttp.get<GetApiCoreBankWarehouseTrayTrayNoResponse>({

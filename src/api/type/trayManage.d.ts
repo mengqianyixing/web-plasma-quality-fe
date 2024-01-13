@@ -506,24 +506,28 @@ export interface PutApiCoreBankTrayWarehouseMoveResponse {
  * 接口 [托盘报废↗](https://yapi.sharing8.cn/project/529/interface/api/31677) 的 **请求类型**
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
- * @请求头 `PUT /api/core/bank/tray/{trayNo}`
- * @更新时间 `2023-12-19 18:25:22`
+ * @请求头 `PUT /api/core/bank/tray/useless`
+ * @更新时间 `2024-01-13 15:39:56`
  */
-export interface PutApiCoreBankTrayTrayNoRequest {
+export interface PutApiCoreBankTrayUselessRequest {
   /**
    * 托盘编号
    */
   trayNo: string;
+  /**
+   * 复核人
+   */
+  rechecker: string;
 }
 
 /**
  * 接口 [托盘报废↗](https://yapi.sharing8.cn/project/529/interface/api/31677) 的 **返回类型**
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
- * @请求头 `PUT /api/core/bank/tray/{trayNo}`
- * @更新时间 `2023-12-19 18:25:22`
+ * @请求头 `PUT /api/core/bank/tray/useless`
+ * @更新时间 `2024-01-13 15:39:56`
  */
-export interface PutApiCoreBankTrayTrayNoResponse {
+export interface PutApiCoreBankTrayUselessResponse {
   /**
    * 响应码
    */

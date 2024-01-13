@@ -102,13 +102,13 @@
     else if (rows.length === 0) return message.warning('请选择一条数据');
     const [row] = rows;
     if (row.closed === closed) return message.warning('状态不需要变更');
-    open.value = false;
+    open.value = true;
   }
-  async function login() {
+  async function login(values) {
     open.value = false;
     const rows = getSelectRows();
     const [row] = rows;
-    await disableTrayApi({ trayNo: row.trayNo });
+    await disableTrayApi({ trayNo: row.trayNo, rechecker: values.userId });
     clearSelectedRowKeys();
     reload();
   }
