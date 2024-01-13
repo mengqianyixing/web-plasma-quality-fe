@@ -176,6 +176,7 @@ export const formSchema: FormSchema[] = [
       return h(InputNumber, {
         placeholder: '请输入',
         value: model[field],
+        maxLength: 7,
         onChange: (e) => {
           if (e && e.toString().includes('.')) {
             model[field] = Number(e.toString().match(/^\d+(?:\.\d{0,2})?/));
