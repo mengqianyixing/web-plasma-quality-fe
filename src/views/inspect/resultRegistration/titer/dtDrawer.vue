@@ -4,41 +4,51 @@
  * @Author: zcc
  * @Date: 2023-12-29 15:36:12
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-02 19:16:32
+ * @LastEditTime: 2024-01-12 18:04:14
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     :title="projectName + '详情'"
     :width="isFull ? '100%' : '800px'"
     :show-ok-btn="false"
     cancelText="关闭"
+    :min-height="520"
     @ok="handleSubmit"
     @close="close"
   >
-    <Tabs v-model:activeKey="activeKey" @change="change" class="h-full bg-white tabs" size="small">
-      <TabPane key="1" tab="尚未有效价结果">
-        <component :is="componentMap['1']" :projectId="pid" :bsNo="bsno" type="INVALID_PRICE" />
-      </TabPane>
-      <TabPane key="2" tab="已有效价结果">
-        <component
-          :is="componentMap['2']"
-          checkResult="true"
-          :projectId="pid"
-          type="EFFECTIVE_PRICE"
-          :bsNo="bsno"
-        />
-      </TabPane>
-      <TabPane key="3" tab="未检测样品">
-        <component :is="componentMap['3']" :projectId="pid" :bsNo="bsno" type="TO_BE_TESTED" />
-      </TabPane>
-    </Tabs>
-  </BasicDrawer>
+    <div class="flex h-inherit max-h-inherit min-h-inherit">
+      <div class="flex-1 w-full">
+        <Tabs
+          v-model:activeKey="activeKey"
+          @change="change"
+          class="h-full bg-white tabs"
+          size="small"
+        >
+          <TabPane key="1" tab="尚未有效价结果">
+            <component :is="componentMap['1']" :projectId="pid" :bsNo="bsno" type="INVALID_PRICE" />
+          </TabPane>
+          <TabPane key="2" tab="已有效价结果">
+            <component
+              :is="componentMap['2']"
+              checkResult="true"
+              :projectId="pid"
+              type="EFFECTIVE_PRICE"
+              :bsNo="bsno"
+            />
+          </TabPane>
+          <TabPane key="3" tab="未检测样品">
+            <component :is="componentMap['3']" :projectId="pid" :bsNo="bsno" type="TO_BE_TESTED" />
+          </TabPane>
+        </Tabs>
+      </div>
+    </div>
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { TabPane, Tabs } from 'ant-design-vue';
   import { ref, markRaw } from 'vue';
   import DtTable from './dtTable.vue';
@@ -53,7 +63,7 @@
     2: 'div',
     3: 'div',
   });
-  const [registerDrawer] = useDrawerInner(async ({ projectId, bsNo, projectAbbr }) => {
+  const [registerModal] = useModalInner(async ({ projectId, bsNo, projectAbbr }) => {
     pid.value = projectId;
     bsno.value = bsNo;
     projectName.value = projectAbbr;

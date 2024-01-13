@@ -7,21 +7,21 @@
  * @LastEditTime: 2023-12-27 16:59:17
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     :title="state.isUpdate ? '编辑' : '新增'"
     width="500px"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
   import { BasicForm, useForm } from '@/components/Form';
   import { itemFormSchema } from './dictionary.data';
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { reactive } from 'vue';
   import { getDictItemDtApi, addDictItemApi, updateDictItemApi } from '@/api/dictionary';
   import { PostApiSysDictItemRequest, PutApiSysDictItemRequest } from '@/api/type/dictionary';
@@ -42,9 +42,9 @@
     schemas: itemFormSchema,
     showActionButtonGroup: false,
   });
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(
     async ({ isUpdate, data }) => {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
       state.isUpdate = isUpdate;
       state.dictItemId = data.dictItemId;
       state.dictId = data.dictId;
@@ -61,7 +61,7 @@
   async function handleSubmit() {
     try {
       const value = await validate();
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       if (state.isUpdate) {
         await updateDictItemApi({
           ...value,
@@ -71,10 +71,10 @@
       } else {
         await addDictItemApi({ ...value, dataDictId: state.dictId } as PostApiSysDictItemRequest);
       }
-      closeDrawer();
+      closeModal();
       emit('success');
     } finally {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
   }
 </script>

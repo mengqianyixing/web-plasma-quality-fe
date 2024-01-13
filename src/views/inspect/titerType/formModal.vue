@@ -7,22 +7,22 @@
  * @LastEditTime: 2024-01-09 16:14:44
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     :title="state.type"
     width="800px"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { formListSchema } from './titerType.data';
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import {
     getTitlerTypeDtApi,
     addTitlerTypeApi,
@@ -42,7 +42,7 @@
       schemas: formListSchema,
       showActionButtonGroup: false,
     });
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(
     async ({ data, disabled }) => {
       state.dictItemId = data.dictItemId;
       if (state.isRequest === false) {
@@ -73,17 +73,17 @@
   async function handleSubmit() {
     try {
       const values = await validate();
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       if (state.dictItemId) {
         await updateTitlerTypeApi({ ...values, dictItemId: state.dictItemId });
       } else {
         await addTitlerTypeApi({ ...values } as any);
       }
-      setDrawerProps({ confirmLoading: false });
-      closeDrawer();
+      setModalProps({ confirmLoading: false });
+      closeModal();
       emit('success');
     } finally {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
   }
   async function getDict() {

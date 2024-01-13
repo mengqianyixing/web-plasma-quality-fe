@@ -13,7 +13,6 @@ export const columns: BasicColumn[] = [
     title: '托盘编号',
     dataIndex: 'trayNo',
     fixed: 'left',
-    slots: { customRender: 'trayNo' },
   },
   {
     title: '负载状态',

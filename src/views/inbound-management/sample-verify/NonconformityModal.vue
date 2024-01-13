@@ -19,6 +19,7 @@
   import { reactive } from 'vue';
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   import LoginModal from './LoginModal.vue';
   import { registerNonconformity } from '@/api/inbound-management/sample-verify';
@@ -26,6 +27,7 @@
   import { nonconformityReasonEnum } from '@/enums/sampleEnum';
 
   const emit = defineEmits(['success', 'register']);
+  const { createMessage } = useMessage();
 
   defineOptions({ name: 'NonconformityModal' });
 
@@ -62,6 +64,7 @@
         label: '样本编号',
         component: 'Input',
         colProps: { span: 20 },
+        required: true,
       },
     ],
   });
@@ -71,7 +74,10 @@
     batchSampleNo: '',
   });
 
-  const [registerModal, { closeModal }] = useModalInner((data) => {
+  const [registerModal, { closeModal, setModalProps }] = useModalInner((data) => {
+    setModalProps({
+      maskClosable: false,
+    });
     modalParams.verifyNo = data.record.verifyNo;
     modalParams.batchSampleNo = data.record.batchSampleNo;
     updateSchema({
@@ -94,6 +100,7 @@
         batchSampleNo: modalParams.batchSampleNo,
       } as PostApiCoreBatchSampleUnqualifiedRequest);
 
+      createMessage.success('登记成功');
       emit('success');
       await resetFields();
       closeModal();

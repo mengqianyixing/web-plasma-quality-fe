@@ -4,12 +4,12 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-06 09:58:27
+ * @LastEditTime: 2024-01-12 17:40:38
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     :title="projectName + '不合格登记'"
     width="400px"
@@ -23,10 +23,10 @@
     </template>
     <BasicForm @register="registerForm" />
     <Login :open="open" @cancel="cancel" @login="login" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { formSchemaMap, notCheckFormSchema, methodsMappding } from './data';
   import Login from '@/components/BusinessDrawer/login/index.vue';
@@ -60,7 +60,7 @@
     schemas: [],
     showActionButtonGroup: false,
   });
-  const [registerDrawer, { setDrawerProps }] = useDrawerInner(
+  const [registerModal, { setModalProps }] = useModalInner(
     async ({ projectAbbr, projectId, bsNo, methodAbbr }) => {
       pid = projectId;
       bsno = bsNo;
@@ -95,7 +95,7 @@
     const { sampleNo, unqualified, od, cutoff, ct } = await validate();
     const { username, userId } = userData as any;
     try {
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       loading.value = true;
       await summitUnqualifiedApi({
         sampleNo,
@@ -116,7 +116,7 @@
       }
     } finally {
       loading.value = false;
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
   }
   function cancel() {

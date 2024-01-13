@@ -18,7 +18,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'times',
   },
   {
-    title: '是否补打印',
+    title: '是否打印',
     dataIndex: 'supplementary',
     format: (text) => {
       return text ? '是' : '否';

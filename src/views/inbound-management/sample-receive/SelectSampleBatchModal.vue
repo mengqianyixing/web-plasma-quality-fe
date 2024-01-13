@@ -1,6 +1,6 @@
 <template>
-  <BasicDrawer v-bind="$attrs" @register="register" title="样本批次列表" width="80%">
-    <PageWrapper dense contentFullHeight fixedHeight>
+  <BasicModal v-bind="$attrs" @register="register" title="样本批次列表" width="80%">
+    <div>
       <BasicTable @register="registerTable">
         <template #sampleType="{ record }">
           {{ formatSampleType(record?.sampleType) }}
@@ -9,20 +9,19 @@
           <a-button type="primary" @click="handleSelect">选择</a-button>
         </template>
       </BasicTable>
-    </PageWrapper>
-  </BasicDrawer>
+    </div>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
-  import { PageWrapper } from '@/components/Page';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { ref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
+  import { getSampleReceiveList } from '@/api/inbound-management/sample-receive';
   import {
-    sampleVerifyColumns,
+    sampleAcceptColumns,
     searchFormSchema,
-  } from '@/views/inbound-management/sample-verify/verify.data';
+  } from '@/views/inbound-management/sample-receive/receive.data';
   import { useMessage } from '@/hooks/web/useMessage';
-  import { getSampleVerifyList } from '@/api/inbound-management/sample-verify';
   import { sampleTypeEnum } from '@/enums/sampleEnum';
 
   const emit = defineEmits(['success', 'register']);
@@ -31,10 +30,10 @@
   const { createMessage } = useMessage();
   const { warning } = createMessage;
 
-  const [registerTable, { reload, setSelectedRowKeys, clearSelectedRowKeys }] = useTable({
-    title: '样本验收批次列表',
-    api: getSampleVerifyList,
-    columns: sampleVerifyColumns,
+  const [registerTable, { reload, setSelectedRowKeys }] = useTable({
+    title: '样本批次列表',
+    api: getSampleReceiveList,
+    columns: sampleAcceptColumns,
     formConfig: {
       labelWidth: 120,
       schemas: searchFormSchema,
@@ -46,6 +45,7 @@
       listField: 'result',
     },
     clickToRowSelect: true,
+    clearSelectOnPageChange: true,
     rowSelection: {
       type: 'checkbox',
       onChange: (keys, selectedRows: any) => {
@@ -57,12 +57,8 @@
           return;
         }
 
-        if (
-          keys.length === 1 &&
-          selectedRows[0].sampleType !== sampleTypeEnum.CallbackSample &&
-          selectedRows[0].sampleType !== sampleTypeEnum.PlasmaSample
-        ) {
-          warning('只能选择回访样本批次或血浆样本批次');
+        if (keys.length === 1 && selectedRows[0].sampleType !== sampleTypeEnum.CallbackSample) {
+          warning('只能选择回访样本批次');
 
           setSelectedRowKeys(selectedRow.value.map((it) => it.key));
 
@@ -82,22 +78,25 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: true,
+    canResize: false,
     immediate: false,
   });
 
   const sampleType = ref<Recordable[]>([]);
 
-  const [register, { closeDrawer }] = useDrawerInner((data) => {
+  const [register, { closeModal }] = useModalInner((data) => {
     if (data.reload) reload();
 
     sampleType.value = data.record.sampleType;
   });
 
   function handleSelect() {
+    if (selectedRow.value.length === 0) {
+      createMessage.warn('请选择一条数据');
+      return;
+    }
     emit('success', selectedRow.value[0]);
-    clearSelectedRowKeys();
-    closeDrawer();
+    closeModal();
   }
 
   function formatSampleType(value: string) {

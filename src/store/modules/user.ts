@@ -123,7 +123,10 @@ export const useUserStore = defineStore({
         this.userInfo = {
           userId: userId,
           username: username,
-          menuIds: menuIds,
+          menuIds: (menuIds ?? []).map((i) => {
+            const _tempId = Number(i);
+            return isNaN(_tempId) ? i : _tempId;
+          }),
           homePath: '/dashboard/analysis',
         };
         this.setUserInfo(this.userInfo);

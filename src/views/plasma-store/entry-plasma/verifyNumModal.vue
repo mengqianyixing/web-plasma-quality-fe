@@ -1,21 +1,24 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     wrapClassName="verifyNumModal"
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerVerifyNum"
     showFooter
     title="验收数量详情"
     width="1000px"
+    :isDetail="true"
     :showDetailBack="false"
+    @ok="closeModal"
   >
-    <div class="drawerTable">
+    <div class="modalTable">
       <BasicTable @register="detailTable" id="detail" />
       <BasicTable @register="sumTable" id="sum" />
     </div>
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  // import { ref } from 'vue';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { useTable, BasicTable } from '@/components/Table';
   import { verifyDetailColumns, verifySumColumns } from './entrySearch.data';
   import { verifyNumApi } from '@/api/plasmaStore/entryPlasma';
@@ -28,10 +31,24 @@
     verifyNum: '',
   });
 
-  const [detailTable] = useTable({
+  const [
+    detailTable,
+    {
+      clearSelectedRowKeys: clearSelectedRowKeysDetail,
+      reload: reloadDetail,
+      setPagination: setPaginationDetail,
+    },
+  ] = useTable({
     title: '明细',
     immediate: true,
     api: verifyNumApi,
+    pagination: false,
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
     rowKey: 'verifyNum',
     columns: verifyDetailColumns,
     bordered: true,
@@ -41,10 +58,11 @@
     },
   });
 
-  const [sumTable, { clearSelectedRowKeys, reload, setPagination }] = useTable({
+  const [sumTable, { clearSelectedRowKeys, reload: reloadSum, setPagination }] = useTable({
     title: '汇总',
     immediate: true,
     api: verifyNumApi,
+    pagination: false,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -60,25 +78,30 @@
       return { ...params, batchNo: state.batchNo };
     },
   });
-  const [registerDrawer] = useDrawerInner(({ batchNo }) => {
+  const [registerVerifyNum, { closeModal }] = useModalInner(({ batchNo }) => {
     state.batchNo = batchNo;
     setPagination({ current: 1 });
-    reload();
+    setPaginationDetail({ current: 1 });
+    reloadDetail();
+    reloadSum();
+    clearSelectedRowKeysDetail();
     clearSelectedRowKeys();
   });
 </script>
 <style>
-  .drawerTable {
+  .modalTable {
     display: flex;
     justify-content: center;
   }
 
   #detail {
     width: 500px;
-    margin-right: 10px;
+    height: 300px;
+    margin-right: 20px;
   }
 
   #sum {
     width: 400px;
+    height: 300px;
   }
 </style>

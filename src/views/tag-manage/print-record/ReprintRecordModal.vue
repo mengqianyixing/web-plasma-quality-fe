@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    title="补打标签"
+    title="打印标签"
     width="500"
     @ok="handleSubmit"
   >

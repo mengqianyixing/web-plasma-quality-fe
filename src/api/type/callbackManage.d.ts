@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback`
- * @更新时间 `2023-12-27 13:51:21`
+ * @更新时间 `2024-01-12 18:22:35`
  */
 export interface GetApiCoreDonorCallbackRequest {
   pageSize: string;
@@ -33,6 +33,10 @@ export interface GetApiCoreDonorCallbackRequest {
    * 发布状态
    */
   state?: string;
+  /**
+   * 名单编号
+   */
+  batchNo?: string;
 }
 
 /**
@@ -40,7 +44,7 @@ export interface GetApiCoreDonorCallbackRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback`
- * @更新时间 `2023-12-27 13:51:21`
+ * @更新时间 `2024-01-12 18:22:35`
  */
 export interface GetApiCoreDonorCallbackResponse {
   totalCount?: number;
@@ -209,13 +213,21 @@ export type PostApiCoreDonorCallbackNeedResponse = null;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-04 19:16:42`
+ * @更新时间 `2024-01-12 18:51:06`
  */
 export interface GetApiCoreDonorCallbackDetailRequest {
   /**
    * 回访批次号
    */
   batchNo: string;
+  /**
+   * 浆员编号
+   */
+  donorNo?: string;
+  /**
+   * 回访情况
+   */
+  state?: string;
 }
 
 /**
@@ -223,7 +235,7 @@ export interface GetApiCoreDonorCallbackDetailRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-04 19:16:42`
+ * @更新时间 `2024-01-12 18:51:06`
  */
 export type GetApiCoreDonorCallbackDetailResponse = {
   stationNo: string;
@@ -239,6 +251,10 @@ export type GetApiCoreDonorCallbackDetailResponse = {
   maxCollectTime: string;
   plasmaCount: number;
   callbackDate?: string;
+  /**
+   * 回访情况
+   */
+  state: string;
   callbackResult?: string;
   sampleCollectTime?: string;
   sampleNo?: string;

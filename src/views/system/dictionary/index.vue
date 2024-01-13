@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:29:52
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-09 19:07:16
+ * @LastEditTime: 2024-01-10 15:37:02
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
@@ -16,24 +16,24 @@
         <a-button type="primary" @click="handleCreateItem()">字典项配置</a-button>
       </template>
     </BasicTable>
-    <FormModel @register="registerDrawer" @success="formSuccess" />
-    <ItemListDrawer @register="registerItemDrawer" />
+    <FormModel @register="registerModal" @success="formSuccess" />
+    <ItemListModal @register="registerItemModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { columns, searchFormSchema } from './dictionary.data';
-  import { useDrawer } from '@/components/Drawer';
+  import { useModal } from '@/components/Modal';
   import { message, Modal } from 'ant-design-vue';
   import FormModel from './formDrawer.vue';
-  import ItemListDrawer from './itemListDrawer.vue';
+  import ItemListModal from './itemListDrawer.vue';
   import { getDictListApi, removeDictApi } from '@/api/dictionary';
 
   defineOptions({ name: 'Dictionary' });
 
-  const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerItemDrawer, { openDrawer: openItemDrawer }] = useDrawer();
+  const [registerModal, { openModal }] = useModal();
+  const [registerItemModal, { openModal: openItemModal }] = useModal();
 
   const [registerTable, { getSelectRows, reload, clearSelectedRowKeys }] = useTable({
     title: '字典列表',
@@ -70,13 +70,13 @@
     clearSelectedRowKeys();
   }
   function handleCreate() {
-    openDrawer(true, { data: {} });
+    openModal(true, { data: {} });
   }
   function handleUpdate() {
     const [row] = getSelectRow();
     if (!row) return;
     if (row.systemLevel) return message.warning('系统字典不可修改');
-    openDrawer(true, { data: row, isUpdate: true });
+    openModal(true, { data: row, isUpdate: true });
   }
   function handleRemove() {
     const [row] = getSelectRow();
@@ -95,7 +95,7 @@
   function handleCreateItem() {
     const [row] = getSelectRow();
     if (!row) return;
-    openItemDrawer(true, { data: row });
+    openItemModal(true, { data: row });
   }
   function getSelectRow() {
     const rows = getSelectRows();

@@ -4,25 +4,25 @@
  * @Author: zcc
  * @Date: 2023-12-20 10:01:47
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-09 17:08:17
+ * @LastEditTime: 2024-01-10 15:30:26
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     :title="state.siteNo ? '编辑' : '新增'"
     width="500px"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { formListSchema } from './site.data';
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { addSiteApi, updateSiteApi, getSiteDtApi } from '@/api/plasmaStore/site';
   import { settingListApi } from '@/api/plasmaStore/setting';
   import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
@@ -39,7 +39,7 @@
       schemas: formListSchema,
       showActionButtonGroup: false,
     });
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async ({ data }) => {
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(async ({ data }) => {
     state.siteNo = data.siteNo;
     getHouseList();
     if (data.siteNo) {
@@ -64,17 +64,17 @@
   async function handleSubmit() {
     try {
       const { siteNo, siteName, fkHouseNo, closed } = await validate();
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       if (state.siteNo) {
         await updateSiteApi({ siteNo, siteName, fkHouseNo, closed, siteNoOld: state.siteNo });
       } else {
         await addSiteApi({ siteNo, siteName, fkHouseNo, closed });
       }
-      setDrawerProps({ confirmLoading: false });
-      closeDrawer();
+      setModalProps({ confirmLoading: false });
+      closeModal();
       emit('success');
     } finally {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
   }
 </script>

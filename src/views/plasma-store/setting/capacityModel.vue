@@ -1,19 +1,19 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     title="扩容"
     width="500px"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
   import { BasicForm, useForm } from '@/components/Form';
   import { capacitySchema } from './setting.data';
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { addCapacityApi } from '@/api/plasmaStore/setting';
   import { reactive } from 'vue';
 
@@ -30,21 +30,21 @@
     showActionButtonGroup: false,
   });
 
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(({ houseNo }) => {
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(({ houseNo }) => {
     state.houseNo = houseNo;
     resetFields();
-    setDrawerProps({ confirmLoading: false });
+    setModalProps({ confirmLoading: false });
   });
 
   async function handleSubmit() {
     try {
       const { capacity } = await validate();
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       await addCapacityApi({ expansion: capacity, houseNo: state.houseNo });
-      closeDrawer();
+      closeModal();
       emit('success');
     } finally {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
   }
 </script>

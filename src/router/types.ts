@@ -7,6 +7,12 @@ export type Component<T = any> =
   | (() => Promise<typeof import('*.vue')>)
   | (() => Promise<T>);
 
+export interface AppAuthElement {
+  title?: string;
+  name?: string;
+  id: string;
+}
+
 // @ts-ignore
 export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
   menuWeight?: number; // 菜单排序权重，越高越前面。
@@ -16,6 +22,7 @@ export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
   component?: Component | string;
   components?: Component;
   children?: AppRouteRecordRaw[];
+  authElements?: AppAuthElement[];
   props?: Recordable;
   fullPath?: string;
 }

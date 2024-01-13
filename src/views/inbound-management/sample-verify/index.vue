@@ -2,8 +2,8 @@
   <PageWrapper>
     <Description @register="register" :data="sampleBatchData" />
 
-    <SampleVerifyBatchDrawer
-      @register="registerSampleVerifyBatchDrawer"
+    <SampleVerifyBatchModal
+      @register="registerSampleVerifyBatchModal"
       @success="handleSelectSampleBatchSuccess"
     />
 
@@ -48,8 +48,8 @@
       @register="registerRevokeVerifySampleModal"
       @success="handleNRSuccess"
     />
-    <StationMissingNumberDrawer @register="registerMissingDrawer" />
-    <PlasmaVerifyNonconformityDrawer @register="registerPlasmaVerifyDrawer" />
+    <StationMissingNumberModal @register="registerMissingModal" />
+    <PlasmaVerifyNonconformityModal @register="registerPlasmaVerifyModal" />
   </PageWrapper>
 </template>
 
@@ -61,13 +61,12 @@
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
-  import { useDrawer } from '@/components/Drawer';
   import { useModal } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
 
-  import SampleVerifyBatchDrawer from './SampleVerifyBatchDrawer.vue';
-  import StationMissingNumberDrawer from '@/views/inbound-management/sample-verify/StationMissingNumberDrawer.vue';
-  import PlasmaVerifyNonconformityDrawer from '@/views/inbound-management/sample-verify/PlasmaVerifyNonconformityDrawer.vue';
+  import SampleVerifyBatchModal from './SampleVerifyBatchModal.vue';
+  import StationMissingNumberModal from '@/views/inbound-management/sample-verify/StationMissingNumberModal.vue';
+  import PlasmaVerifyNonconformityModal from '@/views/inbound-management/sample-verify/PlasmaVerifyNonconformityModal.vue';
   import NonconformityModal from './NonconformityModal.vue';
   import RevokeVerifySampleModal from './RevokeVerifySampleModal.vue';
 
@@ -104,7 +103,7 @@
   const sampleTypeDictionary = ref<Recordable[] | undefined>([]);
   const sampleNonconformityDictionary = ref<Recordable[] | undefined>([]);
 
-  const { createConfirm } = useMessage();
+  const { createConfirm, createMessage } = useMessage();
 
   onMounted(async () => {
     const dictionaryArr = await getSampleDictionary([
@@ -228,8 +227,8 @@
 
   const [registerNonconformityModal, { openModal: openNonconformityModal }] = useModal();
   const [registerRevokeVerifySampleModal, { openModal: openRevokeVerifySampleModal }] = useModal();
-  const [registerMissingDrawer, { openDrawer: openMissingDrawer }] = useDrawer();
-  const [registerPlasmaVerifyDrawer, { openDrawer: openPlasmaVerifyDrawer }] = useDrawer();
+  const [registerMissingModal, { openModal: openMissingModal }] = useModal();
+  const [registerPlasmaVerifyModal, { openModal: openPlasmaVerifyModal }] = useModal();
 
   const gridOptionsUnaccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
     border: true,
@@ -329,11 +328,10 @@
     showFooter: false,
   });
 
-  const [registerSampleVerifyBatchDrawer, { openDrawer: openSampleVerifyBatchDrawer }] =
-    useDrawer();
+  const [registerSampleVerifyBatchModal, { openModal: openSampleVerifyBatchModal }] = useModal();
 
   function handleSelectSampleBatch() {
-    openSampleVerifyBatchDrawer(true, {
+    openSampleVerifyBatchModal(true, {
       reload: true,
       record: {
         sampleType: sampleTypeDictionary.value,
@@ -368,7 +366,7 @@
   }
 
   async function handleNonconformityRegister() {
-    if (!sampleVerifyNo.value) {
+    if (!sampleVerifyNo.value && inputValue.value) {
       await getSampleVerifyNo(inputValue.value);
     }
     openNonconformityModal(true, {
@@ -381,10 +379,22 @@
   }
 
   async function handleCompleteVerify() {
-    await receiveSample({
-      batchSampleNo: sampleBatchData.value.batchSampleNo!,
+    if (isEmpty(unref(sampleBatchData))) {
+      createMessage.warn('请选择样本批号');
+      return;
+    }
+
+    createConfirm({
+      title: '提示',
+      content: `样本批号：${sampleBatchData.value.batchSampleNo}是否完成验收？`,
+      iconType: 'warning',
+      onOk: async () => {
+        await receiveSample({
+          batchSampleNo: sampleBatchData.value.batchSampleNo!,
+        });
+        await updateTableData();
+      },
     });
-    await updateTableData();
   }
 
   const createActions = (record: {
@@ -444,13 +454,13 @@
   };
 
   function handleLackCountClick() {
-    openMissingDrawer(true, {
+    openMissingModal(true, {
       record: sampleBatchData.value.batchSampleNo,
     });
   }
 
   function handlePlasmaAcceptUnqualifiedCountClick() {
-    openPlasmaVerifyDrawer(true, {
+    openPlasmaVerifyModal(true, {
       record: sampleBatchData.value.batchSampleNo,
     });
   }

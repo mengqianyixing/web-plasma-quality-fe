@@ -5,7 +5,7 @@
       <vxe-grid
         v-bind="gridOptionsUnaccept"
         :data="unAcceptList"
-        class="w-2/5 inline-block pr-2"
+        class="inline-block w-2/5 pr-2"
         :loading="tableLoading"
       >
         <template #toolbar>
@@ -34,10 +34,10 @@
               <a-button>缺号登记</a-button>
               <a-button @click="suspendModal('BOX')">暂停箱记录</a-button>
               <a-button @click="suspendModal('BCH')">暂停批记录</a-button>
-              <a-button @click="openInDrawer(true, filterForm)" :disabled="!filterForm.batchNo"
+              <a-button @click="openInModal(true, filterForm)" :disabled="!filterForm.batchNo"
                 >托盘入库</a-button
               >
-              <a-button @click="openOutDrawer(true, filterForm)" :disabled="!filterForm.batchNo"
+              <a-button @click="openOutModal(true, filterForm)" :disabled="!filterForm.batchNo"
                 >托盘出库</a-button
               >
             </div>
@@ -70,8 +70,8 @@
       @clear-info="clearInfo"
       @refresh-data="batchModalSuccess(filterForm.batchNo)"
     />
-    <InStoreDrawer @register="registerInDrawer" />
-    <OutStoreDrawer @register="registerOutDrawer" />
+    <InStoreDrawer @register="registerInModal" />
+    <OutStoreDrawer @register="registerOutModal" />
     <revokeModal
       v-if="revokeModalVisible"
       @close="closeRevoke"
@@ -93,7 +93,6 @@
   import { DescItem, useDescription } from '@/components/Description';
   import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal.vue';
   import revokeModal from './components/revoke-modal.vue';
-  import { useDrawer } from '@/components/Drawer';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import OutStoreDrawer from '../components/outStoreDrawer/index.vue';
   import batchDetail from './components/batch-detail.vue';
@@ -276,8 +275,8 @@
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
   const [registerBoxModal, { openModal: openBatchModal }] = useModal();
 
-  const [registerInDrawer, { openDrawer: openInDrawer }] = useDrawer();
-  const [registerOutDrawer, { openDrawer: openOutDrawer }] = useDrawer();
+  const [registerInModal, { openModal: openInModal }] = useModal();
+  const [registerOutModal, { openModal: openOutModal }] = useModal();
 
   // 表格数据
   const unAcceptList = computed(() => filterForm.value?.unVerifyBag ?? []);

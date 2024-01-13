@@ -1,12 +1,13 @@
 <template>
   <div>
-    <BasicTable @register="registerTable" :searchInfo="searchInfo">
+    <BasicTable @register="registerTable">
       <template #mesId="{ record }">
-        <div class="z-999">
-          <a-button type="link" @click="handleMesClick(record)">
-            {{ record?.mesId }}
-          </a-button>
-        </div>
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleMesClick(record)"
+        >
+          {{ record?.mesId }}
+        </span>
       </template>
       <template #toolbar>
         <div class="flex gap-2">
@@ -21,7 +22,7 @@
       </template>
     </BasicTable>
 
-    <DetailDrawer @register="registerDetailDrawer" />
+    <DetailModal @register="registerDetailModal" />
     <CreateModal @register="registerModal" @success="handleSuccess" />
     <CheckModal @register="registerCheckModal" @success="handleSuccess" />
   </div>
@@ -30,7 +31,6 @@
   import { BasicTable, useTable } from '@/components/Table';
 
   import { useModal } from '@/components/Modal';
-  import { useDrawer } from '@/components/Drawer';
 
   import { columns, searchFormSchema } from './po.data';
 
@@ -45,7 +45,7 @@
   } from '@/api/stockout/production-order';
   import { createVNode, ref } from 'vue';
 
-  import DetailDrawer from './DetailDrawer.vue';
+  import DetailModal from './DetailModal.vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { statusValueEnum } from '@/enums/stockoutEnum';
 
@@ -53,9 +53,8 @@
 
   const [registerModal, { openModal }] = useModal();
   const [registerCheckModal, { openModal: openCheckModal }] = useModal();
-  const [registerDetailDrawer, { openDrawer: openDetailDrawer, setDrawerProps }] = useDrawer();
+  const [registerDetailModal, { openModal: openDetailModal }] = useModal();
 
-  const searchInfo = ref<Recordable>({});
   const selectedRow = ref<Recordable>([]);
 
   const { createMessage, createConfirm } = useMessage();
@@ -75,14 +74,14 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    clickToRowSelect: false,
+    clickToRowSelect: true,
     rowSelection: {
-      type: 'checkbox',
+      type: 'radio',
       onChange: (_, selectedRows: any) => {
         selectedRow.value = selectedRows;
       },
     },
-    size: 'small',
+    size: 'large',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,
@@ -91,13 +90,9 @@
       redo: false,
       setting: false,
     },
-    handleSearchInfoFn(info) {
-      console.log('handleSearchInfoFn', info);
-      return info;
-    },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    canResize: true,
   });
 
   function selectRowsCheck() {
@@ -113,11 +108,8 @@
   }
 
   function handleMesClick(record: Recordable) {
-    openDetailDrawer(true, {
+    openDetailModal(true, {
       orderNo: record?.orderNo,
-    });
-    setDrawerProps({
-      title: '生产指令详情',
     });
   }
 
@@ -129,6 +121,17 @@
 
   function handleEdit() {
     if (!selectRowsCheck()) return;
+
+    if (selectedRow.value[0]?.state === statusValueEnum.RVD) {
+      warning('该生产指令已复核，不可编辑');
+      return;
+    }
+
+    if (selectedRow.value[0]?.state === statusValueEnum.AED) {
+      warning('该生产指令已审核，不可编辑');
+      return;
+    }
+
     openModal(true, {
       record: selectedRow.value[0],
       isUpdate: true,
@@ -137,6 +140,16 @@
 
   async function handleDelete() {
     if (!selectRowsCheck()) return;
+
+    if (selectedRow.value[0]?.state === statusValueEnum.RVD) {
+      warning('该生产指令已复核，不可撤销');
+      return;
+    }
+
+    if (selectedRow.value[0]?.state === statusValueEnum.AED) {
+      warning('该生产指令已审核，不可撤销');
+      return;
+    }
 
     createConfirm({
       iconType: 'warning',
@@ -164,6 +177,7 @@
       warning('该指令不是待复核的状态');
       return;
     }
+
     createConfirm({
       iconType: 'warning',
       title: '复核',

@@ -4,27 +4,33 @@
  * @Author: zcc
  * @Date: 2023-12-29 16:24:20
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-09 18:09:04
+ * @LastEditTime: 2024-01-12 17:42:46
 -->
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     title="选择批次"
     width="1200px"
     cancelText="关闭"
     @ok="handleSubmit"
+    :minHeight="520"
+    @fullscreen="redoHeight"
   >
-    <BasicTable @register="registerTable">
-      <template #sampleCode="{ record }: { record: Recordable }">
-        {{ sampleTypeMap.get(record.sampleCode) }}
-      </template>
-    </BasicTable>
-  </BasicDrawer>
+    <div class="flex h-inherit max-h-inherit min-h-inherit">
+      <div class="flex-1 w-full">
+        <BasicTable @register="registerTable">
+          <template #sampleCode="{ record }: { record: Recordable }">
+            {{ sampleTypeMap.get(record.sampleCode) }}
+          </template>
+        </BasicTable>
+      </div>
+    </div>
+  </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { batchColumns, batchSearchScheam } from './resultRegistration.data';
   import { defineEmits, onMounted, ref } from 'vue';
@@ -38,7 +44,10 @@
 
   let rawData: Recordable[] = [];
 
-  const [registerTable, { clearSelectedRowKeys, reload, setPagination, getSelectRows }] = useTable({
+  const [
+    registerTable,
+    { clearSelectedRowKeys, reload, setPagination, getSelectRows, redoHeight },
+  ] = useTable({
     api: getData,
     title: '',
     immediate: false,
@@ -67,7 +76,7 @@
       return res;
     },
   });
-  const [registerDrawer] = useDrawerInner(async () => {
+  const [registerModal] = useModalInner(async () => {
     setPagination({ current: 1 });
     clearSelectedRowKeys();
     const res = await getBatchListApi({});
