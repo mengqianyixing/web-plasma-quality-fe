@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-29 15:52:07
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 17:22:14
+ * @LastEditTime: 2024-01-13 19:03:32
 -->
 <template>
   <BasicModal
@@ -90,8 +90,11 @@
 
   defineOptions({ name: 'ImportModal' });
 
-  const [registerTable] = useTable({
-    dataSource: dataSource.dataSaved,
+  const [registerTable, { reload: reloadSaved }] = useTable({
+    api: () => Promise.resolve({ result: dataSource.dataSaved }),
+    fetchSetting: {
+      listField: 'result',
+    },
     immediate: false,
     pagination: false,
     columns: importSuccessColumns,
@@ -101,8 +104,11 @@
     bordered: true,
     isCanResizeParent: true,
   });
-  const [registerFailTable] = useTable({
-    dataSource: dataSource.dataFaild,
+  const [registerFailTable, { reload: reloadFaild }] = useTable({
+    api: () => Promise.resolve({ result: dataSource.dataFaild }),
+    fetchSetting: {
+      listField: 'result',
+    },
     immediate: false,
     isCanResizeParent: true,
     columns: importFailColumns,
@@ -117,6 +123,8 @@
     bsno.value = bsNo;
     dataSource.dataFaild.splice(0, dataSource.dataFaild.length);
     dataSource.dataSaved.splice(0, dataSource.dataSaved.length);
+    reloadSaved();
+    reloadFaild();
     for (const key in cellData.value) {
       cellData.value[key] = '';
     }
@@ -136,6 +144,8 @@
       }
       dataSource.dataFaild.splice(0, dataSource.dataFaild.length, ...dataFaild);
       dataSource.dataSaved.splice(0, dataSource.dataSaved.length, ...dataSaved);
+      reloadSaved();
+      reloadFaild();
       message.success('导入成功');
     } finally {
       loading.value = false;
