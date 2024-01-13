@@ -15,7 +15,7 @@
       >
         <template #toolbar>
           <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
-            <span>未验收数：</span>
+            <span>未接收数：</span>
             <span>{{ unAcceptList?.length }}</span>
           </div>
         </template>
@@ -29,7 +29,7 @@
         <template #toolbar>
           <div class="flex items-center justify-between bg-[#ffffff]">
             <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
-              <span>已验收数：</span>
+              <span>已接收数：</span>
               <span>{{ acceptList?.length }}</span>
             </div>
             <div>
