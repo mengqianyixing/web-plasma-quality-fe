@@ -80,7 +80,6 @@
       listField: 'result',
     },
     formConfig: {
-      labelWidth: 120,
       schemas: searchFormSchema,
       transformDateFunc(date) {
         return date ? date.format('YYYY-MM-DD') : '';
