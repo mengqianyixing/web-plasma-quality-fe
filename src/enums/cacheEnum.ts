@@ -14,6 +14,7 @@ export const ROLES_KEY = 'ROLES__KEY__';
 // project config key
 export const PROJ_CFG_KEY = 'PROJ__CFG__KEY__';
 export const API_ADDRESS = 'API_ADDRESS__';
+export const API_PRINT_ADDRESS = 'API_PRINT_ADDRESS__';
 
 // lock info
 export const LOCK_INFO_KEY = 'LOCK__INFO__KEY__';

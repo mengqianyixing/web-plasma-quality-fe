@@ -11,7 +11,7 @@ import { defineStore } from 'pinia';
 import { store } from '@/store';
 
 import { ThemeEnum } from '@/enums/appEnum';
-import { APP_DARK_MODE_KEY, PROJ_CFG_KEY, API_ADDRESS } from '@/enums/cacheEnum';
+import { APP_DARK_MODE_KEY, PROJ_CFG_KEY, API_ADDRESS, API_PRINT_ADDRESS } from '@/enums/cacheEnum';
 import { Persistent } from '@/utils/cache/persistent';
 import { darkMode } from '@/settings/designSetting';
 import { resetRouter } from '@/router';
@@ -66,6 +66,9 @@ export const useAppStore = defineStore({
     getApiAddress() {
       return JSON.parse(localStorage.getItem(API_ADDRESS) || '{}');
     },
+    getPrintApiAddress() {
+      return JSON.parse(localStorage.getItem(API_PRINT_ADDRESS) || '{}');
+    },
   },
   actions: {
     setPageLoading(loading: boolean): void {
@@ -108,6 +111,9 @@ export const useAppStore = defineStore({
     },
     setApiAddress(config: ApiAddress): void {
       localStorage.setItem(API_ADDRESS, JSON.stringify(config));
+    },
+    setPrintApiAddress(config: ApiAddress): void {
+      localStorage.setItem(API_PRINT_ADDRESS, JSON.stringify(config));
     },
   },
 });

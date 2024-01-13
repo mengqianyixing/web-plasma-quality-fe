@@ -278,10 +278,10 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
 }
 export const defHttp = createAxios();
 
-const { VITE_PRINT_URL } = getAppEnvConfig();
+const { VITE_GLOB_PRINT_URL } = getAppEnvConfig();
 export const printHttp = createAxios({
   requestOptions: {
-    apiUrl: VITE_PRINT_URL,
+    apiUrl: VITE_GLOB_PRINT_URL,
   },
 });
 
