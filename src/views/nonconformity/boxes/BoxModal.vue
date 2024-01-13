@@ -109,6 +109,13 @@
         field: 'capacity',
         component: 'InputNumber',
         colProps: { span: 20 },
+        helpMessage() {
+          return '输入正整数';
+        },
+        componentProps: {
+          min: 0,
+          precision: 0,
+        },
         required: true,
       },
       {
