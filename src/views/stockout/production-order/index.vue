@@ -122,13 +122,8 @@
   function handleEdit() {
     if (!selectRowsCheck()) return;
 
-    if (selectedRow.value[0]?.state === statusValueEnum.RVD) {
-      warning('该生产指令已复核，不可编辑');
-      return;
-    }
-
-    if (selectedRow.value[0]?.state === statusValueEnum.AED) {
-      warning('该生产指令已审核，不可编辑');
+    if (selectedRow.value[0]?.state !== statusValueEnum.TBR) {
+      warning('该生产指令不是待复核状态，不可编辑');
       return;
     }
 
@@ -141,13 +136,8 @@
   async function handleDelete() {
     if (!selectRowsCheck()) return;
 
-    if (selectedRow.value[0]?.state === statusValueEnum.RVD) {
-      warning('该生产指令已复核，不可撤销');
-      return;
-    }
-
-    if (selectedRow.value[0]?.state === statusValueEnum.AED) {
-      warning('该生产指令已审核，不可撤销');
+    if (selectedRow.value[0]?.state !== statusValueEnum.TBR) {
+      warning('该生产指令不是待复核状态，不可撤销');
       return;
     }
 
@@ -215,12 +205,7 @@
     if (!selectRowsCheck()) return;
 
     if (selectedRow.value[0]?.state !== statusValueEnum.RVD) {
-      warning('该指令不是已复核的状态');
-      return;
-    }
-
-    if (selectedRow.value[0]?.state === statusValueEnum.AED) {
-      warning('该指令已审核');
+      warning('该指令不是待审核的状态');
       return;
     }
 
@@ -246,8 +231,8 @@
   function handleCancelExamine() {
     if (!selectRowsCheck()) return;
 
-    if (selectedRow.value[0]?.state !== statusValueEnum.AED) {
-      warning('该指令不是已审核的状态');
+    if (selectedRow.value[0]?.state !== statusValueEnum.TBP) {
+      warning('该指令不是待计划的状态，不可取消审核');
       return;
     }
 
