@@ -112,10 +112,16 @@
         helpMessage() {
           return '输入正整数';
         },
-        componentProps: {
-          min: 0,
-          precision: 0,
-        },
+        rules: [
+          {
+            validator: (_, value) => {
+              if (!/^[1-9][0-9]*$/.test(value)) {
+                return Promise.reject('请输入正整数');
+              }
+              return Promise.resolve();
+            },
+          },
+        ],
         required: true,
       },
       {
