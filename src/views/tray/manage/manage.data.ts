@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-20 14:11:29
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-09 16:52:45
+ * @LastEditTime: 2024-01-13 10:31:37
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 
@@ -35,17 +35,13 @@ export const columns: BasicColumn[] = [
     dataIndex: 'createAt',
   },
   {
-    title: '存放库房',
+    title: '所在库房',
     dataIndex: 'wareHouseName',
   },
 
   {
-    title: '存放货位',
+    title: '所在货位',
     dataIndex: 'locationNo',
-  },
-  {
-    title: '备注',
-    dataIndex: 'remark',
   },
   {
     title: '托盘状态',
@@ -71,7 +67,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     component: 'Input',
     field: 'sampleNo',
-    label: '样品批号',
+    label: '样本批号',
     colProps: { span: 6 },
   },
   {

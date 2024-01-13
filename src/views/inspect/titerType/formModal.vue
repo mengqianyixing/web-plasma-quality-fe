@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-26 17:41:03
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-09 16:14:44
+ * @LastEditTime: 2024-01-13 14:33:53
 -->
 <template>
   <BasicModal
@@ -29,19 +29,22 @@
     updateTitlerTypeApi,
   } from '@/api/inspect/titerType';
   import { getDictItemListByNoApi } from '@/api/dictionary';
+  import { isNumber } from '@/utils/is';
 
   const emit = defineEmits(['success', 'register']);
 
   defineOptions({ name: 'FormModel' });
   const state = reactive({ dictItemId: '', type: '', isRequest: false });
 
-  const [registerForm, { validate, setFieldsValue, clearValidate, resetFields, updateSchema }] =
-    useForm({
-      labelWidth: 120,
-      baseColProps: { span: 12 },
-      schemas: formListSchema,
-      showActionButtonGroup: false,
-    });
+  const [
+    registerForm,
+    { validate, setFieldsValue, clearValidate, resetFields, updateSchema, getFieldsValue },
+  ] = useForm({
+    labelWidth: 120,
+    baseColProps: { span: 12 },
+    schemas: formListSchema,
+    showActionButtonGroup: false,
+  });
   const [registerModal, { setModalProps, closeModal }] = useModalInner(
     async ({ data, disabled }) => {
       state.dictItemId = data.dictItemId;
@@ -67,9 +70,23 @@
         disabledOptions.forEach((_) => (_.componentProps.disabled = true));
       }
       updateSchema(disabledOptions);
+      updateSchema([
+        { field: 'max', rules: [{ validator: maxValidator }] },
+        { field: 'min', rules: [{ validator: minValidator }] },
+      ]);
       clearValidate();
     },
   );
+  function maxValidator(_, value: number | void) {
+    const { min } = getFieldsValue();
+    if (!isNumber(min) || !isNumber(value)) return Promise.resolve();
+    if (min > value) return Promise.reject('最大值不能小于最小值');
+  }
+  function minValidator(_, value: number | void) {
+    const { max } = getFieldsValue();
+    if (!isNumber(max) || !isNumber(value)) return Promise.resolve();
+    if (max < value) return Promise.reject('最小值不能大于最大值');
+  }
   async function handleSubmit() {
     try {
       const values = await validate();

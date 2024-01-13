@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 17:40:38
+ * @LastEditTime: 2024-01-13 09:46:36
 -->
 <template>
   <BasicModal
@@ -40,7 +40,7 @@
   let projectName = ref('');
   let pid = '';
   let bsno = '';
-  let userData = {};
+  let userData: Recordable = {};
   let fieldList: string[] = [];
   const emit = defineEmits(['close', 'confirm']);
   const [
@@ -111,6 +111,7 @@
       message.success(sampleNo + '登记成功');
       if (close === false) {
         reloadPage();
+        setFieldsValue({ account: userData.username });
       } else {
         emit('confirm');
       }

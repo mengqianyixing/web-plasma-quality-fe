@@ -20,7 +20,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '效价结果',
-    dataIndex: 'result',
+    dataIndex: 'titerType',
   },
 
   {
@@ -109,12 +109,30 @@ export const formListSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'result',
+    field: 'titerType',
     component: 'Select',
     label: '效价结果',
     required: true,
     componentProps: {
       options: [],
+    },
+  },
+  {
+    field: 'min',
+    component: 'InputNumber',
+    label: '效价最小值',
+    defaultValue: null,
+    componentProps: {
+      min: 0,
+    },
+  },
+  {
+    field: 'max',
+    component: 'InputNumber',
+    label: '效价最大值',
+    defaultValue: null,
+    componentProps: {
+      min: 0,
     },
   },
   {

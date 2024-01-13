@@ -78,7 +78,8 @@ export const initFormSchema: (opt: {
   name: String;
   houseType: String;
   updateSchema: Function;
-}) => FormSchema[] = ({ name, houseType }) => [
+  setFieldsValue: Function;
+}) => FormSchema[] = ({ name, houseType, updateSchema, setFieldsValue }) => [
   {
     field: 'houseName',
     label: name + '名称',
@@ -114,6 +115,15 @@ export const initFormSchema: (opt: {
         { label: STORE_FLAG_TEXT.S, value: STORE_FLAG.S },
         { label: STORE_FLAG_TEXT.F, value: STORE_FLAG.F },
       ],
+      onChange: (value) => {
+        updateSchema({
+          field: 'autoFlag',
+          componentProps: { disabled: value === STORE_FLAG.F },
+        });
+        if (value === STORE_FLAG.F) {
+          setFieldsValue({ autoFlag: AUTO_FLAG.M });
+        }
+      },
     },
   },
   {

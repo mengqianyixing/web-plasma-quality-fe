@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 09:52:52
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 16:05:31
+ * @LastEditTime: 2024-01-13 10:22:29
 -->
 <template>
   <div class="h-full">
@@ -28,14 +28,13 @@
   } from './relocation.data';
   import TrayModel from './component/trayModal.vue';
   import { useModal } from '@/components/Modal';
-  import { settingListApi, areaListApi } from '@/api/plasmaStore/setting';
+  import { settingListApi } from '@/api/plasmaStore/setting';
   import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
   import { reactive, nextTick } from 'vue';
   import { submitRelocationApi, taryHouseApi } from '@/api/tray/relocation';
   import LocationModal from '@/components/BusinessDrawer/locationDrawer/index.vue';
   import { getHouseSiteApi } from '@/api/plasmaStore/site';
 
-  const houseAreaMap: Map<string, Recordable<any>> = new Map();
   const state = reactive<{
     houseList: Recordable[];
   }>({ houseList: [] });
@@ -131,8 +130,6 @@
     if (houseType[1] === STORE_FLAG.S) {
       const componentProps = { 'enter-button': '选择', onSearch: handleLoacationSelect };
       appendSchemaByField({ ...locationSchema, componentProps: componentProps }, void 0);
-    } else {
-      getAreaListFn(values.houseNo);
     }
   }
   async function inStoreConfim() {
@@ -150,19 +147,7 @@
       console.log(e);
     }
   }
-  async function getAreaListFn(houseNo: string) {
-    let list = houseAreaMap.get(houseNo);
-    if (!list) {
-      const res = await areaListApi({ houseNo });
-      const data = (res.subHouseList || []).map((_) => ({ value: _.houseNo, label: _.houseName }));
-      houseAreaMap.set(houseNo, data);
-      list = data;
-    }
-    if (list.length > 0) {
-      const componentProps = { options: list };
-      appendSchemaByField({ ...areaSchema, componentProps }, void 0);
-    }
-  }
+
   async function getHouseList() {
     try {
       const res = await settingListApi({ pageSize: '9999', currPage: '1', closed: CLOSED.NORMAL });

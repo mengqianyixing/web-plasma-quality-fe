@@ -3,9 +3,9 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 export const columns: BasicColumn[] = [
   { title: '检测项目', dataIndex: 'projectAbbr', slots: { customRender: 'projectAbbr' } },
   { title: '检测方法', dataIndex: 'methodAbbr' },
-  { title: '合格样品总数', dataIndex: 'totalQualified' },
-  { title: '不合格样品总数', dataIndex: 'totalUnqualified' },
-  { title: '未检测样品总数', dataIndex: 'totalNotCheck' },
+  { title: '合格样本总数', dataIndex: 'totalQualified' },
+  { title: '不合格样本总数', dataIndex: 'totalUnqualified' },
+  { title: '未检测样本总数', dataIndex: 'totalNotCheck' },
 ];
 export const methodsMappding = {
   NAT: '3',
@@ -44,7 +44,7 @@ export const dtColumnsMap = {
 type getColumns = (checkResult: string, checkType: string) => BasicColumn[];
 export const dtColumns: getColumns = (checkResult, checkType) => [
   {
-    title: '样品编号',
+    title: '样本编号',
     dataIndex: 'sampleNo',
   },
   {
@@ -97,7 +97,7 @@ export const notCheckFormSchema: FormSchema[] = [
   {
     field: 'sampleNo',
     component: 'Input',
-    label: '样品编号',
+    label: '样本编号',
     required: true,
   },
   {

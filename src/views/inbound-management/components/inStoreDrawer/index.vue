@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-04 16:30:55
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 18:12:59
+ * @LastEditTime: 2024-01-13 10:08:29
 -->
 <template>
   <BasicModal
@@ -55,15 +55,16 @@
 
   const state = ref('');
 
-  const [registerForm, { validate, clearValidate, setFieldsValue, getFieldsValue }] = useForm({
-    labelWidth: 90,
-    baseColProps: { span: 24 },
-    schemas: [
-      { label: '托盘编号', component: 'Input', field: 'trayNo', required: true },
-      { label: '箱号', component: 'Input', field: 'boxId', required: true },
-    ],
-    showActionButtonGroup: false,
-  });
+  const [registerForm, { validate, clearValidate, setFieldsValue, getFieldsValue, resetFields }] =
+    useForm({
+      labelWidth: 90,
+      baseColProps: { span: 24 },
+      schemas: [
+        { label: '托盘编号', component: 'Input', field: 'trayNo', required: true },
+        { label: '箱号', component: 'Input', field: 'boxId', required: true },
+      ],
+      showActionButtonGroup: false,
+    });
 
   const [registerInModal, { openModal: openInModal }] = useModal();
   const [registerBindModal, { openModal }] = useModal();
@@ -117,11 +118,9 @@
   }
 
   async function handleReBind() {
-    const rows = getSelections(true);
-    if (rows.length === 0) return;
     openModal();
     await nextTick();
-    setFieldsValue({ trayNo: rows[0].trayNo });
+    resetFields();
     clearValidate();
   }
   async function okFunction() {
@@ -144,7 +143,7 @@
   async function submit() {
     const { boxId, trayNo } = getFieldsValue();
     await bindBoxApi({ boxes: [boxId], trayNo, type: 'bind' });
-    setFieldsValue({ boxId: '' });
+    setFieldsValue({ boxId: '', trayNo: '' });
     message.success('操作成功');
     reload();
   }

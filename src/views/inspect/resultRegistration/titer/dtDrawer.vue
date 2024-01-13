@@ -39,7 +39,7 @@
               :bsNo="bsno"
             />
           </TabPane>
-          <TabPane key="3" tab="未检测样品">
+          <TabPane key="3" tab="未检测样本">
             <component :is="componentMap['3']" :projectId="pid" :bsNo="bsno" type="TO_BE_TESTED" />
           </TabPane>
         </Tabs>

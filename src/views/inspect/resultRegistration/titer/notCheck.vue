@@ -81,7 +81,7 @@
         required: true,
         field: 'sampleNo',
         component: 'InputSearch',
-        label: '样品编号',
+        label: '样本编号',
         componentProps: {
           'enter-button': '查询',
           onSearch: (value) => {

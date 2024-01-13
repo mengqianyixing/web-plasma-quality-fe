@@ -263,12 +263,12 @@ export const entryDetailModalColumns: BasicColumn[] = [
         width: 120,
       },
       {
-        title: '样品批号',
+        title: '样本批号',
         dataIndex: '',
         width: 120,
       },
       {
-        title: '样品编号',
+        title: '样本编号',
         dataIndex: '',
         width: 120,
       },
@@ -288,7 +288,7 @@ export const entryDetailModalColumns: BasicColumn[] = [
         width: 120,
       },
       {
-        title: '样品结果',
+        title: '样本结果',
         dataIndex: '',
         width: 120,
       },

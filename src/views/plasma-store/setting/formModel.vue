@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-12 15:49:25
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-10 15:20:40
+ * @LastEditTime: 2024-01-13 10:37:59
 -->
 <template>
   <BasicModal
@@ -24,6 +24,7 @@
   import { initFormSchema } from './setting.data';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { addHouseApi } from '@/api/plasmaStore/setting';
+  import { noop } from '@/utils/index';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -34,7 +35,12 @@
 
   const getNodeType = computed(() => (state.parentHouseNo === 'ROOT' ? '库房' : '区域'));
 
-  const formSchema = initFormSchema({ name: '', houseType: '', updateSchema: () => ({}) });
+  const formSchema = initFormSchema({
+    name: '',
+    houseType: '',
+    updateSchema: noop,
+    setFieldsValue: noop,
+  });
 
   const [registerForm, { validate, updateSchema, setFieldsValue, clearValidate }] = useForm({
     labelWidth: 90,
@@ -49,6 +55,7 @@
         name: getNodeType.value,
         houseType: parentHouseType || '',
         updateSchema,
+        setFieldsValue,
       });
       setModalProps({ confirmLoading: false });
       updateSchema(formSchema);

@@ -196,7 +196,7 @@ export const sampleBoxScanFormSchema: FormSchema[] = [
   },
   {
     component: 'Input',
-    label: '样品箱号',
+    label: '样本箱号',
     field: 'boxId',
     colProps: { span: 8 },
   },
@@ -210,7 +210,7 @@ export const sampleBoxScanSearchFormSchema: FormSchema[] = [
   },
   {
     component: 'Input',
-    label: '样品箱号',
+    label: '样本箱号',
     field: '',
     colProps: { span: 6 },
   },
@@ -245,7 +245,7 @@ export const sampleBoxHandSearchFormSchema: FormSchema[] = [
   },
   {
     component: 'Input',
-    label: '样品批号',
+    label: '样本批号',
     field: '',
     colProps: { span: 6 },
   },
@@ -256,11 +256,11 @@ export const sampleBoxHandColumns: BasicColumn[] = [
     dataIndex: '',
   },
   {
-    title: '样品箱号',
+    title: '样本箱号',
     dataIndex: '采浆公司',
   },
   {
-    title: '样品批号',
+    title: '样本批号',
     dataIndex: '采浆公司',
   },
   {

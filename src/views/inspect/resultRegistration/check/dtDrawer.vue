@@ -26,7 +26,7 @@
           class="h-full bg-white tabs"
           size="small"
         >
-          <TabPane key="1" tab="合格样品">
+          <TabPane key="1" tab="合格样本">
             <component
               :is="componentMap['1']"
               checkResult="合格"
@@ -35,7 +35,7 @@
               :bsNo="bsno"
             />
           </TabPane>
-          <TabPane key="2" tab="不合格样品">
+          <TabPane key="2" tab="不合格样本">
             <component
               :is="componentMap['2']"
               checkResult="不合格"
@@ -45,7 +45,7 @@
               :bsNo="bsno"
             />
           </TabPane>
-          <TabPane key="3" tab="未检测样品">
+          <TabPane key="3" tab="未检测样本">
             <component
               :is="componentMap['3']"
               checkResult="未检测"

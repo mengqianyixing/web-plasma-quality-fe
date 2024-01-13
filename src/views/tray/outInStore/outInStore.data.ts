@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-18 14:18:35
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-25 18:17:34
+ * @LastEditTime: 2024-01-13 10:28:20
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 
@@ -23,12 +23,9 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '所在货位',
-    dataIndex: 'subWareHouseName',
-  },
-  {
-    title: '所在区域',
     dataIndex: 'locationNo',
   },
+
   {
     title: '打印人',
     dataIndex: 'creater',
@@ -66,7 +63,7 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    label: '样品批次',
+    label: '样本批次',
     component: 'Input',
     field: 'sampleNo',
     colProps: { span: 8 },
@@ -79,15 +76,6 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
-export const inStoreAreaSchema: FormSchema = {
-  field: 'subWareHouseNo',
-  component: 'Select',
-  label: '区域',
-  required: true,
-  componentProps: {
-    options: [],
-  },
-};
 export const inStoreFormSchema: (houseChange: Function) => FormSchema[] = (houseChange) => [
   {
     field: 'houseNo',

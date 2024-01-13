@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-27 18:25:06
+ * @LastEditTime: 2024-01-13 10:25:21
 -->
 <template>
   <div class="h-full">
@@ -67,6 +67,8 @@
     await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: [boxId] });
     setFieldsValue({ boxId: '' });
     message.success('操作成功');
+    const list = await trayBoxListApi({ trayNo });
+    count.value = list.length;
   }
   async function handleSubmit() {
     const { boxId, trayNo } = getFieldsValue();

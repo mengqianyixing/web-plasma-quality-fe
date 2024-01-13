@@ -9,7 +9,7 @@ export const columns: BasicColumn[] = [
     slots: { customRender: 'stationName' },
   },
   {
-    title: '样品批号',
+    title: '样本批号',
     dataIndex: 'sampleBatchNo',
     slots: { customRender: 'sampleBatchNo' },
   },
@@ -21,7 +21,7 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '样品总数',
+    title: '样本总数',
     dataIndex: 'sampleTotal',
   },
 
@@ -69,7 +69,7 @@ export const searchFormschema: FormSchema[] = [
   {
     field: 'sampleBatchNo',
     component: 'Input',
-    label: '样品批号',
+    label: '样本批号',
   },
   {
     field: '[recordStartDate,recordEndDate]',
@@ -83,11 +83,11 @@ export const searchFormschema: FormSchema[] = [
 ];
 export const importDrwaerColumns: BasicColumn[] = [
   {
-    title: '样品批号',
+    title: '样本批号',
     dataIndex: 'batchNo',
   },
   {
-    title: '样品编号',
+    title: '样本编号',
     dataIndex: 'sampleNo',
   },
   {
@@ -112,7 +112,7 @@ export const importDrwaerColumns: BasicColumn[] = [
 ];
 export const dtDrwaerColumns: BasicColumn[] = [
   {
-    title: '样品编号',
+    title: '样本编号',
     dataIndex: 'sampleNo',
   },
   {
