@@ -5,19 +5,19 @@ export enum HoseType {
 }
 
 export enum NonconformityPlasmaStatusEnum {
-  REG = '登记',
-  PIK = '挑选',
-  EXA = '审计',
-  INS = '入库',
-  REV = '撤回',
+  REG = '不合格未挑浆',
+  PIK = '不合格已挑浆',
+  INS = '已入不合格库',
+  EXA = '入库已审核',
+  OTD = '已出不合格库',
 }
 
 export enum NonconformityPlasmaStatusValueEnum {
   REG = 'REG',
   PIK = 'PIK',
-  EXA = 'EXA',
   INS = 'INS',
-  REV = 'REV',
+  EXA = 'EXA',
+  OTD = 'OTD',
 }
 
 export const nonconformityPlasmaMap = new Map<NonconformityPlasmaStatusValueEnum, string>();
@@ -31,14 +31,14 @@ nonconformityPlasmaMap.set(
   NonconformityPlasmaStatusEnum.PIK,
 );
 nonconformityPlasmaMap.set(
-  NonconformityPlasmaStatusValueEnum.EXA,
-  NonconformityPlasmaStatusEnum.EXA,
-);
-nonconformityPlasmaMap.set(
   NonconformityPlasmaStatusValueEnum.INS,
   NonconformityPlasmaStatusEnum.INS,
 );
 nonconformityPlasmaMap.set(
-  NonconformityPlasmaStatusValueEnum.REV,
-  NonconformityPlasmaStatusEnum.REV,
+  NonconformityPlasmaStatusValueEnum.EXA,
+  NonconformityPlasmaStatusEnum.EXA,
+);
+nonconformityPlasmaMap.set(
+  NonconformityPlasmaStatusValueEnum.OTD,
+  NonconformityPlasmaStatusEnum.OTD,
 );
