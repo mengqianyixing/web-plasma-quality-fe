@@ -1,10 +1,10 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     :title="getTitle"
-    width="1200px"
+    width="80%"
     @ok="handleSubmit"
   >
     <a-tabs v-model:activeKey="activeKey">
@@ -57,14 +57,14 @@
     </a-tabs>
 
     <StyleColumnModal @register="registerStyleColumnModal" @success="handleSuccess" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
   import { ref, computed, unref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { styleDetailColumns, formSchema } from './style.data';
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
 
   import StyleColumnModal from './StyleColumnModal.vue';
 
@@ -72,7 +72,6 @@
   import { addStyle, editStyle, getStylePreview, getTagDetail } from '@/api/tag/manage';
   import { GetApiSysTagTagNoResponse, PostApiSysTagPreviewRequest } from '@/api/type/tagManage';
   import type { Nullable } from '@vben/types';
-  import { useModal } from '@/components/Modal';
   import { CodeEditor, MODE } from '@/components/CodeEditor';
   import { tagStatusValueEnum } from '@/enums/tagManageEnum';
 
@@ -134,9 +133,9 @@
   const previewStyle = ref('');
   const previewUrl = computed(() => `data:image/png;base64,${unref(previewStyle)}`);
 
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
-    setDrawerProps({ confirmLoading: false });
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
+    await resetFields();
+    setModalProps({ confirmLoading: false });
     isUpdate.value = !!data?.isUpdate;
 
     if (unref(isUpdate)) {
@@ -152,12 +151,18 @@
       });
       setTableData(originDetailData.value?.content?.Data);
 
-      setFieldsValue({
+      await setFieldsValue({
         ...data.record,
         width: originDetailData.value.content.Width,
         height: originDetailData.value.content.Height,
         gap: originDetailData.value.content.Gap,
       });
+    } else {
+      tagNo.value = '';
+      state.value = '';
+      JsonValue.value = '';
+      previewStyle.value = '';
+      setTableData([]);
     }
   });
 
@@ -166,7 +171,7 @@
   async function handleSubmit() {
     try {
       const values = await validate();
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       if (unref(isUpdate)) {
         if (activeKey.value === '1') {
           await editStyle({
@@ -209,10 +214,10 @@
           await addStyle(JSON.parse(JsonValue.value));
         }
       }
-      closeDrawer();
+      closeModal();
       emit('success');
     } finally {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
   }
 

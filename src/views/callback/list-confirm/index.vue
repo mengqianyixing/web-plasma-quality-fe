@@ -17,18 +17,17 @@
     </BasicTable>
 
     <SelectStationNameModal @register="registerSelectModal" @success="handleSelectSuccess" />
-    <CallbackGenerationDrawer @register="registerGenerationDrawer" @success="handleSuccess" />
-    <CallbackDetailDrawer @register="registerCallbackDetailDrawer" />
+    <CallbackGenerationModal @register="registerGenerationModal" @success="handleSuccess" />
+    <CallbackDetailModal @register="registerCallbackDetailModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { useModal } from '@/components/Modal';
-  import { useDrawer } from '@/components/Drawer';
   import { useMessage } from '@/hooks/web/useMessage';
 
-  import CallbackGenerationDrawer from '@/views/callback/list-generation/CallbackGenerationDrawer.vue';
-  import CallbackDetailDrawer from '@/views/callback/list-generation/CallbackDetailDrawer.vue';
+  import CallbackGenerationModal from '@/views/callback/list-generation/CallbackGenerationModal.vue';
+  import CallbackDetailModal from '@/views/callback/list-generation/CallbackDetailModal.vue';
   import SelectStationNameModal from '@/views/callback/list-generation/SelectStationNameModal.vue';
 
   import { ref, onMounted } from 'vue';
@@ -62,8 +61,8 @@
 
   const [registerSelectModal] = useModal();
 
-  const [registerGenerationDrawer, { openDrawer: openGenerationDrawer }] = useDrawer();
-  const [registerCallbackDetailDrawer, { openDrawer: openCallbackDetailDrawer }] = useDrawer();
+  const [registerGenerationModal, { openModal: openGenerationModal }] = useModal();
+  const [registerCallbackDetailModal, { openModal: openCallbackDetailModal }] = useModal();
 
   const [registerTable, { getForm, reload }] = useTable({
     title: '回访名单确认列表',
@@ -130,7 +129,7 @@
   }
 
   function handleSelectSuccess(id: string) {
-    openGenerationDrawer(true, {
+    openGenerationModal(true, {
       isUpdate: false,
       reload: true,
       record: {
@@ -144,7 +143,7 @@
   }
 
   function handlePlanNoClick(record: Recordable) {
-    openCallbackDetailDrawer(true, {
+    openCallbackDetailModal(true, {
       ...record,
       stationName: formatStationNo(record),
       state: CallbackStateMap.get(record.state),

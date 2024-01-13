@@ -250,9 +250,8 @@ export const usePermissionStore = defineStore({
           break;
 
         case PermissionModeEnum.CAS_DOOR:
-          const menuIds: number[] = [99] // 默认首页
-            .concat(userStore.getUserInfo?.menuIds ?? [])
-            .map((i) => Number(i));
+          const menuIds: any[] = [99] // 默认首页，后续调整
+            .concat(userStore.getUserInfo?.menuIds ?? []);
           const filterRoutes = (routes: any[]): any[] => {
             const filteredRoutes: any[] = [];
 

@@ -39,7 +39,7 @@
   const { createMessage } = useMessage();
   const { success } = createMessage;
 
-  const emit = defineEmits(['clearInfo']);
+  const emit = defineEmits(['clearInfo', 'goon']);
   const userInfo = useUserStore();
 
   const [registerModal, { closeModal, setModalProps }] = useModalInner((data) => {
@@ -222,7 +222,8 @@
         setFieldsValue({
           remark: '',
         });
-        reload();
+        emit('goon');
+        closeModal();
         selectedRow.value = [];
         clearValidate();
       }

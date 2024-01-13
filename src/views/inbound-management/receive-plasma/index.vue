@@ -42,6 +42,7 @@
       @register="registerSusModal"
       @success="batchModalSuccess"
       @clear-info="clearInfo"
+      @goon="goon"
     />
     <InStoreDrawer @register="registerModal" />
   </PageWrapper>
@@ -119,7 +120,7 @@
               value={boxNo}
               disabled={tableLoading.value}
               onChange={(event) => (boxNo.value = event.target.value)}
-              onPressEnter={debounce(handlePressEnter, 500)}
+              onkeyup={debounce(handlePressEnter, 500)}
             />
           </div>
         );
@@ -129,13 +130,13 @@
       field: 'stationName',
       label: '采浆公司',
     },
-    {
-      field: 'transNo',
-      label: '出库单号',
-      render(text) {
-        return <span>{text}</span>;
-      },
-    },
+    // {
+    //   field: 'transNo',
+    //   label: '出库单号',
+    //   render(text) {
+    //     return <span>{text}</span>;
+    //   },
+    // },
     {
       field: 'boxCount',
       label: '血浆箱数',
@@ -153,7 +154,7 @@
   ];
   const [register] = useDescription({
     bordered: false,
-    column: 4,
+    column: 3,
     contentStyle: {
       width: '80px',
     },
@@ -162,37 +163,39 @@
   });
 
   // 箱号扫描
-  async function handlePressEnter() {
-    if (!boxNo.value) {
-      warning('请扫描箱号!');
-      return;
-    }
-    if (!trayNo.value) {
-      warning('请输入托盘编号!');
-      return;
-    }
-    const params = {
-      boxNo: boxNo.value,
-      trayNo: trayNo.value,
-      batchNo: batchNo.value,
-    };
-    try {
-      tableLoading.value = true;
-      const data = await acceptPlasma(params);
-      if (data) {
-        success('接收成功!');
-        filterForm.value = data;
-        if (data.acceptDetail?.unAcceptCount <= 0) {
-          // 一批接收完毕 提示
-          showConfirmGoon();
-        }
+  async function handlePressEnter(e) {
+    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+      if (!boxNo.value) {
+        warning('请扫描箱号!');
+        return;
       }
-    } finally {
-      tableLoading.value = false;
-      boxNo.value = '';
-      nextTick(() => {
-        boxNoRef.value.focus();
-      });
+      if (!trayNo.value) {
+        warning('请输入托盘编号!');
+        return;
+      }
+      const params = {
+        boxNo: boxNo.value,
+        trayNo: trayNo.value,
+        batchNo: batchNo.value,
+      };
+      try {
+        tableLoading.value = true;
+        const data = await acceptPlasma(params);
+        if (data) {
+          success('接收成功!');
+          filterForm.value = data;
+          if (data.acceptDetail?.unAcceptCount <= 0) {
+            // 一批接收完毕 提示
+            showConfirmGoon();
+          }
+        }
+      } finally {
+        tableLoading.value = false;
+        boxNo.value = '';
+        nextTick(() => {
+          boxNoRef.value.focus();
+        });
+      }
     }
   }
 
@@ -328,6 +331,10 @@
 
   // 打开暂停记录框
   function susModal() {
+    if (!batchNo.value) {
+      warning('请先选择批号!');
+      return;
+    }
     openSusModal(true, {
       batchNo: batchNo.value,
     });
@@ -340,5 +347,9 @@
   async function batchModalSuccess(data) {
     batchNo.value = data;
     filterForm.value = await getAccepts(data);
+  }
+
+  async function goon() {
+    filterForm.value = await getAccepts(batchNo.value);
   }
 </script>

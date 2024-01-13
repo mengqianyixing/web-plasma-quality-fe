@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-01-03 10:01:13
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-03 17:52:25
+ * @LastEditTime: 2024-01-11 14:54:21
  * @Description: 菜单权限管理
  * @FilePath: \psms-fe\src\api\oauth\menu.ts
  */
@@ -13,7 +13,7 @@ import { defHttp } from '@/utils/http/axios';
  * @param params
  * @returns
  */
-export const getCasDoorUsers = (params) =>
+export const getCasDoorUsers = (params?) =>
   defHttp.get(
     { url: '/api/sys/casdoor/get-users', params },
     {

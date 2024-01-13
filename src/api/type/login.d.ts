@@ -129,4 +129,28 @@ export interface PostApiSysReviewerLoginResponse {
   username: string;
 }
 
+/**
+ * 接口 [复核人Casdoor登录↗](https://yapi.sharing8.cn/project/521/interface/api/32237) 的 **请求类型**
+ *
+ * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
+ * @请求头 `POST /api/sys/reviewer/casdoor-login`
+ * @更新时间 `2024-01-12 14:24:38`
+ */
+export interface PostApiSysReviewerCasdoorLoginRequest {
+  account?: string;
+  password?: string;
+}
+
+/**
+ * 接口 [复核人Casdoor登录↗](https://yapi.sharing8.cn/project/521/interface/api/32237) 的 **返回类型**
+ *
+ * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
+ * @请求头 `POST /api/sys/reviewer/casdoor-login`
+ * @更新时间 `2024-01-12 14:24:38`
+ */
+export interface PostApiSysReviewerCasdoorLoginResponse {
+  userId?: string;
+  username?: string;
+}
+
 /* prettier-ignore-end */

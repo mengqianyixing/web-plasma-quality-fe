@@ -19,7 +19,7 @@ function setColumnWidth(data, worksheet, min = 3) {
   data.forEach((item) => {
     Object.keys(item).forEach((key) => {
       const cur = item[key];
-      const length = cur?.length * 2 ?? min;
+      const length = (cur?.length ?? min) * 2;
       obj[key] = Math.max(length, obj[key] ?? min);
     });
   });
@@ -54,6 +54,7 @@ export function jsonToSheetXlsx<T = any>({
     },
   };
   /* output format determined by filename */
+  console.log(workbook, write2excelOpts);
   writeFile(workbook, filename, write2excelOpts);
   /* at this point, out.xlsb will have been downloaded */
 }

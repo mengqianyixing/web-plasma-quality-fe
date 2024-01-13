@@ -1,5 +1,5 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
     @register="register"
     :title="getTitle"
@@ -8,17 +8,17 @@
     @ok="handleOk"
   >
     <BasicTable @register="registerTable" ref="table" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { computed, ref, unref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
   import { useMessage } from '@/hooks/web/useMessage';
 
   import {
-    callbackDrawerColumns,
-    addCallbackDrawerSearchFromSchema,
+    callbackModalColumns,
+    addCallbackModalSearchFromSchema,
   } from '@/views/callback/list-generation/generation.data';
   import { generateCallback, getNeedCallbackList } from '@/api/callback/list-generation';
   import dayjs from 'dayjs';
@@ -32,7 +32,7 @@
   const [registerTable, { setSelectedRowKeys, reload }] = useTable({
     title: '样本批次列表',
     api: getNeedCallbackList,
-    columns: callbackDrawerColumns,
+    columns: callbackModalColumns,
     beforeFetch: (params) => {
       return {
         ...params,
@@ -41,9 +41,9 @@
       };
     },
     formConfig: {
-      labelWidth: 150,
+      labelWidth: 130,
       showAdvancedButton: false,
-      schemas: addCallbackDrawerSearchFromSchema,
+      schemas: addCallbackModalSearchFromSchema,
       transformDateFunc(date) {
         return dayjs(date).format('YYYY-MM-DD');
       },
@@ -77,14 +77,15 @@
     },
     immediate: false,
     pagination: false,
+    canResize: false,
   });
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '选择名单'));
 
   const table = ref(null);
   const batchNo = ref('');
-  const [register, { closeDrawer, setDrawerProps }] = useDrawerInner((data) => {
-    setDrawerProps({
+  const [register, { closeModal, setModalProps }] = useModalInner((data) => {
+    setModalProps({
       maskClosable: false,
     });
 
@@ -109,7 +110,7 @@
         });
 
         emit('success');
-        closeDrawer();
+        closeModal();
       },
     });
   }

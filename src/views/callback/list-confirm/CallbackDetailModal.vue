@@ -1,21 +1,22 @@
 <template>
-  <BasicDrawer v-bind="$attrs" @register="register" :title="getTitle" width="85%">
+  <BasicModal v-bind="$attrs" @register="register" :title="getTitle" width="85%">
     <Description @register="registerDescription" :data="descriptionData" />
     <BasicTable @register="registerTable" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 <script lang="tsx" setup>
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { computed, ref, unref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
-
-  import { callbackDetailDrawerColumns } from '@/views/callback/list-generation/generation.data';
+  import { callbackDetailModalColumns } from '@/views/callback/list-generation/generation.data';
   import { getCallbackDetail } from '@/api/callback/list-generation';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
 
+  const selectedRow = ref<Recordable>([]);
   const isUpdate = ref(false);
   const batchNo = ref('');
+  const cacheDonorNos = ref<string[]>([]);
 
   const descriptionData = ref({});
 
@@ -50,7 +51,6 @@
     },
   ];
   const [registerDescription] = useDescription({
-    bordered: false,
     contentStyle: {
       width: '25%',
     },
@@ -61,7 +61,7 @@
   const [registerTable, { reload }] = useTable({
     title: '回访名单详情列表',
     api: getCallbackDetail,
-    columns: callbackDetailDrawerColumns,
+    columns: callbackDetailModalColumns,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -75,8 +75,26 @@
       };
     },
     rowKey: 'donorNo',
-    clickToRowSelect: false,
-    size: 'large',
+    clickToRowSelect: true,
+    rowSelection: {
+      type: 'checkbox',
+      onChange: (_, selectedRows: any) => {
+        selectedRow.value = selectedRows;
+      },
+      onSelect(record, selected) {
+        if (!selected) {
+          cacheDonorNos.value.push(record.donorNo);
+        } else {
+          cacheDonorNos.value = cacheDonorNos.value.filter((it) => it !== record.donorNo);
+        }
+      },
+      onSelectAll(selected, _, changeRows) {
+        if (!selected) {
+          cacheDonorNos.value.push(...changeRows.map((it) => it.donorNo));
+        }
+      },
+    },
+    size: 'small',
     striped: false,
     useSearchForm: false,
     showTableSetting: true,
@@ -87,13 +105,13 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: true,
+    canResize: false,
     immediate: true,
   });
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '生成名单'));
 
-  const [register] = useDrawerInner((data) => {
+  const [register] = useModalInner((data) => {
     isUpdate.value = data.isUpdate;
     batchNo.value = data.planNo;
     descriptionData.value = data;

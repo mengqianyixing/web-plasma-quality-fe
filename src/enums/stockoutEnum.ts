@@ -27,25 +27,29 @@ operationMap.set(operationValueEnum.C, operationEnum.C);
 
 export enum statusEnum {
   TBR = '待复核',
-  RVD = '已复核',
-  AED = '已审核',
+  RVD = '待审核',
+  TBP = '待计划',
+  PLD = '已计划',
+  OTD = '已出库',
   ROD = '已撤销',
-  FED = '不通过',
 }
 
 export enum statusValueEnum {
   TBR = 'TBR',
   RVD = 'RVD',
-  AED = 'AED',
+  TBP = 'TBP',
+  PLD = 'PLD',
+  OTD = 'OTD',
   ROD = 'ROD',
-  FED = 'FED',
 }
 
 export const statusMap = new Map<statusValueEnum, string>();
 
 statusMap.set(statusValueEnum.TBR, statusEnum.TBR);
 statusMap.set(statusValueEnum.RVD, statusEnum.RVD);
-statusMap.set(statusValueEnum.AED, statusEnum.AED);
+statusMap.set(statusValueEnum.TBP, statusEnum.TBP);
+statusMap.set(statusValueEnum.PLD, statusEnum.PLD);
+statusMap.set(statusValueEnum.OTD, statusEnum.OTD);
 statusMap.set(statusValueEnum.ROD, statusEnum.ROD);
 
 //审核结果

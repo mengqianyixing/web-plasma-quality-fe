@@ -24,19 +24,18 @@
     </BasicTable>
 
     <SelectStationNameModal @register="registerSelectModal" @success="handleSelectSuccess" />
-    <CallbackGenerationDrawer @register="registerGenerationDrawer" @success="handleSuccess" />
-    <CallbackDetailDrawer @register="registerCallbackDetailDrawer" />
+    <CallbackGenerationModal @register="registerGenerationModal" @success="handleSuccess" />
+    <CallbackDetailModal @register="registerCallbackDetailModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { useModal } from '@/components/Modal';
-  import { useDrawer } from '@/components/Drawer';
   import { useMessage } from '@/hooks/web/useMessage';
   import { jsonToSheetXlsx } from '@/components/Excel';
 
-  import CallbackGenerationDrawer from '@/views/callback/list-generation/CallbackGenerationDrawer.vue';
-  import CallbackDetailDrawer from '@/views/callback/list-generation/CallbackDetailDrawer.vue';
+  import CallbackGenerationModal from '@/views/callback/list-generation/CallbackGenerationModal.vue';
+  import CallbackDetailModal from '@/views/callback/list-generation/CallbackDetailModal.vue';
   import SelectStationNameModal from '@/views/callback/list-generation/SelectStationNameModal.vue';
 
   import { ref, onMounted } from 'vue';
@@ -82,11 +81,11 @@
 
   const [registerSelectModal, { openModal }] = useModal();
 
-  const [registerGenerationDrawer, { openDrawer: openGenerationDrawer }] = useDrawer();
-  const [registerCallbackDetailDrawer, { openDrawer: openCallbackDetailDrawer }] = useDrawer();
+  const [registerGenerationModal, { openModal: openGenerationModal }] = useModal();
+  const [registerCallbackDetailModal, { openModal: openCallbackDetailModal }] = useModal();
 
   const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
-    title: '回访名单生成列表',
+    title: '回访名单列表',
     api: getCallbackListApi,
     columns,
     formConfig: {
@@ -104,7 +103,7 @@
     },
     clickToRowSelect: true,
     rowSelection: {
-      type: 'checkbox',
+      type: 'radio',
       onChange: (_, selectedRows: any) => {
         selectedRow.value = selectedRows;
       },
@@ -145,10 +144,11 @@
       return;
     }
 
-    openGenerationDrawer(true, {
+    openGenerationModal(true, {
       isUpdate: true,
       record: {
         batchNo: selectedRow.value[0].planNo,
+        stationNo: selectedRow.value[0].stationNo,
       },
     });
 
@@ -203,18 +203,20 @@
           maxCollectTime: it.maxCollectTime ? dayjs(it.maxCollectTime).format('YYYY-MM-DD') : '',
           refuseDate: it.refuseDate ? dayjs(it.refuseDate).format('YYYY-MM-DD') : '',
           refuseReason: it.refuseReason,
+          remainDay: dayjs(it.minCollTime).add(1, 'year').diff(dayjs(), 'day'),
         };
       });
 
-      jsonToSheetXlsx({
+      jsonToSheetXlsx<any>({
         header: {
           donorNo: '浆员编号',
-          minCollTime: '采浆日期',
-          maxCollectTime: '最后采浆日期',
+          minCollTime: '最早采浆日期',
+          maxCollectTime: '最晚采浆日期',
           donorName: '浆员姓名',
           donatorStatus: '浆员状态',
           refuseDate: '拒绝日期',
           refuseReason: '拒绝原因',
+          remainDay: '剩余天数',
         },
         filename: `回访名单${selectedRow.value[0].planNo}-${dayjs().format('YYYY-MM-DD')}.xlsx`,
         data: _exportData,
@@ -243,7 +245,7 @@
       stationNo: id,
     });
 
-    openGenerationDrawer(true, {
+    openGenerationModal(true, {
       isUpdate: false,
       reload: true,
       record: {
@@ -258,7 +260,7 @@
   }
 
   function handlePlanNoClick(record: Recordable) {
-    openCallbackDetailDrawer(true, {
+    openCallbackDetailModal(true, {
       ...record,
       stationName: formatStationNo(record),
       state: CallbackStateMap.get(record.state),

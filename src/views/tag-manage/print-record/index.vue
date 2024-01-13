@@ -7,7 +7,7 @@
       <template #toolbar>
         <div class="flex gap-2">
           <a-button type="primary" @click="handleReview">标签预览</a-button>
-          <a-button type="primary" @click="handleReprint">标签补打</a-button>
+          <a-button type="primary" @click="handleReprint">标签打印</a-button>
         </div>
       </template>
     </BasicTable>
