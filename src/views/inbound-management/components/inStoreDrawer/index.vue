@@ -44,7 +44,7 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchForm } from './data';
   import { message, Modal } from 'ant-design-vue';
-  import { getListApi, trayBoxListApi } from '@/api/tray/list';
+  import { getListApi } from '@/api/tray/list';
   import InModal from '@/views/tray/outInStore/inModal.vue';
   import { nextTick, ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
@@ -54,6 +54,7 @@
   defineOptions({ name: 'InStoreModal' });
 
   const state = ref('');
+  let isAcceptNow = false;
 
   const [registerForm, { validate, clearValidate, setFieldsValue, getFieldsValue }] = useForm({
     labelWidth: 90,
@@ -68,8 +69,9 @@
   const [registerInModal, { openModal: openInModal }] = useModal();
   const [registerBindModal, { openModal }] = useModal();
 
-  const [registerModal] = useModalInner(async ({ batchNo }) => {
+  const [registerModal] = useModalInner(async ({ batchNo, isAccept }) => {
     state.value = batchNo;
+    isAcceptNow = isAccept || false;
     rePage();
   });
 
@@ -126,7 +128,20 @@
   }
   async function okFunction() {
     const values = await validate();
-    const list = await trayBoxListApi({ trayNo: values.trayNo });
+
+    let list;
+    if (isAcceptNow) {
+      import('@/api/tray/list').then(async (module) => {
+        const { trayBoxListApi } = module;
+        list = await trayBoxListApi({ trayNo: values.trayNo });
+      });
+    } else {
+      import('@/api/tray/list').then(async (module) => {
+        const { trayBoxListApiAccept } = module;
+        list = await trayBoxListApiAccept({ trayNo: values.trayNo });
+      });
+    }
+
     if (list.length >= 24) {
       Modal.confirm({
         content: '托盘绑定已满24箱，继续绑定?',

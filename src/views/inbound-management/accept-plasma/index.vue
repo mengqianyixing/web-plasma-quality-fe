@@ -34,7 +34,9 @@
               <a-button>缺号登记</a-button>
               <a-button @click="suspendModal('BOX')">暂停箱记录</a-button>
               <a-button @click="suspendModal('BCH')">暂停批记录</a-button>
-              <a-button @click="openInModal(true, filterForm)" :disabled="!filterForm.batchNo"
+              <a-button
+                @click="openInModal(true, { ...filterForm, isAccept: true })"
+                :disabled="!filterForm.batchNo"
                 >托盘入库</a-button
               >
               <a-button @click="openOutModal(true, filterForm)" :disabled="!filterForm.batchNo"
