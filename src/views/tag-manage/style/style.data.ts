@@ -100,11 +100,11 @@ export const styleDetailColumns: BasicColumn[] = [
   },
   {
     title: 'x坐标',
-    dataIndex: 'x',
+    dataIndex: 'X',
   },
   {
     title: 'y坐标',
-    dataIndex: 'y',
+    dataIndex: 'Y',
   },
   {
     title: '宽度',
@@ -309,14 +309,46 @@ export const editStyleFormSchema: FormSchema[] = [
         options: [...tagStyleTypeMap.values()].map((item) => ({ label: item, value: item })),
         onChange: (e: string) => {
           formActionType.updateSchema([
-            { field: 'TextFormat.FontName', show: e === tagStyleTypeEnum.Text },
-            { field: 'TextFormat.FontSize', show: e === tagStyleTypeEnum.Text },
-            { field: 'TextFormat.Bold', show: e === tagStyleTypeEnum.Text },
-            { field: 'TextFormat.Italic', show: e === tagStyleTypeEnum.Text },
-            { field: 'TextFormat.Underline', show: e === tagStyleTypeEnum.Text },
-            { field: 'TextFormat.LineWrap', show: e === tagStyleTypeEnum.Text },
-            { field: 'TextFormat.Revert', show: e === tagStyleTypeEnum.Text },
-            { field: 'TextFormat.Middle', show: e === tagStyleTypeEnum.Text },
+            {
+              field: 'TextFormat.FontName',
+              show: e === tagStyleTypeEnum.Text,
+              required: e === tagStyleTypeEnum.Text,
+            },
+            {
+              field: 'TextFormat.FontSize',
+              show: e === tagStyleTypeEnum.Text,
+              required: e === tagStyleTypeEnum.Text,
+            },
+            {
+              field: 'TextFormat.Bold',
+              show: e === tagStyleTypeEnum.Text,
+              required: e === tagStyleTypeEnum.Text,
+            },
+            {
+              field: 'TextFormat.Italic',
+              show: e === tagStyleTypeEnum.Text,
+              required: e === tagStyleTypeEnum.Text,
+            },
+            {
+              field: 'TextFormat.Underline',
+              show: e === tagStyleTypeEnum.Text,
+              required: e === tagStyleTypeEnum.Text,
+            },
+            {
+              field: 'TextFormat.LineWrap',
+              show: e === tagStyleTypeEnum.Text,
+              required: e === tagStyleTypeEnum.Text,
+            },
+            {
+              field: 'TextFormat.Revert',
+              show: e === tagStyleTypeEnum.Text,
+              required: e === tagStyleTypeEnum.Text,
+            },
+            {
+              field: 'TextFormat.Middle',
+              show: e === tagStyleTypeEnum.Text,
+              required: e === tagStyleTypeEnum.Text,
+            },
           ]);
         },
       };
@@ -336,14 +368,14 @@ export const editStyleFormSchema: FormSchema[] = [
     colProps: { span: 20 },
   },
   {
-    field: 'x',
+    field: 'X',
     label: 'x坐标(mm)',
     component: 'InputNumber',
     colProps: { span: 20 },
     required: true,
   },
   {
-    field: 'y',
+    field: 'Y',
     label: 'y坐标(mm)',
     component: 'InputNumber',
     colProps: { span: 20 },

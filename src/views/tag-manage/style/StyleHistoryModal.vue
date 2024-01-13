@@ -1,7 +1,7 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerModal"
     showFooter
     title="标签历史"
     width="1000px"
@@ -31,17 +31,16 @@
     </BasicTable>
 
     <HistoryStylePreviewModal @register="registerPreviewModal" />
-  </BasicDrawer>
+  </BasicModal>
 </template>
 
 <script setup lang="ts">
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { ref } from 'vue';
   import { historyStyle, historyStylePreview, reuseStyle } from '@/api/tag/manage';
   import { columnsHistory, searchHistoryFormSchema } from '@/views/tag-manage/style/style.data';
 
-  import { useModal } from '@/components/Modal';
   import HistoryStylePreviewModal from './HistoryStylePreviewModal.vue';
 
   const hisNo = ref('');
@@ -49,8 +48,8 @@
   const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
   const emit = defineEmits(['success']);
 
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    setDrawerProps({ confirmLoading: false });
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
+    setModalProps({ confirmLoading: false });
     hisNo.value = data.record.tagNo;
     reload();
     await getForm().updateSchema({
@@ -94,7 +93,7 @@
   });
 
   function handleSubmit() {
-    closeDrawer();
+    closeModal();
   }
 
   async function handlePreview(record: Recordable) {
@@ -106,7 +105,7 @@
 
   async function handleReuse(record: Recordable) {
     await reuseStyle(record.hisNo);
-    closeDrawer();
+    closeModal();
     emit('success');
   }
 </script>
