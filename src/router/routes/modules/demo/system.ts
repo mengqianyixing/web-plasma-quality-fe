@@ -102,7 +102,7 @@ const system: AppRouteModule = {
         title: '权限管理',
         ignoreKeepAlive: true,
       },
-      component: () => import('@/views/auth/menus/index.vue'),
+      component: () => import('@/views/system/auth/index.vue'),
       authElements: [
         {
           id: 'E_123',
