@@ -9,7 +9,7 @@
     :isDetail="true"
     :showDetailBack="false"
     :minHeight="520"
-    @close="close"
+    @cancel="close"
     @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">

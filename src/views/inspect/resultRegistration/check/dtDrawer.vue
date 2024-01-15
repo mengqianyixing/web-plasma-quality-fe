@@ -13,7 +13,7 @@
     showFooter
     :title="projectName + '详情'"
     width="800px"
-    @close="close"
+    @cancel="close"
     :min-height="520"
     cancelText="关闭"
     :show-ok-btn="false"

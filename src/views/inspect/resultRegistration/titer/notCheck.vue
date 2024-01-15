@@ -16,7 +16,7 @@
     okText="提交&关闭"
     cancelText="关闭"
     :min-height="300"
-    @close="emit('close')"
+    @cancel="emit('close')"
     @ok="handleSubmit(true)"
   >
     <template #appendFooter>

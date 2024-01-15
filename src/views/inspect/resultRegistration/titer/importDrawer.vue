@@ -14,7 +14,7 @@
     width="1000px"
     :show-ok-btn="false"
     cancelText="关闭"
-    @close="emit('close')"
+    @cancel="emit('close')"
   >
     <div class="flex flex-col h-full">
       <div class="title">

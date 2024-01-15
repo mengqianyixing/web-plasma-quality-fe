@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-29 15:36:12
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 18:04:14
+ * @LastEditTime: 2024-01-15 10:35:26
 -->
 <template>
   <BasicModal
@@ -17,7 +17,7 @@
     cancelText="关闭"
     :min-height="520"
     @ok="handleSubmit"
-    @close="close"
+    @cancel="close"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">
       <div class="flex-1 w-full">
@@ -74,6 +74,7 @@
   }
   function handleSubmit() {}
   function close() {
+    console.log('?????????????????????');
     activeKey.value = '1';
     componentMap.value = {
       1: 'div',

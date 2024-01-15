@@ -33,7 +33,7 @@
       title="托盘重绑"
       width="360px"
       @ok="okFunction"
-      @close="emit('close')"
+      @cancel="emit('close')"
     >
       <BasicForm @register="registerForm" />
     </BasicModal>

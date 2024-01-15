@@ -16,7 +16,7 @@
     @ok="okFun"
     :minHeight="480"
     @fullscreen="redoHeight"
-    @close="emit('close')"
+    @cancel="emit('close')"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
