@@ -165,18 +165,21 @@
   async function handleSubmit() {
     try {
       const values = await validate();
-      console.log(values);
+      const domains = values?.domains?.checked ?? [];
       // loading
       setDrawerProps({ confirmLoading: true });
       try {
         if (unref(isUpdate)) {
           await setCasDoorRoles({
             ...values,
-            domains: values?.domains?.checked ?? [],
+            domains,
             oldName: roleId.value,
           });
         } else {
-          await addCasDoorRole(values);
+          await addCasDoorRole({
+            ...values,
+            domains,
+          });
         }
       } catch (e) {
         console.log(e);
