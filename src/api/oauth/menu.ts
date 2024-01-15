@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-01-03 10:01:13
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-11 14:54:21
+ * @LastEditTime: 2024-01-15 16:25:20
  * @Description: 菜单权限管理
  * @FilePath: \psms-fe\src\api\oauth\menu.ts
  */
@@ -15,7 +15,7 @@ import { defHttp } from '@/utils/http/axios';
  */
 export const getCasDoorUsers = (params?) =>
   defHttp.get(
-    { url: '/api/sys/casdoor/get-users', params },
+    { url: '/api/sys/casdoor/all-users', params },
     {
       joinParamsToUrl: true,
     },
@@ -32,7 +32,7 @@ export const getCasDoorRoles = (params) => {
     params.value = params.name;
   }
   return defHttp.get(
-    { url: '/api/sys/casdoor/get-roles', params },
+    { url: '/api/sys/casdoor/roles', params },
     {
       joinParamsToUrl: true,
     },
@@ -44,8 +44,7 @@ export const getCasDoorRoles = (params) => {
  * @param data
  * @returns
  */
-export const setCasDoorRoles = (data) =>
-  defHttp.post({ url: '/api/sys/casdoor/update-role', data });
+export const setCasDoorRoles = (data) => defHttp.put({ url: '/api/sys/casdoor/role', data });
 
 // /**
 //  * 获取角色详情
@@ -67,7 +66,7 @@ export const setCasDoorRoles = (data) =>
  */
 export const addCasDoorRole = (data) =>
   defHttp.post(
-    { url: '/api/sys/casdoor/add-role', data },
+    { url: '/api/sys/casdoor/role', data },
     {
       joinParamsToUrl: true,
     },
@@ -79,8 +78,8 @@ export const addCasDoorRole = (data) =>
  * @returns
  */
 export const deleteCasDoorRole = (data) =>
-  defHttp.post(
-    { url: '/api/sys/casdoor/delete-role', data },
+  defHttp.delete(
+    { url: '/api/sys/casdoor/role', data },
     {
       joinParamsToUrl: true,
     },
