@@ -627,4 +627,27 @@ export interface PostApiCoreBankTrayBoxVerifyResponse {
   msg: string;
 }
 
+/**
+ * 接口 [校验托盘是否在库↗](https://yapi.sharing8.cn/project/529/interface/api/32252) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/instore/{trayNo}`
+ * @更新时间 `2024-01-15 10:16:18`
+ */
+export interface GetApiCoreBankTrayInstoreTrayNoRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+}
+
+/**
+ * 接口 [校验托盘是否在库↗](https://yapi.sharing8.cn/project/529/interface/api/32252) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/instore/{trayNo}`
+ * @更新时间 `2024-01-15 10:16:18`
+ */
+export type GetApiCoreBankTrayInstoreTrayNoResponse = boolean;
+
 /* prettier-ignore-end */

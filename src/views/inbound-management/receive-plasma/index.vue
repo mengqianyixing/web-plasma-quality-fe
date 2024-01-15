@@ -27,11 +27,11 @@
               <span>已接收箱数：</span>
               <span>{{ acceptList?.length }}</span>
             </div>
-            <div>
+            <div class="flex gap-2">
               <a-button @click="susModal">暂停接收</a-button>
-              <a-button @click="openModal(true, filterForm)" :disabled="!filterForm.batchNo"
-                >托盘入库</a-button
-              >
+              <a-button @click="openModal(true, filterForm)" :disabled="!filterForm.batchNo">
+                托盘入库
+              </a-button>
             </div>
           </div>
         </template>
