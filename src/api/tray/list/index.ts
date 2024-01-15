@@ -39,3 +39,8 @@ export const trayDtListApi = ({ trayNo }: GetApiCoreBankTrayTrayNoRequest) =>
 
 export const trayBoxListApi = ({ trayNo }: GetApiCoreBankTrayBoxTrayNoRequest) =>
   defHttp.get<GetApiCoreBankTrayBoxTrayNoResponse>({ url: `/api/core/bank/tray/box/${trayNo}` });
+
+export const trayBoxListApiAccept = ({ trayNo }: GetApiCoreBankTrayBoxTrayNoRequest) =>
+  defHttp.get<GetApiCoreBankTrayBoxTrayNoResponse>({
+    url: `/api/core/bank/tray/box/verify/${trayNo}`,
+  });
