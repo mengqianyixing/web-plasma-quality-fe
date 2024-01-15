@@ -115,5 +115,21 @@ export function usePermission() {
     resume();
   }
 
-  return { changeRole, hasPermission, togglePermissionMode, refreshMenu };
+  /**
+   * 判断是否拥有元素或菜单访问权限
+   * @param value
+   * @returns
+   */
+  function hasCustomPermission(value) {
+    const authList = userStore.getUserInfo.menuIds ?? [];
+    let isAuth = false;
+    if (Array.isArray(value) && value.length) {
+      isAuth = value.some((i) => authList.includes(i));
+    } else {
+      isAuth = authList.includes(value);
+    }
+    return isAuth;
+  }
+
+  return { changeRole, hasPermission, hasCustomPermission, togglePermissionMode, refreshMenu };
 }

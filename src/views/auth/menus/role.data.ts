@@ -60,7 +60,6 @@ export const searchFormSchema: FormSchema[] = [
     field: 'name',
     label: '角色 id',
     component: 'Input',
-    colProps: { span: 4 },
   },
   // {
   //   field: 'displayName',

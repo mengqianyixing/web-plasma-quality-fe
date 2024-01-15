@@ -8,11 +8,11 @@ import type { App, Directive, DirectiveBinding } from 'vue';
 import { usePermission } from '@/hooks/web/usePermission';
 
 function isAuth(el: Element, binding: any) {
-  const { hasPermission } = usePermission();
+  const { hasCustomPermission } = usePermission();
 
   const value = binding.value;
   if (!value) return;
-  if (!hasPermission(value)) {
+  if (!hasCustomPermission(value)) {
     el.parentNode?.removeChild(el);
   }
 }
