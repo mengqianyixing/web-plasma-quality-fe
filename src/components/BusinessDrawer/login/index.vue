@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-30 16:07:39
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-02 13:44:37
+ * @LastEditTime: 2024-01-13 18:33:00
 -->
 <template>
   <Modal
@@ -13,6 +13,7 @@
     :open="props.open"
     @cancel="cancel"
     @ok="confirm"
+    :confirmLoading="confirmLoading"
     okText="登录"
     width="400px"
     title="复核人登录"
@@ -26,11 +27,13 @@
   import { Modal } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { reCheckLogin } from '@/api/sys/login';
+  import { ref } from 'vue';
 
   const emit = defineEmits(['cancel', 'login']);
   const props = defineProps({
     open: { type: Boolean, default: false },
   });
+  const confirmLoading = ref(false);
 
   const [registerForm, { resetFields, clearValidate, validate }] = useForm({
     labelWidth: 60,
@@ -53,10 +56,15 @@
   });
   async function confirm() {
     const values = await validate();
-    const userInfo = await reCheckLogin(values);
-    resetFields();
-    clearValidate();
-    emit('login', userInfo);
+    try {
+      confirmLoading.value = true;
+      const userInfo = await reCheckLogin(values);
+      resetFields();
+      clearValidate();
+      emit('login', userInfo);
+    } finally {
+      confirmLoading.value = false;
+    }
   }
   function cancel() {
     resetFields();

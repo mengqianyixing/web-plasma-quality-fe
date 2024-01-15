@@ -45,13 +45,11 @@ export const searchFormSchema: FormSchema[] = [
     field: 'dictName',
     label: '字典名称',
     component: 'Input',
-    colProps: { span: 8 },
   },
   {
     field: 'dictNo',
     label: '字典编号',
     component: 'Input',
-    colProps: { span: 8 },
   },
 ];
 
@@ -136,13 +134,11 @@ export const itemSearchFormSchema: FormSchema[] = [
     field: 'itemKey',
     label: '字典项名称',
     component: 'Input',
-    colProps: { span: 8 },
   },
   {
     field: 'itemValue',
     label: '字典项值',
     component: 'Input',
-    colProps: { span: 8 },
   },
 ];
 export const itemFormSchema: FormSchema[] = [

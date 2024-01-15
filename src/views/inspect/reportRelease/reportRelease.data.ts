@@ -16,20 +16,20 @@ export const columns: BasicColumn[] = [
     dataIndex: 'stationName',
   },
   {
-    title: '样品批号',
+    title: '样本批号',
     dataIndex: 'bsNo',
   },
   {
-    title: '样品类型',
+    title: '样本类型',
     dataIndex: 'sampleCode',
     slots: { customRender: 'sampleCode' },
   },
   {
-    title: '合格样品总数',
+    title: '合格样本总数',
     dataIndex: 'totalQualified',
   },
   {
-    title: '不合格样品总数',
+    title: '不合格样本总数',
     dataIndex: 'totalUnqualified',
   },
   {
@@ -91,7 +91,7 @@ export const searchFormschema: FormSchema[] = [
   {
     field: 'sampleCode',
     component: 'ApiSelect',
-    label: '样品类型',
+    label: '样本类型',
     componentProps: {
       api: () =>
         new Promise((rs, rj) => {
@@ -107,7 +107,7 @@ export const searchFormschema: FormSchema[] = [
   {
     field: 'state',
     component: 'Select',
-    label: '样品状态',
+    label: '样本状态',
     componentProps: {
       options: stateList,
     },

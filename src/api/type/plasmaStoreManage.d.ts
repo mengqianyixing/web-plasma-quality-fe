@@ -751,13 +751,17 @@ export type GetApiCoreBankSiteHouseHouseNoResponse = {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/warehouses/name`
- * @更新时间 `2024-01-06 17:45:08`
+ * @更新时间 `2024-01-13 11:02:13`
  */
 export interface GetApiCoreBankWarehousesNameRequest {
   /**
    * 库房类型
    */
   houseType: string;
+  /**
+   * 库房类型根据头字母模糊匹配
+   */
+  houseTypeLike: string;
 }
 
 /**
@@ -765,7 +769,7 @@ export interface GetApiCoreBankWarehousesNameRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/warehouses/name`
- * @更新时间 `2024-01-06 17:45:08`
+ * @更新时间 `2024-01-13 11:02:13`
  */
 export type GetApiCoreBankWarehousesNameResponse = {
   bankName?: string;

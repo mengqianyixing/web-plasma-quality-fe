@@ -4,40 +4,40 @@
  * @Author: zcc
  * @Date: 2023-12-29 15:52:07
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-08 15:14:17
+ * @LastEditTime: 2024-01-13 19:03:32
 -->
 <template>
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
     title="效价导入"
-    width="1200px"
-    @close="emit('close')"
+    width="1000px"
+    :show-ok-btn="false"
+    cancelText="关闭"
+    @cancel="emit('close')"
   >
     <div class="flex flex-col h-full">
       <div class="title">
         导入汇总
         <div class="float-right">
           <a-upload
-            size="small"
             :showUploadList="false"
             :before-upload="beforeUpload"
             :maxCount="1"
             accept=".xlsx,.xls"
             class="mr-10px"
           >
-            <a-button size="small"> 选择文件 </a-button>
+            <a-button> 选择文件 </a-button>
           </a-upload>
           <a-button
             type="primary"
             class="mr-10px"
-            size="small"
             @click="uploadClick"
             :loading="loading"
             :disabled="!hasFile"
             >开始上传</a-button
           >
-          <a-button type="primary" class="mr-10px" size="small" @click="downFile">
+          <a-button type="primary" class="mr-10px" @click="downFile">
             <a href="/manage/tmp/titer.xlsx" download>下载模板</a>
           </a-button>
         </div>
@@ -90,8 +90,11 @@
 
   defineOptions({ name: 'ImportModal' });
 
-  const [registerTable] = useTable({
-    dataSource: dataSource.dataSaved,
+  const [registerTable, { reload: reloadSaved }] = useTable({
+    api: () => Promise.resolve({ result: dataSource.dataSaved }),
+    fetchSetting: {
+      listField: 'result',
+    },
     immediate: false,
     pagination: false,
     columns: importSuccessColumns,
@@ -101,8 +104,11 @@
     bordered: true,
     isCanResizeParent: true,
   });
-  const [registerFailTable] = useTable({
-    dataSource: dataSource.dataFaild,
+  const [registerFailTable, { reload: reloadFaild }] = useTable({
+    api: () => Promise.resolve({ result: dataSource.dataFaild }),
+    fetchSetting: {
+      listField: 'result',
+    },
     immediate: false,
     isCanResizeParent: true,
     columns: importFailColumns,
@@ -117,6 +123,8 @@
     bsno.value = bsNo;
     dataSource.dataFaild.splice(0, dataSource.dataFaild.length);
     dataSource.dataSaved.splice(0, dataSource.dataSaved.length);
+    reloadSaved();
+    reloadFaild();
     for (const key in cellData.value) {
       cellData.value[key] = '';
     }
@@ -136,6 +144,8 @@
       }
       dataSource.dataFaild.splice(0, dataSource.dataFaild.length, ...dataFaild);
       dataSource.dataSaved.splice(0, dataSource.dataSaved.length, ...dataSaved);
+      reloadSaved();
+      reloadFaild();
       message.success('导入成功');
     } finally {
       loading.value = false;

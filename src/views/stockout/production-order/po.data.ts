@@ -104,13 +104,11 @@ export const searchFormSchema: FormSchema[] = [
     field: 'mesId',
     label: '制造批号',
     component: 'Input',
-    colProps: { span: 4 },
   },
   {
     field: 'orderType',
     label: '投产类型',
     component: 'Select',
-    colProps: { span: 4 },
     componentProps: {
       options: [...operationMap.entries()].map(([key, value]) => ({
         value: key,
@@ -122,7 +120,6 @@ export const searchFormSchema: FormSchema[] = [
     field: 'expiration',
     label: '血浆效期',
     component: 'Select',
-    colProps: { span: 4 },
     componentProps: {
       options: [...expirationMap.entries()].map(([key, value]) => ({
         value: key,
@@ -134,7 +131,6 @@ export const searchFormSchema: FormSchema[] = [
     field: 'state',
     label: '状态',
     component: 'Select',
-    colProps: { span: 4 },
     componentProps: {
       options: [...statusMap.entries()].map(([key, value]) => ({
         value: key,
@@ -176,6 +172,7 @@ export const formSchema: FormSchema[] = [
       return h(InputNumber, {
         placeholder: '请输入',
         value: model[field],
+        maxLength: 7,
         onChange: (e) => {
           if (e && e.toString().includes('.')) {
             model[field] = Number(e.toString().match(/^\d+(?:\.\d{0,2})?/));

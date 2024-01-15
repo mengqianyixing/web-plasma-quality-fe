@@ -12,16 +12,12 @@ export const columns: BasicColumn[] = [
     dataIndex: 'capacity',
   },
   {
-    title: '已存放血浆袋数（袋）',
+    title: '已存放数量（袋）',
     dataIndex: 'bagNum',
   },
   {
-    title: '不合格原因',
+    title: '存放不合格血浆原因',
     dataIndex: 'unqReason',
-  },
-  {
-    title: '库房编号',
-    dataIndex: 'houseNo',
   },
   {
     title: '库房名称',
@@ -34,6 +30,5 @@ export const searchFormSchema: FormSchema[] = [
     field: 'boxNo',
     label: '箱号',
     component: 'Input',
-    colProps: { span: 8 },
   },
 ];

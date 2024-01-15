@@ -325,6 +325,13 @@
 
   .@{prefix-cls} {
     .ant-form-item {
+      &-label label {
+        color: #666;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22px;
+      }
+
       &-label label::after {
         margin: 0 6px 0 2px;
       }

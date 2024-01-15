@@ -25,7 +25,6 @@
       listField: 'result',
     },
     formConfig: {
-      labelWidth: 60,
       showResetButton: false,
       schemas: [],
     },

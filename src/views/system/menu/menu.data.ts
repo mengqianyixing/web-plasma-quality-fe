@@ -52,7 +52,6 @@ export const searchFormSchema: FormSchema[] = [
     field: 'menuName',
     label: '菜单名称',
     component: 'Input',
-    colProps: { span: 8 },
   },
 ];
 

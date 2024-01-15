@@ -45,13 +45,11 @@ export const searchFormSchema: FormSchema[] = [
     field: 'account',
     label: '用户名',
     component: 'Input',
-    colProps: { span: 8 },
   },
   {
     field: 'nickname',
     label: '昵称',
     component: 'Input',
-    colProps: { span: 8 },
   },
 ];
 

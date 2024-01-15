@@ -4,11 +4,11 @@
     @register="registerModal"
     showFooter
     title="未检测"
-    width="520px"
+    width="360px"
     cancelText="关闭"
     okText="提交&关闭"
     :min-height="300"
-    @close="emit('close')"
+    @cancel="emit('close')"
     @ok="handleSubmit(true)"
   >
     <template #appendFooter>
@@ -74,7 +74,7 @@
         required: true,
         field: 'sampleNo',
         component: 'InputSearch',
-        label: '样品编号',
+        label: '样本编号',
         componentProps: {
           'enter-button': '查询',
           onSearch: (value) => {

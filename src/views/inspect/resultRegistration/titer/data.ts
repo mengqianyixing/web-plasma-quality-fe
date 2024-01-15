@@ -4,11 +4,11 @@ import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
 
 export const columns: BasicColumn[] = [
   { title: '检测项目', dataIndex: 'projectAbbr', slots: { customRender: 'projectAbbr' } },
-  { title: '检测方法', dataIndex: 'methodAbbr', slots: { customRender: 'methodAbbr' } },
+  { title: '检测方法', dataIndex: 'methodAbbr' },
   { title: '高效价总数', dataIndex: 'totalHighTiter' },
   { title: '低效价总数', dataIndex: 'totalLowTiter' },
   { title: '无效价总数', dataIndex: 'totalNormal' },
-  { title: '未检测样品总数', dataIndex: 'totalNotCheck' },
+  { title: '未检测样本总数', dataIndex: 'totalNotCheck' },
 ];
 export const dtRusultColumns: BasicColumn[] = [
   {
@@ -46,7 +46,7 @@ export const dtRusultColumns: BasicColumn[] = [
 type getColumns = (checkResult: string) => BasicColumn[];
 export const dtColumns: getColumns = (checkResult) => [
   {
-    title: '样品编号',
+    title: '样本编号',
     dataIndex: 'sampleNo',
   },
   {
@@ -66,7 +66,7 @@ export const dtColumns: getColumns = (checkResult) => [
 export const dtSearchSchema: FormSchema[] = [
   {
     field: 'sampleNo',
-    label: '样品编号',
+    label: '样本编号',
     component: 'Input',
   },
   // {
@@ -110,7 +110,7 @@ export const enterFormSchema: FormSchema[] = [
 ];
 export const enterColumns: BasicColumn[] = [
   {
-    title: '样品编号',
+    title: '样本编号',
     dataIndex: 'sampleNo',
   },
   {
@@ -150,7 +150,7 @@ export const cellList = [
   },
 ];
 export const importSuccessColumns: BasicColumn[] = [
-  { title: '样品编号', dataIndex: 'sampleNo' },
+  { title: '样本编号', dataIndex: 'sampleNo' },
   { title: '浆员编号', dataIndex: 'donorNo' },
   { title: '浆员姓名', dataIndex: 'name' },
   {

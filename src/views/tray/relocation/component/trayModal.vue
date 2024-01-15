@@ -47,7 +47,6 @@
       totalField: 'totalCount',
     },
     formConfig: {
-      labelWidth: 60,
       schemas: formSchema,
     },
     immediate: false,

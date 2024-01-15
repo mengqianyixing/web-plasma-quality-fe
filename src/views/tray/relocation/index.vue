@@ -24,14 +24,14 @@
       <TabPane key="5" tab="血浆箱手工解绑">
         <PlasmaBoxHand :is-binding="false" />
       </TabPane>
-      <TabPane key="6" tab="样品箱扫描绑定"> <SampleBoxScan :is-binding="true" /></TabPane>
-      <TabPane key="7" tab="样品箱扫描解绑">
+      <TabPane key="6" tab="样本箱扫描绑定"> <SampleBoxScan :is-binding="true" /></TabPane>
+      <TabPane key="7" tab="样本箱扫描解绑">
         <SampleBoxScan :is-binding="false" />
       </TabPane>
-      <TabPane key="8" tab="样品箱手工绑定">
+      <TabPane key="8" tab="样本箱手工绑定">
         <SampleBoxHand :is-binding="true" />
       </TabPane>
-      <TabPane key="9" tab="样品箱手工解绑">
+      <TabPane key="9" tab="样本箱手工解绑">
         <SampleBoxHand :is-binding="false" />
       </TabPane>
     </Tabs>

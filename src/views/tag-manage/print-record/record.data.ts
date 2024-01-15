@@ -1,3 +1,11 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: zcc
+ * @Date: 2024-01-13 14:35:30
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-13 17:46:25
+ */
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
 import dayjs from 'dayjs';
@@ -46,7 +54,6 @@ export const searchFormSchema: FormSchema[] = [
     field: '[begnDate, endDate]',
     label: '打印日期',
     component: 'RangePicker',
-    colProps: { span: 8 },
     defaultValue: [dayjs().format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')],
     componentProps: {
       format: 'YYYY-MM-DD',
@@ -56,7 +63,6 @@ export const searchFormSchema: FormSchema[] = [
     field: 'creator',
     label: '打印人',
     component: 'ApiSelect',
-    colProps: { span: 8 },
     componentProps: {
       api: getPrinter,
     },
@@ -65,7 +71,6 @@ export const searchFormSchema: FormSchema[] = [
     field: 'labelType',
     label: '标签类型',
     component: 'Select',
-    colProps: { span: 8 },
   },
 ];
 

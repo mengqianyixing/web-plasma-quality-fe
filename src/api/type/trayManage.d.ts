@@ -506,24 +506,28 @@ export interface PutApiCoreBankTrayWarehouseMoveResponse {
  * 接口 [托盘报废↗](https://yapi.sharing8.cn/project/529/interface/api/31677) 的 **请求类型**
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
- * @请求头 `PUT /api/core/bank/tray/{trayNo}`
- * @更新时间 `2023-12-19 18:25:22`
+ * @请求头 `PUT /api/core/bank/tray/useless`
+ * @更新时间 `2024-01-13 15:39:56`
  */
-export interface PutApiCoreBankTrayTrayNoRequest {
+export interface PutApiCoreBankTrayUselessRequest {
   /**
    * 托盘编号
    */
   trayNo: string;
+  /**
+   * 复核人
+   */
+  rechecker: string;
 }
 
 /**
  * 接口 [托盘报废↗](https://yapi.sharing8.cn/project/529/interface/api/31677) 的 **返回类型**
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
- * @请求头 `PUT /api/core/bank/tray/{trayNo}`
- * @更新时间 `2023-12-19 18:25:22`
+ * @请求头 `PUT /api/core/bank/tray/useless`
+ * @更新时间 `2024-01-13 15:39:56`
  */
-export interface PutApiCoreBankTrayTrayNoResponse {
+export interface PutApiCoreBankTrayUselessResponse {
   /**
    * 响应码
    */
@@ -587,6 +591,40 @@ export interface GetApiCoreBankWarehouseTrayTrayNoResponse {
   houseNo: string;
   houseName: string;
   houseType: string;
+}
+
+/**
+ * 接口 [托盘重绑（血浆验收）↗](https://yapi.sharing8.cn/project/529/interface/api/32242) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/box/verify`
+ * @更新时间 `2024-01-13 09:38:06`
+ */
+export interface PostApiCoreBankTrayBoxVerifyRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  /**
+   * bind-绑定，unbind-解绑
+   */
+  type: string;
+  /**
+   * 箱号列表
+   */
+  boxes: string[];
+}
+
+/**
+ * 接口 [托盘重绑（血浆验收）↗](https://yapi.sharing8.cn/project/529/interface/api/32242) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/box/verify`
+ * @更新时间 `2024-01-13 09:38:06`
+ */
+export interface PostApiCoreBankTrayBoxVerifyResponse {
+  code: string;
+  msg: string;
 }
 
 /* prettier-ignore-end */

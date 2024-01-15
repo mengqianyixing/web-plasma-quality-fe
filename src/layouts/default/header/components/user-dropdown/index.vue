@@ -19,6 +19,12 @@
         />
         <Menu.Divider v-if="getShowDoc" />
         <MenuItem
+          v-if="getShowPrintApi"
+          key="printApi"
+          text="切换打印地址"
+          icon="ant-design:swap-outlined"
+        />
+        <MenuItem
           v-if="getShowApi"
           key="api"
           :text="t('layout.header.dropdownChangeApi')"
@@ -40,6 +46,7 @@
   </Dropdown>
   <LockAction @register="register" />
   <ChangeApi @register="registerApi" />
+  <ChangePrintApi @register="registerPrintApi" />
 </template>
 <script lang="ts" setup>
   import { Dropdown, Menu } from 'ant-design-vue';
@@ -56,11 +63,12 @@
   import { openWindow } from '@/utils';
   import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
 
-  type MenuEvent = 'logout' | 'doc' | 'lock' | 'api';
+  type MenuEvent = 'logout' | 'doc' | 'lock' | 'api' | 'printApi';
 
   const MenuItem = createAsyncComponent(() => import('./DropMenuItem.vue'));
   const LockAction = createAsyncComponent(() => import('../lock/LockModal.vue'));
   const ChangeApi = createAsyncComponent(() => import('../ChangeApi/index.vue'));
+  const ChangePrintApi = createAsyncComponent(() => import('../ChangePrintApi/index.vue'));
 
   defineOptions({ name: 'UserDropdown' });
 
@@ -70,7 +78,7 @@
 
   const { prefixCls } = useDesign('header-user-dropdown');
   const { t } = useI18n();
-  const { getShowDoc, getUseLockPage, getShowApi } = useHeaderSetting();
+  const { getShowDoc, getUseLockPage, getShowApi, getShowPrintApi } = useHeaderSetting();
   const userStore = useUserStore();
 
   const getUserInfo = computed(() => {
@@ -80,6 +88,7 @@
 
   const [register, { openModal }] = useModal();
   const [registerApi, { openModal: openApiModal }] = useModal();
+  const [registerPrintApi, { openModal: openPrintApiModal }] = useModal();
 
   function handleLock() {
     openModal(true);
@@ -87,6 +96,10 @@
 
   function handleApi() {
     openApiModal(true, {});
+  }
+
+  function handlePrintApi() {
+    openPrintApiModal(true, { isPrint: true });
   }
 
   //  login out
@@ -112,6 +125,9 @@
         break;
       case 'api':
         handleApi();
+        break;
+      case 'printApi':
+        handlePrintApi();
         break;
     }
   }

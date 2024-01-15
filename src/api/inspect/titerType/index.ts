@@ -1,3 +1,11 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: zcc
+ * @Date: 2023-12-27 10:06:33
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-15 10:03:58
+ */
 import { defHttp } from '@/utils/http/axios';
 import {
   GetApiSysDictItemAlenceDictItemIdResponse,
@@ -21,19 +29,19 @@ enum Api {
 export const getListApi = (data: PostApiSysDictItemAlencesRequest) =>
   defHttp.post<PostApiSysDictItemAlencesResponse>({
     url: Api.LIST,
-    data: { ...data, dataDictId: 'alenceType' },
+    data: { ...data, dataDictId: '100005' },
   });
 
 export const addTitlerTypeApi = (data: PostApiSysDictItemAlenceRequest) =>
   defHttp.post<PostApiSysDictItemAlenceResponse>({
     url: Api.FORM,
-    data: { ...data, dataDictId: 'alenceType' },
+    data: { ...data, dataDictId: '100005' },
   });
 
 export const updateTitlerTypeApi = (data: PutApiSysDictItemAlenceRequest) =>
   defHttp.put<PutApiSysDictItemAlenceResponse>({
     url: Api.FORM,
-    data: { ...data, dataDictId: 'alenceType' },
+    data: { ...data, dataDictId: '100005' },
   });
 
 export const getTitlerTypeDtApi = ({ dictItemId }: GetApiSysDictItemAlenceDictItemIdRequest) =>

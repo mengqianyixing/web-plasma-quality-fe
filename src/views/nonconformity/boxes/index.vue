@@ -34,7 +34,6 @@
     api: nonconformityBoxList,
     columns,
     formConfig: {
-      labelWidth: 120,
       schemas: searchFormSchema,
     },
     fetchSetting: {

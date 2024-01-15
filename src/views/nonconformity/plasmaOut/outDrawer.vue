@@ -12,7 +12,7 @@
     @register="registerModal"
     title="挑浆"
     width="1200px"
-    @close="emit('close')"
+    @cancel="emit('close')"
   >
     <div class="flex flex-col">
       <BasicForm @register="registerForm" @submit="handleSubmit" />

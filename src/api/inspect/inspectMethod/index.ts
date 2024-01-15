@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-27 15:34:55
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-02 17:15:21
+ * @LastEditTime: 2024-01-15 10:04:37
  */
 import { defHttp } from '@/utils/http/axios';
 import {
@@ -30,7 +30,7 @@ enum Api {
 export const getListApi = (data: PostApiSysDictItemMethodsRequest) =>
   defHttp.post<PostApiSysDictItemMethodsResponse>({
     url: Api.LIST,
-    data: { ...data, dataDictId: 'labMethod' },
+    data: { ...data, dataDictId: '100004' },
   });
 
 export const getInspectMethodListApi = () =>
@@ -39,13 +39,13 @@ export const getInspectMethodListApi = () =>
 export const addInspectMethodApi = (data: PostApiSysDictItemMethodRequest) =>
   defHttp.post<PostApiSysDictItemMethodResponse>({
     url: Api.FORM,
-    data: { ...data, dataDictId: 'labMethod' },
+    data: { ...data, dataDictId: '100004' },
   });
 
 export const updateInspectMethodApi = (data: PutApiSysDictItemMethodRequest) =>
   defHttp.put<PutApiSysDictItemMethodResponse>({
     url: Api.FORM,
-    data: { ...data, dataDictId: 'labMethod' },
+    data: { ...data, dataDictId: '100004' },
   });
 
 export const getInspectMethodDtApi = ({ dictItemId }: GetApiSysDictItemMethodDictItemIdRequest) =>

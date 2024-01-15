@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-27 18:25:06
+ * @LastEditTime: 2024-01-13 18:03:34
 -->
 <template>
   <div class="h-full">
@@ -53,7 +53,6 @@
       listField: 'result',
     },
     formConfig: {
-      labelWidth: 60,
       schemas: plasmaBoxScanSearchFormSchema,
     },
     rowKey: 'houseNo',
@@ -67,6 +66,8 @@
     await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: [boxId] });
     setFieldsValue({ boxId: '' });
     message.success('操作成功');
+    const list = await trayBoxListApi({ trayNo });
+    count.value = list.length;
   }
   async function handleSubmit() {
     const { boxId, trayNo } = getFieldsValue();

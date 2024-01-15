@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-29 16:24:20
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 17:42:46
+ * @LastEditTime: 2024-01-13 16:51:13
 -->
 <template>
   <BasicModal
@@ -12,7 +12,7 @@
     @register="registerModal"
     showFooter
     title="选择批次"
-    width="1200px"
+    width="1000px"
     cancelText="关闭"
     @ok="handleSubmit"
     :minHeight="520"
@@ -59,10 +59,6 @@
       listField: 'result',
     },
     formConfig: {
-      labelWidth: 90,
-      baseColProps: {
-        span: 6,
-      },
       schemas: batchSearchScheam,
     },
     rowKey: 'bsNo',

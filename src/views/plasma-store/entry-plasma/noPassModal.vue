@@ -40,7 +40,6 @@
       listField: 'result',
     },
     formConfig: {
-      labelWidth: 85,
       schemas: noPassSearchFormSchema,
     },
     rowKey: 'verifyNoPassNum',

@@ -2,13 +2,9 @@
   <div class="h-full">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleRemove" size="small" :disabled="!props.bsNo">
-          删除
-        </a-button>
-        <a-button type="primary" @click="handleUnq" size="small" :disabled="!props.bsNo">
-          不合格登记
-        </a-button>
-        <a-button type="primary" @click="handleNotCheck" size="small" :disabled="!props.bsNo">
+        <a-button type="primary" @click="handleRemove" :disabled="!props.bsNo"> 删除 </a-button>
+        <a-button type="primary" @click="handleUnq" :disabled="!props.bsNo"> 不合格登记 </a-button>
+        <a-button type="primary" @click="handleNotCheck" :disabled="!props.bsNo">
           未检测登记
         </a-button>
       </template>

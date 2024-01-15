@@ -41,7 +41,6 @@
       };
     },
     formConfig: {
-      labelWidth: 130,
       showAdvancedButton: false,
       schemas: addCallbackModalSearchFromSchema,
       transformDateFunc(date) {

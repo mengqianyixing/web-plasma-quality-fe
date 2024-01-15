@@ -109,6 +109,19 @@
         field: 'capacity',
         component: 'InputNumber',
         colProps: { span: 20 },
+        helpMessage() {
+          return '输入正整数';
+        },
+        rules: [
+          {
+            validator: (_, value) => {
+              if (!/^[1-9][0-9]*$/.test(value)) {
+                return Promise.reject('请输入正整数');
+              }
+              return Promise.resolve();
+            },
+          },
+        ],
         required: true,
       },
       {

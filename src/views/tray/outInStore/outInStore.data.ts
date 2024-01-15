@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-18 14:18:35
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-25 18:17:34
+ * @LastEditTime: 2024-01-13 10:28:20
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 
@@ -23,12 +23,9 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '所在货位',
-    dataIndex: 'subWareHouseName',
-  },
-  {
-    title: '所在区域',
     dataIndex: 'locationNo',
   },
+
   {
     title: '打印人',
     dataIndex: 'creater',
@@ -51,43 +48,29 @@ export const searchFormSchema: FormSchema[] = [
     label: '托盘编号',
     component: 'Input',
     field: 'trayNo',
-    colProps: { span: 8 },
   },
   {
     label: '血浆批次',
     component: 'Input',
     field: 'batchNo',
-    colProps: { span: 8 },
   },
   {
     label: '浆袋编号',
     component: 'Input',
     field: 'bagNo',
-    colProps: { span: 8 },
   },
   {
-    label: '样品批次',
+    label: '样本批次',
     component: 'Input',
     field: 'sampleNo',
-    colProps: { span: 8 },
   },
   {
     label: '投产准备号',
     component: 'Input',
     field: 'prepareNo',
-    colProps: { span: 8 },
   },
 ];
 
-export const inStoreAreaSchema: FormSchema = {
-  field: 'subWareHouseNo',
-  component: 'Select',
-  label: '区域',
-  required: true,
-  componentProps: {
-    options: [],
-  },
-};
 export const inStoreFormSchema: (houseChange: Function) => FormSchema[] = (houseChange) => [
   {
     field: 'houseNo',

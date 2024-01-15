@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-04 16:30:55
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 18:12:59
+ * @LastEditTime: 2024-01-13 18:50:42
 -->
 <template>
   <BasicModal
@@ -33,7 +33,7 @@
       title="托盘重绑"
       width="360px"
       @ok="okFunction"
-      @close="emit('close')"
+      @cancel="emit('close')"
     >
       <BasicForm @register="registerForm" />
     </BasicModal>
@@ -48,7 +48,7 @@
   import InModal from '@/views/tray/outInStore/inModal.vue';
   import { nextTick, ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
-  import { bindBoxApi } from '@/api/tray/relocation';
+  import { bindVerifyBoxApi } from '@/api/tray/relocation';
 
   const emit = defineEmits(['register', 'close']);
   defineOptions({ name: 'InStoreModal' });
@@ -56,15 +56,16 @@
   const state = ref('');
   let isAcceptNow = false;
 
-  const [registerForm, { validate, clearValidate, setFieldsValue, getFieldsValue }] = useForm({
-    labelWidth: 90,
-    baseColProps: { span: 24 },
-    schemas: [
-      { label: '托盘编号', component: 'Input', field: 'trayNo', required: true },
-      { label: '箱号', component: 'Input', field: 'boxId', required: true },
-    ],
-    showActionButtonGroup: false,
-  });
+  const [registerForm, { validate, clearValidate, setFieldsValue, getFieldsValue, resetFields }] =
+    useForm({
+      labelWidth: 90,
+      baseColProps: { span: 24 },
+      schemas: [
+        { label: '托盘编号', component: 'Input', field: 'trayNo', required: true },
+        { label: '箱号', component: 'Input', field: 'boxId', required: true },
+      ],
+      showActionButtonGroup: false,
+    });
 
   const [registerInModal, { openModal: openInModal }] = useModal();
   const [registerBindModal, { openModal }] = useModal();
@@ -90,8 +91,6 @@
     },
     rowKey: 'trayNo',
     formConfig: {
-      labelWidth: 80,
-      baseColProps: { span: 6 },
       schemas: searchForm,
     },
     columns,
@@ -119,17 +118,15 @@
   }
 
   async function handleReBind() {
-    const rows = getSelections(true);
-    if (rows.length === 0) return;
     openModal();
     await nextTick();
-    setFieldsValue({ trayNo: rows[0].trayNo });
+    resetFields();
     clearValidate();
   }
   async function okFunction() {
     const values = await validate();
 
-    let list;
+    let list: any[] = [];
     if (isAcceptNow) {
       import('@/api/tray/list').then(async (module) => {
         const { trayBoxListApi } = module;
@@ -141,6 +138,7 @@
         list = await trayBoxListApiAccept({ trayNo: values.trayNo });
       });
     }
+    console.log(isAcceptNow);
 
     if (list.length >= 24) {
       Modal.confirm({
@@ -158,8 +156,8 @@
   }
   async function submit() {
     const { boxId, trayNo } = getFieldsValue();
-    await bindBoxApi({ boxes: [boxId], trayNo, type: 'bind' });
-    setFieldsValue({ boxId: '' });
+    await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind' });
+    setFieldsValue({ boxId: '', trayNo: '' });
     message.success('操作成功');
     reload();
   }

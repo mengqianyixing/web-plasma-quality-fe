@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-04 16:30:55
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 18:11:38
+ * @LastEditTime: 2024-01-15 10:40:15
 -->
 <template>
   <BasicModal
@@ -12,7 +12,7 @@
     @register="registerModal"
     :title="'血浆批号【' + state + '】托盘出库'"
     width="1060px"
-    @close="emit('close')"
+    @cancel="emit('close')"
     :minHeight="520"
     @fullscreen="redoHeight"
   >
@@ -65,8 +65,6 @@
     },
     rowKey: 'trayNo',
     formConfig: {
-      labelWidth: 80,
-      baseColProps: { span: 6 },
       schemas: searchForm,
     },
     columns,

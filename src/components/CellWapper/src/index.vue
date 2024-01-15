@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2024-01-02 13:43:33
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-13 17:19:45
+-->
 <template>
   <div
     :class="['cell-wapper', 'flex', 'flex-wrap']"
@@ -6,12 +14,7 @@
       width: `calc(100% - ${gap}px)`,
     }"
   >
-    <div
-      :class="`item  flex`"
-      :style="{ width: cellWidth }"
-      v-for="(cell, i) in cellList"
-      :key="cell.field + '.' + i"
-    >
+    <div :class="`item  flex`" v-for="(cell, i) in cellList" :key="cell.field + '.' + i">
       <div :class="['label', 'shrink-0', labelWidthClass]" :style="{ width: labelWidth }">
         {{ cell.label }}
       </div>
@@ -31,7 +34,7 @@
   import { Cell } from './type';
   import { get } from 'lodash-es';
 
-  const { data, cellList, labelWidth, labelWidthClass, cellWidth } = defineProps({
+  const { data, cellList, labelWidth, labelWidthClass } = defineProps({
     data: {
       type: Object as PropType<any>,
     },
@@ -59,12 +62,12 @@
 <style scoped>
   .cell-wapper {
     width: calc(100% - 32px);
-    border-top-width: 1px;
     border-left-width: 1px;
     border-color: #f0f0f0;
   }
 
   .item {
+    border-top-width: 1px;
     border-right-width: 1px;
     border-bottom-width: 1px;
     border-color: #f0f0f0;
@@ -72,13 +75,22 @@
 
   .label,
   .value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 8px;
   }
 
+  .value {
+    width: 200px;
+  }
+
   .label {
+    width: 120px;
+    height: 40px;
     border-right-width: 1px;
     border-color: #f0f0f0;
-    background: #f6f7f8;
+    background: #fafafa;
     color: #666;
   }
 </style>

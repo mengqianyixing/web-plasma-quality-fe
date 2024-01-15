@@ -59,6 +59,7 @@ export interface HeaderSetting {
   showNotice: boolean;
   showSearch: boolean;
   showApi: boolean;
+  showPrintApi: boolean;
 }
 
 export interface LocaleSetting {
@@ -143,6 +144,7 @@ export interface GlobConfig {
   title: string;
   // Service interface url
   apiUrl: string;
+  printUrl?: string;
   // Upload url
   uploadUrl?: string;
   //  Service interface url prefix
@@ -160,5 +162,5 @@ export interface GlobEnvConfig {
   // Upload url
   VITE_GLOB_UPLOAD_URL?: string;
   // print url
-  VITE_PRINT_URL?: string;
+  VITE_GLOB_PRINT_URL?: string;
 }

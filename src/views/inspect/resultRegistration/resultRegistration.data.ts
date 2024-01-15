@@ -17,19 +17,19 @@ export const cellList = [
   },
   {
     field: 'bsNo',
-    label: '样品批号',
+    label: '样本批号',
   },
   {
     field: 'sampleTypeName',
-    label: '样品类型',
+    label: '样本类型',
   },
   {
     field: 'totalCount',
-    label: '样品总数',
+    label: '样本总数',
   },
   {
     field: 'totalQualified',
-    label: '合格样品总数',
+    label: '合格样本总数',
   },
   {
     field: 'status',
@@ -39,7 +39,7 @@ export const cellList = [
 
 export const batchColumns: BasicColumn[] = [
   {
-    title: '样品批号',
+    title: '样本批号',
     dataIndex: 'bsNo',
   },
   {
@@ -47,16 +47,16 @@ export const batchColumns: BasicColumn[] = [
     dataIndex: 'stationName',
   },
   {
-    title: '样品类型',
+    title: '样本类型',
     dataIndex: 'sampleCode',
     slots: { customRender: 'sampleCode' },
   },
   {
-    title: '样品总数',
+    title: '样本总数',
     dataIndex: 'totalCount',
   },
   {
-    title: '合格样品数',
+    title: '合格样本数',
     dataIndex: 'totalQualified',
   },
   {
@@ -86,7 +86,7 @@ export const batchSearchScheam: FormSchema[] = [
   {
     field: 'sampleCode',
     component: 'ApiSelect',
-    label: '样品类型',
+    label: '样本类型',
     componentProps: {
       api: () =>
         new Promise((rs, rj) => {
@@ -101,6 +101,6 @@ export const batchSearchScheam: FormSchema[] = [
   {
     field: 'bsNo',
     component: 'Input',
-    label: '样品批号',
+    label: '样本批号',
   },
 ];

@@ -20,7 +20,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '效价结果',
-    dataIndex: 'result',
+    dataIndex: 'titerType',
   },
 
   {
@@ -75,6 +75,24 @@ export const searchFormschema: FormSchema[] = [
     component: 'Input',
     label: '名称',
   },
+  {
+    field: 'plasmaType',
+    component: 'Select',
+    label: '血浆类型',
+    componentProps: {
+      options: PLASMA_TYPE_LIST,
+    },
+  },
+  {
+    field: 'itemValue',
+    component: 'Input',
+    label: '代码',
+  },
+  {
+    field: 'itemKey',
+    component: 'Input',
+    label: '名称',
+  },
 ];
 export const formListSchema: FormSchema[] = [
   {
@@ -109,12 +127,30 @@ export const formListSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'result',
+    field: 'titerType',
     component: 'Select',
     label: '效价结果',
     required: true,
     componentProps: {
       options: [],
+    },
+  },
+  {
+    field: 'min',
+    component: 'InputNumber',
+    label: '效价最小值',
+    defaultValue: null,
+    componentProps: {
+      min: 0,
+    },
+  },
+  {
+    field: 'max',
+    component: 'InputNumber',
+    label: '效价最大值',
+    defaultValue: null,
+    componentProps: {
+      min: 0,
     },
   },
   {

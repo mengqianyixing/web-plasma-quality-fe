@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-29 15:36:12
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 18:06:12
+ * @LastEditTime: 2024-01-15 10:27:40
 -->
 <template>
   <BasicModal
@@ -16,7 +16,7 @@
     okText="提交&关闭"
     cancelText="关闭"
     :minHeight="520"
-    @close="close"
+    @cancel="close"
     @fullscreen="redoHeight"
     @ok="handleSubmit(true)"
   >
@@ -97,15 +97,15 @@
           options: [
             {
               label: PLASMA_TYPE_TEXT[plasmaType] + '高效价',
-              value: PLASMA_TYPE_TEXT[plasmaType] + '高效价',
+              value: plasmaType + 'H',
             },
             {
               label: PLASMA_TYPE_TEXT[plasmaType] + '低效价',
-              value: PLASMA_TYPE_TEXT[plasmaType] + '低效价',
+              value: plasmaType + 'L',
             },
             {
               label: '合格普通浆',
-              value: '合格普通浆',
+              value: 'N',
             },
           ],
         },

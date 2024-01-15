@@ -87,25 +87,21 @@ export const searchReleaseSchema: FormSchema[] = [
     field: 'stationNo',
     component: 'Select',
     label: '采浆公司',
-    colProps: { span: 6 },
   },
   {
     field: 'batchSampleNo',
     component: 'Input',
     label: '样本批号',
-    colProps: { span: 6 },
   },
   {
     field: 'sampleType',
     component: 'Select',
     label: '样本类型',
-    colProps: { span: 6 },
   },
   {
     field: 'verifyState',
     component: 'Select',
     label: '验收状态',
-    colProps: { span: 6 },
     componentProps: {
       options: [...sampleVerifyStatusMap.entries()].map(([key, value]) => ({
         value: key,
@@ -117,19 +113,16 @@ export const searchReleaseSchema: FormSchema[] = [
     field: '[verifyBeginAt, verifyEndAt]',
     component: 'RangePicker',
     label: '验收日期',
-    colProps: { span: 6 },
   },
   {
     field: '[titerExpiredBeginAt, titerExpiredEndAt]',
     component: 'RangePicker',
     label: '效价有效期',
-    colProps: { span: 6 },
   },
   {
     field: '[othersExpiredBeginAt, othersExpiredEndAt]',
     component: 'RangePicker',
     label: '其他有效期',
-    colProps: { span: 6 },
   },
 ];
 

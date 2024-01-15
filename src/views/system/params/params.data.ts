@@ -39,6 +39,5 @@ export const searchFormSchema: FormSchema[] = [
     field: 'paramName',
     label: '参数名称',
     component: 'Input',
-    colProps: { span: 5 },
   },
 ];

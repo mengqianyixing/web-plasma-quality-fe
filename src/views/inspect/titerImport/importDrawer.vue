@@ -12,7 +12,7 @@
     @register="registerModal"
     title="新增"
     width="1200px"
-    @close="emit('close')"
+    @cancel="emit('close')"
   >
     <div class="flex flex-col h-full">
       <BasicForm @register="registerForm" />

@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-19 16:45:20
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 17:15:17
+ * @LastEditTime: 2024-01-13 10:14:08
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
@@ -16,7 +16,9 @@
       </template>
       <template #houseName="{ record }: { record: Recordable }">
         <span
-          class="text-blue-500 underline cursor-pointer"
+          :class="
+            record.houseType[1] === STORE_FLAG.F ? '' : 'text-blue-500 underline cursor-pointer'
+          "
           @click.stop.self="handleDetails(record)"
         >
           {{ record.houseName }}
@@ -56,7 +58,7 @@
 
   const [registerModal, { openModal }] = useModal();
   const [registerLoactionModal, { openModal: openLoactionModal }] = useModal();
-  const [registerAreaModal, { openModal: openAreaModal }] = useModal();
+  const [registerAreaModal] = useModal();
   const houseNo = ref('');
 
   const [registerTable, { getRowSelection, findTableDataRecord, reload, clearSelectedRowKeys }] =
@@ -104,7 +106,7 @@
   function handleDetails(row: Recordable) {
     houseNo.value = row.houseNo;
     if (row.houseType[1] === STORE_FLAG.F) {
-      openAreaModal(true, { houseNo: row.houseNo });
+      return;
     } else {
       openLoactionModal(true, { houseNo: row.houseNo });
     }
