@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-26 17:41:03
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 15:50:29
+ * @LastEditTime: 2024-01-15 10:17:06
 -->
 <template>
   <BasicModal
@@ -106,6 +106,6 @@
   }
   async function getDict() {
     const [res] = await getDictItemListByNoApi(['titerResult']);
-    updateSchema({ field: 'result', componentProps: { options: res.dictImtes } });
+    updateSchema({ field: 'titerType', componentProps: { options: res.dictImtes } });
   }
 </script>
