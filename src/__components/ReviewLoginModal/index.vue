@@ -12,7 +12,7 @@
 <script lang="ts" setup>
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
-  import { formSchema } from './registration.data';
+  import { formSchema } from './modal.data';
   import { reCheckLogin } from '@/api/sys/login';
   import { PostApiSysReviewerLoginRequest } from '@/api/type/login';
 
@@ -41,6 +41,7 @@
       setModalProps({ confirmLoading: true });
       closeModal();
       emit('success', loginRes.username);
+      await resetFields();
     } finally {
       setModalProps({ confirmLoading: false });
     }

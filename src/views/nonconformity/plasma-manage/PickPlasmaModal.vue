@@ -27,7 +27,7 @@
   import { useMessage } from '@/hooks/web/useMessage';
 
   import { pickSchema } from './manage.data';
-  import LoginModal from '@/__components/nonconformity-registration/LoginModal.vue';
+  import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { nonconformityPick } from '@/api/nonconformity/plasma-manage';
   import { PostApiCoreBagUnqualifiedPickRequest } from '@/api/type/nonconformityManage';
 
