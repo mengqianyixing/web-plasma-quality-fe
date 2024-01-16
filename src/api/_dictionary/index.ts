@@ -7,8 +7,10 @@ enum Api {
 
 export enum DictionaryEnum {
   PlasmaUnqualifiedReason = 'bagUnqualifiedReason',
+  SampleUnqualifiedReason = 'sampleUnqualifiedReason',
   UnqualifiedBoxReason = 'warehouseUnqualified',
   SampleType = 'sampleType',
+  PlasmaUnqualifiedItem = 'plasmaUnqualifiedItem',
 }
 
 export const getSysDictionary = (params: DictionaryEnum[]) =>

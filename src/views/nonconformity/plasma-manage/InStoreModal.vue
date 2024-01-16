@@ -27,7 +27,7 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { inStoreSchema } from './manage.data';
 
-  import LoginModal from '@/__components/nonconformity-registration/LoginModal.vue';
+  import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { nonconformityInStore } from '@/api/nonconformity/plasma-manage';
   import { PostApiCoreBagUnqualifiedInStoreRequest } from '@/api/type/nonconformityManage';
 

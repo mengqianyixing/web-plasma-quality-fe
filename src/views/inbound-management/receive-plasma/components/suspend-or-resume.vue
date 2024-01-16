@@ -28,7 +28,7 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { BasicForm, useForm, FormSchema } from '@/components/Form';
   import BasicModal from '@/components/Modal/src/BasicModal.vue';
-  import LoginModal from '@/__components/nonconformity-registration/LoginModal.vue';
+  import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { plasmaPauseBoxList } from '@/api/inbound-management/accept-plasma';
   import { receivePause } from '@/api/inbound-management/receive-plasma';
   import dayjs from 'dayjs';

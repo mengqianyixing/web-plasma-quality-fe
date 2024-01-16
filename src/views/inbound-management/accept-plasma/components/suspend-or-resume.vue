@@ -77,7 +77,7 @@
     plasmaPauseBoxList,
     plasmaPauseBatch,
   } from '@/api/inbound-management/accept-plasma';
-  import LoginModal from '@/__components/nonconformity-registration/LoginModal.vue';
+  import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { useModal } from '@/components/Modal';
 
   import { useMessage } from '@/hooks/web/useMessage';

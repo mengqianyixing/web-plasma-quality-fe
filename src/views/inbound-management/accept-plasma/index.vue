@@ -27,21 +27,21 @@
               <span>本箱已验收(袋)：</span>
               <span>{{ acceptList?.length }}</span>
             </div>
-            <div>
-              <!-- <a-button @click="susModal">暂停接收</a-button> -->
-              <a-button>血浆不合格</a-button>
-              <a-button>样本不合格</a-button>
-              <a-button>缺号登记</a-button>
+            <div class="flex gap-2">
+              <a-button @click="handlePlasmaUnqualified">血浆不合格</a-button>
+              <a-button @click="handleSampleUnqualified">样本不合格</a-button>
+              <a-button @click="handleMissNumRegister">缺号登记</a-button>
               <a-button @click="suspendModal('BOX')">暂停箱记录</a-button>
               <a-button @click="suspendModal('BCH')">暂停批记录</a-button>
               <a-button
                 @click="openInModal(true, { ...filterForm, isAccept: true })"
                 :disabled="!filterForm.batchNo"
-                >托盘入库</a-button
               >
-              <a-button @click="openOutModal(true, filterForm)" :disabled="!filterForm.batchNo"
-                >托盘出库</a-button
-              >
+                托盘入库
+              </a-button>
+              <a-button @click="openOutModal(true, filterForm)" :disabled="!filterForm.batchNo">
+                托盘出库
+              </a-button>
             </div>
           </div>
         </template>
@@ -80,6 +80,15 @@
       ref="revokeModalRef"
       @query="batchModalSuccess"
     />
+    <PlasmaUnqualifiedModal
+      @register="registerPlasmaUnqualifiedModal"
+      @success="handleModalSuccess"
+    />
+    <SampleUnqualifiedModal
+      @register="registerSampleUnqualifiedModal"
+      @success="handleModalSuccess"
+    />
+    <MissNumModal @register="registerMissNumModal" />
   </PageWrapper>
 </template>
 
@@ -87,22 +96,26 @@
   import { ref, computed, reactive, nextTick, createVNode } from 'vue';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import Description from '@/components/Description/src/Description.vue';
-  import LoginModal from '@/__components/nonconformity-registration/LoginModal.vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { useModal } from '@/components/Modal';
   import { debounce } from 'lodash-es';
   import { VxeGridProps } from 'vxe-table';
   import { DescItem, useDescription } from '@/components/Description';
+  import { getPlasmaVerify, plasmaVerifyBag } from '@/api/inbound-management/accept-plasma';
+  import { Modal } from 'ant-design-vue';
+  import dayjs from 'dayjs';
+
   import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal.vue';
   import revokeModal from './components/revoke-modal.vue';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import OutStoreDrawer from '../components/outStoreDrawer/index.vue';
+  import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import batchDetail from './components/batch-detail.vue';
   import boxDetail from './components/box-detail.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
-  import { getPlasmaVerify, plasmaVerifyBag } from '@/api/inbound-management/accept-plasma';
-  import { Modal } from 'ant-design-vue';
-  import dayjs from 'dayjs';
+  import PlasmaUnqualifiedModal from '@/views/inbound-management/accept-plasma/components/PlasmaUnqualifiedModal.vue';
+  import SampleUnqualifiedModal from '@/views/inbound-management/accept-plasma/components/SampleUnqualifiedModal.vue';
+  import MissNumModal from '@/views/inbound-management/accept-plasma/components/MissNumModal.vue';
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
@@ -279,6 +292,9 @@
 
   const [registerInModal, { openModal: openInModal }] = useModal();
   const [registerOutModal, { openModal: openOutModal }] = useModal();
+  const [registerPlasmaUnqualifiedModal, { openModal: openPlasmaUnqualifiedModal }] = useModal();
+  const [registerSampleUnqualifiedModal, { openModal: openSampleUnqualifiedModal }] = useModal();
+  const [registerMissNumModal, { openModal: openMissNumModal }] = useModal();
 
   // 表格数据
   const unAcceptList = computed(() => filterForm.value?.unVerifyBag ?? []);
@@ -607,4 +623,45 @@
   const closeRevoke = () => {
     revokeModalVisible.value = false;
   };
+
+  function handlePlasmaUnqualified() {
+    if (!batchNo.value) {
+      warning('请先选择批号!');
+      return;
+    }
+    openPlasmaUnqualifiedModal(true);
+  }
+
+  function handleSampleUnqualified() {
+    if (!batchNo.value) {
+      warning('请先选择批号!');
+      return;
+    }
+
+    openSampleUnqualifiedModal(true);
+  }
+
+  function handleMissNumRegister() {
+    if (!batchNo.value) {
+      warning('请先选择批号!');
+      return;
+    }
+    openMissNumModal(true);
+  }
+
+  async function handleModalSuccess() {
+    try {
+      tableLoading.value = true;
+      const res = await getPlasmaVerify(batchNo.value);
+      filterForm.value = res;
+      _setReChecker(res.checker);
+      filterForm.value.unVerifyBag = res.unVerifyBag.map((item: any) => {
+        return {
+          bagNo: item,
+        };
+      });
+    } finally {
+      tableLoading.value = false;
+    }
+  }
 </script>

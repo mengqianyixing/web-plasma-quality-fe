@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `POST /api/core/bag/unqualified`
- * @更新时间 `2023-12-23 17:40:52`
+ * @更新时间 `2024-01-15 17:07:45`
  */
 export interface PostApiCoreBagUnqualifiedRequest {
   /**
@@ -27,6 +27,12 @@ export interface PostApiCoreBagUnqualifiedRequest {
    * 血浆编号
    */
   fkBagNo: string;
+  /**
+   * 区分页面用（验收弹窗）
+   */
+  verify?: string;
+  lack?: string;
+  remark?: string;
 }
 
 /**
@@ -34,7 +40,7 @@ export interface PostApiCoreBagUnqualifiedRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `POST /api/core/bag/unqualified`
- * @更新时间 `2023-12-23 17:40:52`
+ * @更新时间 `2024-01-15 17:07:45`
  */
 export type PostApiCoreBagUnqualifiedResponse = null;
 
