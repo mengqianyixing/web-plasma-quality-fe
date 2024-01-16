@@ -5,7 +5,7 @@
       <vxe-grid
         v-bind="gridOptionsUnaccept"
         :data="unAcceptList"
-        class="inline-block w-2/5 pr-2"
+        class="inline-block w-1/4 pr-2"
         :loading="tableLoading"
       >
         <template #toolbar>
@@ -19,7 +19,7 @@
         v-bind="gridOptionsAccept"
         :data="acceptList"
         :loading="tableLoading"
-        class="inline-block w-3/5"
+        class="inline-block w-3/4"
       >
         <template #toolbar>
           <div class="flex items-center justify-between bg-[#ffffff]">
