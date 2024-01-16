@@ -65,11 +65,11 @@
   import { Select, SelectOption } from 'ant-design-vue';
   import { modulesRouteList } from '@/router/routes';
   import {
-    getCasDoorUsers,
+    getCasDoorAllUsers,
     addCasDoorRole,
     // getRoleDomainAuth,
-    setCasDoorRoles,
-  } from '@/api/oauth/menu';
+    setCasDoorRole,
+  } from '@/api/oauth/auth';
   import { jsonClone } from 'js-xxx';
 
   const emit = defineEmits(['success', 'register']);
@@ -148,7 +148,7 @@
     });
   }
 
-  getCasDoorUsers().then((res) => {
+  getCasDoorAllUsers().then((res) => {
     userOptions.value = res.map((item) => {
       return {
         label: item.owner + '/' + item.name + '(' + item.displayName + ')',
@@ -258,7 +258,7 @@
       setModalProps({ confirmLoading: true });
       try {
         if (unref(isUpdate)) {
-          await setCasDoorRoles({
+          await setCasDoorRole({
             ...values,
             domains,
             oldName: roleId.value,

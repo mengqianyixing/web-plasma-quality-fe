@@ -2,9 +2,9 @@
  * @Author: HxB
  * @Date: 2024-01-03 10:01:13
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-15 16:25:20
+ * @LastEditTime: 2024-01-16 18:30:25
  * @Description: 菜单权限管理
- * @FilePath: \psms-fe\src\api\oauth\menu.ts
+ * @FilePath: \psms-fe\src\api\oauth\auth.ts
  */
 import { defHttp } from '@/utils/http/axios';
 
@@ -13,7 +13,7 @@ import { defHttp } from '@/utils/http/axios';
  * @param params
  * @returns
  */
-export const getCasDoorUsers = (params?) =>
+export const getCasDoorAllUsers = (params?) =>
   defHttp.get(
     { url: '/api/sys/casdoor/all-users', params },
     {
@@ -44,20 +44,7 @@ export const getCasDoorRoles = (params) => {
  * @param data
  * @returns
  */
-export const setCasDoorRoles = (data) => defHttp.put({ url: '/api/sys/casdoor/role', data });
-
-// /**
-//  * 获取角色详情
-//  * @param params
-//  * @returns
-//  */
-// export const getRoleDomainAuth = (params) =>
-//   defHttp.get(
-//     { url: '/api/sys/casdoor/get-role', params },
-//     {
-//       joinParamsToUrl: true,
-//     },
-//   );
+export const setCasDoorRole = (data) => defHttp.put({ url: '/api/sys/casdoor/role', data });
 
 /**
  * 增加角色

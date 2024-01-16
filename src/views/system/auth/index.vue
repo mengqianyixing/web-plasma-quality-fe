@@ -32,7 +32,7 @@
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable, TableAction } from '@/components/Table';
-  import { deleteCasDoorRole, getCasDoorRoles } from '@/api/oauth/menu';
+  import { deleteCasDoorRole, getCasDoorRoles } from '@/api/oauth/auth';
 
   import { useModal } from '@/components/Modal';
   import RoleModal from './RoleModal.vue';
