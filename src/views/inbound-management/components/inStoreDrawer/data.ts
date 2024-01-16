@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-04 16:32:04
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 09:59:27
+ * @LastEditTime: 2024-01-16 15:04:35
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 
@@ -32,7 +32,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '所在货位',
-    dataIndex: 'subWareHouseName',
+    dataIndex: 'locationNo',
   },
 ];
 
