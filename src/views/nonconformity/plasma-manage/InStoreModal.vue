@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    title="挑浆"
+    title="入库"
     @ok="handleSubmit"
     width="430px"
   >
