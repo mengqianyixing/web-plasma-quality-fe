@@ -1775,4 +1775,138 @@ export interface PostApiCoreBatchPlasmaAcceptBatchPauseRequest {
  */
 export interface PostApiCoreBatchPlasmaAcceptBatchPauseResponse {}
 
+/**
+ * 接口 [新建批放行单↗](https://yapi.sharing8.cn/project/529/interface/api/32312) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/release`
+ * @更新时间 `2024-01-16 18:11:22`
+ */
+export interface PostApiCoreBatchPlasmaReleaseRequest {
+  batchNo?: string;
+}
+
+/**
+ * 接口 [新建批放行单↗](https://yapi.sharing8.cn/project/529/interface/api/32312) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/release`
+ * @更新时间 `2024-01-16 18:11:22`
+ */
+export interface PostApiCoreBatchPlasmaReleaseResponse {
+  brNo?: string;
+  fkBpNo?: string;
+  state?: string;
+  summary?: {
+    totalCount?: number;
+    failedCount?: number;
+    unProductionCount?: number;
+    trackedCount?: number;
+    firstUnTrackedCount?: number;
+    reUnTrackedCount?: number;
+    approvedBy?: string;
+  };
+  content?: {
+    failedBag?: {
+      bagNo?: string;
+      donorNo?: string;
+      donorName?: string;
+      fkFailedCode?: string;
+      pickBy?: string;
+      reviewBy?: string;
+      pickAt?: string;
+    }[];
+    unProductionBag?: string[];
+    trackedBag?: string[];
+    firstUnTrackedBag?: string[];
+    reUnTrackedBag?: string[];
+  };
+  creator?: string;
+  reviewer?: string;
+  createAt?: string;
+  reviewAt?: string;
+  remark?: string;
+}
+
+/**
+ * 接口 [查询放行单详情↗](https://yapi.sharing8.cn/project/529/interface/api/32357) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/plasma/release`
+ * @更新时间 `2024-01-16 18:01:34`
+ */
+export interface GetApiCoreBatchPlasmaReleaseRequest {
+  /**
+   * 和brNo不能同时为空
+   */
+  batchNo?: string;
+  /**
+   * 和batchNo不能同时为空
+   */
+  brNo?: string;
+}
+
+/**
+ * 接口 [查询放行单详情↗](https://yapi.sharing8.cn/project/529/interface/api/32357) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/plasma/release`
+ * @更新时间 `2024-01-16 18:01:34`
+ */
+export interface GetApiCoreBatchPlasmaReleaseResponse {
+  brNo?: string;
+  fkBpNo?: string;
+  state?: string;
+  summary?: {
+    totalCount?: number;
+    failedCount?: number;
+    unProductionCount?: number;
+    trackedCount?: number;
+    firstUnTrackedCount?: number;
+    reUnTrackedCount?: number;
+    approvedBy?: string;
+  };
+  content?: {
+    failedBag?: {
+      bagNo?: string;
+      donorNo?: string;
+      donorName?: string;
+      fkFailedCode?: string;
+      pickBy?: string;
+      reviewBy?: string;
+      pickAt?: string;
+    }[];
+    unProductionBag?: null;
+    trackedBag?: string[];
+    firstUnTrackedBag?: string[];
+    reUnTrackedBag?: string[];
+  };
+  creator?: string;
+  reviewer?: null;
+  createAt?: string;
+  reviewAt?: string;
+  remark?: string;
+}
+
+/**
+ * 接口 [操作批放行单(复核、取消)↗](https://yapi.sharing8.cn/project/529/interface/api/32397) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `PUT /api/core/batch/plasma/release`
+ * @更新时间 `2024-01-16 18:00:34`
+ */
+export interface PutApiCoreBatchPlasmaReleaseRequest {
+  brNo?: string;
+  state?: string;
+}
+
+/**
+ * 接口 [操作批放行单(复核、取消)↗](https://yapi.sharing8.cn/project/529/interface/api/32397) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `PUT /api/core/batch/plasma/release`
+ * @更新时间 `2024-01-16 18:00:34`
+ */
+export type PutApiCoreBatchPlasmaReleaseResponse = null;
+
 /* prettier-ignore-end */

@@ -784,10 +784,10 @@ export type GetApiCoreBankWarehousesNameResponse = {
  * 接口 [入库记录↗](https://yapi.sharing8.cn/project/529/interface/api/32317) 的 **请求类型**
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
- * @请求头 `GET /api/core/batch/in-store`
- * @更新时间 `2024-01-16 15:27:27`
+ * @请求头 `GET /api/core/batch/plasma/in-store`
+ * @更新时间 `2024-01-16 17:59:40`
  */
-export interface GetApiCoreBatchInStoreRequest {
+export interface GetApiCoreBatchPlasmaInStoreRequest {
   /**
    * 采浆公司
    */
@@ -822,10 +822,10 @@ export interface GetApiCoreBatchInStoreRequest {
  * 接口 [入库记录↗](https://yapi.sharing8.cn/project/529/interface/api/32317) 的 **返回类型**
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
- * @请求头 `GET /api/core/batch/in-store`
- * @更新时间 `2024-01-16 15:27:27`
+ * @请求头 `GET /api/core/batch/plasma/in-store`
+ * @更新时间 `2024-01-16 17:59:40`
  */
-export interface GetApiCoreBatchInStoreResponse {
+export interface GetApiCoreBatchPlasmaInStoreResponse {
   currPage?: number;
   pageSize?: number;
   totalCount?: number;
