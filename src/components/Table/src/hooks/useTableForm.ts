@@ -16,7 +16,7 @@ export function useTableForm(
     return {
       labelWidth: 140,
       showAdvancedButton: false,
-      baseColProps: { flex: '0 0 360px' },
+      baseColProps: { flex: '0 0 370px' },
       actionColOptions: { flex: '1 1 200px', style: 'max-width:unset;' },
       ...formConfig,
       submitButtonOptions: { loading: unref(getLoading), ...submitButtonOptions },
