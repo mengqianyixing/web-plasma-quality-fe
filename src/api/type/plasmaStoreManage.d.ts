@@ -320,7 +320,7 @@ export interface GetApiCoreBankWarehouseHouseNoResponse {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/locations`
- * @更新时间 `2023-12-19 14:09:05`
+ * @更新时间 `2024-01-16 14:30:29`
  */
 export interface GetApiCoreBankLocationsRequest {
   /**
@@ -343,6 +343,10 @@ export interface GetApiCoreBankLocationsRequest {
    * 库房编号
    */
   houseNo: string;
+  /**
+   * 货位是否禁用，0表示启用，1表示禁用
+   */
+  closed?: string;
 }
 
 /**
@@ -350,7 +354,7 @@ export interface GetApiCoreBankLocationsRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/locations`
- * @更新时间 `2023-12-19 14:09:05`
+ * @更新时间 `2024-01-16 14:30:29`
  */
 export interface GetApiCoreBankLocationsResponse {
   currPage: number;
@@ -775,5 +779,126 @@ export type GetApiCoreBankWarehousesNameResponse = {
   bankName?: string;
   bankNo?: string;
 }[];
+
+/**
+ * 接口 [入库记录↗](https://yapi.sharing8.cn/project/529/interface/api/32317) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/batch/in-store`
+ * @更新时间 `2024-01-16 15:27:27`
+ */
+export interface GetApiCoreBatchInStoreRequest {
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 状态
+   */
+  state?: string;
+  /**
+   * 接受开始日期
+   */
+  receiveStartDate?: string;
+  /**
+   * 接受结束日期
+   */
+  receiveEndDate?: string;
+  /**
+   * 验收发布开始日期
+   */
+  verifyPubStartDate?: string;
+  /**
+   * 验收发布结束日期
+   */
+  verifyPubEndDate: string;
+}
+
+/**
+ * 接口 [入库记录↗](https://yapi.sharing8.cn/project/529/interface/api/32317) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/batch/in-store`
+ * @更新时间 `2024-01-16 15:27:27`
+ */
+export interface GetApiCoreBatchInStoreResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 采浆公司
+     */
+    stationNo: string;
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
+    /**
+     * 血浆箱数
+     */
+    boxNum: number;
+    /**
+     * 接受箱数
+     */
+    acceptBoxNum: number;
+    /**
+     * 血浆数量
+     */
+    bagNum: number;
+    /**
+     * 验收数量
+     */
+    verifyNum?: number;
+    /**
+     * 合格血浆数量
+     */
+    passBagNum?: number;
+    /**
+     * 不合格血浆数量
+     */
+    noPassBagNum?: number;
+    /**
+     * 缺号数量
+     */
+    lackNoNum?: number;
+    /**
+     * 浆站重量
+     */
+    stationWeight?: number;
+    /**
+     * 验收重量
+     */
+    verifyWeight?: number;
+    /**
+     * 接收日期
+     */
+    acceptDate?: string;
+    /**
+     * 验收日期
+     */
+    verifyDate?: string;
+    /**
+     * 发布日期
+     */
+    pubDate?: string;
+    /**
+     * 发布人
+     */
+    publisher?: string;
+    /**
+     * 验收状态
+     */
+    verifyState: string;
+    /**
+     * 接受状态
+     */
+    accpetState: string;
+  }[];
+}
 
 /* prettier-ignore-end */
