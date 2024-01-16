@@ -104,7 +104,7 @@ export const useUserStore = defineStore({
         this.userInfo = {
           userId: 'userid',
           username: data.username,
-          homePath: '/dashboard/analysis',
+          homePath: '/404',
         };
         this.setUserInfo(this.userInfo);
         // save token
@@ -127,7 +127,7 @@ export const useUserStore = defineStore({
             const _tempId = Number(i);
             return isNaN(_tempId) ? i : _tempId;
           }),
-          homePath: '/dashboard/analysis',
+          homePath: '/404',
         };
         this.setUserInfo(this.userInfo);
         // save token
