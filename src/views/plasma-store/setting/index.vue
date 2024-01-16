@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-19 16:45:20
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 10:14:08
+ * @LastEditTime: 2024-01-16 14:19:20
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
@@ -94,7 +94,7 @@
     const { closed, houseNo, houseName } = findTableDataRecord(selectedRowKeys[0]) as Recordable;
     if (closed === action) return message.warning('状态不需要变更');
     Modal.confirm({
-      content: '确认' + (action ? '禁用' : '启用') + houseName + '?',
+      content: '确认' + (action === 'CLOSED' ? '禁用' : '启用') + houseName + '?',
       onOk: async () => {
         await checkHouseApi({ closed: action, houseNo });
         clearSelectedRowKeys();
