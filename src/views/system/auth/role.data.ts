@@ -81,12 +81,18 @@ export const formSchema: FormSchema[] = [
     label: '角色 id',
     required: true,
     component: 'Input',
+    colProps: {
+      span: 8,
+    },
   },
   {
     label: '角色名称',
     required: true,
     field: 'displayName',
     component: 'Input',
+    colProps: {
+      span: 8,
+    },
   },
   {
     field: 'enabled',
@@ -98,6 +104,9 @@ export const formSchema: FormSchema[] = [
         { label: '启用', value: true },
         { label: '停用', value: false },
       ],
+    },
+    colProps: {
+      span: 8,
     },
   },
   {

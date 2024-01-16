@@ -27,21 +27,21 @@
         </template>
       </template>
     </BasicTable>
-    <RoleDrawer @register="registerDrawer" @success="handleSuccess" />
+    <RoleDrawer @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable, TableAction } from '@/components/Table';
   import { deleteCasDoorRole, getCasDoorRoles } from '@/api/oauth/menu';
 
-  import { useDrawer } from '@/components/Drawer';
-  import RoleDrawer from './RoleDrawer.vue';
+  import { useModal } from '@/components/Modal';
+  import RoleDrawer from './RoleModal.vue';
 
   import { columns, searchFormSchema } from './role.data';
 
   defineOptions({ name: 'RoleAuthManagement' });
 
-  const [registerDrawer, { openDrawer }] = useDrawer();
+  const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload }] = useTable({
     title: '权限列表',
     api: getCasDoorRoles,
@@ -70,13 +70,13 @@
   });
 
   function handleCreate() {
-    openDrawer(true, {
+    openModal(true, {
       isUpdate: false,
     });
   }
 
   function handleEdit(record: Recordable) {
-    openDrawer(true, {
+    openModal(true, {
       record,
       isUpdate: true,
     });
