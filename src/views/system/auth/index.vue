@@ -7,7 +7,7 @@
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <TableAction
-            v-auth="['E_456']"
+            v-auth="'E_456'"
             :actions="[
               {
                 icon: 'clarity:note-edit-line',
@@ -27,7 +27,7 @@
         </template>
       </template>
     </BasicTable>
-    <RoleDrawer @register="registerModal" @success="handleSuccess" />
+    <RoleModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -35,7 +35,7 @@
   import { deleteCasDoorRole, getCasDoorRoles } from '@/api/oauth/menu';
 
   import { useModal } from '@/components/Modal';
-  import RoleDrawer from './RoleModal.vue';
+  import RoleModal from './RoleModal.vue';
 
   import { columns, searchFormSchema } from './role.data';
 
