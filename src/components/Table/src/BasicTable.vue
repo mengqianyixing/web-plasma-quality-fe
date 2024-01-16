@@ -355,6 +355,10 @@
         border-radius: 2px;
         background-color: @component-background;
       }
+
+      .action-form-item {
+        float: right;
+      }
     }
 
     .ant-table-cell {
