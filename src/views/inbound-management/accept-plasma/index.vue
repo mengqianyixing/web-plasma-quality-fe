@@ -5,7 +5,7 @@
       <vxe-grid
         v-bind="gridOptionsUnaccept"
         :data="unAcceptList"
-        class="inline-block w-2/5 pr-2"
+        class="inline-block w-1/4 pr-2"
         :loading="tableLoading"
       >
         <template #toolbar>
@@ -19,7 +19,7 @@
         v-bind="gridOptionsAccept"
         :data="acceptList"
         :loading="tableLoading"
-        class="inline-block w-3/5"
+        class="inline-block w-3/4"
       >
         <template #toolbar>
           <div class="flex items-center justify-between bg-[#ffffff]">
@@ -156,7 +156,7 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
+          <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
             <a-input placeholder="请登录" value={checker} disabled />
             <a-button type="primary" onClick={handleLogin}>
               选择
@@ -171,7 +171,7 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
+          <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
             <a-input placeholder="请选择" value={batchNo} disabled />
             <a-button type="primary" onClick={selectBatchModal}>
               选择
@@ -186,7 +186,7 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
+          <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
             <a-input
               placeholder="请输入"
               onChange={(event) => (trayNo.value = event.target.value)}
@@ -202,7 +202,7 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
+          <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
             <a-input
               placeholder="请扫描"
               ref={bagNoRef}

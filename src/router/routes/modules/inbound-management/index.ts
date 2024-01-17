@@ -57,6 +57,15 @@ const inboundmanagement: AppRouteModule = {
       id: 9304,
       component: () => import('@/views/inbound-management/sample-verify/index.vue'),
     },
+    {
+      path: 'plasma-inbound-record',
+      name: 'PlasmaInboundRecord',
+      meta: {
+        title: '血浆入库记录',
+      },
+      id: 9305,
+      component: () => import('@/views/inbound-management/plasma-inbound-record/index.vue'),
+    },
   ],
 };
 
