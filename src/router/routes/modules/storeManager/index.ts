@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-28 18:11:32
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-03 09:51:14
+ * @LastEditTime: 2024-01-17 15:42:58
  * @Description: 库房管理
  * @FilePath: \psms-fe\src\router\routes\modules\storeManager\index.ts
  */
@@ -14,6 +14,7 @@ const storeManager: AppRouteModule = {
   path: '/plasma-store',
   name: 'PlasmaStore',
   component: LAYOUT,
+  menuWeight: 89,
   id: 97,
   meta: {
     title: '库房管理',

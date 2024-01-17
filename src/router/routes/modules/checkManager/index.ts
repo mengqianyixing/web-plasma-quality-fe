@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-29 16:47:29
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-10 18:23:50
+ * @LastEditTime: 2024-01-17 15:41:21
  * @Description: 检验管理
  * @FilePath: \psms-fe\src\router\routes\modules\checkManager\index.ts
  */
@@ -14,6 +14,7 @@ const checkManager: AppRouteModule = {
   path: '/inspect',
   name: 'Inspect',
   id: 91,
+  menuWeight: 95,
   component: LAYOUT,
   meta: {
     title: '检验管理',

@@ -8,6 +8,7 @@ const nonconformity: AppRouteModule = {
   component: LAYOUT,
   redirect: '/nonconformity/nb',
   id: 95,
+  menuWeight: 93,
   meta: {
     orderNo: 10000,
     title: '不合格管理',
