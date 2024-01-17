@@ -1,6 +1,7 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
+import { formatDate } from 'js-xxx';
 
 export const columns: BasicColumn[] = [
   {
@@ -51,7 +52,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'createdTime',
     width: 220,
     customRender: ({ record }) => {
-      return h('div', {}, new Date(record.createdTime).toLocaleString());
+      return h('div', {}, formatDate(new Date(record.createdTime)));
     },
   },
 ];
