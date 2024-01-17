@@ -52,19 +52,8 @@
     </div>
     <BatchModal @register="registerBoxModal" @success="batchModalSuccess" />
     <LoginModal @register="registerLoginModal" @success="handleSuccess" />
-    <batchDetail
-      v-if="batchDetailVisible"
-      @close="closeBatchDetail"
-      ref="batchDetailRef"
-      :checkOptsEnum="checkOpts"
-    />
-    <boxDetail
-      v-if="boxDetailVisible"
-      @close="closeBoxDetail"
-      @show-box-detail="showBoxDetail"
-      ref="boxDetailRef"
-      :checkOpts="checkOpts"
-    />
+    <BatchDetail @register="registerBatchDetail" />
+    <BoxDetail @register="registerBoxDetail" @success="handleGoDetail" />
     <suspendOrResumeModal
       v-if="suspendModalVisible"
       ref="suspendOrResumeRef"
@@ -105,13 +94,13 @@
   import { Modal } from 'ant-design-vue';
   import dayjs from 'dayjs';
 
+  import BatchDetail from '../components/PlasmaBatchDetailModal/index.vue';
+  import BoxDetail from '../components/PlasmaBoxDetailModal/index.vue';
   import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal.vue';
   import revokeModal from './components/revoke-modal.vue';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import OutStoreDrawer from '../components/outStoreDrawer/index.vue';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
-  import batchDetail from './components/batch-detail.vue';
-  import boxDetail from './components/box-detail.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import PlasmaUnqualifiedModal from '@/views/inbound-management/accept-plasma/components/PlasmaUnqualifiedModal.vue';
   import SampleUnqualifiedModal from '@/views/inbound-management/accept-plasma/components/SampleUnqualifiedModal.vue';
@@ -129,25 +118,9 @@
   const donorFailed = ref(''); // 献血浆者不符合
 
   const bagNoRef = ref<any>(null);
-  const batchDetailRef = ref<any>('');
-  const boxDetailRef = ref<any>('');
   const suspendOrResumeRef = ref<any>('');
   const revokeModalRef = ref<any>('');
 
-  const checkOpts = ref([
-    {
-      code: 'W',
-      name: '未验收',
-    },
-    {
-      code: 'R',
-      name: '验收中',
-    },
-    {
-      code: 'S',
-      name: '已验收',
-    },
-  ]);
   // 血浆批次信息
   const schema: DescItem[] = [
     {
@@ -289,6 +262,8 @@
   });
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
   const [registerBoxModal, { openModal: openBatchModal }] = useModal();
+  const [registerBatchDetail, { openModal: openBatchDetail }] = useModal();
+  const [registerBoxDetail, { openModal: openBoxDetail }] = useModal();
 
   const [registerInModal, { openModal: openInModal }] = useModal();
   const [registerOutModal, { openModal: openOutModal }] = useModal();
@@ -537,45 +512,26 @@
   }
 
   // 批详情
-  const batchDetailVisible = ref(false);
   const showBatchDetailModal = (params) => {
-    batchDetailVisible.value = true;
-    nextTick(() => {
-      batchDetailRef.value.searchForm.batchNo = filterForm.value.batchNo;
-      batchDetailRef.value.searchForm.stationNo = filterForm.value.stationNo;
-      batchDetailRef.value.searchForm.stationName = filterForm.value.stationName;
-      // needBoxNo => 点击箱号需要带入参数
-      if (params === 'needBoxNo') batchDetailRef.value.searchForm.boxNo = filterForm.value.boxNo;
-      batchDetailRef.value.queryTable();
+    openBatchDetail(true, {
+      record: {
+        batchNo: filterForm.value.batchNo,
+        stationNo: filterForm.value.stationNo,
+        stationName: filterForm.value.stationName,
+        boxNo: params === 'needBoxNo' ? filterForm.value.boxNo : '',
+      },
     });
-  };
-  const closeBatchDetail = () => {
-    batchDetailVisible.value = false;
   };
 
   // 箱详情
-  const boxDetailVisible = ref(false);
   const showBoxDetailModal = () => {
-    boxDetailVisible.value = true;
-    nextTick(() => {
-      boxDetailRef.value.searchForm.batchNo = filterForm.value.batchNo;
-      boxDetailRef.value.searchForm.stationNo = filterForm.value.stationNo;
-      boxDetailRef.value.searchForm.stationName = filterForm.value.stationName;
-      boxDetailRef.value.queryTable();
+    openBoxDetail(true, {
+      record: {
+        batchNo: filterForm.value.batchNo,
+        stationNo: filterForm.value.stationNo,
+        stationName: filterForm.value.stationName,
+      },
     });
-  };
-  // 批详情打开箱详情
-  const showBoxDetail = (row: any) => {
-    batchDetailVisible.value = true;
-    nextTick(() => {
-      batchDetailRef.value.searchForm.stationNo = filterForm.value.stationNo;
-      batchDetailRef.value.searchForm.stationName = filterForm.value.stationName;
-      batchDetailRef.value.searchForm.boxNo = row.boxNo;
-      batchDetailRef.value.queryTable();
-    });
-  };
-  const closeBoxDetail = () => {
-    boxDetailVisible.value = false;
   };
 
   // 暂停/继续框
@@ -663,5 +619,16 @@
     } finally {
       tableLoading.value = false;
     }
+  }
+
+  function handleGoDetail(record) {
+    openBatchDetail(true, {
+      record: {
+        batchNo: filterForm.value.batchNo,
+        stationNo: filterForm.value.stationNo,
+        stationName: filterForm.value.stationName,
+        boxNo: record.boxNo,
+      },
+    });
   }
 </script>
