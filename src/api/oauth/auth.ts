@@ -6,6 +6,7 @@
  * @Description: 菜单权限管理
  * @FilePath: \psms-fe\src\api\oauth\auth.ts
  */
+// @TODO: 稳定版待补充类型声明
 import { defHttp } from '@/utils/http/axios';
 
 /**

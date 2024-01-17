@@ -13,23 +13,18 @@
 <script lang="ts" setup>
   import { ref, computed, unref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
-  import { addFormSchema, updateFormSchema, passwordFormSchema } from './users.data';
+  import { formSchema } from './plasma-batch.data';
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { addCasDoorUser, setCasDoorUserPwd, setCasDoorUser } from '@/api/oauth/users';
+  import { addPlasmaBatchRelease, setPlasmaBatchRelease } from '@/api/quarantine/plasma-batch';
 
   const emit = defineEmits(['success', 'register']);
   const isUpdate = ref(true);
-  const isPassword = ref(false);
   const userId = ref('');
-
-  const getFormSchema = computed(() =>
-    unref(isPassword) ? passwordFormSchema : !unref(isUpdate) ? addFormSchema : updateFormSchema,
-  );
 
   const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
-    schemas: getFormSchema,
+    schemas: formSchema,
     showActionButtonGroup: false,
   });
 
@@ -37,22 +32,16 @@
     resetFields();
     setModalProps({ confirmLoading: false });
     isUpdate.value = !!data?.isUpdate;
-    isPassword.value = !!data?.isPassword;
 
-    if (unref(isUpdate) || unref(isPassword)) {
+    if (unref(isUpdate)) {
       userId.value = data.record.name;
       setFieldsValue({
         ...data.record,
-        forbidden: data.record.isForbidden,
-        oldName: data.record.name,
-        userName: data.record.name,
       });
     }
   });
 
-  const getTitle = computed(() =>
-    unref(isPassword) ? '重置密码' : !unref(isUpdate) ? '新增用户' : '编辑用户',
-  );
+  const getTitle = computed(() => (!unref(isUpdate) ? '新增' : '修改'));
 
   async function handleSubmit() {
     try {
@@ -60,17 +49,12 @@
       // loading
       setModalProps({ confirmLoading: true });
       try {
-        if (unref(isPassword)) {
-          await setCasDoorUserPwd({
+        if (unref(isUpdate)) {
+          await setPlasmaBatchRelease({
             ...values,
-          });
-        } else if (unref(isUpdate)) {
-          await setCasDoorUser({
-            ...values,
-            oldName: userId.value,
           });
         } else {
-          await addCasDoorUser({
+          await addPlasmaBatchRelease({
             ...values,
           });
         }
