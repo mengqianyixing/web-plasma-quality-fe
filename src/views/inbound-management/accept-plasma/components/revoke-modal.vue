@@ -31,7 +31,7 @@
   import { Modal, Textarea, Form, FormItem, Button, Input } from 'ant-design-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { plasmaRevokeBag } from '@/api/inbound-management/accept-plasma.js';
-  import LoginModal from '@/__components/nonconformity-registration/LoginModal.vue';
+  import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { useModal } from '@/components/Modal';
 
   const { createMessage } = useMessage();

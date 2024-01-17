@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 16:31:45
+ * @LastEditTime: 2024-01-16 14:32:21
 -->
 <template>
   <BasicModal
@@ -60,7 +60,7 @@
       schemas: [{ field: 'locationNo', component: 'Input', label: '货位号' }],
     },
     beforeFetch: (params) => {
-      return { ...params, ...state.params };
+      return { ...params, ...state.params, closed: 0 };
     },
     afterFetch: (res) => {
       clearSelectedRowKeys();

@@ -1,7 +1,7 @@
 <template>
   <Col v-bind="actionColOpt" v-if="showActionButtonGroup">
     <div style="width: 100%" :style="{ textAlign: actionColOpt.style.textAlign }">
-      <Form.Item class="float-right">
+      <Form.Item class="action-form-item">
         <slot name="resetBefore"></slot>
         <Button
           type="default"

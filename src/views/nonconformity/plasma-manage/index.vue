@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-12 18:31:46
  * @LastEditors: zcc
@@ -31,8 +31,8 @@
       </template>
     </BasicTable>
 
-    <PickPlasmaModal @register="registerPickModal" />
-    <InStoreModal @register="registerInStoreModal" />
+    <PickPlasmaModal @register="registerPickModal" @success="handleSuccess" />
+    <InStoreModal @register="registerInStoreModal" @success="handleSuccess" />
     <PlasmaDetailModal @register="registerDetailModal" />
   </PageWrapper>
 </template>
@@ -177,5 +177,10 @@
         plasmaUnqualifiedDictionary: plasmaUnqualifiedDictionary.value,
       },
     });
+  }
+
+  function handleSuccess() {
+    clearSelectedRowKeys();
+    reload();
   }
 </script>

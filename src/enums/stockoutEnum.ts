@@ -1,10 +1,18 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: zcc
+ * @Date: 2024-01-15 09:15:09
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-15 14:23:07
+ */
 export enum operationEnum {
   N = '普通',
   B = '乙免',
   R = '狂免',
   A = '炭疽',
   T = '破免',
-  C = '巨细胞',
+  G = '巨细胞',
 }
 
 export enum operationValueEnum {
@@ -13,7 +21,7 @@ export enum operationValueEnum {
   R = 'R',
   A = 'A',
   T = 'T',
-  C = 'C',
+  G = 'C',
 }
 
 export const operationMap = new Map<operationValueEnum, string>();
@@ -23,7 +31,7 @@ operationMap.set(operationValueEnum.B, operationEnum.B);
 operationMap.set(operationValueEnum.R, operationEnum.R);
 operationMap.set(operationValueEnum.A, operationEnum.A);
 operationMap.set(operationValueEnum.T, operationEnum.T);
-operationMap.set(operationValueEnum.C, operationEnum.C);
+operationMap.set(operationValueEnum.G, operationEnum.G);
 
 export enum statusEnum {
   TBR = '待复核',

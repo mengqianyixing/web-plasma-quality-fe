@@ -18,7 +18,7 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { schemas } from './registration.data';
 
-  import LoginModal from './LoginModal.vue';
+  import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { useModal } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
   import { nonconformityRegistration } from '@/api/nonconformity/box-manage';

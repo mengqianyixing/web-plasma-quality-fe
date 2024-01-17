@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dicts`
- * @更新时间 `2023-12-20 15:05:20`
+ * @更新时间 `2024-01-16 09:37:14`
  */
 export interface PostApiSysDictsRequest {
   /**
@@ -38,7 +38,7 @@ export interface PostApiSysDictsRequest {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dicts`
- * @更新时间 `2023-12-20 15:05:20`
+ * @更新时间 `2024-01-16 09:37:14`
  */
 export interface PostApiSysDictsResponse {
   totalCount: number;
@@ -82,6 +82,19 @@ export interface PostApiSysDictsResponse {
      * 字典描述
      */
     dictDesc?: string;
+    /**
+     * 表头
+     */
+    header?: {
+      name?: string;
+      key?: string;
+      type?: string;
+      linkedDict?: string;
+    }[];
+    /**
+     * 树标志
+     */
+    treeFlag: boolean;
   }[];
 }
 
@@ -90,7 +103,7 @@ export interface PostApiSysDictsResponse {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dict`
- * @更新时间 `2023-12-20 15:58:38`
+ * @更新时间 `2024-01-16 10:33:00`
  */
 export interface PostApiSysDictRequest {
   /**
@@ -116,7 +129,7 @@ export interface PostApiSysDictRequest {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dict`
- * @更新时间 `2023-12-20 15:58:38`
+ * @更新时间 `2024-01-16 10:33:00`
  */
 export type PostApiSysDictResponse = string;
 
@@ -125,7 +138,7 @@ export type PostApiSysDictResponse = string;
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `PUT /api/sys/dict`
- * @更新时间 `2023-12-20 16:11:15`
+ * @更新时间 `2024-01-16 10:33:14`
  */
 export interface PutApiSysDictRequest {
   /**
@@ -143,7 +156,7 @@ export interface PutApiSysDictRequest {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `PUT /api/sys/dict`
- * @更新时间 `2023-12-20 16:11:15`
+ * @更新时间 `2024-01-16 10:33:14`
  */
 export type PutApiSysDictResponse = string;
 
@@ -172,7 +185,7 @@ export type DeleteApiSysDictDictIdResponse = string;
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `GET /api/sys/dict/{dictId}`
- * @更新时间 `2023-12-20 15:20:39`
+ * @更新时间 `2024-01-16 10:33:07`
  */
 export interface GetApiSysDictDictIdRequest {
   dictId: string;
@@ -183,7 +196,7 @@ export interface GetApiSysDictDictIdRequest {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `GET /api/sys/dict/{dictId}`
- * @更新时间 `2023-12-20 15:20:39`
+ * @更新时间 `2024-01-16 10:33:07`
  */
 export interface GetApiSysDictDictIdResponse {
   dictId?: string;
@@ -202,7 +215,7 @@ export interface GetApiSysDictDictIdResponse {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dict/items`
- * @更新时间 `2023-12-22 10:55:33`
+ * @更新时间 `2024-01-16 10:34:17`
  */
 export interface PostApiSysDictItemsRequest {
   currPage: number;
@@ -217,7 +230,7 @@ export interface PostApiSysDictItemsRequest {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dict/items`
- * @更新时间 `2023-12-22 10:55:33`
+ * @更新时间 `2024-01-16 10:34:17`
  */
 export interface PostApiSysDictItemsResponse {
   totalCount: number;
@@ -269,6 +282,17 @@ export interface PostApiSysDictItemsResponse {
      * 更新人
      */
     updater?: string;
+    /**
+     * 表头
+     */
+    header?: {
+      name?: string;
+      key?: string;
+      type?: string;
+      linkedDict?: string;
+    }[];
+    treeFlag?: string;
+    newfileds?: string;
   }[];
 }
 
@@ -277,7 +301,7 @@ export interface PostApiSysDictItemsResponse {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dict/item`
- * @更新时间 `2023-12-20 15:41:52`
+ * @更新时间 `2024-01-16 09:45:28`
  */
 export interface PostApiSysDictItemRequest {
   /**
@@ -301,6 +325,7 @@ export interface PostApiSysDictItemRequest {
    */
   enable?: boolean;
   dataDictId: string;
+  newFields?: {};
 }
 
 /**
@@ -308,7 +333,7 @@ export interface PostApiSysDictItemRequest {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dict/item`
- * @更新时间 `2023-12-20 15:41:52`
+ * @更新时间 `2024-01-16 09:45:28`
  */
 export type PostApiSysDictItemResponse = string;
 
@@ -317,7 +342,7 @@ export type PostApiSysDictItemResponse = string;
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `PUT /api/sys/dict/item`
- * @更新时间 `2023-12-20 15:44:57`
+ * @更新时间 `2024-01-16 09:45:46`
  */
 export interface PutApiSysDictItemRequest {
   dictItemId: string;
@@ -326,6 +351,7 @@ export interface PutApiSysDictItemRequest {
   itemDesc?: string;
   sort?: number;
   enable?: boolean;
+  newFields?: boolean;
 }
 
 /**
@@ -333,7 +359,7 @@ export interface PutApiSysDictItemRequest {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `PUT /api/sys/dict/item`
- * @更新时间 `2023-12-20 15:44:57`
+ * @更新时间 `2024-01-16 09:45:46`
  */
 export interface PutApiSysDictItemResponse {}
 
@@ -362,7 +388,7 @@ export type DeleteApiSysDictItemDictItemIdResponse = string;
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `GET /api/sys/dict/item/{dictItemId}`
- * @更新时间 `2023-12-20 15:54:18`
+ * @更新时间 `2024-01-16 09:46:08`
  */
 export interface GetApiSysDictItemDictItemIdRequest {
   dictItemId: string;
@@ -373,7 +399,7 @@ export interface GetApiSysDictItemDictItemIdRequest {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `GET /api/sys/dict/item/{dictItemId}`
- * @更新时间 `2023-12-20 15:54:18`
+ * @更新时间 `2024-01-16 09:46:08`
  */
 export interface GetApiSysDictItemDictItemIdResponse {
   dictItemId: string;
@@ -387,6 +413,7 @@ export interface GetApiSysDictItemDictItemIdResponse {
   creater?: string;
   updateAt?: string;
   updater?: string;
+  newFields?: {};
 }
 
 /**
@@ -440,33 +467,25 @@ export type GetApiSysDictItemsDictNoResponse = {
  * 接口 [根据链接编号查询字典项↗](https://yapi.sharing8.cn/project/521/interface/api/32247) 的 **请求类型**
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
- * @请求头 `GET /api/sys/dict/linkData/{fkLink}`
- * @更新时间 `2024-01-13 17:56:25`
+ * @请求头 `GET /api/sys/dict/linkData/{linkedDict}`
+ * @更新时间 `2024-01-16 14:45:25`
  */
-export interface GetApiSysDictLinkDataFkLinkRequest {
-  fkLink: string;
+export interface GetApiSysDictLinkDataLinkedDictRequest {
+  linkedDict: string;
 }
 
 /**
  * 接口 [根据链接编号查询字典项↗](https://yapi.sharing8.cn/project/521/interface/api/32247) 的 **返回类型**
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
- * @请求头 `GET /api/sys/dict/linkData/{fkLink}`
- * @更新时间 `2024-01-13 17:56:25`
+ * @请求头 `GET /api/sys/dict/linkData/{linkedDict}`
+ * @更新时间 `2024-01-16 14:45:25`
  */
-export type GetApiSysDictLinkDataFkLinkResponse = {
-  dictId: string;
-  dictName: string;
+export type GetApiSysDictLinkDataLinkedDictResponse = {
   dictNo: string;
-  systemLevel: string;
-  header?: {
-    name: string;
-    key: string;
-    type: string;
-    /**
-     * 下一级
-     */
-    linkedDict?: string;
+  dictImtes: {
+    label: string;
+    value: string;
   }[];
 }[];
 
