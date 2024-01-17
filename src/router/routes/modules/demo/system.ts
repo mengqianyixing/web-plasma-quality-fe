@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-16 18:02:13
+ * @LastEditTime: 2024-01-17 11:43:18
  * @Description: 系统管理
  * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
  */
@@ -124,6 +124,13 @@ const system: AppRouteModule = {
         title: '用户管理',
         ignoreKeepAlive: true,
       },
+      authElements: [
+        {
+          id: 'E_789',
+          name: 'editUser',
+          title: '编辑用户',
+        },
+      ],
       component: () => import('@/views/system/users/index.vue'),
     },
     {

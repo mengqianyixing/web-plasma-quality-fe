@@ -7,6 +7,7 @@
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <TableAction
+            v-auth="'E_789'"
             :actions="[
               {
                 icon: 'ant-design:lock-twotone',
