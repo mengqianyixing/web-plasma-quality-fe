@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-11 17:52:52
+ * @LastEditTime: 2024-01-16 18:02:13
  * @Description: 系统管理
  * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
  */
@@ -28,7 +28,7 @@ const system: AppRouteModule = {
       id: 9201,
       name: 'AccountManagement',
       meta: {
-        title: '用户管理',
+        title: '账号管理',
         ignoreKeepAlive: false,
       },
       component: () => import('@/views/system/account/index.vue'),
@@ -115,6 +115,16 @@ const system: AppRouteModule = {
           title: '编辑角色',
         },
       ],
+    },
+    {
+      path: 'users',
+      name: 'Users',
+      id: 9209,
+      meta: {
+        title: '用户管理',
+        ignoreKeepAlive: true,
+      },
+      component: () => import('@/views/system/users/index.vue'),
     },
     {
       path: 'params',
