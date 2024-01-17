@@ -11,6 +11,7 @@ export const columns: BasicColumn[] = [
   {
     title: '角色名称',
     dataIndex: 'displayName',
+    className: 'empty-value',
     width: 200,
   },
   {

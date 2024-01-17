@@ -49,3 +49,23 @@
     background-color: @primary-color;
   }
 }
+
+.empty-value:empty::after {
+  content: '-';
+}
+
+.brackets:not(:empty)::before {
+  content: '(';
+}
+
+.brackets:not(:empty)::after {
+  content: ')';
+}
+
+.square-brackets:not(:empty)::before {
+  content: '[';
+}
+
+.square-brackets:not(:empty)::after {
+  content: ']';
+}
