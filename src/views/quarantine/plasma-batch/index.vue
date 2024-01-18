@@ -6,10 +6,10 @@
       </template>
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button :disabled="!selectedRow.length" type="primary" @click="handleOption"
+        <a-button :disabled="!selectedRow.length" type="primary" @click="handleOption('C')"
           >撤销</a-button
         >
-        <a-button :disabled="!selectedRow.length" type="primary" @click="handleOption"
+        <a-button :disabled="!selectedRow.length" type="primary" @click="handleOption('R')"
           >复核</a-button
         >
         <a-button type="primary" @click="handlePrint">打印</a-button>
@@ -20,7 +20,7 @@
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
-  import { getPlasmaBatchReleases } from '@/api/quarantine/plasma-batch';
+  import { getPlasmaBatchReleases, setPlasmaBatchRelease } from '@/api/quarantine/plasma-batch';
 
   import { useModal } from '@/components/Modal';
   import PlasmaBatchModal from './PlasmaBatchModal.vue';
@@ -63,12 +63,16 @@
       schemas: searchFormSchema,
     },
     clickToRowSelect: true,
+    rowKey: 'fkBpNo',
     rowSelection: {
       fixed: true,
       type: 'radio',
       onChange: (_, selectedRows: any) => {
         selectedRow.value = selectedRows;
       },
+      getCheckboxProps: (record: any) => ({
+        disabled: record.state != 'W', // 仅未复核状态可以操作
+      }),
     },
     useSearchForm: true,
     showTableSetting: true,
@@ -89,8 +93,18 @@
     });
   }
 
-  function handleOption() {
-    console.log(selectedRow.value);
+  function handleOption(state) {
+    setPlasmaBatchRelease({
+      brNo: selectedRow.value[0].brNo,
+      state,
+    })
+      .then(() => {
+        clearSelectedRowKeys();
+        reload();
+      })
+      .catch(() => {
+        reload();
+      });
   }
 
   function handlePrint() {
