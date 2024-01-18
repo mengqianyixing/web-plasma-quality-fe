@@ -5,7 +5,7 @@ import { LAYOUT } from '@/router/constant';
 const checkManager: AppRouteModule = {
   path: '/quality',
   name: 'Quality',
-  id: 99,
+  id: 100,
   component: LAYOUT,
   meta: {
     title: '质量管理',
@@ -15,7 +15,7 @@ const checkManager: AppRouteModule = {
     {
       path: '/quality/plasma-check',
       name: 'plasma-check',
-      id: 9901,
+      id: 10001,
       meta: {
         title: '血浆审核',
       },
