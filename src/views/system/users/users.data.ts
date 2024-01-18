@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-17 10:24:13
+ * @LastEditTime: 2024-01-18 15:35:42
  * @Description: 用户管理数据源
  * @FilePath: \psms-fe\src\views\system\users\users.data.ts
  */
@@ -44,7 +44,13 @@ export const columns: BasicColumn[] = [
     dataIndex: 'createdTime',
     width: 220,
     customRender: ({ record }) => {
-      return h('div', {}, formatDate(new Date(record.createdTime)));
+      return h(
+        'div',
+        {
+          class: 'empty-value',
+        },
+        formatDate(record.createdTime),
+      );
     },
   },
 ];

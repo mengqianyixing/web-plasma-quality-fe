@@ -52,7 +52,13 @@ export const columns: BasicColumn[] = [
     dataIndex: 'createdTime',
     width: 220,
     customRender: ({ record }) => {
-      return h('div', {}, formatDate(new Date(record.createdTime)));
+      return h(
+        'div',
+        {
+          class: 'empty-value',
+        },
+        formatDate(record.createdTime),
+      );
     },
   },
 ];

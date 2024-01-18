@@ -2,31 +2,36 @@
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-17 17:54:52
+ * @LastEditTime: 2024-01-18 15:46:58
  * @Description: 血浆批检疫期报告 data
  * @FilePath: \psms-fe\src\views\quarantine\plasma-batch\plasma-batch.data.ts
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
-import { formatDate } from 'js-xxx';
+import { calculate, BS_COLORS, formatDate } from 'js-xxx';
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 
 export const STATE = {
   W: {
     value: 'W',
     label: '未复核',
-    color: '#165DFF',
+    color: 'default',
   },
   R: {
     value: 'R',
     label: '已发布',
-    color: '#55D187',
+    color: BS_COLORS.green,
   },
   C: {
     value: 'C',
     label: '已取消',
-    color: '#EFBD47',
+    color: BS_COLORS.yellow,
+  },
+  ALL: {
+    value: '',
+    label: '全部',
+    color: 'default',
   },
 };
 
@@ -61,11 +66,14 @@ export const columns: BasicColumn[] = [
     dataIndex: 'summary.checkOK',
     className: 'empty-value',
     customRender: ({ record }) =>
-      (record?.summary?.failedCount ?? 0) +
-      (record?.summary?.unProductionCount ?? 0) +
-      (record?.summary?.trackedCount ?? 0) +
-      (record?.summary.firstUnTrackedCount ?? 0) +
-      (record?.summary?.reUnTrackedCount ?? 0),
+      calculate(
+        '+',
+        record?.summary?.failedCount,
+        record?.summary?.unProductionCount,
+        record?.summary?.trackedCount,
+        record?.summary.firstUnTrackedCount,
+        record?.summary?.reUnTrackedCount,
+      ),
   },
   {
     title: '不合格血浆',
@@ -106,7 +114,13 @@ export const columns: BasicColumn[] = [
     title: '报告生成日期',
     dataIndex: 'createAt',
     customRender: ({ record }) => {
-      return h('div', {}, formatDate(new Date(record.createAt)));
+      return h(
+        'div',
+        {
+          class: 'empty-value',
+        },
+        formatDate(record.createAt),
+      );
     },
   },
   {
@@ -118,7 +132,13 @@ export const columns: BasicColumn[] = [
     title: '复核日期',
     dataIndex: 'reviewAt',
     customRender: ({ record }) => {
-      return h('div', {}, formatDate(new Date(record.reviewAt)));
+      return h(
+        'div',
+        {
+          class: 'empty-value',
+        },
+        formatDate(record.reviewAt),
+      );
     },
   },
 ];
@@ -146,6 +166,7 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     defaultValue: 'W',
     componentProps: {
+      allowClear: false,
       options: Object.values(STATE),
     },
   },

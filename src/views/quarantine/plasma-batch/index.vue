@@ -1,13 +1,17 @@
 <template>
   <div>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" :rowSelection="{ type: 'checkbox' }">
       <template #stationNo="{ record }">
         {{ getStationNameById(record?.stationNo) }}
       </template>
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button type="primary" @click="handleOption">撤销</a-button>
-        <a-button type="primary" @click="handleOption">复核</a-button>
+        <a-button :disabled="!selectedRow.length" type="primary" @click="handleOption"
+          >撤销</a-button
+        >
+        <a-button :disabled="!selectedRow.length" type="primary" @click="handleOption"
+          >复核</a-button
+        >
         <a-button type="primary" @click="handlePrint">打印</a-button>
       </template>
     </BasicTable>
@@ -23,10 +27,11 @@
 
   import { columns, searchFormSchema } from './plasma-batch.data';
   import { useStation } from '@/hooks/common/useStation';
-  import { onMounted, watchEffect } from 'vue';
+  import { onMounted, ref, watchEffect } from 'vue';
 
   defineOptions({ name: 'UsersAuthManagement' });
 
+  const selectedRow = ref<Recordable>([]);
   const { isLoading, stationOptions, getStationNameById } = useStation();
 
   onMounted(() => {
@@ -43,14 +48,8 @@
   });
 
   const [registerModal, { openModal }] = useModal();
-  const [registerTable, { reload, getForm }] = useTable({
+  const [registerTable, { reload, getForm, clearSelectedRowKeys }] = useTable({
     title: '血浆批检疫期报告列表',
-    // rowSelection: {
-    //   type: 'checkbox',
-    //   onChange: (_, selectedRows: any) => {
-    //     selectedRow.value = selectedRows;
-    //   },
-    // },
     api: getPlasmaBatchReleases,
     fetchSetting: {
       pageField: 'currPage',
@@ -63,21 +62,41 @@
       labelWidth: 120,
       schemas: searchFormSchema,
     },
+    clickToRowSelect: true,
+    rowSelection: {
+      fixed: true,
+      type: 'radio',
+      onChange: (_, selectedRows: any) => {
+        selectedRow.value = selectedRows;
+      },
+    },
     useSearchForm: true,
     showTableSetting: true,
     bordered: true,
     showIndexColumn: false,
+    tableSetting: {
+      size: false,
+      redo: false,
+      setting: false,
+    },
+    canResize: true,
   });
 
   function handleCreate() {
+    console.log(selectedRow.value);
     openModal(true, {
       isUpdate: false,
     });
   }
 
-  function handleOption() {}
+  function handleOption() {
+    console.log(selectedRow.value);
+  }
 
-  function handlePrint() {}
+  function handlePrint() {
+    console.log(selectedRow.value);
+    clearSelectedRowKeys();
+  }
 
   function handleSuccess() {
     reload();
