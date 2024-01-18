@@ -181,6 +181,30 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
+export const modalSearchFormSchema: FormSchema[] = [
+  {
+    label: '采浆公司',
+    component: 'ApiSelect',
+    field: 'stationNo',
+    componentProps: {
+      api: stationNameSearchApi,
+      resultField: 'result',
+      labelField: 'stationName',
+      valueField: 'stationNo',
+    },
+  },
+  {
+    field: 'batchNo',
+    label: '血浆批号',
+    component: 'Input',
+  },
+  {
+    field: 'tubeNo',
+    label: '参考样本批号',
+    component: 'Input',
+  },
+];
+
 export const formSchema: FormSchema[] = [
   {
     label: '名称',

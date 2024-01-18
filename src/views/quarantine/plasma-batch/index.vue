@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BasicTable @register="registerTable" :rowSelection="{ type: 'checkbox' }">
+    <BasicTable @register="registerTable">
       <template #stationNo="{ record }">
         {{ getStationNameById(record?.stationNo) }}
       </template>
@@ -62,7 +62,7 @@
       labelWidth: 120,
       schemas: searchFormSchema,
     },
-    clickToRowSelect: true,
+    clickToRowSelect: false,
     rowKey: 'fkBpNo',
     rowSelection: {
       fixed: true,
