@@ -63,7 +63,7 @@
         field: 'lack',
         label: '缺失数量',
         component: 'Input',
-        defaultValue: '1',
+        defaultValue: 'lack',
         show: false,
       },
     ],
