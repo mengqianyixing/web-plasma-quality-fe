@@ -68,6 +68,12 @@
         defaultValue: 'lack',
         show: false,
       },
+      {
+        field: 'pageFlag',
+        defaultValue: 'verify',
+        component: 'Input',
+        show: false,
+      },
     ],
   });
 
