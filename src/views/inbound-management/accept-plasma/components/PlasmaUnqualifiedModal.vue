@@ -52,7 +52,7 @@
         colProps: { span: 18 },
         componentProps: {
           api: getSysDictionary,
-          params: [DictionaryEnum.PlasmaUnqualifiedItem],
+          params: [DictionaryEnum.PlasmaUnqualifiedReason],
           resultField: '[0].dictImtes',
           labelField: 'label',
           valueField: 'value',
@@ -67,8 +67,8 @@
         required: true,
       },
       {
-        field: 'verify',
-        defaultValue: '1',
+        field: 'pageFlag',
+        defaultValue: 'verify1',
         component: 'Input',
         show: false,
       },

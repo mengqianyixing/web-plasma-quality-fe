@@ -68,8 +68,8 @@
         required: true,
       },
       {
-        field: 'verify',
-        defaultValue: '1',
+        field: 'pageFlag',
+        defaultValue: 'verify',
         component: 'Input',
         show: false,
       },

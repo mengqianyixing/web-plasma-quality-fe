@@ -1706,7 +1706,7 @@ export type PostApiCoreBatchSampleVerifyResponse = string;
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/sample/unqualified`
- * @更新时间 `2024-01-03 21:27:40`
+ * @更新时间 `2024-01-18 14:30:26`
  */
 export interface PostApiCoreBatchSampleUnqualifiedRequest {
   /**
@@ -1729,6 +1729,10 @@ export interface PostApiCoreBatchSampleUnqualifiedRequest {
    * 样本批号
    */
   batchSampleNo: string;
+  /**
+   * verify 是验收页面
+   */
+  pageFlag?: string;
 }
 
 /**
@@ -1736,7 +1740,7 @@ export interface PostApiCoreBatchSampleUnqualifiedRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/sample/unqualified`
- * @更新时间 `2024-01-03 21:27:40`
+ * @更新时间 `2024-01-18 14:30:26`
  */
 export type PostApiCoreBatchSampleUnqualifiedResponse = string;
 

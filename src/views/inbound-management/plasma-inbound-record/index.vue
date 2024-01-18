@@ -83,6 +83,9 @@
     columns,
     formConfig: {
       schemas: searchFormSchema,
+      transformDateFunc(date) {
+        return date ? date.format('YYYY-MM-DD') : '';
+      },
     },
     fetchSetting: {
       pageField: 'currPage',
