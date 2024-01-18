@@ -73,10 +73,19 @@
         component: 'Input',
         show: false,
       },
+      {
+        field: 'batchSampleNo',
+        component: 'Input',
+        show: false,
+      },
     ],
   });
 
-  const [register, { closeModal, setModalProps }] = useModalInner();
+  const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
+    await setFieldsValue({
+      batchSampleNo: data.record.batchSampleNo,
+    });
+  });
 
   function handleLogin() {
     openModal(true);

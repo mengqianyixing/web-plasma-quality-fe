@@ -52,7 +52,7 @@
     </div>
     <BatchModal @register="registerBoxModal" @success="batchModalSuccess" />
     <LoginModal @register="registerLoginModal" @success="handleSuccess" />
-    <BatchDetail @register="registerBatchDetail" />
+    <BatchDetail @register="registerBatchDetail" @close="handleBatchDetailClose" />
     <BoxDetail @register="registerBoxDetail" @success="handleGoDetail" />
     <suspendOrResumeModal
       v-if="suspendModalVisible"
@@ -77,7 +77,7 @@
       @register="registerSampleUnqualifiedModal"
       @success="handleModalSuccess"
     />
-    <MissNumModal @register="registerMissNumModal" />
+    <MissNumModal @register="registerMissNumModal" @success="handleModalSuccess" />
   </PageWrapper>
 </template>
 
@@ -594,7 +594,11 @@
       return;
     }
 
-    openSampleUnqualifiedModal(true);
+    openSampleUnqualifiedModal(true, {
+      record: {
+        batchSampleNo: batchNo.value,
+      },
+    });
   }
 
   function handleMissNumRegister() {
@@ -630,5 +634,9 @@
         boxNo: record.boxNo,
       },
     });
+  }
+
+  function handleBatchDetailClose() {
+    showBoxDetailModal();
   }
 </script>

@@ -29,7 +29,7 @@
       </template>
     </BasicTable>
 
-    <BatchDetailModal @register="registerBatchModal" />
+    <BatchDetailModal @register="registerBatchModal" @close="handleBatchDetailClose" />
     <BoxDetailModal @register="registerBoxModal" @success="handleGoBatchDetailModal" />
     <RegisterWeightModal @register="registerWeightModal" @success="handleSuccess" />
     <UnqualifiedStageModal @register="registerStage" />
@@ -188,5 +188,9 @@
         stationName: getStationNameById(record.stationNo),
       },
     });
+  }
+
+  function handleBatchDetailClose(record) {
+    handleOpenBoxDetail(record);
   }
 </script>

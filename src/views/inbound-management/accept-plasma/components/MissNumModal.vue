@@ -32,6 +32,8 @@
 
   const { createMessage } = useMessage();
 
+  const emit = defineEmits(['success']);
+
   const [registerLogin, { openModal }] = useModal();
   const [registerForm, { setFieldsValue, validate }] = useForm({
     showActionButtonGroup: false,
@@ -88,6 +90,8 @@
       await nonconformityRegistration(values as PostApiCoreBagUnqualifiedRequest);
 
       createMessage.success('缺号登记成功');
+
+      emit('success');
 
       closeModal();
     } finally {

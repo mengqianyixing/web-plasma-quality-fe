@@ -501,24 +501,21 @@ export interface GetApiCoreBagPlasmaResponse {
  * 接口 [查询血浆验收记录信息↗](https://yapi.sharing8.cn/project/529/interface/api/31809) 的 **请求类型**
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
- * @请求头 `GET /api/core/batch/plasma/verify/{boxNo}`
- * @更新时间 `2024-01-11 18:25:08`
+ * @请求头 `GET /api/core/batch/plasma/verify/{batchNo}`
+ * @更新时间 `2024-01-18 18:08:47`
  */
-export interface GetApiCoreBatchPlasmaVerifyBoxNoRequest {
-  /**
-   * 箱号
-   */
-  boxNo: string;
+export interface GetApiCoreBatchPlasmaVerifyBatchNoRequest {
+  batchNo: string;
 }
 
 /**
  * 接口 [查询血浆验收记录信息↗](https://yapi.sharing8.cn/project/529/interface/api/31809) 的 **返回类型**
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
- * @请求头 `GET /api/core/batch/plasma/verify/{boxNo}`
- * @更新时间 `2024-01-11 18:25:08`
+ * @请求头 `GET /api/core/batch/plasma/verify/{batchNo}`
+ * @更新时间 `2024-01-18 18:08:47`
  */
-export interface GetApiCoreBatchPlasmaVerifyBoxNoResponse {
+export interface GetApiCoreBatchPlasmaVerifyBatchNoResponse {
   /**
    * 采浆公司
    */

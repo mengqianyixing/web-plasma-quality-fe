@@ -1,7 +1,7 @@
 <template>
   <BasicModal v-bind="$attrs" @register="register" title="验收详情" width="80%">
     <template #footer>
-      <a-button @click="closeModal">关闭</a-button>
+      <a-button @click="handleClose">关闭</a-button>
     </template>
     <BasicTable @register="registerTable">
       <template #verifyState="{ record }"> {{ PlasmaStateMap.get(record?.verifyState) }} </template>
@@ -18,6 +18,8 @@
   import { PlasmaStateMap } from '@/enums/plasmaEnum';
 
   const verifyCount = ref(0);
+  const record = ref<Recordable>({});
+  const emit = defineEmits(['close']);
 
   const [registerTable, { reload, getForm }] = useTable({
     title: '',
@@ -55,6 +57,7 @@
   });
 
   const [register, { closeModal }] = useModalInner(async (data) => {
+    record.value = data.record;
     await getForm().setFieldsValue({
       stationName: data.record.stationName,
       batchNo: data.record.batchNo,
@@ -67,4 +70,11 @@
       },
     });
   });
+
+  function handleClose() {
+    closeModal();
+    if (getForm().getFieldsValue().boxNo) {
+      emit('close', record.value);
+    }
+  }
 </script>

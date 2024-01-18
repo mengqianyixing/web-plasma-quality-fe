@@ -68,7 +68,7 @@
       },
       {
         field: 'pageFlag',
-        defaultValue: 'verify1',
+        defaultValue: 'verify',
         component: 'Input',
         show: false,
       },

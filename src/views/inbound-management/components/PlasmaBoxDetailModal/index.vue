@@ -78,6 +78,7 @@
   });
 
   function handleGoPlasmaDetail(record) {
+    closeModal();
     emit('success', record);
   }
 </script>

@@ -1,8 +1,6 @@
 import { defHttp } from '@/utils/http/axios';
 
 import {
-  GetApiCoreBatchPlasmaVerifyBoxNoRequest,
-  GetApiCoreBatchPlasmaVerifyBoxNoResponse,
   GetApiCoreBatchPlasmaVerifyBagRequest,
   GetApiCoreBatchPlasmaVerifyBagResponse,
   GetApiCoreBatchPlasmaVerifyBoxRequest,
@@ -17,6 +15,8 @@ import {
   GetApiCoreBatchPlasmaVerifyPauseBatchNoPatternPauseTypeResponse,
   PostApiCoreBatchPlasmaVerifyRevokeBagRequest,
   PostApiCoreBatchPlasmaVerifyRevokeBagResponse,
+  GetApiCoreBatchPlasmaVerifyBatchNoRequest,
+  GetApiCoreBatchPlasmaVerifyBatchNoResponse,
 } from '@/api/type/batchManage';
 
 enum Api {
@@ -33,8 +33,8 @@ enum Api {
 }
 
 // 获取血浆验收记录信息
-export const getPlasmaVerify = (params: GetApiCoreBatchPlasmaVerifyBoxNoRequest['boxNo']) => {
-  return defHttp.get<GetApiCoreBatchPlasmaVerifyBoxNoResponse>({
+export const getPlasmaVerify = (params: GetApiCoreBatchPlasmaVerifyBatchNoRequest['batchNo']) => {
+  return defHttp.get<GetApiCoreBatchPlasmaVerifyBatchNoResponse>({
     url: `${Api.GetPlasmaVerify}/${params}`,
   });
 };
