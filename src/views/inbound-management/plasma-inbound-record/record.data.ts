@@ -1,4 +1,6 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
+import { PlasmaStateMap, PlasmaStateValueEnum } from '@/enums/plasmaEnum';
+import dayjs from 'dayjs';
 
 export const columns: BasicColumn[] = [
   {
@@ -9,14 +11,16 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
+    slots: { customRender: 'batchNo' },
   },
   {
     title: '血浆箱数',
     dataIndex: 'boxNum',
+    slots: { customRender: 'boxNum' },
   },
   {
     title: '接受箱数',
-    dataIndex: 'receptNum',
+    dataIndex: 'acceptBoxNum',
   },
   {
     title: '血浆数量',
@@ -24,7 +28,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '验收数量',
-    dataIndex: 'outNum',
+    dataIndex: 'verifyNum',
   },
   {
     title: '合格血浆数量',
@@ -57,6 +61,9 @@ export const columns: BasicColumn[] = [
   {
     title: '发布日期',
     dataIndex: 'pubDate',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
+    },
   },
   {
     title: '发布人',
@@ -64,7 +71,10 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '状态',
-    dataIndex: 'state',
+    dataIndex: 'verifyState',
+    format(text) {
+      return PlasmaStateMap.get(text as PlasmaStateValueEnum) as string;
+    },
   },
 ];
 
@@ -83,6 +93,9 @@ export const searchFormSchema: FormSchema[] = [
     field: 'state',
     label: '状态',
     component: 'Select',
+    componentProps: {
+      options: [...PlasmaStateMap].map(([value, label]) => ({ value, label })),
+    },
   },
   {
     field: '[receiveStartDate,receiveEndDate]',
@@ -93,5 +106,32 @@ export const searchFormSchema: FormSchema[] = [
     field: '[verifyStartDate,verifyEndDate]',
     label: '验收发布日期',
     component: 'RangePicker',
+  },
+];
+
+export const unqualifiedColumns: BasicColumn[] = [
+  {
+    title: '血浆编号',
+    dataIndex: 'bagNo',
+  },
+  {
+    title: '浆员编号',
+    dataIndex: 'donorNo',
+  },
+  {
+    title: '不合格原因',
+    dataIndex: 'unqReason',
+    slots: { customRender: 'unqReason' },
+  },
+  {
+    title: '验收人',
+    dataIndex: 'receiver',
+  },
+  {
+    title: '验收日期',
+    dataIndex: 'verifyAt',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
+    },
   },
 ];
