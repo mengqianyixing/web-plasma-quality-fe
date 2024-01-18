@@ -104,7 +104,12 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: '[verifyStartDate,verifyEndDate]',
-    label: '验收发布日期',
+    label: '验收日期',
+    component: 'RangePicker',
+  },
+  {
+    field: '[publishStartDate,publishEndDate]',
+    label: '发布日期',
     component: 'RangePicker',
   },
 ];

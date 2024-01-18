@@ -785,7 +785,7 @@ export type GetApiCoreBankWarehousesNameResponse = {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/batch/plasma/in-store`
- * @更新时间 `2024-01-17 16:30:08`
+ * @更新时间 `2024-01-18 16:01:27`
  */
 export interface GetApiCoreBatchPlasmaInStoreRequest {
   /**
@@ -809,13 +809,21 @@ export interface GetApiCoreBatchPlasmaInStoreRequest {
    */
   receiveEndDate?: string;
   /**
-   * 验收发布开始日期
+   * 验收开始日期
    */
-  verifyPubStartDate?: string;
+  verifyStartDate?: string;
   /**
-   * 验收发布结束日期
+   * 验收结束日期
    */
-  verifyPubEndDate: string;
+  verifyEndDate?: string;
+  /**
+   * 发布开始日期
+   */
+  publishStartDate?: string;
+  /**
+   * 发布结束日期
+   */
+  publishEndDate?: string;
 }
 
 /**
@@ -823,7 +831,7 @@ export interface GetApiCoreBatchPlasmaInStoreRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/batch/plasma/in-store`
- * @更新时间 `2024-01-17 16:30:08`
+ * @更新时间 `2024-01-18 16:01:27`
  */
 export interface GetApiCoreBatchPlasmaInStoreResponse {
   currPage?: number;
