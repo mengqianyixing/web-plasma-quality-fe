@@ -19,7 +19,7 @@ export const columns: BasicColumn[] = [
     slots: { customRender: 'boxNum' },
   },
   {
-    title: '接受箱数',
+    title: '接收箱数',
     dataIndex: 'acceptBoxNum',
   },
   {
@@ -99,7 +99,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: '[receiveStartDate,receiveEndDate]',
-    label: '血浆接受日期',
+    label: '血浆接收日期',
     component: 'RangePicker',
   },
   {

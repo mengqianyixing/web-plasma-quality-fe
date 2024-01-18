@@ -30,7 +30,7 @@
             <div class="flex gap-2">
               <a-button @click="handlePlasmaUnqualified">血浆不合格</a-button>
               <a-button @click="handleSampleUnqualified">样本不合格</a-button>
-              <a-button @click="handleMissNumRegister">缺号登记</a-button>
+              <a-button @click="handleMissNumRegister">缺浆登记</a-button>
               <a-button @click="suspendModal('BOX')">暂停箱记录</a-button>
               <a-button @click="suspendModal('BCH')">暂停批记录</a-button>
               <a-button
