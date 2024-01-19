@@ -2,11 +2,11 @@
  * @Author: HxB
  * @Date: 2024-01-16 18:07:49
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-17 10:22:48
+ * @LastEditTime: 2024-01-19 14:26:50
  * @Description: 用户管理
  * @FilePath: \psms-fe\src\api\oauth\users.ts
  */
-// @TODO: 稳定版待补充类型声明
+// @TODO: [API TYPE] 稳定版后再使用 ytt 统一生成类型声明
 import { defHttp } from '@/utils/http/axios';
 
 /**

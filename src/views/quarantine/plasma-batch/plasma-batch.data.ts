@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-19 13:48:07
+ * @LastEditTime: 2024-01-19 14:19:58
  * @Description: 血浆批检疫期报告 data
  * @FilePath: \psms-fe\src\views\quarantine\plasma-batch\plasma-batch.data.ts
  */
@@ -42,6 +42,10 @@ export const columns: BasicColumn[] = [
     dataIndex: 'stationNo',
     className: 'empty-value',
     slots: { customRender: 'stationNo' },
+  },
+  {
+    title: '报告单号',
+    dataIndex: 'brNo',
   },
   {
     title: '血浆批号',
@@ -125,6 +129,65 @@ export const columns: BasicColumn[] = [
     title: '复核日期',
     dataIndex: 'reviewAt',
     customRender: ({ record }) => customRenderDate(record.reviewAt),
+  },
+];
+
+export const modalColumns: BasicColumn[] = [
+  {
+    title: '采浆公司',
+    dataIndex: 'stationNo',
+    className: 'empty-value',
+    slots: { customRender: 'stationNo' },
+  },
+  {
+    title: '血浆批号',
+    dataIndex: 'batchNo',
+    className: 'primary-text font-bold',
+  },
+  {
+    title: '血浆数量',
+    dataIndex: 'plasmaCount',
+    className: 'empty-value',
+  },
+  {
+    title: '最早采浆日期',
+    dataIndex: 'firstCollectAt',
+    customRender: ({ record }) => customRenderDate(record.firstCollectAt),
+  },
+  {
+    title: '最晚采浆日期',
+    dataIndex: 'followSeeCount',
+    customRender: ({ record }) => customRenderDate(record.latestCollectAt),
+  },
+  {
+    title: '后续可参考血浆数量',
+    dataIndex: 'followSeeCount',
+    className: 'empty-value',
+  },
+  {
+    title: '后续可参考血浆比例',
+    dataIndex: 'followSeeRatio',
+    className: 'empty-value',
+  },
+  {
+    title: '可放行血浆数量',
+    dataIndex: 'canReleaseCount',
+    className: 'empty-value',
+  },
+  {
+    title: '可放行血浆比例',
+    dataIndex: 'canReleaseRatio',
+    className: 'empty-value',
+  },
+  {
+    title: '待放行血浆数量',
+    dataIndex: 'waitReleaseCount',
+    className: 'empty-value',
+  },
+  {
+    title: '待放行血浆比例',
+    dataIndex: 'waitReleaseRatio',
+    className: 'empty-value',
   },
 ];
 

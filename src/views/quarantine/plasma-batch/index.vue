@@ -87,7 +87,6 @@
   });
 
   function handleCreate() {
-    console.log(selectedRow.value);
     openModal(true, {
       isUpdate: false,
     });
@@ -108,7 +107,6 @@
   }
 
   function handlePrint() {
-    console.log(selectedRow.value);
     clearSelectedRowKeys();
   }
 
