@@ -113,6 +113,14 @@ export default defineConfig([
             outputFilePath: 'src/api/type/productionOrder.d.ts',
           },
           {
+            id: 5424,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              // 以接口全路径生成请求函数名
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/productionPlan.d.ts',
+          },
+          {
             id: 5187,
             getRequestFunctionName(interfaceInfo, changeCase) {
               // 以接口全路径生成请求函数名
