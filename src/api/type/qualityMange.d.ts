@@ -153,12 +153,12 @@ export interface PostApiCoreBagFlagsResponse {
  *
  * @分类 [血浆限制↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5460)
  * @请求头 `POST /api/core/bag/flagged/box`
- * @更新时间 `2024-01-19 15:20:39`
+ * @更新时间 `2024-01-19 19:12:02`
  */
 export interface PostApiCoreBagFlaggedBoxRequest {
   batchNo: string;
-  currPage: string;
-  pageSize: string;
+  currPage: number;
+  pageSize: number;
 }
 
 /**
@@ -166,13 +166,14 @@ export interface PostApiCoreBagFlaggedBoxRequest {
  *
  * @分类 [血浆限制↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5460)
  * @请求头 `POST /api/core/bag/flagged/box`
- * @更新时间 `2024-01-19 15:20:39`
+ * @更新时间 `2024-01-19 19:12:02`
  */
 export interface PostApiCoreBagFlaggedBoxResponse {
   totalCount: number;
-  currPage: null;
-  totalPage: null;
-  pageSize: null;
+  currPage: number;
+  totalPage: number;
+  pageSize: number;
+  remark: string;
   result?: {
     boxNo: string;
     batchNo: string;

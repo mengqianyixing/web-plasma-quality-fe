@@ -357,4 +357,66 @@ export interface PutApiCoreBatchPlasmaAuditApprovalRequest {
  */
 export type PutApiCoreBatchPlasmaAuditApprovalResponse = string;
 
+/**
+ * 接口 [查询血浆审批单详情↗](https://yapi.sharing8.cn/project/529/interface/api/32662) 的 **请求类型**
+ *
+ * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
+ * @请求头 `GET /api/core/batch/plasma/audit/{id}`
+ * @更新时间 `2024-01-19 18:59:10`
+ */
+export interface GetApiCoreBatchPlasmaAuditIdRequest {
+  id: string;
+}
+
+/**
+ * 接口 [查询血浆审批单详情↗](https://yapi.sharing8.cn/project/529/interface/api/32662) 的 **返回类型**
+ *
+ * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
+ * @请求头 `GET /api/core/batch/plasma/audit/{id}`
+ * @更新时间 `2024-01-19 18:59:10`
+ */
+export interface GetApiCoreBatchPlasmaAuditIdResponse {
+  /**
+   * 审核单号
+   */
+  auditId?: string;
+  /**
+   * 血浆批次
+   */
+  batchNo?: string;
+  /**
+   * 审核结论
+   */
+  auditConclusion?: string;
+  /**
+   * 备注
+   */
+  remark?: string;
+  /**
+   * 审核项目列表
+   */
+  itemList?: {
+    /**
+     * 序号
+     */
+    sort?: number;
+    /**
+     * 审核项目
+     */
+    auditItem?: string;
+    /**
+     * 审核内容
+     */
+    auditContent?: string;
+    /**
+     * 审核结果
+     */
+    auditResult?: string;
+  }[];
+  /**
+   * 血浆限制确认内容
+   */
+  plasmaFlagConfirm?: string;
+}
+
 /* prettier-ignore-end */

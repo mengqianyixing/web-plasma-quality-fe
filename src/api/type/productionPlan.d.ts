@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/orders`
- * @更新时间 `2024-01-19 15:48:34`
+ * @更新时间 `2024-01-19 15:53:40`
  */
 export interface PostApiProductPlanOrdersRequest {
   /**
@@ -48,7 +48,7 @@ export interface PostApiProductPlanOrdersRequest {
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/orders`
- * @更新时间 `2024-01-19 15:48:34`
+ * @更新时间 `2024-01-19 15:53:40`
  */
 export interface PostApiProductPlanOrdersResponse {
   totalCount: number;
@@ -61,7 +61,7 @@ export interface PostApiProductPlanOrdersResponse {
      */
     mesId: string;
     /**
-     * 计划投浆量
+     * 计划投浆量（t）
      */
     orderWeight: number;
     /**
@@ -81,7 +81,7 @@ export interface PostApiProductPlanOrdersResponse {
      */
     totalNum: number;
     /**
-     * 血浆净重
+     * 血浆净重（kg）
      */
     totalWeight: number;
     /**
