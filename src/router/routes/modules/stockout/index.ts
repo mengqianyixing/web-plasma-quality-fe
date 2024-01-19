@@ -1,8 +1,8 @@
 /*
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-03 09:42:49
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-19 11:06:19
  * @Description: 出库管理
  * @FilePath: \psms-fe\src\router\routes\modules\stockout\index.ts
  */
@@ -29,6 +29,15 @@ const nonconformity: AppRouteModule = {
         title: '生产指令',
       },
       component: () => import('/@/views/stockout/production-order/index.vue'),
+    },
+    {
+      path: 'productionPlan',
+      name: 'ProductionPlan',
+      id: 9602,
+      meta: {
+        title: '投产计划',
+      },
+      component: () => import('/@/views/stockout/production-plan/index.vue'),
     },
   ],
 };
