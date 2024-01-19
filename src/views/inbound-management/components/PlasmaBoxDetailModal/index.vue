@@ -26,7 +26,7 @@
   import { PlasmaStateMap } from '@/enums/plasmaEnum';
 
   const verifyCount = ref(0);
-  const emit = defineEmits(['success']);
+  const emit = defineEmits(['success', 'register']);
 
   const [registerTable, { reload, getForm }] = useTable({
     title: '',

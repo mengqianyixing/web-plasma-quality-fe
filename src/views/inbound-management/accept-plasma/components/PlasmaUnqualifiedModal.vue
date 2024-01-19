@@ -32,7 +32,7 @@
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
 
   const { createMessage } = useMessage();
-  const emit = defineEmits(['success']);
+  const emit = defineEmits(['success', 'register']);
 
   const [registerLogin, { openModal }] = useModal();
   const [registerForm, { setFieldsValue, validate }] = useForm({

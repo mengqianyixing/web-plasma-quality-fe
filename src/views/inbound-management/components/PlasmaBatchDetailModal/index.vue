@@ -19,7 +19,7 @@
 
   const verifyCount = ref(0);
   const record = ref<Recordable>({});
-  const emit = defineEmits(['close']);
+  const emit = defineEmits(['close', 'register']);
 
   const [registerTable, { reload, getForm }] = useTable({
     title: '',
