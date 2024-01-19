@@ -180,6 +180,13 @@ export default defineConfig([
             },
             outputFilePath: 'src/api/type/sampleManage.d.ts',
           },
+          {
+            id: 5442,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/plasmaCheckManage.d.ts',
+          },
         ],
       },
     ],
