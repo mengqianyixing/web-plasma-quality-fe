@@ -33,7 +33,7 @@
 
   const { createMessage } = useMessage();
 
-  const emit = defineEmits(['success']);
+  const emit = defineEmits(['success', 'register']);
 
   const [registerLogin, { openModal }] = useModal();
   const [registerForm, { setFieldsValue, validate }] = useForm({
@@ -68,15 +68,24 @@
         required: true,
       },
       {
-        field: 'verify',
-        defaultValue: '1',
+        field: 'pageFlag',
+        defaultValue: 'verify',
+        component: 'Input',
+        show: false,
+      },
+      {
+        field: 'batchSampleNo',
         component: 'Input',
         show: false,
       },
     ],
   });
 
-  const [register, { closeModal, setModalProps }] = useModalInner();
+  const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
+    await setFieldsValue({
+      batchSampleNo: data.record.batchSampleNo,
+    });
+  });
 
   function handleLogin() {
     openModal(true);

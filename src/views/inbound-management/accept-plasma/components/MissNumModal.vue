@@ -32,6 +32,8 @@
 
   const { createMessage } = useMessage();
 
+  const emit = defineEmits(['success', 'register']);
+
   const [registerLogin, { openModal }] = useModal();
   const [registerForm, { setFieldsValue, validate }] = useForm({
     showActionButtonGroup: false,
@@ -63,7 +65,13 @@
         field: 'lack',
         label: '缺失数量',
         component: 'Input',
-        defaultValue: '1',
+        defaultValue: 'lack',
+        show: false,
+      },
+      {
+        field: 'pageFlag',
+        defaultValue: 'verify',
+        component: 'Input',
         show: false,
       },
     ],
@@ -88,6 +96,8 @@
       await nonconformityRegistration(values as PostApiCoreBagUnqualifiedRequest);
 
       createMessage.success('缺号登记成功');
+
+      emit('success');
 
       closeModal();
     } finally {

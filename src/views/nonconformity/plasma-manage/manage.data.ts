@@ -36,6 +36,7 @@ export const columns: BasicColumn[] = [
     title: '不合格原因',
     dataIndex: 'unqReason',
     slots: { customRender: 'unqReason' },
+    width: 200,
   },
   {
     title: '状态',

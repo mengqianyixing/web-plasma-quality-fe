@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-04 16:30:55
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 18:50:42
+ * @LastEditTime: 2024-01-17 17:18:34
 -->
 <template>
   <BasicModal
@@ -12,7 +12,7 @@
     @register="registerModal"
     :title="'血浆批号【' + state + '】托盘入库'"
     width="1060px"
-    @close="emit('close')"
+    @cancel="emit('close')"
     :minHeight="520"
     @fullscreen="redoHeight"
   >

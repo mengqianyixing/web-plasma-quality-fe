@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 17:19:45
+ * @LastEditTime: 2024-01-18 09:58:21
 -->
 <template>
   <div
@@ -82,12 +82,12 @@
   }
 
   .value {
-    width: 200px;
+    width: 165px;
   }
 
   .label {
     width: 120px;
-    height: 40px;
+    min-height: 40px;
     border-right-width: 1px;
     border-color: #f0f0f0;
     background: #fafafa;

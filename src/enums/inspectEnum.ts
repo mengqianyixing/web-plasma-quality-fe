@@ -8,12 +8,12 @@ export enum PLASMA_TYPE {
   G = 'G',
 }
 export enum PLASMA_TYPE_TEXT {
-  N = '普通',
-  B = '乙免',
-  R = '狂免',
-  A = '炭疽',
-  T = '破免',
-  G = '巨细胞',
+  N = 'N,普通',
+  B = 'B,乙免',
+  R = 'R,狂免',
+  A = 'A,炭疽',
+  T = 'T,破免',
+  G = 'G,巨细胞',
 }
 export const PLASMA_TYPE_LIST = [
   { value: PLASMA_TYPE.N, label: PLASMA_TYPE_TEXT.N },
