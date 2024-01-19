@@ -2,14 +2,14 @@
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-18 15:35:42
+ * @LastEditTime: 2024-01-19 13:48:54
  * @Description: 用户管理数据源
  * @FilePath: \psms-fe\src\views\system\users\users.data.ts
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
-import { formatDate } from 'js-xxx';
+import { customRenderDate } from '@/utils/tableHelpRender';
 
 export const columns: BasicColumn[] = [
   {
@@ -43,15 +43,7 @@ export const columns: BasicColumn[] = [
     title: '创建时间',
     dataIndex: 'createdTime',
     width: 220,
-    customRender: ({ record }) => {
-      return h(
-        'div',
-        {
-          class: 'empty-value',
-        },
-        formatDate(record.createdTime),
-      );
-    },
+    customRender: ({ record }) => customRenderDate(record.createdTime),
   },
 ];
 

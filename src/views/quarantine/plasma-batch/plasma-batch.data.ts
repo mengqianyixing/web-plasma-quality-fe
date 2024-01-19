@@ -2,15 +2,16 @@
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-18 15:46:58
+ * @LastEditTime: 2024-01-19 13:48:07
  * @Description: 血浆批检疫期报告 data
  * @FilePath: \psms-fe\src\views\quarantine\plasma-batch\plasma-batch.data.ts
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
-import { calculate, BS_COLORS, formatDate } from 'js-xxx';
+import { calculate, BS_COLORS } from 'js-xxx';
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
+import { customRenderDate } from '@/utils/tableHelpRender';
 
 export const STATE = {
   W: {
@@ -113,15 +114,7 @@ export const columns: BasicColumn[] = [
   {
     title: '报告生成日期',
     dataIndex: 'createAt',
-    customRender: ({ record }) => {
-      return h(
-        'div',
-        {
-          class: 'empty-value',
-        },
-        formatDate(record.createAt),
-      );
-    },
+    customRender: ({ record }) => customRenderDate(record.createAt),
   },
   {
     title: '复核人',
@@ -131,15 +124,7 @@ export const columns: BasicColumn[] = [
   {
     title: '复核日期',
     dataIndex: 'reviewAt',
-    customRender: ({ record }) => {
-      return h(
-        'div',
-        {
-          class: 'empty-value',
-        },
-        formatDate(record.reviewAt),
-      );
-    },
+    customRender: ({ record }) => customRenderDate(record.reviewAt),
   },
 ];
 

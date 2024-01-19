@@ -1,7 +1,7 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
-import { formatDate } from 'js-xxx';
+import { customRenderDate } from '@/utils/tableHelpRender';
 
 export const columns: BasicColumn[] = [
   {
@@ -51,15 +51,7 @@ export const columns: BasicColumn[] = [
     title: '创建时间',
     dataIndex: 'createdTime',
     width: 220,
-    customRender: ({ record }) => {
-      return h(
-        'div',
-        {
-          class: 'empty-value',
-        },
-        formatDate(record.createdTime),
-      );
-    },
+    customRender: ({ record }) => customRenderDate(record.createdTime),
   },
 ];
 
