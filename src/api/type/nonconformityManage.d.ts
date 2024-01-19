@@ -49,7 +49,7 @@ export type PostApiCoreBagUnqualifiedResponse = null;
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bank/unqualified/boxes`
- * @更新时间 `2024-01-06 16:52:49`
+ * @更新时间 `2024-01-19 10:24:50`
  */
 export interface GetApiCoreBankUnqualifiedBoxesRequest {
   /**
@@ -65,7 +65,7 @@ export interface GetApiCoreBankUnqualifiedBoxesRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bank/unqualified/boxes`
- * @更新时间 `2024-01-06 16:52:49`
+ * @更新时间 `2024-01-19 10:24:50`
  */
 export interface GetApiCoreBankUnqualifiedBoxesResponse {
   totalCount?: number;

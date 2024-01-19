@@ -21,6 +21,15 @@ const checkManager: AppRouteModule = {
       },
       component: () => import('/@/views/quality-manage/plasma-check/index.vue'),
     },
+    {
+      path: '/quality/plasma-restriction',
+      name: 'plasma-restriction',
+      id: 10002,
+      meta: {
+        title: '血浆限制',
+      },
+      component: () => import('/@/views/quality-manage/plasma-restriction/index.vue'),
+    },
   ],
 };
 
