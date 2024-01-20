@@ -30,6 +30,15 @@ const nonconformity: AppRouteModule = {
       },
       component: () => import('/@/views/stockout/production-order/index.vue'),
     },
+    {
+      path: 'pp',
+      name: 'ProductionPreparation',
+      id: 9602,
+      meta: {
+        title: '投产准备',
+      },
+      component: () => import('/@/views/stockout/production-preparation/index.vue'),
+    },
   ],
 };
 
