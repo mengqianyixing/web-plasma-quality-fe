@@ -46,6 +46,7 @@ export const columns: BasicColumn[] = [
   {
     title: '审核单号',
     dataIndex: 'auditId',
+    slots: { customRender: 'auditId' },
   },
   {
     title: '审核人',

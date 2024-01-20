@@ -7,12 +7,13 @@
     width="85%"
     @ok="handleOk"
     @cancel="handleClose"
+    :showOkBtn="!isPreview"
   >
     <Description @register="registerPlasmaBatchDetail" :data="plasmaDetail" />
 
     <div class="h-[400px]">
       <BasicTable @register="registerTable">
-        <template #toolbar>
+        <template #toolbar v-if="!isPreview">
           <a-button type="primary" @click="handleAdd">新增</a-button>
           <a-button type="primary" @click="handleEdit">编辑</a-button>
           <a-button type="primary" @click="handleDelete">删除</a-button>
@@ -44,10 +45,12 @@
     PostApiCoreBatchPlasmaAuditRequest,
     PutApiCoreBatchPlasmaAuditRequest,
   } from '@/api/type/plasmaCheckManage';
+  import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
 
   const plasmaDetail = ref<Recordable>({});
-  const selectedRow = ref<Recordable>([]);
+  const selectedRow = ref<Recordable[]>([]);
   const isUpdate = ref(false);
+  const isPreview = ref(false);
 
   const [registerAddModal, { openModal }] = useModal();
   const { createMessage } = useMessage();
@@ -108,7 +111,7 @@
     isCanResizeParent: true,
   });
 
-  const [registerForm, { validate, resetFields, setFieldsValue }] = useForm({
+  const [registerForm, { validate, resetFields, setFieldsValue, updateSchema }] = useForm({
     labelWidth: 120,
     schemas: [
       {
@@ -142,6 +145,32 @@
     plasmaDetail.value = data.record;
 
     isUpdate.value = !!data.isUpdate;
+    isPreview.value = !!data.isPreview;
+
+    await updateSchema([
+      {
+        field: 'auditConclusion',
+        componentProps: {
+          disabled: unref(isPreview),
+        },
+      },
+      {
+        field: 'remark',
+        componentProps: {
+          disabled: unref(isPreview),
+        },
+      },
+    ]);
+
+    if (unref(isPreview)) {
+      const res = await getPlasmaCheckDetail(data.record.auditId);
+      await setFieldsValue({
+        auditConclusion: res.auditConclusion,
+        remark: res.remark,
+      });
+
+      setTableData(res.itemList as any[]);
+    }
 
     if (unref(isUpdate)) {
       const res = await getPlasmaCheckDetail(data.record.auditId);
@@ -151,6 +180,20 @@
       });
 
       setTableData(res.itemList as any[]);
+    } else {
+      const dictionaryArr = await getSysDictionary([DictionaryEnum.PlasmaRelease]);
+      if (!dictionaryArr.length) return;
+
+      const template = dictionaryArr[0]?.dictImtes!.map((it) => {
+        const _it = JSON.parse(it.desc!);
+        return {
+          sort: _it.appId,
+          auditItem: _it.appName,
+          auditContent: _it.appContent,
+          auditResult: _it.appResult,
+        };
+      });
+      setTableData(template);
     }
   });
 

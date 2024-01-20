@@ -1,6 +1,14 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
+      <template #auditId="{ record }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handlePreview(record)"
+        >
+          {{ record?.auditId }}
+        </span>
+      </template>
       <template #toolbar>
         <a-button type="primary" @click="handleAdd"> 新增 </a-button>
         <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
@@ -26,7 +34,7 @@
   import { useModal } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
 
-  import { ref } from 'vue';
+  import { onMounted, ref, watchEffect } from 'vue';
   import { PageWrapper } from '@/components/Page';
   import {
     approvalPlasmaCheck,
@@ -38,8 +46,23 @@
   import PlasmaLimitDetailModal from '@/views/quality-manage/plasma-check/PlasmaLimitDetailModal.vue';
   import RevokeCheckModal from '@/views/quality-manage/plasma-check/RevokeCheckModal.vue';
   import { getBindBoxListApi } from '@/api/quality/plasma-restriction';
+  import { useStation } from '@/hooks/common/useStation';
 
+  const { isLoading, stationOptions } = useStation();
   const { createMessage, createConfirm } = useMessage();
+
+  onMounted(() => {
+    watchEffect(() => {
+      if (!isLoading) {
+        getForm().updateSchema({
+          field: 'stationNo',
+          componentProps: {
+            options: stationOptions.value,
+          },
+        });
+      }
+    });
+  });
 
   defineOptions({ name: 'NonconformityBoxes' });
 
@@ -48,7 +71,7 @@
   const [registerRevokeCheckModal, { openModal: openPlasmaRevokeModal }] = useModal();
 
   const selectedRowsRef = ref<Recordable>([]);
-  const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
+  const [registerTable, { reload, clearSelectedRowKeys, getForm }] = useTable({
     title: '血浆审核列表',
     api: getPlasmaCheckList,
     columns,
@@ -97,12 +120,14 @@
     switch (flag) {
       case 'add':
         openPlasmaCheckModal(true, {
+          isPreview: false,
           isUpdate: false,
           record: selectedRowsRef.value[0],
         });
         break;
       case 'edit':
         openPlasmaCheckModal(true, {
+          isPreview: false,
           isUpdate: true,
           record: selectedRowsRef.value[0],
         });
@@ -164,11 +189,18 @@
 
   async function handleAdd() {
     if (!checkSelectedRows()) return;
+
+    if (selectedRowsRef.value[0].auditId) {
+      createMessage.warn('已审核不支持新增');
+      return;
+    }
+
     const flag = await checkPlasmaLimit('add');
 
     if (!flag) return;
 
     openPlasmaCheckModal(true, {
+      isPreview: false,
       isUpdate: false,
       record: selectedRowsRef.value[0],
     });
@@ -181,6 +213,7 @@
     if (!flag) return;
 
     openPlasmaCheckModal(true, {
+      isPreview: false,
       isUpdate: true,
       record: selectedRowsRef.value[0],
     });
@@ -247,6 +280,14 @@
         clearSelectedRowKeys();
         await reload();
       },
+    });
+  }
+
+  function handlePreview(record) {
+    openPlasmaCheckModal(true, {
+      isPreview: true,
+      isUpdate: true,
+      record: record,
     });
   }
 
