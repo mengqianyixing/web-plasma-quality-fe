@@ -14,6 +14,7 @@ const labelManager: AppRouteModule = {
   path: '/tag-manage',
   name: 'TagManager',
   component: LAYOUT,
+  menuWeight: 92,
   id: 94,
   meta: {
     title: '标签管理',

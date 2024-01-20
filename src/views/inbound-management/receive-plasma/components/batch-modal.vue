@@ -37,7 +37,7 @@
 
   const mode = ref('receive');
 
-  const emit = defineEmits(['success']);
+  const emit = defineEmits(['success', 'register']);
   const [registerModal, { closeModal }] = useModalInner(async (data) => {
     // 验收页面打开
     if (data.isAccept) {

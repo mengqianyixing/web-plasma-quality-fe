@@ -3,6 +3,7 @@ import {
   GetApiCoreBagUnqualifiedBagNoResponse,
   GetApiCoreBagUnqualifiedRequest,
   PostApiCoreBagUnqualifiedInStoreRequest,
+  PostApiCoreBagUnqualifiedPickBatchRequest,
   PostApiCoreBagUnqualifiedPickRequest,
   PostApiCoreBagUnqualifiedProcessBagNoRequest,
 } from '@/api/type/nonconformityManage';
@@ -10,6 +11,7 @@ import { defHttp } from '@/utils/http/axios';
 
 enum Api {
   NONCONFORMITY_PLASMA_PICK = '/api/core/bag/unqualified/pick',
+  NONCONFORMITY_PLASMA_PICK_BATCH = '/api/core/bag/unqualified/pick/batch',
   NONCONFORMITY_PLASMA_IN_STORE = '/api/core/bag/unqualified/in-store',
   NONCONFORMITY_PLASMA_CHECK = '/api/core/bag/unqualified/process',
   NONCONFORMITY_PLASMA_RESTFUL = '/api/core/bag/unqualified',
@@ -17,6 +19,9 @@ enum Api {
 
 export const nonconformityPick = (params: PostApiCoreBagUnqualifiedPickRequest) =>
   defHttp.post({ url: Api.NONCONFORMITY_PLASMA_PICK, params });
+
+export const nonconformityPlasmaPickByBatch = (params: PostApiCoreBagUnqualifiedPickBatchRequest) =>
+  defHttp.post({ url: Api.NONCONFORMITY_PLASMA_PICK_BATCH, params });
 
 export const nonconformityInStore = (params: PostApiCoreBagUnqualifiedInStoreRequest) =>
   defHttp.post({ url: Api.NONCONFORMITY_PLASMA_IN_STORE, params });

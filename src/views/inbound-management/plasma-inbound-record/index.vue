@@ -1,0 +1,196 @@
+<template>
+  <PageWrapper dense contentFullHeight fixedHeight>
+    <BasicTable @register="registerTable">
+      <template #batchNo="{ record }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleOpenBatchDetail(record)"
+        >
+          {{ record?.batchNo }}
+        </span>
+      </template>
+      <template #boxNum="{ record }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleOpenBoxDetail(record)"
+        >
+          {{ record?.boxNum }}
+        </span>
+      </template>
+      <template #stationNo="{ record }">
+        {{ getStationNameById(record?.stationNo) }}
+      </template>
+      <template #toolbar>
+        <a-button type="primary" @click="handleUnqualifiedStage"> 不合格暂存 </a-button>
+        <a-button type="primary" @click="handleWeightRegister"> 重量登记 </a-button>
+        <a-button type="primary" @click="handleVerifyRelease">验收发布</a-button>
+        <a-button type="primary" @click="handleVerifyList">验收清单</a-button>
+        <a-button type="primary" @click="handleVisualInspectionList">外观检查清单</a-button>
+      </template>
+    </BasicTable>
+
+    <BatchDetailModal @register="registerBatchModal" @close="handleBatchDetailClose" />
+    <BoxDetailModal @register="registerBoxModal" @success="handleGoBatchDetailModal" />
+    <RegisterWeightModal @register="registerWeightModal" @success="handleSuccess" />
+    <UnqualifiedStageModal @register="registerStage" />
+  </PageWrapper>
+</template>
+<script lang="ts" setup>
+  import { BasicTable, useTable } from '@/components/Table';
+  import { useModal } from '@/components/Modal';
+  import { columns, searchFormSchema } from './record.data';
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { onMounted, ref, watchEffect } from 'vue';
+  import { useStation } from '@/hooks/common/useStation';
+
+  import { PageWrapper } from '@/components/Page';
+  import {
+    getPlasmaInboundList,
+    plasmaVerifyPublish,
+  } from '@/api/inbound-management/plasma-inbound-record';
+  import BatchDetailModal from '../components/PlasmaBatchDetailModal/index.vue';
+  import BoxDetailModal from '../components/PlasmaBoxDetailModal/index.vue';
+  import RegisterWeightModal from '@/views/inbound-management/plasma-inbound-record/RegisterWeightModal.vue';
+  import UnqualifiedStageModal from '@/views/inbound-management/plasma-inbound-record/UnqualifiedStageModal.vue';
+
+  const { isLoading, stationOptions, getStationNameById } = useStation();
+  const { createMessage, createConfirm } = useMessage();
+
+  onMounted(() => {
+    watchEffect(() => {
+      if (!isLoading) {
+        getForm().updateSchema({
+          field: 'stationNo',
+          componentProps: {
+            options: stationOptions.value,
+          },
+        });
+      }
+    });
+  });
+
+  defineOptions({ name: 'PlasmaInboundRecord' });
+
+  const [registerWeightModal, { openModal: openWeightModal }] = useModal();
+  const [registerBatchModal, { openModal: openBatchModal }] = useModal();
+  const [registerBoxModal, { openModal: openBoxModal }] = useModal();
+  const [registerStage, { openModal: openStageModal }] = useModal();
+
+  const selectedRowsRef = ref<Recordable>([]);
+  const [registerTable, { getForm, reload }] = useTable({
+    title: '血浆入库记录',
+    api: getPlasmaInboundList,
+    columns,
+    formConfig: {
+      schemas: searchFormSchema,
+      transformDateFunc(date) {
+        return date ? date.format('YYYY-MM-DD') : '';
+      },
+    },
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    clickToRowSelect: true,
+    rowSelection: {
+      type: 'radio',
+      onChange(_, selectedRows) {
+        selectedRowsRef.value = selectedRows;
+      },
+    },
+    size: 'large',
+    striped: false,
+    useSearchForm: true,
+    showTableSetting: false,
+    bordered: true,
+    showIndexColumn: false,
+    canResize: true,
+  });
+
+  function handleUnqualifiedStage() {
+    if (!selectedRowsRef.value.length) {
+      createMessage.warning('请选择一条数据');
+      return;
+    }
+
+    openStageModal(true, {
+      record: selectedRowsRef.value[0],
+    });
+  }
+
+  function handleWeightRegister() {
+    if (!selectedRowsRef.value.length) {
+      createMessage.warning('请选择一条数据');
+      return;
+    }
+
+    openWeightModal(true, {
+      record: selectedRowsRef.value[0],
+    });
+  }
+
+  async function handleVerifyRelease() {
+    if (!selectedRowsRef.value.length) {
+      createMessage.warning('请选择一条数据');
+      return;
+    }
+
+    createConfirm({
+      title: '确认',
+      content: '确定要验收发布改批次吗？',
+      iconType: 'warning',
+      onOk: async () => {
+        await plasmaVerifyPublish(selectedRowsRef.value[0]?.batchNo);
+
+        createMessage.success('验收发布成功');
+
+        await reload();
+      },
+    });
+  }
+
+  function handleVerifyList() {
+    createMessage.warn('开发中 : ( ');
+  }
+
+  function handleVisualInspectionList() {
+    createMessage.warn('开发中 : ( ');
+  }
+
+  function handleSuccess() {
+    reload();
+  }
+
+  function handleOpenBatchDetail(record) {
+    openBatchModal(true, {
+      record: {
+        ...record,
+        stationName: getStationNameById(record.stationNo),
+      },
+    });
+  }
+
+  function handleOpenBoxDetail(record) {
+    openBoxModal(true, {
+      record: {
+        ...record,
+        stationName: getStationNameById(record.stationNo),
+      },
+    });
+  }
+
+  function handleGoBatchDetailModal(record) {
+    openBatchModal(true, {
+      record: {
+        ...record,
+        stationName: getStationNameById(record.stationNo),
+      },
+    });
+  }
+
+  function handleBatchDetailClose(record) {
+    handleOpenBoxDetail(record);
+  }
+</script>

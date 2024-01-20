@@ -1,6 +1,7 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
+import { customRenderDate } from '@/utils/tableHelpRender';
 
 export const columns: BasicColumn[] = [
   {
@@ -11,6 +12,7 @@ export const columns: BasicColumn[] = [
   {
     title: '角色名称',
     dataIndex: 'displayName',
+    className: 'empty-value',
     width: 200,
   },
   {
@@ -49,9 +51,7 @@ export const columns: BasicColumn[] = [
     title: '创建时间',
     dataIndex: 'createdTime',
     width: 220,
-    customRender: ({ record }) => {
-      return h('div', {}, new Date(record.createdTime).toLocaleString());
-    },
+    customRender: ({ record }) => customRenderDate(record.createdTime),
   },
 ];
 
@@ -60,7 +60,6 @@ export const searchFormSchema: FormSchema[] = [
     field: 'name',
     label: '角色 id',
     component: 'Input',
-    colProps: { span: 4 },
   },
   // {
   //   field: 'displayName',
@@ -82,12 +81,18 @@ export const formSchema: FormSchema[] = [
     label: '角色 id',
     required: true,
     component: 'Input',
+    colProps: {
+      span: 8,
+    },
   },
   {
     label: '角色名称',
     required: true,
     field: 'displayName',
     component: 'Input',
+    colProps: {
+      span: 8,
+    },
   },
   {
     field: 'enabled',
@@ -99,6 +104,9 @@ export const formSchema: FormSchema[] = [
         { label: '启用', value: true },
         { label: '停用', value: false },
       ],
+    },
+    colProps: {
+      span: 8,
     },
   },
   {

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-28 18:11:32
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-03 09:48:04
+ * @LastEditTime: 2024-01-17 15:40:45
  * @Description: 回访管理
  * @FilePath: \psms-fe\src\router\routes\modules\callManager\index.ts
  */
@@ -14,6 +14,7 @@ const callManager: AppRouteModule = {
   path: '/callback',
   name: 'Callback',
   id: 90,
+  menuWeight: 97,
   component: LAYOUT,
   meta: {
     title: '回访管理',

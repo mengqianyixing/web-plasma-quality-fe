@@ -2,12 +2,12 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button v-auth-el="'E_123'" type="primary" @click="handleCreate">新增角色</a-button>
+        <a-button v-auth="'E_123'" type="primary" @click="handleCreate">新增角色</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <TableAction
-            v-auth-el="['E_456']"
+            v-auth="'E_456'"
             :actions="[
               {
                 icon: 'clarity:note-edit-line',
@@ -27,21 +27,21 @@
         </template>
       </template>
     </BasicTable>
-    <RoleDrawer @register="registerDrawer" @success="handleSuccess" />
+    <RoleModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable, TableAction } from '@/components/Table';
-  import { deleteCasDoorRole, getCasDoorRoles } from '@/api/oauth/menu';
+  import { deleteCasDoorRole, getCasDoorRoles } from '@/api/oauth/auth';
 
-  import { useDrawer } from '@/components/Drawer';
-  import RoleDrawer from './RoleDrawer.vue';
+  import { useModal } from '@/components/Modal';
+  import RoleModal from './RoleModal.vue';
 
   import { columns, searchFormSchema } from './role.data';
 
   defineOptions({ name: 'RoleAuthManagement' });
 
-  const [registerDrawer, { openDrawer }] = useDrawer();
+  const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload }] = useTable({
     title: '权限列表',
     api: getCasDoorRoles,
@@ -70,13 +70,13 @@
   });
 
   function handleCreate() {
-    openDrawer(true, {
+    openModal(true, {
       isUpdate: false,
     });
   }
 
   function handleEdit(record: Recordable) {
-    openDrawer(true, {
+    openModal(true, {
       record,
       isUpdate: true,
     });

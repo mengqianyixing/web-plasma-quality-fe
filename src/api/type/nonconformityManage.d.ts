@@ -8,11 +8,11 @@
 type FileData = File;
 
 /**
- * 接口 [不合格登记↗](https://yapi.sharing8.cn/project/529/interface/api/31794) 的 **请求类型**
+ * 接口 [血浆不合格登记↗](https://yapi.sharing8.cn/project/529/interface/api/31794) 的 **请求类型**
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `POST /api/core/bag/unqualified`
- * @更新时间 `2024-01-15 17:07:45`
+ * @更新时间 `2024-01-18 14:29:47`
  */
 export interface PostApiCoreBagUnqualifiedRequest {
   /**
@@ -27,20 +27,20 @@ export interface PostApiCoreBagUnqualifiedRequest {
    * 血浆编号
    */
   fkBagNo: string;
+  lack?: string;
+  remark?: string;
   /**
    * 区分页面用（验收弹窗）
    */
-  verify?: string;
-  lack?: string;
-  remark?: string;
+  pageFlag?: string;
 }
 
 /**
- * 接口 [不合格登记↗](https://yapi.sharing8.cn/project/529/interface/api/31794) 的 **返回类型**
+ * 接口 [血浆不合格登记↗](https://yapi.sharing8.cn/project/529/interface/api/31794) 的 **返回类型**
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `POST /api/core/bag/unqualified`
- * @更新时间 `2024-01-15 17:07:45`
+ * @更新时间 `2024-01-18 14:29:47`
  */
 export type PostApiCoreBagUnqualifiedResponse = null;
 
@@ -49,7 +49,7 @@ export type PostApiCoreBagUnqualifiedResponse = null;
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bank/unqualified/boxes`
- * @更新时间 `2024-01-06 16:52:49`
+ * @更新时间 `2024-01-19 10:24:50`
  */
 export interface GetApiCoreBankUnqualifiedBoxesRequest {
   /**
@@ -65,7 +65,7 @@ export interface GetApiCoreBankUnqualifiedBoxesRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bank/unqualified/boxes`
- * @更新时间 `2024-01-06 16:52:49`
+ * @更新时间 `2024-01-19 10:24:50`
  */
 export interface GetApiCoreBankUnqualifiedBoxesResponse {
   totalCount?: number;
@@ -460,7 +460,7 @@ export interface GetApiCoreBagUnqualifiedBagNoResponse {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-01-10 11:16:30`
+ * @更新时间 `2024-01-18 11:21:47`
  */
 export interface GetApiCoreBagUnqualifiedRequest {
   pageSize: string;
@@ -516,7 +516,7 @@ export interface GetApiCoreBagUnqualifiedRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-01-10 11:16:30`
+ * @更新时间 `2024-01-18 11:21:47`
  */
 export interface GetApiCoreBagUnqualifiedResponse {
   totalCount?: number;
@@ -560,8 +560,44 @@ export interface GetApiCoreBagUnqualifiedResponse {
      * 出库日期
      */
     outStoreDate?: string;
+    /**
+     * 验收人
+     */
+    receiver?: string;
+    /**
+     * 验收日期
+     */
+    verifyAt?: string;
   }[];
 }
+
+/**
+ * 接口 [不合格血浆批量挑浆↗](https://yapi.sharing8.cn/project/529/interface/api/32547) 的 **请求类型**
+ *
+ * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
+ * @请求头 `POST /api/core/bag/unqualified/pick/batch`
+ * @更新时间 `2024-01-18 11:24:39`
+ */
+export interface PostApiCoreBagUnqualifiedPickBatchRequest {
+  /**
+   * 复核人
+   */
+  reviewer: string;
+  bagNos: string[];
+  /**
+   * 库房编号
+   */
+  bankNo: string;
+}
+
+/**
+ * 接口 [不合格血浆批量挑浆↗](https://yapi.sharing8.cn/project/529/interface/api/32547) 的 **返回类型**
+ *
+ * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
+ * @请求头 `POST /api/core/bag/unqualified/pick/batch`
+ * @更新时间 `2024-01-18 11:24:39`
+ */
+export interface PostApiCoreBagUnqualifiedPickBatchResponse {}
 
 /**
  * 接口 [查询不合格出库申请单列表↗](https://yapi.sharing8.cn/project/529/interface/api/32073) 的 **请求类型**

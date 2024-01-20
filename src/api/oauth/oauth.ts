@@ -2,17 +2,11 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:23:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-27 18:03:02
+ * @LastEditTime: 2024-01-19 14:27:30
  * @Description: oauth casdoor
  * @FilePath: \psms-fe\src\api\oauth\oauth.ts
  */
-// const config = {
-//   serverUrl: 'http://192.168.110.13:7000',
-//   clientId: '2bf3139c50199ee0f07d',
-//   organizationName: 'organization_psms',
-//   appName: 'psms',
-//   redirectPath: '/#/login',
-// };
+// @TODO: [API TYPE] 稳定版待 ytt 补充类型声明+替换 fetch
 
 function goToCasDoorLogin() {
   return fetch(`/api/sys/casdoor/login?redirectUri=${encodeURIComponent(window.location.origin)}`, {

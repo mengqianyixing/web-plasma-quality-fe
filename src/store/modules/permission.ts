@@ -250,8 +250,7 @@ export const usePermissionStore = defineStore({
           break;
 
         case PermissionModeEnum.CAS_DOOR:
-          const menuIds: any[] = [99] // 默认首页，后续调整
-            .concat(userStore.getUserInfo?.menuIds ?? []);
+          const menuIds: any[] = userStore.getUserInfo?.menuIds ?? [];
           const filterRoutes = (routes: any[]): any[] => {
             const filteredRoutes: any[] = [];
 
@@ -271,6 +270,12 @@ export const usePermissionStore = defineStore({
           };
           const tempRoutes: any = filterRoutes(asyncRoutes).sort((a, b) => {
             return (b?.menuWeight || 0) - (a?.menuWeight || 0);
+          });
+          userStore.setUserInfo({
+            ...userStore.getUserInfo,
+            homePath: tempRoutes?.length
+              ? tempRoutes?.[0]?.path + '/' + tempRoutes?.[0]?.children?.[0]?.path ?? '404'
+              : '/404',
           });
           this.setBackMenuList(transformRouteToMenu(tempRoutes));
           routes = [PAGE_NOT_FOUND_ROUTE, ...tempRoutes];

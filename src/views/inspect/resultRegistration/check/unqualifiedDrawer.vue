@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 09:46:36
+ * @LastEditTime: 2024-01-17 17:18:17
 -->
 <template>
   <BasicModal
@@ -15,7 +15,7 @@
     width="400px"
     cancelText="关闭"
     okText="提交&关闭"
-    @close="close"
+    @cancel="close"
     @ok="handleSubmit(true)"
   >
     <template #appendFooter>

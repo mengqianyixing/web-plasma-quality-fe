@@ -1,3 +1,11 @@
+/*
+ * @Author: HxB
+ * @Date: 2024-01-11 09:17:02
+ * @LastEditors: DoubleAm
+ * @LastEditTime: 2024-01-17 15:55:58
+ * @Description: 样本管理
+ * @FilePath: \psms-fe\src\router\routes\modules\sampleManager\index.ts
+ */
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
@@ -8,6 +16,7 @@ const sampleManager: AppRouteModule = {
   component: LAYOUT,
   redirect: '/sample-manage/sample-release',
   id: 89,
+  menuWeight: 94,
   meta: {
     orderNo: 30001,
     title: '样本管理',

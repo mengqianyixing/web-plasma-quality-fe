@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-28 18:11:32
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-03 09:52:54
+ * @LastEditTime: 2024-01-17 15:43:11
  * @Description: 托盘管理
  * @FilePath: \psms-fe\src\router\routes\modules\trayManager\index.ts
  */
@@ -14,6 +14,7 @@ const trayManager: AppRouteModule = {
   path: '/tray',
   name: 'TrayManager',
   component: LAYOUT,
+  menuWeight: 88,
   id: 98,
   meta: {
     title: '托盘管理',

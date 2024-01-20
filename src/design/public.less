@@ -49,3 +49,49 @@
     background-color: @primary-color;
   }
 }
+
+.empty-value:empty::after {
+  content: '-';
+}
+
+.brackets:not(:empty)::before {
+  content: '(';
+}
+
+.brackets:not(:empty)::after {
+  content: ')';
+}
+
+.square-brackets:not(:empty)::before {
+  content: '[';
+}
+
+.square-brackets:not(:empty)::after {
+  content: ']';
+}
+
+.white-text {
+  color: whitesmoke;
+}
+
+.primary-text {
+  color: @primary-color;
+}
+
+.success-text {
+  color: @success-color;
+}
+
+.warning-text {
+  color: chocolate;
+  font-weight: 500;
+}
+
+.danger-text {
+  color: @error-color;
+  font-weight: 500;
+}
+
+.font-bold {
+  font-weight: bold;
+}

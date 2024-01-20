@@ -32,7 +32,7 @@
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
 
   const { createMessage } = useMessage();
-  const emit = defineEmits(['success']);
+  const emit = defineEmits(['success', 'register']);
 
   const [registerLogin, { openModal }] = useModal();
   const [registerForm, { setFieldsValue, validate }] = useForm({
@@ -52,7 +52,7 @@
         colProps: { span: 18 },
         componentProps: {
           api: getSysDictionary,
-          params: [DictionaryEnum.PlasmaUnqualifiedItem],
+          params: [DictionaryEnum.PlasmaUnqualifiedReason],
           resultField: '[0].dictImtes',
           labelField: 'label',
           valueField: 'value',
@@ -67,8 +67,8 @@
         required: true,
       },
       {
-        field: 'verify',
-        defaultValue: '1',
+        field: 'pageFlag',
+        defaultValue: 'verify',
         component: 'Input',
         show: false,
       },
