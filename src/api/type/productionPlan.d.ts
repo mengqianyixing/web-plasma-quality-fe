@@ -12,11 +12,11 @@ type FileData = File;
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/orders`
- * @更新时间 `2024-01-18 10:23:39`
+ * @更新时间 `2024-01-19 15:53:40`
  */
 export interface PostApiProductPlanOrdersRequest {
   /**
-   * 指令编号
+   * 指令编号  、制造批号
    */
   orderNo?: string;
   /**
@@ -31,6 +31,14 @@ export interface PostApiProductPlanOrdersRequest {
    * 状态
    */
   planState?: string;
+  /**
+   * 出库开始日期
+   */
+  outStartDate?: string;
+  /**
+   * 出库结束日期
+   */
+  outEndDate?: string;
   pageSize: string;
   currPage: string;
 }
@@ -40,20 +48,20 @@ export interface PostApiProductPlanOrdersRequest {
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/orders`
- * @更新时间 `2024-01-18 10:23:39`
+ * @更新时间 `2024-01-19 15:53:40`
  */
 export interface PostApiProductPlanOrdersResponse {
   totalCount: number;
-  pageSize?: null;
-  currPage: null;
-  totalPage: null;
+  pageSize: number;
+  currPage: number;
+  totalPage: number;
   result?: {
     /**
      * 制造批号
      */
     mesId: string;
     /**
-     * 计划投浆量
+     * 计划投浆量（t）
      */
     orderWeight: number;
     /**
@@ -73,7 +81,7 @@ export interface PostApiProductPlanOrdersResponse {
      */
     totalNum: number;
     /**
-     * 血浆净重
+     * 血浆净重（kg）
      */
     totalWeight: number;
     /**
@@ -108,6 +116,22 @@ export interface PostApiProductPlanOrdersResponse {
      * 复核日期
      */
     planRevieAt: string;
+    /**
+     * 出库人
+     */
+    outPerson?: string;
+    /**
+     * 出库日期
+     */
+    outDate?: string;
+    /**
+     * 接收人
+     */
+    receiver?: string;
+    /**
+     * 接收日期
+     */
+    acceptDate?: string;
     /**
      * 审核人
      */
@@ -493,7 +517,7 @@ export interface PostApiProductPlanPrepareResponse {
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/box`
- * @更新时间 `2024-01-18 10:16:29`
+ * @更新时间 `2024-01-19 10:08:14`
  */
 export interface PostApiProductPlanBoxRequest {
   /**
@@ -516,7 +540,7 @@ export interface PostApiProductPlanBoxRequest {
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/box`
- * @更新时间 `2024-01-18 10:16:29`
+ * @更新时间 `2024-01-19 10:08:14`
  */
 export type PostApiProductPlanBoxResponse = {
   /**
@@ -547,6 +571,7 @@ export type PostApiProductPlanBoxResponse = {
    * 最晚采集日期
    */
   maxCollectAt: string;
+  ppNo: string;
 }[];
 
 /**

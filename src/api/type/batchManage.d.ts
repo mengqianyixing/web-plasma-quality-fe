@@ -2015,4 +2015,88 @@ export interface GetApiCoreBatchPlasmaReleasesResponse {
   }[];
 }
 
+/**
+ * 接口 [查询未放行的批次↗](https://yapi.sharing8.cn/project/529/interface/api/32637) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/plasma/un-releases`
+ * @更新时间 `2024-01-19 11:51:05`
+ */
+export interface GetApiCoreBatchPlasmaUnReleasesRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * 批次号
+   */
+  batchNo?: string;
+  /**
+   * 浆站编码
+   */
+  stationNo?: string;
+}
+
+/**
+ * 接口 [查询未放行的批次↗](https://yapi.sharing8.cn/project/529/interface/api/32637) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/plasma/un-releases`
+ * @更新时间 `2024-01-19 11:51:05`
+ */
+export interface GetApiCoreBatchPlasmaUnReleasesResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 浆站编码
+     */
+    stationNo?: string;
+    /**
+     * 浆站名称
+     */
+    stationName?: string;
+    /**
+     * 批次编码
+     */
+    batchNo?: string;
+    /**
+     * 血浆数量
+     */
+    plasmaCount?: number;
+    /**
+     * 最早采浆日期
+     */
+    firstCollectAt?: string;
+    /**
+     * 最晚采浆日期
+     */
+    latestCollectAt?: string;
+    /**
+     * 最晚采浆日期
+     */
+    followSeeCount?: number;
+    /**
+     * 后续可参考血浆比例
+     */
+    followSeeRatio?: string;
+    /**
+     * 后续可参考血浆比例
+     */
+    canReleaseCount?: number;
+    /**
+     * 后续可参考血浆比例
+     */
+    canReleaseRatio?: string;
+    /**
+     * 待放行血浆数量
+     */
+    waitReleaseCount?: number;
+    /**
+     * 带放行血浆比例
+     */
+    waitReleaseRatio?: string;
+  }[];
+}
+
 /* prettier-ignore-end */
