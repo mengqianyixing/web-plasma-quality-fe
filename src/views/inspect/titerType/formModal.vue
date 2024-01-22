@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-26 17:41:03
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-15 10:17:06
+ * @LastEditTime: 2024-01-22 15:44:38
 -->
 <template>
   <BasicModal
@@ -82,11 +82,13 @@
     const { min } = getFieldsValue();
     if (!isNumber(min) || !isNumber(value)) return Promise.resolve();
     if (min > value) return Promise.reject('最大值不能小于最小值');
+    return Promise.resolve();
   }
   function minValidator(_, value: number | void) {
     const { max } = getFieldsValue();
     if (!isNumber(max) || !isNumber(value)) return Promise.resolve();
     if (max < value) return Promise.reject('最小值不能大于最大值');
+    return Promise.resolve();
   }
   async function handleSubmit() {
     try {
