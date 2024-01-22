@@ -52,6 +52,7 @@
   import BoxDetailModal from '../components/PlasmaBoxDetailModal/index.vue';
   import RegisterWeightModal from '@/views/inbound-management/plasma-inbound-record/RegisterWeightModal.vue';
   import UnqualifiedStageModal from '@/views/inbound-management/plasma-inbound-record/UnqualifiedStageModal.vue';
+  import { omit } from 'lodash-es';
 
   const { isLoading, stationOptions, getStationNameById } = useStation();
   const { createMessage, createConfirm } = useMessage();
@@ -174,10 +175,13 @@
 
   function handleOpenBoxDetail(record) {
     openBoxModal(true, {
-      record: {
-        ...record,
-        stationName: getStationNameById(record.stationNo),
-      },
+      record: omit(
+        {
+          ...record,
+          stationName: getStationNameById(record.stationNo),
+        },
+        ['boxNo'],
+      ),
     });
   }
 

@@ -143,7 +143,6 @@
         ...values,
         netWeight: Number(values.netWeight),
       };
-      console.log(pick(_values, ['reviewer', 'batchNo', 'netWeight']), _values);
 
       await registerPlasmaWeight(
         pick(_values, ['reviewer', 'batchNo', 'netWeight']) as PostApiCoreBatchPlasmaWeightRequest,
