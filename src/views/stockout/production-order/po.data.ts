@@ -35,7 +35,7 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆效期',
     dataIndex: 'expiration',
-    width: 100,
+    width: 80,
     format(text) {
       return expirationMap.get(<expirationValueEnum>text) as string;
     },
@@ -43,7 +43,7 @@ export const columns: BasicColumn[] = [
   {
     title: '计划出库日期',
     dataIndex: 'planOut',
-    width: 100,
+    width: 120,
     format(text) {
       return dayjs(text).format('YYYY-MM-DD');
     },
@@ -51,7 +51,7 @@ export const columns: BasicColumn[] = [
   {
     title: '计划投产日期',
     dataIndex: 'planTask',
-    width: 100,
+    width: 120,
     format(text) {
       return dayjs(text).format('YYYY-MM-DD');
     },
@@ -71,8 +71,9 @@ export const columns: BasicColumn[] = [
   {
     title: '申请日期',
     dataIndex: 'createAt',
+    width: 120,
     format(text) {
-      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
   },
   {
@@ -82,8 +83,9 @@ export const columns: BasicColumn[] = [
   {
     title: '复核日期',
     dataIndex: 'reviewAt',
+    width: 120,
     format(text) {
-      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
   },
   {
@@ -93,8 +95,9 @@ export const columns: BasicColumn[] = [
   {
     title: '审核日期',
     dataIndex: 'checkAt',
+    width: 120,
     format(text) {
-      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
   },
 ];

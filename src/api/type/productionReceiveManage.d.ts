@@ -11,10 +11,10 @@ type FileData = File;
  * 接口 [查询待接收的箱↗](https://yapi.sharing8.cn/project/529/interface/api/32582) 的 **请求类型**
  *
  * @分类 [投产接收↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5451)
- * @请求头 `POST /api/product/reception/boxs`
- * @更新时间 `2024-01-19 19:39:47`
+ * @请求头 `POST /api/product/reception/boxes`
+ * @更新时间 `2024-01-22 10:39:45`
  */
-export interface PostApiProductReceptionBoxsRequest {
+export interface PostApiProductReceptionBoxesRequest {
   orderNo: string;
   currPage: number;
   pageSize: number;
@@ -24,10 +24,10 @@ export interface PostApiProductReceptionBoxsRequest {
  * 接口 [查询待接收的箱↗](https://yapi.sharing8.cn/project/529/interface/api/32582) 的 **返回类型**
  *
  * @分类 [投产接收↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5451)
- * @请求头 `POST /api/product/reception/boxs`
- * @更新时间 `2024-01-19 19:39:47`
+ * @请求头 `POST /api/product/reception/boxes`
+ * @更新时间 `2024-01-22 10:39:45`
  */
-export interface PostApiProductReceptionBoxsResponse {
+export interface PostApiProductReceptionBoxesResponse {
   totalCount: number;
   currPage: null;
   totalPage: null;
@@ -42,10 +42,10 @@ export interface PostApiProductReceptionBoxsResponse {
  * 接口 [查询已接收的箱↗](https://yapi.sharing8.cn/project/529/interface/api/32587) 的 **请求类型**
  *
  * @分类 [投产接收↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5451)
- * @请求头 `POST /api/product/reception/accepted/boxs`
- * @更新时间 `2024-01-19 19:39:42`
+ * @请求头 `POST /api/product/reception/accepted/boxes`
+ * @更新时间 `2024-01-22 10:39:51`
  */
-export interface PostApiProductReceptionAcceptedBoxsRequest {
+export interface PostApiProductReceptionAcceptedBoxesRequest {
   orderNo: string;
   currPage: number;
   pageSize: number;
@@ -55,10 +55,10 @@ export interface PostApiProductReceptionAcceptedBoxsRequest {
  * 接口 [查询已接收的箱↗](https://yapi.sharing8.cn/project/529/interface/api/32587) 的 **返回类型**
  *
  * @分类 [投产接收↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5451)
- * @请求头 `POST /api/product/reception/accepted/boxs`
- * @更新时间 `2024-01-19 19:39:42`
+ * @请求头 `POST /api/product/reception/accepted/boxes`
+ * @更新时间 `2024-01-22 10:39:51`
  */
-export interface PostApiProductReceptionAcceptedBoxsResponse {
+export interface PostApiProductReceptionAcceptedBoxesResponse {
   totalCount: number;
   currPage: null;
   totalPage: null;

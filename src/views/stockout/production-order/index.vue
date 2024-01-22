@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #mesId="{ record }">
         <span
@@ -25,7 +25,7 @@
     <DetailModal @register="registerDetailModal" />
     <CreateModal @register="registerModal" @success="handleSuccess" />
     <CheckModal @register="registerCheckModal" @success="handleSuccess" />
-  </div>
+  </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
@@ -48,6 +48,7 @@
   import DetailModal from './DetailModal.vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { statusValueEnum } from '@/enums/stockoutEnum';
+  import { PageWrapper } from '@/components/Page';
 
   defineOptions({ name: 'DeptManagement' });
 

@@ -40,6 +40,15 @@ const nonconformity: AppRouteModule = {
       },
       component: () => import('/@/views/stockout/production-plan/index.vue'),
     },
+    {
+      path: 'productionPutInto',
+      name: 'ProductionPutInto',
+      id: 9603,
+      meta: {
+        title: '投产出库',
+      },
+      component: () => import('/@/views/stockout/production-put-into/index.vue'),
+    },
   ],
 };
 
