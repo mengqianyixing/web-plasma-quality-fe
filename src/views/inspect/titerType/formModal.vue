@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-26 17:41:03
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-22 15:44:38
+ * @LastEditTime: 2024-01-22 16:08:14
 -->
 <template>
   <BasicModal
@@ -38,7 +38,15 @@
 
   const [
     registerForm,
-    { validate, setFieldsValue, clearValidate, resetFields, updateSchema, getFieldsValue },
+    {
+      validate,
+      setFieldsValue,
+      clearValidate,
+      resetFields,
+      updateSchema,
+      getFieldsValue,
+      validateFields,
+    },
   ] = useForm({
     labelWidth: 200,
     baseColProps: { flex: '0 1 440px' },
@@ -72,8 +80,16 @@
       }
       updateSchema(disabledOptions);
       updateSchema([
-        { field: 'max', rules: [{ validator: maxValidator }] },
-        { field: 'min', rules: [{ validator: minValidator }] },
+        {
+          field: 'max',
+          rules: [{ validator: maxValidator }],
+          componentProps: { onChange: () => validateFields(['min']) },
+        },
+        {
+          field: 'min',
+          rules: [{ validator: minValidator }],
+          componentProps: { onChange: () => validateFields(['max']) },
+        },
       ]);
       clearValidate();
     },
