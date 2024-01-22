@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-10 18:32:10
+ * @LastEditTime: 2024-01-17 15:41:08
  * @Description: 入库管理
  * @FilePath: \psms-fe\src\router\routes\modules\inbound-management\index.ts
  */
@@ -15,6 +15,7 @@ const inboundmanagement: AppRouteModule = {
   name: 'Inboundmanagement',
   component: LAYOUT,
   id: 93,
+  menuWeight: 96,
   meta: {
     orderNo: 10001,
     title: '入库管理',

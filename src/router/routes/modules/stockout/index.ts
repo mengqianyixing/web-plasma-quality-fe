@@ -14,6 +14,7 @@ const nonconformity: AppRouteModule = {
   path: '/stockout',
   name: 'StockOut',
   id: 96,
+  menuWeight: 90,
   component: LAYOUT,
   meta: {
     orderNo: 10000,
@@ -38,6 +39,15 @@ const nonconformity: AppRouteModule = {
         title: '投产计划',
       },
       component: () => import('/@/views/stockout/production-plan/index.vue'),
+    },
+    {
+      path: 'pp',
+      name: 'ProductionPreparation',
+      id: 9603,
+      meta: {
+        title: '投产准备',
+      },
+      component: () => import('/@/views/stockout/production-preparation/index.vue'),
     },
   ],
 };

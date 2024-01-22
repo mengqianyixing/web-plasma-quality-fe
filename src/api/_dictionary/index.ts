@@ -8,6 +8,7 @@ enum Api {
 export enum DictionaryEnum {
   PlasmaUnqualifiedReason = 'bagUnqualifiedReason',
   SampleUnqualifiedReason = 'sampleUnqualifiedReason',
+  PlasmaRelease = 'plasmaRelease',
   UnqualifiedBoxReason = 'warehouseUnqualified',
   SampleType = 'sampleType',
   PlasmaUnqualifiedItem = 'plasmaUnqualifiedItem',

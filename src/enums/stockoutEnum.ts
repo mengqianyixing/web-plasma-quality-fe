@@ -90,3 +90,94 @@ export const expirationMap = new Map<expirationValueEnum, string>();
 
 expirationMap.set(expirationValueEnum.AY, expirationEnum.AY);
 expirationMap.set(expirationValueEnum.TY, expirationEnum.TY);
+
+// 投产准备状态
+export enum prepareStateEnum {
+  RUN = '准备中',
+  REV = '待复核',
+  TPK = '待分拣',
+  RPK = '分拣中',
+  CPK = '已分拣',
+  OUT = '已出库',
+  DEL = '已取消',
+}
+
+export enum prepareStateValueEnum {
+  RUN = 'RUN',
+  REV = 'REV',
+  TPK = 'TPK',
+  RPK = 'RPK',
+  CPK = 'CPK',
+  OUT = 'OUT',
+  DEL = 'DEL',
+}
+
+export const prepareStateMap = new Map<prepareStateValueEnum, string>();
+
+prepareStateMap.set(prepareStateValueEnum.RUN, prepareStateEnum.RUN);
+prepareStateMap.set(prepareStateValueEnum.REV, prepareStateEnum.REV);
+prepareStateMap.set(prepareStateValueEnum.TPK, prepareStateEnum.TPK);
+prepareStateMap.set(prepareStateValueEnum.RPK, prepareStateEnum.RPK);
+prepareStateMap.set(prepareStateValueEnum.CPK, prepareStateEnum.CPK);
+prepareStateMap.set(prepareStateValueEnum.OUT, prepareStateEnum.OUT);
+prepareStateMap.set(prepareStateValueEnum.DEL, prepareStateEnum.DEL);
+
+// 限制血浆
+export enum bagFlagEnum {
+  ALL = '是',
+  NO = '否',
+}
+
+export enum bagFlagValueEnum {
+  ALL = 'ALL',
+  NO = 'NO',
+}
+
+export const bagFlagMap = new Map<bagFlagValueEnum, string>();
+
+bagFlagMap.set(bagFlagValueEnum.ALL, bagFlagEnum.ALL);
+bagFlagMap.set(bagFlagValueEnum.NO, bagFlagEnum.NO);
+
+// 挑浆模式
+export enum pickModeEnum {
+  TPR = '待投产',
+  CPR = '投产',
+}
+
+export enum pickModeValueEnum {
+  TPR = 'TPR',
+  CPR = 'CPR',
+}
+
+export const pickModeMap = new Map<pickModeValueEnum, string>();
+
+pickModeMap.set(pickModeValueEnum.TPR, pickModeEnum.TPR);
+pickModeMap.set(pickModeValueEnum.CPR, pickModeEnum.CPR);
+
+// 合格状态
+export enum BagTrackEnum {
+  UTRK = '待追',
+  PASS = '检疫期合格',
+  FAIL = '检疫期不合格',
+  FTRK = '续追踪不合格',
+  EXPR = '效期不合格',
+  BLOK = '献浆员者不符合',
+}
+
+export enum BagTrackValueEnum {
+  UTRK = 'UTRK',
+  PASS = 'PASS',
+  FAIL = 'FAIL',
+  FTRK = 'FTRK',
+  EXPR = 'EXPR',
+  BLOK = 'BLOK',
+}
+
+export const BagTrackMap = new Map<BagTrackValueEnum, string>();
+
+BagTrackMap.set(BagTrackValueEnum.UTRK, BagTrackEnum.UTRK);
+BagTrackMap.set(BagTrackValueEnum.PASS, BagTrackEnum.PASS);
+BagTrackMap.set(BagTrackValueEnum.FAIL, BagTrackEnum.FAIL);
+BagTrackMap.set(BagTrackValueEnum.FTRK, BagTrackEnum.FTRK);
+BagTrackMap.set(BagTrackValueEnum.EXPR, BagTrackEnum.EXPR);
+BagTrackMap.set(BagTrackValueEnum.BLOK, BagTrackEnum.BLOK);
