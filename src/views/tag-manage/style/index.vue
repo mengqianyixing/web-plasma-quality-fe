@@ -80,7 +80,6 @@
 
   const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, getForm }] = useTable({
-    title: '标签样式列表',
     api: getTagsList,
     columns,
     formConfig: {

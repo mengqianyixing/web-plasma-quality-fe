@@ -76,7 +76,6 @@
       setTableData,
     },
   ] = useTable({
-    title: '审核列表',
     columns: [
       {
         title: '审核项目',

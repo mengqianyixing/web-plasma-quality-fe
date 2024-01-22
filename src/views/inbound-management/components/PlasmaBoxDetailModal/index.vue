@@ -29,7 +29,6 @@
   const emit = defineEmits(['success', 'register']);
 
   const [registerTable, { reload, getForm }] = useTable({
-    title: '',
     api: getPlasmaBox,
     columns,
     formConfig: {

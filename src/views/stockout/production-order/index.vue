@@ -61,7 +61,6 @@
   const { warning } = createMessage;
 
   const [registerTable, { reload }] = useTable({
-    title: '生产指令列表',
     api: getProOrders,
     columns,
     formConfig: {

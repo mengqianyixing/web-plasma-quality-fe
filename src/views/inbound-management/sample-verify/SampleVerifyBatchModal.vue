@@ -31,7 +31,6 @@
   const { warning } = createMessage;
 
   const [registerTable, { reload, setSelectedRowKeys, clearSelectedRowKeys }] = useTable({
-    title: '样本验收批次列表',
     api: getSampleVerifyList,
     columns: sampleVerifyColumns,
     formConfig: {

@@ -96,7 +96,6 @@
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
 
   const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
-    title: '不合格血浆管理列表',
     api: nonconformityPlasmaList,
     fetchSetting: {
       pageField: 'currPage',

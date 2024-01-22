@@ -45,7 +45,6 @@
   const { createConfirm } = useMessage();
 
   const [registerTable, { reload }] = useTable({
-    title: '样本批次列表',
     api: getCallbackDetail,
     columns: callbackModalColumns,
     formConfig: {

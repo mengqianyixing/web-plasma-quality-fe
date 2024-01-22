@@ -67,7 +67,6 @@
   });
 
   const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
-    title: '样本发布列表',
     api: getSampleBatchesList,
     fetchSetting: {
       pageField: 'currPage',

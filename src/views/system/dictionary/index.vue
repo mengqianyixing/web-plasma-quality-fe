@@ -36,7 +36,6 @@
   const [registerItemModal, { openModal: openItemModal }] = useModal();
 
   const [registerTable, { getSelectRows, reload, clearSelectedRowKeys }] = useTable({
-    title: '字典列表',
     api: getDictListApi,
     fetchSetting: {
       pageField: 'currPage',

@@ -49,7 +49,6 @@
     { clearSelectedRowKeys, reload, setPagination, getSelectRows, redoHeight },
   ] = useTable({
     api: getData,
-    title: '',
     immediate: false,
     size: 'small',
     fetchSetting: {

@@ -50,7 +50,6 @@
   const [registerModal, { openModal }] = useModal();
   const searchInfo = reactive<Recordable>({});
   const [registerTable, { reload, updateTableDataRecord }] = useTable({
-    title: '账号列表',
     api: getAccountList,
     fetchSetting: {
       pageField: 'currPage',

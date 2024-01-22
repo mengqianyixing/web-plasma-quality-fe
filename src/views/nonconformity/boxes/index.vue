@@ -30,7 +30,6 @@
 
   const selectedRowsRef = ref<Recordable>([]);
   const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
-    title: '不合格库房管理列表',
     api: nonconformityBoxList,
     columns,
     formConfig: {

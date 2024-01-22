@@ -22,7 +22,6 @@
 
   const batchSampleNo = ref('');
   const [registerTable, { reload }] = useTable({
-    title: '',
     api: getSampleUnqualifiedList,
     columns: unqualifiedColumns,
     fetchSetting: {

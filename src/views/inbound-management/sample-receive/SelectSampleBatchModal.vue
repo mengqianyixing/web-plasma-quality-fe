@@ -31,7 +31,6 @@
   const { warning } = createMessage;
 
   const [registerTable, { reload, setSelectedRowKeys }] = useTable({
-    title: '样本批次列表',
     api: getSampleReceiveList,
     columns: sampleAcceptColumns,
     formConfig: {

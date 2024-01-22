@@ -60,7 +60,6 @@
     });
   });
   const [registerTable, { getForm, reload }] = useTable({
-    title: '历史标签列表',
     api: historyStyle,
     columns: columnsHistory,
     beforeFetch: (params) => {

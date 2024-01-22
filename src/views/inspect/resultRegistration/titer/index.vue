@@ -83,7 +83,6 @@
   const [registerImportModal, { openModal: openImportModal }] = useModal();
 
   const [registerTable, { reload, getSelectRows }] = useTable({
-    title: '',
     immediate: false,
     api: getTiterListApi,
     fetchSetting: {
