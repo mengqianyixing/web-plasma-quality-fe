@@ -162,7 +162,7 @@ export interface GetApiProductPrepareListResponse {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `POST /api/product/prepare/save`
- * @更新时间 `2024-01-09 17:08:58`
+ * @更新时间 `2024-01-22 16:22:23`
  */
 export interface PostApiProductPrepareSaveRequest {
   /**
@@ -184,7 +184,7 @@ export interface PostApiProductPrepareSaveRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `POST /api/product/prepare/save`
- * @更新时间 `2024-01-09 17:08:58`
+ * @更新时间 `2024-01-22 16:22:23`
  */
 export interface PostApiProductPrepareSaveResponse {}
 
@@ -625,7 +625,7 @@ export interface GetApiProductPrepareSummaryBagPrepareNoResponse {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/pick/batch`
- * @更新时间 `2024-01-16 18:06:18`
+ * @更新时间 `2024-01-22 16:25:09`
  */
 export interface GetApiProductPreparePickBatchRequest {
   /**
@@ -641,10 +641,6 @@ export interface GetApiProductPreparePickBatchRequest {
    */
   batchNo?: string;
   /**
-   * 1、ALL-限制  2、NO-不限制  3、血浆限制单号
-   */
-  bagFlag: string;
-  /**
    * 首次挑选
    */
   firstFlag?: string;
@@ -657,10 +653,6 @@ export interface GetApiProductPreparePickBatchRequest {
    */
   maxCollectDay?: string;
   /**
-   * 效价
-   */
-  immunity: string;
-  /**
    * 最小效价值
    */
   minTiter?: string;
@@ -669,13 +661,17 @@ export interface GetApiProductPreparePickBatchRequest {
    */
   maxTiter?: string;
   /**
+   * 效价等级  H-高效价  L-低效价
+   */
+  titerLevel?: string;
+  /**
    * 排序字段(batchNo passCount passRatio)
    */
   orderBy?: string;
   /**
    * 升序：asc 降序：desc
    */
-  sort?: string;
+  sort: string;
   currPage: string;
   pageSize: string;
 }
@@ -685,7 +681,7 @@ export interface GetApiProductPreparePickBatchRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/pick/batch`
- * @更新时间 `2024-01-16 18:06:18`
+ * @更新时间 `2024-01-22 16:25:09`
  */
 export interface GetApiProductPreparePickBatchResponse {
   field_1: {
@@ -741,7 +737,7 @@ export interface GetApiProductPreparePickBatchResponse {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/pick/box`
- * @更新时间 `2024-01-16 17:57:28`
+ * @更新时间 `2024-01-22 16:25:59`
  */
 export interface GetApiProductPreparePickBoxRequest {
   /**
@@ -769,9 +765,9 @@ export interface GetApiProductPreparePickBoxRequest {
    */
   maxCollectDay: string;
   /**
-   * 效价
+   * 效价等级 H-高效价  L-低效价
    */
-  immunity?: string;
+  titerLevel?: string;
   /**
    * 最小效价值
    */
@@ -783,7 +779,7 @@ export interface GetApiProductPreparePickBoxRequest {
   /**
    * 排序字段(batchNo passCount passRatio)
    */
-  orderBy?: string;
+  orderBy: string;
   sort: string;
   currPage: string;
   pageSize: string;
@@ -794,7 +790,7 @@ export interface GetApiProductPreparePickBoxRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/pick/box`
- * @更新时间 `2024-01-16 17:57:28`
+ * @更新时间 `2024-01-22 16:25:59`
  */
 export interface GetApiProductPreparePickBoxResponse {
   field_1: {
@@ -850,7 +846,7 @@ export interface GetApiProductPreparePickBoxResponse {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `POST /api/product/prepare/pick/bag`
- * @更新时间 `2024-01-19 09:46:03`
+ * @更新时间 `2024-01-22 16:24:27`
  */
 export interface PostApiProductPreparePickBagRequest {
   /**
@@ -882,9 +878,9 @@ export interface PostApiProductPreparePickBagRequest {
    */
   maxCollectDay?: string;
   /**
-   * 效价
+   * 效价等级  H-高效价  L-低效价
    */
-  immunity: string;
+  'titerLevel：': string;
   /**
    * 最小效价值
    */
@@ -900,7 +896,7 @@ export interface PostApiProductPreparePickBagRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `POST /api/product/prepare/pick/bag`
- * @更新时间 `2024-01-19 09:46:03`
+ * @更新时间 `2024-01-22 16:24:27`
  */
 export interface PostApiProductPreparePickBagResponse {}
 
@@ -1243,10 +1239,11 @@ export interface GetApiProductPrepareOutStoreResponse {
  * 接口 [投产逐箱出库↗](https://yapi.sharing8.cn/project/529/interface/api/32632) 的 **请求类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `POST /api/product/prepare/out-store/{boxNo}`
- * @更新时间 `2024-01-19 11:29:05`
+ * @请求头 `POST /api/product/prepare/out-store`
+ * @更新时间 `2024-01-22 18:48:19`
  */
-export interface PostApiProductPrepareOutStoreBoxNoRequest {
+export interface PostApiProductPrepareOutStoreRequest {
+  orderNo: string;
   boxNo: string;
 }
 
@@ -1254,10 +1251,10 @@ export interface PostApiProductPrepareOutStoreBoxNoRequest {
  * 接口 [投产逐箱出库↗](https://yapi.sharing8.cn/project/529/interface/api/32632) 的 **返回类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `POST /api/product/prepare/out-store/{boxNo}`
- * @更新时间 `2024-01-19 11:29:05`
+ * @请求头 `POST /api/product/prepare/out-store`
+ * @更新时间 `2024-01-22 18:48:19`
  */
-export interface PostApiProductPrepareOutStoreBoxNoResponse {}
+export interface PostApiProductPrepareOutStoreResponse {}
 
 /**
  * 接口 [投产批出库↗](https://yapi.sharing8.cn/project/529/interface/api/32642) 的 **请求类型**
@@ -1281,5 +1278,43 @@ export interface PostApiProductPrepareOutStoreBatchRequest {
  * @更新时间 `2024-01-20 15:20:49`
  */
 export interface PostApiProductPrepareOutStoreBatchResponse {}
+
+/**
+ * 接口 [投产逐箱出库信息↗](https://yapi.sharing8.cn/project/529/interface/api/32672) 的 **请求类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `GET /api/product/out-store/boxes/{orderNo}`
+ * @更新时间 `2024-01-22 17:07:24`
+ */
+export interface GetApiProductOutStoreBoxesOrderNoRequest {
+  /**
+   * 投产orderNo
+   */
+  orderNo: string;
+}
+
+/**
+ * 接口 [投产逐箱出库信息↗](https://yapi.sharing8.cn/project/529/interface/api/32672) 的 **返回类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `GET /api/product/out-store/boxes/{orderNo}`
+ * @更新时间 `2024-01-22 17:07:24`
+ */
+export interface GetApiProductOutStoreBoxesOrderNoResponse {
+  /**
+   * 未出库
+   */
+  notOutList?: {
+    boxNo?: string;
+    bagNum?: number;
+  }[];
+  /**
+   * 已出库
+   */
+  outList?: {
+    boxNo?: string;
+    bagNum?: number;
+  }[];
+}
 
 /* prettier-ignore-end */

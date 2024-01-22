@@ -25,6 +25,7 @@
 
     <DetailModal @register="registerDetailModal" />
     <BoxReceiveModal @register="registerReceiveModal" @success="handleSuccess" />
+    <BoxOutStoreModal @register="registerBoxOutStoreModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -38,18 +39,20 @@
 
   import DetailModal from './DetailModal.vue';
   import BoxReceiveModal from '@/views/stockout/production-put-into/BoxReceiveModal.vue';
+  import BoxOutStoreModal from '@/views/stockout/production-put-into/BoxOutStoreModal.vue';
 
   import { useMessage } from '@/hooks/web/useMessage';
   import { PageWrapper } from '@/components/Page';
-  import { getListApi } from '@/api/stockout/production-plan';
   import {
     productionReceiveByBatch,
     productionReceiveRevokeByBatch,
     productionStockOutByBatch,
   } from '@/api/stockout/production-put-into';
+  import { getProOrders } from '@/api/stockout/production-order';
 
   defineOptions({ name: 'DeptManagement' });
 
+  const [registerBoxOutStoreModal, { openModal: openBoxOutStoreModal }] = useModal();
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
   const [registerReceiveModal, { openModal: openBoxReceiveModal }] = useModal();
 
@@ -59,8 +62,7 @@
   const { warning } = createMessage;
 
   const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
-    title: '投产出库列表',
-    api: getListApi,
+    api: getProOrders,
     columns,
     formConfig: {
       schemas: searchFormSchema,
@@ -81,12 +83,7 @@
     size: 'large',
     striped: false,
     useSearchForm: true,
-    showTableSetting: true,
-    tableSetting: {
-      size: false,
-      redo: false,
-      setting: false,
-    },
+    showTableSetting: false,
     bordered: true,
     showIndexColumn: false,
     canResize: true,
@@ -112,7 +109,15 @@
 
   function handleTrayStockOut() {}
 
-  function handleBoxStockOut() {}
+  function handleBoxStockOut() {
+    if (!selectRowsCheck()) return;
+
+    openBoxOutStoreModal(true, {
+      record: {
+        orderNo: selectedRow.value[0]?.orderNo,
+      },
+    });
+  }
 
   function handleBatchStockOut() {
     if (!selectRowsCheck()) return;

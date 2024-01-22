@@ -32,7 +32,9 @@ export enum statusEnum {
   PLI = '计划中',
   PBR = '计划待复核',
   PLD = '计划待审核',
+  PVD = '待出库',
   OTD = '已出库',
+  OUI = '出库中',
   ACT = '接收中',
   ACD = '已接收',
   ROD = '已撤销',
@@ -45,7 +47,9 @@ export enum statusValueEnum {
   PLI = 'PLI',
   PBR = 'PBR',
   PLD = 'PLD',
+  PVD = 'PVD',
   OTD = 'OTD',
+  OUI = 'OUT',
   ACT = 'ACT',
   ACD = 'ACD',
   ROD = 'ROD',
@@ -59,7 +63,9 @@ statusMap.set(statusValueEnum.TBP, statusEnum.TBP);
 statusMap.set(statusValueEnum.PLI, statusEnum.PLI);
 statusMap.set(statusValueEnum.PBR, statusEnum.PBR);
 statusMap.set(statusValueEnum.PLD, statusEnum.PLD);
+statusMap.set(statusValueEnum.PVD, statusEnum.PVD);
 statusMap.set(statusValueEnum.OTD, statusEnum.OTD);
+statusMap.set(statusValueEnum.OUI, statusEnum.OUI);
 statusMap.set(statusValueEnum.ACT, statusEnum.ACT);
 statusMap.set(statusValueEnum.ACD, statusEnum.ACD);
 statusMap.set(statusValueEnum.ROD, statusEnum.ROD);
