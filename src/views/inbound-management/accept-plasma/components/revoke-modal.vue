@@ -5,14 +5,19 @@
     :open="true"
     @cancel="hideModal"
     :footer="false"
-    width="500px"
+    width="400px"
     title="撤销验收"
   >
     <div class="content">
-      <Form :model="searchForm">
-        <FormItem label="复核人" name="checker" :rules="[{ required: true }]">
-          <Input v-model:value="searchForm.checker" disabled style="width: 180px" />
-          <Button @click="handleLogin">登录</Button>
+      <Form :model="searchForm" :labelCol="{ span: 4 }">
+        <FormItem label="复核人" la name="checker" :rules="[{ required: true }]">
+          <InputSearch
+            enterButton="登录"
+            placeholder="请点击登录"
+            readonly
+            @search="handleLogin"
+            v-model:value="searchForm.checker"
+          />
         </FormItem>
         <FormItem label="原因" :rules="[{ required: true }]">
           <Textarea v-model:value="searchForm.remark" :cols="40" />
@@ -28,7 +33,7 @@
 
 <script lang="ts" setup>
   import { ref, defineExpose } from 'vue';
-  import { Modal, Textarea, Form, FormItem, Button, Input } from 'ant-design-vue';
+  import { Modal, Textarea, Form, FormItem, Button, InputSearch } from 'ant-design-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { plasmaRevokeBag } from '@/api/inbound-management/accept-plasma.js';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';

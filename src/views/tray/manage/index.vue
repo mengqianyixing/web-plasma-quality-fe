@@ -25,7 +25,7 @@
     </BasicModal>
     <TableModal @register="registerTableModal" />
     <BoxTableModal @register="registerBoxTableModal" />
-    <Login :open="open" @cancel="open = false" @login="login" />
+    <Login @register="registerLoginModal" @success="login" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
@@ -34,7 +34,7 @@
   import { columns, searchFormSchema } from './manage.data';
   import { BasicModal, useModal } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
-  import Login from '@/components/BusinessDrawer/login/index.vue';
+  import Login from '@/__components/ReviewLoginModal/index.vue';
 
   import {
     getListApi,
@@ -45,10 +45,8 @@
   import { message } from 'ant-design-vue';
   import TableModal from './tableDrawer.vue';
   import BoxTableModal from './boxTableDrawer.vue';
-  import { ref } from 'vue';
 
-  const open = ref(false);
-
+  const [registerLoginModal, { openModal: openLoginModal }] = useModal();
   const [registerModal, { openModal, closeModal, setModalProps }] = useModal();
   const [registerTableModal, { openModal: openTableModal }] = useModal();
   const [registerBoxTableModal, { openModal: openBoxTableModal }] = useModal();
@@ -102,10 +100,9 @@
     else if (rows.length === 0) return message.warning('请选择一条数据');
     const [row] = rows;
     if (row.closed === closed) return message.warning('状态不需要变更');
-    open.value = true;
+    openLoginModal(true, {});
   }
-  async function login(values) {
-    open.value = false;
+  async function login(userName, values) {
     const rows = getSelectRows();
     const [row] = rows;
     await disableTrayApi({ trayNo: row.trayNo, rechecker: values.userId });

@@ -6,17 +6,7 @@
     @ok="handleSubmit"
     width="430px"
   >
-    <BasicForm @register="registerForm">
-      <template #check="{ model, field }">
-        <a-input
-          disabled
-          placeholder="请点击登录按钮"
-          v-model:value="model[field]"
-          style="width: calc(100% - 80px)"
-        />
-        <a-button type="primary" @click="handleLogin" class="ml-3">登录</a-button>
-      </template>
-    </BasicForm>
+    <BasicForm @register="registerForm" />
 
     <LoginModal @register="registerLoginModal" @success="handleSuccess" />
   </BasicModal>
@@ -38,7 +28,7 @@
 
   const [registerLoginModal, { openModal }] = useModal();
 
-  const [registerForm, { resetFields, validate, setFieldsValue }] = useForm({
+  const [registerForm, { resetFields, validate, setFieldsValue, updateSchema }] = useForm({
     labelWidth: 120,
     baseColProps: { span: 48 },
     schemas: pickSchema,
@@ -49,6 +39,7 @@
   });
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(() => {
+    updateSchema({ field: 'reviewer', componentProps: { onSearch: handleLogin } });
     resetFields();
     setModalProps({ confirmLoading: false });
   });

@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2024-01-22 15:38:50
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-22 17:48:15
+-->
 <template>
   <BasicModal
     v-bind="$attrs"
@@ -7,17 +15,7 @@
     @close="resetFields"
     width="450px"
   >
-    <BasicForm @register="registerForm">
-      <template #check="{ model, field }">
-        <a-input
-          disabled
-          placeholder="请点击登录"
-          v-model:value="model[field]"
-          style="width: calc(100% - 80px)"
-        />
-        <a-button type="primary" @click="handleLogin" class="ml-3">登录</a-button>
-      </template>
-    </BasicForm>
+    <BasicForm @register="registerForm" />
   </BasicModal>
   <LoginModal @register="registerLoginModal" @success="handleSuccess" />
 </template>
@@ -43,10 +41,15 @@
     },
     {
       field: 'checker',
-      component: 'InputGroup',
-      slot: 'check',
+      component: 'InputSearch',
       label: '复核人',
       colProps: { span: 24 },
+      componentProps: {
+        'enter-button': '登录',
+        placeholder: '请点击登录按钮',
+        readonly: true,
+        onSearch: handleLogin,
+      },
       required: true,
     },
     {
@@ -58,7 +61,7 @@
     },
   ];
   const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
-    labelWidth: 80,
+    labelWidth: 100,
     baseColProps: { span: 48 },
     schemas: formSchema,
     showActionButtonGroup: false,

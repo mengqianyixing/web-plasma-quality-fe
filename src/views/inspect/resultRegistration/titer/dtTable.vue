@@ -14,7 +14,7 @@
       @ok="handleSubmit"
     >
       <BasicForm @register="registerForm" />
-      <Login :open="open" @cancel="cancel" @login="login" />
+      <Login @register="registerLoginModal" @success="login" />
     </BasicModal>
   </div>
 </template>
@@ -24,12 +24,11 @@
   import { dtColumns, dtSearchSchema } from './data';
   import { BasicModal, useModal } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
-  import Login from '@/components/BusinessDrawer/login/index.vue';
-  import { ref, nextTick } from 'vue';
+  import Login from '@/__components/ReviewLoginModal/index.vue';
+  import { nextTick } from 'vue';
   import { getCheckItemDtListApi, updateTiterCheckApi } from '@/api/inspect/resultRegistration';
   import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
 
-  const open = ref(false);
   const props = defineProps({
     checkResult: {
       type: String,
@@ -49,6 +48,8 @@
     },
   });
   let userData = {};
+
+  const [registerLoginModal, { openModal: openLoginModal }] = useModal();
   const [registerModal, { openModal }] = useModal();
   const [registerForm, { setFieldsValue, validate, updateSchema }] = useForm({
     labelWidth: 80,
@@ -71,7 +72,7 @@
           placeholder: '请点击登录按钮',
           readonly: true,
           onSearch: () => {
-            open.value = true;
+            openLoginModal(true, {});
           },
         },
       },
@@ -150,12 +151,9 @@
       },
     });
   }
-  function cancel() {
-    open.value = false;
-  }
-  function login(data) {
+
+  function login(username, data) {
     setFieldsValue({ account: data.username });
     userData = data;
-    open.value = false;
   }
 </script>

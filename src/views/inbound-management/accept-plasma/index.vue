@@ -130,10 +130,13 @@
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
-            <a-input placeholder="请登录" value={checker} disabled />
-            <a-button type="primary" onClick={handleLogin}>
-              选择
-            </a-button>
+            <a-input-search
+              enter-button="登录"
+              placeholder="请点击登录"
+              readOnly
+              value={checker}
+              onSearch={handleLogin}
+            />
           </div>
         );
       },
@@ -145,10 +148,13 @@
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
-            <a-input placeholder="请选择" value={batchNo} disabled />
-            <a-button type="primary" onClick={selectBatchModal}>
-              选择
-            </a-button>
+            <a-input-search
+              enter-button="选择"
+              placeholder="请点击选择"
+              value={batchNo}
+              readOnly
+              onSearch={selectBatchModal}
+            />
           </div>
         );
       },
