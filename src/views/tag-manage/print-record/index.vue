@@ -69,7 +69,6 @@
   const [registerReprintModal, { openModal: openReprintModal }] = useModal();
 
   const [registerTable, { getForm, clearSelectedRowKeys }] = useTable({
-    title: '标签打印记录列表',
     api: getPrintRecords,
     columns,
     formConfig: {

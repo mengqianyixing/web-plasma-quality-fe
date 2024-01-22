@@ -83,10 +83,13 @@
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
-            <a-input placeholder="请选择" value={batchNo} disabled />
-            <a-button type="primary" onClick={selectBatchModal}>
-              选择
-            </a-button>
+            <a-input-search
+              placeholder="请点击选择"
+              enter-button="选择"
+              value={batchNo}
+              readonly
+              onSearch={selectBatchModal}
+            ></a-input-search>
           </div>
         );
       },

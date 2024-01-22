@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-17 17:18:17
+ * @LastEditTime: 2024-01-22 18:45:57
 -->
 <template>
   <BasicModal
@@ -22,19 +22,18 @@
       <a-button type="primary" @click="handleSubmit(false)" :loading="loading">提交&继续</a-button>
     </template>
     <BasicForm @register="registerForm" />
-    <Login :open="open" @cancel="cancel" @login="login" />
+    <Login @register="registerLoginModal" @success="login" />
   </BasicModal>
 </template>
 <script setup lang="ts">
-  import { BasicModal, useModalInner } from '@/components/Modal';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { formSchemaMap, notCheckFormSchema, methodsMappding } from './data';
-  import Login from '@/components/BusinessDrawer/login/index.vue';
+  import Login from '@/__components/ReviewLoginModal/index.vue';
   import { ref } from 'vue';
   import { summitUnqualifiedApi } from '@/api/inspect/resultRegistration';
   import { message } from 'ant-design-vue';
 
-  const open = ref(false);
   const loading = ref(false);
 
   let projectName = ref('');
@@ -43,6 +42,7 @@
   let userData: Recordable = {};
   let fieldList: string[] = [];
   const emit = defineEmits(['close', 'confirm']);
+  const [registerLoginModal, { openModal: openLoginModal }] = useModal();
   const [
     registerForm,
     {
@@ -77,7 +77,7 @@
           placeholder: '请点击登录按钮',
           readonly: true,
           onSearch: () => {
-            open.value = true;
+            openLoginModal(true, {});
           },
         },
       });
@@ -120,12 +120,9 @@
       setModalProps({ confirmLoading: false });
     }
   }
-  function cancel() {
-    open.value = false;
-  }
-  function login(data) {
+
+  function login(userName, data) {
     userData = data;
     setFieldsValue({ account: data.username });
-    open.value = false;
   }
 </script>

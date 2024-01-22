@@ -65,7 +65,6 @@
   const [registerCallbackDetailModal, { openModal: openCallbackDetailModal }] = useModal();
 
   const [registerTable, { getForm, reload }] = useTable({
-    title: '回访名单确认列表',
     api: getCallbackListApi,
     columns,
     formConfig: {

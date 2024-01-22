@@ -19,7 +19,6 @@
 
   const [registerHortFall] = useModalInner();
   const [registerTable] = useTable({
-    title: '明细',
     immediate: true,
     fetchSetting: {
       listField: 'result',

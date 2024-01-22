@@ -15,7 +15,6 @@
   const batchSampleNo = ref('');
 
   const [registerTable, { reload }] = useTable({
-    title: '血浆验收不合格列表',
     api: getVerifyUnqualified,
     columns: plasmaUnqualifiedColumns,
     beforeFetch: (_) => {

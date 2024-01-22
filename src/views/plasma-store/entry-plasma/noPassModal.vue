@@ -29,7 +29,6 @@
     bagNo: '',
   });
   const [registerTable, { clearSelectedRowKeys, reload, setPagination }] = useTable({
-    title: '明细',
     immediate: false,
     api: verifyNoPassNumApi,
 

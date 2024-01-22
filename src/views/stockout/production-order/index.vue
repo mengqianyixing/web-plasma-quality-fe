@@ -62,7 +62,6 @@
   const { warning } = createMessage;
 
   const [registerTable, { reload }] = useTable({
-    title: '生产指令列表',
     api: getProOrders,
     columns,
     formConfig: {
@@ -81,7 +80,7 @@
         selectedRow.value = selectedRows;
       },
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,

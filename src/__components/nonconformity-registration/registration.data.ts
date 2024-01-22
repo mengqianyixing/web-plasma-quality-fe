@@ -4,8 +4,7 @@ import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
 export const schemas: FormSchema[] = [
   {
     field: 'checker',
-    component: 'InputGroup',
-    slot: 'check',
+    component: 'InputSearch',
     label: '复核人',
     colProps: { span: 14 },
     required: true,

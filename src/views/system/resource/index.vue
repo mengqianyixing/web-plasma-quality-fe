@@ -42,7 +42,6 @@
   const [registerModal, { openModal }] = useModal();
 
   const [registerTable, { reload }] = useTable({
-    title: '资源列表',
     api: getResourcesList,
     fetchSetting: {
       pageField: 'currPage',

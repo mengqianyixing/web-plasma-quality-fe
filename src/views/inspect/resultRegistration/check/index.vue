@@ -95,7 +95,6 @@
   });
 
   const [registerTable, { getSelectRows, reload }] = useTable({
-    title: '',
     immediate: false,
     api: getCheckListApi,
     fetchSetting: {

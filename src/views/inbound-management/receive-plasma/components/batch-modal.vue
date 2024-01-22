@@ -52,7 +52,7 @@
         defaultValue: ['R', 'W'],
       });
     } else {
-      // 验收页面打开
+      // 接收页面打开
       await getForm().updateSchema({
         field: 'acceptState',
         defaultValue: ['R', 'W'],

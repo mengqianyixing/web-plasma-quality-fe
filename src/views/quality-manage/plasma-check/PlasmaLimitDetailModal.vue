@@ -65,7 +65,6 @@
   });
 
   const [registerTable, { reload, getRawDataSource }] = useTable({
-    title: '',
     api: getBindBoxListApi,
     columns: [
       {
@@ -122,7 +121,6 @@
     canResize: false,
   });
   const [registerDetailTable] = useTable({
-    title: '',
     columns: [
       {
         title: '血浆编号',

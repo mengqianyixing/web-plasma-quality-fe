@@ -79,7 +79,6 @@
 
   const selectedRowsRef = ref<Recordable>([]);
   const [registerTable, { getForm, reload }] = useTable({
-    title: '血浆入库记录',
     api: getPlasmaInboundList,
     columns,
     formConfig: {
@@ -101,7 +100,7 @@
         selectedRowsRef.value = selectedRows;
       },
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: true,
     showTableSetting: false,

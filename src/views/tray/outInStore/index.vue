@@ -35,7 +35,6 @@
   const [registerInModal, { openModal: openInModal }] = useModal();
 
   const [registerTable, { getSelectRows, reload, clearSelectedRowKeys }] = useTable({
-    title: '',
     api: getListApi,
     fetchSetting: {
       pageField: 'currPage',

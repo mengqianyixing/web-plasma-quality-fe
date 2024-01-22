@@ -14,7 +14,6 @@
 
   const batchSampleNo = ref('');
   const [registerTable, { reload }] = useTable({
-    title: '浆站缺号列表',
     api: getMissingNumberList,
     columns: missingNumberListColumns,
     beforeFetch: (_) => {
