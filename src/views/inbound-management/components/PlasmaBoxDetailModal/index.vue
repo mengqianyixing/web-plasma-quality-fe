@@ -48,7 +48,7 @@
     },
     clickToRowSelect: true,
     clearSelectOnPageChange: true,
-    size: 'large',
+    size: 'small',
     striped: false,
     pagination: false,
     useSearchForm: true,

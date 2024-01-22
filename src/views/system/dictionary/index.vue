@@ -50,7 +50,7 @@
       width: 80,
     },
     columns,
-    size: 'large',
+    size: 'small',
     formConfig: {
       schemas: searchFormSchema,
     },

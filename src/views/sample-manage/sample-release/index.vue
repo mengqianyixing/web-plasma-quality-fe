@@ -76,7 +76,7 @@
       listField: 'result',
     },
     columns,
-    size: 'large',
+    size: 'small',
     useSearchForm: true,
     showTableSetting: false,
     bordered: true,

@@ -40,7 +40,7 @@
     rowProps: {
       justify: 'center',
     },
-    size: 'large',
+    size: 'small',
     actionColOptions: { span: 30 },
     showActionButtonGroup: false,
     schemas: [

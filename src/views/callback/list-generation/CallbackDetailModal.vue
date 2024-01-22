@@ -76,7 +76,7 @@
     },
     rowKey: 'donorNo',
     clickToRowSelect: false,
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: false,
     showTableSetting: true,
