@@ -9,6 +9,7 @@ import {
   statusValueEnum,
 } from '@/enums/stockoutEnum';
 import dayjs from 'dayjs';
+import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
 
 export const columns: BasicColumn[] = [
   {
@@ -132,29 +133,41 @@ export const searchFormSchema: FormSchema[] = [
 export const detailColumns: BasicColumn[] = [
   {
     title: '血浆公司',
+    dataIndex: 'stationName',
   },
   {
     title: '血浆批号',
+    dataIndex: 'batchNo',
   },
   {
     title: '血浆箱号',
+    dataIndex: 'boxNo',
   },
   {
     title: '血浆净重(g)',
+    dataIndex: 'netWeight',
   },
   {
     title: '血浆编号',
+    dataIndex: 'bagNo',
   },
   {
     title: '浆员编号',
+    dataIndex: 'fkDonorNo',
   },
   {
     title: '浆员姓名',
+    dataIndex: 'donorName',
   },
   {
     title: '效价类型',
+    dataIndex: 'immunity',
+    customRender: ({ record }) => {
+      return PLASMA_TYPE_TEXT[record.type];
+    },
   },
   {
     title: '效价结果值',
+    dataIndex: 'titer',
   },
 ];

@@ -47,6 +47,7 @@
     productionReceiveByBatch,
     productionReceiveRevokeByBatch,
     productionStockOutByBatch,
+    revokeProductionOutStore,
   } from '@/api/stockout/production-put-into';
   import { getProOrders } from '@/api/stockout/production-order';
 
@@ -80,7 +81,7 @@
         selectedRow.value = selectedRows;
       },
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: true,
     showTableSetting: false,
@@ -103,7 +104,7 @@
 
   function handleMesClick(record: Recordable) {
     openDetailModal(true, {
-      orderNo: record?.orderNo,
+      record: { orderNo: record?.orderNo },
     });
   }
 
@@ -163,6 +164,7 @@
       content: '请确认是否撤销出库？',
       iconType: 'warning',
       onOk: async () => {
+        await revokeProductionOutStore(selectedRow.value[0]?.orderNo);
         createMessage.success('撤销出库成功');
 
         clearSelectedRowKeys();

@@ -1,9 +1,10 @@
 import { defHttp } from '@/utils/http/axios';
 import {
+  DeleteApiProductOutStoreBatchOrderNoRequest,
   GetApiProductOutStoreBoxesOrderNoRequest,
   GetApiProductOutStoreBoxesOrderNoResponse,
-  PostApiProductPrepareOutStoreBatchRequest,
-  PostApiProductPrepareOutStoreRequest,
+  PostApiProductOutStoreBatchRequest,
+  PostApiProductOutStoreBoxRequest,
 } from '@/api/type/stockoutManage';
 import {
   PostApiProductReceptionAcceptBatchRequest,
@@ -26,7 +27,7 @@ enum Api {
   PRODUCTION_OUT_STORE = '/api/product/out-store/box',
 }
 
-export const productionStockOutByBatch = (params: PostApiProductPrepareOutStoreBatchRequest) =>
+export const productionStockOutByBatch = (params: PostApiProductOutStoreBatchRequest) =>
   defHttp.post({ url: Api.PRODUCTION_BATCH_PUT_INTO, params });
 
 export const productionReceiveByBatch = (params: PostApiProductReceptionAcceptBatchRequest) =>
@@ -58,5 +59,9 @@ export const getProductionOutStoreList = (
     url: Api.PRODUCTION_OUT_STORE_LIST + '/' + params,
   });
 
-export const productionOutStore = (params: PostApiProductPrepareOutStoreRequest) =>
+export const productionOutStore = (params: PostApiProductOutStoreBoxRequest) =>
   defHttp.post({ url: Api.PRODUCTION_OUT_STORE, params });
+
+export const revokeProductionOutStore = (
+  params: DeleteApiProductOutStoreBatchOrderNoRequest['orderNo'],
+) => defHttp.delete({ url: Api.PRODUCTION_BATCH_PUT_INTO + '/' + params });

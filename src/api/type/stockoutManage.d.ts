@@ -1239,10 +1239,10 @@ export interface GetApiProductPrepareOutStoreResponse {
  * 接口 [投产逐箱出库↗](https://yapi.sharing8.cn/project/529/interface/api/32632) 的 **请求类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `POST /api/product/prepare/out-store`
- * @更新时间 `2024-01-22 18:48:19`
+ * @请求头 `POST /api/product/out-store/box`
+ * @更新时间 `2024-01-23 16:43:59`
  */
-export interface PostApiProductPrepareOutStoreRequest {
+export interface PostApiProductOutStoreBoxRequest {
   orderNo: string;
   boxNo: string;
 }
@@ -1251,19 +1251,19 @@ export interface PostApiProductPrepareOutStoreRequest {
  * 接口 [投产逐箱出库↗](https://yapi.sharing8.cn/project/529/interface/api/32632) 的 **返回类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `POST /api/product/prepare/out-store`
- * @更新时间 `2024-01-22 18:48:19`
+ * @请求头 `POST /api/product/out-store/box`
+ * @更新时间 `2024-01-23 16:43:59`
  */
-export interface PostApiProductPrepareOutStoreResponse {}
+export interface PostApiProductOutStoreBoxResponse {}
 
 /**
  * 接口 [投产批出库↗](https://yapi.sharing8.cn/project/529/interface/api/32642) 的 **请求类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `POST /api/product/prepare/out-store/batch`
- * @更新时间 `2024-01-20 15:20:49`
+ * @请求头 `POST /api/product/out-store/batch`
+ * @更新时间 `2024-01-22 19:52:05`
  */
-export interface PostApiProductPrepareOutStoreBatchRequest {
+export interface PostApiProductOutStoreBatchRequest {
   /**
    * 生产指令号
    */
@@ -1274,10 +1274,10 @@ export interface PostApiProductPrepareOutStoreBatchRequest {
  * 接口 [投产批出库↗](https://yapi.sharing8.cn/project/529/interface/api/32642) 的 **返回类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `POST /api/product/prepare/out-store/batch`
- * @更新时间 `2024-01-20 15:20:49`
+ * @请求头 `POST /api/product/out-store/batch`
+ * @更新时间 `2024-01-22 19:52:05`
  */
-export interface PostApiProductPrepareOutStoreBatchResponse {}
+export interface PostApiProductOutStoreBatchResponse {}
 
 /**
  * 接口 [投产逐箱出库信息↗](https://yapi.sharing8.cn/project/529/interface/api/32672) 的 **请求类型**
@@ -1316,5 +1316,28 @@ export interface GetApiProductOutStoreBoxesOrderNoResponse {
     bagNum?: number;
   }[];
 }
+
+/**
+ * 接口 [出库撤销↗](https://yapi.sharing8.cn/project/529/interface/api/32717) 的 **请求类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `DELETE /api/product/out-store/batch/{orderNo}`
+ * @更新时间 `2024-01-23 16:48:55`
+ */
+export interface DeleteApiProductOutStoreBatchOrderNoRequest {
+  /**
+   * 投产批号
+   */
+  orderNo: string;
+}
+
+/**
+ * 接口 [出库撤销↗](https://yapi.sharing8.cn/project/529/interface/api/32717) 的 **返回类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `DELETE /api/product/out-store/batch/{orderNo}`
+ * @更新时间 `2024-01-23 16:48:55`
+ */
+export interface DeleteApiProductOutStoreBatchOrderNoResponse {}
 
 /* prettier-ignore-end */
