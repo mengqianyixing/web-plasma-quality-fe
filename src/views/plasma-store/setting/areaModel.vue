@@ -74,7 +74,6 @@
     },
   ] = useTable({
     immediate: false,
-    title: '',
     api: areaListApi,
     fetchSetting: {
       listField: 'subHouseList',

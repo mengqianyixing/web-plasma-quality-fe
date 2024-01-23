@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2024-01-17 17:24:09
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-22 17:56:27
+-->
 <template>
   <BasicModal
     v-bind="$attrs"
@@ -6,17 +14,7 @@
     @ok="handleSubmit"
     width="430px"
   >
-    <BasicForm @register="registerForm">
-      <template #check="{ model, field }">
-        <a-input
-          disabled
-          placeholder="请点击登录按钮"
-          v-model:value="model[field]"
-          style="width: calc(100% - 80px)"
-        />
-        <a-button type="primary" @click="handleLogin" class="ml-3">登录</a-button>
-      </template>
-    </BasicForm>
+    <BasicForm @register="registerForm" />
 
     <LoginModal @register="registerLoginModal" @success="handleSuccess" />
   </BasicModal>
@@ -38,8 +36,8 @@
 
   const [registerLoginModal, { openModal }] = useModal();
 
-  const [registerForm, { resetFields, validate, setFieldsValue }] = useForm({
-    labelWidth: 120,
+  const [registerForm, { resetFields, validate, setFieldsValue, updateSchema }] = useForm({
+    labelWidth: 130,
     baseColProps: { span: 48 },
     schemas: inStoreSchema,
     showActionButtonGroup: false,
@@ -49,6 +47,7 @@
   });
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(() => {
+    updateSchema({ field: 'reviewer', componentProps: { onSearch: handleLogin } });
     resetFields();
     setModalProps({ confirmLoading: false });
   });

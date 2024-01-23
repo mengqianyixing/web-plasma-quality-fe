@@ -64,7 +64,6 @@
   ];
 
   const [registerTable] = useTable({
-    title: '',
     // api: getImmunityList,
     columns: columnsImmunity,
     useSearchForm: false,

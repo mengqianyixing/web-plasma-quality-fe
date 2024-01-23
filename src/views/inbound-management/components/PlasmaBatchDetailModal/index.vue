@@ -22,7 +22,6 @@
   const emit = defineEmits(['close', 'register']);
 
   const [registerTable, { reload, getForm }] = useTable({
-    title: '',
     api: getPlasmaBag,
     columns,
     formConfig: {
@@ -41,7 +40,7 @@
     },
     clickToRowSelect: true,
     clearSelectOnPageChange: true,
-    size: 'large',
+    size: 'small',
     striped: false,
     pagination: false,
     useSearchForm: true,

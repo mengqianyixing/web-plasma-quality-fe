@@ -52,6 +52,7 @@
   import BoxDetailModal from '../components/PlasmaBoxDetailModal/index.vue';
   import RegisterWeightModal from '@/views/inbound-management/plasma-inbound-record/RegisterWeightModal.vue';
   import UnqualifiedStageModal from '@/views/inbound-management/plasma-inbound-record/UnqualifiedStageModal.vue';
+  import { omit } from 'lodash-es';
 
   const { isLoading, stationOptions, getStationNameById } = useStation();
   const { createMessage, createConfirm } = useMessage();
@@ -78,7 +79,6 @@
 
   const selectedRowsRef = ref<Recordable>([]);
   const [registerTable, { getForm, reload }] = useTable({
-    title: '血浆入库记录',
     api: getPlasmaInboundList,
     columns,
     formConfig: {
@@ -100,7 +100,7 @@
         selectedRowsRef.value = selectedRows;
       },
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: true,
     showTableSetting: false,
@@ -174,10 +174,13 @@
 
   function handleOpenBoxDetail(record) {
     openBoxModal(true, {
-      record: {
-        ...record,
-        stationName: getStationNameById(record.stationNo),
-      },
+      record: omit(
+        {
+          ...record,
+          stationName: getStationNameById(record.stationNo),
+        },
+        ['boxNo'],
+      ),
     });
   }
 

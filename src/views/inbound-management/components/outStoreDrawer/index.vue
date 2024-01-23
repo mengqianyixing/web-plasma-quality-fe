@@ -55,7 +55,6 @@
     { getSelectRows, reload, clearSelectedRowKeys, setPagination, redoHeight },
   ] = useTable({
     immediate: false,
-    title: '',
     api: getListApi,
     fetchSetting: {
       pageField: 'currPage',

@@ -1,12 +1,15 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="register" title="样本批次列表" width="80%">
+  <BasicModal
+    v-bind="$attrs"
+    @register="register"
+    title="样本批次列表"
+    width="80%"
+    @ok="handleSelect"
+  >
     <div>
       <BasicTable @register="registerTable">
         <template #sampleType="{ record }">
           {{ formatSampleType(record?.sampleType) }}
-        </template>
-        <template #toolbar>
-          <a-button type="primary" @click="handleSelect">选择</a-button>
         </template>
       </BasicTable>
     </div>
@@ -31,7 +34,6 @@
   const { warning } = createMessage;
 
   const [registerTable, { reload, setSelectedRowKeys }] = useTable({
-    title: '样本批次列表',
     api: getSampleReceiveList,
     columns: sampleAcceptColumns,
     formConfig: {
@@ -67,7 +69,7 @@
         selectedRow.value = selectedRows;
       },
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,

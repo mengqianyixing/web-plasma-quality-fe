@@ -22,7 +22,7 @@
   const [registerForm, { resetFields, validate }] = useForm({
     labelWidth: 100,
     layout: 'horizontal',
-    size: 'large',
+    size: 'small',
     baseColProps: { span: 48 },
     schemas: [
       {

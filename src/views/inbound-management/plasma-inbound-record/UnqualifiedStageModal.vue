@@ -84,7 +84,7 @@
         selectedRow.value = selectedRows;
       },
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,

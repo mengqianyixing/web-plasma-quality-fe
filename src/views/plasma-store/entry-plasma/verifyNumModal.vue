@@ -39,7 +39,6 @@
       setPagination: setPaginationDetail,
     },
   ] = useTable({
-    title: '明细',
     immediate: true,
     api: verifyNumApi,
     pagination: false,
@@ -59,7 +58,6 @@
   });
 
   const [sumTable, { clearSelectedRowKeys, reload: reloadSum, setPagination }] = useTable({
-    title: '汇总',
     immediate: true,
     api: verifyNumApi,
     pagination: false,

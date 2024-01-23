@@ -32,7 +32,6 @@
   const [registerEncodingDrawer, { openDrawer: openEncodingDrawer }] = useDrawer();
 
   const [registerTable, { reload }] = useTable({
-    title: '标签编码管理',
     api: getEncodingRules,
     columns,
     clickToRowSelect: false,

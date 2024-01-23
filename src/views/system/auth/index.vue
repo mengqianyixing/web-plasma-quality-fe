@@ -43,7 +43,6 @@
 
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload }] = useTable({
-    title: '权限列表',
     api: getCasDoorRoles,
     fetchSetting: {
       pageField: 'currPage',

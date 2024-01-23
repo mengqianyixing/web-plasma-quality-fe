@@ -10,7 +10,7 @@
     <vxe-grid
       v-bind="gridOptionsUnaccept"
       :data="unAcceptList"
-      class="w-1/5 mt-1 inline-block pr-2"
+      class="inline-block w-1/5 pr-2 mt-1"
       :loading="tableLoading"
     >
       <template #toolbar>
@@ -55,7 +55,7 @@
 
 <script setup lang="tsx">
   import { onMounted, reactive, ref, computed, unref } from 'vue';
-  import { debounce, isEmpty } from 'lodash-es';
+  import { isEmpty } from 'lodash-es';
   import { ActionItem, TableAction } from '@/components/Table';
 
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
@@ -143,15 +143,13 @@
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
-            <a-input
+            <a-input-search
               placeholder="请选择批号或输入批号回车"
+              enter-button="选择"
               value={inputValue}
-              onChange={handleSampleBatchChange}
-              onPressEnter={debounce(handlePressEnter, 500)}
+              onChange={(e) => (inputValue.value = e.target.value)}
+              onSearch={handleSelectSampleBatch}
             />
-            <a-button type="primary" onClick={handleSelectSampleBatch}>
-              选择
-            </a-button>
           </div>
         );
       },
@@ -330,13 +328,17 @@
 
   const [registerSampleVerifyBatchModal, { openModal: openSampleVerifyBatchModal }] = useModal();
 
-  function handleSelectSampleBatch() {
-    openSampleVerifyBatchModal(true, {
-      reload: true,
-      record: {
-        sampleType: sampleTypeDictionary.value,
-      },
-    });
+  function handleSelectSampleBatch(value: string, event: MouseEvent) {
+    if (value && event.type !== 'click') {
+      handlePressEnter();
+    } else {
+      openSampleVerifyBatchModal(true, {
+        reload: true,
+        record: {
+          sampleType: sampleTypeDictionary.value,
+        },
+      });
+    }
   }
 
   const verifyFlag = ref('');
@@ -355,10 +357,6 @@
     } finally {
       tableLoading.value = false;
     }
-  }
-
-  function handleSampleBatchChange(e: ChangeEvent) {
-    inputValue.value = e.target.value;
   }
 
   async function handlePressEnter() {

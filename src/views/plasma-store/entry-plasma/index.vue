@@ -66,7 +66,6 @@
   defineOptions({ name: 'PlasmaStoreSetting' });
 
   const [registerTable] = useTable({
-    title: '入库查询',
     api: receptionDetailApi,
     dataSource: [
       {

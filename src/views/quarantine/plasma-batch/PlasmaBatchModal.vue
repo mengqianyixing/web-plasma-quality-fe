@@ -43,7 +43,6 @@
   });
 
   const [registerTable, { reload, getForm, clearSelectedRowKeys }] = useTable({
-    title: '血浆批次列表',
     api: getPlasmaBatchUnReleases,
     fetchSetting: {
       pageField: 'currPage',

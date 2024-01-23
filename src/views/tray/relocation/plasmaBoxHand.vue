@@ -46,7 +46,6 @@
     showResetButton: false,
   });
   const [registerTable, { getSelectRows, reload }] = useTable({
-    title: '',
     api: () => Promise.resolve({ result: [{}] }),
     fetchSetting: {
       pageField: 'currPage',

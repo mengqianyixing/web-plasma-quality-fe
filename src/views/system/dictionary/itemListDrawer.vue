@@ -48,7 +48,6 @@
   const systemLevel = ref(false);
   const [registerItemFormModal, { openModal }] = useModal();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, redoHeight }] = useTable({
-    title: '',
     isCanResizeParent: true,
     api: getDictItemListApi,
     fetchSetting: {

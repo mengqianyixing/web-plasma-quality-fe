@@ -7,17 +7,7 @@
     :maskClosable="false"
     @ok="handleOk"
   >
-    <Basic-form @register="registerForm">
-      <template #check="{ model, field }">
-        <a-input
-          disabled
-          placeholder="请点击登录按钮"
-          v-model:value="model[field]"
-          style="width: calc(100% - 80px)"
-        />
-        <a-button type="primary" @click="handleLogin" size="large" class="ml-3">登录</a-button>
-      </template>
-    </Basic-form>
+    <Basic-form @register="registerForm" />
   </BasicModal>
 
   <LoginModal @register="registerLogin" @success="handleLoginSuccess" />
@@ -42,8 +32,14 @@
       {
         field: 'checker',
         label: '复核人',
-        component: 'Input',
-        slot: 'check',
+        colProps: { span: 18 },
+        component: 'InputSearch',
+        componentProps: {
+          'enter-button': '登录',
+          placeholder: '请点击登录按钮',
+          readonly: true,
+          onSearch: handleLogin,
+        },
         required: true,
       },
       {

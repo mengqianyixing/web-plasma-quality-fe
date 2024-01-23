@@ -30,7 +30,6 @@
   const stationNo = ref('');
 
   const [registerTable, { setSelectedRowKeys, reload }] = useTable({
-    title: '样本批次列表',
     api: getNeedCallbackList,
     columns: callbackModalColumns,
     beforeFetch: (params) => {
@@ -60,7 +59,7 @@
         selectedRow.value = selectedRows;
       },
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,

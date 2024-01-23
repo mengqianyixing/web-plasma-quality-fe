@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 18:03:12
+ * @LastEditTime: 2024-01-22 16:13:36
 -->
 <template>
   <div class="h-full">
@@ -45,7 +45,6 @@
     showResetButton: false,
   });
   const [registerTable, { getSelectRows, reload }] = useTable({
-    title: '',
     api: () => Promise.resolve({ result: [{}] }),
     fetchSetting: {
       pageField: 'currPage',

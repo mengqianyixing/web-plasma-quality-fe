@@ -67,7 +67,6 @@
       redoHeight,
     },
   ] = useTable({
-    title: '',
     immediate: false,
     size: 'small',
     api: locationListApi,

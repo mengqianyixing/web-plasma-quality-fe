@@ -28,7 +28,6 @@
 
   const selectedRowsRef = ref<Recordable>([]);
   const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
-    title: '系统参数列表',
     api: getSysParamsList,
     columns,
     formConfig: {
@@ -47,7 +46,7 @@
         selectedRowsRef.value = selectedRows;
       },
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,

@@ -1,15 +1,5 @@
 <template>
-  <BasicForm @register="register" @submit="handleSubmit">
-    <template #check="{ model, field }">
-      <a-input
-        disabled
-        placeholder="请点击登录按钮"
-        v-model:value="model[field]"
-        style="width: calc(100% - 80px)"
-      />
-      <a-button type="primary" @click="handleLogin" size="large" class="ml-3">登录</a-button>
-    </template>
-  </BasicForm>
+  <BasicForm @register="register" @submit="handleSubmit" />
 
   <LoginModal @register="registerLoginModal" @success="handleSuccess" />
 </template>
@@ -22,6 +12,7 @@
   import { useModal } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
   import { nonconformityRegistration } from '@/api/nonconformity/box-manage';
+  import { onMounted } from 'vue';
 
   const { createMessage } = useMessage();
 
@@ -43,7 +34,7 @@
   }
 
   const [registerLoginModal, { openModal }] = useModal();
-  const [register, { setFieldsValue, resetFields }] = useForm({
+  const [register, { setFieldsValue, resetFields, updateSchema }] = useForm({
     layout: 'horizontal',
     labelWidth: 120,
     labelCol: {
@@ -63,4 +54,15 @@
       text: '确定',
     },
   });
+  onMounted(() => [
+    updateSchema({
+      field: 'checker',
+      componentProps: {
+        'enter-button': '登录',
+        placeholder: '请点击登录按钮',
+        readonly: true,
+        onSearch: handleLogin,
+      },
+    }),
+  ]);
 </script>

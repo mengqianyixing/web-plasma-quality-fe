@@ -17,17 +17,23 @@
         ref="formRef"
       >
         <FormItem label="血浆批号" name="batchNo">
-          <Input v-model:value="searchForm.batchNo" disabled />
+          <Input v-model:value="searchForm.batchNo" readonly />
         </FormItem>
         <FormItem v-if="searchForm.pattern === 'BOX'" label="血浆箱号" name="boxNo">
-          <Input v-model:value="searchForm.boxNo" disabled />
+          <Input v-model:value="searchForm.boxNo" readonly />
         </FormItem>
         <FormItem v-if="searchForm.pattern === 'BCH'" label="复核人" name="checker">
-          <Input v-model:value="searchForm.checker" disabled style="width: 180px" />
-          <Button @click="handleLogin">登录</Button>
+          <InputSearch
+            enterButton="登录"
+            placeholder="请点击登录"
+            readonly
+            @search="handleLogin"
+            v-model:value="searchForm.checker"
+            style="width: 180px"
+          />
         </FormItem>
         <FormItem label="复核人" v-if="searchForm.pattern === 'BOX'" name="checker">
-          <Input v-model:value="searchForm.checker" disabled />
+          <Input v-model:value="searchForm.checker" readonly />
         </FormItem>
         <FormItem label="备注" name="remark">
           <Textarea v-model:value="searchForm.remark" :cols="50" />
@@ -68,6 +74,7 @@
     Table,
     Textarea,
     Button,
+    InputSearch,
     // Select,
     // SelectOption,
   } from 'ant-design-vue';

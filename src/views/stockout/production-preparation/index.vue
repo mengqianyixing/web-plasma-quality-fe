@@ -263,7 +263,6 @@
   ];
 
   const [registerTable, { reload }] = useTable({
-    title: '投产准备列表',
     api: getPrepareList,
     columns,
     formConfig: {

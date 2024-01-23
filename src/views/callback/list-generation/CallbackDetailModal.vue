@@ -59,7 +59,6 @@
   });
 
   const [registerTable, { reload }] = useTable({
-    title: '回访名单详情列表',
     api: getCallbackDetail,
     columns: callbackDetailModalColumns,
     fetchSetting: {
@@ -76,7 +75,7 @@
     },
     rowKey: 'donorNo',
     clickToRowSelect: false,
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: false,
     showTableSetting: true,
