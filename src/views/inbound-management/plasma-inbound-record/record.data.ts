@@ -136,7 +136,7 @@ export const unqualifiedColumns: BasicColumn[] = [
     title: '验收日期',
     dataIndex: 'verifyAt',
     format(text) {
-      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
 ];

@@ -35,7 +35,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'planOut',
     width: 120,
     format(text) {
-      return dayjs(text).format('YYYY-MM-DD');
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
@@ -43,7 +43,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'planTask',
     width: 120,
     format(text) {
-      return dayjs(text).format('YYYY-MM-DD');
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
@@ -69,6 +69,9 @@ export const columns: BasicColumn[] = [
   {
     title: '出库日期',
     dataIndex: 'outDate',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
   },
   {
     title: '接收人',
@@ -77,6 +80,9 @@ export const columns: BasicColumn[] = [
   {
     title: '接收日期',
     dataIndex: 'acceptDate',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
   },
   {
     title: '状态',
