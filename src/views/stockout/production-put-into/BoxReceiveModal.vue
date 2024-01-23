@@ -99,8 +99,8 @@
     api: getAcceptedReceptionList,
     columns: [
       {
-        title: '血浆编号',
-        dataIndex: 'bagNo',
+        title: '箱号',
+        dataIndex: 'boxNo',
       },
       {
         title: '血浆总数',

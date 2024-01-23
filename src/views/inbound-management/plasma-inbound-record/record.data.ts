@@ -43,11 +43,11 @@ export const columns: BasicColumn[] = [
     dataIndex: 'lackNoNum',
   },
   {
-    title: '浆站重量',
+    title: '浆站重量(kg)',
     dataIndex: 'stationWeight',
   },
   {
-    title: '验收重量',
+    title: '验收重量(kg)',
     dataIndex: 'verifyWeight',
   },
   {
@@ -62,7 +62,7 @@ export const columns: BasicColumn[] = [
     title: '发布日期',
     dataIndex: 'pubDate',
     format(text) {
-      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
