@@ -116,7 +116,9 @@
   const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
     setFieldsValue({
       verifyNum: data.record.verifyNum,
-      totalGrossWeight: data.record.verifyWeight * 1000 + 36 * data.record.verifyNum,
+      totalGrossWeight: data.record.verifyWeight
+        ? data.record.verifyWeight * 1000 + 36 * data.record.verifyNum
+        : 0,
       batchNo: data.record.batchNo,
     });
   });
@@ -135,7 +137,6 @@
         ...values,
         netWeight: Number(values.netWeight),
       };
-      console.log(pick(_values, ['reviewer', 'batchNo', 'netWeight']), _values);
 
       await registerPlasmaWeight(
         pick(_values, ['reviewer', 'batchNo', 'netWeight']) as PostApiCoreBatchPlasmaWeightRequest,

@@ -26,6 +26,8 @@
   import { PlasmaStateMap } from '@/enums/plasmaEnum';
 
   const verifyCount = ref(0);
+  const stationNo = ref('');
+  const batchNo = ref('');
   const emit = defineEmits(['success', 'register']);
 
   const [registerTable, { reload, getForm }] = useTable({
@@ -63,6 +65,9 @@
   });
 
   const [register, { closeModal }] = useModalInner(async (data) => {
+    stationNo.value = data.record.stationNo;
+    batchNo.value = data.record.batchNo;
+
     await getForm().setFieldsValue({
       stationName: data.record.stationName,
       batchNo: data.record.batchNo,
@@ -78,6 +83,10 @@
 
   function handleGoPlasmaDetail(record) {
     closeModal();
-    emit('success', record);
+    emit('success', {
+      ...record,
+      stationNo: stationNo.value,
+      batchNo: batchNo.value,
+    });
   }
 </script>

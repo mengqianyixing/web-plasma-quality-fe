@@ -1,11 +1,3 @@
-/*
- * @Descripttion:
- * @version:
- * @Author: zcc
- * @Date: 2024-01-15 09:15:09
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-15 14:23:07
- */
 export enum operationEnum {
   N = '普通',
   B = '乙免',
@@ -21,7 +13,7 @@ export enum operationValueEnum {
   R = 'R',
   A = 'A',
   T = 'T',
-  G = 'C',
+  G = 'G',
 }
 
 export const operationMap = new Map<operationValueEnum, string>();
@@ -37,8 +29,14 @@ export enum statusEnum {
   TBR = '待复核',
   RVD = '待审核',
   TBP = '待计划',
-  PLD = '已计划',
+  PLI = '计划中',
+  PBR = '计划待复核',
+  PLD = '计划待审核',
+  PVD = '待出库',
   OTD = '已出库',
+  OUI = '出库中',
+  ACT = '接收中',
+  ACD = '已接收',
   ROD = '已撤销',
 }
 
@@ -46,8 +44,14 @@ export enum statusValueEnum {
   TBR = 'TBR',
   RVD = 'RVD',
   TBP = 'TBP',
+  PLI = 'PLI',
+  PBR = 'PBR',
   PLD = 'PLD',
+  PVD = 'PVD',
   OTD = 'OTD',
+  OUI = 'OUT',
+  ACT = 'ACT',
+  ACD = 'ACD',
   ROD = 'ROD',
 }
 
@@ -56,8 +60,14 @@ export const statusMap = new Map<statusValueEnum, string>();
 statusMap.set(statusValueEnum.TBR, statusEnum.TBR);
 statusMap.set(statusValueEnum.RVD, statusEnum.RVD);
 statusMap.set(statusValueEnum.TBP, statusEnum.TBP);
+statusMap.set(statusValueEnum.PLI, statusEnum.PLI);
+statusMap.set(statusValueEnum.PBR, statusEnum.PBR);
 statusMap.set(statusValueEnum.PLD, statusEnum.PLD);
+statusMap.set(statusValueEnum.PVD, statusEnum.PVD);
 statusMap.set(statusValueEnum.OTD, statusEnum.OTD);
+statusMap.set(statusValueEnum.OUI, statusEnum.OUI);
+statusMap.set(statusValueEnum.ACT, statusEnum.ACT);
+statusMap.set(statusValueEnum.ACD, statusEnum.ACD);
 statusMap.set(statusValueEnum.ROD, statusEnum.ROD);
 
 //审核结果
