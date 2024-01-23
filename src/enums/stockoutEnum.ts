@@ -150,19 +150,19 @@ bagFlagMap.set(bagFlagValueEnum.NO, bagFlagEnum.NO);
 
 // 挑浆模式
 export enum pickModeEnum {
-  TPR = '待投产',
-  CPR = '投产',
+  A = '投/暂不投',
+  B = '投/暂不投/待放行',
 }
 
 export enum pickModeValueEnum {
-  TPR = 'TPR',
-  CPR = 'CPR',
+  A = 'A',
+  B = 'B',
 }
 
 export const pickModeMap = new Map<pickModeValueEnum, string>();
 
-pickModeMap.set(pickModeValueEnum.TPR, pickModeEnum.TPR);
-pickModeMap.set(pickModeValueEnum.CPR, pickModeEnum.CPR);
+pickModeMap.set(pickModeValueEnum.A, pickModeEnum.A);
+pickModeMap.set(pickModeValueEnum.B, pickModeEnum.B);
 
 // 合格状态
 export enum BagTrackEnum {

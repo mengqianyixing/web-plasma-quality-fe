@@ -7,6 +7,7 @@
     width="100%"
     :draggable="false"
     defaultFullscreen
+    :closeFunc="handleCloseFunc"
     :canFullscreen="false"
   >
     <PageWrapper contentFullHeight fixedHeight>
@@ -44,6 +45,7 @@
     bagFlagMap,
     pickModeMap,
     BagTrackMap,
+    BagTrackValueEnum,
   } from '@/enums/stockoutEnum';
 
   import PickModal from './PickModal.vue';
@@ -57,7 +59,7 @@
   } from '@/api/stockout/production-preparation.js';
   import dayjs from 'dayjs';
 
-  // const emit = defineEmits(['register']);
+  const emit = defineEmits(['success']);
   const activeKey = ref('columnsImmunity');
 
   const prepareDetail = ref(); // 准备详情
@@ -191,11 +193,11 @@
       },
     },
     {
-      field: 'tallTiterCount',
+      field: 'heightCount',
       label: '高效价数量',
       contentMinWidth: 100,
       render(val, data) {
-        return <div>{data.summary.tallTiterCount}</div>;
+        return <div>{data.summary.heightCount}</div>;
       },
     },
     {
@@ -369,7 +371,7 @@
       title: '血浆流程状态',
       dataIndex: 'tracked',
       format(text) {
-        const val = text ? BagTrackMap.get(text) : '';
+        const val = text ? BagTrackMap.get(text as BagTrackValueEnum) : '';
         return val;
       },
     },
@@ -432,7 +434,7 @@
     openPickModal(true, {
       isBatch: record,
       prepareNo: prepareDetail.value.prepareNo,
-      // prepareDetail,
+      prodType: prepareDetail.value.prodType,
     });
   }
   // 挑选框关闭，刷新页面数据
@@ -444,5 +446,11 @@
     });
     prepareDetail.value = res.result[0];
     reload();
+  }
+
+  // 关闭弹框前
+  function handleCloseFunc() {
+    emit('success');
+    return true;
   }
 </script>
