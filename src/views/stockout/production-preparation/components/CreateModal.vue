@@ -14,7 +14,7 @@
   import { ref, computed, unref } from 'vue';
   import { FormSchema, BasicForm, useForm } from '@/components/Form';
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { operationMap } from '@/enums/stockoutEnum';
+  import { operationMap, bagFlagMap, pickModeMap } from '@/enums/stockoutEnum';
   import { addPrepare, updatePrepare } from '@/api/stockout/production-preparation.js';
   import { useMessage } from '@/hooks/web/useMessage';
 
@@ -54,16 +54,10 @@
       required: true,
       defaultValue: 'NO',
       componentProps: {
-        options: [
-          {
-            value: 'NO',
-            label: '不限制',
-          },
-          {
-            value: 'ALL',
-            label: '限制',
-          },
-        ],
+        options: [...bagFlagMap.entries()].map(([key, value]) => ({
+          value: key,
+          label: `${key}，${value}`,
+        })),
       },
     },
     {
@@ -73,16 +67,10 @@
       colProps: { span: 24 },
       required: true,
       componentProps: {
-        options: [
-          {
-            value: 'TPR',
-            label: '待投产',
-          },
-          {
-            value: 'CPR',
-            label: '投产',
-          },
-        ],
+        options: [...pickModeMap.entries()].map(([key, value]) => ({
+          value: key,
+          label: `${key}，${value}`,
+        })),
       },
     },
   ];

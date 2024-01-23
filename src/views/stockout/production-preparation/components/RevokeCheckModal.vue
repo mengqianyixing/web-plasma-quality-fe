@@ -8,7 +8,7 @@
     width="450px"
   >
     <BasicForm @register="registerForm">
-      <template #check="{ model, field }">
+      <!-- <template #check="{ model, field }">
         <a-input
           disabled
           placeholder="请点击登录"
@@ -16,22 +16,22 @@
           style="width: calc(100% - 80px)"
         />
         <a-button type="primary" @click="handleLogin" class="ml-3">登录</a-button>
-      </template>
+      </template> -->
     </BasicForm>
   </BasicModal>
-  <LoginModal @register="registerLoginModal" @success="handleSuccess" />
+  <!-- <LoginModal @register="registerLoginModal" @success="handleSuccess" /> -->
 </template>
 <script lang="ts" setup>
   import { FormSchema, BasicForm, useForm } from '@/components/Form';
-  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
   import { revokeCheckPrepare } from '@/api/stockout/production-preparation.js';
-  import LoginModal from '@/__components/ReviewLoginModal/index.vue';
+  // import LoginModal from '@/__components/ReviewLoginModal/index.vue';
 
   const { createMessage } = useMessage();
   const { success } = createMessage;
 
-  const emit = defineEmits(['success', 'register']);
+  const emit = defineEmits(['success']);
 
   const formSchema: FormSchema[] = [
     {
@@ -41,14 +41,14 @@
       colProps: { span: 24 },
       componentProps: { disabled: true },
     },
-    {
-      field: 'checker',
-      component: 'InputGroup',
-      slot: 'check',
-      label: '复核人',
-      colProps: { span: 24 },
-      required: true,
-    },
+    // {
+    //   field: 'checker',
+    //   component: 'InputGroup',
+    //   slot: 'check',
+    //   label: '复核人',
+    //   colProps: { span: 24 },
+    //   required: true,
+    // },
     {
       field: 'remark',
       component: 'InputTextArea',
@@ -85,17 +85,17 @@
     }
   }
 
-  const [registerLoginModal, { openModal }] = useModal();
+  // const [registerLoginModal, { openModal }] = useModal();
 
-  // 点击登录按钮
-  function handleLogin() {
-    openModal(true);
-  }
+  // // 点击登录按钮
+  // function handleLogin() {
+  //   openModal(true);
+  // }
 
-  // 登录成功事件
-  function handleSuccess(nickname: string) {
-    setFieldsValue({
-      checker: nickname,
-    });
-  }
+  // // 登录成功事件
+  // function handleSuccess(nickname: string) {
+  //   setFieldsValue({
+  //     checker: nickname,
+  //   });
+  // }
 </script>

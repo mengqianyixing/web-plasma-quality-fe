@@ -40,7 +40,7 @@
     <CreateModal @register="registerModal" @success="handleSuccess" />
     <RevokeModal @register="registerRevokeModal" @success="handleSuccessRevoke" />
     <RevokeCheckModal @register="registerRevokeCheckModal" @success="handleSuccessRevokeCheck" />
-    <SummaryModal @register="registerSummaryModal" />
+    <SummaryModal @register="registerSummaryModal" @success="handleSuccessSummary" />
     <PickBatchDetail @register="registerPickBatchDetailModal" />
     <PlasmaDetail @register="registerPlasmaDetailModal" />
   </div>
@@ -79,7 +79,7 @@
   const { createMessage } = useMessage();
   const { warning, success } = createMessage;
 
-  const selectedRow = ref([]);
+  const selectedRow = ref([]); // 表格已选中
 
   const columns: BasicColumn[] = [
     {
@@ -94,21 +94,21 @@
       dataIndex: 'prodType',
       width: 100,
       format(text) {
-        return `${text}, ${operationMap.get(text as operationValueEnum)}`;
+        return `${operationMap.get(text as operationValueEnum)}`;
       },
     },
     {
       title: '挑浆模式',
       dataIndex: 'pickMode',
       format(text) {
-        return `${text}, ${pickModeMap.get(text as pickModeValueEnum)}`;
+        return `${pickModeMap.get(text as pickModeValueEnum)}`;
       },
     },
     {
       title: '是否限制血浆',
       dataIndex: 'bagFlag',
       format(text) {
-        return `${text}, ${bagFlagMap.get(text as bagFlagValueEnum)}`;
+        return `${bagFlagMap.get(text as bagFlagValueEnum)}`;
       },
     },
     {
@@ -194,7 +194,7 @@
       dataIndex: 'prepareState',
       width: 100,
       format(text) {
-        return `${text}, ${prepareStateMap.get(text as prepareStateValueEnum)}`;
+        return `${prepareStateMap.get(text as prepareStateValueEnum)}`;
       },
     },
   ];
@@ -214,7 +214,7 @@
       componentProps: {
         options: [...operationMap.entries()].map(([key, value]) => ({
           value: key,
-          label: `${key}，${value}`,
+          label: `${value}`,
         })),
       },
     },
@@ -226,7 +226,7 @@
       componentProps: {
         options: [...pickModeMap.entries()].map(([key, value]) => ({
           value: key,
-          label: `${key}，${value}`,
+          label: `${value}`,
         })),
       },
     },
@@ -238,7 +238,7 @@
       componentProps: {
         options: [...bagFlagMap.entries()].map(([key, value]) => ({
           value: key,
-          label: `${key}，${value}`,
+          label: `${value}`,
         })),
       },
     },
@@ -250,7 +250,7 @@
       componentProps: {
         options: [...prepareStateMap.entries()].map(([key, value]) => ({
           value: key,
-          label: `${key}，${value}`,
+          label: `${value}`,
         })),
       },
     },
@@ -337,7 +337,9 @@
       warning('请先选择投产准备号!');
       return;
     }
-    if (selectedRow.value[0]?.prepareState !== 'REV' && isPicked) {
+    const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
+
+    if (prepareState !== 'REV' && isPicked) {
       warning('该准备号不可撤销准备!');
       return;
     }
@@ -353,7 +355,12 @@
       warning('请先选择投产准备号!');
       return;
     }
-    const prepareNo = selectedRow.value[0]?.prepareNo;
+    const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
+    const prepareNo = (selectedRow.value[0] as { prepareNo?: string })?.prepareNo;
+    if (prepareState !== 'RUN') {
+      warning('该准备号不可完成准备!');
+      return;
+    }
     Modal.confirm({
       title: '确定要完成准备吗?',
       icon: createVNode(ExclamationCircleOutlined),
@@ -361,6 +368,8 @@
       async onOk() {
         await completePrepare({ prepareNo });
         success('完成准备成功!');
+        reload();
+        selectedRow.value = [];
       },
       onCancel() {
         console.log('Cancel');
@@ -376,18 +385,27 @@
       warning('请先选择投产准备号!');
       return;
     }
+    const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
+
     openSummaryModal(true, {
       record: selectedRow.value[0],
+      readOnly: prepareState !== 'RUN', // 准备中状态才可挑选
     });
   }
+  function handleSuccessSummary() {
+    reload();
+    selectedRow.value = [];
+  }
+
   // 复核
   function clickCheck() {
     if (!selectedRow.value.length) {
       warning('请先选择投产准备号!');
       return;
     }
-    const prepareNo = selectedRow.value[0]?.prepareNo;
-    if (prepareNo !== 'REV') {
+    const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
+    const prepareNo = (selectedRow.value[0] as { prepareNo?: string })?.prepareNo;
+    if (prepareState !== 'REV') {
       warning('该准备号不可复核!');
       return;
     }
@@ -398,6 +416,8 @@
       async onOk() {
         await checkPrepare({ prepareNo });
         success('复核成功!');
+        reload();
+        selectedRow.value = [];
       },
       onCancel() {
         console.log('Cancel');
@@ -417,7 +437,8 @@
       warning('请先选择投产准备号!');
       return;
     }
-    if (selectedRow.value[0]?.prepareState !== 'TPK') {
+    const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
+    if (prepareState !== 'TPK') {
       warning('该准备号不可撤销复核!');
       return;
     }
@@ -428,7 +449,6 @@
 
   // 查看投产准备详情
   function clickPrepareNo(record) {
-    console.log(record);
     openSummaryModal(true, {
       record,
       readOnly: true,

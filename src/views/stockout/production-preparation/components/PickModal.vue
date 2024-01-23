@@ -59,11 +59,15 @@
 
   let pickMode; // 是否为按批挑选
   const pickLoading = ref(false);
-  const prepareNo = ref();
+  const prepareNo = ref(); // 准备号
+  const prodType = ref(); // 投产类型
   const cacheForm = ref(); // 缓存最近一次查询表单的入参
   const [registerModal] = useModalInner(async (data) => {
     pickMode = data.isBatch;
     prepareNo.value = data.prepareNo;
+    prodType.value = data.prodType;
+    const prodTypeName = operationMap.get(prodType.value);
+    const untablePropsCols = [...columnsUn]; // 未挑选表格列
     // 更新汇总数据
     _getPrepareList();
     // 按批
@@ -85,21 +89,17 @@
       setProps({
         api: getPickBatch,
         rowKey: 'batchNo',
-        columns: [
-          {
-            title: '待挑选血浆批号',
-            dataIndex: 'batchNo',
-            align: 'left',
-            fixed: true,
-            sorter: true,
-          },
-          {
-            title: '挑浆次数',
-            dataIndex: 'batchPickCount',
-            width: 100,
-          },
-          ...columnsUn,
-        ],
+      });
+      untablePropsCols.unshift({
+        title: '待挑选血浆批号',
+        dataIndex: 'batchNo',
+        fixed: true,
+        sorter: true,
+      });
+      untablePropsCols.push({
+        title: '挑浆次数',
+        dataIndex: 'batchPickCount',
+        width: 100,
       });
       setPropsed({
         api: getPickedBatch,
@@ -131,21 +131,19 @@
       setProps({
         api: getPickBox,
         rowKey: 'boxNo',
-        columns: [
-          {
-            title: '待挑选血浆箱号',
-            dataIndex: 'boxNo',
-            align: 'left',
-            fixed: true,
-            sorter: true,
-          },
-          {
-            title: '血浆批号',
-            dataIndex: 'batchNo',
-          },
-          ...columnsUn,
-        ],
       });
+      untablePropsCols.unshift(
+        {
+          title: '待挑选血浆箱号',
+          dataIndex: 'boxNo',
+          fixed: true,
+          sorter: true,
+        },
+        {
+          title: '血浆批号',
+          dataIndex: 'batchNo',
+        },
+      );
       setPropsed({
         api: getPickedBox,
         columns: [
@@ -159,6 +157,70 @@
         ],
       });
     }
+    // 非普浆
+    if (prodType.value !== 'N') {
+      updateSchema([
+        {
+          component: 'Select',
+          label: '效价类型',
+          field: 'titerLevel',
+          ifShow: true,
+          componentProps: {
+            disabled: false,
+            options: [
+              {
+                value: 'H',
+                label: `${prodTypeName}高效价`,
+              },
+              {
+                value: 'N',
+                label: `${prodTypeName}低效价`,
+              },
+            ],
+          },
+        },
+      ]);
+      untablePropsCols.push(
+        {
+          title: '平均效价',
+          dataIndex: 'avgTiter',
+          width: 110,
+        },
+        {
+          title: `BH,${prodTypeName}高效价`,
+          dataIndex: 'heightCount',
+          width: 150,
+        },
+        {
+          title: `BH,${prodTypeName}低效价`,
+          dataIndex: 'lowCount',
+          width: 150,
+        },
+      );
+    } else {
+      updateSchema([
+        {
+          component: 'Input',
+          label: '效价类型',
+          field: 'titerLevel',
+          ifShow: true,
+          componentProps: {
+            disabled: true,
+          },
+        },
+      ]);
+      setFieldsValue({
+        titerLevel: '普通',
+      });
+      untablePropsCols.push({
+        title: '普通血浆数量',
+        dataIndex: 'ordinaryCount',
+        width: 110,
+      });
+    }
+    setProps({
+      columns: untablePropsCols,
+    });
     queryUntable();
     reloaded();
   });
@@ -169,9 +231,7 @@
     setTableData([]);
     setTableDataed([]);
     clearSelectedRowKeys();
-    selectedRow.value = [];
     clearSelectedRowKeysed();
-    // prepareDetail.value = {};
     emit('closePickModal');
     return true;
   }
@@ -243,20 +303,20 @@
       componentProps: {
         options: [
           {
-            value: 'Y',
+            value: true,
             label: '是',
           },
           {
-            value: 'N',
+            value: false,
             label: '否',
           },
         ],
       },
     },
     {
-      component: 'Input',
+      component: 'Select',
       label: '效价类型',
-      field: 'immunity',
+      field: 'titerLevel',
       colProps: { span: 5 },
     },
     {
@@ -293,7 +353,7 @@
       },
     },
   ];
-  const [registerForm, { updateSchema, getFieldsValue, resetFields }] = useForm({
+  const [registerForm, { updateSchema, getFieldsValue, resetFields, setFieldsValue }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
     schemas: FormSchemas,
@@ -338,21 +398,6 @@
         return text ? dayjs(text).format('YYYY-MM-DD') : '-';
       },
     },
-    {
-      title: '平均效价',
-      dataIndex: 'avgTiter',
-      width: 100,
-    },
-    {
-      title: 'BH,乙免高效价',
-      dataIndex: 'heightCount',
-      width: 140,
-    },
-    {
-      title: 'BH,乙免低效价',
-      dataIndex: 'lowCount',
-      width: 140,
-    },
   ];
   const columnsEd: BasicColumn[] = [
     {
@@ -361,25 +406,24 @@
     },
   ];
 
-  // 选中数据
-  const selectedRow = ref<Recordable>([]);
   const [registerTableUn, { reload, setProps, getSelectRows, clearSelectedRowKeys, setTableData }] =
     useTable({
       maxHeight: 510,
       columns: columnsUn,
       useSearchForm: false,
       beforeFetch: (p) => {
-        console.log('ppppp', p, getFieldsValue());
         let { currPage, pageSize, field: orderBy, order: sort } = p;
         if (sort === 'ascend') sort = 'asc';
         if (sort === 'descend') sort = 'desc';
+        const formValue = getFieldsValue();
+        prodType.value === 'N' && delete formValue.titerLevel;
         return {
           currPage,
           pageSize,
           orderBy,
           sort,
           prepareNo: prepareNo.value,
-          ...getFieldsValue(),
+          ...formValue,
         };
       },
       pagination: { pageSize: 20 },
@@ -394,8 +438,9 @@
       striped: false,
       rowSelection: {
         type: 'checkbox',
-        onSelect: unSelectionChange,
+        onChange: unSelectionChange,
         hideSelectAll: true,
+        preserveSelectedRowKeys: true,
       },
       immediate: false,
       bordered: true,
@@ -414,8 +459,7 @@
   ] = useTable({
     maxHeight: 510,
     columns: columnsEd,
-    beforeFetch: (p) => {
-      console.log('ppppp', p, getFieldsValue());
+    beforeFetch: () => {
       return {
         prepareNo: prepareNo.value,
       };
@@ -552,11 +596,11 @@
       },
     },
     {
-      field: 'tallTiterCount',
+      field: 'heightCount',
       label: '高效价数量',
       contentMinWidth: 100,
       render(val, data) {
-        return <div>{data.summary.tallTiterCount}</div>;
+        return <div>{data.summary.heightCount}</div>;
       },
     },
     {
@@ -588,11 +632,10 @@
   }
 
   // 未挑选表格勾选事件
-  async function unSelectionChange(record, selected, selectedRows) {
-    selectedRow.value = selectedRows;
-    console.log('微挑选勾选事件', getSelectRows(), selectedRow.value);
+  async function unSelectionChange(selectedRowKeys, selectedRows) {
+    console.log('微挑选勾选事件', getSelectRows(), selectedRows);
     // 一个都没勾，初始化数据
-    if (!selectedRow.value.length) {
+    if (!selectedRows.length) {
       _getPrepareList();
       return;
     }
@@ -640,32 +683,34 @@
       warning('请先勾选数据!');
       return;
     }
-    const { minCollectDay, maxCollectDay, firstFlag, immunity, minTiter, maxTiter, boxNo } =
+    const { minCollectDay, maxCollectDay, firstFlag, titerLevel, minTiter, maxTiter, boxNo } =
       getFieldsValue();
     const params = {
       prepareNo: prepareNo.value,
-      batchNos: selectedRow.value.map((item) => item.batchNo),
+      batchNos: [] as string[],
       minCollectDay,
       maxCollectDay,
       firstFlag,
-      immunity,
+      titerLevel,
       minTiter,
       maxTiter,
-      boxNos: selectedRow.value.map((item) => item.boxNo), // 按箱才有
+      boxNos: [] as string[],
       boxNo: boxNo,
     };
     if (pickMode) {
-      delete params.boxNos;
+      params.batchNos = selected.map((item) => item.batchNo);
     } else {
-      delete params.batchNos;
+      params.boxNos = selected.map((item) => item.boxNo);
     }
+    // 普浆不需要效价类型
+    prodType.value === 'N' && delete params.titerLevel;
 
     pickLoading.value = true;
     try {
-      await pickBag(params);
+      const res = await pickBag(params);
+      console.log(res);
       success('挑选成功!');
       clearSelectedRowKeys();
-      selectedRow.value = [];
       clearSelectedRowKeysed();
       queryUntable();
       reloaded();
@@ -699,7 +744,6 @@
       await revokePickBag(params);
       success('挑选成功!');
       clearSelectedRowKeys();
-      selectedRow.value = [];
       clearSelectedRowKeysed();
       queryUntable();
       reloaded();
@@ -712,25 +756,29 @@
 
   // 获取预览汇总数据
   async function _getSummaryPreview() {
-    const { minCollectDay, maxCollectDay, firstFlag, immunity, minTiter, maxTiter, boxNo } =
+    const { minCollectDay, maxCollectDay, firstFlag, titerLevel, minTiter, maxTiter, boxNo } =
       getFieldsValue();
+    const selected = getSelectRows();
     const params = {
       prepareNo: prepareNo.value,
-      batchNos: selectedRow.value.map((item) => item.batchNo),
+      batchNos: [] as string[],
       minCollectDay,
       maxCollectDay,
-      immunity,
+      titerLevel,
       minTiter,
       maxTiter,
       firstFlag,
-      boxNos: selectedRow.value.map((item) => item.boxNo),
+      boxNos: [] as string[],
       boxNo,
     };
     if (pickMode) {
-      delete params.boxNos;
+      params.batchNos = selected.map((item) => item.batchNo);
     } else {
-      delete params.batchNos;
+      params.boxNos = selected.map((item) => item.boxNo);
     }
+    // 普浆不需要效价类型
+    prodType.value === 'N' && delete params.titerLevel;
+
     const data = await getSummaryPreview(params);
     prepareDetail.value = data;
   }
