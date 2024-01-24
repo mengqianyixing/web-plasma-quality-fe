@@ -166,7 +166,9 @@
   }
 
   function formatUnqReason(unqReason: string) {
-    return plasmaUnqualifiedDictionary.value?.find((it) => it.value === unqReason)?.label;
+    return (
+      plasmaUnqualifiedDictionary.value?.find((it) => it.value === unqReason)?.label ?? unqReason
+    );
   }
 
   function handleBagNoClick(record: Recordable) {
