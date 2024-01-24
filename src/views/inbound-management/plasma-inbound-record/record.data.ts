@@ -47,7 +47,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'stationWeight',
   },
   {
-    title: '验收重量(kg)',
+    title: '验收净重(kg)',
     dataIndex: 'verifyWeight',
   },
   {
