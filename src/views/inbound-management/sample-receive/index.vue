@@ -1,44 +1,42 @@
 <template>
-  <PageWrapper contentFullHeight fixedHeight>
+  <PageWrapper>
     <Description @register="register" :data="sampleBatchData" />
     <SelectSampleBatchModal
       @register="registerSelectModal"
       @success="handleSelectSampleBatchSuccess"
     />
 
-    <div class="flex gap-1 mt-1">
-      <vxe-grid
-        v-bind="gridOptionsUnaccept"
-        :data="unAcceptList"
-        class="inline-block w-2/5 pr-2"
-        :loading="tableLoading"
-      >
-        <template #toolbar>
+    <vxe-grid
+      v-bind="gridOptionsUnaccept"
+      :data="unAcceptList"
+      class="inline-block w-2/5 pr-2"
+      :loading="tableLoading"
+    >
+      <template #toolbar>
+        <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
+          <span>未接收数：</span>
+          <span>{{ unAcceptList?.length }}</span>
+        </div>
+      </template>
+    </vxe-grid>
+    <vxe-grid
+      v-bind="gridOptionsAccept"
+      :data="acceptList"
+      :loading="tableLoading"
+      class="inline-block w-3/5"
+    >
+      <template #toolbar>
+        <div class="flex items-center justify-between bg-[#ffffff]">
           <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
-            <span>未接收数：</span>
-            <span>{{ unAcceptList?.length }}</span>
+            <span>已接收数：</span>
+            <span>{{ acceptList?.length }}</span>
           </div>
-        </template>
-      </vxe-grid>
-      <vxe-grid
-        v-bind="gridOptionsAccept"
-        :data="acceptList"
-        :loading="tableLoading"
-        class="inline-block w-3/5"
-      >
-        <template #toolbar>
-          <div class="flex items-center justify-between bg-[#ffffff]">
-            <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
-              <span>已接收数：</span>
-              <span>{{ acceptList?.length }}</span>
-            </div>
-            <div>
-              <a-button type="primary" @click="handleAcceptSample">接收</a-button>
-            </div>
+          <div>
+            <a-button type="primary" @click="handleAcceptSample">接收</a-button>
           </div>
-        </template>
-      </vxe-grid>
-    </div>
+        </div>
+      </template>
+    </vxe-grid>
   </PageWrapper>
 </template>
 
