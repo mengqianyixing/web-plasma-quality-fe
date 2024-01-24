@@ -52,6 +52,7 @@
       };
     },
     formConfig: {
+      showResetButton: false,
       labelWidth: 120,
       schemas: [
         {
