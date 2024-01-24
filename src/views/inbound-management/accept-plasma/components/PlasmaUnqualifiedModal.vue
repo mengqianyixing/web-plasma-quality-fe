@@ -25,7 +25,7 @@
   const emit = defineEmits(['success', 'register']);
 
   const [registerLogin, { openModal }] = useModal();
-  const [registerForm, { setFieldsValue, validate }] = useForm({
+  const [registerForm, { setFieldsValue, validate, resetFields }] = useForm({
     showActionButtonGroup: false,
     schemas: [
       {
@@ -91,6 +91,7 @@
 
       createMessage.success('登记成功');
       emit('success');
+      resetFields();
       closeModal();
     } finally {
       setModalProps({ confirmLoading: false });
