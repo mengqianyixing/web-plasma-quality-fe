@@ -23,7 +23,6 @@
     trayNo: '',
   });
   const [registerTable, { reload, setPagination }] = useTable({
-    title: '',
     immediate: false,
     size: 'small',
     api: trayDtListApi,

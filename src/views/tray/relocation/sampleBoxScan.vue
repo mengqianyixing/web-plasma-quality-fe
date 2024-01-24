@@ -49,7 +49,6 @@
   });
   const columns = sampleBoxScanColumns(props.isBinding);
   const [registerTable] = useTable({
-    title: '',
     api: () => Promise.resolve({ result: [] }),
     fetchSetting: {
       pageField: 'currPage',

@@ -406,12 +406,15 @@ export type GetApiProductPlanBatchOrderNoResponse = {
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/bag`
- * @更新时间 `2024-01-18 09:58:49`
+ * @更新时间 `2024-01-23 17:10:29`
  */
 export interface PostApiProductPlanBagRequest {
   orderNo: string;
   pageSize: number;
   currPage: number;
+  plasmaBatchNo?: string;
+  plasmaNo?: string;
+  boxNo?: string;
 }
 
 /**
@@ -419,7 +422,7 @@ export interface PostApiProductPlanBagRequest {
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/bag`
- * @更新时间 `2024-01-18 09:58:49`
+ * @更新时间 `2024-01-23 17:10:29`
  */
 export interface PostApiProductPlanBagResponse {
   totalCount: number;
@@ -463,6 +466,10 @@ export interface PostApiProductPlanBagResponse {
      * 效价类型
      */
     immunity: string;
+    /**
+     * 浆袋净重
+     */
+    netWeight: number;
     /**
      * 效价值
      */

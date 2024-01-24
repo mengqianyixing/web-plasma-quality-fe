@@ -43,7 +43,6 @@
 
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload }] = useTable({
-    title: '部门列表',
     api: getDeptList,
     columns,
     formConfig: {

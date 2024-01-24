@@ -11,7 +11,6 @@
   const tableData = ref([]);
 
   const [registerTable, { reload }] = useTable({
-    title: '',
     columns: [
       {
         title: '血浆编号',

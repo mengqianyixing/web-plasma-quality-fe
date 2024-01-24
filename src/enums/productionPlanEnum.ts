@@ -1,3 +1,11 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: zcc
+ * @Date: 2024-01-18 17:58:08
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-22 15:13:27
+ */
 export enum STATUS {
   TBP = 'TBP',
   PLI = 'PLI',
@@ -5,6 +13,8 @@ export enum STATUS {
   PLD = 'PLD',
   PVD = 'PVD',
   OTD = 'OTD',
+  ACT = 'ACT',
+  ACD = 'ACD',
 }
 export const STATUS_TEXT: Map<string, string> = new Map([
   [STATUS.TBP, '未计划'],
@@ -13,6 +23,8 @@ export const STATUS_TEXT: Map<string, string> = new Map([
   [STATUS.PLD, '待审核'],
   [STATUS.PVD, '已审核'],
   [STATUS.OTD, '已出库'],
+  [STATUS.ACT, '接收中'],
+  [STATUS.ACD, '已接收'],
 ]);
 export const statusList = Object.keys(STATUS).map((_) => ({ label: STATUS_TEXT.get(_), value: _ }));
 

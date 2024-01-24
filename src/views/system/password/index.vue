@@ -18,7 +18,7 @@
   defineOptions({ name: 'ChangePassword' });
 
   const [register, { validate, resetFields }] = useForm({
-    size: 'large',
+    size: 'small',
     baseColProps: { span: 24 },
     labelWidth: 100,
     showActionButtonGroup: false,

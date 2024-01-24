@@ -1,16 +1,6 @@
 <template>
   <BasicModal v-bind="$attrs" @register="registerModal" showFooter width="500px" @ok="handleSubmit">
-    <BasicForm @register="registerForm" @submit="handleSubmit">
-      <template #check="{ model, field }">
-        <a-input
-          disabled
-          placeholder="请点击登录按钮"
-          v-model:value="model[field]"
-          style="width: calc(100% - 80px)"
-        />
-        <a-button type="primary" @click="handleLogin" class="ml-2">登录</a-button>
-      </template>
-    </BasicForm>
+    <BasicForm @register="registerForm" @submit="handleSubmit" />
 
     <LoginModal @register="registerLoginModal" @success="handleLoginSuccess" />
   </BasicModal>
@@ -21,7 +11,7 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { useMessage } from '@/hooks/web/useMessage';
 
-  import LoginModal from './LoginModal.vue';
+  import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { registerNonconformity } from '@/api/inbound-management/sample-verify';
   import { PostApiCoreBatchSampleUnqualifiedRequest } from '@/api/type/batchManage';
   import { nonconformityReasonEnum } from '@/enums/sampleEnum';
@@ -40,15 +30,19 @@
     rowProps: {
       justify: 'center',
     },
-    size: 'large',
     actionColOptions: { span: 30 },
     showActionButtonGroup: false,
     schemas: [
       {
         field: 'checker',
-        component: 'InputGroup',
-        slot: 'check',
+        component: 'InputSearch',
         label: '复核人',
+        componentProps: {
+          'enter-button': '登录',
+          placeholder: '请点击登录按钮',
+          readonly: true,
+          onSearch: handleLogin,
+        },
         colProps: { span: 20 },
         required: true,
       },

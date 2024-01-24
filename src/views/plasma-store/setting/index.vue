@@ -63,7 +63,6 @@
 
   const [registerTable, { getRowSelection, findTableDataRecord, reload, clearSelectedRowKeys }] =
     useTable({
-      title: '',
       api: settingListApi,
       fetchSetting: {
         pageField: 'currPage',

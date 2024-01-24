@@ -35,7 +35,6 @@
     trayNo: '',
   });
   const [registerTable, { reload, redoHeight }] = useTable({
-    title: '',
     immediate: false,
     isCanResizeParent: true,
     size: 'small',

@@ -36,7 +36,6 @@
   const [registerItemModal, { openModal: openItemModal }] = useModal();
 
   const [registerTable, { getSelectRows, reload, clearSelectedRowKeys }] = useTable({
-    title: '字典列表',
     api: getDictListApi,
     fetchSetting: {
       pageField: 'currPage',
@@ -50,7 +49,7 @@
       width: 80,
     },
     columns,
-    size: 'large',
+    size: 'small',
     formConfig: {
       schemas: searchFormSchema,
     },

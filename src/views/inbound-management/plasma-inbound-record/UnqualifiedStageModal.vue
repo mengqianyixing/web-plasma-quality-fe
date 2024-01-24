@@ -84,7 +84,7 @@
         selectedRow.value = selectedRows;
       },
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,
@@ -126,7 +126,9 @@
   }
 
   function formatUnReason(unqReason: string) {
-    return plasmaUnqualifiedDictionary.value?.find((it) => it.value === unqReason)?.label;
+    return (
+      plasmaUnqualifiedDictionary.value?.find((it) => it.value === unqReason)?.label ?? unqReason
+    );
   }
 
   function handlePickSuccess() {

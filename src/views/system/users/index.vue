@@ -49,7 +49,6 @@
 
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload }] = useTable({
-    title: '用户列表',
     api: getCasDoorUsers,
     fetchSetting: {
       pageField: 'currPage',

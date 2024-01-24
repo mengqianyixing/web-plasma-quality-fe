@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-12 18:31:46
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 17:48:32
+ * @LastEditTime: 2024-01-22 17:59:05
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
@@ -96,7 +96,6 @@
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
 
   const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
-    title: '不合格血浆管理列表',
     api: nonconformityPlasmaList,
     fetchSetting: {
       pageField: 'currPage',
@@ -105,7 +104,7 @@
       listField: 'result',
     },
     columns,
-    size: 'large',
+    size: 'small',
     useSearchForm: true,
     showTableSetting: false,
     bordered: true,
@@ -127,11 +126,11 @@
   });
 
   function handlePickPlasma() {
-    openPickModal(true);
+    openPickModal(true, {});
   }
 
   function handleInStore() {
-    openInStoreModal(true);
+    openInStoreModal(true, {});
   }
 
   function handleCheck() {

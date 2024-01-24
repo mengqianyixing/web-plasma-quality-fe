@@ -2,8 +2,10 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    title="登录"
+    title="复核人登录"
     @ok="handleSubmit"
+    ok-text="登录"
+    cancel-text="关闭"
     width="500px"
   >
     <BasicForm @register="registerForm" />
@@ -20,7 +22,7 @@
 
   const emit = defineEmits(['success', 'register']);
 
-  const [registerForm, { resetFields, validate }] = useForm({
+  const [registerForm, { resetFields, validate, clearValidate }] = useForm({
     labelWidth: 100,
     layout: 'horizontal',
     size: 'large',
@@ -31,6 +33,7 @@
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async () => {
     await resetFields();
+    clearValidate();
     setModalProps({ confirmLoading: false });
   });
 
@@ -40,7 +43,7 @@
       const loginRes = await reCheckLogin(values as PostApiSysReviewerLoginRequest);
       setModalProps({ confirmLoading: true });
       closeModal();
-      emit('success', loginRes.username);
+      emit('success', loginRes.username, loginRes);
       await resetFields();
     } finally {
       setModalProps({ confirmLoading: false });

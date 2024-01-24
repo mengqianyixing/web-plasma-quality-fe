@@ -22,7 +22,6 @@
 
   const batchNoRef = ref('');
   const [registerTable, { setPagination, setTableData, getPaginationRef }] = useTable({
-    title: '明细',
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',

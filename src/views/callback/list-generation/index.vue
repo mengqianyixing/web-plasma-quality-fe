@@ -85,7 +85,6 @@
   const [registerCallbackDetailModal, { openModal: openCallbackDetailModal }] = useModal();
 
   const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
-    title: '回访名单列表',
     api: getCallbackListApi,
     columns,
     formConfig: {
@@ -107,7 +106,7 @@
         selectedRow.value = selectedRows;
       },
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: true,
     showTableSetting: true,

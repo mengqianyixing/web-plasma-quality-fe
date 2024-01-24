@@ -104,7 +104,6 @@
       getDataSource,
     },
   ] = useTable({
-    title: '',
     columns: styleDetailColumns,
     clickToRowSelect: false,
     size: 'small',

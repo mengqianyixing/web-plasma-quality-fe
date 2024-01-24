@@ -36,7 +36,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'trayNo',
   },
   {
-    title: '验收状态',
+    title: '状态',
     dataIndex: 'verifyState',
     slots: { customRender: 'verifyState' },
   },
@@ -63,7 +63,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: 'verifyState',
-    label: '验收状态',
+    label: '状态',
     component: 'Select',
     componentProps: {
       options: [...PlasmaStateMap].map(([value, label]) => ({ value, label })),

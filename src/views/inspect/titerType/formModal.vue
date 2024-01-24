@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-26 17:41:03
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-15 10:17:06
+ * @LastEditTime: 2024-01-22 16:08:14
 -->
 <template>
   <BasicModal
@@ -38,7 +38,15 @@
 
   const [
     registerForm,
-    { validate, setFieldsValue, clearValidate, resetFields, updateSchema, getFieldsValue },
+    {
+      validate,
+      setFieldsValue,
+      clearValidate,
+      resetFields,
+      updateSchema,
+      getFieldsValue,
+      validateFields,
+    },
   ] = useForm({
     labelWidth: 200,
     baseColProps: { flex: '0 1 440px' },
@@ -72,8 +80,16 @@
       }
       updateSchema(disabledOptions);
       updateSchema([
-        { field: 'max', rules: [{ validator: maxValidator }] },
-        { field: 'min', rules: [{ validator: minValidator }] },
+        {
+          field: 'max',
+          rules: [{ validator: maxValidator }],
+          componentProps: { onChange: () => validateFields(['min']) },
+        },
+        {
+          field: 'min',
+          rules: [{ validator: minValidator }],
+          componentProps: { onChange: () => validateFields(['max']) },
+        },
       ]);
       clearValidate();
     },
@@ -82,11 +98,13 @@
     const { min } = getFieldsValue();
     if (!isNumber(min) || !isNumber(value)) return Promise.resolve();
     if (min > value) return Promise.reject('最大值不能小于最小值');
+    return Promise.resolve();
   }
   function minValidator(_, value: number | void) {
     const { max } = getFieldsValue();
     if (!isNumber(max) || !isNumber(value)) return Promise.resolve();
     if (max < value) return Promise.reject('最小值不能大于最大值');
+    return Promise.resolve();
   }
   async function handleSubmit() {
     try {

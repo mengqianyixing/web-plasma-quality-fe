@@ -75,7 +75,6 @@
     registerTable,
     { setTableData, getDataSource, insertTableDataRecord, deleteTableDataRecord },
   ] = useTable({
-    title: '',
     columns: encodingDetailColumns,
     clickToRowSelect: false,
     size: 'small',

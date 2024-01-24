@@ -4,14 +4,14 @@
  * @Author: zcc
  * @Date: 2024-01-17 11:13:40
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-19 10:23:09
+ * @LastEditTime: 2024-01-23 09:47:09
 -->
 <template>
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    title="投产计划-血浆挑选"
+    :title="`投产计划-${state.disabled ? '详情' : '血浆挑选'}`"
     width="1200px"
     :show-ok-btn="false"
     cancelText="关闭"
@@ -70,7 +70,7 @@
 <script setup lang="ts">
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { message, TabPane, Tabs } from 'ant-design-vue';
-  import { ref, markRaw, reactive } from 'vue';
+  import { ref, markRaw, reactive, nextTick } from 'vue';
   import { CellWapper } from '@/components/CellWapper';
   import { cellList, tabList, tableColumns, TAB } from './production-plan.data';
   import { BasicTable, useTable } from '@/components/Table';
@@ -125,8 +125,15 @@
     change(activeKey.value);
     getData();
   });
-  function change(activeKey) {
+  async function change(activeKey) {
     componentMap.value.set(activeKey, markRaw(BasicTable) as any);
+    await nextTick();
+    const tableInstance = tableInstanceMap.get(activeKey);
+    const item = tabList.find((_) => _.key === activeKey);
+    if (!item) return;
+    tableInstance[1].setProps({
+      rowSelection: item.checkbox && !state.disabled ? { type: 'checkbox' } : void 0,
+    });
   }
   function handleSubmit() {}
   function close() {

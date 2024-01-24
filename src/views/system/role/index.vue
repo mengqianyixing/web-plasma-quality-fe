@@ -42,7 +42,6 @@
 
   const [registerDrawer, { openDrawer }] = useDrawer();
   const [registerTable, { reload }] = useTable({
-    title: '角色列表',
     api: getRoleListByPage,
     fetchSetting: {
       pageField: 'currPage',

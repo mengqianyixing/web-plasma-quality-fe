@@ -1,11 +1,3 @@
-/*
- * @Descripttion:
- * @version:
- * @Author: zcc
- * @Date: 2024-01-15 09:15:09
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-15 14:23:07
- */
 export enum operationEnum {
   N = '普通',
   B = '乙免',
@@ -21,7 +13,7 @@ export enum operationValueEnum {
   R = 'R',
   A = 'A',
   T = 'T',
-  G = 'C',
+  G = 'G',
 }
 
 export const operationMap = new Map<operationValueEnum, string>();
@@ -37,8 +29,14 @@ export enum statusEnum {
   TBR = '待复核',
   RVD = '待审核',
   TBP = '待计划',
-  PLD = '已计划',
+  PLI = '计划中',
+  PBR = '计划待复核',
+  PLD = '计划待审核',
+  PVD = '待出库',
   OTD = '已出库',
+  OUI = '出库中',
+  ACT = '接收中',
+  ACD = '已接收',
   ROD = '已撤销',
 }
 
@@ -46,8 +44,14 @@ export enum statusValueEnum {
   TBR = 'TBR',
   RVD = 'RVD',
   TBP = 'TBP',
+  PLI = 'PLI',
+  PBR = 'PBR',
   PLD = 'PLD',
+  PVD = 'PVD',
   OTD = 'OTD',
+  OUI = 'OUT',
+  ACT = 'ACT',
+  ACD = 'ACD',
   ROD = 'ROD',
 }
 
@@ -56,8 +60,14 @@ export const statusMap = new Map<statusValueEnum, string>();
 statusMap.set(statusValueEnum.TBR, statusEnum.TBR);
 statusMap.set(statusValueEnum.RVD, statusEnum.RVD);
 statusMap.set(statusValueEnum.TBP, statusEnum.TBP);
+statusMap.set(statusValueEnum.PLI, statusEnum.PLI);
+statusMap.set(statusValueEnum.PBR, statusEnum.PBR);
 statusMap.set(statusValueEnum.PLD, statusEnum.PLD);
+statusMap.set(statusValueEnum.PVD, statusEnum.PVD);
 statusMap.set(statusValueEnum.OTD, statusEnum.OTD);
+statusMap.set(statusValueEnum.OUI, statusEnum.OUI);
+statusMap.set(statusValueEnum.ACT, statusEnum.ACT);
+statusMap.set(statusValueEnum.ACD, statusEnum.ACD);
 statusMap.set(statusValueEnum.ROD, statusEnum.ROD);
 
 //审核结果
@@ -90,3 +100,94 @@ export const expirationMap = new Map<expirationValueEnum, string>();
 
 expirationMap.set(expirationValueEnum.AY, expirationEnum.AY);
 expirationMap.set(expirationValueEnum.TY, expirationEnum.TY);
+
+// 投产准备状态
+export enum prepareStateEnum {
+  RUN = '准备中',
+  REV = '待复核',
+  TPK = '待分拣',
+  RPK = '分拣中',
+  CPK = '已分拣',
+  OUT = '已出库',
+  DEL = '已取消',
+}
+
+export enum prepareStateValueEnum {
+  RUN = 'RUN',
+  REV = 'REV',
+  TPK = 'TPK',
+  RPK = 'RPK',
+  CPK = 'CPK',
+  OUT = 'OUT',
+  DEL = 'DEL',
+}
+
+export const prepareStateMap = new Map<prepareStateValueEnum, string>();
+
+prepareStateMap.set(prepareStateValueEnum.RUN, prepareStateEnum.RUN);
+prepareStateMap.set(prepareStateValueEnum.REV, prepareStateEnum.REV);
+prepareStateMap.set(prepareStateValueEnum.TPK, prepareStateEnum.TPK);
+prepareStateMap.set(prepareStateValueEnum.RPK, prepareStateEnum.RPK);
+prepareStateMap.set(prepareStateValueEnum.CPK, prepareStateEnum.CPK);
+prepareStateMap.set(prepareStateValueEnum.OUT, prepareStateEnum.OUT);
+prepareStateMap.set(prepareStateValueEnum.DEL, prepareStateEnum.DEL);
+
+// 限制血浆
+export enum bagFlagEnum {
+  ALL = '是',
+  NO = '否',
+}
+
+export enum bagFlagValueEnum {
+  ALL = 'ALL',
+  NO = 'NO',
+}
+
+export const bagFlagMap = new Map<bagFlagValueEnum, string>();
+
+bagFlagMap.set(bagFlagValueEnum.ALL, bagFlagEnum.ALL);
+bagFlagMap.set(bagFlagValueEnum.NO, bagFlagEnum.NO);
+
+// 挑浆模式
+export enum pickModeEnum {
+  A = '投/暂不投',
+  B = '投/暂不投/待放行',
+}
+
+export enum pickModeValueEnum {
+  A = 'A',
+  B = 'B',
+}
+
+export const pickModeMap = new Map<pickModeValueEnum, string>();
+
+pickModeMap.set(pickModeValueEnum.A, pickModeEnum.A);
+pickModeMap.set(pickModeValueEnum.B, pickModeEnum.B);
+
+// 合格状态
+export enum BagTrackEnum {
+  UTRK = '待追',
+  PASS = '检疫期合格',
+  FAIL = '检疫期不合格',
+  FTRK = '续追踪不合格',
+  EXPR = '效期不合格',
+  BLOK = '献浆员者不符合',
+}
+
+export enum BagTrackValueEnum {
+  UTRK = 'UTRK',
+  PASS = 'PASS',
+  FAIL = 'FAIL',
+  FTRK = 'FTRK',
+  EXPR = 'EXPR',
+  BLOK = 'BLOK',
+}
+
+export const BagTrackMap = new Map<BagTrackValueEnum, string>();
+
+BagTrackMap.set(BagTrackValueEnum.UTRK, BagTrackEnum.UTRK);
+BagTrackMap.set(BagTrackValueEnum.PASS, BagTrackEnum.PASS);
+BagTrackMap.set(BagTrackValueEnum.FAIL, BagTrackEnum.FAIL);
+BagTrackMap.set(BagTrackValueEnum.FTRK, BagTrackEnum.FTRK);
+BagTrackMap.set(BagTrackValueEnum.EXPR, BagTrackEnum.EXPR);
+BagTrackMap.set(BagTrackValueEnum.BLOK, BagTrackEnum.BLOK);

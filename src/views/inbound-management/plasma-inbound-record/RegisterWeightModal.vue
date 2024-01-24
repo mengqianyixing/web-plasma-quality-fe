@@ -6,17 +6,7 @@
     width="23%"
     @ok="handleSubmit"
   >
-    <BasicForm @register="registerForm">
-      <template #check="{ model, field }">
-        <a-input
-          disabled
-          placeholder="请点击登录按钮"
-          v-model:value="model[field]"
-          style="width: calc(100% - 80px)"
-        />
-        <a-button type="primary" @click="handleLogin" class="ml-3">登录</a-button>
-      </template>
-    </BasicForm>
+    <BasicForm @register="registerForm" />
 
     <LoginModal @register="registerLoginModal" @success="handleSuccess" />
   </BasicModal>
@@ -39,15 +29,17 @@
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
 
   const [registerForm, { resetFields, validate, setFieldsValue, getFieldsValue }] = useForm({
+    baseColProps: { span: 20 },
     schemas: [
       {
         field: 'reviewer',
         label: '复核人',
-        component: 'Input',
-        colProps: { span: 20 },
-        slot: 'check',
+        component: 'InputSearch',
         componentProps: {
-          disabled: true,
+          'enter-button': '登录',
+          placeholder: '请点击登录按钮',
+          readonly: true,
+          onSearch: handleLogin,
         },
         required: true,
       },
@@ -124,7 +116,9 @@
   const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
     setFieldsValue({
       verifyNum: data.record.verifyNum,
-      totalGrossWeight: data.record.verifyWeight * 1000 + 36 * data.record.verifyNum,
+      totalGrossWeight: data.record.verifyWeight
+        ? data.record.verifyWeight * 1000 + 36 * data.record.verifyNum
+        : 0,
       batchNo: data.record.batchNo,
     });
   });
@@ -143,7 +137,6 @@
         ...values,
         netWeight: Number(values.netWeight),
       };
-      console.log(pick(_values, ['reviewer', 'batchNo', 'netWeight']), _values);
 
       await registerPlasmaWeight(
         pick(_values, ['reviewer', 'batchNo', 'netWeight']) as PostApiCoreBatchPlasmaWeightRequest,

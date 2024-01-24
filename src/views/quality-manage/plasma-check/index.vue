@@ -72,7 +72,6 @@
 
   const selectedRowsRef = ref<Recordable>([]);
   const [registerTable, { reload, clearSelectedRowKeys, getForm }] = useTable({
-    title: '血浆审核列表',
     api: getPlasmaCheckList,
     columns,
     formConfig: {

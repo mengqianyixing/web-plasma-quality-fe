@@ -72,7 +72,6 @@
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload, getForm, clearSelectedRowKeys }] = useTable({
-    title: '血浆批检疫期报告列表',
     api: getPlasmaBatchReleases,
     fetchSetting: {
       pageField: 'currPage',
