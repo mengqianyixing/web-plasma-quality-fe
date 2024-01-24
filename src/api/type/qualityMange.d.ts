@@ -222,4 +222,49 @@ export interface DeleteApiCoreBagFlagCancelBfNoRequest {
  */
 export interface DeleteApiCoreBagFlagCancelBfNoResponse {}
 
+/**
+ * 接口 [通过血浆批次查询箱号通过多个批号↗](https://yapi.sharing8.cn/project/529/interface/api/32752) 的 **请求类型**
+ *
+ * @分类 [血浆限制↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5460)
+ * @请求头 `POST /api/core/bag/flag/box/batches`
+ * @更新时间 `2024-01-23 19:24:08`
+ */
+export interface PostApiCoreBagFlagBoxBatchesRequest {
+  batchNos: string[];
+  currPage: string;
+  pageSize: string;
+}
+
+/**
+ * 接口 [通过血浆批次查询箱号通过多个批号↗](https://yapi.sharing8.cn/project/529/interface/api/32752) 的 **返回类型**
+ *
+ * @分类 [血浆限制↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5460)
+ * @请求头 `POST /api/core/bag/flag/box/batches`
+ * @更新时间 `2024-01-23 19:24:08`
+ */
+export interface PostApiCoreBagFlagBoxBatchesResponse {
+  totalCount: number;
+  currPage: null;
+  totalPage: null;
+  pageSize: null;
+  result?: {
+    /**
+     * 血浆箱号
+     */
+    boxNo: string;
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
+    /**
+     * 血浆数量
+     */
+    bagCount: string;
+    /**
+     * 血浆编号
+     */
+    bagNos: string;
+  }[];
+}
+
 /* prettier-ignore-end */

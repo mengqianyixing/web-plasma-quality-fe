@@ -1703,7 +1703,7 @@ export type PostApiCoreBatchSampleVerifyResponse = string;
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/sample/unqualified`
- * @更新时间 `2024-01-18 14:30:26`
+ * @更新时间 `2024-01-24 18:22:52`
  */
 export interface PostApiCoreBatchSampleUnqualifiedRequest {
   /**
@@ -1721,7 +1721,7 @@ export interface PostApiCoreBatchSampleUnqualifiedRequest {
   /**
    * 验收单号
    */
-  verifyNo: string;
+  verifyNo?: string;
   /**
    * 样本批号
    */
@@ -1737,7 +1737,7 @@ export interface PostApiCoreBatchSampleUnqualifiedRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/sample/unqualified`
- * @更新时间 `2024-01-18 14:30:26`
+ * @更新时间 `2024-01-24 18:22:52`
  */
 export type PostApiCoreBatchSampleUnqualifiedResponse = string;
 

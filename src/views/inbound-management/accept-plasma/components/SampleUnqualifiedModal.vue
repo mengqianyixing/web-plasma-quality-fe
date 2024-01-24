@@ -44,7 +44,7 @@
         required: true,
       },
       {
-        field: 'fkFailedCode',
+        field: 'unqualifiedReasonCode',
         label: '不合格原因',
         component: 'ApiSelect',
         colProps: { span: 18 },
@@ -58,7 +58,7 @@
         required: true,
       },
       {
-        field: 'fkBagNo',
+        field: 'sampleNo',
         label: '样本编号',
         component: 'Input',
         colProps: { span: 18 },
