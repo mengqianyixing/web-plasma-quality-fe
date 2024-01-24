@@ -14,6 +14,10 @@
   import { nonconformityPlasmaDetail } from '@/api/nonconformity/plasma-manage';
   import { genderMap, genderValueEnum } from '@/enums/commonEnum';
   import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
+  import {
+    nonconformityPlasmaMap,
+    NonconformityPlasmaStatusValueEnum,
+  } from '@/enums/nonconforityEnum';
 
   defineOptions({ name: 'PickPlasmaModal' });
 
@@ -35,6 +39,9 @@
         (it: Recordable) => it.value === detailData.unqReason,
       )?.label,
       donorStatus: donorStatusMap.get(detailData.donorStatus as donorStatusValueEnum),
+      plasmaState: nonconformityPlasmaMap.get(
+        detailData.plasmaState as NonconformityPlasmaStatusValueEnum,
+      ),
     };
 
     setModalProps({ confirmLoading: false });
