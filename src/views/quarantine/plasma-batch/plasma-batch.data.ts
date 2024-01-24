@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-19 14:19:58
+ * @LastEditTime: 2024-01-24 14:49:40
  * @Description: 血浆批检疫期报告 data
  * @FilePath: \psms-fe\src\views\quarantine\plasma-batch\plasma-batch.data.ts
  */
@@ -16,17 +16,17 @@ import { customRenderDate } from '@/utils/tableHelpRender';
 export const STATE = {
   W: {
     value: 'W',
-    label: '未复核',
+    label: '待复核',
     color: 'default',
   },
   R: {
     value: 'R',
-    label: '已发布',
+    label: '已复核',
     color: BS_COLORS.green,
   },
   C: {
     value: 'C',
-    label: '已取消',
+    label: '取消',
     color: BS_COLORS.yellow,
   },
   ALL: {
@@ -83,8 +83,7 @@ export const columns: BasicColumn[] = [
   {
     title: '不合格血浆',
     dataIndex: 'summary.failedCount',
-    className: 'empty-value warning-text',
-    customRender: ({ record }) => record?.summary?.failedCount,
+    slots: { customRender: 'failedCount' },
   },
   {
     title: '检疫期合格血浆',
@@ -101,14 +100,13 @@ export const columns: BasicColumn[] = [
   {
     title: '反复续追踪血浆',
     dataIndex: 'summary.reUnTrackedCount',
-    className: 'empty-value primary-text',
+    className: 'empty-value',
     customRender: ({ record }) => record?.summary?.reUnTrackedCount,
   },
   {
     title: '非生产出库转移血浆',
     dataIndex: 'summary.unProductionCount',
-    className: 'empty-value',
-    customRender: ({ record }) => record?.summary?.unProductionCount,
+    slots: { customRender: 'unProductionCount' },
   },
   {
     title: '报告生成人',
@@ -191,6 +189,34 @@ export const modalColumns: BasicColumn[] = [
   },
 ];
 
+export const modalFailDetailColumns: BasicColumn[] = [
+  {
+    title: '血浆编号',
+    dataIndex: 'bagNo',
+    className: 'font-bold empty-value',
+  },
+  {
+    title: '不合格原因',
+    dataIndex: 'fkFailedCode',
+    className: 'empty-value',
+    slots: { customRender: 'unqReason' },
+  },
+];
+
+export const modalUnProductionDetailColumns: BasicColumn[] = [
+  {
+    title: '血浆编号',
+    dataIndex: 'bagNo',
+    className: 'font-bold empty-value',
+  },
+  {
+    title: '出库原因',
+    dataIndex: 'fkUnProdCode',
+    className: 'empty-value',
+    slots: { customRender: 'prodReason' },
+  },
+];
+
 export const searchFormSchema: FormSchema[] = [
   {
     label: '采浆公司',
@@ -215,7 +241,7 @@ export const searchFormSchema: FormSchema[] = [
     defaultValue: 'W',
     componentProps: {
       allowClear: false,
-      options: Object.values(STATE),
+      options: Object.values(STATE).filter((item) => item.value != 'C'),
     },
   },
   {
