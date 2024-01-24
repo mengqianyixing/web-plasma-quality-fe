@@ -162,7 +162,7 @@
       field: 'acceptAt',
       label: '接收日期',
       render(text) {
-        return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
+        return text ? dayjs(text).format('YYYY-MM-DD') : '';
       },
     },
     {
