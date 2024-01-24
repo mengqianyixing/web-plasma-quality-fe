@@ -91,7 +91,7 @@
 
       createMessage.success('登记成功');
       emit('success');
-      resetFields();
+      await resetFields();
       closeModal();
     } finally {
       setModalProps({ confirmLoading: false });
