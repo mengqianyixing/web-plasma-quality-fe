@@ -142,6 +142,15 @@ const system: AppRouteModule = {
       },
       component: () => import('@/views/system/params/index.vue'),
     },
+    {
+      path: 'report',
+      name: 'report',
+      id: 9209,
+      meta: {
+        title: '报表设置',
+      },
+      component: () => import('@/views/system/report/index.vue'),
+    },
     // {
     //   path: 'changePassword',
     //   name: 'ChangePassword',
