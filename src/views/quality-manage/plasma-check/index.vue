@@ -84,6 +84,10 @@
       listField: 'result',
     },
     clickToRowSelect: true,
+    afterFetch: (data) => {
+      clearSelectedRowKeys();
+      return data;
+    },
     rowSelection: {
       type: 'radio',
       onChange(_, selectedRows) {
