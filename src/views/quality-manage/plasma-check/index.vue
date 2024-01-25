@@ -47,6 +47,7 @@
   import RevokeCheckModal from '@/views/quality-manage/plasma-check/RevokeCheckModal.vue';
   import { getBindBoxListApi } from '@/api/quality/plasma-restriction';
   import { useStation } from '@/hooks/common/useStation';
+  import { PlasmaCheckStateValueEnum } from '@/enums/plasmaEnum';
 
   const { isLoading, stationOptions } = useStation();
   const { createMessage, createConfirm } = useMessage();
@@ -211,6 +212,11 @@
 
   async function handleEdit() {
     if (!checkSelectedRows()) return;
+    if (selectedRowsRef.value[0].auditState !== PlasmaCheckStateValueEnum.WV) {
+      createMessage.warn('只有待复核状态下的血浆批审核单才允许编辑');
+      return;
+    }
+
     const flag = await checkPlasmaLimit('edit');
 
     if (!flag) return;
@@ -224,6 +230,10 @@
 
   async function handleDelete() {
     if (!checkSelectedRows()) return;
+    if (selectedRowsRef.value[0].auditState !== PlasmaCheckStateValueEnum.WV) {
+      createMessage.warn('只有待复核状态下的血浆批审核单才允许撤销审核');
+      return;
+    }
 
     openPlasmaRevokeModal(true, {
       flag: 'check',
@@ -233,6 +243,10 @@
 
   async function handleReCheck() {
     if (!checkSelectedRows()) return;
+    if (selectedRowsRef.value[0].auditState !== PlasmaCheckStateValueEnum.WV) {
+      createMessage.warn('只有待复核状态下的血浆批审核单才允许复核');
+      return;
+    }
     const flag = await checkPlasmaLimit('recheck');
 
     if (!flag) return;
@@ -255,6 +269,10 @@
 
   function handleCancelReCheck() {
     if (!checkSelectedRows()) return;
+    if (selectedRowsRef.value[0].auditState !== PlasmaCheckStateValueEnum.WA) {
+      createMessage.warn('只有待批准状态下的血浆批审核单才允许撤销复核');
+      return;
+    }
 
     openPlasmaRevokeModal(true, {
       flag: 'recheck',
@@ -266,6 +284,10 @@
 
   async function handleApproval() {
     if (!checkSelectedRows()) return;
+    if (selectedRowsRef.value[0].auditState !== PlasmaCheckStateValueEnum.WA) {
+      createMessage.warn('只有待批准状态下的血浆批审核单才允许批准');
+      return;
+    }
     const flag = await checkPlasmaLimit('approval');
 
     if (!flag) return;
