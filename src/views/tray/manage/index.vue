@@ -42,6 +42,7 @@
     createTrayLabelApi,
     confirmTrayLabelApi,
   } from '@/api/tray/list';
+  import { printRecord } from '@/api/tag/printRecord';
   import { message } from 'ant-design-vue';
   import TableModal from './tableDrawer.vue';
   import BoxTableModal from './boxTableDrawer.vue';
@@ -114,8 +115,22 @@
       setModalProps({ confirmLoading: true });
       const { trayNumber } = await validate();
       const res = await createTrayLabelApi({ trayNumber });
-      for (const key in res) {
-        await confirmTrayLabelApi({ trayNo: key, action: 'confirm' });
+      let n = 0;
+      try {
+        for (const key in res) {
+          const re = await printRecord({
+            ...res[key],
+            resolution: void 0,
+            dpi: res[key].resolution,
+          });
+          console.log(re);
+
+          await confirmTrayLabelApi({ trayNo: key, action: 'confirm' });
+          n++;
+        }
+        message.success('本次打印成功' + n + '个');
+      } catch (e) {
+        message.warning(`本次成功${n}个、失败${trayNumber - n}个。请检查打印机状态！！！`);
       }
       setModalProps({ confirmLoading: false });
       closeModal();
