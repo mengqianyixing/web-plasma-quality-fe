@@ -1340,4 +1340,40 @@ export interface DeleteApiProductOutStoreBatchOrderNoRequest {
  */
 export interface DeleteApiProductOutStoreBatchOrderNoResponse {}
 
+/**
+ * 接口 [投产出库托盘列表↗](https://yapi.sharing8.cn/project/529/interface/api/32807) 的 **请求类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `GET /api/product/prepare/tray/out`
+ * @更新时间 `2024-01-25 14:17:20`
+ */
+export interface GetApiProductPrepareTrayOutRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo?: string;
+  /**
+   * 生产指令号
+   */
+  orderNo: string;
+}
+
+/**
+ * 接口 [投产出库托盘列表↗](https://yapi.sharing8.cn/project/529/interface/api/32807) 的 **返回类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `GET /api/product/prepare/tray/out`
+ * @更新时间 `2024-01-25 14:17:20`
+ */
+export type GetApiProductPrepareTrayOutResponse = {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  boxNum: number;
+  plasmaNum: number;
+  state: string;
+  houseName: string;
+}[];
+
 /* prettier-ignore-end */
