@@ -78,6 +78,10 @@
   ] = useTable({
     columns: [
       {
+        title: '排序号',
+        dataIndex: 'sort',
+      },
+      {
         title: '审核项目',
         dataIndex: 'auditItem',
       },
@@ -102,11 +106,7 @@
     pagination: false,
     showTableSetting: false,
     bordered: true,
-    showIndexColumn: true,
-    indexColumnProps: {
-      width: 80,
-      title: '排序号',
-    },
+    showIndexColumn: false,
     isCanResizeParent: true,
   });
 
@@ -231,6 +231,8 @@
       insertTableDataRecord(rowRecord);
     }
 
+    setTableData(getDataSource().sort((a, b) => a.sort - b.sort));
+
     clearSelectedRowKeys();
   }
 
@@ -242,20 +244,14 @@
       if (!isUpdate.value) {
         await addPlasmaCheck({
           ...values,
-          auditList: getDataSource().map((item, idx) => ({
-            ...item,
-            sort: idx + 1,
-          })),
+          auditList: getDataSource(),
           batchNo: plasmaDetail.value.batchNo,
         } as PostApiCoreBatchPlasmaAuditRequest);
       } else {
         await editPlasmaCheck({
           ...values,
           auditId: plasmaDetail.value.auditId,
-          auditList: getDataSource().map((item, idx) => ({
-            ...item,
-            sort: idx + 1,
-          })),
+          auditList: getDataSource(),
           batchNo: plasmaDetail.value.batchNo,
         } as PutApiCoreBatchPlasmaAuditRequest);
       }
