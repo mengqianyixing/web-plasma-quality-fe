@@ -19,8 +19,8 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
-  import { registerNonconformity } from '@/api/inbound-management/sample-verify';
-  import { PostApiCoreBatchSampleUnqualifiedRequest } from '@/api/type/batchManage';
+  import { PostApiCoreBatchSampleUnqualifiedPlasmaRequest } from '@/api/type/batchManage';
+  import { nonconformityPlasmaReceiveSampleRegister } from '@/api/nonconformity/sample-manage';
 
   const { createMessage } = useMessage();
 
@@ -65,12 +65,6 @@
         required: true,
       },
       {
-        field: 'pageFlag',
-        defaultValue: 'verify',
-        component: 'Input',
-        show: false,
-      },
-      {
         field: 'batchSampleNo',
         component: 'Input',
         show: false,
@@ -98,7 +92,9 @@
     try {
       setModalProps({ confirmLoading: true });
       const values = await validate();
-      await registerNonconformity(values as PostApiCoreBatchSampleUnqualifiedRequest);
+      await nonconformityPlasmaReceiveSampleRegister(
+        values as PostApiCoreBatchSampleUnqualifiedPlasmaRequest,
+      );
 
       createMessage.success('登记成功');
       emit('success');
