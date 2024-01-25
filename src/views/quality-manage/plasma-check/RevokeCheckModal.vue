@@ -44,6 +44,7 @@
         componentProps: {
           rows: 4,
         },
+        required: true,
       },
     ],
     showActionButtonGroup: false,
@@ -65,7 +66,6 @@
       setModalProps({ confirmLoading: true });
       const values = await validate();
 
-      console.log(flag.value);
       if (flag.value === 'check') {
         await revokePlasmaCheck(values as PutApiCoreBatchPlasmaAuditRevokeRequest);
         createMessage.success('撤销审核成功');

@@ -25,7 +25,7 @@
   const emit = defineEmits(['success', 'register']);
 
   const [registerLogin, { openModal }] = useModal();
-  const [registerForm, { setFieldsValue, validate }] = useForm({
+  const [registerForm, { setFieldsValue, validate, resetFields }] = useForm({
     showActionButtonGroup: false,
     schemas: [
       {
@@ -95,6 +95,7 @@
 
       emit('success');
 
+      await resetFields();
       closeModal();
     } finally {
       setModalProps({ confirmLoading: false });
