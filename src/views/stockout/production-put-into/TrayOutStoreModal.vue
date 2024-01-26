@@ -32,7 +32,7 @@
 
   const [registerTrayOutConfirmModal, { openModal }] = useModal();
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
     api: getTrayOutStoreList,
     columns: trayColumns,
     formConfig: {
@@ -55,6 +55,10 @@
         ...params,
         orderNo: orderNo.value,
       };
+    },
+    afterFetch: (data) => {
+      clearSelectedRowKeys();
+      return data;
     },
     size: 'small',
     clickToRowSelect: true,

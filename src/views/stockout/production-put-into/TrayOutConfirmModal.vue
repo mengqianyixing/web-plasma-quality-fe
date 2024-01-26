@@ -4,7 +4,7 @@
     @register="register"
     title="托盘出库"
     showFooter
-    width="40%"
+    width="30%"
     @ok="handleOk"
   >
     <BasicForm @register="registerTable" ref="table" />
@@ -13,8 +13,11 @@
 <script lang="ts" setup>
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
+  import { useMessage } from '@/hooks/web/useMessage';
   import { ref } from 'vue';
   import { submitOutHouseApi } from '@/api/tray/relocation';
+
+  const { createMessage } = useMessage();
 
   const [registerTable, { updateSchema, setFieldsValue, validate, resetFields }] = useForm({
     showActionButtonGroup: false,
@@ -67,7 +70,7 @@
       values.trayNos.forEach((it) => {
         fnStack.push(
           submitOutHouseApi({ dlvInfo: [it], orderNo: orderNo.value })
-            .then((res) => res)
+            .then((res) => ({ res, dlv: it, type: 'success' }))
             .catch((e) => ({ e, dlv: it, type: 'error' })),
         );
       });
@@ -85,6 +88,7 @@
           trayNos: errArr,
         });
       } else {
+        createMessage.success('出库成功');
         await resetFields();
         closeModal();
         emit('success');
