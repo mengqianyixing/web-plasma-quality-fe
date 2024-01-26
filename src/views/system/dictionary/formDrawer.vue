@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-09 19:10:30
+ * @LastEditTime: 2024-01-25 17:11:32
 -->
 <template>
   <BasicModal
@@ -61,6 +61,7 @@
   async function handleSubmit() {
     try {
       const value = await validate();
+      value.systemLevel = value.systemLevel ? 1 : -1;
       setModalProps({ confirmLoading: true });
       if (state.isUpdate) {
         await updateDictApi({ ...value, dictId: state.dictId } as PutApiSysDictRequest);
