@@ -23,6 +23,7 @@
       </template>
     </BasicTable>
 
+    <TrayOutStoreModal @register="registerTrayOutStoreModal" @success="handleSuccess" />
     <DetailModal @register="registerDetailModal" />
     <BoxReceiveModal @register="registerReceiveModal" @success="handleSuccess" />
     <BoxOutStoreModal @register="registerBoxOutStoreModal" @success="handleSuccess" />
@@ -40,6 +41,7 @@
   import DetailModal from './DetailModal.vue';
   import BoxReceiveModal from '@/views/stockout/production-put-into/BoxReceiveModal.vue';
   import BoxOutStoreModal from '@/views/stockout/production-put-into/BoxOutStoreModal.vue';
+  import TrayOutStoreModal from '@/views/stockout/production-put-into/TrayOutStoreModal.vue';
 
   import { useMessage } from '@/hooks/web/useMessage';
   import { PageWrapper } from '@/components/Page';
@@ -56,6 +58,7 @@
   const [registerBoxOutStoreModal, { openModal: openBoxOutStoreModal }] = useModal();
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
   const [registerReceiveModal, { openModal: openBoxReceiveModal }] = useModal();
+  const [registerTrayOutStoreModal, { openModal: openTrayOutStoreModal }] = useModal();
 
   const selectedRow = ref<Recordable>([]);
 
@@ -67,6 +70,9 @@
     columns,
     formConfig: {
       schemas: searchFormSchema,
+      transformDateFunc(date) {
+        return date ? date.format('YYYY-MM-DD') : '';
+      },
     },
     fetchSetting: {
       pageField: 'currPage',
@@ -108,7 +114,15 @@
     });
   }
 
-  function handleTrayStockOut() {}
+  function handleTrayStockOut() {
+    if (!selectRowsCheck()) return;
+
+    openTrayOutStoreModal(true, {
+      record: {
+        orderNo: selectedRow.value[0]?.orderNo,
+      },
+    });
+  }
 
   function handleBoxStockOut() {
     if (!selectRowsCheck()) return;

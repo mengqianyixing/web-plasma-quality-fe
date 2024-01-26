@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-27 16:59:17
+ * @LastEditTime: 2024-01-25 18:24:55
 -->
 <template>
   <BasicModal
@@ -25,6 +25,7 @@
   import { reactive } from 'vue';
   import { getDictItemDtApi, addDictItemApi, updateDictItemApi } from '@/api/dictionary';
   import { PostApiSysDictItemRequest, PutApiSysDictItemRequest } from '@/api/type/dictionary';
+  import { FormSchema } from '@/components/Table';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -35,19 +36,41 @@
     dictItemId: '',
     dictId: '',
   });
+  let fields: string[] = [];
 
-  const [registerForm, { validate, setFieldsValue, clearValidate, resetFields }] = useForm({
-    labelWidth: 90,
+  const [
+    registerForm,
+    {
+      validate,
+      setFieldsValue,
+      clearValidate,
+      resetFields,
+      appendSchemaByField,
+      removeSchemaByField,
+      updateSchema,
+    },
+  ] = useForm({
+    labelWidth: 140,
     baseColProps: { span: 24 },
     schemas: itemFormSchema,
     showActionButtonGroup: false,
   });
+  type Data = {
+    isUpdate: boolean;
+    data: Recordable;
+    formSchema: FormSchema[];
+  };
   const [registerModal, { setModalProps, closeModal }] = useModalInner(
-    async ({ isUpdate, data }) => {
+    async ({ isUpdate, data, formSchema = [] }: Data) => {
+      await removeSchemaByField(fields);
+      fields = formSchema.map((_) => _.field);
+      appendSchemaByField(formSchema, 'itemValue');
       setModalProps({ confirmLoading: false });
       state.isUpdate = isUpdate;
       state.dictItemId = data.dictItemId;
       state.dictId = data.dictId;
+      updateSchema({ field: 'itemValue', componentProps: { disabled: !!isUpdate } });
+      updateSchema({ field: 'enable', show: !isUpdate });
       if (isUpdate) {
         const res = await getDictItemDtApi({ dictItemId: data.dictItemId });
         setFieldsValue(res);
@@ -62,14 +85,23 @@
     try {
       const value = await validate();
       setModalProps({ confirmLoading: true });
+      const newFields = fields.reduce((t, c) => {
+        t[c] = value[c];
+        return t;
+      }, Object.create(null));
       if (state.isUpdate) {
         await updateDictItemApi({
           ...value,
           dictItemId: state.dictItemId,
           dataDictId: state.dictId,
+          newFields,
         } as PutApiSysDictItemRequest);
       } else {
-        await addDictItemApi({ ...value, dataDictId: state.dictId } as PostApiSysDictItemRequest);
+        await addDictItemApi({
+          ...value,
+          dataDictId: state.dictId,
+          newFields,
+        } as PostApiSysDictItemRequest);
       }
       closeModal();
       emit('success');

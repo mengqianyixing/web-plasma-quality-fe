@@ -171,3 +171,26 @@ export const detailColumns: BasicColumn[] = [
     dataIndex: 'titer',
   },
 ];
+
+export const trayColumns: BasicColumn[] = [
+  {
+    title: '托盘编号',
+    dataIndex: 'trayNo',
+  },
+  {
+    title: '箱数',
+    dataIndex: 'boxNum',
+  },
+  {
+    title: '血浆数量',
+    dataIndex: 'plasmaNum',
+  },
+  {
+    title: '状态',
+    dataIndex: 'state',
+  },
+  {
+    title: '存放位置',
+    dataIndex: 'houseName',
+  },
+];

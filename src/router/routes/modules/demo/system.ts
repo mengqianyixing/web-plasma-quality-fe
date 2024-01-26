@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-26 14:53:13
+ * @LastEditTime: 2024-01-26 16:45:47
  * @Description: 系统管理
  * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
  */
@@ -157,6 +157,15 @@ const system: AppRouteModule = {
         },
       ],
       component: () => import('@/views/system/policies/index.vue'),
+    },
+    {
+      path: 'report',
+      name: 'report',
+      id: 9211,
+      meta: {
+        title: '报表设置',
+      },
+      component: () => import('@/views/system/report/index.vue'),
     },
     // {
     //   path: 'changePassword',

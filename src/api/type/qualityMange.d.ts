@@ -267,4 +267,363 @@ export interface PostApiCoreBagFlagBoxBatchesResponse {
   }[];
 }
 
+/**
+ * 接口 [新增放行单↗](https://yapi.sharing8.cn/project/529/interface/api/32677) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `POST /api/product/release`
+ * @更新时间 `2024-01-23 18:39:15`
+ */
+export interface PostApiProductReleaseRequest {
+  /**
+   * 制造批号
+   */
+  mesId: string;
+  /**
+   * 放行单号
+   */
+  prNo: string;
+  /**
+   * 审核项
+   */
+  releaseDetail: {
+    /**
+     * 排序号
+     */
+    appIndex: string;
+    /**
+     * 审核项目
+     */
+    appName: string;
+    /**
+     * 审核内容
+     */
+    appContent: string;
+    /**
+     * 审核结果
+     */
+    appResult: string;
+  }[];
+  /**
+   * 结论
+   */
+  conclusion: string;
+  /**
+   * 备注
+   */
+  remark: string;
+}
+
+/**
+ * 接口 [新增放行单↗](https://yapi.sharing8.cn/project/529/interface/api/32677) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `POST /api/product/release`
+ * @更新时间 `2024-01-23 18:39:15`
+ */
+export type PostApiProductReleaseResponse = string;
+
+/**
+ * 接口 [编辑放行单↗](https://yapi.sharing8.cn/project/529/interface/api/32687) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `PUT /api/product/release`
+ * @更新时间 `2024-01-24 19:45:27`
+ */
+export interface PutApiProductReleaseRequest {
+  mesId: string;
+  prNo: string;
+  releaseDetail?: {
+    appIndex: string;
+    appName: string;
+    appContent: string;
+    appResult: string;
+  }[];
+}
+
+/**
+ * 接口 [编辑放行单↗](https://yapi.sharing8.cn/project/529/interface/api/32687) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `PUT /api/product/release`
+ * @更新时间 `2024-01-24 19:45:27`
+ */
+export interface PutApiProductReleaseResponse {}
+
+/**
+ * 接口 [获取放行单详情↗](https://yapi.sharing8.cn/project/529/interface/api/32692) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/product/release/{prNo}`
+ * @更新时间 `2024-01-23 10:25:26`
+ */
+export interface GetApiProductReleasePrNoRequest {
+  prNo: string;
+}
+
+/**
+ * 接口 [获取放行单详情↗](https://yapi.sharing8.cn/project/529/interface/api/32692) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/product/release/{prNo}`
+ * @更新时间 `2024-01-23 10:25:26`
+ */
+export interface GetApiProductReleasePrNoResponse {
+  mesId: string;
+  prNo: string;
+  releaseDetail: {
+    appIndex: string;
+    appName: string;
+    appContent: string;
+    appResult: string;
+  }[];
+}
+
+/**
+ * 接口 [复核↗](https://yapi.sharing8.cn/project/529/interface/api/32697) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `PUT /api/product/release/review/{prNo}`
+ * @更新时间 `2024-01-23 19:14:21`
+ */
+export interface PutApiProductReleaseReviewPrNoRequest {
+  prNo: string;
+}
+
+/**
+ * 接口 [复核↗](https://yapi.sharing8.cn/project/529/interface/api/32697) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `PUT /api/product/release/review/{prNo}`
+ * @更新时间 `2024-01-23 19:14:21`
+ */
+export interface PutApiProductReleaseReviewPrNoResponse {}
+
+/**
+ * 接口 [放行↗](https://yapi.sharing8.cn/project/529/interface/api/32702) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `PUT /api/product/release/{prNo}`
+ * @更新时间 `2024-01-23 10:32:20`
+ */
+export interface PutApiProductReleasePrNoRequest {
+  prNo: string;
+}
+
+/**
+ * 接口 [放行↗](https://yapi.sharing8.cn/project/529/interface/api/32702) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `PUT /api/product/release/{prNo}`
+ * @更新时间 `2024-01-23 10:32:20`
+ */
+export type PutApiProductReleasePrNoResponse = string;
+
+/**
+ * 接口 [取消放行↗](https://yapi.sharing8.cn/project/529/interface/api/32707) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `PUT /api/product/release/cancel`
+ * @更新时间 `2024-01-23 10:33:45`
+ */
+export interface PutApiProductReleaseCancelRequest {
+  prNo: string;
+  reason?: string;
+}
+
+/**
+ * 接口 [取消放行↗](https://yapi.sharing8.cn/project/529/interface/api/32707) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `PUT /api/product/release/cancel`
+ * @更新时间 `2024-01-23 10:33:45`
+ */
+export interface PutApiProductReleaseCancelResponse {}
+
+/**
+ * 接口 [查询放行单列表↗](https://yapi.sharing8.cn/project/529/interface/api/32712) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `POST /api/product/releases`
+ * @更新时间 `2024-01-24 10:46:03`
+ */
+export interface PostApiProductReleasesRequest {
+  /**
+   * 制造批号
+   */
+  mesId?: string;
+  /**
+   * 放行单号
+   */
+  prNo?: string;
+  /**
+   * 放行状态
+   */
+  state?: string;
+  currPage: number;
+  pageSize: number;
+}
+
+/**
+ * 接口 [查询放行单列表↗](https://yapi.sharing8.cn/project/529/interface/api/32712) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `POST /api/product/releases`
+ * @更新时间 `2024-01-24 10:46:03`
+ */
+export interface PostApiProductReleasesResponse {
+  pageSize: number;
+  currPage: number;
+  totalCount: number;
+  totalPage: number;
+  result?: {
+    /**
+     * 制造批号
+     */
+    mesId?: string;
+    /**
+     * 投产类型
+     */
+    orderType?: string;
+    /**
+     * 计划投产日期
+     */
+    planTask?: string;
+    /**
+     * 投产血浆净重
+     */
+    netWeight: string;
+    /**
+     * 投产血浆数量
+     */
+    prodBagCount: string;
+    /**
+     * 献血浆者人数
+     */
+    donorCount: string;
+    /**
+     * 最早采集日期
+     */
+    minCollectAt: string;
+    /**
+     * 最晚采集日期
+     */
+    maxCollectAt: string;
+    /**
+     * 最早采集血浆有效期至
+     */
+    earliestValid: string;
+    /**
+     * 最晚满检疫期日期
+     */
+    latestExpiration: string;
+    /**
+     * 放行状态
+     */
+    state: string;
+    /**
+     * 放行单号
+     */
+    prNo: string;
+    /**
+     * 审核人
+     */
+    checker: string;
+    /**
+     * 审核日期
+     */
+    checkAt: string;
+    /**
+     * 复核人
+     */
+    reviewer: string;
+    /**
+     * 复核日期
+     */
+    reviewAt: string;
+    /**
+     * 放行人
+     */
+    releaseBy: string;
+    /**
+     * 放行日期
+     */
+    releaseAt: string;
+    orderNo: string;
+    batchNos: string;
+    /**
+     * 是否有血浆限制标记
+     */
+    bagFlag: boolean;
+  }[];
+}
+
+/**
+ * 接口 [查询未挑选出的不合格血浆↗](https://yapi.sharing8.cn/project/529/interface/api/32722) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/product/release/unqualified/{orderNo}`
+ * @更新时间 `2024-01-23 16:39:03`
+ */
+export interface GetApiProductReleaseUnqualifiedOrderNoRequest {
+  orderNo: string;
+}
+
+/**
+ * 接口 [查询未挑选出的不合格血浆↗](https://yapi.sharing8.cn/project/529/interface/api/32722) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/product/release/unqualified/{orderNo}`
+ * @更新时间 `2024-01-23 16:39:03`
+ */
+export type GetApiProductReleaseUnqualifiedOrderNoResponse = {
+  /**
+   * 不合格血浆编号
+   */
+  bagNo: string;
+  /**
+   * 血浆批号
+   */
+  batchNo: string;
+  /**
+   * 不合格日期
+   */
+  createAt: string;
+  /**
+   * 不合格类型
+   */
+  fkFailedCode: string;
+  /**
+   * 不合格原因
+   */
+  failedReason: string;
+  /**
+   * 状态
+   */
+  state: string;
+}[];
+
+/**
+ * 接口 [查询预制审核内容↗](https://yapi.sharing8.cn/project/529/interface/api/32787) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/product/release/detail`
+ * @更新时间 `2024-01-24 17:57:38`
+ */
+export interface GetApiProductReleaseDetailRequest {}
+
+/**
+ * 接口 [查询预制审核内容↗](https://yapi.sharing8.cn/project/529/interface/api/32787) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/product/release/detail`
+ * @更新时间 `2024-01-24 17:57:38`
+ */
+export type GetApiProductReleaseDetailResponse = {
+  appIndex: string;
+  appName: string;
+  appContent: string;
+  appResult: string;
+}[];
+
 /* prettier-ignore-end */

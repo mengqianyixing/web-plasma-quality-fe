@@ -139,6 +139,16 @@ export const searchFormSchema: FormSchema[] = [
       })),
     },
   },
+  {
+    field: '[begnPlanOut, endPlanOut]',
+    label: '计划出库日期',
+    component: 'RangePicker',
+  },
+  {
+    field: '[begnPlanTask, endPlanTask]',
+    label: '计划投产日期',
+    component: 'RangePicker',
+  },
 ];
 
 export const formSchema: FormSchema[] = [

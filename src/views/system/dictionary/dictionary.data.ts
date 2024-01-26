@@ -9,7 +9,6 @@ export const columns: BasicColumn[] = [
     title: '字典编号',
     dataIndex: 'dictNo',
   },
-
   {
     title: '描述',
     dataIndex: 'dictDesc',
@@ -18,17 +17,17 @@ export const columns: BasicColumn[] = [
     title: '系统字典',
     dataIndex: '',
     customRender: ({ record }) => {
-      return record.systemLevel ? '是' : '否';
+      return record.systemLevel > 0 ? '是' : '否';
     },
   },
-  {
-    title: '创建人',
-    dataIndex: 'creater',
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createAt',
-  },
+  // {
+  //   title: '创建人',
+  //   dataIndex: 'creater',
+  // },
+  // {
+  //   title: '创建时间',
+  //   dataIndex: 'createAt',
+  // },
 
   {
     title: '修改人',

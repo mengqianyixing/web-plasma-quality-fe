@@ -23,19 +23,28 @@
     labelWidth: 120,
     schemas: [
       {
+        field: 'sort',
+        label: '排序号',
+        component: 'InputNumber',
+        required: true,
+      },
+      {
         field: 'auditItem',
         label: '审核项目',
         component: 'Input',
+        required: true,
       },
       {
         field: 'auditContent',
         label: '审核内容',
         component: 'Input',
+        required: true,
       },
       {
         field: 'auditResult',
         label: '审核结果',
         component: 'Input',
+        required: true,
       },
     ],
     showActionButtonGroup: false,
