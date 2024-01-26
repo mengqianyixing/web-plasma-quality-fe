@@ -1376,4 +1376,114 @@ export type GetApiProductPrepareTrayOutResponse = {
   houseName: string;
 }[];
 
+/**
+ * 接口 [分拣批次信息查询↗](https://yapi.sharing8.cn/project/529/interface/api/32867) 的 **请求类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `GET /api/product/prepare/sort/batch-info`
+ * @更新时间 `2024-01-26 11:13:04`
+ */
+export interface GetApiProductPrepareSortBatchInfoRequest {
+  prepareNo: string;
+  currPage: string;
+  pageSize: string;
+}
+
+/**
+ * 接口 [分拣批次信息查询↗](https://yapi.sharing8.cn/project/529/interface/api/32867) 的 **返回类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `GET /api/product/prepare/sort/batch-info`
+ * @更新时间 `2024-01-26 11:13:04`
+ */
+export interface GetApiProductPrepareSortBatchInfoResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    batchNo?: string;
+    pickCount?: null;
+    sortCount?: number;
+    waitSortCount?: number;
+    operator?: string;
+    startAt?: string;
+    endAt?: string;
+    elapsedTime?: string;
+    /**
+     *   RUN, //准备中     REV, //待复核     TPK, //待分拣     RPK, //分拣中     CPK, //已分拣     OUT, //已出库     DEL  //已取消
+     */
+    state?: string;
+  }[];
+}
+
+/**
+ * 接口 [装箱信息列表查询↗](https://yapi.sharing8.cn/project/529/interface/api/32872) 的 **请求类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `GET /api/product/prepare/sort/boxs`
+ * @更新时间 `2024-01-26 11:17:22`
+ */
+export interface GetApiProductPrepareSortBoxsRequest {
+  /**
+   * 准备号
+   */
+  prepareNo: string;
+  currPage: string;
+  pageSize: string;
+  /**
+   * 箱编码
+   */
+  boxNo?: string;
+  /**
+   * 装箱类型
+   */
+  useType?: string;
+  /**
+   * 状态    TBR("待复核"),
+   *     RVD("已复核"),
+   */
+  state?: string;
+}
+
+/**
+ * 接口 [装箱信息列表查询↗](https://yapi.sharing8.cn/project/529/interface/api/32872) 的 **返回类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `GET /api/product/prepare/sort/boxs`
+ * @更新时间 `2024-01-26 11:17:22`
+ */
+export interface GetApiProductPrepareSortBoxsResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 箱编码
+     */
+    boxNo?: string;
+    /**
+     * 装箱类型
+     */
+    useType?: string;
+    /**
+     * 血浆数量
+     */
+    bagCount?: number;
+    /**
+     * 装箱人
+     */
+    opeartor?: string;
+    /**
+     * 装箱日期
+     */
+    opearteAt?: string;
+    /**
+     * 状态    TBR("待复核"),     RVD("已复核"),
+     */
+    state?: string;
+  }[];
+}
+
 /* prettier-ignore-end */

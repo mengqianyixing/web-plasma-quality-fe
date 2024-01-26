@@ -30,6 +30,24 @@ const callManager: AppRouteModule = {
       id: 9001,
       component: () => import('/@/views/callback/list-generation/index.vue'),
     },
+    {
+      path: 'callback-complete',
+      name: 'CallbackComplete',
+      meta: {
+        title: '回访完成',
+      },
+      id: 9002,
+      component: () => import('/@/views/callback/callback-complete/index.vue'),
+    },
+    {
+      path: 'callback-failure',
+      name: 'CallbackFailure',
+      meta: {
+        title: '回访失败',
+      },
+      id: 9003,
+      component: () => import('/@/views/callback/callback-failure/index.vue'),
+    },
   ],
 };
 export default callManager;

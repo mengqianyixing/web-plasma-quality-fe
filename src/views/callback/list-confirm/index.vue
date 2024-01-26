@@ -86,15 +86,10 @@
         selectedRow.value = selectedRows;
       },
     },
-    size: 'middle',
+    size: 'small',
     striped: false,
     useSearchForm: true,
-    showTableSetting: true,
-    tableSetting: {
-      size: false,
-      redo: false,
-      setting: false,
-    },
+    showTableSetting: false,
     bordered: true,
     showIndexColumn: false,
   });
