@@ -4,7 +4,7 @@
       <template #toolbar>
         <a-button type="primary" @click="openModal(true, {})">新增</a-button>
         <a-button type="primary" @click="handleEdit">编辑</a-button>
-        <a-button type="primary" @click="handleRemove">删除</a-button>
+        <a-button type="primary" @click="handleRemove">撤销</a-button>
         <a-button type="primary" @click="handleProcess">审核</a-button>
         <a-button type="primary" @click="handleUnProcess">取消审核</a-button>
         <a-button type="primary" @click="handleScan">出库扫描</a-button>
@@ -124,7 +124,7 @@
   function handleRemove() {
     const [row] = getSelections(true);
     if (!row) return;
-    type.value = '删除';
+    type.value = '撤销';
     open.value = true;
     api = removeFormApi;
     resetFields();
