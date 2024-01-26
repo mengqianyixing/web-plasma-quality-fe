@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-01-03 10:01:13
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-26 16:00:11
+ * @LastEditTime: 2024-01-26 16:41:02
  * @Description: 策略管理
  * @FilePath: \psms-fe\src\api\oauth\policies.ts
  */
@@ -33,7 +33,7 @@ export const getCasDoorPolicies = (params) => {
     params.value = params.name;
   }
   return defHttp.get(
-    { url: 'api/sys/casdoor/policies', params },
+    { url: '/api/sys/casdoor/policies', params },
     {
       joinParamsToUrl: true,
     },
