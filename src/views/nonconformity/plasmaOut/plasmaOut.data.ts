@@ -1,6 +1,6 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import dayjs from 'dayjs';
-import { getDictItemListByNoApi } from '@/api/dictionary';
+import { getDictItemListByNoApi, getDictItemListByNo2Api } from '@/api/dictionary';
 
 export enum USE_TO {
   DET = 'DET',
@@ -214,20 +214,14 @@ export const dtSearchFormSchema: FormSchema[] = [
     componentProps: {
       api: () =>
         new Promise((rs, rj) => {
-          getDictItemListByNoApi([
-            'sampleUnqualifiedReason',
-            'traceUnqualifiedReason',
-            '1004',
-            '1003',
-            '1002',
-          ])
-            .then((res) => {
-              rs(
-                res.reduce((pre, cur) => {
-                  pre.push(...(cur.dictImtes || []));
-                  return [...pre];
-                }, [] as any),
-              );
+          getDictItemListByNoApi(['plasmaFailedItem'])
+            .then(([result]) => {
+              const dictNos = (result.dictImtes || []).map((_) => _.value);
+              getDictItemListByNo2Api({ dictNos, dataKey: 'plasmaFailedItem' })
+                .then((res) => {
+                  rs(res);
+                })
+                .catch(rj);
             })
             .catch(rj);
         }),
