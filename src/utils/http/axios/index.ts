@@ -251,7 +251,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           // 格式化提交参数时间
           formatDate: true,
           // 消息提示类型
-          errorMessageMode: 'message',
+          errorMessageMode: 'modal',
           // 接口地址
           apiUrl:
             !globSetting.apiUrl || globSetting.apiUrl == '/'
@@ -266,7 +266,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           // 是否携带token
           withToken: true,
           retryRequest: {
-            isOpenRetry: true,
+            isOpenRetry: false,
             count: 5,
             waitTime: 100,
           },
