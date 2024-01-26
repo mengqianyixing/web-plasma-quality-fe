@@ -353,4 +353,168 @@ export interface DeleteApiCoreDonorCallbackDetailRequest {
  */
 export interface DeleteApiCoreDonorCallbackDetailResponse {}
 
+/**
+ * 接口 [回访完成情况↗](https://yapi.sharing8.cn/project/529/interface/api/32877) 的 **请求类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `GET /api/core/donor/callback/result`
+ * @更新时间 `2024-01-26 14:44:44`
+ */
+export interface GetApiCoreDonorCallbackResultRequest {
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 生成开始日期
+   */
+  createStartDate?: string;
+  /**
+   * 生成结束日期
+   */
+  createEndDate?: string;
+  /**
+   * 样品接收开始日期
+   */
+  receiveStartDate?: string;
+  /**
+   * 样品接收结束日期
+   */
+  receiveEndDate?: string;
+  pageSize: string;
+  currPage: string;
+}
+
+/**
+ * 接口 [回访完成情况↗](https://yapi.sharing8.cn/project/529/interface/api/32877) 的 **返回类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `GET /api/core/donor/callback/result`
+ * @更新时间 `2024-01-26 14:44:44`
+ */
+export type GetApiCoreDonorCallbackResultResponse = {
+  /**
+   * 浆站名称
+   */
+  stationNo: string;
+  /**
+   * 回访批次
+   */
+  batchNo: string;
+  /**
+   * 生成日期
+   */
+  generateDate: string;
+  /**
+   * 需回访数量
+   */
+  totalCount: number;
+  /**
+   * 恢复采浆量
+   */
+  recoverNum: number;
+  /**
+   * 回访样本数量
+   */
+  sampleNum: number;
+  /**
+   * 超期未回访数量
+   */
+  overDateNum: number;
+  /**
+   * 回访失败量
+   */
+  failedNum: number;
+  /**
+   * 样本接收日期
+   */
+  receiveDate: string;
+  /**
+   * 样本准备日期
+   */
+  readyDate: number;
+  /**
+   * 完成率
+   */
+  completionRate: string;
+}[];
+
+/**
+ * 接口 [回访失败(终止回访)查询↗](https://yapi.sharing8.cn/project/529/interface/api/32882) 的 **请求类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `GET /api/core/donor/callback/defeat`
+ * @更新时间 `2024-01-26 14:35:42`
+ */
+export interface GetApiCoreDonorCallbackDefeatRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 回访开始日期
+   */
+  callBackStartDate?: string;
+  /**
+   * 回访结束日期
+   */
+  callBackEndDate?: string;
+  /**
+   * 失败原因
+   */
+  failureReason?: string;
+}
+
+/**
+ * 接口 [回访失败(终止回访)查询↗](https://yapi.sharing8.cn/project/529/interface/api/32882) 的 **返回类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `GET /api/core/donor/callback/defeat`
+ * @更新时间 `2024-01-26 14:35:42`
+ */
+export type GetApiCoreDonorCallbackDefeatResponse = {
+  /**
+   * 采浆公司编号
+   */
+  stationNo: string;
+  /**
+   * 浆员编号
+   */
+  donorNo: string;
+  /**
+   * 浆员姓名
+   */
+  name: string;
+  /**
+   * 浆员性别
+   */
+  gender: string;
+  /**
+   * 浆员状态
+   */
+  status: string;
+  /**
+   * 拒绝日期
+   */
+  refuseDate?: string;
+  /**
+   * 拒绝原因
+   */
+  refuseReason?: string;
+  /**
+   * 最后采浆日期
+   */
+  lastCollectionDate: string;
+  /**
+   * 回访日期
+   */
+  callBackDate?: string;
+  /**
+   * 失败原因
+   */
+  failureReason?: string;
+}[];
+
 /* prettier-ignore-end */

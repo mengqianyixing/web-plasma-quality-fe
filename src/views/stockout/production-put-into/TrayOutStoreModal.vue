@@ -105,6 +105,7 @@
       record: {
         dlvInfo: selectedRow.value,
         orderNo: orderNo.value,
+        houseNo: selectedRow.value[0]?.houseNo,
       },
     });
   }

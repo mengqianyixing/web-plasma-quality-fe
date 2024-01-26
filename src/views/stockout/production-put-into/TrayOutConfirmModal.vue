@@ -16,9 +16,11 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { ref } from 'vue';
   import { submitOutHouseApi } from '@/api/tray/relocation';
+  import { getHouseSiteApi } from '@/api/plasmaStore/site';
 
   const { createMessage } = useMessage();
 
+  const houseNo = ref('');
   const [registerTable, { updateSchema, setFieldsValue, validate, resetFields }] = useForm({
     showActionButtonGroup: false,
     schemas: [
@@ -31,30 +33,52 @@
         },
         colProps: { span: 20 },
       },
+      {
+        field: 'siteId',
+        label: '站点ID',
+        component: 'ApiSelect',
+      },
     ],
   });
 
   const emit = defineEmits(['success', 'register']);
   const dlvInfo = ref<Recordable[]>([]);
   const orderNo = ref('');
-  const [register, { setModalProps, closeModal }] = useModalInner((data) => {
+  const [register, { setModalProps, closeModal }] = useModalInner(async (data) => {
     setModalProps({
       maskClosable: false,
     });
 
     dlvInfo.value = data.record.dlvInfo;
     orderNo.value = data.record.orderNo;
-    updateSchema({
-      field: 'trayNos',
-      componentProps: {
-        options: dlvInfo.value.map((item: any) => ({
-          label: item.trayNo,
-          value: item.trayNo,
-        })),
+    houseNo.value = data.record.houseNo;
+    await updateSchema([
+      {
+        field: 'trayNos',
+        componentProps: {
+          options: dlvInfo.value.map((item: any) => ({
+            label: item.trayNo,
+            value: item.trayNo,
+          })),
+        },
       },
-    });
+      {
+        field: 'siteId',
+        componentProps: {
+          api: getHouseSiteApi,
+          params: {
+            houseNo: houseNo.value,
+          },
+          labelField: 'label',
+          valueField: 'value',
+        },
+        colProps: {
+          span: 15,
+        },
+      },
+    ]);
 
-    setFieldsValue({
+    await setFieldsValue({
       trayNos: dlvInfo.value.map((it) => it.trayNo),
     });
   });
