@@ -343,6 +343,8 @@
 
   const verifyFlag = ref('');
   async function handleSelectSampleBatchSuccess(record: Recordable) {
+    sampleVerifyNo.value = null;
+
     verifyFlag.value = record.verifyState;
     inputValue.value = record.batchSampleNo;
     await updateTableData();
