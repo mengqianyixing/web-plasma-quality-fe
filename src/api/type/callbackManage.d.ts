@@ -358,7 +358,7 @@ export interface DeleteApiCoreDonorCallbackDetailResponse {}
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/result`
- * @更新时间 `2024-01-26 14:44:44`
+ * @更新时间 `2024-01-26 17:32:06`
  */
 export interface GetApiCoreDonorCallbackResultRequest {
   /**
@@ -390,7 +390,7 @@ export interface GetApiCoreDonorCallbackResultRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/result`
- * @更新时间 `2024-01-26 14:44:44`
+ * @更新时间 `2024-01-26 17:32:06`
  */
 export type GetApiCoreDonorCallbackResultResponse = {
   /**
