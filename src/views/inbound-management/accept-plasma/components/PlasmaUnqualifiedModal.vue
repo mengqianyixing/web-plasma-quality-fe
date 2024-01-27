@@ -19,7 +19,11 @@
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { nonconformityRegistration } from '@/api/nonconformity/box-manage';
   import { PostApiCoreBagUnqualifiedRequest } from '@/api/type/nonconformityManage';
-  import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
+  import {
+    DictionaryEnum,
+    DictionaryItemKeyEnum,
+    getSysSecondaryDictionary,
+  } from '@/api/_dictionary';
 
   const { createMessage } = useMessage();
   const emit = defineEmits(['success', 'register']);
@@ -47,11 +51,17 @@
         component: 'ApiSelect',
         colProps: { span: 18 },
         componentProps: {
-          api: getSysDictionary,
-          params: [DictionaryEnum.PlasmaUnqualifiedReason],
-          resultField: '[0].dictImtes',
-          labelField: 'label',
-          valueField: 'value',
+          api: getSysSecondaryDictionary,
+          params: {
+            dataKey: DictionaryEnum.PlasmaFailedItem,
+            dictNos: [
+              DictionaryItemKeyEnum.Accept,
+              DictionaryItemKeyEnum.Track,
+              DictionaryItemKeyEnum.Test,
+              DictionaryItemKeyEnum.Quarantine,
+              DictionaryItemKeyEnum.Other,
+            ],
+          },
         },
         required: true,
       },

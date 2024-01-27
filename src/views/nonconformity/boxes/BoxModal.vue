@@ -23,7 +23,6 @@
     PostApiCoreBankUnqualifiedBoxRequest,
     PutApiCoreBankUnqualifiedBoxRequest,
   } from '@/api/type/nonconformityManage';
-  import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
   import { HoseType } from '@/enums/nonconforityEnum';
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑' : '新增'));
@@ -42,6 +41,7 @@
         field: 'unqReason',
         componentProps: {
           disabled: isUpdate.value,
+          options: data.unqReasonOptions,
         },
       },
       {
@@ -93,14 +93,7 @@
       {
         label: '不合格原因',
         field: 'unqReason',
-        component: 'ApiSelect',
-        componentProps: {
-          api: getSysDictionary,
-          params: [DictionaryEnum.PlasmaUnqualifiedReason],
-          resultField: '[0].dictImtes',
-          labelField: 'label',
-          valueField: 'value',
-        },
+        component: 'Select',
         colProps: { span: 20 },
         required: true,
       },

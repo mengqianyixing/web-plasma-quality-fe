@@ -20,7 +20,11 @@
     nonconformityPlasmaMap,
     NonconformityPlasmaStatusValueEnum,
   } from '@/enums/nonconforityEnum';
-  import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
+  import {
+    DictionaryEnum,
+    DictionaryItemKeyEnum,
+    getSysSecondaryDictionary,
+  } from '@/api/_dictionary';
 
   import PickBatchModal from './PickBatchModal.vue';
 
@@ -32,13 +36,16 @@
 
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
   onMounted(async () => {
-    const dictionaryArr = await getSysDictionary([DictionaryEnum.PlasmaUnqualifiedReason]);
-
-    if (!dictionaryArr) return;
-
-    plasmaUnqualifiedDictionary.value = dictionaryArr.find(
-      (it) => it.dictNo === DictionaryEnum.PlasmaUnqualifiedReason,
-    )?.dictImtes;
+    plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
+      dataKey: DictionaryEnum.PlasmaFailedItem,
+      dictNos: [
+        DictionaryItemKeyEnum.Accept,
+        DictionaryItemKeyEnum.Track,
+        DictionaryItemKeyEnum.Test,
+        DictionaryItemKeyEnum.Quarantine,
+        DictionaryItemKeyEnum.Other,
+      ],
+    });
   });
 
   const [registerTable, { reload, getForm }] = useTable({

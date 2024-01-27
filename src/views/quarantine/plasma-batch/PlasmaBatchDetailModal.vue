@@ -26,7 +26,12 @@
   import { useTable, BasicTable } from '@/components/Table';
   import { modalFailDetailColumns, modalUnProductionDetailColumns } from './plasma-batch.data';
   // import { useMessage } from '@/hooks/web/useMessage';
-  import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
+  import {
+    DictionaryEnum,
+    DictionaryItemKeyEnum,
+    getSysDictionary,
+    getSysSecondaryDictionary,
+  } from '@/api/_dictionary';
 
   const emit = defineEmits(['success', 'register']);
   const { isLoading, stationOptions, getStationNameById } = useStation();
@@ -38,16 +43,21 @@
   const unProdReasonDictionary = ref<Recordable[] | undefined>([]);
 
   async function getUnqualifiedDictionary() {
-    const dictionaryArr = await getSysDictionary([
-      DictionaryEnum.PlasmaUnqualifiedReason,
-      DictionaryEnum.unProdReason,
-    ]);
+    const dictionaryArr = await getSysDictionary([DictionaryEnum.unProdReason]);
 
     if (!dictionaryArr) return;
 
-    plasmaUnqualifiedDictionary.value = dictionaryArr.find(
-      (it) => it.dictNo === DictionaryEnum.PlasmaUnqualifiedReason,
-    )?.dictImtes;
+    plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
+      dataKey: DictionaryEnum.PlasmaFailedItem,
+      dictNos: [
+        DictionaryItemKeyEnum.Accept,
+        DictionaryItemKeyEnum.Track,
+        DictionaryItemKeyEnum.Test,
+        DictionaryItemKeyEnum.Quarantine,
+        DictionaryItemKeyEnum.Other,
+      ],
+    });
+
     unProdReasonDictionary.value = dictionaryArr.find(
       (it) => it.dictNo === DictionaryEnum.unProdReason,
     )?.dictImtes;
@@ -69,11 +79,13 @@
   });
 
   function formatUnReason(unqReason: string) {
-    return plasmaUnqualifiedDictionary.value?.find((it) => it.value === unqReason)?.label;
+    return (
+      plasmaUnqualifiedDictionary.value?.find((it) => it.value === unqReason)?.label ?? unqReason
+    );
   }
 
   function formatProdReason(unqReason: string) {
-    return unProdReasonDictionary.value?.find((it) => it.value === unqReason)?.label;
+    return unProdReasonDictionary.value?.find((it) => it.value === unqReason)?.label ?? unqReason;
   }
   const [registerTable, { reload, getForm }] = useTable({
     dataSource: bagNos,
