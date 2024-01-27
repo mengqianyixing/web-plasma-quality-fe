@@ -1380,10 +1380,10 @@ export type GetApiProductPrepareTrayOutResponse = {
  * 接口 [分拣批次信息查询↗](https://yapi.sharing8.cn/project/529/interface/api/32867) 的 **请求类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `GET /api/product/prepare/sort/batch-info`
- * @更新时间 `2024-01-26 11:13:04`
+ * @请求头 `GET /api/product/prepare/sorting/batch-info`
+ * @更新时间 `2024-01-27 14:23:27`
  */
-export interface GetApiProductPrepareSortBatchInfoRequest {
+export interface GetApiProductPrepareSortingBatchInfoRequest {
   prepareNo: string;
   currPage: string;
   pageSize: string;
@@ -1393,10 +1393,10 @@ export interface GetApiProductPrepareSortBatchInfoRequest {
  * 接口 [分拣批次信息查询↗](https://yapi.sharing8.cn/project/529/interface/api/32867) 的 **返回类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `GET /api/product/prepare/sort/batch-info`
- * @更新时间 `2024-01-26 11:13:04`
+ * @请求头 `GET /api/product/prepare/sorting/batch-info`
+ * @更新时间 `2024-01-27 14:23:27`
  */
-export interface GetApiProductPrepareSortBatchInfoResponse {
+export interface GetApiProductPrepareSortingBatchInfoResponse {
   totalCount?: number;
   pageSize?: number;
   totalPage?: number;
@@ -1421,10 +1421,10 @@ export interface GetApiProductPrepareSortBatchInfoResponse {
  * 接口 [装箱信息列表查询↗](https://yapi.sharing8.cn/project/529/interface/api/32872) 的 **请求类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `GET /api/product/prepare/sort/boxs`
- * @更新时间 `2024-01-26 11:17:22`
+ * @请求头 `GET /api/product/prepare/sorting/boxs`
+ * @更新时间 `2024-01-27 14:23:15`
  */
-export interface GetApiProductPrepareSortBoxsRequest {
+export interface GetApiProductPrepareSortingBoxsRequest {
   /**
    * 准备号
    */
@@ -1450,10 +1450,10 @@ export interface GetApiProductPrepareSortBoxsRequest {
  * 接口 [装箱信息列表查询↗](https://yapi.sharing8.cn/project/529/interface/api/32872) 的 **返回类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `GET /api/product/prepare/sort/boxs`
- * @更新时间 `2024-01-26 11:17:22`
+ * @请求头 `GET /api/product/prepare/sorting/boxs`
+ * @更新时间 `2024-01-27 14:23:15`
  */
-export interface GetApiProductPrepareSortBoxsResponse {
+export interface GetApiProductPrepareSortingBoxsResponse {
   totalCount?: number;
   pageSize?: number;
   totalPage?: number;
@@ -1483,6 +1483,169 @@ export interface GetApiProductPrepareSortBoxsResponse {
      * 状态    TBR("待复核"),     RVD("已复核"),
      */
     state?: string;
+  }[];
+}
+
+/**
+ * 接口 [装箱核对袋信息查询↗](https://yapi.sharing8.cn/project/529/interface/api/32887) 的 **请求类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `GET /api/product/prepare/sorting/box/{boxNo}`
+ * @更新时间 `2024-01-27 14:23:06`
+ */
+export interface GetApiProductPrepareSortingBoxBoxNoRequest {
+  /**
+   * 箱号
+   */
+  boxNo: string;
+}
+
+/**
+ * 接口 [装箱核对袋信息查询↗](https://yapi.sharing8.cn/project/529/interface/api/32887) 的 **返回类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `GET /api/product/prepare/sorting/box/{boxNo}`
+ * @更新时间 `2024-01-27 14:23:06`
+ */
+export interface GetApiProductPrepareSortingBoxBoxNoResponse {
+  /**
+   * 已核对数
+   */
+  checkedCount?: number;
+  /**
+   * 总数
+   */
+  totalCount?: number;
+  list?: {
+    /**
+     * 箱号
+     */
+    boxNo: string;
+    /**
+     * 血浆号
+     */
+    bagNo: string;
+    /**
+     *     PRO,  // 合格投产     UPR,  // 合格不投产     UNQ,  // 不合格     WV   //待追踪
+     */
+    pickType: string;
+    /**
+     * 核对人
+     */
+    checker: string | null;
+    /**
+     * 核对时间
+     */
+    checkAt: string | null;
+    /**
+     * 状态   TBR("待复核"),     RVD("已复核"),
+     */
+    state: string;
+  }[];
+}
+
+/**
+ * 接口 [装箱核对↗](https://yapi.sharing8.cn/project/529/interface/api/32892) 的 **请求类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `PUT /api/product/prepare/sorting/box/check`
+ * @更新时间 `2024-01-27 14:22:49`
+ */
+export interface PutApiProductPrepareSortingBoxCheckRequest {
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+  /**
+   * 袋号
+   */
+  bagNo?: string;
+}
+
+/**
+ * 接口 [装箱核对↗](https://yapi.sharing8.cn/project/529/interface/api/32892) 的 **返回类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `PUT /api/product/prepare/sorting/box/check`
+ * @更新时间 `2024-01-27 14:22:49`
+ */
+export type PutApiProductPrepareSortingBoxCheckResponse = null;
+
+/**
+ * 接口 [血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/32897) 的 **请求类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `GET /api/product/prepare/sorting/bags`
+ * @更新时间 `2024-01-27 14:31:59`
+ */
+export interface GetApiProductPrepareSortingBagsRequest {
+  prepareNo: string;
+  currPage: string;
+  pageSize: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+  /**
+   * 是否分拣
+   */
+  sorting?: string;
+  /**
+   * 批次
+   */
+  batchNo?: string;
+  /**
+   * 准备投产
+   */
+  prepareProduce?: string;
+}
+
+/**
+ * 接口 [血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/32897) 的 **返回类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `GET /api/product/prepare/sorting/bags`
+ * @更新时间 `2024-01-27 14:31:59`
+ */
+export interface GetApiProductPrepareSortingBagsResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 浆站名称
+     */
+    stationName?: string;
+    stationNo?: string;
+    batchNo?: string;
+    bagNo?: string;
+    boxNo?: string;
+    collectAt?: string;
+    /**
+     * 浆员编码
+     */
+    donorNo?: string;
+    /**
+     * 效价类型
+     */
+    immType?: string;
+    /**
+     * 效价
+     */
+    titer?: number;
+    /**
+     * 分拣状态
+     */
+    sorting?: boolean;
+    /**
+     * 分拣人
+     */
+    operator?: string;
+    /**
+     * 分拣时间
+     */
+    opearteAt?: string;
   }[];
 }
 

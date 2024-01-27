@@ -422,7 +422,7 @@ export interface PutApiCoreBankTrayWarehouseDeliverResponse {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/warehouse/move`
- * @更新时间 `2023-12-19 17:26:37`
+ * @更新时间 `2024-01-27 14:35:27`
  */
 export interface PostApiCoreBankTrayWarehouseMoveRequest {
   /**
@@ -430,25 +430,9 @@ export interface PostApiCoreBankTrayWarehouseMoveRequest {
    */
   trayNo: string;
   /**
-   * 源货位
-   */
-  sourceLocatonNo?: string;
-  /**
    * 目标货位
    */
   targetLocatonNo?: string;
-  /**
-   * 源区域编号
-   */
-  sourceSubWarehouseNo?: string;
-  /**
-   * 目标区域编号
-   */
-  targetSubWarehouseNo?: string;
-  /**
-   * 站点id，如果是高架库移库的时候必填
-   */
-  siteId?: string;
 }
 
 /**
@@ -456,7 +440,7 @@ export interface PostApiCoreBankTrayWarehouseMoveRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/warehouse/move`
- * @更新时间 `2023-12-19 17:26:37`
+ * @更新时间 `2024-01-27 14:35:27`
  */
 export interface PostApiCoreBankTrayWarehouseMoveResponse {
   /**
