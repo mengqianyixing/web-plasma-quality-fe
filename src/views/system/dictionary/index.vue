@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:29:52
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-25 18:12:49
+ * @LastEditTime: 2024-01-27 11:46:13
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
@@ -77,7 +77,7 @@
       row.children.push(
         ...(res.result || []).map((_) => ({
           id: ++id,
-          dictId: _.dictItemId,
+          dictId: _.fkLink,
           dictName: _.itemKey,
           dictNo: _.itemValue,
           dictDesc: _.itemDesc,
