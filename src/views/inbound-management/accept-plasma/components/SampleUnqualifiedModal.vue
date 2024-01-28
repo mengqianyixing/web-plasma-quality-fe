@@ -6,6 +6,7 @@
     width="500px"
     :maskClosable="false"
     @ok="handleOk"
+    @cancel="resetFields"
   >
     <Basic-form @register="registerForm" />
   </BasicModal>
@@ -18,15 +19,15 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
-  import { registerNonconformity } from '@/api/inbound-management/sample-verify';
-  import { PostApiCoreBatchSampleUnqualifiedRequest } from '@/api/type/batchManage';
+  import { PostApiCoreBatchSampleUnqualifiedPlasmaRequest } from '@/api/type/batchManage';
+  import { nonconformityPlasmaReceiveSampleRegister } from '@/api/nonconformity/sample-manage';
 
   const { createMessage } = useMessage();
 
   const emit = defineEmits(['success', 'register']);
 
   const [registerLogin, { openModal }] = useModal();
-  const [registerForm, { setFieldsValue, validate }] = useForm({
+  const [registerForm, { setFieldsValue, validate, resetFields }] = useForm({
     showActionButtonGroup: false,
     schemas: [
       {
@@ -43,7 +44,7 @@
         required: true,
       },
       {
-        field: 'fkFailedCode',
+        field: 'unqualifiedReasonCode',
         label: '不合格原因',
         component: 'ApiSelect',
         colProps: { span: 18 },
@@ -57,17 +58,11 @@
         required: true,
       },
       {
-        field: 'fkBagNo',
+        field: 'sampleNo',
         label: '样本编号',
         component: 'Input',
         colProps: { span: 18 },
         required: true,
-      },
-      {
-        field: 'pageFlag',
-        defaultValue: 'verify',
-        component: 'Input',
-        show: false,
       },
       {
         field: 'batchSampleNo',
@@ -97,10 +92,13 @@
     try {
       setModalProps({ confirmLoading: true });
       const values = await validate();
-      await registerNonconformity(values as PostApiCoreBatchSampleUnqualifiedRequest);
+      await nonconformityPlasmaReceiveSampleRegister(
+        values as PostApiCoreBatchSampleUnqualifiedPlasmaRequest,
+      );
 
       createMessage.success('登记成功');
       emit('success');
+      await resetFields();
       closeModal();
     } finally {
       setModalProps({ confirmLoading: false });

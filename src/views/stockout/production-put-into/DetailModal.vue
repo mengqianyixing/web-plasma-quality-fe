@@ -15,21 +15,20 @@
   import { ref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
 
-  import { getBindBoxListApi } from '@/api/quality/plasma-restriction';
   import { detailColumns } from '@/views/stockout/production-put-into/production-put-into.data';
+  import { getForPlasmaListApi } from '@/api/stockout/production-plan';
 
-  const batchNo = ref('');
+  const orderNo = ref('');
 
   defineEmits(['success', 'register']);
 
   const [registerTable, { reload }] = useTable({
-    title: '',
-    api: getBindBoxListApi,
+    api: getForPlasmaListApi,
     columns: detailColumns,
     formConfig: {
       schemas: [
         {
-          field: 'batchNo',
+          field: 'plasmaBatchNo',
           label: '血浆批号',
           component: 'Input',
         },
@@ -39,7 +38,7 @@
           component: 'Input',
         },
         {
-          field: 'bagNo',
+          field: 'plasmaNo',
           label: '血浆编号',
           component: 'Input',
         },
@@ -54,10 +53,10 @@
     beforeFetch: (params) => {
       return {
         ...params,
-        batchNo: batchNo.value,
+        orderNo: orderNo.value,
       };
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: true,
     showTableSetting: false,
@@ -74,7 +73,7 @@
       maskClosable: false,
     });
 
-    batchNo.value = data.record.batchNo;
+    orderNo.value = data.record.orderNo;
 
     reload();
   });

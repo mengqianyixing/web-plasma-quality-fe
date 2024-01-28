@@ -9,6 +9,7 @@ import {
   statusValueEnum,
 } from '@/enums/stockoutEnum';
 import dayjs from 'dayjs';
+import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
 
 export const columns: BasicColumn[] = [
   {
@@ -35,7 +36,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'planOut',
     width: 120,
     format(text) {
-      return dayjs(text).format('YYYY-MM-DD');
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
@@ -43,7 +44,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'planTask',
     width: 120,
     format(text) {
-      return dayjs(text).format('YYYY-MM-DD');
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
@@ -69,6 +70,9 @@ export const columns: BasicColumn[] = [
   {
     title: '出库日期',
     dataIndex: 'outDate',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
   },
   {
     title: '接收人',
@@ -77,6 +81,9 @@ export const columns: BasicColumn[] = [
   {
     title: '接收日期',
     dataIndex: 'acceptDate',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
   },
   {
     title: '状态',
@@ -126,29 +133,64 @@ export const searchFormSchema: FormSchema[] = [
 export const detailColumns: BasicColumn[] = [
   {
     title: '血浆公司',
+    dataIndex: 'stationName',
   },
   {
     title: '血浆批号',
+    dataIndex: 'batchNo',
   },
   {
     title: '血浆箱号',
+    dataIndex: 'boxNo',
   },
   {
     title: '血浆净重(g)',
+    dataIndex: 'netWeight',
   },
   {
     title: '血浆编号',
+    dataIndex: 'bagNo',
   },
   {
     title: '浆员编号',
+    dataIndex: 'fkDonorNo',
   },
   {
     title: '浆员姓名',
+    dataIndex: 'donorName',
   },
   {
     title: '效价类型',
+    dataIndex: 'immunity',
+    customRender: ({ record }) => {
+      return PLASMA_TYPE_TEXT[record.type];
+    },
   },
   {
     title: '效价结果值',
+    dataIndex: 'titer',
+  },
+];
+
+export const trayColumns: BasicColumn[] = [
+  {
+    title: '托盘编号',
+    dataIndex: 'trayNo',
+  },
+  {
+    title: '箱数',
+    dataIndex: 'boxNum',
+  },
+  {
+    title: '血浆数量',
+    dataIndex: 'plasmaNum',
+  },
+  {
+    title: '状态',
+    dataIndex: 'state',
+  },
+  {
+    title: '存放位置',
+    dataIndex: 'houseName',
   },
 ];

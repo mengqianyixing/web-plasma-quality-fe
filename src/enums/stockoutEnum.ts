@@ -49,7 +49,7 @@ export enum statusValueEnum {
   PLD = 'PLD',
   PVD = 'PVD',
   OTD = 'OTD',
-  OUI = 'OUT',
+  OUI = 'OUI',
   ACT = 'ACT',
   ACD = 'ACD',
   ROD = 'ROD',

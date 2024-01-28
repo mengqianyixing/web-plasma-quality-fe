@@ -1,8 +1,8 @@
 /*
  * @Author: HxB
  * @Date: 2023-12-29 16:47:29
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-17 15:51:50
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-26 14:00:59
  * @Description: 检疫管理
  * @FilePath: \psms-fe\src\router\routes\modules\QuarantineManager\index.ts
  */
@@ -29,6 +29,20 @@ const quarantineManager: AppRouteModule = {
         title: '血浆批检疫期报告',
       },
       component: () => import('/@/views/quarantine/plasma-batch/index.vue'),
+    },
+    {
+      path: '/quarantine/computed',
+      name: 'computed',
+      id: 8802,
+      meta: { title: '检疫期计算' },
+      component: () => import('/@/views/quarantine/computed/index.vue'),
+    },
+    {
+      path: '/quarantine/overdue-confirmation',
+      name: 'OverdueConfirmation',
+      id: 8803,
+      meta: { title: '超一年期确认' },
+      component: () => import('/@/views/quarantine/overdue-confirmation/index.vue'),
     },
   ],
 };

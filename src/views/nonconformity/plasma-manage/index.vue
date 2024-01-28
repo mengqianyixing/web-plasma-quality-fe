@@ -45,7 +45,11 @@
 
   import { onMounted, ref } from 'vue';
   import { stationNameList } from '@/api/callback/list-generation';
-  import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
+  import {
+    DictionaryEnum,
+    DictionaryItemKeyEnum,
+    getSysSecondaryDictionary,
+  } from '@/api/_dictionary';
   import {
     nonconformityCheck,
     nonconformityPlasmaList,
@@ -65,18 +69,24 @@
   onMounted(async () => {
     stationNames.value = await stationNameList();
 
-    const dictionaryArr = await getSysDictionary([DictionaryEnum.PlasmaUnqualifiedReason]);
-
-    if (!dictionaryArr) return;
-
-    plasmaUnqualifiedDictionary.value = dictionaryArr.find(
-      (it) => it.dictNo === DictionaryEnum.PlasmaUnqualifiedReason,
-    )?.dictImtes;
+    plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
+      dataKey: DictionaryEnum.PlasmaFailedItem,
+      dictNos: [
+        DictionaryItemKeyEnum.Accept,
+        DictionaryItemKeyEnum.Track,
+        DictionaryItemKeyEnum.Test,
+        DictionaryItemKeyEnum.Quarantine,
+        DictionaryItemKeyEnum.Other,
+      ],
+    });
 
     await getForm().updateSchema({
       field: 'unqReason',
       componentProps: {
-        options: plasmaUnqualifiedDictionary.value,
+        options: plasmaUnqualifiedDictionary.value.map((it) => ({
+          label: it.label,
+          value: it.value,
+        })),
       },
     });
 
@@ -166,7 +176,9 @@
   }
 
   function formatUnqReason(unqReason: string) {
-    return plasmaUnqualifiedDictionary.value?.find((it) => it.value === unqReason)?.label;
+    return (
+      plasmaUnqualifiedDictionary.value?.find((it) => it.value === unqReason)?.label ?? unqReason
+    );
   }
 
   function handleBagNoClick(record: Recordable) {

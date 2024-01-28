@@ -52,23 +52,11 @@ export const setCasDoorRole = (data) => defHttp.put({ url: '/api/sys/casdoor/rol
  * @param data
  * @returns
  */
-export const addCasDoorRole = (data) =>
-  defHttp.post(
-    { url: '/api/sys/casdoor/role', data },
-    {
-      joinParamsToUrl: true,
-    },
-  );
+export const addCasDoorRole = (data) => defHttp.post({ url: '/api/sys/casdoor/role', data });
 
 /**
  * 删除角色
  * @param data
  * @returns
  */
-export const deleteCasDoorRole = (data) =>
-  defHttp.delete(
-    { url: '/api/sys/casdoor/role', data },
-    {
-      joinParamsToUrl: true,
-    },
-  );
+export const deleteCasDoorRole = (data) => defHttp.delete({ url: '/api/sys/casdoor/role', data });

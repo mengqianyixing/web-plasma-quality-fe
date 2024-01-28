@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-22 09:12:00
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-26 11:30:09
+ * @LastEditTime: 2024-01-26 10:00:10
  */
 import { defHttp } from '@/utils/http/axios';
 import {
@@ -30,6 +30,10 @@ import {
   DeleteApiSysDictItemDictItemIdResponse,
   PostApiSysDictionaryItemsRequest,
   PostApiSysDictionaryItemsResponse,
+  GetApiSysDictLinkDataLinkedDictRequest,
+  GetApiSysDictLinkDataLinkedDictResponse,
+  PostApiSysItemItemKeyRequest,
+  PostApiSysItemItemKeyResponse,
 } from '../type/dictionary';
 
 enum Api {
@@ -40,6 +44,8 @@ enum Api {
   DICT_ITEM_FORM = '/api/sys/dict/item',
   DICT_ITEM_REMOVE = '/api/sys/dict/item/',
   DICT_ITEM_LIST_BY_NO = '/api/sys/dictionaryItems',
+  DICT_ITEM_LIST_BY_NO2 = '/api/sys/item/itemKey',
+  DICT_COLUMNS = '/api/sys/dict/linkData/',
 }
 
 export const getDictListApi = (params: PostApiSysDictsRequest) =>
@@ -47,8 +53,10 @@ export const getDictListApi = (params: PostApiSysDictsRequest) =>
 
 export const addDictApi = (params: PostApiSysDictRequest) =>
   defHttp.post<PostApiSysDictResponse>({ url: Api.DICT_FORM, params });
+
 export const updateDictApi = (params: PutApiSysDictRequest) =>
   defHttp.put<PutApiSysDictResponse>({ url: Api.DICT_FORM, params });
+
 export const removeDictApi = ({ dictId }: DeleteApiSysDictDictIdRequest) =>
   defHttp.delete<DeleteApiSysDictDictIdResponse>({ url: `${Api.DICT_DICT_ID}${dictId}` });
 
@@ -78,3 +86,11 @@ export const getDictItemListByNoApi = (params: PostApiSysDictionaryItemsRequest)
     url: `${Api.DICT_ITEM_LIST_BY_NO}`,
     params,
   });
+export const getDictItemListByNo2Api = (params: PostApiSysItemItemKeyRequest) =>
+  defHttp.post<PostApiSysItemItemKeyResponse>({
+    url: `${Api.DICT_ITEM_LIST_BY_NO2}`,
+    params,
+  });
+
+export const getDictColumnsApi = ({ linkedDict }: GetApiSysDictLinkDataLinkedDictRequest) =>
+  defHttp.get<GetApiSysDictLinkDataLinkedDictResponse>({ url: Api.DICT_COLUMNS + linkedDict });

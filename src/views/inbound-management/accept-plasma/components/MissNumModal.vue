@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="register"
-    title="不合格血浆登记"
+    title="缺浆登记"
     width="500px"
     :maskClosable="false"
     @ok="handleOk"
@@ -25,7 +25,7 @@
   const emit = defineEmits(['success', 'register']);
 
   const [registerLogin, { openModal }] = useModal();
-  const [registerForm, { setFieldsValue, validate }] = useForm({
+  const [registerForm, { setFieldsValue, validate, resetFields }] = useForm({
     showActionButtonGroup: false,
     schemas: [
       {
@@ -91,10 +91,11 @@
       const values = await validate();
       await nonconformityRegistration(values as PostApiCoreBagUnqualifiedRequest);
 
-      createMessage.success('缺号登记成功');
+      createMessage.success('缺浆登记成功');
 
       emit('success');
 
+      await resetFields();
       closeModal();
     } finally {
       setModalProps({ confirmLoading: false });

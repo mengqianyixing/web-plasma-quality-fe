@@ -30,6 +30,15 @@ const checkManager: AppRouteModule = {
       },
       component: () => import('/@/views/quality-manage/plasma-restriction/index.vue'),
     },
+    {
+      path: '/quality/batch-release',
+      name: 'batch-release',
+      id: 10003,
+      meta: {
+        title: '血浆批放行',
+      },
+      component: () => import('/@/views/quality-manage/batch-release/index.vue'),
+    },
   ],
 };
 

@@ -117,7 +117,7 @@ export const searchReleaseSchema: FormSchema[] = [
   {
     field: '[titerExpiredBeginAt, titerExpiredEndAt]',
     component: 'RangePicker',
-    label: '效价有效期',
+    label: '效价项目有效期',
   },
   {
     field: '[othersExpiredBeginAt, othersExpiredEndAt]',
@@ -140,7 +140,7 @@ export const unqualifiedColumns: BasicColumn[] = [
     dataIndex: 'donorNo',
   },
   {
-    title: '不合格备注',
+    title: '不合格原因',
     dataIndex: 'unqualifiedReason',
   },
   {

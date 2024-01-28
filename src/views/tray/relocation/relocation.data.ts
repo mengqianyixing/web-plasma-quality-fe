@@ -54,7 +54,11 @@ export const locationSchema: FormSchema = {
   label: '目标货位',
   component: 'InputSearch',
   field: 'locationNo',
-  required: true,
+  componentProps: {
+    placeholder: '请点击选择',
+    readonly: true,
+    'enter-button': '选择',
+  },
 };
 export const areaSchema: FormSchema = {
   label: '目标区域',
@@ -65,10 +69,7 @@ export const areaSchema: FormSchema = {
     options: [],
   },
 };
-export const trayRelocationFormSchema: (fn1: Function, fn2: Function) => FormSchema[] = (
-  f1,
-  f2,
-) => [
+export const trayRelocationFormSchema: FormSchema[] = [
   {
     label: '托盘编号',
     component: 'InputSearch',
@@ -76,19 +77,18 @@ export const trayRelocationFormSchema: (fn1: Function, fn2: Function) => FormSch
     required: true,
     componentProps: {
       'enter-button': '选择',
-      onSearch: f1,
     },
   },
-
-  {
-    label: '入库库房',
-    component: 'Select',
-    field: 'houseNo',
-    required: true,
-    componentProps: {
-      onChange: f2,
-    },
-  },
+  locationSchema,
+  // {
+  //   label: '入库库房',
+  //   component: 'Select',
+  //   field: 'houseNo',
+  //   required: true,
+  //   componentProps: {
+  //     onChange: f2,
+  //   },
+  // },
 ];
 
 export const plasmaBoxScanFormSchema: FormSchema[] = [

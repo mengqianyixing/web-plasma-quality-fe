@@ -47,7 +47,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'stationWeight',
   },
   {
-    title: '验收重量(kg)',
+    title: '验收净重(kg)',
     dataIndex: 'verifyWeight',
   },
   {
@@ -136,7 +136,7 @@ export const unqualifiedColumns: BasicColumn[] = [
     title: '验收日期',
     dataIndex: 'verifyAt',
     format(text) {
-      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
 ];

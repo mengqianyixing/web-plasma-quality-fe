@@ -6,6 +6,7 @@
     showFooter
     width="85%"
     :showOkBtn="false"
+    @cancel="emit('success')"
   >
     <div class="flex items-center gap-2 w-[300px]">
       <span class="w-[80px]">箱号：</span>
@@ -41,7 +42,7 @@
   const inputDisabled = ref(false);
   const inputValue = ref('');
 
-  defineEmits(['success', 'register']);
+  const emit = defineEmits(['success', 'register']);
   const { createMessage } = useMessage();
   const inputRef = ref<HTMLElement | null>(null);
   const { focused } = useFocus(inputRef);

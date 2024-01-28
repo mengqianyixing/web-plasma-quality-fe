@@ -1,6 +1,7 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
+      <template #unqReason="{ record }"> {{ formatUnqReason(record) }} </template>
       <template #toolbar>
         <a-button type="primary" @click="handleAdd"> 新增 </a-button>
         <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
@@ -18,15 +19,35 @@
   import { useModal } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
 
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import { PageWrapper } from '@/components/Page';
   import BoxModal from '@/views/nonconformity/boxes/BoxModal.vue';
   import { deleteBox, nonconformityBoxList } from '@/api/nonconformity/box-manage';
   import { getPrintRecord } from '@/api/tag/printRecord';
+  import {
+    DictionaryEnum,
+    DictionaryItemKeyEnum,
+    getSysSecondaryDictionary,
+  } from '@/api/_dictionary';
 
   const { createMessage, createConfirm } = useMessage();
 
   defineOptions({ name: 'NonconformityBoxes' });
+
+  const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
+
+  onMounted(async () => {
+    plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
+      dataKey: DictionaryEnum.PlasmaFailedItem,
+      dictNos: [
+        DictionaryItemKeyEnum.Accept,
+        DictionaryItemKeyEnum.Track,
+        DictionaryItemKeyEnum.Test,
+        DictionaryItemKeyEnum.Quarantine,
+        DictionaryItemKeyEnum.Other,
+      ],
+    });
+  });
 
   const selectedRowsRef = ref<Recordable>([]);
   const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
@@ -67,6 +88,10 @@
   function handleAdd() {
     openBoxModal(true, {
       isUpdate: false,
+      unqReasonOptions: plasmaUnqualifiedDictionary.value!.map((it) => ({
+        label: it.label,
+        value: it.value,
+      })),
     });
   }
 
@@ -79,6 +104,10 @@
     openBoxModal(true, {
       isUpdate: true,
       record: selectedRowsRef.value[0],
+      unqReasonOptions: plasmaUnqualifiedDictionary.value!.map((it) => ({
+        label: it.label,
+        value: it.value,
+      })),
     });
   }
 
@@ -111,5 +140,12 @@
   function handleSuccess() {
     clearSelectedRowKeys();
     reload();
+  }
+
+  function formatUnqReason(record: Recordable) {
+    return (
+      plasmaUnqualifiedDictionary.value?.find((it) => it.value === record.unqReason)?.label ??
+      record.unqReason
+    );
   }
 </script>

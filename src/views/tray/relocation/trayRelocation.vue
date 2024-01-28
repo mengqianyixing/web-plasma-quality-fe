@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 09:52:52
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 18:02:10
+ * @LastEditTime: 2024-01-27 15:19:11
 -->
 <template>
   <div class="h-full">
@@ -22,18 +22,16 @@
   import {
     taryRelocationColumns,
     trayRelocationFormSchema,
-    siteSchema,
     locationSchema,
-    areaSchema,
   } from './relocation.data';
   import TrayModel from './component/trayModal.vue';
   import { useModal } from '@/components/Modal';
   import { settingListApi } from '@/api/plasmaStore/setting';
   import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
-  import { reactive, nextTick } from 'vue';
+  import { reactive, onMounted } from 'vue';
   import { submitRelocationApi, taryHouseApi } from '@/api/tray/relocation';
   import LocationModal from '@/components/BusinessDrawer/locationDrawer/index.vue';
-  import { getHouseSiteApi } from '@/api/plasmaStore/site';
+  import { message } from 'ant-design-vue';
 
   const state = reactive<{
     houseList: Recordable[];
@@ -44,20 +42,11 @@
 
   const [
     registerForm,
-    {
-      validate,
-      setFieldsValue,
-      updateSchema,
-      appendSchemaByField,
-      removeSchemaByField,
-      getFieldsValue,
-      resetFields,
-      clearValidate,
-    },
+    { validate, setFieldsValue, updateSchema, getFieldsValue, resetFields, clearValidate },
   ] = useForm({
     labelWidth: 90,
     baseColProps: { span: 10 },
-    schemas: trayRelocationFormSchema(handleTraySelect, houseChange),
+    schemas: trayRelocationFormSchema,
     showActionButtonGroup: true,
     showResetButton: false,
     submitButtonOptions: { text: '确认移库' },
@@ -82,16 +71,19 @@
     size: 'small',
   });
   async function handleLoacationSelect(value: string, event: MouseEvent) {
+    const { trayNo } = getFieldsValue();
+    if (!trayNo) return message.warning('请先选择托盘');
+    const res = await taryHouseApi({ trayNo });
+    if (!res) return message.warning('未查询到托盘在库信息');
+    if (res.houseType[1] !== STORE_FLAG.S) return message.warning('请选择或输入存放于高架库的托盘');
     if (value && event.type !== 'click') return;
-    const { houseNo } = getFieldsValue();
-    openLocationModal(true, { params: { houseNo, locationStatus: 'IDLE' } });
+    openLocationModal(true, { params: { houseNo: res.houseNo, locationStatus: 'IDLE' } });
   }
   function locationConfim([{ locationNo }]) {
     setFieldsValue({ [locationSchema.field]: locationNo });
     openLocationModal(false);
   }
   async function handleTraySelect(value: string, event: MouseEvent) {
-    openTrayModal(true, { params: { closed: 0 } });
     if (value && event.type !== 'click') {
       searchTrayInfo(value);
     } else {
@@ -104,40 +96,18 @@
     openTrayModal(false);
   }
   async function searchTrayInfo(trayNo: string) {
-    const values = getFieldsValue();
-    removeSchemaByField(siteSchema.field);
-    if (!values.houseNo || !trayNo) return;
-    // 根据托盘查询老库房
     const res = await taryHouseApi({ trayNo });
-    if (!res) return;
-    const { houseNo, houseType } = res;
-    if (!houseNo) return;
-    // 高架库
-    if (houseType[1] === STORE_FLAG.S && values.houseNo !== houseNo) {
-      const res = await getHouseSiteApi({ houseNo: houseNo });
-      appendSchemaByField({ ...siteSchema, componentProps: { options: res } }, 'houseNo');
-    }
+    if (!res) return message.warning('未查询到托盘在库信息');
+    const { houseType } = res;
+    if (houseType[1] !== STORE_FLAG.S) return message.warning('请选择或输入存放于高架库的托盘');
   }
-  async function houseChange() {
-    await nextTick();
-    const values = getFieldsValue();
-    searchTrayInfo(values.trayNo);
-    const { houseType } = state.houseList.find((_) => _.value === values.houseNo) as Recordable;
-    removeSchemaByField(areaSchema.field);
-    removeSchemaByField(locationSchema.field);
-    if (houseType[1] === STORE_FLAG.S) {
-      const componentProps = { 'enter-button': '选择', onSearch: handleLoacationSelect };
-      appendSchemaByField({ ...locationSchema, componentProps: componentProps }, void 0);
-    }
-  }
+
   async function inStoreConfim() {
     try {
-      const { houseNo, subWareHouseNo, siteId, locationNo, trayNo } = await validate();
+      const { locationNo, trayNo } = await validate();
       await submitRelocationApi({
         trayNo,
         targetLocatonNo: locationNo,
-        targetSubWarehouseNo: locationNo ? void 0 : subWareHouseNo || houseNo,
-        siteId,
       });
       resetFields();
       clearValidate();
@@ -165,4 +135,18 @@
 
   getHouseList();
   getSiteList();
+  onMounted(() => {
+    updateSchema([
+      {
+        field: locationSchema.field,
+        componentProps: { 'enter-button': '选择', onSearch: handleLoacationSelect },
+      },
+      {
+        field: 'trayNo',
+        componentProps: {
+          onSearch: handleTraySelect,
+        },
+      },
+    ]);
+  });
 </script>

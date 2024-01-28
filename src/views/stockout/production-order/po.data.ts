@@ -9,8 +9,6 @@ import {
   statusValueEnum,
 } from '@/enums/stockoutEnum';
 import dayjs, { Dayjs } from 'dayjs';
-import { h } from 'vue';
-import { InputNumber } from 'ant-design-vue';
 
 export const columns: BasicColumn[] = [
   {
@@ -141,6 +139,16 @@ export const searchFormSchema: FormSchema[] = [
       })),
     },
   },
+  {
+    field: '[begnPlanOut, endPlanOut]',
+    label: '计划出库日期',
+    component: 'RangePicker',
+  },
+  {
+    field: '[begnPlanTask, endPlanTask]',
+    label: '计划投产日期',
+    component: 'RangePicker',
+  },
 ];
 
 export const formSchema: FormSchema[] = [
@@ -169,21 +177,31 @@ export const formSchema: FormSchema[] = [
     component: 'InputNumber',
     label: '投浆重量(t)',
     colProps: { span: 12 },
-    rules: [{ required: true }],
-    helpMessage: '投浆重量支持两位小数',
-    render: ({ model, field }) => {
-      return h(InputNumber, {
-        placeholder: '请输入',
-        value: model[field],
-        maxLength: 7,
-        onChange: (e) => {
-          if (e && e.toString().includes('.')) {
-            model[field] = Number(e.toString().match(/^\d+(?:\.\d{0,2})?/));
+    rules: [
+      {
+        validator: (_, value) => {
+          if (!value) return Promise.reject('请输入投浆重量');
+          if (value.toString().includes('.')) {
+            const reg = /^\d{0,5}(?:\.\d{0,2})?$/;
+            if (!reg.test(value.toString())) {
+              return Promise.reject('投浆重量整数支持五位，小数部分支持两位');
+            } else {
+              return Promise.resolve();
+            }
           } else {
-            model[field] = e;
+            const reg = /^\d{0,5}$/;
+            if (!reg.test(value.toString())) {
+              return Promise.reject('投浆重量整数支持五位，小数部分支持两位');
+            } else {
+              return Promise.resolve();
+            }
           }
         },
-      });
+      },
+    ],
+    helpMessage: '投浆重量整数支持五位，小数部分支持两位',
+    componentProps: {
+      maxLength: 8,
     },
   },
   {

@@ -23,6 +23,7 @@
       </template>
     </BasicTable>
 
+    <TrayOutStoreModal @register="registerTrayOutStoreModal" @success="handleSuccess" />
     <DetailModal @register="registerDetailModal" />
     <BoxReceiveModal @register="registerReceiveModal" @success="handleSuccess" />
     <BoxOutStoreModal @register="registerBoxOutStoreModal" @success="handleSuccess" />
@@ -40,6 +41,7 @@
   import DetailModal from './DetailModal.vue';
   import BoxReceiveModal from '@/views/stockout/production-put-into/BoxReceiveModal.vue';
   import BoxOutStoreModal from '@/views/stockout/production-put-into/BoxOutStoreModal.vue';
+  import TrayOutStoreModal from '@/views/stockout/production-put-into/TrayOutStoreModal.vue';
 
   import { useMessage } from '@/hooks/web/useMessage';
   import { PageWrapper } from '@/components/Page';
@@ -47,6 +49,7 @@
     productionReceiveByBatch,
     productionReceiveRevokeByBatch,
     productionStockOutByBatch,
+    revokeProductionOutStore,
   } from '@/api/stockout/production-put-into';
   import { getProOrders } from '@/api/stockout/production-order';
 
@@ -55,6 +58,7 @@
   const [registerBoxOutStoreModal, { openModal: openBoxOutStoreModal }] = useModal();
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
   const [registerReceiveModal, { openModal: openBoxReceiveModal }] = useModal();
+  const [registerTrayOutStoreModal, { openModal: openTrayOutStoreModal }] = useModal();
 
   const selectedRow = ref<Recordable>([]);
 
@@ -66,6 +70,9 @@
     columns,
     formConfig: {
       schemas: searchFormSchema,
+      transformDateFunc(date) {
+        return date ? date.format('YYYY-MM-DD') : '';
+      },
     },
     fetchSetting: {
       pageField: 'currPage',
@@ -80,7 +87,7 @@
         selectedRow.value = selectedRows;
       },
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: true,
     showTableSetting: false,
@@ -103,11 +110,19 @@
 
   function handleMesClick(record: Recordable) {
     openDetailModal(true, {
-      orderNo: record?.orderNo,
+      record: { orderNo: record?.orderNo },
     });
   }
 
-  function handleTrayStockOut() {}
+  function handleTrayStockOut() {
+    if (!selectRowsCheck()) return;
+
+    openTrayOutStoreModal(true, {
+      record: {
+        orderNo: selectedRow.value[0]?.orderNo,
+      },
+    });
+  }
 
   function handleBoxStockOut() {
     if (!selectRowsCheck()) return;
@@ -163,6 +178,7 @@
       content: '请确认是否撤销出库？',
       iconType: 'warning',
       onOk: async () => {
+        await revokeProductionOutStore(selectedRow.value[0]?.orderNo);
         createMessage.success('撤销出库成功');
 
         clearSelectedRowKeys();

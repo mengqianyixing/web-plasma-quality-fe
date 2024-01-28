@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-20 14:11:29
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 18:00:49
+ * @LastEditTime: 2024-01-26 10:50:50
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 
@@ -25,6 +25,10 @@ export const columns: BasicColumn[] = [
     title: '已存放容量(箱)',
     dataIndex: 'totalNumber',
     slots: { customRender: 'totalNumber' },
+  },
+  {
+    title: '已存放容量(袋)',
+    dataIndex: 'totalBagNumber',
   },
   {
     title: '打印人姓名',

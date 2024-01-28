@@ -1699,11 +1699,11 @@ export interface PostApiCoreBatchSampleVerifyRequest {
 export type PostApiCoreBatchSampleVerifyResponse = string;
 
 /**
- * 接口 [血浆验收中的不合格样本登记↗](https://yapi.sharing8.cn/project/529/interface/api/32049) 的 **请求类型**
+ * 接口 [样本验收中的不合格样本登记↗](https://yapi.sharing8.cn/project/529/interface/api/32049) 的 **请求类型**
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/sample/unqualified`
- * @更新时间 `2024-01-18 14:30:26`
+ * @更新时间 `2024-01-24 19:45:25`
  */
 export interface PostApiCoreBatchSampleUnqualifiedRequest {
   /**
@@ -1726,18 +1726,14 @@ export interface PostApiCoreBatchSampleUnqualifiedRequest {
    * 样本批号
    */
   batchSampleNo: string;
-  /**
-   * verify 是验收页面
-   */
-  pageFlag?: string;
 }
 
 /**
- * 接口 [血浆验收中的不合格样本登记↗](https://yapi.sharing8.cn/project/529/interface/api/32049) 的 **返回类型**
+ * 接口 [样本验收中的不合格样本登记↗](https://yapi.sharing8.cn/project/529/interface/api/32049) 的 **返回类型**
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/sample/unqualified`
- * @更新时间 `2024-01-18 14:30:26`
+ * @更新时间 `2024-01-24 19:45:25`
  */
 export type PostApiCoreBatchSampleUnqualifiedResponse = string;
 
@@ -2098,5 +2094,40 @@ export interface GetApiCoreBatchPlasmaUnReleasesResponse {
     waitReleaseRatio?: string;
   }[];
 }
+
+/**
+ * 接口 [血浆验收不合格样本登记↗](https://yapi.sharing8.cn/project/529/interface/api/32802) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/sample/unqualified/plasma`
+ * @更新时间 `2024-01-25 09:26:45`
+ */
+export interface PostApiCoreBatchSampleUnqualifiedPlasmaRequest {
+  /**
+   * 复核人
+   */
+  checker: string;
+  /**
+   * 样本编号
+   */
+  sampleNo: string;
+  /**
+   * 不合格原因code
+   */
+  unqualifiedReasonCode: string;
+  /**
+   * 样本批号
+   */
+  batchSampleNo: string;
+}
+
+/**
+ * 接口 [血浆验收不合格样本登记↗](https://yapi.sharing8.cn/project/529/interface/api/32802) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/sample/unqualified/plasma`
+ * @更新时间 `2024-01-25 09:26:45`
+ */
+export type PostApiCoreBatchSampleUnqualifiedPlasmaResponse = string;
 
 /* prettier-ignore-end */

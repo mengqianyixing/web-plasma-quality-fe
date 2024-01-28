@@ -4,6 +4,22 @@
       <template #stationNo="{ record }">
         {{ getStationNameById(record?.stationNo) }}
       </template>
+      <template #unProductionCount="{ record }">
+        <span
+          class="empty-value text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetailClick(record, 'unProductionCount')"
+        >
+          {{ record?.summary?.unProductionCount }}
+        </span>
+      </template>
+      <template #failedCount="{ record }">
+        <span
+          class="empty-value text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetailClick(record, 'failedCount')"
+        >
+          {{ record?.summary?.failedCount }}
+        </span>
+      </template>
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增</a-button>
         <a-button :disabled="!selectedRow.length" type="primary" @click="handleOption('C')"
@@ -15,15 +31,21 @@
         <a-button type="primary" @click="handlePrint">打印</a-button>
       </template>
     </BasicTable>
+    <PlasmaBatchDetailModal @register="registerDetailModal" />
     <PlasmaBatchModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
-  import { getPlasmaBatchReleases, setPlasmaBatchRelease } from '@/api/quarantine/plasma-batch';
+  import {
+    getPlasmaBatchReleases,
+    setPlasmaBatchRelease,
+    getPlasmaBatchRelease,
+  } from '@/api/quarantine/plasma-batch';
 
   import { useModal } from '@/components/Modal';
   import PlasmaBatchModal from './PlasmaBatchModal.vue';
+  import PlasmaBatchDetailModal from './PlasmaBatchDetailModal.vue';
 
   import { columns, searchFormSchema } from './plasma-batch.data';
   import { useStation } from '@/hooks/common/useStation';
@@ -47,6 +69,7 @@
     });
   });
 
+  const [registerDetailModal, { openModal: openDetailModal }] = useModal();
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload, getForm, clearSelectedRowKeys }] = useTable({
     api: getPlasmaBatchReleases,
@@ -84,6 +107,16 @@
     },
     canResize: true,
   });
+
+  function handleDetailClick(record, type) {
+    getPlasmaBatchRelease({ batchNo: record?.fkBpNo }).then((res) => {
+      openDetailModal(true, {
+        record,
+        ...res,
+        type,
+      });
+    });
+  }
 
   function handleCreate() {
     openModal(true, {
