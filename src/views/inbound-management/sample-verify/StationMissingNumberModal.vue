@@ -1,5 +1,11 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="register" title="浆站缺号列表" width="80%">
+  <BasicModal
+    v-bind="$attrs"
+    @register="register"
+    title="浆站缺号列表"
+    width="80%"
+    :showOkBtn="false"
+  >
     <div>
       <BasicTable @register="registerTable" />
     </div>
