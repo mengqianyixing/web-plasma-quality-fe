@@ -322,7 +322,11 @@
       return;
     }
     const selectedRowOne: any = selectedRow.value[0];
-    if (selectedRowOne.prepareState === 'REV' || selectedRowOne.prepareState === 'TPK') {
+    if (
+      selectedRowOne.prepareState === 'REV' ||
+      selectedRowOne.prepareState === 'TPK' ||
+      selectedRowOne.prepareState === 'DEL'
+    ) {
       warning('该准备号不可修改!');
       return;
     }

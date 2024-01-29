@@ -132,27 +132,11 @@
   // 准备号栏信息
   const topBoxBarRef = ref();
   // top栏箱子
-  const topBoxData = ref<any>([
-    // {
-    //   title: '可投产',
-    //   sortCount: 0,
-    //   totalCount: 2222,
-    //   isSelected: false,
-    //   bagNos: [],
-    // },
-  ]);
+  const topBoxData = ref<any>([]);
   // 批次栏信息
   const bottomBoxBarRef = ref();
   // bottom栏箱子
-  const bottomBoxData = ref<any>([
-    // {
-    //   title: 'BH,乙免低效价',
-    //   sortCount: 0,
-    //   totalCount: 2222,
-    //   isSelected: false,
-    //   bagNos: [],
-    // },
-  ]);
+  const bottomBoxData = ref<any>([]);
 
   const prepareSchema: DescItem[] = [
     {
@@ -811,8 +795,6 @@
   // 血浆明细
   const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
   function goPlasmaDetail(prepareProduce?) {
-    console.log('打开血浆明细:', prepareProduce);
-
     openPlasmaDetailModal(true, {
       record: { prepareNo: prepareNo.value },
       prepareProduce,
