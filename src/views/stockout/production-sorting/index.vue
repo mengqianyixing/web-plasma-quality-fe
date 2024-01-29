@@ -46,6 +46,8 @@
     <PackingInfoModal @register="registerPackingInfoModal" />
     <PickBatchDetail @register="registerPickBatchDetailModal" />
     <PlasmaDetail @register="registerPlasmaDetailModal" />
+    <InStoreModal @register="registerInStoreModal" />
+    <OutStoreModal @register="registerOutStoreModal" />
   </PageWrapper>
 </template>
 
@@ -73,6 +75,8 @@
     sortingMouldAssembling,
     sortingAllQua,
   } from '@/api/stockout/production-preparation.js';
+  import InStoreModal from './components/in-store-modal.vue';
+  import OutStoreModal from './components/out-store-modal.vue';
 
   const { createMessage } = useMessage();
   const { warning, success } = createMessage;
@@ -248,8 +252,18 @@
             <a-button>批次暂停</a-button>
             <a-button>准备号暂停</a-button>
             <a-button onclick={pickBoxInfo}>装箱信息</a-button>
-            <a-button>血浆出库</a-button>
-            <a-button>血浆入库</a-button>
+            <a-button
+              disabled={!prepareNo.value}
+              onclick={() => openOutStoreModal(true, { prepareNo: prepareNo.value })}
+            >
+              血浆出库
+            </a-button>
+            <a-button
+              disabled={!prepareNo.value}
+              onclick={() => openInStoreModal(true, { prepareNo: prepareNo.value })}
+            >
+              血浆入库
+            </a-button>
             <a-button>分拣完成</a-button>
           </div>
         );
@@ -347,6 +361,8 @@
 
   const [registerPrepareModal, { openModal: openPrepareModal }] = useModal();
   const [registerPackingInfoModal, { openModal: openPackingInfoModal }] = useModal();
+  const [registerInStoreModal, { openModal: openInStoreModal }] = useModal();
+  const [registerOutStoreModal, { openModal: openOutStoreModal }] = useModal();
 
   // 血浆扫描
   async function handlePressEnter(e) {
