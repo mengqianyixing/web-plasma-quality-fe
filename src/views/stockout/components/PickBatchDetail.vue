@@ -9,18 +9,18 @@
     :draggable="false"
     :canFullscreen="false"
   >
-    <BasicTable @register="registerTable" :scroll="{y: 600}">
+    <BasicTable @register="registerTable" :scroll="{ y: 600, x: true }">
       <template #sortCount="{ record }">
         <div class="z-999">
           <a-button type="link" @click="goPlasmaDetail(record)">
-            {{ record.sortCount }}
+            {{ record?.sortCount }}
           </a-button>
         </div>
       </template>
       <template #waitSortCount="{ record }">
         <div class="z-999">
           <a-button type="link" @click="goPlasmaDetail(record)">
-            {{ record.waitSortCount }}
+            {{ record?.waitSortCount }}
           </a-button>
         </div>
       </template>
@@ -35,11 +35,8 @@
   import { BasicTable, useTable, BasicColumn } from '@/components/Table';
   import dayjs from 'dayjs';
   import PlasmaDetail from './PlasmaDetail.vue';
-  import { getBatchInfo, } from '@/api/stockout/production-preparation.js';
-  import {
-    prepareStateMap,
-    prepareStateValueEnum,
-  } from '@/enums/stockoutEnum';
+  import { getBatchInfo } from '@/api/stockout/production-preparation.js';
+  import { prepareStateMap, prepareStateValueEnum } from '@/enums/stockoutEnum';
 
   const prepareDetail = ref(); // 准备详情
 
@@ -126,8 +123,7 @@
   const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
   function goPlasmaDetail(record) {
     openPlasmaDetailModal(true, {
-      record: { ...record, prepareNo: '123', },
-      // prepareNo: prepareDetail.value.prepareNo,
+      record: { ...record, prepareNo: '123' },
     });
   }
 </script>

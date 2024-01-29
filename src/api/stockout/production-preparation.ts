@@ -27,7 +27,6 @@ enum Api {
   CheckBox = '/api/product/prepare/sorting/box/check',
   GetPrepareSorting = '/api/product/prepare/sorting',
   GetSortBags = '/api/product/prepare/sorting/bags',
-  GetSortingBatch = '/api/product/prepare/sorting/batch',
   PickSortingBag = '/api/product/prepare/sorting/bag',
   SortingMouldAssembling = '/api/product/prepare/sorting/mould-assembling',
   SortingBoxSealing = '/api/product/prepare/sorting/box-sealing',
@@ -175,7 +174,7 @@ export const getSortBags = (params: any) => {
 
 // 查询准备号内的批次号
 export const getSortingBatch = (params: any) => {
-  return defHttp.get<any>({ url: `${Api.GetSortingBatch}/${params.prepareNo}` });
+  return defHttp.get<any>({ url: `${Api.GetBatchInfo}/${params.prepareNo}` });
 };
 
 // 获取血浆分拣信息总览

@@ -9,8 +9,7 @@
     :maskClosable="false"
     width="85%"
   >
-    <BasicTable @register="registerTable" >
-    </BasicTable>
+    <BasicTable @register="registerTable" />
   </BasicModal>
 </template>
 

@@ -10,7 +10,7 @@
     :closeFunc="handleCloseFunc"
     width="70%"
   >
-    <Description @register="register" :data="filterForm" class="mt-2"/>
+    <Description @register="register" :data="filterForm" class="mt-2" />
     <BasicTable @register="registerTable" />
   </BasicModal>
 </template>
@@ -24,12 +24,7 @@
   import { FormSchema } from '@/components/Form';
   import BasicModal from '@/components/Modal/src/BasicModal.vue';
   import { getSortBoxsList, checkBox } from '@/api/stockout/production-preparation.js';
-  import {
-    pickBoxMap,
-    pickBoxValueEnum,
-    plasmaMap,
-    plasmaValueEnum,
-  } from '@/enums/stockoutEnum';
+  import { pickBoxMap, pickBoxValueEnum, plasmaMap, plasmaValueEnum } from '@/enums/stockoutEnum';
 
   import dayjs from 'dayjs';
   import { useMessage } from '@/hooks/web/useMessage';
@@ -51,10 +46,7 @@
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
-            <a-input
-              value={boxNo}
-              disabled
-            />
+            <a-input value={boxNo} disabled />
           </div>
         );
       },
@@ -81,7 +73,11 @@
       field: 'checkedCount',
       label: '已核对',
       render() {
-        return <span>{filterForm.value?.checkedCount}/{filterForm.value?.totalCount}</span>;
+        return (
+          <span>
+            {filterForm.value?.checkedCount}/{filterForm.value?.totalCount}
+          </span>
+        );
       },
     },
   ];

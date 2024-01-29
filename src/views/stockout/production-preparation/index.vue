@@ -341,7 +341,7 @@
     }
     const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
     const pickBagCount = (selectedRow.value[0] as { pickBagCount?: string })?.pickBagCount;
-    if(!isPicked && prepareState !== 'RUN' || Number(pickBagCount) > 0) {
+    if ((!isPicked && prepareState !== 'RUN') || Number(pickBagCount) > 0) {
       warning('该准备号不可撤销!');
       return;
     }
