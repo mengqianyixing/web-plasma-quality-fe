@@ -179,11 +179,7 @@
       labelWidth: 80,
       schemas: searchFormSchema,
     },
-    // beforeFetch: (p) => {
-    //   return { ...p, prepareNo };
-    // },
     clickToRowSelect: false,
-    // maxHeight: 600,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -195,6 +191,5 @@
     immediate: false,
     bordered: true,
     showIndexColumn: false,
-    // canResize: false,
   });
 </script>
