@@ -201,7 +201,7 @@ export const formSchema: FormSchema[] = [
     field: 'conclusion',
     component: 'InputTextArea',
     label: '审核结论',
-    defaultValue: '准许放行',
+    defaultValue: '准予放行',
     required: true,
   },
   {
