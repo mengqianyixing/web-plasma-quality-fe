@@ -6,6 +6,8 @@ import {
   NonconformityPlasmaStatusValueEnum,
 } from '@/enums/nonconforityEnum';
 
+const formatKg = (text) => (text || text === 0 ? (text / 1000).toFixed(3) : '');
+
 export const columns: BasicColumn[] = [
   {
     title: '制造批号',
@@ -23,8 +25,9 @@ export const columns: BasicColumn[] = [
     dataIndex: 'planTask',
   },
   {
-    title: '投产净重',
+    title: '投产净重(kg)',
     dataIndex: 'netWeight',
+    format: formatKg,
   },
   {
     title: '投产数量',
@@ -43,6 +46,7 @@ export const columns: BasicColumn[] = [
   {
     title: '最早采集血浆有效期至',
     dataIndex: 'earliestValid',
+    format: (text) => text?.slice(0, 10),
   },
   {
     title: '最晚满检疫期日期',
