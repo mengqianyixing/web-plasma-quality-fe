@@ -17,13 +17,13 @@
             ><a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a
             ><a @click="_sortingBoxSealing(item)">封箱</a></template
           >
-          <div class="text-4" v-for="(one, i) in item.bagNos" :key="i">{{ one }}</div>
+          <div class="text-4" v-for="one in item.bagNos" :key="one">{{ one }}</div>
         </Card>
       </div>
     </div>
     <Description @register="registerBatch" :data="batchData" class="mt-3" />
     <div class="card-bar mt-1 mb-1 bg-[#fff] h-73.5">
-      <div class="h-10 pl-3 card-bar-header lh-10">{{ pickTitle.bottom }}</div>
+      <div class="card-bar-header h-10 lh-10 pl-3">{{ pickTitle.bottom }}</div>
       <div class="card-bar-body flex w-100% p-3 bg-[#fff] overflow-x-auto" ref="bottomBoxBarRef">
         <Card
           v-for="item in bottomBoxData"
@@ -38,7 +38,7 @@
             ><a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a
             ><a @click="_sortingBoxSealing(item)">封箱</a></template
           >
-          <div class="text-4" v-for="(one, i) in item.bagNos" :key="i">{{ one }}</div>
+          <div class="text-4" v-for="one in item.bagNos" :key="one">{{ one }}</div>
         </Card>
       </div>
     </div>
@@ -453,8 +453,7 @@
   }
 
   // 选择准备号
-  function handleSelectPrepare(value: string, event: MouseEvent) {
-    console.log(value, event);
+  function handleSelectPrepare() {
     openPrepareModal(true);
   }
   // 准备号框确认

@@ -339,15 +339,19 @@
       warning('请先选择投产准备号!');
       return;
     }
-    const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
-    const pickBagCount = (selectedRow.value[0] as { pickBagCount?: string })?.pickBagCount;
-    if(!isPicked && prepareState !== 'RUN' || Number(pickBagCount) > 0) {
-      warning('该准备号不可撤销!');
-      return;
-    }
-    if (prepareState !== 'REV' && isPicked) {
-      warning('该准备号不可撤销准备!');
-      return;
+    const selectedRowOne: any = selectedRow.value[0];
+    const prepareState = selectedRowOne?.prepareState;
+    const prodBagCount = selectedRowOne?.summary?.prodBagCount;
+    if (isPicked === 'isPicked') {
+      if (prepareState !== 'REV') {
+        warning('该准备号不可撤销准备!');
+        return;
+      }
+    } else {
+      if (prepareState !== 'RUN' || Number(prodBagCount) > 0) {
+        warning('该准备号不可撤销!');
+        return;
+      }
     }
     openRevokeModal(true, {
       record: selectedRow.value[0],
@@ -361,9 +365,12 @@
       warning('请先选择投产准备号!');
       return;
     }
-    const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
-    const prepareNo = (selectedRow.value[0] as { prepareNo?: string })?.prepareNo;
-    if (prepareState !== 'RUN') {
+    const selectedRowOne: any = selectedRow.value[0];
+    const prepareState = selectedRowOne?.prepareState;
+    const prepareNo = selectedRowOne?.prepareNo;
+    const prodBagCount = selectedRowOne?.summary?.prodBagCount;
+
+    if (prepareState !== 'RUN' || Number(prodBagCount) <= 0) {
       warning('该准备号不可完成准备!');
       return;
     }
@@ -471,7 +478,7 @@
 
   // 血浆明细
   const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
-  function goPlasmaDetail(record, prepareProduce) {
+  function goPlasmaDetail(record, prepareProduce?) {
     openPlasmaDetailModal(true, {
       record,
       prepareProduce,

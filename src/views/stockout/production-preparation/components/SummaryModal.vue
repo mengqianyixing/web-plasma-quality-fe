@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    title="血浆汇总"
+    title="投产准备-血浆挑选"
     :footer="null"
     width="100%"
     :draggable="false"

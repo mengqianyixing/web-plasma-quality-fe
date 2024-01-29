@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-29 10:43:03
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-29 11:31:21
+ * @LastEditTime: 2024-01-29 14:07:29
 -->
 <template>
   <BasicModal
@@ -36,6 +36,26 @@
       </div>
     </div>
     <OutModal @register="registerOutModal" @success="reload" />
+    <BasicModal
+      @register="registenBindModal"
+      showFooter
+      :title="`托盘存放血浆箱`"
+      width="800px"
+      :show-ok-btn="false"
+      cancelText="关闭"
+      :min-height="600"
+      @cancel="cancel"
+    >
+      <div class="relative h-inherit max-h-inherit min-h-inherit">
+        <div class="absolute flex flex-col w-full h-full">
+          <BasicTable @register="registerBindTable">
+            <template #toolbar>
+              <a-button type="primary" @click="handleUnbind">解绑托盘</a-button>
+            </template>
+          </BasicTable>
+        </div>
+      </div>
+    </BasicModal>
   </BasicModal>
 </template>
 <script setup lang="ts">
@@ -43,7 +63,11 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { message } from 'ant-design-vue';
   import { reactive } from 'vue';
-  import { trayOutStoreColumns, trayOutStoreFormSchema } from '../production-sorting.data';
+  import {
+    trayOutStoreColumns,
+    trayOutStoreFormSchema,
+    boxBindColumns,
+  } from '../production-sorting.data';
   import OutModal from '@/views/tray/outInStore/outModal.vue';
 
   const state = reactive({
@@ -54,6 +78,7 @@
     state.prepareNo = prepareNo;
   });
   const [registerOutModal, { openModal: openOutModal }] = useModal();
+  const [registenBindModal, { openModal: openBindModal }] = useModal();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: () => Promise.resolve({ result: [{ box: '123' }] }),
     fetchSetting: {
@@ -79,6 +104,34 @@
       schemas: trayOutStoreFormSchema,
     },
   });
+  const [
+    registerBindTable,
+    {
+      getSelectRows: getBindSelectRows,
+      clearSelectedRowKeys: clearBindSelectedRowKeys,
+      reload: reloadBind,
+    },
+  ] = useTable({
+    api: () => Promise.resolve({ result: [{ box: '123' }] }),
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    columns: boxBindColumns,
+    inset: true,
+    isCanResizeParent: true,
+    size: 'small',
+    showTableSetting: false,
+    bordered: true,
+    rowSelection: { type: 'checkbox' },
+    beforeFetch: (p) => ({ ...p, prepareNo: state.prepareNo }),
+    afterFetch: (res) => {
+      clearBindSelectedRowKeys();
+      return res;
+    },
+  });
   function cancel() {
     emit('close');
   }
@@ -88,7 +141,13 @@
     if (rows.some((_) => _.status)) return message.warning('请选择在库中的数据');
     openOutModal(true, { data: rows });
   }
+  function handleUnbind() {
+    const rows: Recordable[] = getBindSelectRows();
+    if (rows.length === 0) return message.warning('请选择数据');
+  }
   function handleBoxClick(row: Recordable) {
     console.log(row);
+    reloadBind();
+    openBindModal(true);
   }
 </script>

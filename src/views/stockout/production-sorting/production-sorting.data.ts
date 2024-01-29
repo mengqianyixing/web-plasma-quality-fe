@@ -95,3 +95,21 @@ export const trayOutStoreFormSchema: FormSchema[] = [
     component: 'Input',
   },
 ];
+export const boxBindColumns: BasicColumn[] = [
+  {
+    title: '血浆批号',
+    dataIndex: '',
+  },
+  {
+    title: '血浆箱号',
+    dataIndex: '',
+  },
+  {
+    title: '血浆数量',
+    dataIndex: '',
+  },
+  {
+    title: '是否待分拣',
+    dataIndex: '',
+  },
+];
