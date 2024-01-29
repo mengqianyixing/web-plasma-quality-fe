@@ -321,6 +321,15 @@
       warning('请先选择投产准备号!');
       return;
     }
+    const selectedRowOne: any = selectedRow.value[0];
+    if (
+      selectedRowOne.prepareState === 'REV' ||
+      selectedRowOne.prepareState === 'TPK' ||
+      selectedRowOne.prepareState === 'DEL'
+    ) {
+      warning('该准备号不可修改!');
+      return;
+    }
     openPreparationModal(true, {
       record: selectedRow.value[0],
       isUpdate: true,
