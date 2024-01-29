@@ -34,7 +34,7 @@
   import { FormSchema } from '@/components/Form';
   import BasicModal from '@/components/Modal/src/BasicModal.vue';
   import { getSortBoxs } from '@/api/stockout/production-preparation.js';
-  import { pickBoxMap, pickBoxValueEnum } from '@/enums/stockoutEnum';
+  import { pickBoxMap, pickBoxValueEnum, boxTypeMap, boxTypeValueEnum } from '@/enums/stockoutEnum';
   import dayjs from 'dayjs';
   import PackingCheckModal from '@/views/stockout/production-sorting/components/packing-check-modal.vue';
 
@@ -53,8 +53,11 @@
     },
     {
       title: '装箱类型',
-      dataIndex: 'useType',
+      dataIndex: 'boxType',
       width: 100,
+      format(text) {
+        return `${boxTypeMap.get(text as boxTypeValueEnum)}`;
+      },
     },
     {
       title: '血浆数量',
@@ -83,17 +86,17 @@
 
   const searchFormSchema: FormSchema[] = [
     {
-      field: 'prepareNo',
+      field: 'boxType',
       label: '装箱类型',
       component: 'Select',
       colProps: { span: 6 },
-      // defaultValue: [],
-      // componentProps: {
-      //   options: [...prepareStateMap.entries()].map(([key, value]) => ({
-      //     value: key,
-      //     label: `${value}`,
-      //   })),
-      // },
+      defaultValue: [],
+      componentProps: {
+        options: [...boxTypeMap.entries()].map(([key, value]) => ({
+          value: key,
+          label: `${value}`,
+        })),
+      },
     },
     {
       field: 'boxNo',
@@ -123,8 +126,7 @@
       schemas: searchFormSchema,
     },
     beforeFetch: (p) => {
-      // return { ...p, prepareNo: prepareDetail.value };
-      return { ...p, prepareNo: '123' };
+      return { ...p, prepareNo: prepareNo.value };
     },
     immediate: true,
     fetchSetting: {

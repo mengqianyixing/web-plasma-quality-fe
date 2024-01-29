@@ -229,3 +229,22 @@ plasmaMap.set(plasmaValueEnum.PRO, plasmaEnum.PRO);
 plasmaMap.set(plasmaValueEnum.UPR, plasmaEnum.UPR);
 plasmaMap.set(plasmaValueEnum.UNQ, plasmaEnum.UNQ);
 plasmaMap.set(plasmaValueEnum.WV, plasmaEnum.WV);
+
+// 装箱类型
+export enum boxTypeEnum {
+  PRO = '合格投产',
+  UPR = '合格不投产',
+  WV = '待追踪',
+}
+
+export enum boxTypeValueEnum {
+  PRO = 'PRO',
+  UPR = 'UPR',
+  WV = 'WV',
+}
+
+export const boxTypeMap = new Map<boxTypeValueEnum, string>();
+
+boxTypeMap.set(boxTypeValueEnum.PRO, boxTypeEnum.PRO);
+boxTypeMap.set(boxTypeValueEnum.UPR, boxTypeEnum.UPR);
+boxTypeMap.set(boxTypeValueEnum.WV, boxTypeEnum.WV);

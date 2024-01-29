@@ -38,10 +38,11 @@
   import { getBatchInfo } from '@/api/stockout/production-preparation.js';
   import { prepareStateMap, prepareStateValueEnum } from '@/enums/stockoutEnum';
 
-  const prepareDetail = ref(); // 准备详情
+  const prepareNo = ref(''); // 准备号
 
   const [registerModal] = useModalInner(async (data) => {
-    prepareDetail.value = data.record;
+    console.log('看看批次', data);
+    prepareNo.value = data.record.prepareNo;
   });
 
   const columnsImmunity: BasicColumn[] = [
@@ -101,8 +102,7 @@
     columns: columnsImmunity,
     useSearchForm: false,
     beforeFetch: (p) => {
-      // return { ...p, prepareNo: prepareDetail.value.prepareNo };
-      return { ...p, prepareNo: '123' };
+      return { ...p, prepareNo: prepareNo.value };
     },
     pagination: true,
     clickToRowSelect: false,
@@ -123,8 +123,7 @@
   const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
   function goPlasmaDetail(record) {
     openPlasmaDetailModal(true, {
-      record: { ...record, prepareNo: '123' },
-      // prepareNo: prepareDetail.value.prepareNo,
+      record: { ...record, prepareNo: prepareNo.value },
     });
   }
 </script>

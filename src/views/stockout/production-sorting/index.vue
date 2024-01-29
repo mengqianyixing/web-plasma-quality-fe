@@ -44,6 +44,8 @@
     </div>
     <PrepareModal @register="registerPrepareModal" @success="prepareModalSuccess" />
     <PackingInfoModal @register="registerPackingInfoModal" />
+    <PickBatchDetail @register="registerPickBatchDetailModal" />
+    <PlasmaDetail @register="registerPlasmaDetailModal" />
   </PageWrapper>
 </template>
 
@@ -56,15 +58,25 @@
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { useModal } from '@/components/Modal';
   import { debounce } from 'lodash-es';
-  import { getPrepareSorting, pickSortingBag } from '@/api/stockout/production-preparation.js';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { useLoading } from '@/components/Loading';
 
   import PrepareModal from '@/views/stockout/production-sorting/components/prepare-modal.vue';
   import PackingInfoModal from '@/views/stockout/production-sorting/components/packing-info-modal.vue';
+  import PickBatchDetail from '../components/PickBatchDetail.vue';
+  import PlasmaDetail from '../components/PlasmaDetail.vue';
   import { prepareStateMap, prepareStateValueEnum } from '@/enums/stockoutEnum';
+  import {
+    getPrepareSorting,
+    pickSortingBag,
+    sortingBoxSealing,
+    sortingMouldAssembling,
+    sortingAllQua,
+  } from '@/api/stockout/production-preparation.js';
 
   const { createMessage } = useMessage();
   const { warning, success } = createMessage;
+  const [openFullLoading, closeFullLoading] = useLoading({});
 
   interface PrepareData {
     batchNoCount?: Number;
@@ -176,7 +188,11 @@
       field: 'outWarehouseDate',
       label: '分拣批次',
       render() {
-        return <div>{prepareData.value.batchNoCount ? prepareData.value.batchNoCount : ''}</div>;
+        return (
+          <div className="text-blue-600 cursor-pointer" onClick={goPickBatchDetail}>
+            {prepareData.value.batchNoCount ? prepareData.value.batchNoCount : ''}
+          </div>
+        );
       },
     },
     {
@@ -185,9 +201,16 @@
       render() {
         return (
           <div>
-            {prepareData.value.sortTotal
-              ? `${prepareData.value.sortCount}/${prepareData.value.sortTotal}`
-              : ''}
+            {prepareData.value.sortTotal ? (
+              <span>
+                <span>{prepareData.value.sortCount}/</span>
+                <span className="text-blue-600 cursor-pointer" onClick={goPlasmaDetail}>
+                  {prepareData.value.sortTotal}
+                </span>
+              </span>
+            ) : (
+              ''
+            )}
           </div>
         );
       },
@@ -198,9 +221,19 @@
       render() {
         return (
           <div>
-            {prepareData.value.proTotal
-              ? `${prepareData.value.proSortCount}/${prepareData.value.proTotal}`
-              : ''}
+            {prepareData.value.sortTotal ? (
+              <span>
+                <span>{prepareData.value.proSortCount}/</span>
+                <span
+                  className="text-blue-600 cursor-pointer"
+                  onClick={() => goPlasmaDetail('prepareProduce')}
+                >
+                  {prepareData.value.proTotal}
+                </span>
+              </span>
+            ) : (
+              ''
+            )}
           </div>
         );
       },
@@ -244,7 +277,7 @@
               placeholder="请扫描"
               value={boxNo}
               onChange={(event) => (boxNo.value = event.target.value)}
-              onkeyup={debounce(handlePressEnter, 500)}
+              onkeyup={debounce(_sortingAllQua, 500)}
             />
           </div>
         );
@@ -331,108 +364,180 @@
         bagNo: bagNo.value,
         batchNo: batchData.value.batchSummary?.batchNo || null,
       };
-      const data = await pickSortingBag(params);
-      success('分拣血浆成功!');
-      bagNo.value = '';
-      nextTick(() => {
-        bagNoRef.value.focus();
-      });
-
-      // 准备号、批次详情数据
-      prepareData.value = { ...data.preSummary };
-      batchData.value = {
-        batchSummary: data.batchSummary,
-        pros: data.pros,
-        unPro: data.unPro,
-        utrkUnPro: data.utrkUnPro,
-      };
-
-      // 清空所有选中状态
-      for (const item of topBoxData.value) {
-        item.isSelected = false;
-      }
-      for (const item of bottomBoxData.value) {
-        item.isSelected = false;
-      }
-
-      // 可投产箱子
-      topBoxData.value[0].sortCount = data.pros?.sortCount;
-      topBoxData.value[0].totalCount = data.pros?.totalCount;
-      if (data.pros?.bagNos?.length) {
-        // 可投产血浆列表有长度，说明正在挑的是可投产的，更新血浆列表
-        topBoxData.value[0].bagNos = data.pros?.bagNos;
-        topBoxData.value[0].isSelected = true;
+      let targetBox = {}; // 正在分拣的血浆属于的箱子,用于封箱
+      try {
+        openFullLoading();
+        const data = await pickSortingBag(params);
+        success('分拣血浆成功!');
+        bagNo.value = '';
         nextTick(() => {
-          scollToBox(false, topBoxData.value[0].immTypeName);
+          bagNoRef.value.focus();
         });
-      }
-      // B时的不投产箱子,A时为空
-      if (data.unPro?.sortImmTypes?.length) {
-        let scollToIndex = -1;
-        topBoxData.value.forEach((item, index) => {
-          topBoxData[index + 1].sortCount = data.unPro?.sortImmTypes?.[index]?.sortCount;
-          topBoxData[index + 1].totalCount = data.unPro?.sortImmTypes?.[index]?.totalCount;
-          if (data.unPro?.sortImmTypes?.[index]?.bagNos?.length) {
-            topBoxData[index + 1].bagNos = data.unPro?.sortImmTypes?.[index]?.bagNos;
-            scollToIndex = index + 1;
+
+        // 准备号、批次详情数据
+        prepareData.value = { ...data.preSummary };
+        batchData.value = {
+          batchSummary: data.batchSummary,
+          pros: data.pros,
+          unPro: data.unPro,
+          utrkUnPro: data.utrkUnPro,
+        };
+
+        // 清空所有选中状态
+        for (const item of topBoxData.value) {
+          item.isSelected = false;
+        }
+        if (bottomBoxData.value) {
+          for (const item of bottomBoxData.value) {
+            item.isSelected = false;
           }
-        });
-        nextTick(() => {
-          topBoxData.value[scollToIndex].isSelected = true;
-          // 滚动逻辑...
-          scollToBox(false, topBoxData.value[scollToIndex].immTypeName);
-        });
-      }
-      // A时的不投产或B的待放行
-      // 挑第一袋时， bottomBoxData 列表数据为空,直接赋值列表
-      if (!bottomBoxData.value.length) {
-        bottomBoxData.value = data.utrkUnPro?.sortImmTypes?.map((item) => {
-          return {
-            immTypeName: item?.immTypeName,
-            title: `${item?.titerLevel === 'H' ? '高' : '低'},${item?.immType}`,
-            sortCount: item?.sortCount,
-            totalCount: item?.totalCount,
-            bagNos: item?.bagNos,
-            isSelected: !!item?.bagNos?.length,
-          };
-        });
-        nextTick(() => {
-          scollToBox(false, bottomBoxData.value[0].immTypeName);
-        });
-      } else {
-        let scollToIndex = -1;
-        bottomBoxData.value.forEach((item, index) => {
-          item.sortCount = data.utrkUnPro?.sortImmTypes?.[index]?.sortCount;
-          item.totalCount = data.utrkUnPro?.sortImmTypes?.[index]?.totalCount;
-          if (data.utrkUnPro?.sortImmTypes?.[index]?.bagNos?.length) {
-            item.bagNos = data.utrkUnPro?.sortImmTypes?.[index]?.bagNos;
-            scollToIndex = index;
-          }
-        });
-        nextTick(() => {
-          bottomBoxData.value[scollToIndex].isSelected = true;
-          scollToBox(false, bottomBoxData.value[scollToIndex].immTypeName);
-        });
-      }
+        }
 
-      if (data?.fullBox === true) {
-        Modal.confirm({
-          title: '提示?',
-          icon: createVNode(ExclamationCircleOutlined),
-          content: createVNode(
-            'div',
-            { style: 'color:red;' },
-            '该箱已满请进行封箱操作，要打印箱签吗?',
-          ),
-          onOk() {
-            console.log('OK');
-          },
-          onCancel() {
-            console.log('Cancel');
-          },
-          class: 'test',
-        });
+        // 可投产箱子
+        topBoxData.value[0].sortCount = data.pros?.sortCount;
+        topBoxData.value[0].totalCount = data.pros?.totalCount;
+        topBoxData.value[0].immType = data.pros?.immType;
+        topBoxData.value[0].immTypeName = data.pros?.immTypeName;
+        if (data.pros?.bagNos?.length) {
+          // 可投产血浆列表有长度，说明正在挑的是可投产的，更新血浆列表
+          topBoxData.value[0].bagNos = data.pros?.bagNos;
+          topBoxData.value[0].isSelected = true;
+          targetBox = topBoxData.value[0];
+          nextTick(() => {
+            scollToBox(false, topBoxData.value[0].immTypeName);
+          });
+        }
+        // B时的不投产箱子,A时为空
+        if (data.unPro?.sortImmTypes?.length) {
+          let scollToIndex = -1;
+          // 挑第一袋时，topBoxData中只有可投产的箱，此处直接生成不投产箱子
+          if (topBoxData.value.length === 1) {
+            const unProArr = data.unPro?.sortImmTypes?.map((item, index) => {
+              if (item?.bagNos?.length) {
+                scollToIndex = index;
+              }
+              return {
+                immTypeName: item?.immTypeName,
+                immType: item?.immType,
+                pickType: data.unPro?.pickType,
+                title: `${item?.titerLevel === 'H' ? '高' : '低'},${item?.immType}`,
+                sortCount: item?.sortCount,
+                totalCount: item?.totalCount,
+                bagNos: item?.bagNos,
+                isSelected: !!item?.bagNos?.length,
+              };
+            });
+            topBoxData.value.push(...unProArr);
+            nextTick(() => {
+              scollToBox(true, topBoxData.value[scollToIndex].immTypeName);
+            });
+          } else {
+            data.unPro?.sortImmTypes.forEach((item, index) => {
+              topBoxData.value[index + 1].sortCount = data.unPro?.sortImmTypes?.[index]?.sortCount;
+              topBoxData.value[index + 1].totalCount =
+                data.unPro?.sortImmTypes?.[index]?.totalCount;
+              if (data.unPro?.sortImmTypes?.[index]?.bagNos?.length) {
+                topBoxData.value[index + 1].bagNos = data.unPro?.sortImmTypes?.[index]?.bagNos;
+                scollToIndex = index + 1;
+              }
+            });
+
+            nextTick(() => {
+              topBoxData.value[scollToIndex].isSelected = true;
+              // 滚动逻辑...
+              scollToBox(false, topBoxData.value[scollToIndex].immTypeName);
+            });
+          }
+          targetBox = topBoxData.value[scollToIndex];
+        }
+        // A时的不投产或B的待放行
+        if (data.utrkUnPro?.sortImmTypes?.length) {
+          // 挑第一袋时， bottomBoxData 列表数据为空,直接赋值列表
+          let scollToIndex = -1;
+          if (!bottomBoxData.value.length) {
+            bottomBoxData.value = data.utrkUnPro?.sortImmTypes?.map((item, index) => {
+              if (item?.bagNos?.length) {
+                scollToIndex = index;
+              }
+              return {
+                immTypeName: item?.immTypeName,
+                immType: item?.immType,
+                pickType: data.utrkUnPro?.pickType,
+                title: `${item?.titerLevel === 'H' ? '高' : '低'},${item?.immType}`,
+                sortCount: item?.sortCount,
+                totalCount: item?.totalCount,
+                bagNos: item?.bagNos,
+                isSelected: !!item?.bagNos?.length,
+              };
+            });
+            nextTick(() => {
+              scollToBox(false, topBoxData.value[scollToIndex].immTypeName);
+            });
+          } else {
+            bottomBoxData.value.forEach((item, index) => {
+              item.sortCount = data.utrkUnPro?.sortImmTypes?.[index]?.sortCount;
+              item.totalCount = data.utrkUnPro?.sortImmTypes?.[index]?.totalCount;
+              if (data.utrkUnPro?.sortImmTypes?.[index]?.bagNos?.length) {
+                item.bagNos = data.utrkUnPro?.sortImmTypes?.[index]?.bagNos;
+                scollToIndex = index;
+              }
+            });
+            nextTick(() => {
+              bottomBoxData.value[scollToIndex].isSelected = true;
+              scollToBox(false, bottomBoxData.value[scollToIndex].immTypeName);
+            });
+          }
+          targetBox = bottomBoxData.value[scollToIndex];
+        }
+
+        if (data?.fullBox === true) {
+          Modal.confirm({
+            title: '提示?',
+            icon: createVNode(ExclamationCircleOutlined),
+            content: createVNode(
+              'div',
+              { style: 'color:red;' },
+              '该箱已满,要进行封箱操作并打印箱签吗?',
+            ),
+            onOk() {
+              // 走封箱操作 不需要提示
+              _sortingBoxSealing(targetBox, true);
+              // 走打印逻辑
+              console.log('OK');
+            },
+            onCancel() {
+              console.log('Cancel');
+            },
+            class: 'test',
+          });
+        }
+      } finally {
+        closeFullLoading();
       }
+    }
+  }
+
+  // 箱号扫描
+  async function _sortingAllQua(e) {
+    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+      if (!boxNo.value) {
+        warning('请扫描血浆箱号!');
+        return;
+      }
+      if (!prepareNo.value) {
+        warning('请选择投产准备号!');
+        return;
+      }
+    }
+    try {
+      openFullLoading();
+      const res = await sortingAllQua({ prepareNo: prepareNo.value, boxNo: boxNo.value });
+      success('整箱分拣成功!');
+      console.log('整箱扫描', res);
+      // 请求总览数据
+      prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+    } finally {
+      closeFullLoading();
     }
   }
 
@@ -450,63 +555,28 @@
 
     prepareNo.value = prepareNoData.prepareNo;
     pickMode = prepareNoData.pickMode; // 挑浆模式
-    const data = await getPrepareSorting({ prepareNo: prepareNo.value });
-    console.log('总览数据:', data, prepareNoData);
-    // 准备号、批次详情数据
-    prepareData.value = { ...data.preSummary };
-    batchData.value = {
-      batchSummary: data.batchSummary,
-      pros: data.pros,
-      unPro: data.unPro,
-      utrkUnPro: data.utrkUnPro,
-    };
-    console.log('复制后:', data, prepareNoData);
+    try {
+      openFullLoading();
+      const data = await getPrepareSorting({ prepareNo: prepareNo.value });
+      console.log('总览数据:', data, prepareNoData);
+      // 准备号、批次详情数据
+      prepareData.value = { ...data.preSummary };
+      batchData.value = {
+        batchSummary: data.batchSummary,
+        pros: data.pros,
+        unPro: data.unPro,
+        utrkUnPro: data.utrkUnPro,
+      };
 
-    if (pickMode === 'A') {
-      pickTitle.value.top = '检疫期合格可投产血浆';
-      pickTitle.value.bottom = '暂不投产血浆';
-      setBatchDescProps({
-        schema: [
-          ...batchSchema,
-          {
-            field: 'unPro',
-            label: '暂不投产血浆',
-            render() {
-              return (
-                <div>
-                  {batchData.value.utrkUnPro?.total
-                    ? `${batchData.value.utrkUnPro?.sortCount}/${batchData.value.utrkUnPro?.total}`
-                    : ''}
-                </div>
-              );
-            },
-          },
-        ],
-      });
-    }
-    if (pickMode === 'B') {
-      pickTitle.value.top = '检疫期合格可投产&检疫期合格暂不投产血浆';
-      pickTitle.value.bottom = '检疫期待放行血浆';
-      {
+      if (pickMode === 'A') {
+        pickTitle.value.top = '检疫期合格可投产血浆';
+        pickTitle.value.bottom = '暂不投产血浆';
         setBatchDescProps({
           schema: [
             ...batchSchema,
             {
               field: 'unPro',
               label: '暂不投产血浆',
-              render() {
-                return (
-                  <div>
-                    {batchData.value.unPro?.total
-                      ? `${batchData.value.unPro?.sortCount}/${batchData.value.unPro?.total}`
-                      : ''}
-                  </div>
-                );
-              },
-            },
-            {
-              field: 'utrkUnPro',
-              label: '检疫期待放行',
               render() {
                 return (
                   <div>
@@ -520,48 +590,94 @@
           ],
         });
       }
-    }
+      if (pickMode === 'B') {
+        pickTitle.value.top = '检疫期合格可投产&检疫期合格暂不投产血浆';
+        pickTitle.value.bottom = '检疫期待放行血浆';
+        {
+          setBatchDescProps({
+            schema: [
+              ...batchSchema,
+              {
+                field: 'unPro',
+                label: '暂不投产血浆',
+                render() {
+                  return (
+                    <div>
+                      {batchData.value.unPro?.total
+                        ? `${batchData.value.unPro?.sortCount}/${batchData.value.unPro?.total}`
+                        : ''}
+                    </div>
+                  );
+                },
+              },
+              {
+                field: 'utrkUnPro',
+                label: '检疫期待放行',
+                render() {
+                  return (
+                    <div>
+                      {batchData.value.utrkUnPro?.total
+                        ? `${batchData.value.utrkUnPro?.sortCount}/${batchData.value.utrkUnPro?.total}`
+                        : ''}
+                    </div>
+                  );
+                },
+              },
+            ],
+          });
+        }
+      }
 
-    // 处理箱数据 pros => 投产列表  unPro => 不投产列表(A时为空、B时为不投产)  utrkUnPro => 不投产或待放行（A时为不投产、B时为待放行）作为 bottomBoxData 数据
-    if (data.pros?.bagNos.length) {
-      topBoxData.value.push({
-        title: '可投产',
-        sortCount: data.pros?.sortCount,
-        totalCount: data.pros?.totalCount,
-        bagNos: data.pros?.bagNos,
-        isSelected: false,
+      // 处理箱数据 pros => 投产列表  unPro => 不投产列表(A时为空、B时为不投产)  utrkUnPro => 不投产或待放行（A时为不投产、B时为待放行）作为 bottomBoxData 数据
+      if (data.pros?.bagNos.length) {
+        topBoxData.value.push({
+          title: '可投产',
+          immType: data.pros?.immType,
+          pickType: 'PRO',
+          sortCount: data.pros?.sortCount,
+          totalCount: data.pros?.totalCount,
+          bagNos: data.pros?.bagNos,
+          isSelected: false,
+        });
+      } else {
+        topBoxData.value.push({
+          title: '可投产',
+          pickType: 'PRO',
+          sortCount: '',
+          totalCount: '',
+          bagNos: [],
+          isSelected: false,
+        });
+      }
+      const unProArr = data.unPro?.sortImmTypes?.map((item) => {
+        return {
+          immTypeName: item?.immTypeName,
+          immType: item?.immType,
+          pickType: data.unPro?.pickType,
+          title: `${item?.titerLevel === 'H' ? '高' : '低'},${item?.immType}`,
+          sortCount: item?.sortCount,
+          totalCount: item?.totalCount,
+          bagNos: item?.bagNos,
+          isSelected: false,
+        };
       });
-    } else {
-      topBoxData.value.push({
-        title: '可投产',
-        sortCount: '',
-        totalCount: '',
-        bagNos: [],
-        isSelected: false,
-      });
-    }
-    const unProArr = data.unPro?.sortImmTypes?.map((item) => {
-      return {
-        immTypeName: item?.immTypeName,
-        title: `${item?.titerLevel === 'H' ? '高' : '低'},${item?.immType}`,
-        sortCount: item?.sortCount,
-        totalCount: item?.totalCount,
-        bagNos: item?.bagNos,
-        isSelected: false,
-      };
-    });
-    unProArr?.length && topBoxData.value.push(...unProArr);
+      unProArr?.length && topBoxData.value.push(...unProArr);
 
-    bottomBoxData.value = data.utrkUnPro?.sortImmTypes?.map((item) => {
-      return {
-        immTypeName: item?.immTypeName,
-        title: `${item?.titerLevel === 'H' ? '高' : '低'},${item?.immType}`,
-        sortCount: item?.sortCount,
-        totalCount: item?.totalCount,
-        bagNos: item?.bagNos,
-        isSelected: false,
-      };
-    });
+      bottomBoxData.value = data.utrkUnPro?.sortImmTypes?.map((item) => {
+        return {
+          immTypeName: item?.immTypeName,
+          immType: item?.immType,
+          pickType: data.utrkUnPro?.pickType,
+          title: `${item?.titerLevel === 'H' ? '高' : '低'},${item?.immType}`,
+          sortCount: item?.sortCount,
+          totalCount: item?.totalCount,
+          bagNos: item?.bagNos,
+          isSelected: false,
+        };
+      });
+    } finally {
+      closeFullLoading();
+    }
   }
 
   // 定位到操作箱
@@ -586,11 +702,105 @@
   // 合箱
   async function _sortingMouldAssembling(data) {
     console.log('合箱', data);
+    if (!prepareNo.value) {
+      warning('请选择投产准备号!');
+      return;
+    }
+    if (!data.bagNos.length) {
+      warning('请先分拣血浆');
+      return;
+    }
+    Modal.confirm({
+      title: '提示?',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: createVNode('div', { style: 'color:red;' }, '确认合箱重扫吗?'),
+      async onOk() {
+        const params = {
+          prepareNo: prepareNo.value,
+          bagNos: data.bagNos,
+        };
+        try {
+          openFullLoading();
+          const res = await sortingMouldAssembling(params);
+          console.log('合箱成功:', res);
+          success('合箱成功!');
+          // 请求总览数据
+          prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+        } finally {
+          closeFullLoading();
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+      class: 'test',
+    });
   }
 
   // 封箱
-  async function _sortingBoxSealing(data) {
+  async function _sortingBoxSealing(data, noTip?) {
     console.log('封箱', data);
+    if (!prepareNo.value) {
+      warning('请选择投产准备号!');
+      return;
+    }
+    if (!data.bagNos.length) {
+      warning('请先分拣血浆');
+      return;
+    }
+    if (noTip) {
+      doThis();
+    } else {
+      Modal.confirm({
+        title: '提示?',
+        icon: createVNode(ExclamationCircleOutlined),
+        content: createVNode('div', { style: 'color:red;' }, '确认封箱并打印箱标签吗?'),
+        async onOk() {
+          doThis();
+        },
+        onCancel() {
+          console.log('Cancel');
+        },
+        class: 'test',
+      });
+    }
+    async function doThis() {
+      const params = {
+        prepareNo: prepareNo.value,
+        immType: data.immType,
+        pickType: data.pickType,
+        bagNos: data.bagNos,
+      };
+      try {
+        openFullLoading();
+        const res = await sortingBoxSealing(params);
+        console.log('封箱成功:', res);
+        success('封箱成功!');
+        // 请求总览数据
+        prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+      } finally {
+        closeFullLoading();
+      }
+    }
+  }
+
+  // 分拣批次信息
+  const [registerPickBatchDetailModal, { openModal: openPickBatchDetailModal }] = useModal();
+  function goPickBatchDetail() {
+    openPickBatchDetailModal(true, {
+      record: { prepareNo: prepareNo.value },
+    });
+  }
+
+  // 血浆明细
+  const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
+  function goPlasmaDetail(prepareProduce?) {
+    console.log('打开血浆明细:', prepareProduce);
+
+    openPlasmaDetailModal(true, {
+      record: { prepareNo: prepareNo.value },
+      prepareProduce,
+    });
   }
 </script>
 <style lang="less" scoped>
