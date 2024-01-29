@@ -9,18 +9,18 @@
     :draggable="false"
     :canFullscreen="false"
   >
-    <BasicTable @register="registerTable" :scroll="{ y: 600, x: true }">
+    <BasicTable @register="registerTable" :scroll="{ y: 600 }">
       <template #sortCount="{ record }">
         <div class="z-999">
           <a-button type="link" @click="goPlasmaDetail(record)">
-            {{ record?.sortCount }}
+            {{ record.sortCount }}
           </a-button>
         </div>
       </template>
       <template #waitSortCount="{ record }">
         <div class="z-999">
           <a-button type="link" @click="goPlasmaDetail(record)">
-            {{ record?.waitSortCount }}
+            {{ record.waitSortCount }}
           </a-button>
         </div>
       </template>
@@ -124,6 +124,7 @@
   function goPlasmaDetail(record) {
     openPlasmaDetailModal(true, {
       record: { ...record, prepareNo: '123' },
+      // prepareNo: prepareDetail.value.prepareNo,
     });
   }
 </script>

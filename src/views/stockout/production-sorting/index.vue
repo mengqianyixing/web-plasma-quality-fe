@@ -13,10 +13,10 @@
           :class="{ selected: item.isSelected }"
           :title="`${item.title}(${item.sortCount}/${item.totalCount})`"
         >
-          <template #extra>
-            <a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a>
-            <a @click="_sortingBoxSealing(item)">封箱</a>
-          </template>
+          <template #extra
+            ><a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a
+            ><a @click="_sortingBoxSealing(item)">封箱</a></template
+          >
           <div class="text-4" v-for="one in item.bagNos" :key="one">{{ one }}</div>
         </Card>
       </div>
@@ -34,10 +34,10 @@
           :class="{ selected: item.isSelected }"
           :title="`${item.title}(${item.sortCount}/${item.totalCount})`"
         >
-          <template #extra>
-            <a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a>
-            <a @click="_sortingBoxSealing(item)">封箱</a>
-          </template>
+          <template #extra
+            ><a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a
+            ><a @click="_sortingBoxSealing(item)">封箱</a></template
+          >
           <div class="text-4" v-for="one in item.bagNos" :key="one">{{ one }}</div>
         </Card>
       </div>
@@ -437,8 +437,7 @@
   }
 
   // 选择准备号
-  function handleSelectPrepare(value: string, event: MouseEvent) {
-    console.log(value, event);
+  function handleSelectPrepare() {
     openPrepareModal(true);
   }
   // 准备号框确认

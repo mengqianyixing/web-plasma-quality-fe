@@ -39,7 +39,7 @@
   import PackingCheckModal from '@/views/stockout/production-sorting/components/packing-check-modal.vue';
 
   const prepareNo = ref(''); // 投产准备号
-  defineEmits(['success', 'register']);
+  // const emit = defineEmits(['success', 'register']);
   const [registerModal] = useModalInner(async (data) => {
     console.log(data);
     prepareNo.value = data.prepareNo;
