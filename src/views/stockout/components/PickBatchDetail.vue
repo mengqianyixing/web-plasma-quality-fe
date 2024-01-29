@@ -9,7 +9,7 @@
     :draggable="false"
     :canFullscreen="false"
   >
-    <BasicTable @register="registerTable" :scroll="{y: 600}">
+    <BasicTable @register="registerTable" :scroll="{ y: 600 }">
       <template #sortCount="{ record }">
         <div class="z-999">
           <a-button type="link" @click="goPlasmaDetail(record)">
@@ -35,11 +35,8 @@
   import { BasicTable, useTable, BasicColumn } from '@/components/Table';
   import dayjs from 'dayjs';
   import PlasmaDetail from './PlasmaDetail.vue';
-  import { getBatchInfo, } from '@/api/stockout/production-preparation.js';
-  import {
-    prepareStateMap,
-    prepareStateValueEnum,
-  } from '@/enums/stockoutEnum';
+  import { getBatchInfo } from '@/api/stockout/production-preparation.js';
+  import { prepareStateMap, prepareStateValueEnum } from '@/enums/stockoutEnum';
 
   const prepareDetail = ref(); // 准备详情
 
@@ -126,7 +123,7 @@
   const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
   function goPlasmaDetail(record) {
     openPlasmaDetailModal(true, {
-      record: { ...record, prepareNo: '123', },
+      record: { ...record, prepareNo: '123' },
       // prepareNo: prepareDetail.value.prepareNo,
     });
   }

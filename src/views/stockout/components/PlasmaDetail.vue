@@ -23,7 +23,7 @@
 
   let prepareNo = ''; // 准备号
   const [registerModal] = useModalInner(async (data) => {
-    console.log('血浆明细看看data',data);
+    console.log('血浆明细看看data', data);
     prepareNo = data.record.prepareNo;
     await getForm().updateSchema([
       {
@@ -34,11 +34,11 @@
         field: 'batchNo',
         componentProps: {
           params: { prepareNo },
-        }
-      }
-    ])
+        },
+      },
+    ]);
     // 准备投产默认值
-    if(data.prepareProduce) {
+    if (data.prepareProduce) {
       await getForm().updateSchema({
         field: 'prepareProduce',
         defaultValue: true,

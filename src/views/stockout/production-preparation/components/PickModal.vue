@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    title="血浆挑选"
+    :title="`投产准备-血浆挑选-按${pickMode ? '批' : '箱'}`"
     :footer="null"
     width="100%"
     :draggable="false"
@@ -57,13 +57,13 @@
 
   const emit = defineEmits(['closePickModal']);
 
-  let pickMode; // 是否为按批挑选
+  let pickMode = ref(); // 是否为按批挑选
   const pickLoading = ref(false);
   const prepareNo = ref(); // 准备号
   const prodType = ref(); // 投产类型
   const cacheForm = ref(); // 缓存最近一次查询表单的入参
   const [registerModal] = useModalInner(async (data) => {
-    pickMode = data.isBatch;
+    pickMode.value = data.isBatch;
     prepareNo.value = data.prepareNo;
     prodType.value = data.prodType;
     const prodTypeName = operationMap.get(prodType.value);
@@ -170,11 +170,11 @@
             options: [
               {
                 value: 'H',
-                label: `${prodTypeName}高效价`,
+                label: `${prodType.value}H,${prodTypeName}高效价`,
               },
               {
-                value: 'N',
-                label: `${prodTypeName}低效价`,
+                value: 'L',
+                label: `${prodType.value}L,${prodTypeName}低效价`,
               },
             ],
           },
@@ -187,12 +187,12 @@
           width: 110,
         },
         {
-          title: `BH,${prodTypeName}高效价`,
+          title: `${prodType.value}H,${prodTypeName}高效价`,
           dataIndex: 'heightCount',
           width: 150,
         },
         {
-          title: `BL,${prodTypeName}低效价`,
+          title: `${prodType.value}L,${prodTypeName}低效价`,
           dataIndex: 'lowCount',
           width: 150,
         },
@@ -697,7 +697,7 @@
       boxNos: [] as string[],
       boxNo: boxNo,
     };
-    if (pickMode) {
+    if (pickMode.value) {
       params.batchNos = selected.map((item) => item.batchNo);
     } else {
       params.boxNos = selected.map((item) => item.boxNo);
@@ -727,7 +727,7 @@
       return;
     }
     let params = {};
-    if (pickMode) {
+    if (pickMode.value) {
       params = {
         prepareNo: prepareNo.value,
         batchNos: getSelectRowsed().map((item) => item.batchNo),
@@ -771,7 +771,7 @@
       boxNos: [] as string[],
       boxNo,
     };
-    if (pickMode) {
+    if (pickMode.value) {
       params.batchNos = selected.map((item) => item.batchNo);
     } else {
       params.boxNos = selected.map((item) => item.boxNo);

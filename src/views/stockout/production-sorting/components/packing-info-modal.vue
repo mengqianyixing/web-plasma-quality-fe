@@ -9,7 +9,7 @@
     :showOkBtn="false"
     width="70%"
   >
-    <BasicTable @register="registerTable" >
+    <BasicTable @register="registerTable">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <TableAction
@@ -24,7 +24,7 @@
       </template>
     </BasicTable>
   </BasicModal>
-  <PackingCheckModal @register="registerPackingCheckModal"  @success="reload"/>
+  <PackingCheckModal @register="registerPackingCheckModal" @success="reload" />
 </template>
 
 <script setup lang="ts">
@@ -34,15 +34,12 @@
   import { FormSchema } from '@/components/Form';
   import BasicModal from '@/components/Modal/src/BasicModal.vue';
   import { getSortBoxs } from '@/api/stockout/production-preparation.js';
-  import {
-    pickBoxMap,
-    pickBoxValueEnum,
-  } from '@/enums/stockoutEnum';
+  import { pickBoxMap, pickBoxValueEnum } from '@/enums/stockoutEnum';
   import dayjs from 'dayjs';
   import PackingCheckModal from '@/views/stockout/production-sorting/components/packing-check-modal.vue';
 
   const prepareNo = ref(''); // 投产准备号
-  const emit = defineEmits(['success', 'register']);
+  // const emit = defineEmits(['success', 'register']);
   const [registerModal] = useModalInner(async (data) => {
     console.log(data);
     prepareNo.value = data.prepareNo;
@@ -160,9 +157,8 @@
   // 核对弹框
   function handleCheck(record) {
     openPackingCheckModal(true, {
-      record
-    })
+      record,
+    });
   }
   const [registerPackingCheckModal, { openModal: openPackingCheckModal }] = useModal();
-
 </script>

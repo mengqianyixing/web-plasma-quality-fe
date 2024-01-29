@@ -27,6 +27,7 @@ enum Api {
   CheckBox = '/api/product/prepare/sorting/box/check',
   GetPrepareSorting = '/api/product/prepare/sorting',
   GetSortBags = '/api/product/prepare/sorting/bags',
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   GetSortingBatch = '/api/product/prepare/sorting/batch',
   PickSortingBag = '/api/product/prepare/sorting/bag',
   SortingMouldAssembling = '/api/product/prepare/sorting/mould-assembling',
