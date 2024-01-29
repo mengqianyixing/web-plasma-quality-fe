@@ -192,7 +192,7 @@
           width: 150,
         },
         {
-          title: `BH,${prodTypeName}低效价`,
+          title: `BL,${prodTypeName}低效价`,
           dataIndex: 'lowCount',
           width: 150,
         },

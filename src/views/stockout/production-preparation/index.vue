@@ -22,6 +22,13 @@
           </a-button>
         </div>
       </template>
+      <template #prodBagCount="{ record }">
+        <div class="z-999">
+          <a-button type="link" @click="goPlasmaDetail(record, 'prepareProduce')">
+            {{ record.summary?.prodBagCount }}
+          </a-button>
+        </div>
+      </template>
       <template #toolbar>
         <div class="flex gap-2">
           <a-button @click="openPreparation"> 新增 </a-button>
@@ -130,9 +137,14 @@
     {
       title: '投产血浆数量',
       dataIndex: 'prodBagCount',
+      slots: { customRender: 'prodBagCount' },
+    },
+    {
+      title: '投产血浆净重(kg)',
+      dataIndex: 'netWeight',
       customRender: ({ record }) => {
-        if (record.summary && record.summary.prodBagCount !== null) {
-          return record.summary.prodBagCount;
+        if (record.summary && record.summary.netWeight !== null) {
+          return record.summary.netWeight;
         }
         return '';
       },
@@ -143,16 +155,6 @@
       customRender: ({ record }) => {
         if (record.summary && record.summary.donorCount !== null) {
           return record.summary.donorCount;
-        }
-        return '';
-      },
-    },
-    {
-      title: '验收净重(kg)',
-      dataIndex: 'netWeight',
-      customRender: ({ record }) => {
-        if (record.summary && record.summary.netWeight !== null) {
-          return record.summary.netWeight;
         }
         return '';
       },
@@ -331,13 +333,18 @@
     reload();
     selectedRow.value = [];
   }
+  // isPicked => 撤销准备操作
   function clickRevokeModal(isPicked) {
     if (!selectedRow.value.length) {
       warning('请先选择投产准备号!');
       return;
     }
     const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
-
+    const pickBagCount = (selectedRow.value[0] as { pickBagCount?: string })?.pickBagCount;
+    if(!isPicked && prepareState !== 'RUN' || Number(pickBagCount) > 0) {
+      warning('该准备号不可撤销!');
+      return;
+    }
     if (prepareState !== 'REV' && isPicked) {
       warning('该准备号不可撤销准备!');
       return;
@@ -462,11 +469,12 @@
     });
   }
 
-  // 血浆详情
+  // 血浆明细
   const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
-  function goPlasmaDetail(record) {
+  function goPlasmaDetail(record, prepareProduce) {
     openPlasmaDetailModal(true, {
       record,
+      prepareProduce,
     });
   }
 </script>

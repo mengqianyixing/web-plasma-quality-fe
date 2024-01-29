@@ -7,6 +7,7 @@
     width="100%"
     :draggable="false"
     defaultFullscreen
+    :destroyOnClose="true"
     :canFullscreen="false"
   >
     <BasicTable @register="registerTable" />
@@ -18,63 +19,87 @@
   import { BasicTable, useTable, BasicColumn } from '@/components/Table';
   import { FormSchema } from '@/components/Form';
   import dayjs from 'dayjs';
+  import { getSortBags, getSortingBatch } from '@/api/stockout/production-preparation.js';
 
-  const [registerModal] = useModalInner();
+  let prepareNo = ''; // 准备号
+  const [registerModal] = useModalInner(async (data) => {
+    console.log('血浆明细看看data',data);
+    prepareNo = data.record.prepareNo;
+    await getForm().updateSchema([
+      {
+        field: 'prepareNo',
+        defaultValue: prepareNo,
+      },
+      {
+        field: 'batchNo',
+        componentProps: {
+          params: { prepareNo },
+        }
+      }
+    ])
+    // 准备投产默认值
+    if(data.prepareProduce) {
+      await getForm().updateSchema({
+        field: 'prepareProduce',
+        defaultValue: true,
+      });
+    }
+    reload();
+  });
 
   const columns: BasicColumn[] = [
     {
       title: '采浆公司',
-      dataIndex: 'batchNo',
-      align: 'left',
+      dataIndex: 'stationName',
     },
     {
-      dataIndex: 'batchPickCount',
+      dataIndex: 'batchNo',
       title: '血浆批号',
     },
     {
       title: '血浆箱号',
-      dataIndex: 'pickBagCount',
+      dataIndex: 'boxNo',
     },
     {
       title: '血浆编号',
-      dataIndex: 'pickBagCount',
+      dataIndex: 'bagNo',
     },
     {
       title: '采浆日期',
-      dataIndex: 'netWeightRatio',
+      dataIndex: 'collectAt',
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD') : '-';
       },
     },
     {
       title: '浆员编号',
-      dataIndex: 'pickBagCount',
+      dataIndex: 'donorNo',
     },
     {
       title: '效价类型',
-      dataIndex: 'pickBagCount',
+      dataIndex: 'immType',
     },
     {
       title: '效价值',
-      dataIndex: 'pickBagCount',
+      dataIndex: 'titer',
     },
     {
       title: '准备投产',
-      dataIndex: 'pickBagCount',
+      dataIndex: 'prepareProduce',
     },
     {
       title: '分拣状态',
-      dataIndex: 'prepareState',
+      dataIndex: 'sorting',
       width: 100,
     },
     {
       title: '分拣人',
-      dataIndex: 'prepareState',
+      dataIndex: 'operator',
       width: 100,
     },
     {
       title: '分拣时间',
-      dataIndex: 'createAt',
+      dataIndex: 'opearteAt',
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
       },
@@ -84,57 +109,79 @@
   // 表单搜索列
   const searchFormSchema: FormSchema[] = [
     {
-      field: 'stationNo',
+      field: 'prepareNo',
       label: '准备号',
-      component: 'Select',
-      colProps: { span: 4 },
-      componentProps: {
-        options: [],
-      },
-    },
-    {
-      field: 'batchNo',
-      label: '血浆批号',
       component: 'Input',
       colProps: { span: 4 },
     },
     {
       field: 'batchNo',
+      label: '血浆批号',
+      component: 'ApiSelect',
+      colProps: { span: 4 },
+      componentProps: {
+        api: getSortingBatch,
+        // alwaysLoad: true,
+        // params: { prepareNo },
+        labelField: 'batchNo',
+        valueField: 'batchNo',
+        immediate: false,
+      },
+    },
+    {
+      field: 'boxNo',
       label: '血浆箱号',
       component: 'Input',
       colProps: { span: 4 },
     },
     {
-      field: 'stationNo',
+      field: 'prepareProduce',
       label: '准备投产',
       component: 'Select',
       colProps: { span: 4 },
       componentProps: {
-        options: [],
+        options: [
+          {
+            label: '是',
+            value: true,
+          },
+          {
+            label: '否',
+            value: false,
+          },
+        ],
       },
     },
     {
-      field: 'stationNo',
+      field: 'sorting',
       label: '分拣状态',
       component: 'Select',
       colProps: { span: 4 },
       componentProps: {
-        options: [],
+        options: [
+          {
+            label: '待分拣',
+            value: false,
+          },
+          {
+            label: '已分拣',
+            value: true,
+          },
+        ],
       },
     },
   ];
-  const [registerTable] = useTable({
-    // api: getImmunityList,
+  const [registerTable, { getForm, reload }] = useTable({
+    api: getSortBags,
     columns: columns,
     useSearchForm: true,
     formConfig: {
-      labelWidth: 75,
+      labelWidth: 80,
       schemas: searchFormSchema,
     },
     // beforeFetch: (p) => {
-    //   return { ...p, prepareNo: prepareDetail.value.prepareNo };
+    //   return { ...p, prepareNo };
     // },
-    // pagination: false,
     clickToRowSelect: false,
     // maxHeight: 600,
     fetchSetting: {

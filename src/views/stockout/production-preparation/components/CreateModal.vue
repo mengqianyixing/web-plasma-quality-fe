@@ -39,6 +39,7 @@
       component: 'Select',
       colProps: { span: 24 },
       required: true,
+      defaultValue: 'N',
       componentProps: {
         options: [...operationMap.entries()].map(([key, value]) => ({
           value: key,
