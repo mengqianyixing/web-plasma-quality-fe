@@ -11,7 +11,7 @@
   >
     <Description @register="registerPlasmaBatchDetail" :data="plasmaDetail" />
 
-    <div class="h-[400px]">
+    <div class="h-[300px]">
       <BasicTable @register="registerTable">
         <template #toolbar v-if="!isPreview">
           <a-button type="primary" @click="handleAdd">新增</a-button>
@@ -21,6 +21,7 @@
       </BasicTable>
     </div>
 
+    <Description @register="registerConclusionDetail" :data="conclusionData" />
     <BasicForm @register="registerForm" />
     <AddCheckContentModal @register="registerAddModal" @success="handleSuccess" />
   </BasicModal>
@@ -28,7 +29,7 @@
 <script lang="ts" setup>
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
-  import { computed, ref, unref } from 'vue';
+  import { computed, ref, unref, reactive } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
   import { useMessage } from '@/hooks/web/useMessage';
 
@@ -39,6 +40,7 @@
   import {
     addPlasmaCheck,
     editPlasmaCheck,
+    getCheckConclusionTemplate,
     getPlasmaCheckDetail,
   } from '@/api/qualify-manage/plasma-check';
   import {
@@ -48,6 +50,9 @@
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
 
   const plasmaDetail = ref<Recordable>({});
+  const conclusionData = reactive<Recordable>({
+    conclusion: '',
+  });
   const selectedRow = ref<Recordable[]>([]);
   const isUpdate = ref(false);
   const isPreview = ref(false);
@@ -63,6 +68,17 @@
     size: 'middle',
     title: '血浆批次详情',
     schema: PlasmaBatchSchema,
+  });
+  const [registerConclusionDetail] = useDescription({
+    bordered: false,
+    column: 4,
+    size: 'middle',
+    schema: [
+      {
+        field: 'conclusion',
+        label: '审核结论',
+      },
+    ],
   });
 
   const [
@@ -117,17 +133,17 @@
         field: 'auditConclusion',
         label: '审核结论',
         component: 'InputTextArea',
-        colProps: { span: 12 },
+        colProps: { span: 24 },
         componentProps: {
-          rows: 4,
+          rows: 6,
         },
-        required: true,
+        show: false,
       },
       {
         field: 'remark',
         label: '备注',
         component: 'InputTextArea',
-        colProps: { span: 12 },
+        colProps: { span: 24 },
         componentProps: {
           rows: 4,
         },
@@ -141,8 +157,12 @@
     setModalProps({
       maskClosable: false,
     });
-    plasmaDetail.value = data.record;
+    conclusionData.conclusion = await getCheckConclusionTemplate(data.record?.batchNo);
+    await setFieldsValue({
+      auditConclusion: conclusionData.conclusion,
+    });
 
+    plasmaDetail.value = data.record;
     isUpdate.value = !!data.isUpdate;
     isPreview.value = !!data.isPreview;
 
@@ -150,7 +170,7 @@
       {
         field: 'auditConclusion',
         componentProps: {
-          disabled: unref(isPreview),
+          disabled: true,
         },
       },
       {
@@ -174,7 +194,6 @@
     if (unref(isUpdate)) {
       const res = await getPlasmaCheckDetail(data.record.auditId);
       await setFieldsValue({
-        auditConclusion: res.auditConclusion,
         remark: res.remark,
       });
 

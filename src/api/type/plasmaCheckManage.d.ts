@@ -419,4 +419,27 @@ export interface GetApiCoreBatchPlasmaAuditIdResponse {
   plasmaFlagConfirm?: string;
 }
 
+/**
+ * 接口 [获取血浆审核结论↗](https://yapi.sharing8.cn/project/529/interface/api/32932) 的 **请求类型**
+ *
+ * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
+ * @请求头 `GET /api/core/batch/plasma/audit-conclusion/{batchNo}`
+ * @更新时间 `2024-01-29 14:09:07`
+ */
+export interface GetApiCoreBatchPlasmaAuditConclusionBatchNoRequest {
+  /**
+   * 血浆批号
+   */
+  batchNo: string;
+}
+
+/**
+ * 接口 [获取血浆审核结论↗](https://yapi.sharing8.cn/project/529/interface/api/32932) 的 **返回类型**
+ *
+ * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
+ * @请求头 `GET /api/core/batch/plasma/audit-conclusion/{batchNo}`
+ * @更新时间 `2024-01-29 14:09:07`
+ */
+export type GetApiCoreBatchPlasmaAuditConclusionBatchNoResponse = string;
+
 /* prettier-ignore-end */
