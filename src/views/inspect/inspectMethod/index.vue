@@ -57,7 +57,7 @@
     useSearchForm: true,
     showTableSetting: false,
     bordered: true,
-    rowSelection: { type: 'checkbox' },
+    rowSelection: { type: 'radio' },
     afterFetch: (res) => {
       clearSelectedRowKeys();
       return res;

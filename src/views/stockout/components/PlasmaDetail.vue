@@ -99,7 +99,7 @@
     },
     {
       title: '分拣时间',
-      dataIndex: 'opearteAt',
+      dataIndex: 'operateAt',
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
       },

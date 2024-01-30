@@ -219,7 +219,7 @@ export const dtSearchFormSchema: FormSchema[] = [
               const dictNos = (result.dictImtes || []).map((_) => _.value);
               getDictItemListByNo2Api({ dictNos, dataKey: 'plasmaFailedItem' })
                 .then((res) => {
-                  rs(res);
+                  rs(res.map((_) => ({ label: _.label, value: _.dictItemId })));
                 })
                 .catch(rj);
             })

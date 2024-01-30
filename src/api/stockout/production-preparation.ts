@@ -33,6 +33,7 @@ enum Api {
   SortingMouldAssembling = '/api/product/prepare/sorting/mould-assembling',
   SortingBoxSealing = '/api/product/prepare/sorting/box-sealing',
   SortingAllQua = '/api/product/prepare/sorting/all-qua/box',
+  CompleteSorting = '/api/product/prepare/commit/sorting',
 }
 
 export const getPrepareList = (params: any) => {
@@ -215,4 +216,9 @@ export const sortingAllQua = (params: any) => {
     url: Api.SortingAllQua,
     params,
   });
+};
+
+// 血浆分拣-完成分拣
+export const completeSorting = (params: any) => {
+  return defHttp.post<any>({ url: `${Api.CompleteSorting}/${params.prepareNo}` });
 };
