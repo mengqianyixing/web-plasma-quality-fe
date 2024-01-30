@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-29 10:43:03
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-29 14:07:29
+ * @LastEditTime: 2024-01-30 17:01:47
 -->
 <template>
   <BasicModal
@@ -22,14 +22,18 @@
       <div class="absolute flex flex-col w-full h-full">
         <BasicTable @register="registerTable">
           <template #toolbar>
-            <a-button type="primary" @click="handleInStore">入库</a-button>
+            <a-button type="primary" @click="handleOutStore">出库</a-button>
           </template>
           <template #box="{ record }: { record: Recordable }">
             <span
+              v-if="record.boxCount"
               class="text-blue-500 underline cursor-pointer"
               @click.stop.self="handleBoxClick(record)"
             >
-              {{ record.box }}
+              {{ record.boxCount }}
+            </span>
+            <span v-else>
+              {{ record.boxCount }}
             </span>
           </template>
         </BasicTable>
@@ -44,7 +48,7 @@
       :show-ok-btn="false"
       cancelText="关闭"
       :min-height="600"
-      @cancel="cancel"
+      @cancel="reload"
     >
       <div class="relative h-inherit max-h-inherit min-h-inherit">
         <div class="absolute flex flex-col w-full h-full">
@@ -61,26 +65,32 @@
 <script setup lang="ts">
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
-  import { message } from 'ant-design-vue';
-  import { reactive } from 'vue';
+  import { message, Modal } from 'ant-design-vue';
+  import { reactive, nextTick } from 'vue';
+  import { bindBoxApi } from '@/api/tray/relocation';
   import {
     trayOutStoreColumns,
     trayOutStoreFormSchema,
     boxBindColumns,
   } from '../production-sorting.data';
   import OutModal from '@/views/tray/outInStore/outModal.vue';
+  import { getBoxListApi, getOutStoreListApi } from '@/api/stockout/production-sorting/index';
+  import { TRAY_STORE_STATE, TRAY_STORE_STATE_TEXT } from '@/enums/stockoutEnum';
 
   const state = reactive({
     prepareNo: '',
+    trayNo: '',
   });
   const emit = defineEmits(['close']);
   const [registerModal] = useModalInner(async ({ prepareNo }) => {
     state.prepareNo = prepareNo;
+    reload();
   });
   const [registerOutModal, { openModal: openOutModal }] = useModal();
   const [registenBindModal, { openModal: openBindModal }] = useModal();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
-    api: () => Promise.resolve({ result: [{ box: '123' }] }),
+    immediate: false,
+    api: getOutStoreListApi,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -112,21 +122,17 @@
       reload: reloadBind,
     },
   ] = useTable({
-    api: () => Promise.resolve({ result: [{ box: '123' }] }),
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
+    immediate: false,
+    api: getBoxListApi,
     columns: boxBindColumns,
     inset: true,
     isCanResizeParent: true,
+    pagination: false,
     size: 'small',
     showTableSetting: false,
     bordered: true,
-    rowSelection: { type: 'checkbox' },
-    beforeFetch: (p) => ({ ...p, prepareNo: state.prepareNo }),
+    rowSelection: { type: 'radio' },
+    beforeFetch: (p) => ({ ...p, trayNo: state.trayNo }),
     afterFetch: (res) => {
       clearBindSelectedRowKeys();
       return res;
@@ -135,19 +141,40 @@
   function cancel() {
     emit('close');
   }
-  function handleInStore() {
+  function handleOutStore() {
     const rows: Recordable[] = getSelectRows();
     if (rows.length === 0) return message.warning('请选择数据');
-    if (rows.some((_) => _.status)) return message.warning('请选择在库中的数据');
+    const [row] = rows;
+    if (rows.some((_) => _.state !== TRAY_STORE_STATE.S)) {
+      return message.warning(
+        '请选择【' + TRAY_STORE_STATE_TEXT.get(TRAY_STORE_STATE.S) + '】的数据',
+      );
+    }
+    if (rows.some((_) => _.wareHouseName !== row.wareHouseName)) {
+      return message.warning('请选择相同库房的数据');
+    }
     openOutModal(true, { data: rows });
   }
   function handleUnbind() {
     const rows: Recordable[] = getBindSelectRows();
     if (rows.length === 0) return message.warning('请选择数据');
+    const [row] = rows;
+    Modal.confirm({
+      content: '确定解绑箱号【' + row.boxNo + '】?',
+      onOk: async () => {
+        await bindBoxApi({ trayNo: state.trayNo, type: 'unbind', boxes: [row.boxNo] });
+        message.success('解绑成功');
+        reloadBind();
+      },
+      onCancel: () => {
+        Modal.destroyAll();
+      },
+    });
   }
-  function handleBoxClick(row: Recordable) {
-    console.log(row);
-    reloadBind();
+  async function handleBoxClick(row: Recordable) {
+    state.trayNo = row.trayNo;
     openBindModal(true);
+    await nextTick();
+    reloadBind();
   }
 </script>

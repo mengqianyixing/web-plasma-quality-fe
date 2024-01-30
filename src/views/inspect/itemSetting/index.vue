@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-25 14:30:13
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 17:29:16
+ * @LastEditTime: 2024-01-30 18:06:37
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
@@ -57,7 +57,7 @@
     useSearchForm: true,
     showTableSetting: false,
     bordered: true,
-    rowSelection: { type: 'checkbox' },
+    rowSelection: { type: 'radio' },
     afterFetch: (res) => {
       clearSelectedRowKeys();
       return res;

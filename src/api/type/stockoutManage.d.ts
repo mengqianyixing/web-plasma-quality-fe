@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/list`
- * @更新时间 `2024-01-15 13:46:30`
+ * @更新时间 `2024-01-30 16:46:47`
  */
 export interface GetApiProductPrepareListRequest {
   /**
@@ -42,6 +42,14 @@ export interface GetApiProductPrepareListRequest {
   pickEnd: string;
   currPage: string;
   pageSize: string;
+  /**
+   * 分拣开始日期
+   */
+  sortingAtBegin: string;
+  /**
+   * 分拣结束日期
+   */
+  sortingAtEnd: string;
 }
 
 /**
@@ -49,7 +57,7 @@ export interface GetApiProductPrepareListRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/list`
- * @更新时间 `2024-01-15 13:46:30`
+ * @更新时间 `2024-01-30 16:46:47`
  */
 export interface GetApiProductPrepareListResponse {
   /**
@@ -154,6 +162,10 @@ export interface GetApiProductPrepareListResponse {
      * 复核时间
      */
     createAt: string;
+    /**
+     * 分拣日期
+     */
+    sortingAt: string;
   }[];
 }
 
@@ -1345,7 +1357,7 @@ export interface DeleteApiProductOutStoreBatchOrderNoResponse {}
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/tray/out`
- * @更新时间 `2024-01-29 16:40:51`
+ * @更新时间 `2024-01-29 16:59:57`
  */
 export interface GetApiProductPrepareTrayOutRequest {
   /**
@@ -1363,7 +1375,7 @@ export interface GetApiProductPrepareTrayOutRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/tray/out`
- * @更新时间 `2024-01-29 16:40:51`
+ * @更新时间 `2024-01-29 16:59:57`
  */
 export type GetApiProductPrepareTrayOutResponse = {
   /**
@@ -1377,7 +1389,7 @@ export type GetApiProductPrepareTrayOutResponse = {
   /**
    * 是否高架自动库，为true选择站点
    */
-  automatic?: string;
+  automatic?: boolean;
 }[];
 
 /**
@@ -1824,12 +1836,18 @@ export interface GetApiProductPrepareSortingPrepareNoResponse {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `POST /api/product/prepare/sorting/bag`
- * @更新时间 `2024-01-29 15:52:15`
+ * @更新时间 `2024-01-30 11:21:11`
  */
 export interface PostApiProductPrepareSortingBagRequest {
   prepareNo: string;
   'bagNo：': string;
   batchNo?: string;
+  /**
+   * 分拣正常进行：true-正常
+   * 1、不合格时需传 true
+   * 2、整箱投产但单袋分拣时传 true
+   */
+  pickFlag?: string;
 }
 
 /**
@@ -1837,7 +1855,7 @@ export interface PostApiProductPrepareSortingBagRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `POST /api/product/prepare/sorting/bag`
- * @更新时间 `2024-01-29 15:52:15`
+ * @更新时间 `2024-01-30 11:21:11`
  */
 export interface PostApiProductPrepareSortingBagResponse {
   /**
@@ -1964,6 +1982,18 @@ export interface PostApiProductPrepareSortingBagResponse {
    * true-满箱 false-不满
    */
   fullBox: boolean;
+  /**
+   * 整箱合格投产 true-是
+   */
+  fullBoxQua: boolean;
+  /**
+   * 血浆合格状态
+   */
+  track: string;
+  /**
+   * 箱号
+   */
+  boxNo: string;
 }
 
 /**
@@ -2039,5 +2069,25 @@ export interface PostApiProductPrepareSortingAllQuaBoxRequest {
  * @更新时间 `2024-01-29 15:52:22`
  */
 export interface PostApiProductPrepareSortingAllQuaBoxResponse {}
+
+/**
+ * 接口 [分拣完成↗](https://yapi.sharing8.cn/project/529/interface/api/33027) 的 **请求类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `POST /api/product/prepare/commit/sorting/{prepareNo}`
+ * @更新时间 `2024-01-30 15:58:52`
+ */
+export interface PostApiProductPrepareCommitSortingPrepareNoRequest {
+  prepareNo: string;
+}
+
+/**
+ * 接口 [分拣完成↗](https://yapi.sharing8.cn/project/529/interface/api/33027) 的 **返回类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `POST /api/product/prepare/commit/sorting/{prepareNo}`
+ * @更新时间 `2024-01-30 15:58:52`
+ */
+export interface PostApiProductPrepareCommitSortingPrepareNoResponse {}
 
 /* prettier-ignore-end */
