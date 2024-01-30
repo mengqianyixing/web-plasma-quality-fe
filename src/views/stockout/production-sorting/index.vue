@@ -8,7 +8,7 @@
           v-for="item in topBoxData"
           :key="item.title"
           size="small"
-          :id="item.immTypeName"
+          :id="item.pickType === 'PRO' ? 'PRO' : item.immTypeName"
           class="one-card min-w-57.5 mr-3 flex-shrink-0 h-57.5"
           :class="{ selected: item.isSelected }"
           :title="`${item.title}(${item.sortCount}/${item.totalCount})`"
@@ -75,6 +75,7 @@
     sortingBoxSealing,
     sortingMouldAssembling,
     sortingAllQua,
+    completeSorting,
   } from '@/api/stockout/production-preparation.js';
   import InStoreModal from './components/in-store-modal.vue';
   import OutStoreModal from './components/out-store-modal.vue';
@@ -235,9 +236,11 @@
       render() {
         return (
           <div class="flex items-center justify-end gap-2 -mt-1 w-100%">
-            <a-button>批次暂停</a-button>
-            <a-button>准备号暂停</a-button>
-            <a-button onclick={pickBoxInfo}>装箱信息</a-button>
+            <a-button disabled={!prepareNo.value}>批次暂停</a-button>
+            <a-button disabled={!prepareNo.value}>准备号暂停</a-button>
+            <a-button disabled={!prepareNo.value} onclick={pickBoxInfo}>
+              装箱信息
+            </a-button>
             <a-button
               disabled={!prepareNo.value}
               onclick={() => openOutStoreModal(true, { prepareNo: prepareNo.value })}
@@ -250,7 +253,9 @@
             >
               血浆入库
             </a-button>
-            <a-button>分拣完成</a-button>
+            <a-button disabled={!prepareNo.value} onclick={_completeSorting}>
+              分拣完成
+            </a-button>
           </div>
         );
       },
@@ -437,14 +442,14 @@
         topBoxData.value[0].sortCount = data.pros?.sortCount;
         topBoxData.value[0].totalCount = data.pros?.totalCount;
         topBoxData.value[0].immType = data.pros?.immType;
-        topBoxData.value[0].immTypeName = data.pros?.immTypeName;
+        // topBoxData.value[0].immTypeName = data.pros?.immTypeName;
         if (data.pros?.bagNos?.length) {
           // 可投产血浆列表有长度，说明正在挑的是可投产的，更新血浆列表
           topBoxData.value[0].bagNos = data.pros?.bagNos;
           topBoxData.value[0].isSelected = true;
           targetBox = topBoxData.value[0];
           nextTick(() => {
-            scollToBox(false, topBoxData.value[0].immTypeName);
+            scollToBox(true, 'PRO');
           });
         }
         // B时的不投产箱子,A时为空
@@ -468,9 +473,6 @@
               };
             });
             topBoxData.value.push(...unProArr);
-            nextTick(() => {
-              scollToBox(true, topBoxData.value[scollToIndex].immTypeName);
-            });
           } else {
             data.unPro?.sortImmTypes.forEach((item, index) => {
               topBoxData.value[index + 1].sortCount = data.unPro?.sortImmTypes?.[index]?.sortCount;
@@ -481,14 +483,15 @@
                 scollToIndex = index + 1;
               }
             });
-
+          }
+          if (scollToIndex !== -1) {
+            targetBox = topBoxData.value[scollToIndex];
             nextTick(() => {
               topBoxData.value[scollToIndex].isSelected = true;
               // 滚动逻辑...
-              scollToBox(false, topBoxData.value[scollToIndex].immTypeName);
+              scollToBox(true, topBoxData.value[scollToIndex].immTypeName);
             });
           }
-          targetBox = topBoxData.value[scollToIndex];
         }
         // A时的不投产或B的待放行
         if (data.utrkUnPro?.sortImmTypes?.length) {
@@ -510,9 +513,6 @@
                 isSelected: !!item?.bagNos?.length,
               };
             });
-            nextTick(() => {
-              scollToBox(false, topBoxData.value[scollToIndex].immTypeName);
-            });
           } else {
             bottomBoxData.value.forEach((item, index) => {
               item.sortCount = data.utrkUnPro?.sortImmTypes?.[index]?.sortCount;
@@ -522,12 +522,14 @@
                 scollToIndex = index;
               }
             });
+          }
+          if (scollToIndex !== -1) {
+            targetBox = bottomBoxData.value[scollToIndex];
             nextTick(() => {
               bottomBoxData.value[scollToIndex].isSelected = true;
               scollToBox(false, bottomBoxData.value[scollToIndex].immTypeName);
             });
           }
-          targetBox = bottomBoxData.value[scollToIndex];
         }
 
         // 满箱
@@ -688,8 +690,14 @@
           title: '可投产',
           pickType: 'PRO',
           immType: data.pros?.immType || '',
-          sortCount: data.pros?.sortCount,
-          totalCount: data.pros?.totalCount,
+          sortCount:
+            data.pros && Object.prototype.hasOwnProperty.call(data.pros, 'sortCount')
+              ? data.pros.sortCount
+              : '',
+          totalCount:
+            data.pros && Object.prototype.hasOwnProperty.call(data.pros, 'totalCount')
+              ? data.pros.totalCount
+              : '',
           bagNos: [],
           isSelected: false,
         });
@@ -737,10 +745,6 @@
 
   // 装箱信息
   function pickBoxInfo() {
-    if (!prepareNo.value) {
-      warning('请选择投产准备号!');
-      return;
-    }
     openPackingInfoModal(true, { prepareNo });
   }
 
@@ -833,6 +837,43 @@
   function handleUnqualifiedSuccess() {
     // 走分拣接口
     handlePressEnter(true);
+  }
+
+  // 完成分拣
+  async function _completeSorting() {
+    if (
+      prepareData.value.sortTotal &&
+      prepareData.value.sortTotal > 0 &&
+      prepareData.value.sortTotal === prepareData.value.sortCount
+    ) {
+      Modal.confirm({
+        title: '提示?',
+        icon: createVNode(ExclamationCircleOutlined),
+        content: createVNode('div', { style: 'color:red;' }, '确认要完成分拣吗?'),
+        async onOk() {
+          try {
+            openFullLoading();
+            await completeSorting({ prepareNo: prepareNo.value });
+            success('操作成功!');
+            // 清除上次数据
+            prepareData.value = {};
+            batchData.value = {};
+            topBoxData.value = [];
+            bottomBoxData.value = [];
+            prepareNo.value = '';
+            pickMode = '';
+          } finally {
+            closeFullLoading();
+          }
+        },
+        onCancel() {
+          console.log('Cancel');
+        },
+        class: 'test',
+      });
+    } else {
+      warning('请先分拣完血浆!');
+    }
   }
 
   // 分拣批次信息

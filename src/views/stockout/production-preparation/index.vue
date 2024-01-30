@@ -127,12 +127,6 @@
       title: '分拣血浆数量',
       dataIndex: 'pickBagCount',
       slots: { customRender: 'pickBagCount' },
-      // customRender: ({ record }) => {
-      //   if (record.summary && record.summary.pickBagCount !== null) {
-      //     return record.summary.pickBagCount;
-      //   }
-      //   return '';
-      // },
     },
     {
       title: '投产血浆数量',
@@ -185,11 +179,11 @@
     },
     {
       title: '分拣完成日期',
-      dataIndex: 'pickMode',
+      dataIndex: 'sortingAt',
       width: 100,
-      // format(text) {
-      //   return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-      // },
+      format(text) {
+        return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+      },
     },
     {
       title: '状态',
@@ -257,7 +251,7 @@
       },
     },
     {
-      field: '[pickBegin, pickEnd]',
+      field: '[sortingAtBegin, sortingAtEnd]',
       component: 'RangePicker',
       colProps: { span: 6 },
       label: '分拣完成日期',

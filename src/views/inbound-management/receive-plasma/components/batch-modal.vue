@@ -5,6 +5,7 @@
     title="选择批次"
     @ok="handleSubmit"
     @cancel="resetField"
+    :destroyOnClose="true"
     :maskClosable="false"
     width="85%"
   >
@@ -14,7 +15,9 @@
           {{ optsTransMap(receiveOpts, 'value', 'label')[text] }}
         </template>
         <template v-else-if="column.dataIndex === 'verifyState'">
-          {{ optsTransMap(checkOpts, 'value', 'label')[text] }}
+          {{
+            optsTransMap([...checkOpts, { value: 'H', label: '已验收' }], 'value', 'label')[text]
+          }}
         </template>
       </template>
     </BasicTable>
@@ -207,6 +210,13 @@
       schemas: searchFormSchema,
     },
     immediate: true,
+    beforeFetch: (p) => {
+      // 已验收需加上 H（已发布）
+      if (p.verifyState && p.verifyState.findIndex((item) => item === 'S') !== -1) {
+        p.verifyState.push('H');
+      }
+      return { ...p };
+    },
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
