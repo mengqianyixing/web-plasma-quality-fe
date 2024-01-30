@@ -208,7 +208,7 @@ export const detailSchema: DescItem[] = [
   { field: 'outStoreDate', label: '出库申请日期' },
   { field: 'proposer', label: '申请人' },
   { field: 'applicantCompany', label: '申请单位' },
-  { field: 'outReviewDate', label: '出库申请日期' },
+  { field: 'outReviewDate', label: '出库审核日期' },
   { field: 'outReviewer', label: '出库审核人' },
   { field: 'outPurpose', label: '出库用途' },
   { field: 'unqOutDate', label: '不合格出库日期' },
