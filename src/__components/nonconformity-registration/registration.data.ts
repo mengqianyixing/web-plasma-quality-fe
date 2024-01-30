@@ -29,6 +29,7 @@ export const schemas: FormSchema[] = [
           DictionaryItemKeyEnum.Other,
         ],
       },
+      valueField: 'dictItemId',
     },
     required: true,
   },

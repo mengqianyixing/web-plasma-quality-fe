@@ -62,6 +62,7 @@
               DictionaryItemKeyEnum.Other,
             ],
           },
+          valueField: 'dictItemId',
         },
         required: true,
       },
