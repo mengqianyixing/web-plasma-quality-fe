@@ -77,6 +77,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '状态',
     component: 'Select',
     field: 'isConfirm',
+    defaultValue: false,
     componentProps: {
       options: [
         {
