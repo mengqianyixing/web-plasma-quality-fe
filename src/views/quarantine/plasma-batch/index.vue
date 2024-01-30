@@ -85,7 +85,6 @@
       schemas: searchFormSchema,
     },
     clickToRowSelect: false,
-    rowKey: 'fkBpNo',
     rowSelection: {
       fixed: true,
       type: 'radio',
