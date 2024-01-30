@@ -1,61 +1,59 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
+import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
+import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
 
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: '',
+    dataIndex: 'stationName',
   },
   {
     title: '血浆批号',
-    dataIndex: '',
+    dataIndex: 'batchNo',
   },
   {
     title: '血浆编号',
-    dataIndex: '',
+    dataIndex: 'bagNo',
   },
   {
     title: '浆员编号',
-    dataIndex: '',
+    dataIndex: 'donorNo',
   },
   {
     title: '浆员姓名',
-    dataIndex: '',
+    dataIndex: 'donorName',
   },
   {
     title: '浆员状态',
-    dataIndex: '',
+    dataIndex: 'donatorStatus',
+    format: (text) => {
+      return donorStatusMap.get(text as donorStatusValueEnum) as string;
+    },
   },
   {
     title: '血浆类型',
-    dataIndex: '',
+    dataIndex: 'plasmaImmType',
+    format: (text) => PLASMA_TYPE_TEXT[text],
   },
   {
     title: '采浆日期',
-    dataIndex: '',
+    dataIndex: 'collectAt',
   },
   {
     title: '最后采浆日期',
-    dataIndex: '',
+    dataIndex: 'lastCollectAt',
   },
   {
     title: '最后回访日期',
-    dataIndex: '',
+    dataIndex: 'lastCallBackAt',
   },
   {
-    title: '计算人',
-    dataIndex: '',
+    title: '确认人',
+    dataIndex: 'creator',
   },
   {
-    title: '计算日期',
-    dataIndex: '',
-  },
-  {
-    title: '复核人',
-    dataIndex: '',
-  },
-  {
-    title: '复核日期',
-    dataIndex: '',
+    title: '确认日期',
+    dataIndex: 'createAt',
   },
 ];
 
@@ -63,24 +61,33 @@ export const searchFormSchema: FormSchema[] = [
   {
     label: '血浆批号',
     component: 'Input',
-    field: '',
+    field: 'batchNo',
   },
   {
     label: '血浆编号',
     component: 'Input',
-    field: '',
+    field: 'bagNo',
   },
   {
     label: '浆员编号',
     component: 'Input',
-    field: '',
+    field: 'donorNo',
   },
   {
     label: '状态',
     component: 'Select',
-    field: '',
+    field: 'isConfirm',
     componentProps: {
-      options: [],
+      options: [
+        {
+          label: '已确认',
+          value: true,
+        },
+        {
+          label: '未确认',
+          value: false,
+        },
+      ],
     },
   },
 ];

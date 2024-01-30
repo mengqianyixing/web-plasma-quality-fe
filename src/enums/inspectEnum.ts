@@ -1,3 +1,11 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: zcc
+ * @Date: 2024-01-02 13:49:26
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-30 10:42:02
+ */
 /** 血浆类型 */
 export enum PLASMA_TYPE {
   N = 'N',
@@ -6,6 +14,7 @@ export enum PLASMA_TYPE {
   A = 'A',
   T = 'T',
   G = 'G',
+  C = 'C',
 }
 export enum PLASMA_TYPE_TEXT {
   N = 'N,普通',
@@ -13,6 +22,7 @@ export enum PLASMA_TYPE_TEXT {
   R = 'R,狂免',
   A = 'A,炭疽',
   T = 'T,破免',
+  C = 'C,新冠',
   G = 'G,巨细胞',
 }
 export const PLASMA_TYPE_LIST = [
