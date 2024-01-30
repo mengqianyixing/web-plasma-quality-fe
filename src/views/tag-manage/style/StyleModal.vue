@@ -42,7 +42,7 @@
             </template>
           </BasicTable>
           <div>
-            <img :src="previewUrl" alt="" class="w-[350px] h-[400px]" />
+            <img :src="previewUrl" alt="" />
           </div>
         </div>
       </a-tab-pane>
@@ -50,7 +50,7 @@
         <div class="flex">
           <CodeEditor class="w-8/10" v-model:value="JsonValue" :mode="modeValue" />
           <div>
-            <img :src="previewUrl" alt="" class="w-[350px] h-[400px]" />
+            <img :src="previewUrl" alt="" />
           </div>
         </div>
       </a-tab-pane>
