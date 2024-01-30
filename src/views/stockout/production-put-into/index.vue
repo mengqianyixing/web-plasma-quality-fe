@@ -52,6 +52,7 @@
     revokeProductionOutStore,
   } from '@/api/stockout/production-put-into';
   import { getProOrders } from '@/api/stockout/production-order';
+  import { statusValueEnum } from '@/enums/stockoutEnum';
 
   defineOptions({ name: 'DeptManagement' });
 
@@ -117,6 +118,11 @@
   function handleTrayStockOut() {
     if (!selectRowsCheck()) return;
 
+    if (selectedRow.value[0]?.state !== statusValueEnum.PVD) {
+      createMessage.warn('只有待出库状态下的制造批号才允许托盘出库');
+      return;
+    }
+
     openTrayOutStoreModal(true, {
       record: {
         orderNo: selectedRow.value[0]?.orderNo,
@@ -127,6 +133,11 @@
   function handleBoxStockOut() {
     if (!selectRowsCheck()) return;
 
+    if (selectedRow.value[0]?.state !== statusValueEnum.PVD) {
+      createMessage.warn('该状态下的制造批号不允许逐箱出库');
+      return;
+    }
+
     openBoxOutStoreModal(true, {
       record: {
         orderNo: selectedRow.value[0]?.orderNo,
@@ -136,6 +147,11 @@
 
   function handleBatchStockOut() {
     if (!selectRowsCheck()) return;
+
+    if (selectedRow.value[0]?.state !== statusValueEnum.PVD) {
+      createMessage.warn('该状态下的制造批号不允许整批出库');
+      return;
+    }
 
     createConfirm({
       title: '确认',
@@ -157,6 +173,11 @@
   function handlePickPlasmaSystem() {
     if (!selectRowsCheck()) return;
 
+    if (selectedRow.value[0]?.state !== statusValueEnum.PVD) {
+      createMessage.warn('该状态下的制造批号不允许挑浆');
+      return;
+    }
+
     createConfirm({
       title: '确认',
       content: '请确认是否下发出库指令到挑浆系统？此操作不可回退，请谨慎操作！',
@@ -172,6 +193,14 @@
 
   function handleCancelStockOut() {
     if (!selectRowsCheck()) return;
+
+    if (
+      selectedRow.value[0]?.state !== statusValueEnum.OTD ||
+      selectedRow.value[0]?.state !== statusValueEnum.OUI
+    ) {
+      createMessage.warn('只有已出库或出库中状态下的制造批号才允许撤销出');
+      return;
+    }
 
     createConfirm({
       title: '确认',
