@@ -106,7 +106,7 @@
   import SampleUnqualifiedModal from '@/views/inbound-management/accept-plasma/components/SampleUnqualifiedModal.vue';
   import MissNumModal from '@/views/inbound-management/accept-plasma/components/MissNumModal.vue';
 
-  const { createMessage } = useMessage();
+  const { createMessage, createErrorModal } = useMessage();
   const { success, warning } = createMessage;
 
   const filterForm = ref<any>({}); // 本批数据
@@ -427,6 +427,11 @@
             });
           } else if (data.trayNo) {
             filterForm.value.trayNo = data.trayNo;
+          } else if (data.donorFailed) {
+            createErrorModal({
+              title: '提示',
+              content: createVNode('div', { style: 'color:red;' }, data.donorFailed),
+            });
           }
 
           filterForm.value.unVerifyBag = data.unVerifyBag.map((item: any) => {
