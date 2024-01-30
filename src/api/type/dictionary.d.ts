@@ -494,7 +494,7 @@ export type GetApiSysDictLinkDataLinkedDictResponse = {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/item/itemKey`
- * @更新时间 `2024-01-26 10:19:57`
+ * @更新时间 `2024-01-30 17:22:56`
  */
 export interface PostApiSysItemItemKeyRequest {
   dictNos: {}[];
@@ -506,11 +506,14 @@ export interface PostApiSysItemItemKeyRequest {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/item/itemKey`
- * @更新时间 `2024-01-26 10:19:57`
+ * @更新时间 `2024-01-30 17:22:56`
  */
 export type PostApiSysItemItemKeyResponse = {
   label: string;
   value: string;
+  dataDictId: string;
+  dictItemId: string;
+  dictName: string;
 }[];
 
 /* prettier-ignore-end */

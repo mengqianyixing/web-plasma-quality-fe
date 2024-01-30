@@ -216,7 +216,7 @@ export type GetApiProductPrepareSortingOutTrayBoxesTrayNoResponse = {
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
  * @请求头 `GET /api/product/prepare/sorting/in-tray-boxes`
- * @更新时间 `2024-01-30 16:14:04`
+ * @更新时间 `2024-01-30 16:36:14`
  */
 export interface GetApiProductPrepareSortingInTrayBoxesRequest {
   /**
@@ -224,13 +224,21 @@ export interface GetApiProductPrepareSortingInTrayBoxesRequest {
    */
   prepareNo: string;
   /**
-   * 装箱类型
+   * 装箱类型： PRO-可投产、UPR-暂不投产、WV-检疫期待放行、UNQ-不合格
    */
   pickType?: string;
   /**
    * 血浆箱号
    */
   boxNo?: string;
+  /**
+   * 当前分页
+   */
+  currPage: string;
+  /**
+   * 页数大小
+   */
+  pageSize: string;
 }
 
 /**
@@ -238,7 +246,7 @@ export interface GetApiProductPrepareSortingInTrayBoxesRequest {
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
  * @请求头 `GET /api/product/prepare/sorting/in-tray-boxes`
- * @更新时间 `2024-01-30 16:14:04`
+ * @更新时间 `2024-01-30 16:36:14`
  */
 export interface GetApiProductPrepareSortingInTrayBoxesResponse {
   totalCount?: number;
@@ -251,7 +259,7 @@ export interface GetApiProductPrepareSortingInTrayBoxesResponse {
      */
     boxNo?: string;
     /**
-     * 装箱类型
+     * 装箱类型： PRO-可投产、UPR-暂不投产、WV-检疫期待放行、UNQ-不合格
      */
     pickType?: string;
     /**

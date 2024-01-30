@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/list`
- * @更新时间 `2024-01-15 13:46:30`
+ * @更新时间 `2024-01-30 16:46:47`
  */
 export interface GetApiProductPrepareListRequest {
   /**
@@ -42,6 +42,14 @@ export interface GetApiProductPrepareListRequest {
   pickEnd: string;
   currPage: string;
   pageSize: string;
+  /**
+   * 分拣开始日期
+   */
+  sortingAtBegin: string;
+  /**
+   * 分拣结束日期
+   */
+  sortingAtEnd: string;
 }
 
 /**
@@ -49,7 +57,7 @@ export interface GetApiProductPrepareListRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/list`
- * @更新时间 `2024-01-15 13:46:30`
+ * @更新时间 `2024-01-30 16:46:47`
  */
 export interface GetApiProductPrepareListResponse {
   /**
@@ -154,6 +162,10 @@ export interface GetApiProductPrepareListResponse {
      * 复核时间
      */
     createAt: string;
+    /**
+     * 分拣日期
+     */
+    sortingAt: string;
   }[];
 }
 
