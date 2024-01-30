@@ -208,6 +208,20 @@ export default defineConfig([
             },
             outputFilePath: 'src/api/type/productionReceiveManage.d.ts',
           },
+          {
+            id: 5559,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/quarantineMange.d.ts',
+          },
+          {
+            id: [5568],
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/productionSortingMange.d.ts',
+          },
         ],
       },
     ],

@@ -1,11 +1,3 @@
-<!--
- * @Descripttion:
- * @version:
- * @Author: zcc
- * @Date: 2024-01-12 18:31:46
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-22 17:59:05
--->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
@@ -64,7 +56,7 @@
   const stationNames = ref<Recordable>({});
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
 
-  const { createConfirm } = useMessage();
+  const { createConfirm, createMessage } = useMessage();
 
   onMounted(async () => {
     stationNames.value = await stationNameList();
@@ -135,6 +127,15 @@
     canResize: true,
   });
 
+  function checkSelectedRows() {
+    if (!selectedRow.value.length) {
+      createMessage.warn('请选择一条记录');
+      return false;
+    }
+
+    return true;
+  }
+
   function handlePickPlasma() {
     openPickModal(true, {});
   }
@@ -144,6 +145,8 @@
   }
 
   function handleCheck() {
+    if (!checkSelectedRows()) return;
+
     createConfirm({
       iconType: 'warning',
       title: '提示',
@@ -158,6 +161,8 @@
   }
 
   function handleCancelCheck() {
+    if (!checkSelectedRows()) return;
+
     createConfirm({
       iconType: 'warning',
       title: '提示',

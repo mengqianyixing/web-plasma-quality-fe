@@ -58,6 +58,15 @@ const nonconformity: AppRouteModule = {
       },
       component: () => import('/@/views/stockout/production-put-into/index.vue'),
     },
+    {
+      path: 'ps',
+      name: 'ProductionSorting',
+      id: 9605,
+      meta: {
+        title: '血浆分拣',
+      },
+      component: () => import('/@/views/stockout/production-sorting/index.vue'),
+    },
   ],
 };
 

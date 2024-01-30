@@ -191,3 +191,76 @@ BagTrackMap.set(BagTrackValueEnum.FAIL, BagTrackEnum.FAIL);
 BagTrackMap.set(BagTrackValueEnum.FTRK, BagTrackEnum.FTRK);
 BagTrackMap.set(BagTrackValueEnum.EXPR, BagTrackEnum.EXPR);
 BagTrackMap.set(BagTrackValueEnum.BLOK, BagTrackEnum.BLOK);
+
+// 装箱状态
+export enum pickBoxEnum {
+  TBR = '待复核',
+  RVD = '已复核',
+}
+
+export enum pickBoxValueEnum {
+  TBR = 'TBR',
+  RVD = 'RVD',
+}
+
+export const pickBoxMap = new Map<pickBoxValueEnum, string>();
+
+pickBoxMap.set(pickBoxValueEnum.TBR, pickBoxEnum.TBR);
+pickBoxMap.set(pickBoxValueEnum.RVD, pickBoxEnum.RVD);
+
+// 血浆状态
+export enum plasmaEnum {
+  PRO = '合格投产',
+  UPR = '合格不投产',
+  UNQ = '不合格',
+  WV = '待追踪',
+}
+
+export enum plasmaValueEnum {
+  PRO = 'PRO',
+  UPR = 'UPR',
+  UNQ = 'UNQ',
+  WV = 'WV',
+}
+
+export const plasmaMap = new Map<plasmaValueEnum, string>();
+
+plasmaMap.set(plasmaValueEnum.PRO, plasmaEnum.PRO);
+plasmaMap.set(plasmaValueEnum.UPR, plasmaEnum.UPR);
+plasmaMap.set(plasmaValueEnum.UNQ, plasmaEnum.UNQ);
+plasmaMap.set(plasmaValueEnum.WV, plasmaEnum.WV);
+
+// 装箱类型
+export enum boxTypeEnum {
+  PRO = '合格投产',
+  UPR = '合格不投产',
+  WV = '待追踪',
+}
+
+export enum boxTypeValueEnum {
+  PRO = 'PRO',
+  UPR = 'UPR',
+  WV = 'WV',
+}
+
+export const boxTypeMap = new Map<boxTypeValueEnum, string>();
+
+boxTypeMap.set(boxTypeValueEnum.PRO, boxTypeEnum.PRO);
+boxTypeMap.set(boxTypeValueEnum.UPR, boxTypeEnum.UPR);
+boxTypeMap.set(boxTypeValueEnum.WV, boxTypeEnum.WV);
+
+export enum TRAY_STORE_STATE {
+  W = 'W',
+  R = 'R',
+  S = 'S',
+}
+export const TRAY_STORE_STATE_TEXT: Map<string, string> = new Map([
+  [TRAY_STORE_STATE.W, '未入库'],
+  [TRAY_STORE_STATE.R, '入库中'],
+  [TRAY_STORE_STATE.S, '已入库'],
+]);
+
+export const TRAY_STORE_STATE_LIST = Object.keys(TRAY_STORE_STATE).map((_) => ({
+  label: TRAY_STORE_STATE_TEXT.get(_),
+  value: _,
+}));

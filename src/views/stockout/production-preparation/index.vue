@@ -22,6 +22,13 @@
           </a-button>
         </div>
       </template>
+      <template #prodBagCount="{ record }">
+        <div class="z-999">
+          <a-button type="link" @click="goPlasmaDetail(record, 'prepareProduce')">
+            {{ record.summary?.prodBagCount }}
+          </a-button>
+        </div>
+      </template>
       <template #toolbar>
         <div class="flex gap-2">
           <a-button @click="openPreparation"> 新增 </a-button>
@@ -130,9 +137,14 @@
     {
       title: '投产血浆数量',
       dataIndex: 'prodBagCount',
+      slots: { customRender: 'prodBagCount' },
+    },
+    {
+      title: '投产血浆净重(kg)',
+      dataIndex: 'netWeight',
       customRender: ({ record }) => {
-        if (record.summary && record.summary.prodBagCount !== null) {
-          return record.summary.prodBagCount;
+        if (record.summary && record.summary.netWeight !== null) {
+          return record.summary.netWeight;
         }
         return '';
       },
@@ -143,16 +155,6 @@
       customRender: ({ record }) => {
         if (record.summary && record.summary.donorCount !== null) {
           return record.summary.donorCount;
-        }
-        return '';
-      },
-    },
-    {
-      title: '验收净重(kg)',
-      dataIndex: 'netWeight',
-      customRender: ({ record }) => {
-        if (record.summary && record.summary.netWeight !== null) {
-          return record.summary.netWeight;
         }
         return '';
       },
@@ -319,6 +321,15 @@
       warning('请先选择投产准备号!');
       return;
     }
+    const selectedRowOne: any = selectedRow.value[0];
+    if (
+      selectedRowOne.prepareState === 'REV' ||
+      selectedRowOne.prepareState === 'TPK' ||
+      selectedRowOne.prepareState === 'DEL'
+    ) {
+      warning('该准备号不可修改!');
+      return;
+    }
     openPreparationModal(true, {
       record: selectedRow.value[0],
       isUpdate: true,
@@ -331,16 +342,25 @@
     reload();
     selectedRow.value = [];
   }
+  // isPicked => 撤销准备操作
   function clickRevokeModal(isPicked) {
     if (!selectedRow.value.length) {
       warning('请先选择投产准备号!');
       return;
     }
-    const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
-
-    if (prepareState !== 'REV' && isPicked) {
-      warning('该准备号不可撤销准备!');
-      return;
+    const selectedRowOne: any = selectedRow.value[0];
+    const prepareState = selectedRowOne?.prepareState;
+    const prodBagCount = selectedRowOne?.summary?.prodBagCount;
+    if (isPicked === 'isPicked') {
+      if (prepareState !== 'REV') {
+        warning('该准备号不可撤销准备!');
+        return;
+      }
+    } else {
+      if (prepareState !== 'RUN' || Number(prodBagCount) > 0) {
+        warning('该准备号不可撤销!');
+        return;
+      }
     }
     openRevokeModal(true, {
       record: selectedRow.value[0],
@@ -354,9 +374,12 @@
       warning('请先选择投产准备号!');
       return;
     }
-    const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
-    const prepareNo = (selectedRow.value[0] as { prepareNo?: string })?.prepareNo;
-    if (prepareState !== 'RUN') {
+    const selectedRowOne: any = selectedRow.value[0];
+    const prepareState = selectedRowOne?.prepareState;
+    const prepareNo = selectedRowOne?.prepareNo;
+    const prodBagCount = selectedRowOne?.summary?.prodBagCount;
+
+    if (prepareState !== 'RUN' || Number(prodBagCount) <= 0) {
       warning('该准备号不可完成准备!');
       return;
     }
@@ -462,11 +485,12 @@
     });
   }
 
-  // 血浆详情
+  // 血浆明细
   const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
-  function goPlasmaDetail(record) {
+  function goPlasmaDetail(record, prepareProduce?) {
     openPlasmaDetailModal(true, {
       record,
+      prepareProduce,
     });
   }
 </script>

@@ -21,6 +21,18 @@ enum Api {
   GetPickedBatch = '/api/product/prepare/pick/bag/batch',
   GetPickedBox = '/api/product/prepare/pick/bag/box',
   GetSummaryPreview = '/api/product/prepare/summary/preview',
+  GetBatchInfo = '/api/product/prepare/sorting/batch',
+  GetSortBoxs = '/api/product/prepare/sorting/boxs',
+  GetSortBoxsList = '/api/product/prepare/sorting/box',
+  CheckBox = '/api/product/prepare/sorting/box/check',
+  GetPrepareSorting = '/api/product/prepare/sorting',
+  GetSortBags = '/api/product/prepare/sorting/bags',
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+  GetSortingBatch = '/api/product/prepare/sorting/batch',
+  PickSortingBag = '/api/product/prepare/sorting/bag',
+  SortingMouldAssembling = '/api/product/prepare/sorting/mould-assembling',
+  SortingBoxSealing = '/api/product/prepare/sorting/box-sealing',
+  SortingAllQua = '/api/product/prepare/sorting/all-qua/box',
 }
 
 export const getPrepareList = (params: any) => {
@@ -133,4 +145,74 @@ export const getPickedBox = (params: any) => {
 // 挑浆汇总预览
 export const getSummaryPreview = (params: any) => {
   return defHttp.get<any>({ url: Api.GetSummaryPreview, params });
+};
+
+// 分拣批次信息
+export const getBatchInfo = (params: any) => {
+  return defHttp.get<any>({ url: Api.GetBatchInfo, params });
+};
+
+// 获取分拣装箱信息列表
+export const getSortBoxs = (params: any) => {
+  return defHttp.get<any>({ url: Api.GetSortBoxs, params });
+};
+
+// 获取分拣装箱核对袋信息列表
+export const getSortBoxsList = (params: any) => {
+  return defHttp.get<any>({ url: `${Api.GetSortBoxsList}/${params.boxNo}` });
+};
+
+// 装箱核对
+export const checkBox = (params: any) => {
+  return defHttp.put<any>({
+    url: Api.CheckBox,
+    params,
+  });
+};
+
+// 获取血浆明细列表
+export const getSortBags = (params: any) => {
+  return defHttp.get<any>({ url: Api.GetSortBags, params });
+};
+
+// 查询准备号内的批次号
+export const getSortingBatch = (params: any) => {
+  return defHttp.get<any>({ url: `${Api.GetSortingBatch}/${params.prepareNo}` });
+};
+
+// 获取血浆分拣信息总览
+export const getPrepareSorting = (params: any) => {
+  return defHttp.get<any>({ url: `${Api.GetPrepareSorting}/${params.prepareNo}` });
+};
+
+// 血浆分拣
+export const pickSortingBag = (params: any) => {
+  return defHttp.post<any>({
+    url: Api.PickSortingBag,
+    params,
+  });
+};
+
+// 血浆分拣-合箱
+export const sortingMouldAssembling = (params: any) => {
+  return defHttp.post<any>({
+    url: Api.SortingMouldAssembling,
+    params,
+  });
+};
+
+// 血浆分拣-封箱
+export const sortingBoxSealing = (params: any) => {
+  return defHttp.post<any>({
+    url: Api.SortingBoxSealing,
+    params,
+  });
+};
+
+// 血浆分拣-整箱合格分拣
+export const sortingAllQua = (params: any) => {
+  return defHttp.post<any>({
+    url: Api.SortingAllQua,
+    params,
+  });
 };

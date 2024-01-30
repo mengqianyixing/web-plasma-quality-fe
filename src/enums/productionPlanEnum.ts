@@ -4,13 +4,14 @@
  * @Author: zcc
  * @Date: 2024-01-18 17:58:08
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-22 15:13:27
+ * @LastEditTime: 2024-01-29 17:11:48
  */
 export enum STATUS {
   TBP = 'TBP',
   PLI = 'PLI',
   PBR = 'PBR',
   PLD = 'PLD',
+  OUI = 'OUI',
   PVD = 'PVD',
   OTD = 'OTD',
   ACT = 'ACT',
@@ -22,6 +23,7 @@ export const STATUS_TEXT: Map<string, string> = new Map([
   [STATUS.PBR, '待复核'],
   [STATUS.PLD, '待审核'],
   [STATUS.PVD, '已审核'],
+  [STATUS.OUI, '出库中'],
   [STATUS.OTD, '已出库'],
   [STATUS.ACT, '接收中'],
   [STATUS.ACD, '已接收'],
