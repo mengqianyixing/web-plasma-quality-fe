@@ -19,7 +19,7 @@
   import { useModal } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
 
-  import { ref, onMounted } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { PageWrapper } from '@/components/Page';
   import BoxModal from '@/views/nonconformity/boxes/BoxModal.vue';
   import { deleteBox, nonconformityBoxList } from '@/api/nonconformity/box-manage';
@@ -29,6 +29,7 @@
     DictionaryItemKeyEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
+  import { groupBy, entries } from 'lodash-es';
 
   const { createMessage, createConfirm } = useMessage();
 
@@ -37,16 +38,26 @@
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
 
   onMounted(async () => {
-    plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
+    const originDictionaryData = await getSysSecondaryDictionary({
       dataKey: DictionaryEnum.PlasmaFailedItem,
       dictNos: [
         DictionaryItemKeyEnum.Accept,
         DictionaryItemKeyEnum.Track,
         DictionaryItemKeyEnum.Test,
+        DictionaryItemKeyEnum.Sample,
         DictionaryItemKeyEnum.Quarantine,
         DictionaryItemKeyEnum.Other,
       ],
     });
+
+    plasmaUnqualifiedDictionary.value = entries(groupBy(originDictionaryData, 'preBox')).map(
+      ([key, valueArr]) => {
+        return {
+          label: key,
+          value: valueArr.map((it) => it.label).join(','),
+        };
+      },
+    );
   });
 
   const selectedRowsRef = ref<Recordable>([]);
