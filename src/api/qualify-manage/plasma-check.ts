@@ -1,5 +1,6 @@
 import { defHttp } from '@/utils/http/axios';
 import {
+  GetApiCoreBatchPlasmaAuditConclusionBatchNoRequest,
   GetApiCoreBatchPlasmaAuditIdRequest,
   GetApiCoreBatchPlasmaAuditIdResponse,
   GetApiCoreBatchPlasmaAuditsRequest,
@@ -19,6 +20,7 @@ enum Api {
   PLASMA_CHECK_RECHECK = '/api/core/batch/plasma/audit/recheck',
   PLASMA_RECHECK_CANCEL = '/api/core/batch/plasma/audit/recheck-cancel',
   PLASMA_CHECK_APPROVAL = '/api/core/batch/plasma/audit/approval',
+  PLASMA_CHECK_CONCLUSION_TEMPLATE = '/api/core/batch/plasma/audit-conclusion',
 }
 
 export const getPlasmaCheckList = (params: GetApiCoreBatchPlasmaAuditsRequest) =>
@@ -49,3 +51,7 @@ export const recheckCancelPlasmaCheck = (params: PutApiCoreBatchPlasmaAuditReche
 
 export const approvalPlasmaCheck = (params: PutApiCoreBatchPlasmaAuditApprovalRequest) =>
   defHttp.put({ url: Api.PLASMA_CHECK_APPROVAL, params });
+
+export const getCheckConclusionTemplate = (
+  params: GetApiCoreBatchPlasmaAuditConclusionBatchNoRequest['batchNo'],
+) => defHttp.get({ url: Api.PLASMA_CHECK_CONCLUSION_TEMPLATE + '/' + params });

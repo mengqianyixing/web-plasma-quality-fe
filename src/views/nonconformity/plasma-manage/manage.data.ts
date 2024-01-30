@@ -105,7 +105,7 @@ export const searchSchema: FormSchema[] = [
     component: 'RangePicker',
   },
   {
-    field: '[outStoreEndDate, outStoreEndDate]',
+    field: '[outStoreStartDate, outStoreEndDate]',
     label: '不合格出库日期',
     component: 'RangePicker',
   },

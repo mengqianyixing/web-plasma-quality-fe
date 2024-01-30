@@ -1,8 +1,8 @@
 /*
  * @Author: HxB
  * @Date: 2023-12-29 16:47:29
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-17 15:41:21
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-30 11:30:09
  * @Description: 检验管理
  * @FilePath: \psms-fe\src\router\routes\modules\checkManager\index.ts
  */
@@ -39,15 +39,15 @@ const checkManager: AppRouteModule = {
       id: 9102,
       component: () => import('/@/views/inspect/itemSetting/index.vue'),
     },
-    {
-      path: '/inspect/titerImport',
-      name: 'titerImport',
-      meta: {
-        title: '效价导入',
-      },
-      id: 9103,
-      component: () => import('/@/views/inspect/titerImport/index.vue'),
-    },
+    // {
+    //   path: '/inspect/titerImport',
+    //   name: 'titerImport',
+    //   meta: {
+    //     title: '效价导入',
+    //   },
+    //   id: 9103,
+    //   component: () => import('/@/views/inspect/titerImport/index.vue'),
+    // },
     {
       path: '/inspect/titerType',
       name: 'titerType',
