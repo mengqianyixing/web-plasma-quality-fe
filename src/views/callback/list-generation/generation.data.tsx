@@ -5,8 +5,8 @@ import {
   donorStatusMap,
   donorStatusValueEnum,
 } from '@/enums/callbackEnum';
-import { PLASMA_TYPE_LIST } from '@/enums/inspectEnum';
 import dayjs, { Dayjs } from 'dayjs';
+import { operationMap, operationValueEnum } from '@/enums/stockoutEnum';
 
 export const columns: BasicColumn[] = [
   {
@@ -114,6 +114,9 @@ export const callbackModalColumns: BasicColumn[] = [
   {
     title: '血浆类型',
     dataIndex: 'immType',
+    format: (text) => {
+      return operationMap.get(text as operationValueEnum) as string;
+    },
   },
   {
     title: '性别',
@@ -234,9 +237,9 @@ export const addCallbackModalSearchFromSchema: FormSchema[] = [
     component: 'Select',
     colProps: { span: 4 },
     componentProps: {
-      options: PLASMA_TYPE_LIST.map((it) => ({
-        label: `${it.value}，${it.label}`,
-        value: it.value,
+      options: [...operationMap.entries()].map(([key, value]) => ({
+        value: key,
+        label: `${key}，${value}`,
       })),
     },
   },
@@ -282,9 +285,42 @@ export const callbackModalSearchFromSchema: FormSchema[] = [
     component: 'Select',
     colProps: { span: 4 },
     componentProps: {
-      options: PLASMA_TYPE_LIST.map((it) => ({
-        label: `${it.value}，${it.label}`,
-        value: it.value,
+      options: [...operationMap.entries()].map(([key, value]) => ({
+        value: key,
+        label: `${key}，${value}`,
+      })),
+    },
+  },
+  {
+    field: 'gapDays',
+    label: '距今未采浆天数',
+    component: 'InputNumber',
+    colProps: { span: 4 },
+  },
+  {
+    field: 'donorNo',
+    label: '浆员编号',
+    component: 'Input',
+    colProps: { span: 5 },
+  },
+  {
+    field: '[minCollectTime, maxCollectTime]',
+    label: '最早待回访日期',
+    component: 'RangePicker',
+    colProps: { span: 7 },
+  },
+];
+
+export const callbackDetailFormSchema: FormSchema[] = [
+  {
+    field: 'immType',
+    label: '血浆类型',
+    component: 'Select',
+    colProps: { span: 4 },
+    componentProps: {
+      options: [...operationMap.entries()].map(([key, value]) => ({
+        value: key,
+        label: `${key}，${value}`,
       })),
     },
   },

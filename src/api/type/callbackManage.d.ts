@@ -214,7 +214,7 @@ export type PostApiCoreDonorCallbackNeedResponse = null;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-13 11:09:50`
+ * @更新时间 `2024-01-30 10:40:04`
  */
 export interface GetApiCoreDonorCallbackDetailRequest {
   /**
@@ -226,9 +226,15 @@ export interface GetApiCoreDonorCallbackDetailRequest {
    */
   donorNo?: string;
   /**
-   * 回访情况
+   * 血浆类型
    */
-  state?: string;
+  immType?: string;
+  /**
+   * 距今未采浆天数
+   */
+  gapDays?: string;
+  minCollectTime?: string;
+  maxCollectTime?: string;
 }
 
 /**
@@ -236,7 +242,7 @@ export interface GetApiCoreDonorCallbackDetailRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-13 11:09:50`
+ * @更新时间 `2024-01-30 10:40:04`
  */
 export type GetApiCoreDonorCallbackDetailResponse = {
   stationNo: string;
