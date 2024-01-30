@@ -48,6 +48,7 @@
     <PlasmaDetail @register="registerPlasmaDetailModal" />
     <InStoreModal @register="registerInStoreModal" />
     <OutStoreModal @register="registerOutStoreModal" />
+    <UnqualifiedModal @register="registerUnqualifiedModal" @success="handleUnqualifiedSuccess" />
   </PageWrapper>
 </template>
 
@@ -77,6 +78,7 @@
   } from '@/api/stockout/production-preparation.js';
   import InStoreModal from './components/in-store-modal.vue';
   import OutStoreModal from './components/out-store-modal.vue';
+  import UnqualifiedModal from './components/unqualified-modal.vue';
 
   const { createMessage } = useMessage();
   const { warning, success } = createMessage;
@@ -347,10 +349,11 @@
   const [registerPackingInfoModal, { openModal: openPackingInfoModal }] = useModal();
   const [registerInStoreModal, { openModal: openInStoreModal }] = useModal();
   const [registerOutStoreModal, { openModal: openOutStoreModal }] = useModal();
+  const [registerUnqualifiedModal, { openModal: openUnqualifiedModal }] = useModal();
 
   // 血浆扫描
   async function handlePressEnter(e) {
-    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+    if (e.code === 'Enter' || e.code === 'NumpadEnter' || e === true) {
       if (!bagNo.value) {
         warning('请扫描血浆编号!');
         return;
@@ -359,15 +362,52 @@
         warning('请选择投产准备号!');
         return;
       }
+
       const params = {
         prepareNo: prepareNo.value,
         bagNo: bagNo.value,
         batchNo: batchData.value.batchSummary?.batchNo || null,
+        pickFlag: e === true, // 特殊分拣情况:整箱血浆为合格/不合格血浆复核登录后进行分拣
       };
       let targetBox = {}; // 正在分拣的血浆属于的箱子,用于封箱
       try {
         openFullLoading();
         const data = await pickSortingBag(params);
+
+        // 血浆不合格
+        if (data.track) {
+          openUnqualifiedModal(true, {
+            bagNo: bagNo.value,
+            track: data.track,
+          });
+          return;
+        }
+
+        // 整箱血浆为合格
+        if (data.fullBoxQua) {
+          Modal.confirm({
+            title: '提示?',
+            icon: createVNode(ExclamationCircleOutlined),
+            content: createVNode(
+              'div',
+              { style: 'color:red;' },
+              '本箱全部为满足要求的血浆,要进行封箱操作并打印箱签吗?',
+            ),
+            async onOk() {
+              // 走整箱分拣操作
+              await _sortingAllQua(true, data.boxNo);
+              // 走打印逻辑
+              console.log('OK');
+            },
+            async onCancel() {
+              // 重新走一次分拣逻辑
+              await handlePressEnter(true);
+            },
+            class: 'test',
+          });
+          return;
+        }
+
         success('分拣血浆成功!');
         bagNo.value = '';
         nextTick(() => {
@@ -490,6 +530,7 @@
           targetBox = bottomBoxData.value[scollToIndex];
         }
 
+        // 满箱
         if (data?.fullBox === true) {
           Modal.confirm({
             title: '提示?',
@@ -518,26 +559,29 @@
   }
 
   // 箱号扫描
-  async function _sortingAllQua(e) {
-    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-      if (!boxNo.value) {
+  async function _sortingAllQua(e, boxNo?) {
+    if (e.code === 'Enter' || e.code === 'NumpadEnter' || e === true) {
+      if (!boxNo.value && e !== true) {
         warning('请扫描血浆箱号!');
         return;
       }
-      if (!prepareNo.value) {
+      if (!prepareNo.value && e !== true) {
         warning('请选择投产准备号!');
         return;
       }
-    }
-    try {
-      openFullLoading();
-      const res = await sortingAllQua({ prepareNo: prepareNo.value, boxNo: boxNo.value });
-      success('整箱分拣成功!');
-      console.log('整箱扫描', res);
-      // 请求总览数据
-      prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
-    } finally {
-      closeFullLoading();
+      try {
+        openFullLoading();
+        const res = await sortingAllQua({
+          prepareNo: prepareNo.value,
+          boxNo: e === true ? boxNo : boxNo.value,
+        });
+        success('整箱分拣成功!');
+        console.log('整箱扫描', res);
+        // 请求总览数据
+        prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+      } finally {
+        closeFullLoading();
+      }
     }
   }
 
@@ -545,6 +589,7 @@
   function handleSelectPrepare() {
     openPrepareModal(true);
   }
+
   // 准备号框确认
   async function prepareModalSuccess(prepareNoData) {
     // 清除上次数据
@@ -627,7 +672,6 @@
           });
         }
       }
-
       // 处理箱数据 pros => 投产列表  unPro => 不投产列表(A时为空、B时为不投产)  utrkUnPro => 不投产或待放行（A时为不投产、B时为待放行）作为 bottomBoxData 数据
       if (data.pros?.bagNos.length) {
         topBoxData.value.push({
@@ -643,8 +687,9 @@
         topBoxData.value.push({
           title: '可投产',
           pickType: 'PRO',
-          sortCount: '',
-          totalCount: '',
+          immType: data.pros?.immType || '',
+          sortCount: data.pros?.sortCount,
+          totalCount: data.pros?.totalCount,
           bagNos: [],
           isSelected: false,
         });
@@ -784,6 +829,12 @@
     }
   }
 
+  // 不合格血浆，确认分拣
+  function handleUnqualifiedSuccess() {
+    // 走分拣接口
+    handlePressEnter(true);
+  }
+
   // 分拣批次信息
   const [registerPickBatchDetailModal, { openModal: openPickBatchDetailModal }] = useModal();
   function goPickBatchDetail() {
@@ -797,7 +848,7 @@
   function goPlasmaDetail(prepareProduce?) {
     openPlasmaDetailModal(true, {
       record: { prepareNo: prepareNo.value },
-      prepareProduce,
+      prepareProduce: prepareProduce === 'prepareProduce',
     });
   }
 </script>

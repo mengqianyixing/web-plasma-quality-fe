@@ -65,11 +65,11 @@
     },
     {
       title: '装箱人',
-      dataIndex: 'opeartor',
+      dataIndex: 'operator',
     },
     {
       title: '装箱日期',
-      dataIndex: 'opearteAt',
+      dataIndex: 'operateAt',
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD') : '-';
       },
