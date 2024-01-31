@@ -6,6 +6,7 @@
     width="85%"
     showFooter
     @ok="handleOk"
+    @cancel="clearSelectedRowKeys"
   >
     <BasicTable @register="registerTable" ref="table" />
   </BasicModal>
@@ -25,11 +26,11 @@
 
   const emit = defineEmits(['success', 'register']);
 
-  const selectedRow = ref<Recordable[]>([]);
+  const selectedRow = ref<string[]>([]);
   const isUpdate = ref(false);
   const stationNo = ref('');
 
-  const [registerTable, { setSelectedRowKeys, reload }] = useTable({
+  const [registerTable, { setSelectedRowKeys, reload, clearSelectedRowKeys }] = useTable({
     api: getNeedCallbackList,
     columns: callbackModalColumns,
     beforeFetch: (params) => {
@@ -55,8 +56,8 @@
     clickToRowSelect: true,
     rowSelection: {
       type: 'checkbox',
-      onChange: (_, selectedRows: any) => {
-        selectedRow.value = selectedRows;
+      onChange: (selectedRowKeys: any) => {
+        selectedRow.value = selectedRowKeys;
       },
     },
     size: 'small',
@@ -104,7 +105,7 @@
       onOk: async () => {
         await generateCallback({
           batchNo: batchNo.value,
-          donorNos: selectedRow.value.map((it) => it.donorNo),
+          donorNos: selectedRow.value,
         });
 
         emit('success');
