@@ -122,7 +122,9 @@ export const searchFormSchema: FormSchema[] = [
           value: key,
           label: value,
         }))
-        .filter((it) => [statusValueEnum.PVD, statusValueEnum.OTD].includes(it.value)),
+        .filter((it) =>
+          [statusValueEnum.PVD, statusValueEnum.OTD, statusValueEnum.OUI].includes(it.value),
+        ),
     },
   },
   {
