@@ -110,7 +110,6 @@
   });
 
   function _checkParamsValue(values: any) {
-    console.log(values);
     const value: any = values.paramValue;
     switch (values.valueType) {
       case 'float':
@@ -132,7 +131,9 @@
     try {
       const values: any = await validate<PostApiSysParamRequest & PutApiSysParamRequest>();
       if (!_checkParamsValue(values)) {
-        createMessage.warning(`参数值不符合要求 【${values?.valueType}】`);
+        createMessage.warning(
+          `参数值不符合要求 【${values?.valueType ?? '-'}】 ${values?.valueContext ?? ''}！`,
+        );
         return;
       }
       setModalProps({
