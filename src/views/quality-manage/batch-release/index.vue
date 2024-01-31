@@ -130,12 +130,18 @@
         return message.warning(`请选择【${STATUS_TEXT.get(STATUS.TBR)}】的数据`);
       }
       if (releaseUnqualifiedStorage.value) {
-        const res = await getNonconformityListApi({ orderNo: row.orderNo });
-        if (res.length) {
-          openNonconModal(true, res);
-        } else {
-          iterator = handleNext(row, 'add', openFormModal, true, { ...row, title: '新增' });
-          iterator.next();
+        try {
+          loading.add = true;
+          const res = await getNonconformityListApi({ orderNo: row.orderNo });
+          loading.add = false;
+          if (res.length) {
+            openNonconModal(true, res);
+          } else {
+            iterator = handleNext(row, 'add', openFormModal, true, { ...row, title: '新增' });
+            iterator.next();
+          }
+        } catch {
+          loading.add = false;
         }
       } else {
         iterator = handleNext(row, 'add', openFormModal, true, { ...row, title: '新增' });
