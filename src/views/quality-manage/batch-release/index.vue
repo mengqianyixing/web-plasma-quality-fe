@@ -2,10 +2,10 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate()" :loading="addLoading">新增</a-button>
+        <a-button type="primary" @click="handleCreate()" :loading="loading.add">新增</a-button>
         <a-button type="primary" @click="handleUpdate()">编辑</a-button>
-        <a-button type="primary" @click="handleReview">复核</a-button>
-        <a-button type="primary" @click="handleRelease">放行</a-button>
+        <a-button type="primary" @click="handleReview" :loading="loading.review">复核</a-button>
+        <a-button type="primary" @click="handleRelease" :loading="loading.release">放行</a-button>
         <a-button type="primary" @click="handleCancelRelease">取消放行</a-button>
         <a-button type="primary">打印</a-button>
       </template>
@@ -47,7 +47,7 @@
   import FormModal from './form-modal.vue';
   import { useModal } from '@/components/Modal';
   import { message, Modal } from 'ant-design-vue';
-  import { ref } from 'vue';
+  import { ref, reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import {
     getListApi,
@@ -64,6 +64,12 @@
   const confirmLoading = ref(false);
   const releaseUnqualifiedStorage = ref(false);
   const addLoading = ref(false);
+  type LoadingKey = 'add' | 'review' | 'release';
+  const loading = reactive<Record<LoadingKey, boolean>>({
+    add: false,
+    review: false,
+    release: false,
+  });
 
   const [registerForm, { resetFields, clearValidate, validate }] = useForm({
     labelWidth: 80,
@@ -128,11 +134,11 @@
         if (res.length) {
           openNonconModal(true, res);
         } else {
-          iterator = handleNext(row, openFormModal, true, { ...row, title: '新增' });
+          iterator = handleNext(row, 'add', openFormModal, true, { ...row, title: '新增' });
           iterator.next();
         }
       } else {
-        iterator = handleNext(row, openFormModal, true, { ...row, title: '新增' });
+        iterator = handleNext(row, 'add', openFormModal, true, { ...row, title: '新增' });
         iterator.next();
       }
     });
@@ -145,7 +151,8 @@
       openFormModal(true, { ...row, title: '编辑' });
     });
   }
-  async function* handleNext(row: Recordable, fn: Function, ...arg: any) {
+  async function* handleNext(row: Recordable, type: LoadingKey, fn: Function, ...arg: any) {
+    loading[type] = true;
     addLoading.value = true;
     try {
       const res = await getBindBoxsListApi({
@@ -153,10 +160,10 @@
         currPage: '1',
         pageSize: '1',
       });
-      addLoading.value = false;
+      loading[type] = false;
       if (res.totalCount) yield openPRModal(true, row);
     } catch {
-      addLoading.value = false;
+      loading[type] = false;
       yield;
     }
     yield fn(...arg);
@@ -174,7 +181,7 @@
       if (row.state !== STATUS.ROD) {
         return message.warning(`请选择【${STATUS_TEXT.get(STATUS.ROD)}】的数据`);
       }
-      iterator = handleNext(row, () => {
+      iterator = handleNext(row, 'review', () => {
         Modal.confirm({
           content: '确认复核制造批号【' + row.mesId + '】?',
           onOk: async () => {
@@ -193,7 +200,7 @@
       if (row.state !== STATUS.WAT) {
         return message.warning(`请选择【${STATUS_TEXT.get(STATUS.WAT)}】的数据`);
       }
-      iterator = handleNext(row, () => {
+      iterator = handleNext(row, 'release', () => {
         Modal.confirm({
           content: '确认放行制造批号【' + row.mesId + '】?',
           onOk: async () => {
