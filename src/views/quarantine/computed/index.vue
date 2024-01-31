@@ -4,11 +4,11 @@
  * @Author: zcc
  * @Date: 2024-01-26 14:02:36
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-29 16:57:05
+ * @LastEditTime: 2024-01-31 18:00:27
 -->
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight>
-    <div class="flex items-center justify-center h-full">
+  <PageWrapper dense contentFullHeight fixedHeight class="p-16px">
+    <div class="flex items-center justify-center h-full bg-white">
       <a-button @click="handleComputed" size="large" type="primary" :loading="loading"
         >检疫期计算</a-button
       >

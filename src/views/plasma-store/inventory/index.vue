@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 root">
+  <div class="p-16px root">
     <vxe-grid v-bind="gridOptions" ref="vxe">
       <template #receiptDate="{ data, field }">
         <range-picker v-model:value="data[field]" />
@@ -30,6 +30,8 @@
     border: true,
     showOverflow: true,
     height: 750,
+    align: 'center',
+    size: 'small',
     exportConfig: {},
     columnConfig: {
       resizable: true,
@@ -42,9 +44,11 @@
       pageSize: 999999,
     },
     formConfig: {
-      className: '!p-3',
       collapseStatus: false,
       items: vxeTableFormSchema,
+      titleWidth: '140px',
+      size: 'medium',
+      titleAlign: 'right',
     },
     toolbarConfig: {
       refresh: false,
@@ -97,8 +101,23 @@
   });
 </script>
 
-<style scoped>
+<style scoped lang="less">
   .root :deep(.vxe-pager) {
     display: none;
+  }
+
+  :deep(.vxe-form--item-content > div) {
+    width: 100%;
+  }
+
+  :deep(.vxe-form--item > .vxe-form--item-inner) {
+    flex-grow: unset;
+  }
+
+  :deep(.vxe-grid--form-wrapper::after) {
+    content: '';
+    display: block;
+    height: 16px;
+    background: #f5f5f5;
   }
 </style>
