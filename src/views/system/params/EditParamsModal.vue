@@ -20,6 +20,10 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { addSysParams, editSysParams } from '@/api/systemServer/params';
   import { PostApiSysParamRequest, PutApiSysParamRequest } from '@/api/type/systemParamsManage';
+  import { hasKey, isDecimal, isInteger, isJSON, isStr } from 'js-xxx';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  const { createMessage } = useMessage();
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑' : '新增'));
 
@@ -72,6 +76,16 @@
         required: true,
       },
       {
+        field: 'valueType',
+        slot: 'valueType',
+        show: false,
+      },
+      {
+        field: 'valueContext',
+        slot: 'valueContext',
+        show: false,
+      },
+      {
         label: '备注',
         field: 'remark',
         component: 'InputTextArea',
@@ -95,9 +109,32 @@
     },
   });
 
+  function _checkParamsValue(values: any) {
+    console.log(values);
+    const value: any = values.paramValue;
+    switch (values.valueType) {
+      case 'float':
+        return isDecimal(value);
+      case 'text':
+        return isStr(value);
+      case 'int':
+        return isInteger(value);
+      case 'json':
+        return isJSON(value);
+      case 'select':
+        return hasKey(JSON.parse(values?.valueContext ?? '{}'), value);
+      default:
+        return true;
+    }
+  }
+
   async function handleSubmit() {
     try {
-      const values = await validate<PostApiSysParamRequest & PutApiSysParamRequest>();
+      const values: any = await validate<PostApiSysParamRequest & PutApiSysParamRequest>();
+      if (!_checkParamsValue(values)) {
+        createMessage.warning(`参数值不符合要求 【${values?.valueType}】`);
+        return;
+      }
       setModalProps({
         confirmLoading: true,
       });
