@@ -221,7 +221,6 @@
   getSysParamsList({ currPage: '1', pageSize: '1', paramKey: 'releaseUnqualifiedStorage' }).then(
     (res) => {
       const data = res.result || [];
-      console.log(data[0]?.paramValue);
       releaseUnqualifiedStorage.value = data[0]?.paramValue === '1';
     },
   );
