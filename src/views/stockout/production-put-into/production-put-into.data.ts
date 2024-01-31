@@ -123,7 +123,14 @@ export const searchFormSchema: FormSchema[] = [
           label: value,
         }))
         .filter((it) =>
-          [statusValueEnum.PVD, statusValueEnum.OTD, statusValueEnum.OUI].includes(it.value),
+          [
+            statusValueEnum.PVD,
+            statusValueEnum.OTD,
+            statusValueEnum.OUI,
+            statusValueEnum.ACD,
+            statusValueEnum.ACT,
+            statusValueEnum.ROD,
+          ].includes(it.value),
         ),
     },
   },
