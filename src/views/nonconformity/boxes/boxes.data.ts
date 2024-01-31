@@ -18,7 +18,7 @@ export const columns: BasicColumn[] = [
   {
     title: '存放不合格血浆原因',
     dataIndex: 'unqReason',
-    slots: { customRender: 'unqReason' },
+    ellipsis: false,
   },
   {
     title: '库房名称',

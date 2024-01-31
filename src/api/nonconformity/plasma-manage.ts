@@ -2,6 +2,7 @@ import {
   GetApiCoreBagUnqualifiedBagNoRequest,
   GetApiCoreBagUnqualifiedBagNoResponse,
   GetApiCoreBagUnqualifiedRequest,
+  GetApiCoreBagUnqualifiedResponse,
   PostApiCoreBagUnqualifiedInStoreRequest,
   PostApiCoreBagUnqualifiedPickBatchRequest,
   PostApiCoreBagUnqualifiedPickRequest,
@@ -39,4 +40,7 @@ export const nonconformityPlasmaDetail = (params: GetApiCoreBagUnqualifiedBagNoR
   });
 
 export const nonconformityPlasmaList = (params: GetApiCoreBagUnqualifiedRequest) =>
-  defHttp.get({ url: Api.NONCONFORMITY_PLASMA_RESTFUL, params }, { joinParamsToUrl: true });
+  defHttp.get<GetApiCoreBagUnqualifiedResponse>(
+    { url: Api.NONCONFORMITY_PLASMA_RESTFUL, params },
+    { joinParamsToUrl: true },
+  );

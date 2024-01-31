@@ -6,6 +6,7 @@
     width="500px"
     :maskClosable="false"
     @ok="handleOk"
+    @cancel="resetFields"
   >
     <Basic-form @register="registerForm" />
   </BasicModal>

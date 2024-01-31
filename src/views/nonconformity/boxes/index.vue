@@ -1,7 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
-      <template #unqReason="{ record }"> {{ formatUnqReason(record) }} </template>
       <template #toolbar>
         <a-button type="primary" @click="handleAdd"> 新增 </a-button>
         <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
@@ -151,12 +150,5 @@
   function handleSuccess() {
     clearSelectedRowKeys();
     reload();
-  }
-
-  function formatUnqReason(record: Recordable) {
-    return (
-      plasmaUnqualifiedDictionary.value?.find((it) => it.value === record.unqReason)?.label ??
-      record.unqReason
-    );
   }
 </script>
