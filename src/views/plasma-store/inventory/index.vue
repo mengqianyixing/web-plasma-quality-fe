@@ -1,22 +1,38 @@
 <template>
-  <div class="p-16px root">
-    <vxe-grid v-bind="gridOptions" ref="vxe">
-      <template #receiptDate="{ data, field }">
-        <range-picker v-model:value="data[field]" />
-      </template>
-    </vxe-grid>
+  <div class="p-3 root">
+    <div class="bg-white pt-5 mb-16px">
+      <BasicForm @register="registerForm" @reset="handleResetBtn" @submit="handleSubmit" />
+    </div>
+
+    <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData" />
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { reactive } from 'vue';
+  import { onMounted, reactive, watchEffect, ref } from 'vue';
+  import { BasicForm, useForm } from '@/components/Form';
+  import { useStation } from '@/hooks/common/useStation';
   import { VxeGridProps } from 'vxe-table';
-  import { RangePicker } from 'ant-design-vue';
-  import { vxeTableColumns, vxeTableFormSchema } from './inventory.data';
-  import { inventoryDetailApi } from '@/api/plasmaStore/inventory';
+  import { vxeTableColumns, formSchema } from './inventory.data';
   import { GetApiCoreBankStockRequest } from '@/api/type/plasmaStoreManage';
   import dayjs from 'dayjs';
-  import { cloneDeep } from 'lodash-es';
+
+  import { inventoryDetailApi } from '@/api/plasmaStore/inventory';
+
+  const { isLoading, stationOptions, getStationNameById } = useStation();
+  onMounted(async () => {
+    await initTableData();
+    watchEffect(() => {
+      if (!isLoading) {
+        updateSchema({
+          field: 'stationNo',
+          componentProps: {
+            options: stationOptions.value,
+          },
+        });
+      }
+    });
+  });
 
   const sumNum = (list: any[], field: string) => {
     let count = 0;
@@ -25,6 +41,18 @@
     });
     return count;
   };
+
+  const [registerForm, { updateSchema, validate }] = useForm({
+    labelWidth: 140,
+    showAdvancedButton: false,
+    baseColProps: { flex: '0 0 370px' },
+    actionColOptions: { style: 'right: 40px; top: 150px;  position: absolute;' },
+    schemas: formSchema,
+    transformDateFunc(date) {
+      return dayjs(date).format('YYYY-MM-DD');
+    },
+    compact: true,
+  });
 
   const gridOptions = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
     border: true,
@@ -39,45 +67,11 @@
     scrollY: {
       enabled: true,
     },
-    pagerConfig: {
-      enabled: true,
-      pageSize: 999999,
-    },
-    formConfig: {
-      collapseStatus: false,
-      items: vxeTableFormSchema,
-      titleWidth: '140px',
-      size: 'medium',
-      titleAlign: 'right',
-    },
     toolbarConfig: {
       refresh: false,
       loading: false,
       export: false,
       custom: false,
-    },
-    proxyConfig: {
-      form: true,
-      ajax: {
-        query: async ({ _, form }) => {
-          const params = cloneDeep(form);
-          if (form.receiptDate) {
-            params.receiptStartDate = dayjs(form.receiptDate[0]).format('YYYY-MM-DD');
-            params.receiptEndDate = dayjs(form.receiptDate[1]).format('YYYY-MM-DD');
-
-            delete params.receiptDate;
-          }
-          const list = await inventoryDetailApi({
-            ...params,
-          });
-
-          return new Promise((resolve) => {
-            resolve({
-              result: list,
-            });
-          });
-        },
-      },
     },
     columns: vxeTableColumns,
     showFooter: true,
@@ -99,6 +93,35 @@
       ];
     },
   });
+
+  const tableLoading = ref(false);
+  const tableData = ref<Recordable[]>([{}]);
+  async function initTableData() {
+    try {
+      const values = await validate();
+      tableLoading.value = true;
+
+      const searchParams = {
+        ...values,
+      };
+
+      const originListData = await inventoryDetailApi(searchParams as GetApiCoreBankStockRequest);
+      tableData.value = originListData.map((it) => ({
+        ...it,
+        stationNo: getStationNameById(it.stationNo),
+      }));
+    } finally {
+      tableLoading.value = false;
+    }
+  }
+
+  async function handleResetBtn() {
+    await initTableData();
+  }
+
+  async function handleSubmit() {
+    await initTableData();
+  }
 </script>
 
 <style scoped lang="less">
