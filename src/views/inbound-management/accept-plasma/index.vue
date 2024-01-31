@@ -617,7 +617,11 @@
       warning('请先选择批号!');
       return;
     }
-    openMissNumModal(true);
+    openMissNumModal(true, {
+      record: {
+        batchNo: batchNo.value,
+      },
+    });
   }
 
   async function handleModalSuccess() {

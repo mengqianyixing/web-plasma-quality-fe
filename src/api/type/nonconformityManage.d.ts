@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `POST /api/core/bag/unqualified`
- * @更新时间 `2024-01-18 14:29:47`
+ * @更新时间 `2024-01-30 17:56:59`
  */
 export interface PostApiCoreBagUnqualifiedRequest {
   /**
@@ -33,6 +33,10 @@ export interface PostApiCoreBagUnqualifiedRequest {
    * 区分页面用（验收弹窗）
    */
   pageFlag?: string;
+  /**
+   * 验收页面传，用于校验是否属于本批
+   */
+  batchNo?: string;
 }
 
 /**
@@ -40,7 +44,7 @@ export interface PostApiCoreBagUnqualifiedRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `POST /api/core/bag/unqualified`
- * @更新时间 `2024-01-18 14:29:47`
+ * @更新时间 `2024-01-30 17:56:59`
  */
 export type PostApiCoreBagUnqualifiedResponse = null;
 
@@ -105,13 +109,16 @@ export interface GetApiCoreBankUnqualifiedBoxesResponse {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `POST /api/core/bank/unqualified/box`
- * @更新时间 `2024-01-08 10:42:08`
+ * @更新时间 `2024-01-30 19:17:30`
  */
 export interface PostApiCoreBankUnqualifiedBoxRequest {
   /**
    * 不合格原因
    */
   unqReason: string;
+  /**
+   * 箱号前缀
+   */
   unqReasonKey: string;
   /**
    * 容量
@@ -128,7 +135,7 @@ export interface PostApiCoreBankUnqualifiedBoxRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `POST /api/core/bank/unqualified/box`
- * @更新时间 `2024-01-08 10:42:08`
+ * @更新时间 `2024-01-30 19:17:30`
  */
 export interface PostApiCoreBankUnqualifiedBoxResponse {}
 

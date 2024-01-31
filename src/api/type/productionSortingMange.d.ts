@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
  * @请求头 `GET /api/product/prepare/sorting/out-traies`
- * @更新时间 `2024-01-30 16:03:34`
+ * @更新时间 `2024-01-30 21:25:51`
  */
 export interface GetApiProductPrepareSortingOutTraiesRequest {
   /**
@@ -40,7 +40,7 @@ export interface GetApiProductPrepareSortingOutTraiesRequest {
    */
   state?: string;
   /**
-   * 是否全分拣
+   * 是否全分拣，0表示否，1表示是
    */
   sortType?: string;
   /**
@@ -54,7 +54,7 @@ export interface GetApiProductPrepareSortingOutTraiesRequest {
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
  * @请求头 `GET /api/product/prepare/sorting/out-traies`
- * @更新时间 `2024-01-30 16:03:34`
+ * @更新时间 `2024-01-30 21:25:51`
  */
 export interface GetApiProductPrepareSortingOutTraiesResponse {
   totalCount?: number;
