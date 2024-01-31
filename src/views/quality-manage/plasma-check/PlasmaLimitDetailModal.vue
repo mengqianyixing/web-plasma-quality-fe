@@ -103,10 +103,9 @@
       };
       return data;
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: false,
-    showTableSetting: true,
     tableSetting: {
       size: false,
       redo: false,
@@ -148,10 +147,9 @@
       };
       return data;
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: false,
-    showTableSetting: true,
     tableSetting: {
       size: false,
       redo: false,

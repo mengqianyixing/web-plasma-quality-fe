@@ -351,7 +351,7 @@
       .ant-form {
         width: 100%;
         margin-bottom: 16px;
-        padding: 12px 10px 6px;
+        padding: 12px 6px 6px;
         border-radius: 2px;
         background-color: @component-background;
       }

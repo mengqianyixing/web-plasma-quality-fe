@@ -32,6 +32,9 @@ export enum DictionaryItemKeyEnum {
   Sample = 'sample',
   Other = 'other',
 }
+export enum UnqualifiedEnum {
+  MissNum = 'bagMiss',
+}
 
 export const getSysDictionary = (params: DictionaryEnum[]) =>
   defHttp.post<PostApiSysDictionaryItemsResponse>({ url: Api.DICTIONARY, params });

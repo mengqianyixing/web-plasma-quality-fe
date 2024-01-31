@@ -18,7 +18,11 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { useMessage } from '@/hooks/web/useMessage';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
-  import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
+  import {
+    DictionaryEnum,
+    DictionaryItemKeyEnum,
+    getSysSecondaryDictionary,
+  } from '@/api/_dictionary';
   import { PostApiCoreBatchSampleUnqualifiedPlasmaRequest } from '@/api/type/batchManage';
   import { nonconformityPlasmaReceiveSampleRegister } from '@/api/nonconformity/sample-manage';
 
@@ -49,11 +53,12 @@
         component: 'ApiSelect',
         colProps: { span: 18 },
         componentProps: {
-          api: getSysDictionary,
-          params: [DictionaryEnum.SampleUnqualifiedReason],
-          resultField: '[0].dictImtes',
-          labelField: 'label',
-          valueField: 'value',
+          api: getSysSecondaryDictionary,
+          params: {
+            dataKey: DictionaryEnum.PlasmaFailedItem,
+            dictNos: [DictionaryItemKeyEnum.Sample],
+          },
+          valueField: 'dictItemId',
         },
         required: true,
       },

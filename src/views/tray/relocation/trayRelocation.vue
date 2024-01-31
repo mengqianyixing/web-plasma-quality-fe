@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 09:52:52
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-27 15:19:11
+ * @LastEditTime: 2024-01-31 17:05:02
 -->
 <template>
   <div class="h-full">
@@ -45,12 +45,11 @@
     { validate, setFieldsValue, updateSchema, getFieldsValue, resetFields, clearValidate },
   ] = useForm({
     labelWidth: 90,
-    baseColProps: { span: 10 },
+    baseColProps: { flex: '0 0 370px' },
     schemas: trayRelocationFormSchema,
     showActionButtonGroup: true,
     showResetButton: false,
     submitButtonOptions: { text: '确认移库' },
-    actionColOptions: { span: 4 },
   });
 
   const [registerTable] = useTable({

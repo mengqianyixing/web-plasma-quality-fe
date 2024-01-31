@@ -1,43 +1,45 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight class="flex flex-col bg-white p-16px">
-    <div class="title">
-      基本信息
-      <div class="float-right">
-        <a-button class="mr-15px" type="primary" @click="handleSelect">选择</a-button>
-        <a-button class="mr-15px" type="primary" @click="handleAddItem" :disabled="!bsNo">
-          新增检测项目
-        </a-button>
-        <a-button
-          class="mr-15px"
-          type="primary"
-          @click="registration"
-          :disabled="!bsNo"
-          :loading="registrationLoading"
-          >登记完成</a-button
-        >
-        <a-button
-          type="primary"
-          @click="unRegistration"
-          :loading="unregistrationLoading"
-          :disabled="!bsNo"
-        >
-          撤销登记
-        </a-button>
+  <PageWrapper dense contentFullHeight fixedHeight class="p-16px">
+    <div class="flex flex-col h-full bg-white p-10px">
+      <div class="title">
+        基本信息
+        <div class="float-right">
+          <a-button class="mr-15px" type="primary" @click="handleSelect">选择</a-button>
+          <a-button class="mr-15px" type="primary" @click="handleAddItem" :disabled="!bsNo">
+            新增检测项目
+          </a-button>
+          <a-button
+            class="mr-15px"
+            type="primary"
+            @click="registration"
+            :disabled="!bsNo"
+            :loading="registrationLoading"
+            >登记完成</a-button
+          >
+          <a-button
+            type="primary"
+            @click="unRegistration"
+            :loading="unregistrationLoading"
+            :disabled="!bsNo"
+          >
+            撤销登记
+          </a-button>
+        </div>
       </div>
+      <CellWapper :data="rowData" cell-width="16.66%" :cell-list="cellList" :gap="0" />
+      <div class="title">血浆信息</div>
+      <CellWapper :data="countData" :cell-list="plasmaCellList" :gap="0" />
+      <Tabs v-model:activeKey="activeKey" class="flex-1 bg-white">
+        <TabPane key="1" tab="检测明细">
+          <CheckPage :bs-no="bsNo" @reload="saveReload" />
+        </TabPane>
+        <TabPane key="2" tab="效价明细">
+          <TiterPage :bs-no="bsNo" @reload="saveReload" />
+        </TabPane>
+      </Tabs>
+      <BatchModal @register="registerModal" @confirm="confirm" />
+      <CheckItemModal @register="registerCIModal" @confirm="confirm2" />
     </div>
-    <CellWapper :data="rowData" cell-width="16.66%" :cell-list="cellList" :gap="0" />
-    <div class="title">血浆信息</div>
-    <CellWapper :data="countData" :cell-list="plasmaCellList" :gap="0" />
-    <Tabs v-model:activeKey="activeKey" class="flex-1 bg-white">
-      <TabPane key="1" tab="检测明细">
-        <CheckPage :bs-no="bsNo" @reload="saveReload" />
-      </TabPane>
-      <TabPane key="2" tab="效价明细">
-        <TiterPage :bs-no="bsNo" @reload="saveReload" />
-      </TabPane>
-    </Tabs>
-    <BatchModal @register="registerModal" @confirm="confirm" />
-    <CheckItemModal @register="registerCIModal" @confirm="confirm2" />
   </PageWrapper>
 </template>
 

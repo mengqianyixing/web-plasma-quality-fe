@@ -6,6 +6,7 @@
     width="500px"
     :maskClosable="false"
     @ok="handleOk"
+    @cancel="resetFields"
   >
     <Basic-form @register="registerForm" />
   </BasicModal>
@@ -62,6 +63,7 @@
               DictionaryItemKeyEnum.Other,
             ],
           },
+          valueField: 'dictItemId',
         },
         required: true,
       },
@@ -78,10 +80,20 @@
         component: 'Input',
         show: false,
       },
+      {
+        field: 'batchNo',
+        label: '批次',
+        component: 'Input',
+        show: false,
+      },
     ],
   });
 
-  const [register, { closeModal, setModalProps }] = useModalInner();
+  const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
+    await setFieldsValue({
+      batchNo: data.record.batchNo,
+    });
+  });
 
   function handleLogin() {
     openModal(true);

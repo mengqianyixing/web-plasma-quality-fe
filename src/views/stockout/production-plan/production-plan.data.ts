@@ -266,7 +266,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
       dataIndex: 'prodBagCount',
     },
     {
-      title: '数量比例',
+      title: '数量比例(%)',
       dataIndex: 'quantityRatio',
     },
     {
@@ -275,7 +275,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
       format: formatKg,
     },
     {
-      title: '净重比例',
+      title: '净重比例(%)',
       dataIndex: 'weightRatio',
     },
   ],
@@ -289,7 +289,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
       dataIndex: 'prodBagCount',
     },
     {
-      title: '数量比例',
+      title: '数量比例(%)',
       dataIndex: 'quantityRatio',
     },
     {
@@ -298,7 +298,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
       format: formatKg,
     },
     {
-      title: '净重比例',
+      title: '净重比例(%)',
       dataIndex: 'weightRatio',
     },
   ],

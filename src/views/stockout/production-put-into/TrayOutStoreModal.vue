@@ -89,6 +89,7 @@
 
     reload();
   });
+
   function selectRowsCheck() {
     if (selectedRow.value.length === 0) {
       warning('请先选择一条数据');
@@ -101,11 +102,22 @@
   function handleTrayOutStore() {
     if (!selectRowsCheck()) return;
 
+    if (selectedRow.value.some((it) => it.state === '已出库')) {
+      warning('选中数据中有已出库的数据');
+      return;
+    }
+
+    if (new Set([selectedRow.value.map((it) => it.houseName)]).size !== 1) {
+      warning('请选择同一库房的托盘进行出库');
+      return;
+    }
+
     openModal(true, {
       record: {
         dlvInfo: selectedRow.value,
         orderNo: orderNo.value,
         houseNo: selectedRow.value[0]?.houseNo,
+        automatic: selectedRow.value[0]?.automatic,
       },
     });
   }

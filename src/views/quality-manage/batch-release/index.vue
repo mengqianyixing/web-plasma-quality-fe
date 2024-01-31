@@ -2,7 +2,7 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate()">新增</a-button>
+        <a-button type="primary" @click="handleCreate()" :loading="addLoading">新增</a-button>
         <a-button type="primary" @click="handleUpdate()">编辑</a-button>
         <a-button type="primary" @click="handleReview">复核</a-button>
         <a-button type="primary" @click="handleRelease">放行</a-button>
@@ -58,10 +58,12 @@
   } from '@/api/quality/batch-release';
   import { getSysParamsList } from '@/api/systemServer/params';
   import { STATUS, STATUS_TEXT } from '@/enums/batchReleaseEnum';
+  import { getBindBoxsListApi } from '@/api/quality/plasma-restriction';
 
   const open = ref(false);
   const confirmLoading = ref(false);
   const releaseUnqualifiedStorage = ref(false);
+  const addLoading = ref(false);
 
   const [registerForm, { resetFields, clearValidate, validate }] = useForm({
     labelWidth: 80,
@@ -121,7 +123,6 @@
       if (row.state !== STATUS.TBR) {
         return message.warning(`请选择【${STATUS_TEXT.get(STATUS.TBR)}】的数据`);
       }
-      console.log(releaseUnqualifiedStorage.value);
       if (releaseUnqualifiedStorage.value) {
         const res = await getNonconformityListApi({ orderNo: row.orderNo });
         if (res.length) {
@@ -144,8 +145,18 @@
       openFormModal(true, { ...row, title: '编辑' });
     });
   }
-  function* handleNext(row: Recordable, fn: Function, ...arg: any) {
-    if (row.bagFlag) yield openPRModal(true, row);
+  async function* handleNext(row: Recordable, fn: Function, ...arg: any) {
+    addLoading.value = true;
+    try {
+      const res = await getBindBoxsListApi({
+        batchNos: row.batchNos,
+        currPage: '1',
+        pageSize: '1',
+      });
+      if (res.totalCount) yield openPRModal(true, row);
+    } finally {
+      addLoading.value = false;
+    }
     yield fn(...arg);
   }
   function success() {
@@ -221,7 +232,6 @@
   getSysParamsList({ currPage: '1', pageSize: '1', paramKey: 'releaseUnqualifiedStorage' }).then(
     (res) => {
       const data = res.result || [];
-      console.log(data[0]?.paramValue);
       releaseUnqualifiedStorage.value = data[0]?.paramValue === '1';
     },
   );

@@ -101,23 +101,15 @@
 
   const inputValue = ref('');
   const sampleTypeDictionary = ref<Recordable[] | undefined>([]);
-  const sampleNonconformityDictionary = ref<Recordable[] | undefined>([]);
 
   const { createConfirm, createMessage } = useMessage();
 
   onMounted(async () => {
-    const dictionaryArr = await getSampleDictionary([
-      sampleDictionary.NonconformityReason,
-      sampleDictionary.SampleType,
-    ]);
+    const dictionaryArr = await getSampleDictionary([sampleDictionary.SampleType]);
     if (!dictionaryArr) return;
 
     sampleTypeDictionary.value = dictionaryArr.find(
       (it) => it.dictNo === sampleDictionary.SampleType,
-    )?.dictImtes;
-
-    sampleNonconformityDictionary.value = dictionaryArr.find(
-      (it) => it.dictNo === sampleDictionary.NonconformityReason,
     )?.dictImtes;
   });
 
@@ -371,7 +363,6 @@
     }
     openNonconformityModal(true, {
       record: {
-        options: sampleNonconformityDictionary.value,
         verifyNo: sampleVerifyNo.value,
         batchSampleNo: inputValue.value,
       },

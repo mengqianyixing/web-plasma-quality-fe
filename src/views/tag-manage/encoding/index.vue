@@ -1,5 +1,13 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2023-12-26 14:35:04
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-31 18:32:15
+-->
 <template>
-  <div>
+  <div class="p-16px">
     <BasicTable @register="registerTable">
       <template #bodyCell="{ record, column }">
         <template v-if="column.key === 'action'">
@@ -38,7 +46,6 @@
     size: 'small',
     striped: false,
     useSearchForm: false,
-    showTableSetting: false,
     bordered: true,
     actionColumn: {
       title: '操作',

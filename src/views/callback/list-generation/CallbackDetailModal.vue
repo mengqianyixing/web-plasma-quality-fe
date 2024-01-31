@@ -9,7 +9,10 @@
   import { computed, ref, unref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
 
-  import { callbackDetailModalColumns } from '@/views/callback/list-generation/generation.data';
+  import {
+    callbackDetailModalColumns,
+    callbackDetailFormSchema,
+  } from '@/views/callback/list-generation/generation.data';
   import { getCallbackDetail } from '@/api/callback/list-generation';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
@@ -61,6 +64,12 @@
   const [registerTable, { reload }] = useTable({
     api: getCallbackDetail,
     columns: callbackDetailModalColumns,
+    formConfig: {
+      schemas: callbackDetailFormSchema,
+      transformDateFunc(date) {
+        return date ? date.format('YYYY-MM-DD') : '';
+      },
+    },
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -77,7 +86,7 @@
     clickToRowSelect: false,
     size: 'small',
     striped: false,
-    useSearchForm: false,
+    useSearchForm: true,
     showTableSetting: true,
     tableSetting: {
       size: false,

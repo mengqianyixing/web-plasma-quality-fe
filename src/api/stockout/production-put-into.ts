@@ -4,6 +4,7 @@ import {
   GetApiProductOutStoreBoxesOrderNoRequest,
   GetApiProductOutStoreBoxesOrderNoResponse,
   GetApiProductPrepareTrayOutRequest,
+  GetApiProductPrepareTrayOutResponse,
   PostApiProductOutStoreBatchRequest,
   PostApiProductOutStoreBoxRequest,
 } from '@/api/type/stockoutManage';
@@ -69,7 +70,7 @@ export const revokeProductionOutStore = (
 ) => defHttp.delete({ url: Api.PRODUCTION_BATCH_PUT_INTO + '/' + params });
 
 export const getTrayOutStoreList = (params: GetApiProductPrepareTrayOutRequest) =>
-  defHttp.get(
+  defHttp.get<GetApiProductPrepareTrayOutResponse>(
     { url: Api.PRODUCTION_TRAY_OUT_STORE, params },
     {
       joinParamsToUrl: true,

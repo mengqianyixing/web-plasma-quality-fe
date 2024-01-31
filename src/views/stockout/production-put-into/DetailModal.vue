@@ -6,6 +6,7 @@
     showFooter
     width="85%"
     :showOkBtn="false"
+    @cancel="handelCancel"
   >
     <BasicTable @register="registerTable" ref="table" />
   </BasicModal>
@@ -22,7 +23,7 @@
 
   defineEmits(['success', 'register']);
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, getForm }] = useTable({
     api: getForPlasmaListApi,
     columns: detailColumns,
     formConfig: {
@@ -77,4 +78,8 @@
 
     reload();
   });
+
+  function handelCancel() {
+    getForm().resetFields();
+  }
 </script>

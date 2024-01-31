@@ -14,14 +14,18 @@
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { registerNonconformity } from '@/api/inbound-management/sample-verify';
   import { PostApiCoreBatchSampleUnqualifiedRequest } from '@/api/type/batchManage';
-  import { nonconformityReasonEnum } from '@/enums/sampleEnum';
+  import {
+    DictionaryEnum,
+    DictionaryItemKeyEnum,
+    getSysSecondaryDictionary,
+  } from '@/api/_dictionary';
 
   const emit = defineEmits(['success', 'register']);
   const { createMessage } = useMessage();
 
   defineOptions({ name: 'NonconformityModal' });
 
-  const [registerForm, { setFieldsValue, updateSchema, validate, resetFields }] = useForm({
+  const [registerForm, { setFieldsValue, validate, resetFields }] = useForm({
     layout: 'horizontal',
     labelWidth: 120,
     wrapperCol: {
@@ -49,7 +53,15 @@
       {
         field: 'unqualifiedReasonCode',
         label: '不合格原因',
-        component: 'Select',
+        component: 'ApiSelect',
+        componentProps: {
+          api: getSysSecondaryDictionary,
+          params: {
+            dataKey: DictionaryEnum.PlasmaFailedItem,
+            dictNos: [DictionaryItemKeyEnum.Sample],
+          },
+          valueField: 'dictItemId',
+        },
         colProps: { span: 20 },
         required: true,
       },
@@ -74,14 +86,6 @@
     });
     modalParams.verifyNo = data.record.verifyNo;
     modalParams.batchSampleNo = data.record.batchSampleNo;
-    updateSchema({
-      field: 'unqualifiedReasonCode',
-      componentProps: {
-        options: data.record.options.filter(
-          (it) => it.label !== nonconformityReasonEnum.DonorNonConformance,
-        ),
-      },
-    });
   });
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
   async function handleSubmit() {

@@ -28,6 +28,7 @@
   const getTitle = computed(() => (unref(isUpdate) ? '编辑' : '新增'));
 
   const emit = defineEmits(['success']);
+  const selectOption = ref<Recordable>({});
 
   const isUpdate = ref(false);
   const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
@@ -91,10 +92,15 @@
     baseColProps: { span: 24 },
     schemas: [
       {
-        label: '不合格原因',
+        label: '箱号类型',
         field: 'unqReason',
         component: 'Select',
         colProps: { span: 20 },
+        componentProps: {
+          onChange: (_, value) => {
+            selectOption.value = value;
+          },
+        },
         required: true,
       },
       {
@@ -149,7 +155,10 @@
         confirmLoading: true,
       });
       if (!unref(isUpdate)) {
-        await addBox(values);
+        await addBox({
+          ...values,
+          unqReasonKey: selectOption.value.label,
+        });
       } else {
         await editBoxDetail(values);
       }

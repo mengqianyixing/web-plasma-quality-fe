@@ -31,12 +31,14 @@
         componentProps: {
           mode: 'multiple',
         },
-        colProps: { span: 20 },
+        colProps: { span: 15 },
+        required: true,
       },
       {
         field: 'siteId',
         label: '站点ID',
         component: 'ApiSelect',
+        required: true,
       },
     ],
   });
@@ -75,6 +77,7 @@
         colProps: {
           span: 15,
         },
+        show: !!data.record.automatic,
       },
     ]);
 

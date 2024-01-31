@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:00:48
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 18:02:36
+ * @LastEditTime: 2024-01-31 17:06:12
 -->
 <template>
   <div class="h-full">
@@ -36,7 +36,7 @@
 
   const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
     labelWidth: 90,
-    baseColProps: { span: 8 },
+    baseColProps: { flex: '0 0 370px' },
     schemas: sampleBoxScanFormSchema,
     showActionButtonGroup: false,
     showResetButton: false,

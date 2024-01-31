@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 18:03:34
+ * @LastEditTime: 2024-01-31 17:05:41
 -->
 <template>
   <div class="h-full">
@@ -31,7 +31,7 @@
   const count = ref(0);
   const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
     labelWidth: 90,
-    baseColProps: { span: 8 },
+    baseColProps: { flex: '0 0 370px' },
     schemas: plasmaBoxScanFormSchema,
     showActionButtonGroup: false,
     showResetButton: false,

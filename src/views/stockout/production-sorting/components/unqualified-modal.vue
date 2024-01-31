@@ -3,7 +3,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    width="500px"
+    width="550px"
     @ok="handleSubmit"
     :destroyOnClose="true"
     :body-style="{ height: '80px' }"
@@ -16,6 +16,7 @@
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
+  import { BagTrackMap, BagTrackValueEnum } from '@/enums/stockoutEnum';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -57,7 +58,9 @@
     prepareDetail = { ...data };
     setModalProps({
       maskClosable: false,
-      title: `${prepareDetail.bagNo}为${prepareDetail.track}不合格血浆，请进行复核确认!`,
+      title: `${prepareDetail.bagNo}为${BagTrackMap.get(
+        prepareDetail.track as BagTrackValueEnum,
+      )}血浆，请进行复核确认!`,
     });
   });
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();

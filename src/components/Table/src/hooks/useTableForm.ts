@@ -1,3 +1,11 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: zcc
+ * @Date: 2024-01-17 17:24:09
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-31 16:53:20
+ */
 import type { ComputedRef, Slots } from 'vue';
 import type { BasicTableProps, FetchParams } from '../types/table';
 import { unref, computed } from 'vue';
@@ -17,7 +25,7 @@ export function useTableForm(
       labelWidth: 140,
       showAdvancedButton: false,
       baseColProps: { flex: '0 0 370px' },
-      actionColOptions: { flex: '1 1 200px', style: 'max-width:unset;' },
+      actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
       ...formConfig,
       submitButtonOptions: { loading: unref(getLoading), ...submitButtonOptions },
       compact: true,

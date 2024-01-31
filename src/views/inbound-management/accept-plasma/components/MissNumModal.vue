@@ -6,6 +6,7 @@
     width="500px"
     :maskClosable="false"
     @ok="handleOk"
+    @cancel="resetFields"
   >
     <Basic-form @register="registerForm" />
   </BasicModal>
@@ -19,6 +20,7 @@
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { nonconformityRegistration } from '@/api/nonconformity/box-manage';
   import { PostApiCoreBagUnqualifiedRequest } from '@/api/type/nonconformityManage';
+  import { UnqualifiedEnum } from '@/api/_dictionary';
 
   const { createMessage } = useMessage();
 
@@ -70,10 +72,27 @@
         component: 'Input',
         show: false,
       },
+      {
+        field: 'fkFailedCode',
+        label: '不合格原因',
+        component: 'Input',
+        defaultValue: UnqualifiedEnum.MissNum,
+        show: false,
+      },
+      {
+        field: 'batchNo',
+        label: '批次',
+        component: 'Input',
+        show: false,
+      },
     ],
   });
 
-  const [register, { closeModal, setModalProps }] = useModalInner();
+  const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
+    await setFieldsValue({
+      batchNo: data.record.batchNo,
+    });
+  });
 
   function handleLogin() {
     openModal(true);

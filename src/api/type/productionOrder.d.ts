@@ -43,7 +43,7 @@ export interface PostApiProductOrderResponse {}
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `POST /api/product/orders`
- * @更新时间 `2024-01-12 10:05:58`
+ * @更新时间 `2024-01-31 15:46:29`
  */
 export interface PostApiProductOrdersRequest {
   /**
@@ -86,6 +86,10 @@ export interface PostApiProductOrdersRequest {
    * 计划投产日期结束时间
    */
   endPlanTask?: string;
+  /**
+   * out  标识为投产出库页面
+   */
+  pageFlag?: string;
 }
 
 /**
@@ -93,7 +97,7 @@ export interface PostApiProductOrdersRequest {
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `POST /api/product/orders`
- * @更新时间 `2024-01-12 10:05:58`
+ * @更新时间 `2024-01-31 15:46:29`
  */
 export interface PostApiProductOrdersResponse {
   /**
