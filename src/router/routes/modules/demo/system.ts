@@ -23,16 +23,16 @@ const system: AppRouteModule = {
     title: '系统管理',
   },
   children: [
-    {
-      path: 'account',
-      id: 9201,
-      name: 'AccountManagement',
-      meta: {
-        title: '账号管理',
-        ignoreKeepAlive: false,
-      },
-      component: () => import('@/views/system/account/index.vue'),
-    },
+    // {
+    //   path: 'account',
+    //   id: 9201,
+    //   name: 'AccountManagement',
+    //   meta: {
+    //     title: '账号管理',
+    //     ignoreKeepAlive: false,
+    //   },
+    //   component: () => import('@/views/system/account/index.vue'),
+    // },
     // {
     //   path: 'account_detail/:id',
     //   name: 'AccountDetail',
@@ -45,46 +45,46 @@ const system: AppRouteModule = {
     //   },
     //   component: () => import('@/views/system/account/AccountDetail.vue'),
     // },
-    {
-      path: 'role',
-      name: 'RoleManagement',
-      id: 9202,
-      meta: {
-        title: '角色管理',
-        ignoreKeepAlive: true,
-      },
-      component: () => import('@/views/system/role/index.vue'),
-    },
-    {
-      path: 'menu',
-      name: 'MenuManagement',
-      id: 9203,
-      meta: {
-        title: '菜单管理',
-        ignoreKeepAlive: true,
-      },
-      component: () => import('@/views/system/menu/index.vue'),
-    },
-    {
-      path: 'dept',
-      id: 9204,
-      name: 'DeptManagement',
-      meta: {
-        title: '部门管理',
-        ignoreKeepAlive: true,
-      },
-      component: () => import('@/views/system/dept/index.vue'),
-    },
-    {
-      path: 'resource',
-      id: 9205,
-      name: 'ResourceViews',
-      meta: {
-        title: '资源管理',
-        ignoreKeepAlive: true,
-      },
-      component: () => import('@/views/system/resource/index.vue'),
-    },
+    // {
+    //   path: 'role',
+    //   name: 'RoleManagement',
+    //   id: 9202,
+    //   meta: {
+    //     title: '角色管理',
+    //     ignoreKeepAlive: true,
+    //   },
+    //   component: () => import('@/views/system/role/index.vue'),
+    // },
+    // {
+    //   path: 'menu',
+    //   name: 'MenuManagement',
+    //   id: 9203,
+    //   meta: {
+    //     title: '菜单管理',
+    //     ignoreKeepAlive: true,
+    //   },
+    //   component: () => import('@/views/system/menu/index.vue'),
+    // },
+    // {
+    //   path: 'dept',
+    //   id: 9204,
+    //   name: 'DeptManagement',
+    //   meta: {
+    //     title: '部门管理',
+    //     ignoreKeepAlive: true,
+    //   },
+    //   component: () => import('@/views/system/dept/index.vue'),
+    // },
+    // {
+    //   path: 'resource',
+    //   id: 9205,
+    //   name: 'ResourceViews',
+    //   meta: {
+    //     title: '资源管理',
+    //     ignoreKeepAlive: true,
+    //   },
+    //   component: () => import('@/views/system/resource/index.vue'),
+    // },
     {
       path: 'dictionary',
       name: 'Dictionary',
@@ -147,7 +147,7 @@ const system: AppRouteModule = {
       name: 'Policies',
       id: 9210,
       meta: {
-        title: '策略管理',
+        title: '资源管理',
       },
       authElements: [
         {
