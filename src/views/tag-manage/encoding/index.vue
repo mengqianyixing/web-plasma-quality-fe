@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-26 14:35:04
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-31 18:01:26
+ * @LastEditTime: 2024-01-31 18:32:15
 -->
 <template>
   <div class="p-16px">
@@ -46,7 +46,6 @@
     size: 'small',
     striped: false,
     useSearchForm: false,
-    showTableSetting: false,
     bordered: true,
     actionColumn: {
       title: '操作',

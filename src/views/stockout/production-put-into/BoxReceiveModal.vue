@@ -84,10 +84,9 @@
     afterFetch: (data) => {
       receptionCount.value = data.length;
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: false,
-    showTableSetting: false,
     bordered: true,
     showIndexColumn: true,
     indexColumnProps: {
@@ -123,10 +122,9 @@
     afterFetch: (data) => {
       acceptedCount.value = data.length;
     },
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: false,
-    showTableSetting: false,
     bordered: true,
     showIndexColumn: true,
     indexColumnProps: {

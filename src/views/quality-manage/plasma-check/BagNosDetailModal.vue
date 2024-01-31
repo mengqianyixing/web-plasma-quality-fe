@@ -18,10 +18,9 @@
         ifShow: false,
       },
     ],
-    size: 'large',
+    size: 'small',
     striped: false,
     useSearchForm: false,
-    showTableSetting: true,
     tableSetting: {
       size: false,
       redo: false,
