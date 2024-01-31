@@ -153,9 +153,11 @@
         currPage: '1',
         pageSize: '1',
       });
-      if (res.totalCount) yield openPRModal(true, row);
-    } finally {
       addLoading.value = false;
+      if (res.totalCount) yield openPRModal(true, row);
+    } catch {
+      addLoading.value = false;
+      yield;
     }
     yield fn(...arg);
   }
