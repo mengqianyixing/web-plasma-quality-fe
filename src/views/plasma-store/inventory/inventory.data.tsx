@@ -1,5 +1,5 @@
-// import { FormProps, FormSchema, BasicColumn } from '@/components/Table';
-import { VxeFormItemProps, VxeGridPropTypes } from '@/components/VxeTable';
+import { VxeGridPropTypes } from '@/components/VxeTable';
+import { FormSchema } from '@/components/Form';
 
 export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
@@ -10,7 +10,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
     title: '采浆公司',
     field: 'stationNo',
-    width: 100,
+    width: 150,
     align: 'center',
   },
   {
@@ -45,101 +45,53 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   },
 ];
 
-export const vxeTableFormSchema: VxeFormItemProps[] = [
+export const formSchema: FormSchema[] = [
   {
+    label: '采浆公司',
     field: 'stationNo',
-    title: '采浆公司',
-    contentClassName: 'w-230px ',
-    titleClassName: 'text-16px',
-    itemRender: { name: '$input', props: { placeholder: '请输入' } },
+    component: 'Select',
+    colProps: {
+      span: 5,
+    },
   },
   {
+    label: '血浆出库类型',
     field: 'field',
-    title: '血浆出库类型',
-    contentClassName: 'w-230px ',
-    titleClassName: 'text-16px',
-    itemRender: {
-      name: '$select',
-      options: [
-        { value: '1', label: '男' },
-        { value: '0', label: '女' },
-      ],
-      props: {
-        clearable: true,
-        placeholder: '请选择',
-      },
+    component: 'Select',
+    colProps: {
+      span: 5,
     },
   },
   {
-    field: 'receiptDate',
-    title: '接收日期',
-    contentClassName: 'w-230px ',
-    titleClassName: 'text-16px',
-    slots: {
-      default: 'receiptDate',
+    label: '接收日期',
+    field: '[receiptStartDate, receiptEndDate]',
+    component: 'RangePicker',
+    colProps: {
+      span: 8,
     },
   },
   {
+    label: '血浆批号',
     field: 'batchNo',
-    title: '血浆批号',
-    contentClassName: 'w-230px ',
-    titleClassName: 'text-16px',
-    folding: true,
-    itemRender: { name: '$input', props: { placeholder: '请输入' } },
+    component: 'Input',
+    colProps: {
+      span: 5,
+    },
   },
   {
+    label: '血浆过程状态',
     field: 'filed',
-    title: '血浆过程状态',
-    contentClassName: 'w-230px ',
-    titleClassName: 'text-16px',
-    folding: true,
-    itemRender: {
-      name: '$select',
-      options: [],
-      props: {
-        clearable: true,
-        placeholder: '请选择',
-      },
+    component: 'Select',
+    colProps: {
+      span: 5,
     },
   },
   {
+    label: '效价类型',
     field: 'immuneType',
-    title: '效价类型',
-    contentClassName: 'w-230px ',
-    titleClassName: 'text-16px',
-    itemRender: {
-      name: '$select',
-      options: [],
-      props: {
-        clearable: true,
-        placeholder: '请选择',
-      },
-    },
-  },
-  {
-    contentClassName: 'w-130px ',
-    className: 'flex-1 flex justify-end float-right',
-    collapseNode: false,
-    itemRender: {
-      name: '$buttons',
-      children: [
-        {
-          props: { type: 'reset', content: '重置' },
-          events: {
-            click: (params: any) => {
-              delete params.data.receiptDate;
-            },
-          },
-        },
-        {
-          props: {
-            type: 'submit',
-            content: '确定',
-            status: 'primary',
-            style: { 'background-color': '#165DFF' },
-          },
-        },
-      ],
+    component: 'Select',
+    colProps: {
+      span: 5,
     },
   },
 ];
