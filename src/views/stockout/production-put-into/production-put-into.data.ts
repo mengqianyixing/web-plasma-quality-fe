@@ -117,16 +117,25 @@ export const searchFormSchema: FormSchema[] = [
     label: '状态',
     component: 'Select',
     componentProps: {
-      options: [...statusMap.entries()].map(([key, value]) => ({
-        value: key,
-        label: value,
-      })),
+      options: [...statusMap.entries()]
+        .map(([key, value]) => ({
+          value: key,
+          label: value,
+        }))
+        .filter((it) => [statusValueEnum.PVD, statusValueEnum.OTD].includes(it.value)),
     },
   },
   {
     field: '[outStartDate, outEndDate]',
     label: '出库日期',
     component: 'RangePicker',
+  },
+  {
+    field: 'pageFlag',
+    label: '页面flag',
+    component: 'Input',
+    defaultValue: 'out',
+    show: false,
   },
 ];
 
