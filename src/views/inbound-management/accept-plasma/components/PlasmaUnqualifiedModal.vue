@@ -79,10 +79,20 @@
         component: 'Input',
         show: false,
       },
+      {
+        field: 'batchNo',
+        label: '批次',
+        component: 'Input',
+        show: false,
+      },
     ],
   });
 
-  const [register, { closeModal, setModalProps }] = useModalInner();
+  const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
+    await setFieldsValue({
+      batchNo: data.record.batchNo,
+    });
+  });
 
   function handleLogin() {
     openModal(true);

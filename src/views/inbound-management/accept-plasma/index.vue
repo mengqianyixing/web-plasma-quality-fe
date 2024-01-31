@@ -596,7 +596,11 @@
       warning('请先选择批号!');
       return;
     }
-    openPlasmaUnqualifiedModal(true);
+    openPlasmaUnqualifiedModal(true, {
+      record: {
+        batchNo: batchNo.value,
+      },
+    });
   }
 
   function handleSampleUnqualified() {
