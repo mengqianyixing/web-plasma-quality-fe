@@ -113,7 +113,7 @@
       usrId: useInfo.userId,
       moduleType: 0,
       optName: '用户登出',
-      optContent: `用户【${useInfo.username}】在【${formatDate(new Date())} 注销登录`,
+      optContent: `用户【${useInfo.username}】在【${formatDate(new Date())}】 注销登录`,
       path: 'POST /api/sys/user/logout',
       time: getRandNum(10, 50),
       reqData: JSON.stringify(useInfo),
