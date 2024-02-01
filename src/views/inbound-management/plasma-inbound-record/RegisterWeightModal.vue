@@ -115,7 +115,7 @@
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
     setFieldsValue({
-      verifyNum: data.record.verifyNum,
+      verifyNum: Number(data.record.passBagNum) + Number(data.record.noPassBagNum),
       totalGrossWeight: data.record.verifyWeight
         ? data.record.verifyWeight * 1000 + 36 * data.record.verifyNum
         : 0,
