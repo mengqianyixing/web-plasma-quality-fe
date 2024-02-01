@@ -142,12 +142,13 @@
       },
     },
     {
-      field: 'prepareState',
+      field: 'prepareStates',
       label: '状态',
       component: 'Select',
       colProps: { span: 5 },
-      defaultValue: [],
+      defaultValue: ['TPK', 'RPK'],
       componentProps: {
+        mode: 'multiple',
         options: [...prepareStateMap.entries()].map(([key, value]) => ({
           value: key,
           label: `${value}`,
@@ -202,7 +203,12 @@
       warning('请先选择一条数据!');
       return;
     }
-    const firstSelectedItem = selectedRow.value[0];
+    const firstSelectedItem: any = selectedRow.value[0];
+    const prepareState = firstSelectedItem?.prepareState;
+    if (prepareState !== 'TPK' && prepareState !== 'RPK' && prepareState !== 'CPK') {
+      warning('当前准备号不可分拣!');
+      return;
+    }
     emit('success', firstSelectedItem);
     resetField();
   }

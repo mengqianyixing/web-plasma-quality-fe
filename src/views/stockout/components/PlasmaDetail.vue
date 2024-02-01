@@ -20,11 +20,19 @@
   import { FormSchema } from '@/components/Form';
   import dayjs from 'dayjs';
   import { getSortBags, getSortingBatch } from '@/api/stockout/production-preparation.js';
+  import {
+    sortingMap,
+    sortingValueEnum,
+    prepareProduceMap,
+    prepareProduceValueEnum,
+  } from '@/enums/stockoutEnum';
 
   let prepareNo = ''; // 准备号
   const [registerModal] = useModalInner(async (data) => {
     console.log('血浆明细看看data', data);
     prepareNo = data.record.prepareNo;
+    const sort = data.record.sort; // 分拣/待分拣
+
     await getForm().updateSchema([
       {
         field: 'prepareNo',
@@ -35,15 +43,23 @@
         componentProps: {
           params: { prepareNo },
         },
+        defaultValue: data.record.batchNo,
       },
     ]);
     // 准备投产默认值
     if (data.prepareProduce) {
       await getForm().updateSchema({
         field: 'prepareProduce',
-        defaultValue: true,
+        defaultValue: 'true',
       });
     }
+    if (sort) {
+      await getForm().updateSchema({
+        field: 'sorting',
+        defaultValue: sort === 'sortCount' ? 'true' : 'false',
+      });
+    }
+
     reload();
   });
 
@@ -86,11 +102,17 @@
     {
       title: '准备投产',
       dataIndex: 'prepareProduce',
+      format(text) {
+        return `${prepareProduceMap.get(String(text) as prepareProduceValueEnum)}`;
+      },
     },
     {
       title: '分拣状态',
       dataIndex: 'sorting',
       width: 100,
+      format(text) {
+        return `${sortingMap.get(String(text) as sortingValueEnum)}`;
+      },
     },
     {
       title: '分拣人',
@@ -121,8 +143,6 @@
       colProps: { span: 4 },
       componentProps: {
         api: getSortingBatch,
-        // alwaysLoad: true,
-        // params: { prepareNo },
         labelField: 'batchNo',
         valueField: 'batchNo',
         immediate: false,
@@ -140,16 +160,10 @@
       component: 'Select',
       colProps: { span: 4 },
       componentProps: {
-        options: [
-          {
-            label: '是',
-            value: true,
-          },
-          {
-            label: '否',
-            value: false,
-          },
-        ],
+        options: [...prepareProduceMap.entries()].map(([key, value]) => ({
+          value: key,
+          label: `${value}`,
+        })),
       },
     },
     {
@@ -158,16 +172,10 @@
       component: 'Select',
       colProps: { span: 4 },
       componentProps: {
-        options: [
-          {
-            label: '待分拣',
-            value: false,
-          },
-          {
-            label: '已分拣',
-            value: true,
-          },
-        ],
+        options: [...sortingMap.entries()].map(([key, value]) => ({
+          value: key,
+          label: `${value}`,
+        })),
       },
     },
   ];

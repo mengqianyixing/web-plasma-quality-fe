@@ -12,14 +12,14 @@
     <BasicTable @register="registerTable" :scroll="{ y: 600 }">
       <template #sortCount="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="goPlasmaDetail(record)">
+          <a-button type="link" @click="goPlasmaDetail(record, 'sortCount')">
             {{ record.sortCount }}
           </a-button>
         </div>
       </template>
       <template #waitSortCount="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="goPlasmaDetail(record)">
+          <a-button type="link" @click="goPlasmaDetail(record, 'waitSortCount')">
             {{ record.waitSortCount }}
           </a-button>
         </div>
@@ -121,9 +121,14 @@
 
   // 血浆明细
   const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
-  function goPlasmaDetail(record) {
+  function goPlasmaDetail(record, sort?) {
     openPlasmaDetailModal(true, {
-      record: { ...record, prepareNo: prepareNo.value },
+      record: {
+        ...record,
+        prepareNo: prepareNo.value,
+        batchNo: record.batchNo,
+        sort,
+      },
     });
   }
 </script>

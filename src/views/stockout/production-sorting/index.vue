@@ -53,7 +53,8 @@
 </template>
 
 <script lang="tsx" setup>
-  import { ref, createVNode, nextTick } from 'vue';
+  import { ref, createVNode, nextTick, onMounted } from 'vue';
+  import { useRoute } from 'vue-router';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
@@ -84,6 +85,7 @@
   const { createMessage } = useMessage();
   const { warning, success } = createMessage;
   const [openFullLoading, closeFullLoading] = useLoading({});
+  const route = useRoute();
 
   interface PrepareData {
     batchNoCount?: Number;
@@ -261,7 +263,7 @@
       },
     },
   ];
-  const [register] = useDescription({
+  const [register, { setDescProps }] = useDescription({
     bordered: false,
     column: 6,
     contentStyle: {
@@ -437,7 +439,6 @@
             item.isSelected = false;
           }
         }
-
         // 可投产箱子
         topBoxData.value[0].sortCount = data.pros?.sortCount;
         topBoxData.value[0].totalCount = data.pros?.totalCount;
@@ -456,7 +457,7 @@
         if (data.unPro?.sortImmTypes?.length) {
           let scollToIndex = -1;
           // 挑第一袋时，topBoxData中只有可投产的箱，此处直接生成不投产箱子
-          if (topBoxData.value.length === 1) {
+          if (topBoxData.value && topBoxData.value.length === 1) {
             const unProArr = data.unPro?.sortImmTypes?.map((item, index) => {
               if (item?.bagNos?.length) {
                 scollToIndex = index;
@@ -497,7 +498,7 @@
         if (data.utrkUnPro?.sortImmTypes?.length) {
           // 挑第一袋时， bottomBoxData 列表数据为空,直接赋值列表
           let scollToIndex = -1;
-          if (!bottomBoxData.value.length) {
+          if (!bottomBoxData.value || !bottomBoxData.value.length) {
             bottomBoxData.value = data.utrkUnPro?.sortImmTypes?.map((item, index) => {
               if (item?.bagNos?.length) {
                 scollToIndex = index;
@@ -618,6 +619,9 @@
       if (pickMode === 'A') {
         pickTitle.value.top = '检疫期合格可投产血浆';
         pickTitle.value.bottom = '暂不投产血浆';
+        setDescProps({
+          title: '挑浆模式-投/暂不投',
+        });
         setBatchDescProps({
           schema: [
             ...batchSchema,
@@ -640,6 +644,9 @@
       if (pickMode === 'B') {
         pickTitle.value.top = '检疫期合格可投产&检疫期合格暂不投产血浆';
         pickTitle.value.bottom = '检疫期待放行血浆';
+        setDescProps({
+          title: '挑浆模式-投/暂不投/待放行',
+        });
         {
           setBatchDescProps({
             schema: [
@@ -755,7 +762,7 @@
       warning('请选择投产准备号!');
       return;
     }
-    if (!data.bagNos.length) {
+    if (!data.bagNos || !data.bagNos.length) {
       warning('请先分拣血浆');
       return;
     }
@@ -793,7 +800,7 @@
       warning('请选择投产准备号!');
       return;
     }
-    if (!data.bagNos.length) {
+    if (!data.bagNos || !data.bagNos.length) {
       warning('请先分拣血浆');
       return;
     }
@@ -892,6 +899,13 @@
       prepareProduce: prepareProduce === 'prepareProduce',
     });
   }
+
+  onMounted(() => {
+    // 投产准备跳转过来
+    if (route.query.prepareNo) {
+      prepareModalSuccess(route.query);
+    }
+  });
 </script>
 <style lang="less" scoped>
   .card-bar-header {
