@@ -25,6 +25,7 @@
           v-model:activeKey="activeKey"
           @change="change"
           class="h-full bg-white tabs"
+          type="card"
           size="small"
         >
           <TabPane key="1" tab="尚未有效价结果">

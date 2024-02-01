@@ -29,7 +29,7 @@
       <CellWapper :data="rowData" cell-width="16.66%" :cell-list="cellList" :gap="0" />
       <div class="title">血浆信息</div>
       <CellWapper :data="countData" :cell-list="plasmaCellList" :gap="0" />
-      <Tabs v-model:activeKey="activeKey" class="flex-1 bg-white">
+      <Tabs v-model:activeKey="activeKey" class="flex-1 bg-white mt-10px" type="card" size="small">
         <TabPane key="1" tab="检测明细">
           <CheckPage :bs-no="bsNo" @reload="saveReload" />
         </TabPane>

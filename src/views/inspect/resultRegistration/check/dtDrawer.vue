@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 17:52:29
+ * @LastEditTime: 2024-02-01 16:16:19
 -->
 <template>
   <BasicModal
@@ -24,6 +24,7 @@
           v-model:activeKey="activeKey"
           @change="change"
           class="h-full bg-white tabs"
+          type="card"
           size="small"
         >
           <TabPane key="1" tab="合格样本">

@@ -24,6 +24,7 @@
           v-model:activeKey="state.activeKey"
           @change="change"
           class="h-full bg-white tabs"
+          type="card"
           size="small"
         >
           <TabPane tab="分拣血浆箱" key="1">
