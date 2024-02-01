@@ -232,7 +232,7 @@
     api: demoListApi,
     columns: columns,
     showIndexColumn: false,
-    showTableSetting: true,
+
     tableSetting: { fullScreen: true },
     actionColumn: {
       width: 160,

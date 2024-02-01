@@ -98,11 +98,7 @@
     showTableSetting: false,
     bordered: true,
     showIndexColumn: true,
-    tableSetting: {
-      size: false,
-      redo: false,
-      setting: false,
-    },
+
     canResize: true,
   });
 

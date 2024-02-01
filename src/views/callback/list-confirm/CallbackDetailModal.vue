@@ -96,12 +96,7 @@
     size: 'small',
     striped: false,
     useSearchForm: false,
-    showTableSetting: true,
-    tableSetting: {
-      size: false,
-      redo: false,
-      setting: false,
-    },
+
     bordered: true,
     showIndexColumn: false,
     canResize: false,

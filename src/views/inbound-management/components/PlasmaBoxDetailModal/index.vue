@@ -53,12 +53,7 @@
     striped: false,
     pagination: false,
     useSearchForm: true,
-    showTableSetting: true,
-    tableSetting: {
-      size: false,
-      redo: false,
-      setting: false,
-    },
+
     bordered: true,
     showIndexColumn: false,
     immediate: false,

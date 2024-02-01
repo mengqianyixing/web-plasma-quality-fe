@@ -288,12 +288,7 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-    showTableSetting: true,
-    tableSetting: {
-      size: false,
-      redo: false,
-      setting: false,
-    },
+
     bordered: true,
     showIndexColumn: false,
     canResize: false,

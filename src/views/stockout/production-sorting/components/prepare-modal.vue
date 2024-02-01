@@ -182,12 +182,7 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-    showTableSetting: true,
-    tableSetting: {
-      size: false,
-      redo: false,
-      setting: false,
-    },
+
     handleSearchInfoFn(info) {
       return info;
     },
