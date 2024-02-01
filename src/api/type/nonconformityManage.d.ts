@@ -302,7 +302,7 @@ export interface DeleteApiCoreBagUnqualifiedProcessBagNoResponse {}
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified/{bagNo}`
- * @更新时间 `2024-01-10 11:16:08`
+ * @更新时间 `2024-02-01 16:32:39`
  */
 export interface GetApiCoreBagUnqualifiedBagNoRequest {
   bagNo: string;
@@ -313,7 +313,7 @@ export interface GetApiCoreBagUnqualifiedBagNoRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified/{bagNo}`
- * @更新时间 `2024-01-10 11:16:08`
+ * @更新时间 `2024-02-01 16:32:39`
  */
 export interface GetApiCoreBagUnqualifiedBagNoResponse {
   /**
@@ -467,7 +467,7 @@ export interface GetApiCoreBagUnqualifiedBagNoResponse {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-01-18 11:21:47`
+ * @更新时间 `2024-02-01 16:37:37`
  */
 export interface GetApiCoreBagUnqualifiedRequest {
   pageSize: string;
@@ -516,6 +516,10 @@ export interface GetApiCoreBagUnqualifiedRequest {
    * 出库时间
    */
   outStoreEndDate?: string;
+  /**
+   * 不合格类型
+   */
+  flow?: string;
 }
 
 /**
@@ -523,7 +527,7 @@ export interface GetApiCoreBagUnqualifiedRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-01-18 11:21:47`
+ * @更新时间 `2024-02-01 16:37:37`
  */
 export interface GetApiCoreBagUnqualifiedResponse {
   totalCount?: number;
@@ -559,6 +563,7 @@ export interface GetApiCoreBagUnqualifiedResponse {
      * 状态
      */
     state: string;
+    flow: string;
     /**
      * 入库日期
      */

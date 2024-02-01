@@ -77,6 +77,7 @@
         colProps: {
           span: 15,
         },
+        required: false,
         show: !!data.record.automatic,
       },
     ]);
