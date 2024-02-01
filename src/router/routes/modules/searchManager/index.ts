@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-28 18:11:32
  * @LastEditors: zcc
- * @LastEditTime: 2024-02-01 14:19:02
+ * @LastEditTime: 2024-02-01 15:55:34
  * @Description: 托盘管理
  * @FilePath: \psms-fe\src\router\routes\modules\trayManager\index.ts
  */
@@ -14,8 +14,8 @@ const trayManager: AppRouteModule = {
   path: '/search',
   name: 'SearchManager',
   component: LAYOUT,
-  menuWeight: 910,
-  id: 91,
+  menuWeight: 900,
+  id: 90,
   meta: {
     title: '查询统计',
     icon: 'ant-design:windows-outlined',
@@ -27,7 +27,7 @@ const trayManager: AppRouteModule = {
       meta: {
         title: '库存查询',
       },
-      id: 910010,
+      id: 900010,
       component: () => import('/@/views/plasma-store/inventory/index.vue'),
     },
   ],

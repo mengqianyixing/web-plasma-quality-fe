@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2024-01-31 18:59:35
  * @LastEditors: zcc
- * @LastEditTime: 2024-02-01 14:37:19
+ * @LastEditTime: 2024-02-01 15:53:59
  */
 import type { AppRouteModule } from '@/router/types';
 
@@ -15,8 +15,8 @@ const nonconformity: AppRouteModule = {
   name: 'Nonconformity',
   component: LAYOUT,
   redirect: '/nonconformity/nb',
-  id: 93,
-  menuWeight: 930,
+  id: 92,
+  menuWeight: 920,
   meta: {
     orderNo: 10000,
     title: '不合格管理',
@@ -26,7 +26,7 @@ const nonconformity: AppRouteModule = {
     {
       path: 'nb',
       name: 'NonconformityBoxes',
-      id: 930010,
+      id: 920010,
       meta: {
         title: '不合格库房管理',
       },
@@ -38,7 +38,7 @@ const nonconformity: AppRouteModule = {
       meta: {
         title: '不合格血浆登记',
       },
-      id: 930020,
+      id: 920020,
       component: () => import('/@/views/nonconformity/nonconformity-registration/index.vue'),
     },
     {
@@ -47,7 +47,7 @@ const nonconformity: AppRouteModule = {
       meta: {
         title: '不合格血浆出库',
       },
-      id: 930030,
+      id: 920030,
       component: () => import('/@/views/nonconformity/plasmaOut/index.vue'),
     },
     {
@@ -56,7 +56,7 @@ const nonconformity: AppRouteModule = {
       meta: {
         title: '不合格血浆管理',
       },
-      id: 930040,
+      id: 920040,
       component: () => import('/@/views/nonconformity/plasma-manage/index.vue'),
     },
   ],

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: zcc
- * @LastEditTime: 2024-02-01 14:34:56
+ * @LastEditTime: 2024-02-01 15:54:43
  * @Description: 出库管理
  * @FilePath: \psms-fe\src\router\routes\modules\stockout\index.ts
  */
@@ -13,8 +13,8 @@ import { LAYOUT } from '@/router/constant';
 const nonconformity: AppRouteModule = {
   path: '/stockout',
   name: 'StockOut',
-  id: 92,
-  menuWeight: 920,
+  id: 91,
+  menuWeight: 910,
   component: LAYOUT,
   meta: {
     orderNo: 10000,
@@ -25,7 +25,7 @@ const nonconformity: AppRouteModule = {
     {
       path: 'pp',
       name: 'ProductionPreparation',
-      id: 920010,
+      id: 910010,
       meta: {
         title: '投产准备',
       },
@@ -34,7 +34,7 @@ const nonconformity: AppRouteModule = {
     {
       path: 'ps',
       name: 'ProductionSorting',
-      id: 920020,
+      id: 910020,
       meta: {
         title: '血浆分拣',
       },
@@ -43,7 +43,7 @@ const nonconformity: AppRouteModule = {
     {
       path: 'po',
       name: 'ProductionOrder',
-      id: 920030,
+      id: 910030,
       meta: {
         title: '生产指令',
       },
@@ -52,7 +52,7 @@ const nonconformity: AppRouteModule = {
     {
       path: 'productionPlan',
       name: 'ProductionPlan',
-      id: 920040,
+      id: 910040,
       meta: {
         title: '投产计划',
       },
@@ -62,7 +62,7 @@ const nonconformity: AppRouteModule = {
     {
       path: 'productionPutInto',
       name: 'ProductionPutInto',
-      id: 920050,
+      id: 910050,
       meta: {
         title: '投产出库',
       },
