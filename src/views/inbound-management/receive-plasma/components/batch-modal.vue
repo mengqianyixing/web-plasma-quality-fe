@@ -233,12 +233,7 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-    showTableSetting: true,
-    tableSetting: {
-      size: false,
-      redo: false,
-      setting: false,
-    },
+
     handleSearchInfoFn(info) {
       console.log('handleSearchInfoFn', info);
       return info;

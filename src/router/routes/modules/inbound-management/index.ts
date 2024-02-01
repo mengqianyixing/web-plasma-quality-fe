@@ -1,8 +1,8 @@
 /*
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-17 15:41:08
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-02-01 14:37:59
  * @Description: 入库管理
  * @FilePath: \psms-fe\src\router\routes\modules\inbound-management\index.ts
  */
@@ -14,8 +14,8 @@ const inboundmanagement: AppRouteModule = {
   path: '/inboundmanagement',
   name: 'Inboundmanagement',
   component: LAYOUT,
-  id: 93,
-  menuWeight: 96,
+  id: 98,
+  menuWeight: 980,
   meta: {
     orderNo: 10001,
     title: '入库管理',
@@ -25,7 +25,7 @@ const inboundmanagement: AppRouteModule = {
     {
       path: 'receiveplasma',
       name: 'Receiveplasma',
-      id: 9301,
+      id: 980010,
       meta: {
         title: '血浆接收',
       },
@@ -34,37 +34,20 @@ const inboundmanagement: AppRouteModule = {
     {
       path: 'acceptplasma',
       name: 'Acceptplasma',
-      id: 9302,
+      id: 980020,
       meta: {
         title: '血浆验收',
       },
       component: () => import('@/views/inbound-management/accept-plasma/index.vue'),
     },
-    {
-      path: 'sample-accept',
-      name: 'SampleAccept',
-      meta: {
-        title: '样本接收',
-      },
-      id: 9303,
-      component: () => import('@/views/inbound-management/sample-receive/index.vue'),
-    },
-    {
-      path: 'sample-verify',
-      name: '样本验收',
-      meta: {
-        title: '样本验收',
-      },
-      id: 9304,
-      component: () => import('@/views/inbound-management/sample-verify/index.vue'),
-    },
+
     {
       path: 'plasma-inbound-record',
       name: 'PlasmaInboundRecord',
       meta: {
         title: '血浆入库记录',
       },
-      id: 9305,
+      id: 980030,
       component: () => import('@/views/inbound-management/plasma-inbound-record/index.vue'),
     },
   ],

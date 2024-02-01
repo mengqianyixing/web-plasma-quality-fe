@@ -7,6 +7,7 @@ import {
 } from '@/enums/nonconforityEnum';
 import { DescItem } from '@/components/Description';
 import dayjs from 'dayjs';
+import { PlasmaUnqualifiedTypeMap, PlasmaUnqualifiedTypeValueEnum } from '@/enums/plasmaEnum';
 
 export const columns: BasicColumn[] = [
   {
@@ -37,6 +38,13 @@ export const columns: BasicColumn[] = [
     dataIndex: 'unqReason',
     slots: { customRender: 'unqReason' },
     width: 200,
+  },
+  {
+    title: '不合格类别',
+    dataIndex: 'flow',
+    format(text) {
+      return PlasmaUnqualifiedTypeMap.get(text as PlasmaUnqualifiedTypeValueEnum) as string;
+    },
   },
   {
     title: '状态',
@@ -88,10 +96,20 @@ export const searchSchema: FormSchema[] = [
     component: 'Select',
   },
   {
+    field: 'flow',
+    label: '不合格类别',
+    component: 'Select',
+    componentProps: {
+      options: [...PlasmaUnqualifiedTypeMap.entries()].map(([value, label]) => ({
+        label,
+        value,
+      })),
+    },
+  },
+  {
     field: 'state',
     label: '状态',
     component: 'Select',
-
     componentProps: {
       options: [...nonconformityPlasmaMap.entries()].map(([value, label]) => ({
         label,

@@ -44,7 +44,7 @@
     striped: false,
     pagination: false,
     useSearchForm: true,
-    showTableSetting: true,
+
     tableSetting: {
       size: false,
       redo: false,

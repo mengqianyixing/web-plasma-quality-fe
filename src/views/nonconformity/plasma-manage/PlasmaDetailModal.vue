@@ -35,9 +35,10 @@
     detailRef.value = {
       ...detailData,
       gender: genderMap.get(detailData.gender as genderValueEnum),
-      unqReason: data.record.plasmaUnqualifiedDictionary?.find(
-        (it: Recordable) => it.value === detailData.unqReason,
-      )?.label,
+      unqReason:
+        data.record.plasmaUnqualifiedDictionary?.find(
+          (it: Recordable) => it.value === detailData.unqReason,
+        )?.label ?? detailData.unqReason,
       donorStatus: donorStatusMap.get(detailData.donorStatus as donorStatusValueEnum),
       plasmaState: nonconformityPlasmaMap.get(
         detailData.plasmaState as NonconformityPlasmaStatusValueEnum,

@@ -140,11 +140,7 @@
     striped: false,
     useSearchForm: true,
     showTableSetting: false,
-    tableSetting: {
-      size: false,
-      redo: false,
-      setting: false,
-    },
+
     bordered: true,
     showIndexColumn: false,
     canResize: false,

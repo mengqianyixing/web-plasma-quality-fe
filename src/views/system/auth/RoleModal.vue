@@ -157,7 +157,7 @@
         emit('success');
         return;
       }
-      const domains = values?.domains?.checked ?? [];
+      const domains = values?.domains?.checked ?? values?.domains ?? [];
       // loading
       setModalProps({ confirmLoading: true });
       try {

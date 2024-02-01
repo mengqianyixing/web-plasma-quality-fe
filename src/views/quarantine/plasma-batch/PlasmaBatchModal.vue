@@ -70,14 +70,10 @@
       // }),
     },
     useSearchForm: true,
-    showTableSetting: true,
+
     bordered: true,
     showIndexColumn: false,
-    tableSetting: {
-      size: false,
-      redo: false,
-      setting: false,
-    },
+
     canResize: true,
   });
 

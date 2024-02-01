@@ -54,6 +54,9 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆净重(kg)',
     dataIndex: 'totalWeight',
+    format(text) {
+      return Number(text) / 1000;
+    },
   },
   {
     title: '血浆效期',

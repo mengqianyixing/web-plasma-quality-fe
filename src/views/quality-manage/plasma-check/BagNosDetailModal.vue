@@ -21,11 +21,7 @@
     size: 'small',
     striped: false,
     useSearchForm: false,
-    tableSetting: {
-      size: false,
-      redo: false,
-      setting: false,
-    },
+
     bordered: true,
     showIndexColumn: true,
     indexColumnProps: {

@@ -47,10 +47,11 @@
         <CellWapper :data="cellData" :cell-list="cellList" :gap="0" />
         <div class="flex-1 w-full">
           <Tabs
+            type="card"
+            size="small"
             v-model:activeKey="activeKey"
             @change="change"
             class="h-full bg-white tabs"
-            size="small"
           >
             <TabPane v-for="tab in tabList" :key="tab.key" :tab="tab.label">
               <div style="height: calc(100% - 20px)">

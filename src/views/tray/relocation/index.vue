@@ -4,11 +4,11 @@
  * @Author: zcc
  * @Date: 2023-12-15 17:42:17
  * @LastEditors: zcc
- * @LastEditTime: 2023-12-21 16:58:56
+ * @LastEditTime: 2024-02-01 16:13:13
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <Tabs v-model:activeKey="activeKey" class="h-full bg-white m-16px">
+    <Tabs v-model:activeKey="activeKey" class="h-full bg-white m-16px" type="card" size="small">
       <TabPane key="1" tab="托盘移库">
         <TrayRelocation />
       </TabPane>

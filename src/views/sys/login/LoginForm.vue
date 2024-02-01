@@ -75,6 +75,8 @@
   import { getSysVerifyCode } from '@/api/sys/login';
   import { buildUUID } from '@/utils/uuid';
   import oauth from '@/api/oauth/oauth';
+  import { pushLog } from '@/api/oauth/logger';
+  import { formatDate, qsParse } from 'js-xxx';
 
   const ACol = Col;
   const ARow = Row;
@@ -96,11 +98,25 @@
     const [path, queryString] = url.split('?');
     console.log({ url, path, queryString });
     if (queryString && queryString.includes('code')) {
-      // @ts-ignore
+      const timeStamp = new Date().getTime();
       oauth.signIn(queryString).then((res) => {
         if (res.code == 0) {
           window.history.replaceState({}, '', path);
-          userStore.oathLogin(res.data);
+          // 模拟登录日志-审计使用
+          const useInfo = res?.data ?? {};
+          const time = new Date();
+          pushLog({
+            usrName: useInfo.username,
+            usrId: useInfo.userId,
+            moduleType: 0,
+            optName: '用户登录',
+            optContent: `用户【${useInfo.username}】在【${formatDate(time)}】登录成功`,
+            path: 'POST /api/sys/user/login',
+            time: time.getTime() - timeStamp,
+            reqData: JSON.stringify(qsParse(queryString)),
+            respData: JSON.stringify(res),
+          });
+          userStore.oathLogin(useInfo);
         } else {
           // handleCasDoorLogin();
         }

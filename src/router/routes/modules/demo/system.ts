@@ -1,8 +1,8 @@
 /*
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-26 16:45:47
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-02-01 14:40:34
  * @Description: 系统管理
  * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
  */
@@ -13,7 +13,7 @@ import { LAYOUT } from '@/router/constant';
 const system: AppRouteModule = {
   path: '/system',
   name: 'System',
-  menuWeight: 98,
+  menuWeight: 1010,
   id: 92,
   component: LAYOUT,
   redirect: '/system/account',
@@ -24,80 +24,9 @@ const system: AppRouteModule = {
   },
   children: [
     {
-      path: 'account',
-      id: 9201,
-      name: 'AccountManagement',
-      meta: {
-        title: '账号管理',
-        ignoreKeepAlive: false,
-      },
-      component: () => import('@/views/system/account/index.vue'),
-    },
-    // {
-    //   path: 'account_detail/:id',
-    //   name: 'AccountDetail',
-    //   meta: {
-    //     hideMenu: true,
-    //     title: '账号详情',
-    //     ignoreKeepAlive: true,
-    //     showMenu: false,
-    //     currentActiveMenu: '/system/account',
-    //   },
-    //   component: () => import('@/views/system/account/AccountDetail.vue'),
-    // },
-    {
-      path: 'role',
-      name: 'RoleManagement',
-      id: 9202,
-      meta: {
-        title: '角色管理',
-        ignoreKeepAlive: true,
-      },
-      component: () => import('@/views/system/role/index.vue'),
-    },
-    {
-      path: 'menu',
-      name: 'MenuManagement',
-      id: 9203,
-      meta: {
-        title: '菜单管理',
-        ignoreKeepAlive: true,
-      },
-      component: () => import('@/views/system/menu/index.vue'),
-    },
-    {
-      path: 'dept',
-      id: 9204,
-      name: 'DeptManagement',
-      meta: {
-        title: '部门管理',
-        ignoreKeepAlive: true,
-      },
-      component: () => import('@/views/system/dept/index.vue'),
-    },
-    {
-      path: 'resource',
-      id: 9205,
-      name: 'ResourceViews',
-      meta: {
-        title: '资源管理',
-        ignoreKeepAlive: true,
-      },
-      component: () => import('@/views/system/resource/index.vue'),
-    },
-    {
-      path: 'dictionary',
-      name: 'Dictionary',
-      meta: {
-        title: '字典管理',
-      },
-      id: 9206,
-      component: () => import('@/views/system/dictionary/index.vue'),
-    },
-    {
       path: 'auth_menus',
       name: 'AuthMenus',
-      id: 9207,
+      id: 101010,
       meta: {
         title: '权限管理',
         ignoreKeepAlive: true,
@@ -119,7 +48,7 @@ const system: AppRouteModule = {
     {
       path: 'users',
       name: 'Users',
-      id: 9209,
+      id: 101020,
       meta: {
         title: '用户管理',
         ignoreKeepAlive: true,
@@ -133,21 +62,13 @@ const system: AppRouteModule = {
       ],
       component: () => import('@/views/system/users/index.vue'),
     },
-    {
-      path: 'params',
-      name: 'Params',
-      id: 9208,
-      meta: {
-        title: '系统参数',
-      },
-      component: () => import('@/views/system/params/index.vue'),
-    },
+
     {
       path: 'policies',
       name: 'Policies',
-      id: 9210,
+      id: 101030,
       meta: {
-        title: '策略管理',
+        title: '资源管理',
       },
       authElements: [
         {
@@ -158,24 +79,6 @@ const system: AppRouteModule = {
       ],
       component: () => import('@/views/system/policies/index.vue'),
     },
-    {
-      path: 'report',
-      name: 'report',
-      id: 9211,
-      meta: {
-        title: '报表设置',
-      },
-      component: () => import('@/views/system/report/index.vue'),
-    },
-    // {
-    //   path: 'changePassword',
-    //   name: 'ChangePassword',
-    //   meta: {
-    //     title: '修改密码',
-    //     ignoreKeepAlive: true,
-    //   },
-    //   component: () => import('@/views/system/password/index.vue'),
-    // },
   ],
 };
 

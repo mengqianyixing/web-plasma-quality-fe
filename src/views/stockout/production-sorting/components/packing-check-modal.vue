@@ -181,11 +181,7 @@
     striped: false,
     useSearchForm: false,
     showTableSetting: false,
-    tableSetting: {
-      size: false,
-      redo: false,
-      setting: false,
-    },
+
     bordered: true,
     showIndexColumn: true,
     canResize: false,
