@@ -1,8 +1,8 @@
 /*
  * @Author: HxB
  * @Date: 2023-12-28 18:11:32
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-17 15:40:45
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-02-01 14:39:41
  * @Description: 回访管理
  * @FilePath: \psms-fe\src\router\routes\modules\callManager\index.ts
  */
@@ -13,8 +13,8 @@ import { LAYOUT } from '@/router/constant';
 const callManager: AppRouteModule = {
   path: '/callback',
   name: 'Callback',
-  id: 90,
-  menuWeight: 97,
+  id: 94,
+  menuWeight: 940,
   component: LAYOUT,
   meta: {
     title: '回访管理',
@@ -27,7 +27,7 @@ const callManager: AppRouteModule = {
       meta: {
         title: '回访名单',
       },
-      id: 9001,
+      id: 940010,
       component: () => import('/@/views/callback/list-generation/index.vue'),
     },
     {
@@ -36,7 +36,7 @@ const callManager: AppRouteModule = {
       meta: {
         title: '回访完成',
       },
-      id: 9002,
+      id: 940020,
       component: () => import('/@/views/callback/callback-complete/index.vue'),
     },
     {
@@ -45,7 +45,7 @@ const callManager: AppRouteModule = {
       meta: {
         title: '回访失败',
       },
-      id: 9003,
+      id: 940030,
       component: () => import('/@/views/callback/callback-failure/index.vue'),
     },
   ],

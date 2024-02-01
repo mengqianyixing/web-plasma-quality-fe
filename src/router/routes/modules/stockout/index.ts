@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
  * @LastEditors: zcc
- * @LastEditTime: 2024-01-19 11:06:19
+ * @LastEditTime: 2024-02-01 14:34:56
  * @Description: 出库管理
  * @FilePath: \psms-fe\src\router\routes\modules\stockout\index.ts
  */
@@ -13,8 +13,8 @@ import { LAYOUT } from '@/router/constant';
 const nonconformity: AppRouteModule = {
   path: '/stockout',
   name: 'StockOut',
-  id: 96,
-  menuWeight: 90,
+  id: 92,
+  menuWeight: 920,
   component: LAYOUT,
   meta: {
     orderNo: 10000,
@@ -23,9 +23,27 @@ const nonconformity: AppRouteModule = {
   },
   children: [
     {
+      path: 'pp',
+      name: 'ProductionPreparation',
+      id: 920010,
+      meta: {
+        title: '投产准备',
+      },
+      component: () => import('/@/views/stockout/production-preparation/index.vue'),
+    },
+    {
+      path: 'ps',
+      name: 'ProductionSorting',
+      id: 920020,
+      meta: {
+        title: '血浆分拣',
+      },
+      component: () => import('/@/views/stockout/production-sorting/index.vue'),
+    },
+    {
       path: 'po',
       name: 'ProductionOrder',
-      id: 9601,
+      id: 920030,
       meta: {
         title: '生产指令',
       },
@@ -34,38 +52,21 @@ const nonconformity: AppRouteModule = {
     {
       path: 'productionPlan',
       name: 'ProductionPlan',
-      id: 9602,
+      id: 920040,
       meta: {
         title: '投产计划',
       },
       component: () => import('/@/views/stockout/production-plan/index.vue'),
     },
-    {
-      path: 'pp',
-      name: 'ProductionPreparation',
-      id: 9603,
-      meta: {
-        title: '投产准备',
-      },
-      component: () => import('/@/views/stockout/production-preparation/index.vue'),
-    },
+
     {
       path: 'productionPutInto',
       name: 'ProductionPutInto',
-      id: 9604,
+      id: 920050,
       meta: {
         title: '投产出库',
       },
       component: () => import('/@/views/stockout/production-put-into/index.vue'),
-    },
-    {
-      path: 'ps',
-      name: 'ProductionSorting',
-      id: 9605,
-      meta: {
-        title: '血浆分拣',
-      },
-      component: () => import('/@/views/stockout/production-sorting/index.vue'),
     },
   ],
 };

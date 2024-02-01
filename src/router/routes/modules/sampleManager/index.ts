@@ -1,8 +1,8 @@
 /*
  * @Author: HxB
  * @Date: 2024-01-11 09:17:02
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-17 15:55:58
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-02-01 14:30:41
  * @Description: 样本管理
  * @FilePath: \psms-fe\src\router\routes\modules\sampleManager\index.ts
  */
@@ -15,8 +15,8 @@ const sampleManager: AppRouteModule = {
   name: 'SampleManage',
   component: LAYOUT,
   redirect: '/sample-manage/sample-release',
-  id: 89,
-  menuWeight: 94,
+  id: 97,
+  menuWeight: 970,
   meta: {
     orderNo: 30001,
     title: '样本管理',
@@ -24,9 +24,27 @@ const sampleManager: AppRouteModule = {
   },
   children: [
     {
+      path: 'sample-accept',
+      name: 'SampleAccept',
+      meta: {
+        title: '样本接收',
+      },
+      id: 970010,
+      component: () => import('@/views/inbound-management/sample-receive/index.vue'),
+    },
+    {
+      path: 'sample-verify',
+      name: '样本验收',
+      meta: {
+        title: '样本验收',
+      },
+      id: 970020,
+      component: () => import('@/views/inbound-management/sample-verify/index.vue'),
+    },
+    {
       path: 'sample-release',
       name: 'SampleRelease',
-      id: 8901,
+      id: 970030,
       meta: {
         title: '样本发布',
       },
