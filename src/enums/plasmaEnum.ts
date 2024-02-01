@@ -48,3 +48,33 @@ PlasmaCheckStateMap.set(PlasmaCheckStateValueEnum.WC, PlasmaCheckStateEnum.WC);
 PlasmaCheckStateMap.set(PlasmaCheckStateValueEnum.WV, PlasmaCheckStateEnum.WV);
 PlasmaCheckStateMap.set(PlasmaCheckStateValueEnum.WA, PlasmaCheckStateEnum.WA);
 PlasmaCheckStateMap.set(PlasmaCheckStateValueEnum.AD, PlasmaCheckStateEnum.AD);
+
+export enum PlasmaUnqualifiedTypeEnum {
+  USP = '不合格样本登记',
+  UPR = '不合格血浆登记',
+  TRS = '检测结果',
+  QPR = '检疫期',
+  FUP = '续追踪',
+  PCP = '血浆验收',
+  SAP = '样本验收',
+}
+
+export enum PlasmaUnqualifiedTypeValueEnum {
+  USP = 'USP',
+  UPR = 'UPR',
+  TRS = 'TRS',
+  QPR = 'QPR',
+  FUP = 'FUP',
+  PCP = 'PCP',
+  SAP = 'SAP',
+}
+
+export const PlasmaUnqualifiedTypeMap = new Map<PlasmaUnqualifiedTypeValueEnum, string>();
+
+PlasmaUnqualifiedTypeMap.set(PlasmaUnqualifiedTypeValueEnum.USP, PlasmaUnqualifiedTypeEnum.USP);
+PlasmaUnqualifiedTypeMap.set(PlasmaUnqualifiedTypeValueEnum.UPR, PlasmaUnqualifiedTypeEnum.UPR);
+PlasmaUnqualifiedTypeMap.set(PlasmaUnqualifiedTypeValueEnum.TRS, PlasmaUnqualifiedTypeEnum.TRS);
+PlasmaUnqualifiedTypeMap.set(PlasmaUnqualifiedTypeValueEnum.QPR, PlasmaUnqualifiedTypeEnum.QPR);
+PlasmaUnqualifiedTypeMap.set(PlasmaUnqualifiedTypeValueEnum.FUP, PlasmaUnqualifiedTypeEnum.FUP);
+PlasmaUnqualifiedTypeMap.set(PlasmaUnqualifiedTypeValueEnum.PCP, PlasmaUnqualifiedTypeEnum.PCP);
+PlasmaUnqualifiedTypeMap.set(PlasmaUnqualifiedTypeValueEnum.SAP, PlasmaUnqualifiedTypeEnum.SAP);
