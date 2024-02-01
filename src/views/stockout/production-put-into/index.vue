@@ -133,7 +133,10 @@
   function handleBoxStockOut() {
     if (!selectRowsCheck()) return;
 
-    if (selectedRow.value[0]?.state !== statusValueEnum.PVD) {
+    if (
+      selectedRow.value[0]?.state !== statusValueEnum.PVD &&
+      selectedRow.value[0]?.state !== statusValueEnum.OUI
+    ) {
       createMessage.warn('该状态下的制造批号不允许逐箱出库');
       return;
     }
@@ -148,7 +151,10 @@
   function handleBatchStockOut() {
     if (!selectRowsCheck()) return;
 
-    if (selectedRow.value[0]?.state !== statusValueEnum.PVD) {
+    if (
+      selectedRow.value[0]?.state !== statusValueEnum.PVD &&
+      selectedRow.value[0]?.state !== statusValueEnum.OUI
+    ) {
       createMessage.warn('该状态下的制造批号不允许整批出库');
       return;
     }
@@ -173,7 +179,10 @@
   function handlePickPlasmaSystem() {
     if (!selectRowsCheck()) return;
 
-    if (selectedRow.value[0]?.state !== statusValueEnum.PVD) {
+    if (
+      selectedRow.value[0]?.state !== statusValueEnum.PVD &&
+      selectedRow.value[0]?.state !== statusValueEnum.OUI
+    ) {
       createMessage.warn('该状态下的制造批号不允许挑浆');
       return;
     }
@@ -195,7 +204,7 @@
     if (!selectRowsCheck()) return;
 
     if (
-      selectedRow.value[0]?.state !== statusValueEnum.OTD ||
+      selectedRow.value[0]?.state !== statusValueEnum.OTD &&
       selectedRow.value[0]?.state !== statusValueEnum.OUI
     ) {
       createMessage.warn('只有已出库或出库中状态下的制造批号才允许撤销出');
