@@ -383,8 +383,11 @@
     {
       title: '满足率',
       dataIndex: 'passRatio',
-      sorter: true,
+      // sorter: true,
       width: 100,
+      format(text) {
+        return text ? text + '%' : '-';
+      },
     },
     {
       title: '浆员数量',

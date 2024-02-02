@@ -40,7 +40,7 @@
           <a-button @click="clickCheck"> 复核 </a-button>
           <a-button @click="revokeCheck"> 撤销复核 </a-button>
           <a-button> 自动分拣 </a-button>
-          <a-button> 转人工分拣 </a-button>
+          <a-button @click="manual"> 转人工分拣 </a-button>
         </div>
       </template>
     </BasicTable>
@@ -53,6 +53,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+  import { useRouter } from 'vue-router';
   import { BasicTable, useTable, BasicColumn } from '@/components/Table';
   import { FormSchema } from '@/components/Form';
   import { useModal } from '@/components/Modal';
@@ -83,6 +84,7 @@
     pickModeValueEnum,
   } from '@/enums/stockoutEnum';
 
+  const router = useRouter();
   const { createMessage } = useMessage();
   const { warning, success } = createMessage;
 
@@ -239,7 +241,7 @@
       },
     },
     {
-      field: 'prepareState',
+      field: 'prepareStates',
       label: '状态',
       component: 'Select',
       colProps: { span: 6 },
@@ -311,11 +313,7 @@
       return;
     }
     const selectedRowOne: any = selectedRow.value[0];
-    if (
-      selectedRowOne.prepareState === 'REV' ||
-      selectedRowOne.prepareState === 'TPK' ||
-      selectedRowOne.prepareState === 'DEL'
-    ) {
+    if (selectedRowOne.prepareState !== 'RUN' || selectedRowOne.prodBagCount == 0) {
       warning('该准备号不可修改!');
       return;
     }
@@ -480,6 +478,25 @@
     openPlasmaDetailModal(true, {
       record,
       prepareProduce,
+    });
+  }
+
+  // 人工分拣
+  function manual() {
+    if (!selectedRow.value.length) {
+      warning('请先选择投产准备号!');
+      return;
+    }
+    const selectedRowOne: any = selectedRow.value[0];
+    const prepareState = selectedRowOne?.prepareState;
+    if (prepareState !== 'TPK' && prepareState !== 'RPK' && prepareState !== 'CPK') {
+      warning('该准备号不可转人工分拣!');
+      return;
+    }
+    // 跳转血浆分拣页面
+    router.push({
+      path: '/stockout/ps',
+      query: { prepareNo: selectedRowOne.prepareNo, pickMode: selectedRowOne.pickMode },
     });
   }
 </script>

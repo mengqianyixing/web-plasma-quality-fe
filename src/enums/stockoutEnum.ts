@@ -264,3 +264,35 @@ export const TRAY_STORE_STATE_LIST = Object.keys(TRAY_STORE_STATE).map((_) => ({
   label: TRAY_STORE_STATE_TEXT.get(_),
   value: _,
 }));
+
+// 分拣状态
+export enum sortingEnum {
+  F = '待分拣',
+  T = '已分拣',
+}
+
+export enum sortingValueEnum {
+  F = 'false',
+  T = 'true',
+}
+
+export const sortingMap = new Map<sortingValueEnum, string>();
+
+sortingMap.set(sortingValueEnum.F, sortingEnum.F);
+sortingMap.set(sortingValueEnum.T, sortingEnum.T);
+
+// 这准备投产
+export enum prepareProduceEnum {
+  F = '否',
+  T = '是',
+}
+
+export enum prepareProduceValueEnum {
+  F = 'false',
+  T = 'true',
+}
+
+export const prepareProduceMap = new Map<prepareProduceValueEnum, string>();
+
+prepareProduceMap.set(prepareProduceValueEnum.F, prepareProduceEnum.F);
+prepareProduceMap.set(prepareProduceValueEnum.T, prepareProduceEnum.T);
