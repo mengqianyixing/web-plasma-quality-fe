@@ -69,7 +69,12 @@
   import PackingInfoModal from '@/views/stockout/production-sorting/components/packing-info-modal.vue';
   import PickBatchDetail from '../components/PickBatchDetail.vue';
   import PlasmaDetail from '../components/PlasmaDetail.vue';
-  import { prepareStateMap, prepareStateValueEnum } from '@/enums/stockoutEnum';
+  import {
+    prepareStateMap,
+    prepareStateValueEnum,
+    operationMap,
+    operationValueEnum,
+  } from '@/enums/stockoutEnum';
   import {
     getPrepareSorting,
     pickSortingBag,
@@ -460,17 +465,22 @@
           if (topBoxData.value && topBoxData.value.length === 1) {
             const unProArr = data.unPro?.sortImmTypes?.map((item, index) => {
               if (item?.bagNos?.length) {
-                scollToIndex = index;
+                scollToIndex = index + 1;
               }
               return {
                 immTypeName: item?.immTypeName,
                 immType: item?.immType,
                 pickType: data.unPro?.pickType,
-                title: `${item?.titerLevel === 'H' ? '高' : '低'},${item?.immType}`,
+                title:
+                  item?.immType === 'N'
+                    ? `${item?.immType},普通`
+                    : `${item?.immType}${item?.titerLevel},${operationMap.get(
+                        item?.immType as operationValueEnum,
+                      )}${item?.titerLevel === 'H' ? '高' : '低'}效价`,
                 sortCount: item?.sortCount,
                 totalCount: item?.totalCount,
                 bagNos: item?.bagNos,
-                isSelected: !!item?.bagNos?.length,
+                // isSelected: !!item?.bagNos?.length,
               };
             });
             topBoxData.value.push(...unProArr);
@@ -507,11 +517,16 @@
                 immTypeName: item?.immTypeName,
                 immType: item?.immType,
                 pickType: data.utrkUnPro?.pickType,
-                title: `${item?.titerLevel === 'H' ? '高' : '低'},${item?.immType}`,
+                title:
+                  item?.immType === 'N'
+                    ? `${item?.immType},普通`
+                    : `${item?.immType}${item?.titerLevel},${operationMap.get(
+                        item?.immType as operationValueEnum,
+                      )}${item?.titerLevel === 'H' ? '高' : '低'}效价`,
                 sortCount: item?.sortCount,
                 totalCount: item?.totalCount,
                 bagNos: item?.bagNos,
-                isSelected: !!item?.bagNos?.length,
+                // isSelected: !!item?.bagNos?.length,
               };
             });
           } else {
@@ -556,6 +571,7 @@
           });
         }
       } finally {
+        bagNo.value = '';
         closeFullLoading();
       }
     }
@@ -583,6 +599,7 @@
         // 请求总览数据
         prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
       } finally {
+        boxNo.value = '';
         closeFullLoading();
       }
     }
@@ -714,7 +731,12 @@
           immTypeName: item?.immTypeName,
           immType: item?.immType,
           pickType: data.unPro?.pickType,
-          title: `${item?.titerLevel === 'H' ? '高' : '低'},${item?.immType}`,
+          title:
+            item?.immType === 'N'
+              ? `${item?.immType},普通`
+              : `${item?.immType}${item?.titerLevel},${operationMap.get(
+                  item?.immType as operationValueEnum,
+                )}${item?.titerLevel === 'H' ? '高' : '低'}效价`,
           sortCount: item?.sortCount,
           totalCount: item?.totalCount,
           bagNos: item?.bagNos,
@@ -728,7 +750,12 @@
           immTypeName: item?.immTypeName,
           immType: item?.immType,
           pickType: data.utrkUnPro?.pickType,
-          title: `${item?.titerLevel === 'H' ? '高' : '低'},${item?.immType}`,
+          title:
+            item?.immType === 'N'
+              ? `${item?.immType},普通`
+              : `${item?.immType}${item?.titerLevel},${operationMap.get(
+                  item?.immType as operationValueEnum,
+                )}${item?.titerLevel === 'H' ? '高' : '低'}效价`,
           sortCount: item?.sortCount,
           totalCount: item?.totalCount,
           bagNos: item?.bagNos,

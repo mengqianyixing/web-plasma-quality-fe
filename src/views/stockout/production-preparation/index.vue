@@ -83,8 +83,10 @@
     pickModeMap,
     pickModeValueEnum,
   } from '@/enums/stockoutEnum';
+  import { useUserStore } from '@/store/modules/user';
 
   const router = useRouter();
+  const userInfo = useUserStore();
   const { createMessage } = useMessage();
   const { warning, success } = createMessage;
 
@@ -317,6 +319,10 @@
       warning('该准备号不可修改!');
       return;
     }
+    if (selectedRowOne.creator !== userInfo.getUserInfo.username) {
+      warning('当前账号无此权限!');
+      return;
+    }
     openPreparationModal(true, {
       record: selectedRow.value[0],
       isUpdate: true,
@@ -349,6 +355,10 @@
         return;
       }
     }
+    if (selectedRowOne.creator !== userInfo.getUserInfo.username) {
+      warning('当前账号无此权限!');
+      return;
+    }
     openRevokeModal(true, {
       record: selectedRow.value[0],
       isPicked: isPicked === 'isPicked',
@@ -368,6 +378,10 @@
 
     if (prepareState !== 'RUN' || Number(prodBagCount) <= 0) {
       warning('该准备号不可完成准备!');
+      return;
+    }
+    if (selectedRowOne.creator !== userInfo.getUserInfo.username) {
+      warning('当前账号无此权限!');
       return;
     }
     Modal.confirm({
@@ -446,9 +460,14 @@
       warning('请先选择投产准备号!');
       return;
     }
-    const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
+    const selectedRowOne: any = selectedRow.value[0];
+    const prepareState = selectedRowOne?.prepareState;
     if (prepareState !== 'TPK') {
       warning('该准备号不可撤销复核!');
+      return;
+    }
+    if (selectedRowOne.reviewer !== userInfo.getUserInfo.username) {
+      warning('当前账号无此权限!');
       return;
     }
     openRevokeCheckModal(true, {
