@@ -77,7 +77,7 @@
         colProps: {
           span: 15,
         },
-        required: false,
+        required: !!data.record.automatic,
         show: !!data.record.automatic,
       },
     ]);
@@ -97,7 +97,7 @@
 
       values.trayNos.forEach((it) => {
         fnStack.push(
-          submitOutHouseApi({ dlvInfo: [it], orderNo: orderNo.value })
+          submitOutHouseApi({ dlvInfo: [it], orderNo: orderNo.value, siteId: values.siteId })
             .then((res) => ({ res, dlv: it, type: 'success' }))
             .catch((e) => ({ e, dlv: it, type: 'error' })),
         );

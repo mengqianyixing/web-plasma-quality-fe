@@ -78,3 +78,21 @@ PlasmaUnqualifiedTypeMap.set(PlasmaUnqualifiedTypeValueEnum.QPR, PlasmaUnqualifi
 PlasmaUnqualifiedTypeMap.set(PlasmaUnqualifiedTypeValueEnum.FUP, PlasmaUnqualifiedTypeEnum.FUP);
 PlasmaUnqualifiedTypeMap.set(PlasmaUnqualifiedTypeValueEnum.PCP, PlasmaUnqualifiedTypeEnum.PCP);
 PlasmaUnqualifiedTypeMap.set(PlasmaUnqualifiedTypeValueEnum.SAP, PlasmaUnqualifiedTypeEnum.SAP);
+
+export enum PlasmaOutboundTypeEnum {
+  OTP = '投产出库',
+  OTD = '不合格出库',
+  OTE = '科研出库',
+}
+
+export enum PlasmaOutboundTypeValueEnum {
+  OTP = 'OTP',
+  OTD = 'OTD',
+  OTE = 'OTE',
+}
+
+export const PlasmaOutboundTypeMap = new Map<PlasmaOutboundTypeValueEnum, string>();
+
+PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.OTP, PlasmaOutboundTypeEnum.OTP);
+PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.OTD, PlasmaOutboundTypeEnum.OTD);
+PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.OTE, PlasmaOutboundTypeEnum.OTE);

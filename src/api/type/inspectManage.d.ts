@@ -650,6 +650,27 @@ export interface PostApiSysDictItemAlencesResponse {
 }
 
 /**
+ * 接口 [效价类型（下拉框）↗](https://yapi.sharing8.cn/project/529/interface/api/33202) 的 **请求类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `GET /api/sys/dict/item/titer-level`
+ * @更新时间 `2024-02-02 10:38:30`
+ */
+export interface GetApiSysDictItemTiterLevelRequest {}
+
+/**
+ * 接口 [效价类型（下拉框）↗](https://yapi.sharing8.cn/project/529/interface/api/33202) 的 **返回类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `GET /api/sys/dict/item/titer-level`
+ * @更新时间 `2024-02-02 10:38:30`
+ */
+export interface GetApiSysDictItemTiterLevelResponse {
+  key: string;
+  value: string;
+}
+
+/**
  * 接口 [样品批次查询↗](https://yapi.sharing8.cn/project/529/interface/api/31905) 的 **请求类型**
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)

@@ -120,6 +120,8 @@
     canResize: false,
   });
   const [register, { setModalProps }] = useModalInner(async (data) => {
+    inputRef.value?.focus();
+
     setModalProps({
       maskClosable: false,
     });
