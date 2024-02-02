@@ -1,5 +1,8 @@
 import { VxeGridPropTypes } from '@/components/VxeTable';
 import { FormSchema } from '@/components/Form';
+import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
+import { PlasmaOutboundTypeMap } from '@/enums/plasmaEnum';
+import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
 
 export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
@@ -56,8 +59,14 @@ export const formSchema: FormSchema[] = [
   },
   {
     label: '血浆出库类型',
-    field: 'field',
+    field: 'dlvType',
     component: 'Select',
+    componentProps: {
+      options: [...PlasmaOutboundTypeMap.entries()].map(([value, label]) => ({
+        label,
+        value,
+      })),
+    },
     colProps: {
       span: 5,
     },
@@ -80,16 +89,26 @@ export const formSchema: FormSchema[] = [
   },
   {
     label: '血浆过程状态',
-    field: 'filed',
-    component: 'Select',
+    field: 'state',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getSysDictionary,
+      params: [DictionaryEnum.StockPlasmaProcessStatus],
+      resultField: '[0].dictImtes',
+    },
     colProps: {
       span: 5,
     },
   },
   {
     label: '效价类型',
-    field: 'immuneType',
-    component: 'Select',
+    field: 'immType',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getDilutionTypeApi,
+      labelField: 'key',
+      valueField: 'value',
+    },
     colProps: {
       span: 5,
     },

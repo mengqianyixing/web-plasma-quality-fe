@@ -467,7 +467,7 @@ export interface GetApiCoreBagUnqualifiedBagNoResponse {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-02-01 16:37:37`
+ * @更新时间 `2024-02-01 16:45:24`
  */
 export interface GetApiCoreBagUnqualifiedRequest {
   pageSize: string;
@@ -527,7 +527,7 @@ export interface GetApiCoreBagUnqualifiedRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-02-01 16:37:37`
+ * @更新时间 `2024-02-01 16:45:24`
  */
 export interface GetApiCoreBagUnqualifiedResponse {
   totalCount?: number;
@@ -563,6 +563,9 @@ export interface GetApiCoreBagUnqualifiedResponse {
      * 状态
      */
     state: string;
+    /**
+     * 不合格类别
+     */
     flow: string;
     /**
      * 入库日期
