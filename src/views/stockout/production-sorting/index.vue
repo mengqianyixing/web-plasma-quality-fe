@@ -384,197 +384,211 @@
       let targetBox = {}; // 正在分拣的血浆属于的箱子,用于封箱
       try {
         openFullLoading();
-        const data = await pickSortingBag(params);
+        const res = await pickSortingBag(params);
+        if (res.data.ok === true) {
+          const data = res.data.data;
+          // 血浆不合格
+          if (data.track) {
+            openUnqualifiedModal(true, {
+              bagNo: bagNo.value,
+              track: data.track,
+            });
+            return;
+          }
 
-        // 血浆不合格
-        if (data.track) {
-          openUnqualifiedModal(true, {
-            bagNo: bagNo.value,
-            track: data.track,
+          // 整箱血浆为合格
+          if (data.fullBoxQua) {
+            Modal.confirm({
+              title: '提示?',
+              icon: createVNode(ExclamationCircleOutlined),
+              content: createVNode(
+                'div',
+                { style: 'color:red;' },
+                '本箱全部为满足要求的血浆,要进行封箱操作并打印箱签吗?',
+              ),
+              onOk() {
+                // 走整箱分拣操作
+                _sortingAllQua(true, data.boxNo);
+                // 走打印逻辑
+                console.log('OK');
+              },
+              onCancel() {
+                // 重新走一次分拣逻辑
+                handlePressEnter(true);
+              },
+              class: 'test',
+            });
+            return;
+          }
+
+          success('分拣血浆成功!');
+          bagNo.value = '';
+          nextTick(() => {
+            bagNoRef.value.focus();
           });
-          return;
-        }
 
-        // 整箱血浆为合格
-        if (data.fullBoxQua) {
-          Modal.confirm({
-            title: '提示?',
-            icon: createVNode(ExclamationCircleOutlined),
-            content: createVNode(
-              'div',
-              { style: 'color:red;' },
-              '本箱全部为满足要求的血浆,要进行封箱操作并打印箱签吗?',
-            ),
-            async onOk() {
-              // 走整箱分拣操作
-              await _sortingAllQua(true, data.boxNo);
-              // 走打印逻辑
-              console.log('OK');
-            },
-            async onCancel() {
-              // 重新走一次分拣逻辑
-              await handlePressEnter(true);
-            },
-            class: 'test',
-          });
-          return;
-        }
+          // 准备号、批次详情数据
+          prepareData.value = { ...data.preSummary };
+          batchData.value = {
+            batchSummary: data.batchSummary,
+            pros: data.pros,
+            unPro: data.unPro,
+            utrkUnPro: data.utrkUnPro,
+          };
 
-        success('分拣血浆成功!');
-        bagNo.value = '';
-        nextTick(() => {
-          bagNoRef.value.focus();
-        });
-
-        // 准备号、批次详情数据
-        prepareData.value = { ...data.preSummary };
-        batchData.value = {
-          batchSummary: data.batchSummary,
-          pros: data.pros,
-          unPro: data.unPro,
-          utrkUnPro: data.utrkUnPro,
-        };
-
-        // 清空所有选中状态
-        for (const item of topBoxData.value) {
-          item.isSelected = false;
-        }
-        if (bottomBoxData.value) {
-          for (const item of bottomBoxData.value) {
+          // 清空所有选中状态
+          for (const item of topBoxData.value) {
             item.isSelected = false;
           }
-        }
-        // 可投产箱子
-        topBoxData.value[0].sortCount = data.pros?.sortCount;
-        topBoxData.value[0].totalCount = data.pros?.totalCount;
-        topBoxData.value[0].immType = data.pros?.immType;
-        // topBoxData.value[0].immTypeName = data.pros?.immTypeName;
-        if (data.pros?.bagNos?.length) {
-          // 可投产血浆列表有长度，说明正在挑的是可投产的，更新血浆列表
-          topBoxData.value[0].bagNos = data.pros?.bagNos;
-          topBoxData.value[0].isSelected = true;
-          targetBox = topBoxData.value[0];
-          nextTick(() => {
-            scollToBox(true, 'PRO');
-          });
-        }
-        // B时的不投产箱子,A时为空
-        if (data.unPro?.sortImmTypes?.length) {
-          let scollToIndex = -1;
-          // 挑第一袋时，topBoxData中只有可投产的箱，此处直接生成不投产箱子
-          if (topBoxData.value && topBoxData.value.length === 1) {
-            const unProArr = data.unPro?.sortImmTypes?.map((item, index) => {
-              if (item?.bagNos?.length) {
-                scollToIndex = index + 1;
-              }
-              return {
-                immTypeName: item?.immTypeName,
-                immType: item?.immType,
-                pickType: data.unPro?.pickType,
-                title:
-                  item?.immType === 'N'
-                    ? `${item?.immType},普通`
-                    : `${item?.immType}${item?.titerLevel},${operationMap.get(
-                        item?.immType as operationValueEnum,
-                      )}${item?.titerLevel === 'H' ? '高' : '低'}效价`,
-                sortCount: item?.sortCount,
-                totalCount: item?.totalCount,
-                bagNos: item?.bagNos,
-                // isSelected: !!item?.bagNos?.length,
-              };
-            });
-            topBoxData.value.push(...unProArr);
-          } else {
-            data.unPro?.sortImmTypes.forEach((item, index) => {
-              topBoxData.value[index + 1].sortCount = data.unPro?.sortImmTypes?.[index]?.sortCount;
-              topBoxData.value[index + 1].totalCount =
-                data.unPro?.sortImmTypes?.[index]?.totalCount;
-              if (data.unPro?.sortImmTypes?.[index]?.bagNos?.length) {
-                topBoxData.value[index + 1].bagNos = data.unPro?.sortImmTypes?.[index]?.bagNos;
-                scollToIndex = index + 1;
-              }
-            });
+          if (bottomBoxData.value) {
+            for (const item of bottomBoxData.value) {
+              item.isSelected = false;
+            }
           }
-          if (scollToIndex !== -1) {
-            targetBox = topBoxData.value[scollToIndex];
+          // 可投产箱子
+          topBoxData.value[0].sortCount = data.pros?.sortCount;
+          topBoxData.value[0].totalCount = data.pros?.totalCount;
+          topBoxData.value[0].immType = data.pros?.immType;
+          // topBoxData.value[0].immTypeName = data.pros?.immTypeName;
+          if (data.pros?.bagNos?.length) {
+            // 可投产血浆列表有长度，说明正在挑的是可投产的，更新血浆列表
+            topBoxData.value[0].bagNos = data.pros?.bagNos;
+            topBoxData.value[0].isSelected = true;
+            targetBox = topBoxData.value[0];
             nextTick(() => {
-              topBoxData.value[scollToIndex].isSelected = true;
-              // 滚动逻辑...
-              scollToBox(true, topBoxData.value[scollToIndex].immTypeName);
+              scollToBox(true, 'PRO');
             });
           }
-        }
-        // A时的不投产或B的待放行
-        if (data.utrkUnPro?.sortImmTypes?.length) {
-          // 挑第一袋时， bottomBoxData 列表数据为空,直接赋值列表
-          let scollToIndex = -1;
-          if (!bottomBoxData.value || !bottomBoxData.value.length) {
-            bottomBoxData.value = data.utrkUnPro?.sortImmTypes?.map((item, index) => {
-              if (item?.bagNos?.length) {
-                scollToIndex = index;
-              }
-              return {
-                immTypeName: item?.immTypeName,
-                immType: item?.immType,
-                pickType: data.utrkUnPro?.pickType,
-                title:
-                  item?.immType === 'N'
-                    ? `${item?.immType},普通`
-                    : `${item?.immType}${item?.titerLevel},${operationMap.get(
-                        item?.immType as operationValueEnum,
-                      )}${item?.titerLevel === 'H' ? '高' : '低'}效价`,
-                sortCount: item?.sortCount,
-                totalCount: item?.totalCount,
-                bagNos: item?.bagNos,
-                // isSelected: !!item?.bagNos?.length,
-              };
-            });
-          } else {
-            bottomBoxData.value.forEach((item, index) => {
-              item.sortCount = data.utrkUnPro?.sortImmTypes?.[index]?.sortCount;
-              item.totalCount = data.utrkUnPro?.sortImmTypes?.[index]?.totalCount;
-              if (data.utrkUnPro?.sortImmTypes?.[index]?.bagNos?.length) {
-                item.bagNos = data.utrkUnPro?.sortImmTypes?.[index]?.bagNos;
-                scollToIndex = index;
-              }
-            });
+          // B时的不投产箱子,A时为空
+          if (data.unPro?.sortImmTypes?.length) {
+            let scollToIndex = -1;
+            // 挑第一袋时，topBoxData中只有可投产的箱，此处直接生成不投产箱子
+            if (topBoxData.value && topBoxData.value.length === 1) {
+              const unProArr = data.unPro?.sortImmTypes?.map((item, index) => {
+                if (item?.bagNos?.length) {
+                  scollToIndex = index + 1;
+                }
+                return {
+                  immTypeName: item?.immTypeName,
+                  immType: item?.immType,
+                  pickType: data.unPro?.pickType,
+                  title:
+                    item?.immType === 'N'
+                      ? `${item?.immType},普通`
+                      : `${item?.immType}${item?.titerLevel},${operationMap.get(
+                          item?.immType as operationValueEnum,
+                        )}${item?.titerLevel === 'H' ? '高' : '低'}效价`,
+                  sortCount: item?.sortCount,
+                  totalCount: item?.totalCount,
+                  bagNos: item?.bagNos,
+                  // isSelected: !!item?.bagNos?.length,
+                };
+              });
+              topBoxData.value.push(...unProArr);
+            } else {
+              data.unPro?.sortImmTypes.forEach((item, index) => {
+                topBoxData.value[index + 1].sortCount =
+                  data.unPro?.sortImmTypes?.[index]?.sortCount;
+                topBoxData.value[index + 1].totalCount =
+                  data.unPro?.sortImmTypes?.[index]?.totalCount;
+                if (data.unPro?.sortImmTypes?.[index]?.bagNos?.length) {
+                  topBoxData.value[index + 1].bagNos = data.unPro?.sortImmTypes?.[index]?.bagNos;
+                  scollToIndex = index + 1;
+                }
+              });
+            }
+            if (scollToIndex !== -1) {
+              targetBox = topBoxData.value[scollToIndex];
+              nextTick(() => {
+                topBoxData.value[scollToIndex].isSelected = true;
+                // 滚动逻辑...
+                scollToBox(true, topBoxData.value[scollToIndex].immTypeName);
+              });
+            }
           }
-          if (scollToIndex !== -1) {
-            targetBox = bottomBoxData.value[scollToIndex];
-            nextTick(() => {
-              bottomBoxData.value[scollToIndex].isSelected = true;
-              scollToBox(false, bottomBoxData.value[scollToIndex].immTypeName);
-            });
+          // A时的不投产或B的待放行
+          if (data.utrkUnPro?.sortImmTypes?.length) {
+            // 挑第一袋时， bottomBoxData 列表数据为空,直接赋值列表
+            let scollToIndex = -1;
+            if (!bottomBoxData.value || !bottomBoxData.value.length) {
+              bottomBoxData.value = data.utrkUnPro?.sortImmTypes?.map((item, index) => {
+                if (item?.bagNos?.length) {
+                  scollToIndex = index;
+                }
+                return {
+                  immTypeName: item?.immTypeName,
+                  immType: item?.immType,
+                  pickType: data.utrkUnPro?.pickType,
+                  title:
+                    item?.immType === 'N'
+                      ? `${item?.immType},普通`
+                      : `${item?.immType}${item?.titerLevel},${operationMap.get(
+                          item?.immType as operationValueEnum,
+                        )}${item?.titerLevel === 'H' ? '高' : '低'}效价`,
+                  sortCount: item?.sortCount,
+                  totalCount: item?.totalCount,
+                  bagNos: item?.bagNos,
+                  // isSelected: !!item?.bagNos?.length,
+                };
+              });
+            } else {
+              bottomBoxData.value.forEach((item, index) => {
+                item.sortCount = data.utrkUnPro?.sortImmTypes?.[index]?.sortCount;
+                item.totalCount = data.utrkUnPro?.sortImmTypes?.[index]?.totalCount;
+                if (data.utrkUnPro?.sortImmTypes?.[index]?.bagNos?.length) {
+                  item.bagNos = data.utrkUnPro?.sortImmTypes?.[index]?.bagNos;
+                  scollToIndex = index;
+                }
+              });
+            }
+            if (scollToIndex !== -1) {
+              targetBox = bottomBoxData.value[scollToIndex];
+              nextTick(() => {
+                bottomBoxData.value[scollToIndex].isSelected = true;
+                scollToBox(false, bottomBoxData.value[scollToIndex].immTypeName);
+              });
+            }
           }
-        }
 
-        // 满箱
-        if (data?.fullBox === true) {
+          // 满箱
+          if (data?.fullBox === true) {
+            Modal.confirm({
+              title: '提示?',
+              icon: createVNode(ExclamationCircleOutlined),
+              content: createVNode(
+                'div',
+                { style: 'color:red;' },
+                '该箱已满,要进行封箱操作并打印箱签吗?',
+              ),
+              onOk() {
+                // 走封箱操作 不需要提示
+                _sortingBoxSealing(targetBox, true);
+                // 走打印逻辑
+                console.log('OK');
+              },
+              onCancel() {
+                console.log('Cancel');
+              },
+              class: 'test',
+            });
+          }
+        } else {
           Modal.confirm({
-            title: '提示?',
+            title: '提示',
             icon: createVNode(ExclamationCircleOutlined),
-            content: createVNode(
-              'div',
-              { style: 'color:red;' },
-              '该箱已满,要进行封箱操作并打印箱签吗?',
-            ),
+            autoFocusButton: 'ok',
+            cancelButtonProps: { style: { display: 'none' } },
+            content: createVNode('div', { style: 'color:red;' }, res.data?.msg || '系统出错!'),
             onOk() {
-              // 走封箱操作 不需要提示
-              _sortingBoxSealing(targetBox, true);
-              // 走打印逻辑
-              console.log('OK');
-            },
-            onCancel() {
-              console.log('Cancel');
+              bagNo.value = '';
+              nextTick(() => {
+                bagNoRef.value.focus();
+              });
             },
             class: 'test',
           });
         }
-      } catch (err) {
-        console.log(err);
-        bagNo.value = '';
       } finally {
-        // bagNo.value = '';
         closeFullLoading();
       }
     }

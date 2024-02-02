@@ -188,10 +188,13 @@ export const getPrepareSorting = (params: any) => {
 
 // 血浆分拣
 export const pickSortingBag = (params: any) => {
-  return defHttp.post<any>({
-    url: Api.PickSortingBag,
-    params,
-  });
+  return defHttp.post<any>(
+    {
+      url: Api.PickSortingBag,
+      params,
+    },
+    { isReturnNativeResponse: true },
+  );
 };
 
 // 血浆分拣-合箱
