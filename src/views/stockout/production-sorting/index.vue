@@ -570,8 +570,11 @@
             class: 'test',
           });
         }
-      } finally {
+      } catch (err) {
+        console.log(err);
         bagNo.value = '';
+      } finally {
+        // bagNo.value = '';
         closeFullLoading();
       }
     }
