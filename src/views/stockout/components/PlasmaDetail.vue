@@ -25,6 +25,8 @@
     sortingValueEnum,
     prepareProduceMap,
     prepareProduceValueEnum,
+    operationMap,
+    operationValueEnum,
   } from '@/enums/stockoutEnum';
 
   let prepareNo = ''; // 准备号
@@ -94,6 +96,9 @@
     {
       title: '效价类型',
       dataIndex: 'immType',
+      format(text) {
+        return `${operationMap.get(String(text) as operationValueEnum)}`;
+      },
     },
     {
       title: '效价值',
@@ -134,6 +139,7 @@
       field: 'prepareNo',
       label: '准备号',
       component: 'Input',
+      required: true,
       colProps: { span: 4 },
     },
     {

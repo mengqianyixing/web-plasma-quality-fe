@@ -101,12 +101,10 @@
     {
       title: '血浆箱号',
       dataIndex: 'boxNo',
-      width: 180,
     },
     {
       title: '血浆编号',
       dataIndex: 'bagNo',
-      width: 100,
     },
     {
       title: '血浆状态',
