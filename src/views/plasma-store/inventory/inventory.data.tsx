@@ -44,7 +44,8 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   },
   {
     title: '库房',
-    field: 'bankNo',
+    field: 'bankNames',
+    showOverflow: false,
   },
 ];
 
