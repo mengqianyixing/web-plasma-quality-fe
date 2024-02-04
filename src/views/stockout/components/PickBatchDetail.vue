@@ -24,6 +24,12 @@
           </a-button>
         </div>
       </template>
+      <template #toolbar>
+        <div class="flex gap-2">
+          <a-button> 自动分拣 </a-button>
+          <a-button> 转人工分拣 </a-button>
+        </div>
+      </template>
     </BasicTable>
     <PlasmaDetail @register="registerPlasmaDetailModal" />
   </BasicModal>
@@ -39,6 +45,7 @@
   import { prepareStateMap, prepareStateValueEnum } from '@/enums/stockoutEnum';
 
   const prepareNo = ref(''); // 准备号
+  const selectedRow = ref([]); // 表格已选中
 
   const [registerModal] = useModalInner(async (data) => {
     console.log('看看批次', data);
@@ -106,6 +113,12 @@
     },
     pagination: true,
     clickToRowSelect: false,
+    rowSelection: {
+      type: 'radio',
+      onChange: (_, selectedRows: any) => {
+        selectedRow.value = selectedRows;
+      },
+    },
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',

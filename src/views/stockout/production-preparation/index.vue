@@ -39,8 +39,6 @@
           <a-button @click="clickRevokeModal('isPicked')"> 撤销准备 </a-button>
           <a-button @click="clickCheck"> 复核 </a-button>
           <a-button @click="revokeCheck"> 撤销复核 </a-button>
-          <a-button> 自动分拣 </a-button>
-          <a-button @click="manual"> 转人工分拣 </a-button>
         </div>
       </template>
     </BasicTable>
@@ -53,7 +51,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { useRouter } from 'vue-router';
   import { BasicTable, useTable, BasicColumn } from '@/components/Table';
   import { FormSchema } from '@/components/Form';
   import { useModal } from '@/components/Modal';
@@ -85,7 +82,6 @@
   } from '@/enums/stockoutEnum';
   import { useUserStore } from '@/store/modules/user';
 
-  const router = useRouter();
   const userInfo = useUserStore();
   const { createMessage } = useMessage();
   const { warning, success } = createMessage;
@@ -497,25 +493,6 @@
     openPlasmaDetailModal(true, {
       record,
       prepareProduce,
-    });
-  }
-
-  // 人工分拣
-  function manual() {
-    if (!selectedRow.value.length) {
-      warning('请先选择投产准备号!');
-      return;
-    }
-    const selectedRowOne: any = selectedRow.value[0];
-    const prepareState = selectedRowOne?.prepareState;
-    if (prepareState !== 'TPK' && prepareState !== 'RPK' && prepareState !== 'CPK') {
-      warning('该准备号不可转人工分拣!');
-      return;
-    }
-    // 跳转血浆分拣页面
-    router.push({
-      path: '/stockout/ps',
-      query: { prepareNo: selectedRowOne.prepareNo, pickMode: selectedRowOne.pickMode },
     });
   }
 </script>

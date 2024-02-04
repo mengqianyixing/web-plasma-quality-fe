@@ -53,8 +53,7 @@
 </template>
 
 <script lang="tsx" setup>
-  import { ref, createVNode, nextTick, onMounted } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { ref, createVNode, nextTick } from 'vue';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
@@ -90,7 +89,6 @@
   const { createMessage } = useMessage();
   const { warning, success } = createMessage;
   const [openFullLoading, closeFullLoading] = useLoading({});
-  const route = useRoute();
 
   interface PrepareData {
     batchNoCount?: Number;
@@ -943,13 +941,6 @@
       prepareProduce: prepareProduce === 'prepareProduce',
     });
   }
-
-  onMounted(() => {
-    // 投产准备跳转过来
-    if (route.query.prepareNo) {
-      prepareModalSuccess(route.query);
-    }
-  });
 </script>
 <style lang="less" scoped>
   .card-bar-header {
