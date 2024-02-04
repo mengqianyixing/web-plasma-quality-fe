@@ -33,7 +33,7 @@
   import { BasicTable, useTable, TableAction } from '@/components/Table';
   import { FormSchema } from '@/components/Form';
   import BasicModal from '@/components/Modal/src/BasicModal.vue';
-  import { getSortBoxs } from '@/api/stockout/production-preparation.js';
+  import { getSortBoxs } from '@/api/stockout/production-sorting/production-sorting-main';
   import { pickBoxMap, pickBoxValueEnum, boxTypeMap, boxTypeValueEnum } from '@/enums/stockoutEnum';
   import dayjs from 'dayjs';
   import PackingCheckModal from '@/views/stockout/production-sorting/components/packing-check-modal.vue';

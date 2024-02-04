@@ -222,6 +222,20 @@ export default defineConfig([
             },
             outputFilePath: 'src/api/type/productionSortingMange.d.ts',
           },
+          {
+            id: [5390],
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/productionPreparation.d.ts',
+          },
+          {
+            id: [5667],
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/productionSortingMangeMain.d.ts',
+          },
         ],
       },
     ],

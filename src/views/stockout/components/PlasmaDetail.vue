@@ -19,7 +19,10 @@
   import { BasicTable, useTable, BasicColumn } from '@/components/Table';
   import { FormSchema } from '@/components/Form';
   import dayjs from 'dayjs';
-  import { getSortBags, getSortingBatch } from '@/api/stockout/production-preparation.js';
+  import {
+    getSortBags,
+    getSortingBatch,
+  } from '@/api/stockout/production-sorting/production-sorting-main';
   import {
     sortingMap,
     sortingValueEnum,

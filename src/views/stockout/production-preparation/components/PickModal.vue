@@ -359,6 +359,7 @@
     schemas: FormSchemas,
     showActionButtonGroup: true,
     showResetButton: true,
+    resetFunc: customResetFunc,
     actionColOptions: {
       span: 14,
     },
@@ -790,6 +791,13 @@
   async function _getPrepareList() {
     const data = await getPrepareList({ prepareNo: prepareNo.value, currPage: 1, pageSize: 1 });
     prepareDetail.value = data.result[0];
+  }
+
+  // 重置查询
+  async function customResetFunc() {
+    setTimeout(() => {
+      reload();
+    });
   }
 </script>
 <style lang="less" scoped>

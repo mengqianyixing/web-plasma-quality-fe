@@ -81,7 +81,7 @@
     sortingMouldAssembling,
     sortingAllQua,
     completeSorting,
-  } from '@/api/stockout/production-preparation.js';
+  } from '@/api/stockout/production-sorting/production-sorting-main';
   import InStoreModal from './components/in-store-modal.vue';
   import OutStoreModal from './components/out-store-modal.vue';
   import UnqualifiedModal from './components/unqualified-modal.vue';

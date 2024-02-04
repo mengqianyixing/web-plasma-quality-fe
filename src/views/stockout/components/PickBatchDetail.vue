@@ -41,7 +41,7 @@
   import { BasicTable, useTable, BasicColumn } from '@/components/Table';
   import dayjs from 'dayjs';
   import PlasmaDetail from './PlasmaDetail.vue';
-  import { getBatchInfo } from '@/api/stockout/production-preparation.js';
+  import { getBatchInfo } from '@/api/stockout/production-sorting/production-sorting-main';
   import { prepareStateMap, prepareStateValueEnum } from '@/enums/stockoutEnum';
 
   const prepareNo = ref(''); // 准备号

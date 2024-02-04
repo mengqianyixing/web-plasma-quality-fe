@@ -21,9 +21,11 @@
   import { BasicTable, useTable } from '@/components/Table';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
-  import { FormSchema } from '@/components/Form';
   import BasicModal from '@/components/Modal/src/BasicModal.vue';
-  import { getSortBoxsList, checkBox } from '@/api/stockout/production-preparation.js';
+  import {
+    getSortBoxsList,
+    checkBox,
+  } from '@/api/stockout/production-sorting/production-sorting-main';
   import { pickBoxMap, pickBoxValueEnum, plasmaMap, plasmaValueEnum } from '@/enums/stockoutEnum';
 
   import dayjs from 'dayjs';
@@ -133,40 +135,9 @@
     },
   ];
 
-  const searchFormSchema: FormSchema[] = [
-    {
-      field: 'prepareNo',
-      label: '装箱类型',
-      component: 'Select',
-      colProps: { span: 6 },
-    },
-    {
-      field: 'boxNo',
-      label: '血浆箱号',
-      component: 'Input',
-      colProps: { span: 6 },
-    },
-    {
-      field: 'state',
-      label: '状态',
-      component: 'Select',
-      colProps: { span: 6 },
-      componentProps: {
-        options: [...pickBoxMap.entries()].map(([key, value]) => ({
-          value: key,
-          label: `${value}`,
-        })),
-      },
-    },
-  ];
-
   const [registerTable, { reload, setLoading }] = useTable({
     api: _getSortBoxsList,
     columns,
-    formConfig: {
-      labelWidth: 90,
-      schemas: searchFormSchema,
-    },
     beforeFetch: (p) => {
       return { ...p, boxNo: boxNo.value };
     },
