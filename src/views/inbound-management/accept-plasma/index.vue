@@ -51,7 +51,11 @@
       </vxe-grid>
     </div>
     <BatchModal @register="registerBoxModal" @success="batchModalSuccess" />
-    <LoginModal @register="registerLoginModal" @success="handleSuccess" />
+    <LoginModal
+      @register="registerLoginModal"
+      @success="handleSuccess"
+      :auth-code="ReCheckButtonEnum.ReCheckLogin"
+    />
     <BatchDetail @register="registerBatchDetail" @close="handleBatchDetailClose" />
     <BoxDetail @register="registerBoxDetail" @success="handleGoDetail" />
     <suspendOrResumeModal
@@ -105,6 +109,7 @@
   import PlasmaUnqualifiedModal from '@/views/inbound-management/accept-plasma/components/PlasmaUnqualifiedModal.vue';
   import SampleUnqualifiedModal from '@/views/inbound-management/accept-plasma/components/SampleUnqualifiedModal.vue';
   import MissNumModal from '@/views/inbound-management/accept-plasma/components/MissNumModal.vue';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage, createErrorModal } = useMessage();
   const { success, warning } = createMessage;

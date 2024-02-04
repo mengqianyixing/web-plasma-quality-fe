@@ -2,7 +2,11 @@
   <BasicModal v-bind="$attrs" @register="registerModal" showFooter width="500px" @ok="handleSubmit">
     <BasicForm @register="registerForm" />
 
-    <LoginModal @register="registerLoginModal" @success="handleLoginSuccess" />
+    <LoginModal
+      @register="registerLoginModal"
+      @success="handleLoginSuccess"
+      :auth-code="ReCheckButtonEnum.NonconformitySampleRevokeRegisterCheck"
+    />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -14,6 +18,7 @@
   import { revokeSampleVerify } from '@/api/inbound-management/sample-verify';
   import { PutApiCoreBatchSampleVerifyRevokeRequest } from '@/api/type/batchManage';
   import { ref } from 'vue';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const emit = defineEmits(['success', 'register']);
   const { createMessage } = useMessage();

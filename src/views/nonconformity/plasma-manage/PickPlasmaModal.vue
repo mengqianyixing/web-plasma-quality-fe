@@ -8,11 +8,15 @@
   >
     <BasicForm @register="registerForm" />
 
-    <LoginModal @register="registerLoginModal" @success="handleSuccess" />
+    <LoginModal
+      @register="registerLoginModal"
+      @success="handleSuccess"
+      :auth-code="ReCheckButtonEnum.NonconformityPickCheck"
+    />
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
+  import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { useMessage } from '@/hooks/web/useMessage';
 
@@ -20,6 +24,7 @@
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { nonconformityPick } from '@/api/nonconformity/plasma-manage';
   import { PostApiCoreBagUnqualifiedPickRequest } from '@/api/type/nonconformityManage';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage } = useMessage();
   defineOptions({ name: 'PickPlasmaModal' });

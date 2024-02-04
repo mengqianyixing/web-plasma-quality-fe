@@ -9,6 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
 const checkManager: AppRouteModule = {
   path: '/inspect',
@@ -29,6 +30,18 @@ const checkManager: AppRouteModule = {
       },
       id: 960010,
       component: () => import('/@/views/inspect/resultRegistration/index.vue'),
+      authElements: [
+        {
+          id: ReCheckButtonEnum.ResultRegistrationCheck,
+          name: 'reCheckResultRegistrationCheck',
+          title: '不合格登记复核权限',
+        },
+        {
+          id: ReCheckButtonEnum.ResultRegistrationTiter,
+          name: 'reCheckResultRegistrationTiter',
+          title: '效价登记复核权限',
+        },
+      ],
     },
     {
       path: '/inspect/reportRelease',

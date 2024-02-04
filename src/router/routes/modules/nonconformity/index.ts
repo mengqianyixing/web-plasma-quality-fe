@@ -9,6 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
 const nonconformity: AppRouteModule = {
   path: '/nonconformity',
@@ -40,6 +41,13 @@ const nonconformity: AppRouteModule = {
       },
       id: 920020,
       component: () => import('/@/views/nonconformity/nonconformity-registration/index.vue'),
+      authElements: [
+        {
+          id: ReCheckButtonEnum.NonconformityRegistrationCheck,
+          name: 'reCheck',
+          title: '复核人登录权限',
+        },
+      ],
     },
     {
       path: 'plasmaOut',
@@ -58,6 +66,18 @@ const nonconformity: AppRouteModule = {
       },
       id: 920040,
       component: () => import('/@/views/nonconformity/plasma-manage/index.vue'),
+      authElements: [
+        {
+          id: ReCheckButtonEnum.NonconformityPickCheck,
+          name: 'reCheckPick',
+          title: '挑浆复核权限',
+        },
+        {
+          id: ReCheckButtonEnum.NonconformityInStoreCheck,
+          name: 'recheckInStore',
+          title: '入库登录权限',
+        },
+      ],
     },
   ],
 };

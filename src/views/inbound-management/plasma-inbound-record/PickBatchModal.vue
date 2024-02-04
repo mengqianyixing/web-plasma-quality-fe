@@ -8,7 +8,11 @@
   >
     <BasicForm @register="registerForm" />
 
-    <LoginModal @register="registerLoginModal" @success="handleSuccess" />
+    <LoginModal
+      @register="registerLoginModal"
+      @success="handleSuccess"
+      :auth-code="ReCheckButtonEnum.PlasmaInboundRecordCheck"
+    />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -22,6 +26,7 @@
   import { nonconformityPlasmaPickByBatch } from '@/api/nonconformity/plasma-manage';
   import { ref } from 'vue';
   import { PostApiCoreBagUnqualifiedPickBatchRequest } from '@/api/type/nonconformityManage';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage } = useMessage();
   defineOptions({ name: 'PickPlasmaModal' });

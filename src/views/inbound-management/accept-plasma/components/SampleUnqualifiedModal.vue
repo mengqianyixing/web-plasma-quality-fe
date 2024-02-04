@@ -11,7 +11,11 @@
     <Basic-form @register="registerForm" />
   </BasicModal>
 
-  <LoginModal @register="registerLogin" @success="handleLoginSuccess" />
+  <LoginModal
+    @register="registerLogin"
+    @success="handleLoginSuccess"
+    :auth-code="ReCheckButtonEnum.UnqualifiedSampleCheck"
+  />
 </template>
 <script lang="ts" setup>
   import { BasicModal, useModal, useModalInner } from '@/components/Modal';
@@ -25,6 +29,7 @@
   } from '@/api/_dictionary';
   import { PostApiCoreBatchSampleUnqualifiedPlasmaRequest } from '@/api/type/batchManage';
   import { nonconformityPlasmaReceiveSampleRegister } from '@/api/nonconformity/sample-manage';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage } = useMessage();
 

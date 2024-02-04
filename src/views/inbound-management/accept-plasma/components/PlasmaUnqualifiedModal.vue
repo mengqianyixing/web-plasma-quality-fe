@@ -11,7 +11,11 @@
     <Basic-form @register="registerForm" />
   </BasicModal>
 
-  <LoginModal @register="registerLogin" @success="handleLoginSuccess" />
+  <LoginModal
+    @register="registerLogin"
+    @success="handleLoginSuccess"
+    :auth-code="ReCheckButtonEnum.UnqualifiedPlasmaCheck"
+  />
 </template>
 <script lang="ts" setup>
   import { BasicModal, useModal, useModalInner } from '@/components/Modal';
@@ -25,6 +29,7 @@
     DictionaryItemKeyEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage } = useMessage();
   const emit = defineEmits(['success', 'register']);

@@ -9,14 +9,19 @@
     :body-style="{ height: '80px' }"
   >
     <BasicForm @register="registerForm" @submit="handleSubmit" />
-    <LoginModal @register="registerLoginModal" @success="handleLoginSuccess" />
+    <LoginModal
+      @register="registerLoginModal"
+      @success="handleLoginSuccess"
+      :auth-code="ReCheckButtonEnum.ProductionSortingReCheck"
+    />
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
+  import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { BagTrackMap, BagTrackValueEnum } from '@/enums/stockoutEnum';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const emit = defineEmits(['success', 'register']);
 

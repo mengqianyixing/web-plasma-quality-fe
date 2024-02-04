@@ -134,11 +134,12 @@ export interface PostApiSysReviewerLoginResponse {
  *
  * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
  * @请求头 `POST /api/sys/reviewer/casdoor-login`
- * @更新时间 `2024-01-12 14:24:38`
+ * @更新时间 `2024-02-04 14:11:38`
  */
 export interface PostApiSysReviewerCasdoorLoginRequest {
   account?: string;
   password?: string;
+  buttonId: string;
 }
 
 /**
@@ -146,7 +147,7 @@ export interface PostApiSysReviewerCasdoorLoginRequest {
  *
  * @分类 [登录/登出↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4416)
  * @请求头 `POST /api/sys/reviewer/casdoor-login`
- * @更新时间 `2024-01-12 14:24:38`
+ * @更新时间 `2024-02-04 14:11:38`
  */
 export interface PostApiSysReviewerCasdoorLoginResponse {
   userId?: string;

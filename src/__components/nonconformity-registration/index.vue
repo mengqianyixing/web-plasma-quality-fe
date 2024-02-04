@@ -1,7 +1,11 @@
 <template>
   <BasicForm @register="register" @submit="handleSubmit" />
 
-  <LoginModal @register="registerLoginModal" @success="handleSuccess" />
+  <LoginModal
+    @register="registerLoginModal"
+    @success="handleSuccess"
+    :auth-code="ReCheckButtonEnum.NonconformityRegistrationCheck"
+  />
 </template>
 
 <script setup lang="ts">
@@ -13,6 +17,7 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { nonconformityRegistration } from '@/api/nonconformity/box-manage';
   import { onMounted } from 'vue';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage } = useMessage();
 

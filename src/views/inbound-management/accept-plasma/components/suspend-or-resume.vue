@@ -60,7 +60,11 @@
         </template>
       </Table>
     </div>
-    <LoginModal @register="registerLoginModal" @success="handleSuccess" />
+    <LoginModal
+      @register="registerLoginModal"
+      @success="handleSuccess"
+      :auth-code="ReCheckButtonEnum.PlasmaSuspendCheck"
+    />
   </Modal>
 </template>
 
@@ -88,6 +92,7 @@
   import { useModal } from '@/components/Modal';
 
   import { useMessage } from '@/hooks/web/useMessage';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;

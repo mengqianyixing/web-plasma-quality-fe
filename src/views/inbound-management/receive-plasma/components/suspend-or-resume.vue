@@ -10,7 +10,11 @@
     <BasicForm @register="registerForm" />
     <BasicTable @register="registerTable" />
   </BasicModal>
-  <LoginModal @register="registerLoginModal" @success="handleSuccess" />
+  <LoginModal
+    @register="registerLoginModal"
+    @success="handleSuccess"
+    :auth-code="ReCheckButtonEnum.PlasmaReceiveSuspendCheck"
+  />
 </template>
 
 <script setup lang="tsx">
@@ -25,6 +29,7 @@
   import { ref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { useUserStore } from '@/store/modules/user';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage } = useMessage();
   const { success } = createMessage;
