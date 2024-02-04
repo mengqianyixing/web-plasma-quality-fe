@@ -8,7 +8,11 @@
   >
     <BasicForm @register="registerForm" />
 
-    <LoginModal @register="registerLoginModal" @success="handleSuccess" />
+    <LoginModal
+      @register="registerLoginModal"
+      @success="handleSuccess"
+      :auth-code="ReCheckButtonEnum.RegisterWeightCheck"
+    />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -20,6 +24,7 @@
   import { registerPlasmaWeight } from '@/api/inbound-management/plasma-inbound-record';
   import { PostApiCoreBatchPlasmaWeightRequest } from '@/api/type/batchManage';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage } = useMessage();
   defineOptions({ name: 'PickPlasmaModal' });

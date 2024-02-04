@@ -473,7 +473,7 @@ export type GetApiCoreBankStockResponse = {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/reception`
- * @更新时间 `2023-12-20 11:10:39`
+ * @更新时间 `2024-02-04 11:24:33`
  */
 export interface GetApiCoreBankReceptionRequest {
   /**
@@ -515,7 +515,7 @@ export interface GetApiCoreBankReceptionRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/reception`
- * @更新时间 `2023-12-20 11:10:39`
+ * @更新时间 `2024-02-04 11:24:33`
  */
 export interface GetApiCoreBankReceptionResponse {
   currPage?: number;
@@ -553,7 +553,7 @@ export interface GetApiCoreBankReceptionResponse {
     /**
      * 接收日期
      */
-    receptDate: string;
+    acceptDate: string;
     /**
      * 验收发布人
      */

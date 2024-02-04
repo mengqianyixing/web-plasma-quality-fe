@@ -11,7 +11,11 @@
     <Basic-form @register="registerForm" />
   </BasicModal>
 
-  <LoginModal @register="registerLogin" @success="handleLoginSuccess" />
+  <LoginModal
+    @register="registerLogin"
+    @success="handleLoginSuccess"
+    :auth-code="ReCheckButtonEnum.MissNumCheck"
+  />
 </template>
 <script lang="ts" setup>
   import { BasicModal, useModal, useModalInner } from '@/components/Modal';
@@ -21,6 +25,7 @@
   import { nonconformityRegistration } from '@/api/nonconformity/box-manage';
   import { PostApiCoreBagUnqualifiedRequest } from '@/api/type/nonconformityManage';
   import { UnqualifiedEnum } from '@/api/_dictionary';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage } = useMessage();
 

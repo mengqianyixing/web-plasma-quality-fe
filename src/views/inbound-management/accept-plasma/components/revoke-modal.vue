@@ -27,17 +27,22 @@
         </FormItem>
       </Form>
     </div>
-    <LoginModal @register="registerLoginModal" @success="handleSuccess" />
+    <LoginModal
+      @register="registerLoginModal"
+      @success="handleSuccess"
+      :auth-code="ReCheckButtonEnum.RevokeCheck"
+    />
   </Modal>
 </template>
 
 <script lang="ts" setup>
-  import { ref, defineExpose } from 'vue';
-  import { Modal, Textarea, Form, FormItem, Button, InputSearch } from 'ant-design-vue';
+  import { defineExpose, ref } from 'vue';
+  import { Button, Form, FormItem, InputSearch, Modal, Textarea } from 'ant-design-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { plasmaRevokeBag } from '@/api/inbound-management/accept-plasma.js';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { useModal } from '@/components/Modal';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;

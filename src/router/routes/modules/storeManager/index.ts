@@ -9,6 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
 const storeManager: AppRouteModule = {
   path: '/plasma-store',
@@ -38,6 +39,13 @@ const storeManager: AppRouteModule = {
       },
       id: 990020,
       component: () => import('/@/views/tray/manage/index.vue'),
+      authElements: [
+        {
+          id: ReCheckButtonEnum.TrayManageCheck,
+          name: 'reRecheck',
+          title: '复核权限',
+        },
+      ],
     },
     {
       path: 'relocation',

@@ -7,7 +7,7 @@
           class="text-blue-500 underline cursor-pointer"
           @click.stop.self="handleDetails(record, 'batchNo')"
         >
-          {{ record.batchNo }}
+          {{ record?.batchNo }}
         </span>
       </template>
       <!-- 验收数量跳转 -->
@@ -16,7 +16,7 @@
           class="text-blue-500 underline cursor-pointer"
           @click.stop.self="handleDetails(record, 'verifyNum')"
         >
-          {{ record.verifyNum }}
+          {{ record?.verifyNum }}
         </span>
       </template>
       <!-- 验收不合格数量跳转 -->
@@ -25,7 +25,7 @@
           class="text-blue-500 underline cursor-pointer"
           @click.stop.self="handleDetails(record, 'verifyNoPassNum')"
         >
-          {{ record.verifyNoPassNum }}
+          {{ record?.verifyNoPassNum }}
         </span>
       </template>
       <!-- 不足量数量跳转 -->
@@ -34,7 +34,7 @@
           class="text-blue-500 underline cursor-pointer"
           @click.stop.self="handleDetails(record, 'hortFallNum')"
         >
-          {{ record.hortFallNum }}
+          {{ record?.hortFallNum }}
         </span>
       </template>
     </BasicTable>
@@ -49,7 +49,7 @@
   import { PageWrapper } from '@/components/Page';
   import { entryColumns, searchFormSchema } from './entrySearch.data';
   import { receptionDetailApi } from '@/api/plasmaStore/entryPlasma';
-  import { useModal } from '/@/components/Modal';
+  import { useModal } from '@/components/Modal';
   import BatchNoMadal from './batchNoModal.vue';
   import VerifyNumModal from './verifyNumModal.vue';
   import NoPassModal from './noPassModal.vue';

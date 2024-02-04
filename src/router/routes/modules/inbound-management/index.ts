@@ -9,6 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
 const inboundmanagement: AppRouteModule = {
   path: '/inboundmanagement',
@@ -30,6 +31,13 @@ const inboundmanagement: AppRouteModule = {
         title: '血浆接收',
       },
       component: () => import('@/views/inbound-management/receive-plasma/index.vue'),
+      authElements: [
+        {
+          id: ReCheckButtonEnum.PlasmaReceiveSuspendCheck,
+          name: 'reCheckLogin',
+          title: '暂停接收复核人登录',
+        },
+      ],
     },
     {
       path: 'acceptplasma',
@@ -39,6 +47,38 @@ const inboundmanagement: AppRouteModule = {
         title: '血浆验收',
       },
       component: () => import('@/views/inbound-management/accept-plasma/index.vue'),
+      authElements: [
+        {
+          id: ReCheckButtonEnum.MissNumCheck,
+          name: 'missRecheck',
+          title: '缺号登记复核人权限',
+        },
+        {
+          id: ReCheckButtonEnum.UnqualifiedPlasmaCheck,
+          name: 'plasmaRecheck',
+          title: '不合格血浆登记复核人权限',
+        },
+        {
+          id: ReCheckButtonEnum.UnqualifiedSampleCheck,
+          name: 'sampleRecheck',
+          title: '不合格样本登记复核人权限',
+        },
+        {
+          id: ReCheckButtonEnum.RevokeVerifyCheck,
+          name: 'revokeRecheck',
+          title: '撤销验收复核人权限',
+        },
+        {
+          id: ReCheckButtonEnum.PlasmaVerifyReCheckLogin,
+          name: 'reCheckLogin',
+          title: '复核人登录',
+        },
+        {
+          id: ReCheckButtonEnum.PlasmaSuspendCheck,
+          name: 'suspendRecheck',
+          title: '暂停验收复核人权限',
+        },
+      ],
     },
 
     {
@@ -49,6 +89,18 @@ const inboundmanagement: AppRouteModule = {
       },
       id: 980030,
       component: () => import('@/views/inbound-management/plasma-inbound-record/index.vue'),
+      authElements: [
+        {
+          id: ReCheckButtonEnum.PlasmaInboundRecordCheck,
+          name: 'reCheckRecordLogin',
+          title: '不合格暂存复核人登录',
+        },
+        {
+          id: ReCheckButtonEnum.RegisterWeightCheck,
+          name: 'registerWeight',
+          title: '登记称重复核人',
+        },
+      ],
     },
   ],
 };

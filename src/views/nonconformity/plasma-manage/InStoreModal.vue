@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-17 17:24:09
  * @LastEditors: zcc
@@ -16,11 +16,15 @@
   >
     <BasicForm @register="registerForm" />
 
-    <LoginModal @register="registerLoginModal" @success="handleSuccess" />
+    <LoginModal
+      @register="registerLoginModal"
+      @success="handleSuccess"
+      :auth-code="ReCheckButtonEnum.NonconformityInStoreCheck"
+    />
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
+  import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { useMessage } from '@/hooks/web/useMessage';
   import { inStoreSchema } from './manage.data';
@@ -28,6 +32,7 @@
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { nonconformityInStore } from '@/api/nonconformity/plasma-manage';
   import { PostApiCoreBagUnqualifiedInStoreRequest } from '@/api/type/nonconformityManage';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'PickPlasmaModal' });
 

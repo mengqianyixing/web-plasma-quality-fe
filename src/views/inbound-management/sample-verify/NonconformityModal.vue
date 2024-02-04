@@ -2,12 +2,16 @@
   <BasicModal v-bind="$attrs" @register="registerModal" showFooter width="500px" @ok="handleSubmit">
     <BasicForm @register="registerForm" @submit="handleSubmit" />
 
-    <LoginModal @register="registerLoginModal" @success="handleLoginSuccess" />
+    <LoginModal
+      @register="registerLoginModal"
+      @success="handleLoginSuccess"
+      :auth-code="ReCheckButtonEnum.NonconformitySampleCheck"
+    />
   </BasicModal>
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
-  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
+  import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { useMessage } from '@/hooks/web/useMessage';
 
@@ -19,6 +23,7 @@
     DictionaryItemKeyEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const emit = defineEmits(['success', 'register']);
   const { createMessage } = useMessage();

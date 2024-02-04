@@ -9,6 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
 const sampleManager: AppRouteModule = {
   path: '/sample-manage',
@@ -40,6 +41,18 @@ const sampleManager: AppRouteModule = {
       },
       id: 970020,
       component: () => import('@/views/inbound-management/sample-verify/index.vue'),
+      authElements: [
+        {
+          id: ReCheckButtonEnum.NonconformitySampleCheck,
+          name: 'reCheckSampleVerifyLogin',
+          title: '样本不合格复核人登录',
+        },
+        {
+          id: ReCheckButtonEnum.NonconformitySampleRevokeRegisterCheck,
+          name: 'reCheckSampleVerify',
+          title: '撤销登记登录',
+        },
+      ],
     },
     {
       path: 'sample-release',

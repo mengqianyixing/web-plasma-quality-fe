@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
@@ -22,7 +22,11 @@
       <a-button type="primary" @click="handleSubmit(false)" :loading="loading">提交&继续</a-button>
     </template>
     <BasicForm @register="registerForm" />
-    <Login @register="registerLoginModal" @success="login" />
+    <Login
+      @register="registerLoginModal"
+      @success="login"
+      :auth-code="ReCheckButtonEnum.ResultRegistrationCheck"
+    />
   </BasicModal>
 </template>
 <script setup lang="ts">
@@ -33,6 +37,7 @@
   import { ref } from 'vue';
   import { summitUnqualifiedApi } from '@/api/inspect/resultRegistration';
   import { message } from 'ant-design-vue';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const loading = ref(false);
 

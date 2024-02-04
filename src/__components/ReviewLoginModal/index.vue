@@ -16,9 +16,18 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { formSchema } from './modal.data';
   import { reCheckLogin } from '@/api/sys/login';
-  import { PostApiSysReviewerLoginRequest } from '@/api/type/login';
+  import { PostApiSysReviewerCasdoorLoginRequest } from '@/api/type/login';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'LoginModal' });
+  const props = withDefaults(
+    defineProps<{
+      authCode: ReCheckButtonEnum;
+    }>(),
+    {
+      authCode: ReCheckButtonEnum.ResultRegistrationCheck,
+    },
+  );
 
   const emit = defineEmits(['success', 'register']);
 
@@ -33,14 +42,17 @@
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async () => {
     await resetFields();
-    clearValidate();
+    await clearValidate();
     setModalProps({ confirmLoading: false });
   });
 
   async function handleSubmit() {
     try {
       const values = await validate();
-      const loginRes = await reCheckLogin(values as PostApiSysReviewerLoginRequest);
+      const loginRes = await reCheckLogin({
+        ...values,
+        buttonId: props.authCode,
+      } as PostApiSysReviewerCasdoorLoginRequest);
       setModalProps({ confirmLoading: true });
       closeModal();
       emit('success', loginRes.username, loginRes);

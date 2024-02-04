@@ -14,7 +14,11 @@
       @ok="handleSubmit"
     >
       <BasicForm @register="registerForm" />
-      <Login @register="registerLoginModal" @success="login" />
+      <Login
+        @register="registerLoginModal"
+        @success="login"
+        :auth-code="ReCheckButtonEnum.ResultRegistrationTiter"
+      />
     </BasicModal>
   </div>
 </template>
@@ -28,6 +32,7 @@
   import { nextTick } from 'vue';
   import { getCheckItemDtListApi, updateTiterCheckApi } from '@/api/inspect/resultRegistration';
   import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const props = defineProps({
     checkResult: {

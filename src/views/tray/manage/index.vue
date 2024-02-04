@@ -25,7 +25,11 @@
     </BasicModal>
     <TableModal @register="registerTableModal" />
     <BoxTableModal @register="registerBoxTableModal" />
-    <Login @register="registerLoginModal" @success="login" />
+    <Login
+      @register="registerLoginModal"
+      @success="login"
+      :auth-code="ReCheckButtonEnum.TrayManageCheck"
+    />
   </PageWrapper>
 </template>
 <script setup lang="ts">
@@ -37,15 +41,16 @@
   import Login from '@/__components/ReviewLoginModal/index.vue';
 
   import {
-    getListApi,
-    disableTrayApi,
-    createTrayLabelApi,
     confirmTrayLabelApi,
+    createTrayLabelApi,
+    disableTrayApi,
+    getListApi,
   } from '@/api/tray/list';
   import { printRecord } from '@/api/tag/printRecord';
   import { message } from 'ant-design-vue';
   import TableModal from './tableDrawer.vue';
   import BoxTableModal from './boxTableDrawer.vue';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
   const [registerModal, { openModal, closeModal, setModalProps }] = useModal();

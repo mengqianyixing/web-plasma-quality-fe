@@ -9,6 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
 const nonconformity: AppRouteModule = {
   path: '/stockout',
@@ -39,6 +40,13 @@ const nonconformity: AppRouteModule = {
         title: '血浆分拣',
       },
       component: () => import('/@/views/stockout/production-sorting/index.vue'),
+      authElements: [
+        {
+          id: ReCheckButtonEnum.ProductionSortingReCheck,
+          name: 'reCheckLogin',
+          title: '复核人登录',
+        },
+      ],
     },
     {
       path: 'po',
