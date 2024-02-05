@@ -11,10 +11,10 @@ type FileData = File;
  * 接口 [查询血浆出库托盘列表↗](https://yapi.sharing8.cn/project/529/interface/api/32957) 的 **请求类型**
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
- * @请求头 `GET /api/product/prepare/sorting/out-traies`
- * @更新时间 `2024-01-30 21:25:51`
+ * @请求头 `GET /api/core/bank/tray/sort-out`
+ * @更新时间 `2024-02-05 17:15:23`
  */
-export interface GetApiProductPrepareSortingOutTraiesRequest {
+export interface GetApiCoreBankTraySortOutRequest {
   /**
    * 当前页码
    */
@@ -53,10 +53,10 @@ export interface GetApiProductPrepareSortingOutTraiesRequest {
  * 接口 [查询血浆出库托盘列表↗](https://yapi.sharing8.cn/project/529/interface/api/32957) 的 **返回类型**
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
- * @请求头 `GET /api/product/prepare/sorting/out-traies`
- * @更新时间 `2024-01-30 21:25:51`
+ * @请求头 `GET /api/core/bank/tray/sort-out`
+ * @更新时间 `2024-02-05 17:15:23`
  */
-export interface GetApiProductPrepareSortingOutTraiesResponse {
+export interface GetApiCoreBankTraySortOutResponse {
   totalCount?: number;
   currPage?: null;
   totalPage?: null;
@@ -98,6 +98,10 @@ export interface GetApiProductPrepareSortingOutTraiesResponse {
      * 存放货位
      */
     locationNo?: string;
+    /**
+     * 待分拣的血浆箱数
+     */
+    waitBoxCount?: string;
   }[];
 }
 
@@ -105,10 +109,10 @@ export interface GetApiProductPrepareSortingOutTraiesResponse {
  * 接口 [查询血浆入库托盘列表↗](https://yapi.sharing8.cn/project/529/interface/api/32962) 的 **请求类型**
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
- * @请求头 `GET /api/product/prepare/sorting/in-traies`
- * @更新时间 `2024-01-30 16:03:57`
+ * @请求头 `GET /api/core/bank/tray/sort-in`
+ * @更新时间 `2024-02-05 17:16:11`
  */
-export interface GetApiProductPrepareSortingInTraiesRequest {
+export interface GetApiCoreBankTraySortInRequest {
   /**
    * 当前页码
    */
@@ -135,10 +139,10 @@ export interface GetApiProductPrepareSortingInTraiesRequest {
  * 接口 [查询血浆入库托盘列表↗](https://yapi.sharing8.cn/project/529/interface/api/32962) 的 **返回类型**
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
- * @请求头 `GET /api/product/prepare/sorting/in-traies`
- * @更新时间 `2024-01-30 16:03:57`
+ * @请求头 `GET /api/core/bank/tray/sort-in`
+ * @更新时间 `2024-02-05 17:16:11`
  */
-export interface GetApiProductPrepareSortingInTraiesResponse {
+export interface GetApiCoreBankTraySortInResponse {
   totalCount?: number;
   currPage?: null;
   totalPage?: null;
@@ -175,13 +179,10 @@ export interface GetApiProductPrepareSortingInTraiesResponse {
  * 接口 [出库血浆托盘血浆箱存放明细列表↗](https://yapi.sharing8.cn/project/529/interface/api/32967) 的 **请求类型**
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
- * @请求头 `GET /api/product/prepare/sorting/out-tray-boxes/{trayNo}`
- * @更新时间 `2024-01-30 14:47:01`
+ * @请求头 `GET /api/core/bank/tray/sort-out/boxes/{trayNo}`
+ * @更新时间 `2024-02-05 17:16:46`
  */
-export interface GetApiProductPrepareSortingOutTrayBoxesTrayNoRequest {
-  /**
-   * 托盘编号
-   */
+export interface GetApiCoreBankTraySortOutBoxesTrayNoRequest {
   trayNo: string;
 }
 
@@ -189,10 +190,10 @@ export interface GetApiProductPrepareSortingOutTrayBoxesTrayNoRequest {
  * 接口 [出库血浆托盘血浆箱存放明细列表↗](https://yapi.sharing8.cn/project/529/interface/api/32967) 的 **返回类型**
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
- * @请求头 `GET /api/product/prepare/sorting/out-tray-boxes/{trayNo}`
- * @更新时间 `2024-01-30 14:47:01`
+ * @请求头 `GET /api/core/bank/tray/sort-out/boxes/{trayNo}`
+ * @更新时间 `2024-02-05 17:16:46`
  */
-export type GetApiProductPrepareSortingOutTrayBoxesTrayNoResponse = {
+export type GetApiCoreBankTraySortOutBoxesTrayNoResponse = {
   /**
    * 血浆批号
    */
@@ -215,10 +216,10 @@ export type GetApiProductPrepareSortingOutTrayBoxesTrayNoResponse = {
  * 接口 [查询入库血浆的分拣血浆箱列表↗](https://yapi.sharing8.cn/project/529/interface/api/33032) 的 **请求类型**
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
- * @请求头 `GET /api/product/prepare/sorting/in-tray-boxes`
- * @更新时间 `2024-01-30 16:36:14`
+ * @请求头 `GET /api/core/bank/tray/sort-in/boxes`
+ * @更新时间 `2024-02-05 17:17:07`
  */
-export interface GetApiProductPrepareSortingInTrayBoxesRequest {
+export interface GetApiCoreBankTraySortInBoxesRequest {
   /**
    * 投产准备号
    */
@@ -245,10 +246,10 @@ export interface GetApiProductPrepareSortingInTrayBoxesRequest {
  * 接口 [查询入库血浆的分拣血浆箱列表↗](https://yapi.sharing8.cn/project/529/interface/api/33032) 的 **返回类型**
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
- * @请求头 `GET /api/product/prepare/sorting/in-tray-boxes`
- * @更新时间 `2024-01-30 16:36:14`
+ * @请求头 `GET /api/core/bank/tray/sort-in/boxes`
+ * @更新时间 `2024-02-05 17:17:07`
  */
-export interface GetApiProductPrepareSortingInTrayBoxesResponse {
+export interface GetApiCoreBankTraySortInBoxesResponse {
   totalCount?: number;
   currPage?: null;
   totalPage?: null;

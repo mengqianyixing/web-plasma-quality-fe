@@ -40,7 +40,7 @@ export const columns: BasicColumn[] = [
     width: 200,
   },
   {
-    title: '不合格类别',
+    title: '不合格类型',
     dataIndex: 'flow',
     format(text) {
       return PlasmaUnqualifiedTypeMap.get(text as PlasmaUnqualifiedTypeValueEnum) as string;
@@ -97,7 +97,7 @@ export const searchSchema: FormSchema[] = [
   },
   {
     field: 'flow',
-    label: '不合格类别',
+    label: '不合格类型',
     component: 'Select',
     componentProps: {
       options: [...PlasmaUnqualifiedTypeMap.entries()].map(([value, label]) => ({

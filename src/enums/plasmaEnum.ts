@@ -80,19 +80,28 @@ PlasmaUnqualifiedTypeMap.set(PlasmaUnqualifiedTypeValueEnum.PCP, PlasmaUnqualifi
 PlasmaUnqualifiedTypeMap.set(PlasmaUnqualifiedTypeValueEnum.SAP, PlasmaUnqualifiedTypeEnum.SAP);
 
 export enum PlasmaOutboundTypeEnum {
-  OTP = '投产出库',
-  OTD = '不合格出库',
-  OTE = '科研出库',
+  PRO = '投产出库',
+  RMT = '不合格出库转移',
+  DST = '不合格出库销毁',
+  SIC = '科研出库',
+  NOR = '普通出库',
+  NPD = '非生产出库',
 }
 
 export enum PlasmaOutboundTypeValueEnum {
-  OTP = 'OTP',
-  OTD = 'OTD',
-  OTE = 'OTE',
+  PRO = 'PRO',
+  RMT = 'RMT',
+  DST = 'DST',
+  SIC = 'SIC',
+  NOR = 'NOR',
+  NPD = 'NPD',
 }
 
 export const PlasmaOutboundTypeMap = new Map<PlasmaOutboundTypeValueEnum, string>();
 
-PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.OTP, PlasmaOutboundTypeEnum.OTP);
-PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.OTD, PlasmaOutboundTypeEnum.OTD);
-PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.OTE, PlasmaOutboundTypeEnum.OTE);
+PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.PRO, PlasmaOutboundTypeEnum.PRO);
+PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.RMT, PlasmaOutboundTypeEnum.RMT);
+PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.DST, PlasmaOutboundTypeEnum.DST);
+PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.SIC, PlasmaOutboundTypeEnum.SIC);
+PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.NOR, PlasmaOutboundTypeEnum.NOR);
+PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.NPD, PlasmaOutboundTypeEnum.NPD);

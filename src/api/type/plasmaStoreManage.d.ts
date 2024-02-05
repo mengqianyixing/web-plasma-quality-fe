@@ -381,7 +381,7 @@ export interface GetApiCoreBankLocationsResponse {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/stock`
- * @更新时间 `2024-02-04 17:00:27`
+ * @更新时间 `2024-02-05 17:00:04`
  */
 export interface GetApiCoreBankStockRequest {
   /**
@@ -435,6 +435,14 @@ export interface GetApiCoreBankStockRequest {
    * 血浆过程状态  字典stockPlasmaProcessStatus
    */
   state?: string;
+  /**
+   * 验收发布开始时间
+   */
+  verifyPubStartDate?: string;
+  /**
+   * 验收发布结束时间
+   */
+  verifyPubEndDate?: string;
 }
 
 /**
@@ -442,7 +450,7 @@ export interface GetApiCoreBankStockRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/stock`
- * @更新时间 `2024-02-04 17:00:27`
+ * @更新时间 `2024-02-05 17:00:04`
  */
 export type GetApiCoreBankStockResponse = {
   /**

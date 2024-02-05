@@ -1,8 +1,9 @@
 import { VxeGridPropTypes } from '@/components/VxeTable';
 import { FormSchema } from '@/components/Form';
 import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
-import { PlasmaOutboundTypeMap } from '@/enums/plasmaEnum';
+import { PlasmaOutboundTypeMap, PlasmaOutboundTypeValueEnum } from '@/enums/plasmaEnum';
 import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
+import { Select, RangePicker, FormItem, FormItemRest } from 'ant-design-vue';
 
 export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
@@ -63,19 +64,46 @@ export const formSchema: FormSchema[] = [
     field: 'dlvType',
     component: 'Select',
     componentProps: {
-      options: [...PlasmaOutboundTypeMap.entries()].map(([value, label]) => ({
-        label,
-        value,
-      })),
+      options: [...PlasmaOutboundTypeMap.entries()]
+        .map(([value, label]) => ({
+          label,
+          value,
+        }))
+        .filter((it) =>
+          [
+            PlasmaOutboundTypeValueEnum.PRO,
+            PlasmaOutboundTypeValueEnum.RMT,
+            PlasmaOutboundTypeValueEnum.DST,
+            PlasmaOutboundTypeValueEnum.NPD,
+          ].includes(it.value),
+        ),
     },
     colProps: {
       span: 5,
     },
   },
   {
-    label: '接收日期',
-    field: '[receiptStartDate, receiptEndDate]',
-    component: 'RangePicker',
+    required: true,
+    field: 'dateKey',
+    defaultValue: 'receipt',
+    fields: ['date'],
+    component: 'Input',
+    label: '日期',
+    render({ model, field }, { disabled }) {
+      return (
+        <div class="flex gap-2">
+          <Select disabled={disabled} style="width: 120px;" allowClear v-model:value={model[field]}>
+            <Select.Option value="receipt">接收日期</Select.Option>
+            <Select.Option value="verify">发布验收日期</Select.Option>
+          </Select>
+          <FormItem name="date">
+            <FormItemRest>
+              <RangePicker v-model:value={model['date']} />
+            </FormItemRest>
+          </FormItem>
+        </div>
+      );
+    },
     colProps: {
       span: 8,
     },
