@@ -418,7 +418,7 @@ export type GetApiCoreBagStatisticsBatchNoResponse = {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/plasma`
- * @更新时间 `2024-02-05 15:13:10`
+ * @更新时间 `2024-02-05 15:17:03`
  */
 export interface GetApiCoreBagPlasmaRequest {
   /**
@@ -435,6 +435,10 @@ export interface GetApiCoreBagPlasmaRequest {
    * 验收人
    */
   receiver?: string;
+  /**
+   * 浆站箱号
+   */
+  boxNo?: string;
 }
 
 /**
@@ -442,7 +446,7 @@ export interface GetApiCoreBagPlasmaRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/plasma`
- * @更新时间 `2024-02-05 15:13:10`
+ * @更新时间 `2024-02-05 15:17:03`
  */
 export interface GetApiCoreBagPlasmaResponse {
   totalCount?: number;
