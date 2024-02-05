@@ -15,7 +15,9 @@
 <script setup lang="ts">
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { useTable, BasicTable } from '@/components/Table';
-  import { hortFallNumModalColums } from './entrySearch.data';
+  import { hortFallNumModalColumns } from './entrySearch.data';
+
+  defineEmits(['register']);
 
   const [registerHortFall] = useModalInner();
   const [registerTable] = useTable({
@@ -28,14 +30,9 @@
       schemas: [],
     },
     rowKey: 'hortFallNum',
-    columns: hortFallNumModalColums,
+    columns: hortFallNumModalColumns,
     pagination: false,
     useSearchForm: false,
     bordered: true,
   });
 </script>
-<style>
-  .locationModal .scrollbar__view {
-    height: 100%;
-  }
-</style>

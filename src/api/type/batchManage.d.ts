@@ -381,7 +381,7 @@ export type GetApiCoreBatchAcceptationBatchNoResponse = {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/statistics/{batchNo}`
- * @更新时间 `2023-12-23 15:11:38`
+ * @更新时间 `2024-02-05 14:41:38`
  */
 export interface GetApiCoreBagStatisticsBatchNoRequest {
   batchNo: string;
@@ -392,7 +392,7 @@ export interface GetApiCoreBagStatisticsBatchNoRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/statistics/{batchNo}`
- * @更新时间 `2023-12-23 15:11:38`
+ * @更新时间 `2024-02-05 14:41:38`
  */
 export type GetApiCoreBagStatisticsBatchNoResponse = {
   /**
@@ -404,6 +404,10 @@ export type GetApiCoreBagStatisticsBatchNoResponse = {
    */
   plasmaNum?: number;
   /**
+   * 效价类型
+   */
+  titerType?: string;
+  /**
    * 血浆重量
    */
   plasmaWeight?: number;
@@ -414,7 +418,7 @@ export type GetApiCoreBagStatisticsBatchNoResponse = {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/plasma`
- * @更新时间 `2023-12-25 16:19:51`
+ * @更新时间 `2024-02-05 15:13:10`
  */
 export interface GetApiCoreBagPlasmaRequest {
   /**
@@ -427,6 +431,10 @@ export interface GetApiCoreBagPlasmaRequest {
   bagVerify?: string;
   currPage: string;
   pageSize: string;
+  /**
+   * 验收人
+   */
+  receiver?: string;
 }
 
 /**
@@ -434,7 +442,7 @@ export interface GetApiCoreBagPlasmaRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/plasma`
- * @更新时间 `2023-12-25 16:19:51`
+ * @更新时间 `2024-02-05 15:13:10`
  */
 export interface GetApiCoreBagPlasmaResponse {
   totalCount?: number;
@@ -458,6 +466,10 @@ export interface GetApiCoreBagPlasmaResponse {
      * 浆站箱号
      */
     boxNo: string;
+    /**
+     * 现存箱号
+     */
+    nowBoxNo: string;
     /**
      * 血浆编号
      */
@@ -490,6 +502,10 @@ export interface GetApiCoreBagPlasmaResponse {
      * 验收净重
      */
     verifyWeight: number;
+    /**
+     * 血型
+     */
+    bloodType: string;
     /**
      * 地址
      */

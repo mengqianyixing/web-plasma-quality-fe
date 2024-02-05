@@ -38,7 +38,7 @@
         </span>
       </template>
     </BasicTable>
-    <BatchNoMadal @register="register" />
+    <BatchNoModal @register="register" />
     <VerifyNumModal @register="registerVerifyNum" />
     <NoPassModal @register="registerNoPass" />
     <HortFallModal @register="registerHortFall" />
@@ -50,13 +50,10 @@
   import { entryColumns, searchFormSchema } from './entrySearch.data';
   import { receptionDetailApi } from '@/api/plasmaStore/entryPlasma';
   import { useModal } from '@/components/Modal';
-  import BatchNoMadal from './batchNoModal.vue';
+  import BatchNoModal from './batchNoModal.vue';
   import VerifyNumModal from './verifyNumModal.vue';
   import NoPassModal from './noPassModal.vue';
   import HortFallModal from './hortFallModal.vue';
-  // import dayjs from 'dayjs';
-  // import { cloneDeep } from 'lodash-es';
-  // import { TableColumnType } from 'ant-design-vue';
 
   const [register, { openModal }] = useModal();
   const [registerVerifyNum, { openModal: openVerifyNumModal }] = useModal();
@@ -67,11 +64,6 @@
 
   const [registerTable] = useTable({
     api: receptionDetailApi,
-    dataSource: [
-      {
-        verifyNoPassNum: '5',
-      },
-    ],
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -91,7 +83,10 @@
     showIndexColumn: true,
   });
 
-  function handleDetails(row: Recordable, flag) {
+  function handleDetails(
+    row: Recordable,
+    flag: 'batchNo' | 'verifyNum' | 'verifyNoPassNum' | string,
+  ) {
     if (flag === 'batchNo') {
       openModal(true, { batchNo: row.batchNo });
     } else if (flag === 'verifyNum') {

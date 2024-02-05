@@ -381,7 +381,7 @@ export interface GetApiCoreBankLocationsResponse {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/stock`
- * @更新时间 `2024-02-02 15:58:06`
+ * @更新时间 `2024-02-04 17:00:27`
  */
 export interface GetApiCoreBankStockRequest {
   /**
@@ -405,19 +405,30 @@ export interface GetApiCoreBankStockRequest {
    */
   immType?: string;
   /**
-   * 血浆出库类型
-   *     /**
+   *  /**
    *      * 投产出库
    *      * /
-   *     OTP,
+   *     PRO,
    *     /**
-   *      * 不合格出库
+   *      * 不合格出库转移
    *      * /
-   *     OTD,
+   *     RMT,
+   *     /**
+   *      * 不合格出库销毁
+   *      * /
+   *     DST,
    *     /**
    *      * 科研出库
    *      * /
-   *     OTE,
+   *     SIC,
+   *     /**
+   *      * 普通出库
+   *      * /
+   *     NOR,
+   *     /**
+   *      * 非生产出库
+   *      * /
+   *     NPD,
    */
   dlvType?: string;
   /**
@@ -431,7 +442,7 @@ export interface GetApiCoreBankStockRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/stock`
- * @更新时间 `2024-02-02 15:58:06`
+ * @更新时间 `2024-02-04 17:00:27`
  */
 export type GetApiCoreBankStockResponse = {
   /**
@@ -473,7 +484,7 @@ export type GetApiCoreBankStockResponse = {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/reception`
- * @更新时间 `2024-02-04 11:24:33`
+ * @更新时间 `2024-02-04 16:00:20`
  */
 export interface GetApiCoreBankReceptionRequest {
   /**
@@ -495,11 +506,11 @@ export interface GetApiCoreBankReceptionRequest {
   /**
    * 接收开始日期
    */
-  receptStartDate?: string;
+  acceptStartDate?: string;
   /**
    * 接收结束日期
    */
-  receptEndDate?: string;
+  acceptEndDate?: string;
   /**
    * 验收发布开始日期
    */
@@ -515,7 +526,7 @@ export interface GetApiCoreBankReceptionRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/reception`
- * @更新时间 `2024-02-04 11:24:33`
+ * @更新时间 `2024-02-04 16:00:20`
  */
 export interface GetApiCoreBankReceptionResponse {
   currPage?: number;
@@ -557,7 +568,7 @@ export interface GetApiCoreBankReceptionResponse {
     /**
      * 验收发布人
      */
-    verifyPuber: string;
+    verifyPublisher: string;
     /**
      * 验收发布日期
      */

@@ -17,7 +17,6 @@
   </BasicModal>
 </template>
 <script setup lang="ts">
-  // import { ref } from 'vue';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { useTable, BasicTable } from '@/components/Table';
   import { verifyDetailColumns, verifySumColumns } from './entrySearch.data';
@@ -26,20 +25,15 @@
 
   defineOptions({ name: 'VerifyNumModal' });
 
+  defineEmits(['register']);
+
   const state = reactive({
     batchNo: '',
     verifyNum: '',
   });
 
-  const [
-    detailTable,
-    {
-      clearSelectedRowKeys: clearSelectedRowKeysDetail,
-      reload: reloadDetail,
-      setPagination: setPaginationDetail,
-    },
-  ] = useTable({
-    immediate: true,
+  const [detailTable, { reload: reloadDetail }] = useTable({
+    immediate: false,
     api: verifyNumApi,
     pagination: false,
     fetchSetting: {
@@ -51,14 +45,13 @@
     rowKey: 'verifyNum',
     columns: verifyDetailColumns,
     bordered: true,
-    isCanResizeParent: true,
-    beforeFetch: (params) => {
-      return { ...params, batchNo: state.batchNo };
+    beforeFetch: () => {
+      return state.batchNo;
     },
   });
 
-  const [sumTable, { clearSelectedRowKeys, reload: reloadSum, setPagination }] = useTable({
-    immediate: true,
+  const [sumTable, { reload: reloadSum }] = useTable({
+    immediate: false,
     api: verifyNumApi,
     pagination: false,
     fetchSetting: {
@@ -70,21 +63,20 @@
     rowKey: 'verifyNum',
     columns: verifySumColumns,
     bordered: true,
-    isCanResizeParent: true,
-    // rowSelection: { type: 'checkbox' },
-    beforeFetch: (params) => {
-      return { ...params, batchNo: state.batchNo };
+    beforeFetch: () => {
+      return state.batchNo;
     },
   });
   const [registerVerifyNum, { closeModal }] = useModalInner(({ batchNo }) => {
     state.batchNo = batchNo;
-    setPagination({ current: 1 });
-    setPaginationDetail({ current: 1 });
+
+    reloadTable();
+  });
+
+  function reloadTable() {
     reloadDetail();
     reloadSum();
-    clearSelectedRowKeysDetail();
-    clearSelectedRowKeys();
-  });
+  }
 </script>
 <style>
   .modalTable {

@@ -16,11 +16,13 @@
 <script setup lang="ts">
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { useTable, BasicTable } from '@/components/Table';
-  import { noPassSearchFormSchema, noPassModalColums } from './entrySearch.data';
+  import { noPassSearchFormSchema, noPassModalColumns } from './entrySearch.data';
   import { verifyNoPassNumApi } from '@/api/plasmaStore/entryPlasma';
   import { reactive } from 'vue';
 
   defineOptions({ name: 'NoPassModal' });
+
+  defineEmits(['register']);
 
   const state = reactive({
     verifyNoPassNum: '',
@@ -28,10 +30,9 @@
     bagVerify: 'FAIL',
     bagNo: '',
   });
-  const [registerTable, { clearSelectedRowKeys, reload, setPagination }] = useTable({
+  const [registerTable, { clearSelectedRowKeys, reload }] = useTable({
     immediate: false,
     api: verifyNoPassNumApi,
-
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -42,22 +43,17 @@
       schemas: noPassSearchFormSchema,
     },
     rowKey: 'verifyNoPassNum',
-    columns: noPassModalColums,
+    columns: noPassModalColumns,
     bordered: true,
-    isCanResizeParent: true,
     useSearchForm: true,
-    // rowSelection: { type: 'checkbox' },
     beforeFetch: (params) => {
       return { ...params, batchNo: state.batchNo, bagVerify: state.bagVerify };
     },
   });
   const [registerNoPass, { closeModal }] = useModalInner(({ batchNo, bagVerify }) => {
-    // state.bagVerify = bagVerify;
     state.batchNo = batchNo;
     state.bagVerify = bagVerify;
-    console.log(batchNo, bagVerify);
 
-    setPagination({ current: 1 });
     reload();
     clearSelectedRowKeys();
   });

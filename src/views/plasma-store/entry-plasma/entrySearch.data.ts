@@ -1,6 +1,7 @@
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { operationMap, operationValueEnum } from '@/enums/stockoutEnum';
+import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
 
 export const entryColumns: BasicColumn[] = [
   {
@@ -49,12 +50,12 @@ export const entryColumns: BasicColumn[] = [
     children: [
       {
         title: '接收日期',
-        dataIndex: 'receptDate',
+        dataIndex: 'acceptDate',
         width: 100,
       },
       {
         title: '验收发布人',
-        dataIndex: 'verifyPuber',
+        dataIndex: 'verifyPublisher',
         width: 100,
       },
       {
@@ -111,7 +112,6 @@ export const searchFormSchema: FormSchema[] = [
     field: 'stationNo',
     componentProps: {
       api: stationNameSearchApi,
-      resultField: 'result',
       labelField: 'stationName',
       valueField: 'stationNo',
     },
@@ -124,7 +124,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     label: '接收日期',
     component: 'RangePicker',
-    field: '[receptStartDate, receptEndDate]',
+    field: '[acceptStartDate, acceptEndDate]',
   },
   {
     label: '验收日期',
@@ -151,12 +151,12 @@ export const entryDetailModalColumns: BasicColumn[] = [
   },
   {
     title: '现存箱号',
-    dataIndex: 'bagNo',
+    dataIndex: 'nowBoxNo',
     width: 150,
   },
   {
     title: '血浆编号',
-    dataIndex: 'collectAt',
+    dataIndex: 'bagNo',
     width: 100,
   },
   {
@@ -178,10 +178,13 @@ export const entryDetailModalColumns: BasicColumn[] = [
     title: '浆员状态',
     dataIndex: 'donorStatus',
     width: 100,
+    format: (text) => {
+      return donorStatusMap.get(text as donorStatusValueEnum) as string;
+    },
   },
   {
     title: '血型',
-    dataIndex: '',
+    dataIndex: 'bloodType',
     width: 100,
   },
   {
@@ -303,6 +306,9 @@ export const verifyDetailColumns: BasicColumn[] = [
   {
     title: '血浆类型',
     dataIndex: 'immuType',
+    format: (text) => {
+      return operationMap.get(text as operationValueEnum) as string;
+    },
     width: 90,
   },
   {
@@ -326,6 +332,9 @@ export const verifySumColumns: BasicColumn[] = [
   {
     title: '血浆类型',
     dataIndex: 'immuType',
+    format: (text) => {
+      return operationMap.get(text as operationValueEnum) as string;
+    },
     width: 100,
   },
   {
@@ -354,11 +363,11 @@ export const noPassSearchFormSchema: FormSchema[] = [
   {
     label: '验收人',
     component: 'Input',
-    field: '',
+    field: 'receiver',
   },
 ];
 
-export const noPassModalColums: BasicColumn[] = [
+export const noPassModalColumns: BasicColumn[] = [
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
@@ -381,7 +390,7 @@ export const noPassModalColums: BasicColumn[] = [
   },
   {
     title: '验收人',
-    dataIndex: '',
+    dataIndex: 'receiver',
   },
   {
     title: '复核人',
@@ -401,7 +410,7 @@ export const noPassModalColums: BasicColumn[] = [
   },
 ];
 
-export const hortFallNumModalColums: BasicColumn[] = [
+export const hortFallNumModalColumns: BasicColumn[] = [
   {
     title: '血浆批号',
     dataIndex: '',

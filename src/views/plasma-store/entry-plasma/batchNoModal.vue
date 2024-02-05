@@ -20,40 +20,37 @@
   import { entryDetailModalColumns } from './entrySearch.data';
   import { bagPlasmaDetailApi } from '@/api/plasmaStore/entryPlasma';
 
-  const batchNoRef = ref('');
-  const [registerTable, { setPagination, setTableData, getPaginationRef }] = useTable({
+  defineEmits(['register']);
+
+  const batchNo = ref('');
+  const [registerTable, { reload }] = useTable({
+    api: bagPlasmaDetailApi,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
       totalField: 'totalCount',
       listField: 'result',
     },
+    beforeFetch: (params) => {
+      return {
+        ...params,
+        batchNo: batchNo.value,
+      };
+    },
     rowKey: 'batchNo',
     columns: entryDetailModalColumns,
-    isCanResizeParent: true,
     bordered: true,
-    onChange: (page) => {
-      getBatchDetail(page);
-    },
+    immediate: false,
   });
 
-  async function getBatchDetail(pager) {
-    const res = await bagPlasmaDetailApi({
-      batchNo: batchNoRef.value,
-      currPage: pager.current,
-      pageSize: pager.defaultPageSize,
+  const [register, { closeModal, setModalProps }] = useModalInner((data) => {
+    setModalProps({
+      maskClosable: false,
     });
-    setTableData(res.result as any);
 
-    setPagination({
-      total: res.totalCount,
-    });
-  }
+    batchNo.value = data.batchNo;
 
-  const [register, { closeModal }] = useModalInner(async ({ batchNo }) => {
-    batchNoRef.value = batchNo;
-    const pager = getPaginationRef();
-    getBatchDetail(pager);
+    reload();
   });
 </script>
 <style scoped>
