@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-02-19 17:22:11
+ * @LastEditTime: 2024-02-19 17:30:19
  * @Description: 用户管理数据源
  * @FilePath: \psms-fe\src\views\system\users\users.data.ts
  */
@@ -133,7 +133,6 @@ export const userDetailFormSchema: FormSchema[] = [
     label: '角色',
     component: 'Select',
     render: ({ model, field }) => {
-      console.log({ model, field });
       return h(Select, {
         value: model[field]?.map((item) => item.name),
         mode: 'multiple',
@@ -151,7 +150,6 @@ export const userDetailFormSchema: FormSchema[] = [
     label: '权限',
     component: 'Select',
     render: ({ model, field }) => {
-      console.log({ model, field });
       return h(Select, {
         value: model[field]
           ?.filter((item) => routeIdMap[item])
