@@ -10,26 +10,26 @@
     <BasicForm @register="registerForm" />
     <BasicTable @register="registerTable" />
   </BasicModal>
-  <LoginModal
+  <!-- <LoginModal
     @register="registerLoginModal"
     @success="handleSuccess"
     :auth-code="ReCheckButtonEnum.PlasmaReceiveSuspendCheck"
-  />
+  /> -->
 </template>
 
 <script setup lang="tsx">
-  import { useModalInner, useModal } from '@/components/Modal';
+  import { useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { BasicForm, useForm, FormSchema } from '@/components/Form';
   import BasicModal from '@/components/Modal/src/BasicModal.vue';
-  import LoginModal from '@/__components/ReviewLoginModal/index.vue';
+  // import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { plasmaPauseBoxList } from '@/api/inbound-management/accept-plasma';
   import { receivePause } from '@/api/inbound-management/receive-plasma';
   import dayjs from 'dayjs';
   import { ref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { useUserStore } from '@/store/modules/user';
-  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  // import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage } = useMessage();
   const { success } = createMessage;
@@ -66,24 +66,24 @@
       componentProps: { disabled: true },
       required: true,
     },
-    {
-      field: 'checker',
-      component: 'InputSearch',
-      label: '复核人',
-      required: true,
-      componentProps: {
-        'enter-button': '登录',
-        placeholder: '请点击登录按钮',
-        readonly: true,
-        onSearch: handleLogin,
-      },
-    },
+    // {
+    //   field: 'checker',
+    //   component: 'InputSearch',
+    //   label: '复核人',
+    //   required: true,
+    //   componentProps: {
+    //     'enter-button': '登录',
+    //     placeholder: '请点击登录按钮',
+    //     readonly: true,
+    //     onSearch: handleLogin,
+    //   },
+    // },
     {
       field: 'remark',
       component: 'InputTextArea',
       label: '备注',
       colProps: { span: 8 },
-      required: true,
+      required: false,
     },
   ];
   const pauseLoading = ref(false);
@@ -106,10 +106,10 @@
       title: '接收人',
       dataIndex: 'creater',
     },
-    {
-      title: '复核人',
-      dataIndex: 'reviewer',
-    },
+    // {
+    //   title: '复核人',
+    //   dataIndex: 'reviewer',
+    // },
     {
       title: '暂停操作时间',
       dataIndex: 'createAt',
@@ -134,10 +134,10 @@
       title: '继续操作人',
       dataIndex: 'freedBy',
     },
-    {
-      title: '继续复核人',
-      dataIndex: 'reviewBy',
-    },
+    // {
+    //   title: '继续复核人',
+    //   dataIndex: 'reviewBy',
+    // },
   ];
   const selectedRow = ref<any>([]);
   const [registerTable, { reload }] = useTable({
@@ -178,7 +178,7 @@
     canResize: false,
   });
 
-  const [registerLoginModal, { openModal }] = useModal();
+  // const [registerLoginModal, { openModal }] = useModal();
 
   // 提交暂停
   async function submitReceivePause() {
@@ -186,7 +186,7 @@
     const data = getFieldsValue();
     const params = {
       batchNo: data.batchNo,
-      checker: data.checker,
+      // checker: data.checker,
       remark: data.remark,
       state: 'PAUSE',
       type: 'ACC',
@@ -209,7 +209,7 @@
     const data = getFieldsValue();
     const params = {
       batchNo: data.batchNo,
-      checker: data.checker,
+      // checker: data.checker,
       remark: data.remark,
       state: 'RESTORE',
       type: 'ACC',
@@ -232,15 +232,15 @@
     }
   }
 
-  // 点击登录按钮
-  function handleLogin() {
-    openModal(true);
-  }
+  // // 点击登录按钮
+  // function handleLogin() {
+  //   openModal(true);
+  // }
 
   // 登录成功事件
-  function handleSuccess(nickname: string) {
-    setFieldsValue({
-      checker: nickname,
-    });
-  }
+  // function handleSuccess(nickname: string) {
+  //   setFieldsValue({
+  //     checker: nickname,
+  //   });
+  // }
 </script>

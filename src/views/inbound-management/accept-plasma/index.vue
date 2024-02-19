@@ -33,6 +33,7 @@
               <a-button @click="handleMissNumRegister">缺浆登记</a-button>
               <a-button @click="suspendModal('BOX')">暂停箱记录</a-button>
               <a-button @click="suspendModal('BCH')">暂停批记录</a-button>
+              <a-button @click="completeAccept">完成验收</a-button>
               <a-button
                 @click="openInModal(true, { ...filterForm, isAccept: true })"
                 :disabled="!filterForm.batchNo"
@@ -94,8 +95,13 @@
   import { debounce } from 'lodash-es';
   import { VxeGridProps } from 'vxe-table';
   import { DescItem, useDescription } from '@/components/Description';
-  import { getPlasmaVerify, plasmaVerifyBag } from '@/api/inbound-management/accept-plasma';
+  import {
+    getPlasmaVerify,
+    plasmaVerifyBag,
+    plasmaComplete,
+  } from '@/api/inbound-management/accept-plasma';
   import { Modal } from 'ant-design-vue';
+  import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import dayjs from 'dayjs';
 
   import BatchDetail from '../components/PlasmaBatchDetailModal/index.vue';
@@ -662,5 +668,41 @@
 
   function handleBatchDetailClose() {
     showBoxDetailModal();
+  }
+
+  // 完成验收
+  async function completeAccept() {
+    if (!filterForm.value.batchNo) {
+      warning('请先选择批次!');
+      return;
+    }
+    if (
+      filterForm.value.bagCount <= 0 ||
+      filterForm.value.verifyBagCount != filterForm.value.bagCount
+    ) {
+      warning('请先验收完血浆!');
+      return;
+    }
+    Modal.confirm({
+      title: '提示?',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: createVNode('div', { style: 'color:red;' }, '确认验收完成吗?'),
+      async onOk() {
+        try {
+          tableLoading.value = true;
+          await plasmaComplete(batchNo.value);
+          // 清除数据
+          filterForm.value = {};
+          trayNo.value = '';
+          batchNo.value = '';
+        } finally {
+          tableLoading.value = false;
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+      class: 'test',
+    });
   }
 </script>

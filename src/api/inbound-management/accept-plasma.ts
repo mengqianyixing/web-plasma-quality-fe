@@ -30,6 +30,7 @@ enum Api {
   PlasmaPauseBoxList = '/api/core/batch/plasma/verify/pause',
   PlasmaPauseBatch = '/api/core/batch/plasma/verify/batch/pause',
   PlasmaRevokeBag = '/api/core/batch/plasma/verify/revoke/bag',
+  PlasmaComplete = '/api/core/batch/plasma/verify/batch/commit',
 }
 
 // 获取血浆验收记录信息
@@ -89,5 +90,12 @@ export const plasmaRevokeBag = (params: PostApiCoreBatchPlasmaVerifyRevokeBagReq
   return defHttp.post<PostApiCoreBatchPlasmaVerifyRevokeBagResponse>({
     url: Api.PlasmaRevokeBag,
     params,
+  });
+};
+
+// 血浆验收-完成验收
+export const plasmaComplete = (params: any) => {
+  return defHttp.post<any>({
+    url: `${Api.PlasmaComplete}/${params}`,
   });
 };

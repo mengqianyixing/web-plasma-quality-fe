@@ -48,7 +48,7 @@
       // 设置接收状态默认值
       await getForm().updateSchema({
         field: 'acceptState',
-        defaultValue: ['R', 'S'],
+        defaultValue: ['S'],
       });
       await getForm().updateSchema({
         field: 'verifyState',

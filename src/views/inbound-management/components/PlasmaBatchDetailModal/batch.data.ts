@@ -65,7 +65,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'verifyAt',
     customRender: ({ text }) => {
       if (text) {
-        return dayjs(text).format('YYYY-MM-DD');
+        return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
       }
       return '';
     },

@@ -32,9 +32,9 @@
             style="width: 180px"
           />
         </FormItem>
-        <FormItem label="复核人" v-if="searchForm.pattern === 'BOX'" name="checker">
+        <!-- <FormItem label="复核人" v-if="searchForm.pattern === 'BOX'" name="checker">
           <Input v-model:value="searchForm.checker" readonly />
-        </FormItem>
+        </FormItem> -->
         <FormItem label="备注" name="remark">
           <Textarea v-model:value="searchForm.remark" :cols="50" />
         </FormItem>
@@ -105,8 +105,8 @@
   interface SearchForm {
     batchNo: string;
     boxNo?: string;
-    remark: string;
-    checker: string;
+    remark?: string;
+    checker?: string;
     pattern: string; // BOX/BCH
   }
   // 表单数据
@@ -123,10 +123,10 @@
       title: '验收人',
       dataIndex: 'creater',
     },
-    {
-      title: '复核人',
-      dataIndex: 'reviewer',
-    },
+    // {
+    //   title: '复核人',
+    //   dataIndex: 'reviewer',
+    // },
     {
       title: '暂停操作时间',
       dataIndex: 'createAt',
@@ -161,6 +161,10 @@
   // 动态列
   const addCols = () => {
     if (searchForm.value.pattern === 'BCH') {
+      columns.value.splice(1, 0, {
+        title: '复核人',
+        dataIndex: 'reviewer',
+      });
       columns.value.splice(
         3,
         0,
@@ -212,17 +216,16 @@
 
   // 暂停
   const confirm = async () => {
-    if (!searchForm.value.checker) {
-      warning('请登录复核人');
-      return;
-    }
-    if (!searchForm.value.remark) {
-      warning('请填写备注!');
-      return;
-    }
     if (searchForm.value.pattern === 'BOX') {
       try {
-        const params = { ...searchForm.value, state: 'PAUSE', type: 'VER' };
+        const params = {
+          batchNo: searchForm.value.batchNo,
+          boxNo: searchForm.value.boxNo,
+          pattern: 'BOX',
+          state: 'PAUSE',
+          type: 'VER',
+          remark: searchForm.value.remark || null,
+        };
         submitLoading.value = true;
         const data = await plasmaPauseBox(params);
         if (data === null) {
@@ -234,6 +237,14 @@
         submitLoading.value = false;
       }
     } else if (searchForm.value.pattern === 'BCH') {
+      if (!searchForm.value.checker) {
+        warning('请登录复核人');
+        return;
+      }
+      if (!searchForm.value.remark) {
+        warning('请填写备注!');
+        return;
+      }
       try {
         const params = {
           batchNo: searchForm.value.batchNo,
@@ -294,24 +305,16 @@
       warning('请先选择一条数据!');
       return;
     }
-    if (!searchForm.value.checker) {
-      warning('请登录复核人');
-      return;
-    }
-    if (!searchForm.value.remark) {
-      warning('请填写备注!');
-      return;
-    }
     const firstSelectedItem = tableSelected.value[0];
     if (searchForm.value.pattern === 'BOX') {
       try {
         const params = {
           batchNo: searchForm.value.batchNo,
           boxNo: firstSelectedItem.boxNo,
-          checker: searchForm.value.checker, // 传登录的复核人
+          // checker: searchForm.value.checker, // 传登录的复核人
           state: 'RESTORE',
           type: 'VER',
-          remark: searchForm.value.remark,
+          remark: searchForm.value.remark || null,
         };
         resumeLoading.value = true;
         const data = await plasmaPauseBox(params);
@@ -326,6 +329,10 @@
         hideModal();
       }
     } else if (searchForm.value.pattern === 'BCH') {
+      if (!searchForm.value.remark) {
+        warning('请填写备注!');
+        return;
+      }
       if (!searchForm.value.checker) {
         warning('请登录复核人');
         return;
