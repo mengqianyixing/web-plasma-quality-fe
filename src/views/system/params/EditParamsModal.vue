@@ -81,9 +81,14 @@
         show: false,
       },
       {
+        label: '参数值提示',
         field: 'valueContext',
-        slot: 'valueContext',
-        show: false,
+        component: 'InputTextArea',
+        componentProps: {
+          placeholder: '-',
+          readonly: true,
+        },
+        colProps: { span: 20 },
       },
       {
         label: '备注',
@@ -111,17 +116,24 @@
 
   function _checkParamsValue(values: any) {
     const value: any = values.paramValue;
+    const rules = JSON.parse(values?.valueContext ?? '{}');
     switch (values.valueType) {
       case 'float':
+        if (hasKey(rules, 'min') && hasKey(rules, 'max')) {
+          return isDecimal(value) && value >= rules.min && value <= rules.max;
+        }
         return isDecimal(value);
+      case 'int':
+        if (hasKey(rules, 'min') && hasKey(rules, 'max')) {
+          return isInteger(value) && value >= rules.min && value <= rules.max;
+        }
+        return isInteger(value);
       case 'text':
         return isStr(value);
-      case 'int':
-        return isInteger(value);
       case 'json':
         return isJSON(value);
       case 'select':
-        return hasKey(JSON.parse(values?.valueContext ?? '{}'), value);
+        return hasKey(rules, value);
       default:
         return true;
     }
