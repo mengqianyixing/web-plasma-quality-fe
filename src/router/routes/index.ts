@@ -18,7 +18,28 @@ Object.keys(modules).forEach((key) => {
   routeModuleList.push(...modList);
 });
 
+function getRouteIdMap(routes: any[]) {
+  let ret: any = {};
+  routes.forEach((item) => {
+    if (item.id) {
+      ret[item.id] = {
+        ...item,
+        title: item?.title ?? item?.meta?.title ?? item?.name,
+      };
+    }
+    if (item.children || item.authElements) {
+      ret = {
+        ...ret,
+        ...getRouteIdMap(item.children || item.authElements || []),
+      };
+    }
+  });
+  return ret;
+}
+
 export const modulesRouteList = jsonClone(routeModuleList);
+
+export const routeIdMap = getRouteIdMap(modulesRouteList);
 
 export const asyncRoutes = [PAGE_NOT_FOUND_ROUTE, ...routeModuleList];
 

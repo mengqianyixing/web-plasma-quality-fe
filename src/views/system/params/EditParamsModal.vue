@@ -80,16 +80,16 @@
         slot: 'valueType',
         show: false,
       },
-      {
-        label: '参数值提示',
-        field: 'valueContext',
-        component: 'InputTextArea',
-        componentProps: {
-          placeholder: '-',
-          readonly: true,
-        },
-        colProps: { span: 20 },
-      },
+      // {
+      //   label: '参数值提示',
+      //   field: 'valueContext',
+      //   component: 'InputTextArea',
+      //   componentProps: {
+      //     placeholder: '-',
+      //     readonly: true,
+      //   },
+      //   colProps: { span: 20 },
+      // },
       {
         label: '备注',
         field: 'remark',

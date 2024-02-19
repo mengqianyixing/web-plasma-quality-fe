@@ -42,6 +42,7 @@
   import { ref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { exportFile, formatDate, transferCSVData } from 'js-xxx';
+  import { routeIdMap } from '@/router/routes';
 
   const { createMessage } = useMessage();
 
@@ -100,7 +101,10 @@
     }
     const records: any[] = selectedRowsRef.value.map((item) => ({
       ...item,
-      domainsStr: (item.domains ?? []).join('、'),
+      domainsStr: (item.domains ?? [])
+        .filter((item) => routeIdMap[item])
+        ?.map((item) => routeIdMap[item]?.title ?? item)
+        .join('、'),
       usersStr: (item.users ?? []).join('、'),
     }));
     exportFile(

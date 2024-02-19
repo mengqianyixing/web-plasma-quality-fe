@@ -10,6 +10,11 @@
             v-auth="'E_789'"
             :actions="[
               {
+                icon: 'ant-design:user',
+                title: '用户详情',
+                onClick: handleUserDetail.bind(null, record),
+              },
+              {
                 icon: 'ant-design:lock-twotone',
                 title: '修改密码',
                 onClick: handleSetPassword.bind(null, record),
@@ -34,20 +39,23 @@
       </template>
     </BasicTable>
     <UsersModal @register="registerModal" @success="handleSuccess" />
+    <UsersDetailModal @register="registerUserDetailModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable, TableAction } from '@/components/Table';
-  import { deleteCasDoorUser, getCasDoorUsers } from '@/api/oauth/users';
+  import { deleteCasDoorUser, getCasDoorUserDetail, getCasDoorUsers } from '@/api/oauth/users';
 
   import { useModal } from '@/components/Modal';
   import UsersModal from './UsersModal.vue';
+  import UsersDetailModal from './UsersDetailModal.vue';
 
   import { columns, searchFormSchema } from './users.data';
 
   defineOptions({ name: 'UsersAuthManagement' });
 
   const [registerModal, { openModal }] = useModal();
+  const [registerUserDetailModal, { openModal: openUsersDetailModal }] = useModal();
   const [registerTable, { reload }] = useTable({
     api: getCasDoorUsers,
     fetchSetting: {
@@ -84,6 +92,13 @@
     openModal(true, {
       record,
       isUpdate: true,
+    });
+  }
+
+  async function handleUserDetail(record: Recordable) {
+    const res: any = await getCasDoorUserDetail(record);
+    openUsersDetailModal(true, {
+      record: { ...record, ...(res ?? {}) },
     });
   }
 
