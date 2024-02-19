@@ -20,7 +20,7 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { addSysParams, editSysParams } from '@/api/systemServer/params';
   import { PostApiSysParamRequest, PutApiSysParamRequest } from '@/api/type/systemParamsManage';
-  import { hasKey, isDecimal, isInteger, isJSON, isStr } from 'js-xxx';
+  import { hasKey, isDecimal, isInteger, isJSON, isStr, textTransferCase } from 'js-xxx';
   import { useMessage } from '@/hooks/web/useMessage';
 
   const { createMessage } = useMessage();
@@ -117,7 +117,7 @@
   function _checkParamsValue(values: any) {
     const value: any = values.paramValue;
     const rules = JSON.parse(values?.valueContext ?? '{}');
-    switch (values.valueType) {
+    switch (textTransferCase(values.valueType, 'lower')) {
       case 'float':
         if (hasKey(rules, 'min') && hasKey(rules, 'max')) {
           return isDecimal(value) && value >= rules.min && value <= rules.max;
