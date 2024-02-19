@@ -28,10 +28,6 @@ export const getCasDoorAllUsers = (params?) =>
  * @returns
  */
 export const getCasDoorRoles = (params) => {
-  if (params.name) {
-    params.field = 'name';
-    params.value = params.name;
-  }
   return defHttp.get(
     { url: '/api/sys/casdoor/roles', params },
     {
