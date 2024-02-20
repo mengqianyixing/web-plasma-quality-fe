@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-02-20 15:47:43
+ * @LastEditTime: 2024-02-20 16:40:41
 -->
 <template>
   <BasicModal
@@ -49,6 +49,7 @@
     updateDictItemApi,
     getDictColumnsApi,
   } from '@/api/dictionary';
+  import { getEnumsItems } from '@/api/enums';
   import { ref } from 'vue';
 
   const emit = defineEmits(['close', 'register']);
@@ -56,6 +57,7 @@
   const dictName = ref('');
   const systemLevel = ref(0);
   const linkMap = ref(new Map());
+  const enumsMap = ref(new Map());
   const formSchema = ref<FormSchema[]>([]);
   const [registerItemFormModal, { openModal }] = useModal();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, redoHeight, setColumns }] =
@@ -101,6 +103,9 @@
           if (_.linkedDict) {
             return linkMap.value.get(_.key)?.get(text);
           }
+          if (_.enumKey) {
+            return enumsMap.value.get(_.key)?.get(text);
+          }
           return text;
         },
       }));
@@ -121,10 +126,25 @@
           }, new Map()),
         );
       });
+      const enums = data.header.filter((_) => _.enumKey);
+      const enumsRes = await Promise.all(enums.map((_) => getEnumsItems(_.enumKey)));
+      enumsRes.forEach((res: any, i) => {
+        enums[i].options = (res?.dataList?.[0]?.enumObjList ?? []).map((item) => ({
+          label: `${item.show}(${item.key})`,
+          value: item.key,
+        }));
+        enumsMap.value.set(
+          enums[i].key,
+          enums[i].options.reduce((t, c) => {
+            t.set(c.value, c.label);
+            return t;
+          }, new Map()),
+        );
+      });
       formSchema.value = data.header.map((_) => ({
         field: _.key,
         required: _.require,
-        component: _.linkedDict ? 'Select' : 'Input',
+        component: _.linkedDict || _.enumKey ? 'Select' : 'Input',
         label: _.name,
         componentProps: { options: _.options },
       }));
