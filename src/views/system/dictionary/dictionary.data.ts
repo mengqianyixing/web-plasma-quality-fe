@@ -12,6 +12,7 @@ export const columns: BasicColumn[] = [
   {
     title: '描述',
     dataIndex: 'dictDesc',
+    className: 'empty-value',
   },
   {
     title: '系统字典',
@@ -29,14 +30,14 @@ export const columns: BasicColumn[] = [
   //   dataIndex: 'createAt',
   // },
 
-  {
-    title: '修改人',
-    dataIndex: 'updater',
-  },
-  {
-    title: '修改时间',
-    dataIndex: 'updateAt',
-  },
+  // {
+  //   title: '修改人',
+  //   dataIndex: 'updater',
+  // },
+  // {
+  //   title: '修改时间',
+  //   dataIndex: 'updateAt',
+  // },
 ];
 
 export const searchFormSchema: FormSchema[] = [
@@ -116,17 +117,18 @@ export const itemColumns: BasicColumn[] = [
   {
     title: '描述',
     dataIndex: 'itemDesc',
+    className: 'empty-value',
   },
 
-  {
-    title: '创建人',
-    dataIndex: 'creater',
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createAt',
-    width: 200,
-  },
+  // {
+  //   title: '创建人',
+  //   dataIndex: 'creater',
+  // },
+  // {
+  //   title: '创建时间',
+  //   dataIndex: 'createAt',
+  //   width: 200,
+  // },
 ];
 export const itemSearchFormSchema: FormSchema[] = [
   {

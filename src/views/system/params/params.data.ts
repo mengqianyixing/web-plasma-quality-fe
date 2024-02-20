@@ -6,10 +6,10 @@ export const columns: BasicColumn[] = [
     title: '参数名称',
     dataIndex: 'paramName',
   },
-  {
-    title: '参数键名',
-    dataIndex: 'paramKey',
-  },
+  // {
+  //   title: '参数键名',
+  //   dataIndex: 'paramKey',
+  // },
   {
     title: '参数键值',
     dataIndex: 'paramValue',

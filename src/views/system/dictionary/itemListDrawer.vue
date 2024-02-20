@@ -3,8 +3,8 @@
  * @version: 
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-25 19:19:11
+ * @LastEditors: DoubleAm
+ * @LastEditTime: 2024-02-20 15:47:43
 -->
 <template>
   <BasicModal
@@ -96,6 +96,7 @@
       const columns = data.header.map((_) => ({
         title: _.name,
         dataIndex: _.key,
+        className: 'empty-value',
         format: (text: string) => {
           if (_.linkedDict) {
             return linkMap.value.get(_.key)?.get(text);
@@ -106,7 +107,6 @@
       const _columns = itemColumns.slice();
       _columns.splice(2, 0, ...columns);
       setColumns(_columns);
-      console.log(columns, _columns);
       const links = data.header.filter((_) => _.linkedDict);
       const linkRes = await Promise.all(
         links.map((_) => getDictColumnsApi({ linkedDict: _.linkedDict })),
@@ -154,6 +154,7 @@
     if (!row) return;
     openModal(true, {
       data: { ...row, dictId: dictId.value, linkMap: linkMap.value },
+      formSchema: formSchema.value,
       isUpdate: true,
     });
   }
