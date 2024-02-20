@@ -3,8 +3,8 @@
  * @version: 
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-25 18:24:55
+ * @LastEditors: DoubleAm
+ * @LastEditTime: 2024-02-20 16:48:56
 -->
 <template>
   <BasicModal
@@ -70,7 +70,7 @@
       state.dictItemId = data.dictItemId;
       state.dictId = data.dictId;
       updateSchema({ field: 'itemValue', componentProps: { disabled: !!isUpdate } });
-      updateSchema({ field: 'enable', show: !isUpdate });
+      updateSchema({ field: 'enable' });
       if (isUpdate) {
         const res = await getDictItemDtApi({ dictItemId: data.dictItemId });
         setFieldsValue(res);
