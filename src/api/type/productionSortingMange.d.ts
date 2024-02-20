@@ -179,21 +179,28 @@ export interface GetApiCoreBankTraySortInResponse {
  * 接口 [出库血浆托盘血浆箱存放明细列表↗](https://yapi.sharing8.cn/project/529/interface/api/32967) 的 **请求类型**
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
- * @请求头 `GET /api/core/bank/tray/sort-out/boxes/{trayNo}`
- * @更新时间 `2024-02-05 17:16:46`
+ * @请求头 `GET /api/core/bank/tray/sort-out/boxes`
+ * @更新时间 `2024-02-18 14:36:25`
  */
-export interface GetApiCoreBankTraySortOutBoxesTrayNoRequest {
+export interface GetApiCoreBankTraySortOutBoxesRequest {
+  /**
+   * 托盘编号
+   */
   trayNo: string;
+  /**
+   * 投产准备号
+   */
+  prepareNo: string;
 }
 
 /**
  * 接口 [出库血浆托盘血浆箱存放明细列表↗](https://yapi.sharing8.cn/project/529/interface/api/32967) 的 **返回类型**
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
- * @请求头 `GET /api/core/bank/tray/sort-out/boxes/{trayNo}`
- * @更新时间 `2024-02-05 17:16:46`
+ * @请求头 `GET /api/core/bank/tray/sort-out/boxes`
+ * @更新时间 `2024-02-18 14:36:25`
  */
-export type GetApiCoreBankTraySortOutBoxesTrayNoResponse = {
+export type GetApiCoreBankTraySortOutBoxesResponse = {
   /**
    * 血浆批号
    */
@@ -216,10 +223,10 @@ export type GetApiCoreBankTraySortOutBoxesTrayNoResponse = {
  * 接口 [查询入库血浆的分拣血浆箱列表↗](https://yapi.sharing8.cn/project/529/interface/api/33032) 的 **请求类型**
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
- * @请求头 `GET /api/core/bank/tray/sort-in/boxes`
- * @更新时间 `2024-02-05 17:17:07`
+ * @请求头 `GET /api/product/prepare/sorting/sort-boxes`
+ * @更新时间 `2024-02-18 17:51:14`
  */
-export interface GetApiCoreBankTraySortInBoxesRequest {
+export interface GetApiProductPrepareSortingSortBoxesRequest {
   /**
    * 投产准备号
    */
@@ -246,10 +253,10 @@ export interface GetApiCoreBankTraySortInBoxesRequest {
  * 接口 [查询入库血浆的分拣血浆箱列表↗](https://yapi.sharing8.cn/project/529/interface/api/33032) 的 **返回类型**
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
- * @请求头 `GET /api/core/bank/tray/sort-in/boxes`
- * @更新时间 `2024-02-05 17:17:07`
+ * @请求头 `GET /api/product/prepare/sorting/sort-boxes`
+ * @更新时间 `2024-02-18 17:51:14`
  */
-export interface GetApiCoreBankTraySortInBoxesResponse {
+export interface GetApiProductPrepareSortingSortBoxesResponse {
   totalCount?: number;
   currPage?: null;
   totalPage?: null;

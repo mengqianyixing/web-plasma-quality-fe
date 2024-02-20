@@ -236,6 +236,13 @@ export default defineConfig([
             },
             outputFilePath: 'src/api/type/productionSortingMangeMain.d.ts',
           },
+          {
+            id: 5694,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/queryStatistics.d.ts',
+          },
         ],
       },
     ],
