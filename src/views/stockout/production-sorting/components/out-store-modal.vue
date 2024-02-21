@@ -132,7 +132,7 @@
     showTableSetting: false,
     bordered: true,
     rowSelection: { type: 'radio' },
-    beforeFetch: (p) => ({ ...p, trayNo: state.trayNo }),
+    beforeFetch: (p) => ({ ...p, ...state }),
     afterFetch: (res) => {
       clearBindSelectedRowKeys();
       return res;

@@ -105,6 +105,7 @@ export const sortingBoxBindColumns: BasicColumn[] = [
   {
     title: '装箱日期',
     dataIndex: 'pickDate',
+    format: (text) => text?.slice(0, 10),
   },
   {
     title: '托盘编号',
@@ -128,11 +129,11 @@ export const trayOutStoreColumns: BasicColumn[] = [
   },
   {
     title: '待分拣血浆箱数',
-    dataIndex: 'allSort',
+    dataIndex: 'waitBoxCount',
   },
   {
     title: '是否全分拣',
-    dataIndex: '',
+    dataIndex: 'allSort',
     format: (text) => (text ? '是' : '否'),
   },
   {

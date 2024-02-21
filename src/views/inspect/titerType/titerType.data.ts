@@ -75,24 +75,6 @@ export const searchFormschema: FormSchema[] = [
     component: 'Input',
     label: '名称',
   },
-  {
-    field: 'plasmaType',
-    component: 'Select',
-    label: '血浆类型',
-    componentProps: {
-      options: PLASMA_TYPE_LIST,
-    },
-  },
-  {
-    field: 'itemValue',
-    component: 'Input',
-    label: '代码',
-  },
-  {
-    field: 'itemKey',
-    component: 'Input',
-    label: '名称',
-  },
 ];
 export const formListSchema: FormSchema[] = [
   {

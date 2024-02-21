@@ -781,7 +781,7 @@ export interface PostApiProductPrepareSortingBagResponse {
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `POST /api/product/prepare/sorting/box-sealing`
- * @更新时间 `2024-02-04 15:56:18`
+ * @更新时间 `2024-02-21 15:53:31`
  */
 export interface PostApiProductPrepareSortingBoxSealingRequest {
   bagNos?: string[];
@@ -797,6 +797,10 @@ export interface PostApiProductPrepareSortingBoxSealingRequest {
    *     投产类型 PRO,  // 合格投产     UPR,  // 合格不投产     UNQ,  // 不合格     WV   //待追踪
    */
   pickType?: string;
+  /**
+   * 批号
+   */
+  batchNo: string;
 }
 
 /**
@@ -804,7 +808,7 @@ export interface PostApiProductPrepareSortingBoxSealingRequest {
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `POST /api/product/prepare/sorting/box-sealing`
- * @更新时间 `2024-02-04 15:56:18`
+ * @更新时间 `2024-02-21 15:53:31`
  */
 export type PostApiProductPrepareSortingBoxSealingResponse = null;
 
@@ -869,5 +873,131 @@ export interface PostApiProductPrepareCommitSortingPrepareNoRequest {
  * @更新时间 `2024-02-04 15:55:04`
  */
 export interface PostApiProductPrepareCommitSortingPrepareNoResponse {}
+
+/**
+ * 接口 [分拣暂停、继续(批次)↗](https://yapi.sharing8.cn/project/529/interface/api/33262) 的 **请求类型**
+ *
+ * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
+ * @请求头 `POST /api/product/prepare/sorting/batch/pause`
+ * @更新时间 `2024-02-20 16:22:38`
+ */
+export interface PostApiProductPrepareSortingBatchPauseRequest {
+  /**
+   * 血浆批号
+   */
+  prepareNo: string;
+  /**
+   * 血浆箱号
+   */
+  batchNo?: string;
+  /**
+   * 备注
+   */
+  remark?: string;
+  /**
+   * 操作类型(暂停-PAUSE  继续-RESTORE)
+   */
+  state: string;
+}
+
+/**
+ * 接口 [分拣暂停、继续(批次)↗](https://yapi.sharing8.cn/project/529/interface/api/33262) 的 **返回类型**
+ *
+ * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
+ * @请求头 `POST /api/product/prepare/sorting/batch/pause`
+ * @更新时间 `2024-02-20 16:22:38`
+ */
+export interface PostApiProductPrepareSortingBatchPauseResponse {}
+
+/**
+ * 接口 [分拣暂停列表↗](https://yapi.sharing8.cn/project/529/interface/api/33267) 的 **请求类型**
+ *
+ * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
+ * @请求头 `GET /api/product/prepare/sorting/prepare/pause/{prepareNo}/{pattern}`
+ * @更新时间 `2024-02-20 16:27:19`
+ */
+export interface GetApiProductPrepareSortingPreparePausePrepareNoPatternRequest {
+  prepareNo: string;
+  /**
+   * 查询类型(批-BATCH ,准备号-PREPARE)
+   */
+  pattern: string;
+}
+
+/**
+ * 接口 [分拣暂停列表↗](https://yapi.sharing8.cn/project/529/interface/api/33267) 的 **返回类型**
+ *
+ * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
+ * @请求头 `GET /api/product/prepare/sorting/prepare/pause/{prepareNo}/{pattern}`
+ * @更新时间 `2024-02-20 16:27:19`
+ */
+export type GetApiProductPrepareSortingPreparePausePrepareNoPatternResponse = {
+  /**
+   * 唯一标识
+   */
+  pspId: string;
+  prepareNo: string;
+  batchNo: string;
+  /**
+   * 暂停时间
+   */
+  createAt: string;
+  /**
+   * 暂停人
+   */
+  creater: string;
+  /**
+   * 复核人
+   */
+  reviewer: string;
+  /**
+   * 继续时间
+   */
+  freeAt: string;
+  /**
+   * 当前状态
+   */
+  state: string;
+  /**
+   * 继续人
+   */
+  freedBy: string;
+  /**
+   * 继续复核人
+   */
+  reviewBy: string;
+}[];
+
+/**
+ * 接口 [分拣暂停、继续(准备号)↗](https://yapi.sharing8.cn/project/529/interface/api/33272) 的 **请求类型**
+ *
+ * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
+ * @请求头 `POST /api/product/prepare/sorting/prepare/pause`
+ * @更新时间 `2024-02-20 16:24:05`
+ */
+export interface PostApiProductPrepareSortingPreparePauseRequest {
+  /**
+   * 投产准备号
+   */
+  prepareNo: string;
+  batchNo?: string;
+  /**
+   * 备注
+   */
+  remark?: string;
+  /**
+   * 操作类型(暂停-PAUSE  继续-RESTORE)
+   */
+  state: string;
+}
+
+/**
+ * 接口 [分拣暂停、继续(准备号)↗](https://yapi.sharing8.cn/project/529/interface/api/33272) 的 **返回类型**
+ *
+ * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
+ * @请求头 `POST /api/product/prepare/sorting/prepare/pause`
+ * @更新时间 `2024-02-20 16:24:05`
+ */
+export interface PostApiProductPrepareSortingPreparePauseResponse {}
 
 /* prettier-ignore-end */

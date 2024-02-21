@@ -675,7 +675,7 @@ export interface GetApiSysDictItemTiterLevelResponse {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/batchSamples`
- * @更新时间 `2024-01-09 17:47:28`
+ * @更新时间 `2024-02-07 15:24:44`
  */
 export interface PostApiCoreLabRegistrationBatchSamplesRequest {
   stationNo?: string;
@@ -688,7 +688,7 @@ export interface PostApiCoreLabRegistrationBatchSamplesRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/batchSamples`
- * @更新时间 `2024-01-09 17:47:28`
+ * @更新时间 `2024-02-07 15:24:44`
  */
 export type PostApiCoreLabRegistrationBatchSamplesResponse = {
   bsNo: string;
@@ -699,6 +699,10 @@ export type PostApiCoreLabRegistrationBatchSamplesResponse = {
   outDate?: string;
   status?: string;
   totalQualified?: string;
+  /**
+   * 验收不合格样本
+   */
+  totalUnqualified: string;
 }[];
 
 /**
@@ -1739,7 +1743,7 @@ export interface PutApiCoreLabReportMadeRevokeResponse {}
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/reports`
- * @更新时间 `2024-01-08 18:07:42`
+ * @更新时间 `2024-02-20 15:29:40`
  */
 export interface PostApiCoreLabReportsRequest {
   /**
@@ -1775,7 +1779,7 @@ export interface PostApiCoreLabReportsRequest {
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/reports`
- * @更新时间 `2024-01-08 18:07:42`
+ * @更新时间 `2024-02-20 15:29:40`
  */
 export interface PostApiCoreLabReportsResponse {
   totalCount: number;
@@ -1840,6 +1844,67 @@ export interface PostApiCoreLabReportsResponse {
      * 制作时间
      */
     productionAt: string;
+  }[];
+}
+
+/**
+ * 接口 [根据检验报告no查询不合格样本↗](https://yapi.sharing8.cn/project/529/interface/api/33257) 的 **请求类型**
+ *
+ * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
+ * @请求头 `POST /api/core/lab/report/unqualified`
+ * @更新时间 `2024-02-20 15:55:44`
+ */
+export interface PostApiCoreLabReportUnqualifiedRequest {
+  reportNo: string;
+  pageSize: number;
+  currPage: number;
+}
+
+/**
+ * 接口 [根据检验报告no查询不合格样本↗](https://yapi.sharing8.cn/project/529/interface/api/33257) 的 **返回类型**
+ *
+ * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
+ * @请求头 `POST /api/core/lab/report/unqualified`
+ * @更新时间 `2024-02-20 15:55:44`
+ */
+export interface PostApiCoreLabReportUnqualifiedResponse {
+  totalCount: number;
+  pageSize: null;
+  totalPage: null;
+  currPage: null;
+  result?: {
+    /**
+     * 样本编号
+     */
+    sampleNo: string;
+    /**
+     * 浆员编号
+     */
+    donorNo: string;
+    /**
+     * 浆员姓名
+     */
+    donorName: string;
+    /**
+     * 不合格项目
+     */
+    projectName: string;
+    /**
+     * OD值
+     */
+    od?: string;
+    /**
+     * Cutoff值
+     */
+    cutoff?: string;
+    /**
+     * 检测时间
+     */
+    checkAt: string;
+    /**
+     * 检测方法
+     */
+    methodName: string;
   }[];
 }
 
