@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-02-20 16:40:41
+ * @LastEditTime: 2024-02-21 11:09:10
 -->
 <template>
   <BasicModal
@@ -101,10 +101,10 @@
         className: 'empty-value',
         format: (text: string) => {
           if (_.linkedDict) {
-            return linkMap.value.get(_.key)?.get(text);
+            return linkMap.value.get(_.key)?.get(text) ?? text;
           }
           if (_.enumKey) {
-            return enumsMap.value.get(_.key)?.get(text);
+            return enumsMap.value.get(_.key)?.get(text) ?? text;
           }
           return text;
         },
@@ -116,11 +116,14 @@
       const linkRes = await Promise.all(
         links.map((_) => getDictColumnsApi({ linkedDict: _.linkedDict })),
       );
-      linkRes.forEach((res = [], i) => {
-        links[i].options = res?.[0].dictImtes;
+      linkRes.forEach((res: any, i) => {
+        links[i].options = (res?.[0]?.dictImtes ?? []).map((item) => ({
+          label: `${item.label}(${item.id}) ${item.value}`,
+          value: item.id,
+        }));
         linkMap.value.set(
           links[i].key,
-          res?.[0].dictImtes.reduce((t, c) => {
+          links[i].options.reduce((t, c) => {
             t.set(c.value, c.label);
             return t;
           }, new Map()),
