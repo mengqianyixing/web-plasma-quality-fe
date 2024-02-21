@@ -423,28 +423,13 @@
           filterForm.value.boxCount = data.boxCount;
           filterForm.value.stationNo = data.stationNo;
           filterForm.value.boxNo = data.boxNo;
-          // 更改托盘编号
-          if (trayNo.value && data.trayNo && trayNo.value != data.trayNo) {
-            Modal.confirm({
-              title: '提示?',
-              content: createVNode('div', { style: 'color:red;' }, '托盘编号不一致，需要替换吗?'),
-              onOk() {
-                trayNo.value = data.trayNo;
-              },
-              onCancel() {
-                console.log('Cancel');
-              },
-              class: 'test',
-            });
-          } else if (data.trayNo) {
-            filterForm.value.trayNo = data.trayNo;
-          } else if (data.donorFailed) {
+          trayNo.value = data?.trayNo || '';
+          if (data.donorFailed) {
             createErrorModal({
               title: '提示',
               content: createVNode('div', { style: 'color:red;' }, data.donorFailed),
             });
           }
-
           filterForm.value.unVerifyBag = data.unVerifyBag.map((item: any) => {
             return {
               bagNo: item,
@@ -516,6 +501,7 @@
     batchNo.value = data;
     const res = await getPlasmaVerify(data);
     filterForm.value = res;
+    trayNo.value = res.trayNo;
     _setReChecker(res.checker);
     filterForm.value.unVerifyBag = res.unVerifyBag.map((item: any) => {
       return {
@@ -691,6 +677,7 @@
         try {
           tableLoading.value = true;
           await plasmaComplete(batchNo.value);
+          success('完成验收成功!');
           // 清除数据
           filterForm.value = {};
           trayNo.value = '';

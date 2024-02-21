@@ -49,6 +49,8 @@
     <InStoreModal @register="registerInStoreModal" />
     <OutStoreModal @register="registerOutStoreModal" />
     <UnqualifiedModal @register="registerUnqualifiedModal" @success="handleUnqualifiedSuccess" />
+    <PrepareSuspendModal @register="registerPrepareSuspendModal" @success="PrepareSuspendSuccess" />
+    <BatchSuspendModal @register="registerBatchSuspendModal" @success="PrepareSuspendSuccess" />
   </PageWrapper>
 </template>
 
@@ -85,6 +87,8 @@
   import InStoreModal from './components/in-store-modal.vue';
   import OutStoreModal from './components/out-store-modal.vue';
   import UnqualifiedModal from './components/unqualified-modal.vue';
+  import PrepareSuspendModal from './components/prepare-suspend-modal.vue';
+  import BatchSuspendModal from './components/batch-suspend-modal.vue';
 
   const { createMessage } = useMessage();
   const { warning, success } = createMessage;
@@ -241,8 +245,12 @@
       render() {
         return (
           <div class="flex items-center justify-end gap-2 -mt-1 w-100%">
-            <a-button disabled={!prepareNo.value}>批次暂停</a-button>
-            <a-button disabled={!prepareNo.value}>准备号暂停</a-button>
+            <a-button disabled={!prepareNo.value} onclick={_openBatchSuspendModal}>
+              批次暂停
+            </a-button>
+            <a-button disabled={!prepareNo.value} onclick={_openPrepareSuspendModal}>
+              准备号暂停
+            </a-button>
             <a-button disabled={!prepareNo.value} onclick={pickBoxInfo}>
               装箱信息
             </a-button>
@@ -360,6 +368,8 @@
   const [registerInStoreModal, { openModal: openInStoreModal }] = useModal();
   const [registerOutStoreModal, { openModal: openOutStoreModal }] = useModal();
   const [registerUnqualifiedModal, { openModal: openUnqualifiedModal }] = useModal();
+  const [registerPrepareSuspendModal, { openModal: openPrepareSuspendModal }] = useModal();
+  const [registerBatchSuspendModal, { openModal: openBatchSuspendModal }] = useModal();
 
   // 血浆扫描
   async function handlePressEnter(e) {
@@ -593,7 +603,7 @@
   }
 
   // 箱号扫描
-  async function _sortingAllQua(e, boxNo?) {
+  async function _sortingAllQua(e, boxNoNow?) {
     if (e.code === 'Enter' || e.code === 'NumpadEnter' || e === true) {
       if (!boxNo.value && e !== true) {
         warning('请扫描血浆箱号!');
@@ -607,7 +617,7 @@
         openFullLoading();
         const res = await sortingAllQua({
           prepareNo: prepareNo.value,
-          boxNo: e === true ? boxNo : boxNo.value,
+          boxNo: e === true ? boxNoNow : boxNo.value,
         });
         success('整箱分拣成功!');
         console.log('整箱扫描', res);
@@ -719,8 +729,8 @@
           title: '可投产',
           immType: data.pros?.immType,
           pickType: 'PRO',
-          sortCount: data.pros?.sortCount,
-          totalCount: data.pros?.totalCount,
+          sortCount: data.pros?.sortCount || '',
+          totalCount: data.pros?.totalCount || '',
           bagNos: data.pros?.bagNos,
           isSelected: false,
         });
@@ -868,6 +878,7 @@
         immType: data.immType,
         pickType: data.pickType,
         bagNos: data.bagNos,
+        batchNo: batchData.value?.batchSummary?.batchNo || null,
       };
       try {
         openFullLoading();
@@ -939,6 +950,25 @@
     openPlasmaDetailModal(true, {
       record: { prepareNo: prepareNo.value },
       prepareProduce: prepareProduce === 'prepareProduce',
+    });
+  }
+
+  // 准备号暂停
+  function _openPrepareSuspendModal() {
+    openPrepareSuspendModal(true, {
+      prepareNo: prepareNo.value,
+    });
+  }
+  // 刷新页面数据
+  function PrepareSuspendSuccess() {
+    prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+  }
+
+  // 批号暂停
+  function _openBatchSuspendModal() {
+    openBatchSuspendModal(true, {
+      prepareNo: prepareNo.value,
+      batchNo: batchData.value?.batchSummary?.batchNo,
     });
   }
 </script>

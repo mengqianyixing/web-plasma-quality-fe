@@ -38,6 +38,10 @@ enum Api {
   SORTING_BOX_SEALING = '/api/product/prepare/sorting/box-sealing',
   SORTING_ALL_QUA = '/api/product/prepare/sorting/all-qua/box',
   COMPLETE_SORTING = '/api/product/prepare/commit/sorting',
+  GET_PAUSE_LIST = '/api/product/prepare/sorting/prepare/pause',
+  BATCH_PAUSE = '/api/product/prepare/sorting/batch/pause',
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+  PREPARE_PAUSE = '/api/product/prepare/sorting/prepare/pause',
 }
 
 // 分拣批次信息
@@ -128,5 +132,28 @@ export const sortingAllQua = (params: PostApiProductPrepareSortingAllQuaBoxReque
 export const completeSorting = (params: PostApiProductPrepareCommitSortingPrepareNoRequest) => {
   return defHttp.post<PostApiProductPrepareCommitSortingPrepareNoResponse>({
     url: `${Api.COMPLETE_SORTING}/${params.prepareNo}`,
+  });
+};
+
+// 获取分拣暂停列表
+export const getPauseList = (params: any) => {
+  return defHttp.get<any>({
+    url: `${Api.GET_PAUSE_LIST}/${params.prepareNo}/${params.pattern}`,
+  });
+};
+
+// 分拣批次暂停/继续
+export const batchPause = (params: any) => {
+  return defHttp.post<any>({
+    url: Api.BATCH_PAUSE,
+    params,
+  });
+};
+
+// 分拣准备号暂停/继续
+export const preparePause = (params: any) => {
+  return defHttp.post<any>({
+    url: Api.PREPARE_PAUSE,
+    params,
   });
 };
