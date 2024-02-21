@@ -30,6 +30,15 @@ const trayManager: AppRouteModule = {
       id: 900010,
       component: () => import('/@/views/plasma-store/inventory/index.vue'),
     },
+    {
+      path: 'plasma',
+      name: 'PlasmaQuery',
+      meta: {
+        title: '血浆查询',
+      },
+      id: 900020,
+      component: () => import('/@/views/query-statistics/plasma/index.vue'),
+    },
   ],
 };
 export default trayManager;
