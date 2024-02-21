@@ -76,7 +76,7 @@
         required: true,
       },
       {
-        label: '浆站编码',
+        label: 'ERP浆站编码',
         field: 'preERP',
         component: 'Input',
         colProps: { span: 20 },
