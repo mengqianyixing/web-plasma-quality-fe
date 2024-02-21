@@ -1,7 +1,6 @@
 import { defHttp } from '@/utils/http/axios';
 import {
   DeleteApiSysStationRequest,
-  GetApiSysStationRequest,
   GetApiSysStationResponse,
   PostApiSysStationRequest,
   PostApiSysStationStationNoRequest,
@@ -12,9 +11,9 @@ enum Api {
   STATION_RESTFUL = '/api/sys/station',
 }
 
-export const getStationList = (params: GetApiSysStationRequest) =>
-  defHttp.get<GetApiSysStationResponse>(
-    { url: Api.STATION_RESTFUL, params },
+export const getStationList = () =>
+  defHttp.get<GetApiSysStationResponse[]>(
+    { url: Api.STATION_RESTFUL },
     {
       joinParamsToUrl: true,
     },

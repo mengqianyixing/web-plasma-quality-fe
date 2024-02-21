@@ -29,20 +29,30 @@
   import { getSampleBatchesList, sampleRelease } from '@/api/sample-manage/sample-release';
 
   import UnqualifiedModal from '@/views/sample-manage/sample-release/unqualifiedModal.vue';
-  import { onMounted, ref } from 'vue';
-  import { stationNameList } from '@/api/callback/list-generation';
+  import { onMounted, ref, watchEffect } from 'vue';
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
+  import { useStation } from '@/hooks/common/useStation';
 
   const { createMessage, createConfirm } = useMessage();
 
   const [registerUnqualifiedModal, { openModal: openUnqualifiedModal }] = useModal();
 
   const selectedRow = ref<Recordable>([]);
-  const stationNames = ref<Recordable>({});
   const sampleTypeDictionary = ref<Recordable[] | undefined>([]);
 
+  const { isLoading, stationOptions } = useStation();
+
   onMounted(async () => {
-    stationNames.value = await stationNameList();
+    watchEffect(async () => {
+      if (!isLoading) {
+        await getForm().updateSchema({
+          field: 'stationNo',
+          componentProps: {
+            options: stationOptions.value,
+          },
+        });
+      }
+    });
 
     sampleTypeDictionary.value = (await getSysDictionary([DictionaryEnum.SampleType])).find(
       (it) => it.dictNo === DictionaryEnum.SampleType,
@@ -52,16 +62,6 @@
       field: 'sampleType',
       componentProps: {
         options: sampleTypeDictionary.value,
-      },
-    });
-
-    await getForm().updateSchema({
-      field: 'stationNo',
-      componentProps: {
-        options: stationNames.value.map((it) => ({
-          label: it.stationName,
-          value: it.stationNo,
-        })),
       },
     });
   });

@@ -21,7 +21,7 @@ enum Api {
   // 验收数量详情
   VERIFY_NUM = '/api/core/bag/statistics',
   // 血浆公司下拉框搜索
-  STATION_NAME = '/api/core/station',
+  STATION_NAME = '/api/sys/station/form',
 }
 
 export const receptionDetailApi = (params: GetApiCoreBankReceptionRequest) =>
