@@ -195,6 +195,7 @@
 
   // 关闭弹框前
   function handleCloseFunc() {
+    filterForm.value = {};
     emit('success');
     return true;
   }
