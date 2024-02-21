@@ -168,6 +168,7 @@
       onOk: async () => {
         await bindBoxApi({ trayNo: row.trayNo, type: 'unbind', boxes: [row.boxNo] });
         message.success('解绑成功');
+        reloadBind();
       },
       onCancel: () => {
         Modal.destroyAll();

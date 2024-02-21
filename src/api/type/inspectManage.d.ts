@@ -675,7 +675,7 @@ export interface GetApiSysDictItemTiterLevelResponse {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/batchSamples`
- * @更新时间 `2024-01-09 17:47:28`
+ * @更新时间 `2024-02-07 15:24:44`
  */
 export interface PostApiCoreLabRegistrationBatchSamplesRequest {
   stationNo?: string;
@@ -688,7 +688,7 @@ export interface PostApiCoreLabRegistrationBatchSamplesRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/batchSamples`
- * @更新时间 `2024-01-09 17:47:28`
+ * @更新时间 `2024-02-07 15:24:44`
  */
 export type PostApiCoreLabRegistrationBatchSamplesResponse = {
   bsNo: string;
@@ -699,6 +699,10 @@ export type PostApiCoreLabRegistrationBatchSamplesResponse = {
   outDate?: string;
   status?: string;
   totalQualified?: string;
+  /**
+   * 验收不合格样本
+   */
+  totalUnqualified: string;
 }[];
 
 /**

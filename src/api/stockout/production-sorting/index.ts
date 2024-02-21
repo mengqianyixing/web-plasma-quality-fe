@@ -8,42 +8,43 @@
  */
 import { defHttp } from '@/utils/http/axios';
 import {
-  GetApiProductPrepareSortingInTraiesRequest,
-  GetApiProductPrepareSortingInTraiesResponse,
-  GetApiProductPrepareSortingOutTraiesRequest,
-  GetApiProductPrepareSortingOutTraiesResponse,
-  GetApiProductPrepareSortingOutTrayBoxesTrayNoRequest,
-  GetApiProductPrepareSortingOutTrayBoxesTrayNoResponse,
-  GetApiProductPrepareSortingInTrayBoxesRequest,
-  GetApiProductPrepareSortingInTrayBoxesResponse,
+  GetApiCoreBankTraySortOutRequest,
+  GetApiCoreBankTraySortOutResponse,
+  GetApiCoreBankTraySortInRequest,
+  GetApiCoreBankTraySortInResponse,
+  GetApiCoreBankTraySortOutBoxesRequest,
+  GetApiCoreBankTraySortOutBoxesResponse,
+  GetApiProductPrepareSortingSortBoxesRequest,
+  GetApiProductPrepareSortingSortBoxesResponse,
 } from '@/api/type/productionSortingMange';
 
 enum Api {
-  OUT_STORE_LIST = `/api/product/prepare/sorting/out-traies`,
-  IN_STORE_LIST = '/api/product/prepare/sorting/in-traies',
-  BOX_LIST = '/api/product/prepare/sorting/out-tray-boxes/',
-  SORTING_BOX_LIST = '/api/product/prepare/sorting/in-tray-boxes',
+  OUT_STORE_LIST = `/api/core/bank/tray/sort-out`,
+  IN_STORE_LIST = '/api/core/bank/tray/sort-in',
+  BOX_LIST = '/api/core/bank/tray/sort-out/boxes',
+  SORTING_BOX_LIST = '/api/product/prepare/sorting/sort-boxes',
 }
 
-export const getOutStoreListApi = (params: GetApiProductPrepareSortingOutTraiesRequest) =>
-  defHttp.get<GetApiProductPrepareSortingOutTraiesResponse>({
+export const getOutStoreListApi = (params: GetApiCoreBankTraySortOutRequest) =>
+  defHttp.get<GetApiCoreBankTraySortOutResponse>({
     url: Api.OUT_STORE_LIST,
     params: params,
   });
 
-export const getInStoreListApi = (params: GetApiProductPrepareSortingInTraiesRequest) =>
-  defHttp.get<GetApiProductPrepareSortingInTraiesResponse>({
+export const getInStoreListApi = (params: GetApiCoreBankTraySortInRequest) =>
+  defHttp.get<GetApiCoreBankTraySortInResponse>({
     url: Api.IN_STORE_LIST,
     params: params,
   });
 
-export const getBoxListApi = (params: GetApiProductPrepareSortingOutTrayBoxesTrayNoRequest) =>
-  defHttp.get<GetApiProductPrepareSortingOutTrayBoxesTrayNoResponse>({
-    url: Api.BOX_LIST + params.trayNo,
+export const getBoxListApi = (params: GetApiCoreBankTraySortOutBoxesRequest) =>
+  defHttp.get<GetApiCoreBankTraySortOutBoxesResponse>({
+    url: Api.BOX_LIST,
+    params,
   });
 
-export const getSortingBoxListApi = (params: GetApiProductPrepareSortingInTrayBoxesRequest) =>
-  defHttp.get<GetApiProductPrepareSortingInTrayBoxesResponse>({
+export const getSortingBoxListApi = (params: GetApiProductPrepareSortingSortBoxesRequest) =>
+  defHttp.get<GetApiProductPrepareSortingSortBoxesResponse>({
     url: Api.SORTING_BOX_LIST,
     params,
   });

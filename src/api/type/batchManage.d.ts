@@ -2150,4 +2150,36 @@ export interface PostApiCoreBatchSampleUnqualifiedPlasmaRequest {
  */
 export type PostApiCoreBatchSampleUnqualifiedPlasmaResponse = string;
 
+/**
+ * 接口 [批 验收完成↗](https://yapi.sharing8.cn/project/529/interface/api/33217) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/verify/batch/commit/{batchNo}`
+ * @更新时间 `2024-02-18 15:19:23`
+ */
+export interface PostApiCoreBatchPlasmaVerifyBatchCommitBatchNoRequest {
+  /**
+   * 当前页码
+   */
+  currPage: string;
+  /**
+   * 页数大小
+   */
+  pageSize: string;
+  /**
+   * 样本批次号
+   */
+  batchSampleNo: string;
+  batchNo: string;
+}
+
+/**
+ * 接口 [批 验收完成↗](https://yapi.sharing8.cn/project/529/interface/api/33217) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/verify/batch/commit/{batchNo}`
+ * @更新时间 `2024-02-18 15:19:23`
+ */
+export interface PostApiCoreBatchPlasmaVerifyBatchCommitBatchNoResponse {}
+
 /* prettier-ignore-end */
