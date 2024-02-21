@@ -75,6 +75,15 @@ const callManager: AppRouteModule = {
       },
       component: () => import('@/views/system/params/index.vue'),
     },
+    {
+      path: 'station',
+      name: 'Station',
+      id: 100070,
+      meta: {
+        title: '采浆公司',
+      },
+      component: () => import('@/views/base-settings/station/index.vue'),
+    },
   ],
 };
 export default callManager;

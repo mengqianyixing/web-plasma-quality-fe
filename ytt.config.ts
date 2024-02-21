@@ -99,6 +99,13 @@ export default defineConfig([
             },
             outputFilePath: 'src/api/type/systemParamsManage.d.ts',
           },
+          {
+            id: 5703,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/stationManage.d.ts',
+          },
         ],
       },
       {
