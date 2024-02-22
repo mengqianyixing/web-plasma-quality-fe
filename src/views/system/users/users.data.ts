@@ -1,8 +1,8 @@
 /*
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-02-19 17:30:19
+ * @LastEditors: Ding 1326587277@qq.com
+ * @LastEditTime: 2024-02-22 16:54:45
  * @Description: 用户管理数据源
  * @FilePath: \psms-fe\src\views\system\users\users.data.ts
  */
@@ -183,6 +183,50 @@ export const passwordFormSchema: FormSchema[] = [
     label: '密码',
     component: 'InputPassword',
     required: true,
+    dynamicRules: ({ values }) => {
+      return [
+        {
+          required: true,
+          validator: (_, value) => {
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
+            if (!value) {
+              return Promise.reject('密码不能为空');
+            }
+            if (!regex.test(value)) {
+              return Promise.reject(
+                '密码必须包含大写字母、小写字母、特殊字符、数字中的三种且不小于8位!',
+              );
+            }
+            if (value === values.userName) {
+              return Promise.reject('禁止使用用户名作为登录密码!');
+            }
+            return Promise.resolve();
+          },
+        },
+      ];
+    },
+  },
+  {
+    field: 'reNewPassword',
+    label: '重复密码',
+    component: 'InputPassword',
+    required: true,
+    dynamicRules: ({ values }) => {
+      return [
+        {
+          required: true,
+          validator: (_, value) => {
+            if (!value) {
+              return Promise.reject('密码不能为空');
+            }
+            if (value !== values.newPassword) {
+              return Promise.reject('两次输入的密码不一致!');
+            }
+            return Promise.resolve();
+          },
+        },
+      ];
+    },
   },
 ];
 

@@ -31,6 +31,7 @@ export interface PostApiSysDictsRequest {
    * 字典编号
    */
   dictNo?: string;
+  queryMenu?: boolean;
 }
 
 /**
