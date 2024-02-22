@@ -147,7 +147,7 @@
   function _checkParamsValue(values: any) {
     const value: any = values.paramValue;
     const rules = JSON.parse(values?.valueContext ?? '{}');
-    switch (textTransferCase(values.valueType, 'lower')) {
+    switch (textTransferCase(values.valueType ?? '', 'lower')) {
       case 'float':
         if (hasKey(rules, 'min') && hasKey(rules, 'max')) {
           return isDecimal(value) && value >= rules.min && value <= rules.max;
@@ -175,18 +175,18 @@
   async function handleSubmit() {
     try {
       const values: any = await validate<PostApiSysParamRequest & PutApiSysParamRequest>();
-      if (!_checkParamsValue(values)) {
-        createMessage.warning(
-          `参数值不符合要求 【${values?.valueType ?? '-'}】 ${values?.valueContext ?? ''}！`,
-        );
-        return;
-      }
       setModalProps({
         confirmLoading: true,
       });
       if (!unref(isUpdate)) {
         await addSysParams(values);
       } else {
+        if (!_checkParamsValue(values)) {
+          createMessage.warning(
+            `参数值不符合要求 【${values?.valueType ?? '-'}】 ${values?.valueContext ?? ''}！`,
+          );
+          return;
+        }
         await editSysParams({
           ...values,
           id: paramsId.value,
