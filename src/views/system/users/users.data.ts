@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-02-22 16:54:45
+ * @LastEditTime: 2024-02-22 17:41:31
  * @Description: 用户管理数据源
  * @FilePath: \psms-fe\src\views\system\users\users.data.ts
  */
@@ -94,6 +94,12 @@ export const addFormSchema: FormSchema[] = [
     label: '密码',
     component: 'InputPassword',
     required: true,
+  },
+  {
+    field: 'roles',
+    label: '角色',
+    slot: 'users',
+    component: 'Select',
   },
   ...formSchema,
 ];
@@ -239,6 +245,12 @@ export const updateFormSchema: FormSchema[] = [
     componentProps: {
       readonly: true,
     },
+  },
+  {
+    field: 'roles',
+    label: '角色',
+    slot: 'users',
+    component: 'Select',
   },
   ...formSchema,
 ];
