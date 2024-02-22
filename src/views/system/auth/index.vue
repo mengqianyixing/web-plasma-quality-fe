@@ -2,6 +2,7 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
+        <a-button type="success" @click="handleExport">导出</a-button>
         <a-button v-auth="'E_123'" type="primary" @click="handleCreate">新增角色</a-button>
       </template>
       <template #bodyCell="{ column, record }">
@@ -38,9 +39,15 @@
   import RoleModal from './RoleModal.vue';
 
   import { columns, searchFormSchema } from './role.data';
+  import { ref } from 'vue';
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { exportFile, formatDate, transferCSVData } from 'js-xxx';
+  import { routeIdMap } from '@/router/routes';
+
+  const { createMessage } = useMessage();
 
   defineOptions({ name: 'RoleAuthManagement' });
-
+  const selectedRowsRef = ref<Recordable>([]);
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload }] = useTable({
     api: getCasDoorRoles,
@@ -66,6 +73,12 @@
       // slots: { customRender: 'action' },
       fixed: undefined,
     },
+    rowSelection: {
+      type: 'checkbox',
+      onChange(_, selectedRows) {
+        selectedRowsRef.value = selectedRows;
+      },
+    },
   });
 
   function handleCreate() {
@@ -79,6 +92,35 @@
       record,
       isUpdate: true,
     });
+  }
+
+  function handleExport() {
+    if (!selectedRowsRef.value.length) {
+      createMessage.warn('请选择一条记录');
+      return;
+    }
+    const records: any[] = selectedRowsRef.value.map((item) => ({
+      ...item,
+      domainsStr: (item.domains ?? [])
+        .filter((item) => routeIdMap[item])
+        ?.map((item) => routeIdMap[item]?.title ?? item)
+        .join('、'),
+      usersStr: (item.users ?? []).join('、'),
+    }));
+    exportFile(
+      transferCSVData(
+        [
+          { label: '角色 id', prop: 'name' },
+          { label: '角色名称', prop: 'displayName' },
+          { label: '用户', prop: 'usersStr' },
+          { label: '菜单权限', prop: 'domainsStr' },
+        ],
+        records,
+      ),
+      `角色权限导出-${formatDate(new Date(), 'yyyymmddhhiissS')}`,
+      'csv',
+    );
+    createMessage.success('导出成功');
   }
 
   async function handleDelete(record: Recordable) {
