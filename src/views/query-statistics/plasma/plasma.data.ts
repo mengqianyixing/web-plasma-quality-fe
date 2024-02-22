@@ -101,11 +101,10 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '血浆复检信息',
-    dataIndex: 'reCheckInfo',
     children: [
       {
         title: '结果发布日期',
-        dataIndex: 'reCheckInfo.issueAt',
+        dataIndex: ['reCheckInfo', 'issueAt'],
         width: 150,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
@@ -113,22 +112,22 @@ export const columns: BasicColumn[] = [
       },
       {
         title: '复检结果',
-        dataIndex: 'reCheckInfo.reCheckResult',
+        dataIndex: ['reCheckInfo', 'reCheckResult'],
         width: 150,
       },
       {
         title: '不合格项目',
-        dataIndex: 'reCheckInfo.unqualifiedItems',
+        dataIndex: ['reCheckInfo', 'unqualifiedItems'],
         width: 150,
       },
       {
         title: '血浆类型',
-        dataIndex: 'reCheckInfo.immunityType',
+        dataIndex: ['reCheckInfo', 'immunityType'],
         width: 150,
       },
       {
         title: '效价结果值',
-        dataIndex: 'reCheckInfo.titer',
+        dataIndex: ['reCheckInfo', 'titer'],
         width: 150,
       },
     ],
@@ -139,7 +138,7 @@ export const columns: BasicColumn[] = [
     children: [
       {
         title: '满足日期',
-        dataIndex: 'trackedSeeInfo.qualifiedDate',
+        dataIndex: ['trackedSeeInfo', 'qualifiedDate'],
         width: 150,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
@@ -147,17 +146,17 @@ export const columns: BasicColumn[] = [
       },
       {
         title: '样本批号',
-        dataIndex: 'trackedSeeInfo.batchSampleNo',
+        dataIndex: ['trackedSeeInfo', 'batchSampleNo'],
         width: 150,
       },
       {
         title: '样本编号',
-        dataIndex: 'trackedSeeInfo.sampleNo',
+        dataIndex: ['trackedSeeInfo', 'sampleNo'],
         width: 150,
       },
       {
         title: '采集日期',
-        dataIndex: 'trackedSeeInfo.collectAt',
+        dataIndex: ['trackedSeeInfo', 'collectAt'],
         width: 150,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
@@ -165,7 +164,7 @@ export const columns: BasicColumn[] = [
       },
       {
         title: '浆站检验日期',
-        dataIndex: 'trackedSeeInfo.stationCheckDate',
+        dataIndex: ['trackedSeeInfo', 'stationCheckDate'],
         width: 150,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
@@ -173,7 +172,7 @@ export const columns: BasicColumn[] = [
       },
       {
         title: '厂家复检日期',
-        dataIndex: 'trackedSeeInfo.reCheckDate',
+        dataIndex: ['trackedSeeInfo', 'reCheckDate'],
         width: 150,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
@@ -181,12 +180,12 @@ export const columns: BasicColumn[] = [
       },
       {
         title: '样本结果',
-        dataIndex: 'trackedSeeInfo.reCheckResult',
+        dataIndex: ['trackedSeeInfo', 'reCheckResult'],
         width: 150,
       },
       {
         title: '不合格项目',
-        dataIndex: 'trackedSeeInfo.unqualifiedItems',
+        dataIndex: ['trackedSeeInfo', 'unqualifiedItems'],
         width: 150,
       },
     ],
