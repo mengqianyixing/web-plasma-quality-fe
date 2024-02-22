@@ -306,4 +306,63 @@ export interface GetApiCoreBagStatisticsResponse {
   }[];
 }
 
+/**
+ * 接口 [批号查询-来浆数据↗](https://yapi.sharing8.cn/project/529/interface/api/33367) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/batch/statistic`
+ * @更新时间 `2024-02-22 15:03:24`
+ */
+export interface GetApiCoreBatchStatisticRequest {
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 血浆批号起
+   */
+  batchStartNo?: string;
+  /**
+   * 血浆批号止
+   */
+  batchEndNo?: string;
+}
+
+/**
+ * 接口 [批号查询-来浆数据↗](https://yapi.sharing8.cn/project/529/interface/api/33367) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/batch/statistic`
+ * @更新时间 `2024-02-22 15:03:24`
+ */
+export interface GetApiCoreBatchStatisticResponse {
+  batchNo: string;
+  typeList: {
+    /**
+     * 来浆类型
+     */
+    plasmaType: string;
+    /**
+     * 血浆编号（起止）
+     */
+    batchNoRange: string;
+    /**
+     * 浆站不合格
+     */
+    lackNos?: string;
+    /**
+     * 血浆数量
+     */
+    totalNum: number;
+    /**
+     * 验收净重
+     */
+    verifyWeight: number;
+    /**
+     * 验收血浆不合格编号
+     */
+    verifyUnqNos?: string;
+  }[];
+}
+
 /* prettier-ignore-end */

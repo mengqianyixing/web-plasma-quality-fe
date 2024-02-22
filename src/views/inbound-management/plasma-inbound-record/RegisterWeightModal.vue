@@ -19,15 +19,16 @@
   import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { ref } from 'vue';
 
   import { pick } from 'lodash-es';
   import { registerPlasmaWeight } from '@/api/inbound-management/plasma-inbound-record';
   import { PostApiCoreBatchPlasmaWeightRequest } from '@/api/type/batchManage';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { getStationList } from '@/api/base-settings/station';
 
   const { createMessage } = useMessage();
-  defineOptions({ name: 'PickPlasmaModal' });
 
   const emit = defineEmits(['success', 'register']);
 
@@ -74,8 +75,7 @@
               });
               return;
             }
-            //todo 36是单袋毛重要走基础设置
-            const netWeight = Number(e) - 36 * Number(getFieldsValue().verifyNum);
+            const netWeight = Number(e) - tareWeight.value! * Number(getFieldsValue().verifyNum);
 
             //尾数做平
             const flag = Number(netWeight) % Number(getFieldsValue().verifyNum);
@@ -118,11 +118,24 @@
     },
   });
 
+  const tareWeight = ref<number | undefined>(0);
+  async function initTareWeight(innerInfo: Recordable) {
+    try {
+      const res = await getStationList();
+      tareWeight.value = res.find((item) => item.stationNo === innerInfo.record.stationNo)
+        ?.tareWeight;
+    } catch (e) {
+      createMessage.error('获取皮重信息失败');
+    }
+  }
+
   const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
+    initTareWeight(data);
+
     setFieldsValue({
       verifyNum: Number(data.record.passBagNum) + Number(data.record.noPassBagNum),
       totalGrossWeight: data.record.verifyWeight
-        ? data.record.verifyWeight * 1000 + 36 * data.record.verifyNum
+        ? data.record.verifyWeight * 1000 + tareWeight.value! * data.record.verifyNum
         : 0,
       batchNo: data.record.batchNo,
     });

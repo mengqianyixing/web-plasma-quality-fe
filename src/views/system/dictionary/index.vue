@@ -3,8 +3,8 @@
  * @version:
  * @Author: zcc
  * @Date: 2023-12-21 17:29:52
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-27 11:46:13
+ * @LastEditors: DoubleAm
+ * @LastEditTime: 2024-02-20 15:47:19
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
@@ -75,7 +75,7 @@
       setLoading(true);
       const res = await getDictItemListApi({ dataDictId: row.dictId, pageSize: 1000, currPage: 1 });
       row.children.push(
-        ...(res.result || []).map((_) => ({
+        ...(res.result || []).map((_: any) => ({
           id: ++id,
           dictId: _.fkLink,
           dictName: _.itemKey,
@@ -115,7 +115,6 @@
   function handleCreateItem() {
     const [row] = getSelectRow();
     if (!row) return;
-    console.log(row);
     openItemModal(true, { data: row });
   }
   function getSelectRow() {

@@ -3,8 +3,8 @@
  * @version: 
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-25 19:19:11
+ * @LastEditors: DoubleAm
+ * @LastEditTime: 2024-02-21 11:09:10
 -->
 <template>
   <BasicModal
@@ -49,6 +49,7 @@
     updateDictItemApi,
     getDictColumnsApi,
   } from '@/api/dictionary';
+  import { getEnumsItems } from '@/api/enums';
   import { ref } from 'vue';
 
   const emit = defineEmits(['close', 'register']);
@@ -56,6 +57,7 @@
   const dictName = ref('');
   const systemLevel = ref(0);
   const linkMap = ref(new Map());
+  const enumsMap = ref(new Map());
   const formSchema = ref<FormSchema[]>([]);
   const [registerItemFormModal, { openModal }] = useModal();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, redoHeight, setColumns }] =
@@ -96,9 +98,13 @@
       const columns = data.header.map((_) => ({
         title: _.name,
         dataIndex: _.key,
+        className: 'empty-value',
         format: (text: string) => {
           if (_.linkedDict) {
-            return linkMap.value.get(_.key)?.get(text);
+            return linkMap.value.get(_.key)?.get(text) ?? text;
+          }
+          if (_.enumKey) {
+            return enumsMap.value.get(_.key)?.get(text) ?? text;
           }
           return text;
         },
@@ -106,16 +112,33 @@
       const _columns = itemColumns.slice();
       _columns.splice(2, 0, ...columns);
       setColumns(_columns);
-      console.log(columns, _columns);
       const links = data.header.filter((_) => _.linkedDict);
       const linkRes = await Promise.all(
         links.map((_) => getDictColumnsApi({ linkedDict: _.linkedDict })),
       );
-      linkRes.forEach((res = [], i) => {
-        links[i].options = res?.[0].dictImtes;
+      linkRes.forEach((res: any, i) => {
+        links[i].options = (res?.[0]?.dictImtes ?? []).map((item) => ({
+          label: `${item.label}(${item.id}) ${item.value}`,
+          value: item.id,
+        }));
         linkMap.value.set(
           links[i].key,
-          res?.[0].dictImtes.reduce((t, c) => {
+          links[i].options.reduce((t, c) => {
+            t.set(c.value, c.label);
+            return t;
+          }, new Map()),
+        );
+      });
+      const enums = data.header.filter((_) => _.enumKey);
+      const enumsRes = await Promise.all(enums.map((_) => getEnumsItems(_.enumKey)));
+      enumsRes.forEach((res: any, i) => {
+        enums[i].options = (res?.dataList?.[0]?.enumObjList ?? []).map((item) => ({
+          label: `${item.show}(${item.key})`,
+          value: item.key,
+        }));
+        enumsMap.value.set(
+          enums[i].key,
+          enums[i].options.reduce((t, c) => {
             t.set(c.value, c.label);
             return t;
           }, new Map()),
@@ -124,7 +147,7 @@
       formSchema.value = data.header.map((_) => ({
         field: _.key,
         required: _.require,
-        component: _.linkedDict ? 'Select' : 'Input',
+        component: _.linkedDict || _.enumKey ? 'Select' : 'Input',
         label: _.name,
         componentProps: { options: _.options },
       }));
@@ -154,6 +177,7 @@
     if (!row) return;
     openModal(true, {
       data: { ...row, dictId: dictId.value, linkMap: linkMap.value },
+      formSchema: formSchema.value,
       isUpdate: true,
     });
   }

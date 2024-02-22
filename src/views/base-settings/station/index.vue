@@ -5,8 +5,20 @@
         <div class="flex gap-2">
           <a-button type="primary" @click="handleAdd">新增</a-button>
           <a-button type="primary" @click="handleEdit">编辑</a-button>
-          <a-button type="primary" @click="handleEnable">启用</a-button>
-          <a-button type="primary" @click="handleDisable">禁用</a-button>
+          <a-button
+            type="primary"
+            @click="handleEnable"
+            v-auth="BaseSettingButtonEnum.StationEnable"
+          >
+            启用
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleDisable"
+            v-auth="BaseSettingButtonEnum.StationDisable"
+          >
+            禁用
+          </a-button>
         </div>
       </template>
     </BasicTable>
@@ -16,7 +28,7 @@
     <Login
       @register="registerLoginModal"
       @success="loginSuccess"
-      :auth-code="ReCheckButtonEnum.ResultRegistrationCheck"
+      :auth-code="BaseSettingButtonEnum.StationDisable"
     />
   </PageWrapper>
 </template>
@@ -32,7 +44,7 @@
   import { disableStation, enableStation, getStationList } from '@/api/base-settings/station';
   import { useModal } from '@/components/Modal';
   import Login from '@/__components/ReviewLoginModal/index.vue';
-  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'CallbackListGeneration' });
 

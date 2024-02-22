@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-01-16 18:07:49
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-19 14:26:50
+ * @LastEditTime: 2024-02-19 16:05:24
  * @Description: 用户管理
  * @FilePath: \psms-fe\src\api\oauth\users.ts
  */
@@ -32,9 +32,9 @@ export const getCasDoorUsers = (params?) => {
  * @param params
  * @returns
  */
-export const getCasDoorUserInfo = (params) => {
+export const getCasDoorUserDetail = (params) => {
   return defHttp.get(
-    { url: '/api/sys/casdoor/roles', params },
+    { url: '/api/sys/casdoor/user/detail', params },
     {
       joinParamsToUrl: true,
     },

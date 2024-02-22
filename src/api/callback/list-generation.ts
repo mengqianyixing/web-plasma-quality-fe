@@ -17,7 +17,7 @@ import { GetApiCoreStationResponse } from '@/api/type/stationManage';
 enum Api {
   CALLBACK_LIST = '/api/core/donor/callback',
   CALLBACK_RESTFUL = '/api/core/donor/callback/detail',
-  STATION_NAME = '/api/core/station',
+  STATION_NAME = '/api/sys/station/form',
   GENERATE_CALLBACK = '/api/core/donor/callback/need',
   CREATE_CALLBACK_BATCH = '/api/core/donor/callback/batch',
 }

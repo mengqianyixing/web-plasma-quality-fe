@@ -13,7 +13,7 @@
         </span>
       </template>
       <template #stationNo="{ record }">
-        {{ formatStationNo(record?.stationNo) }}
+        {{ getStationNameById(record?.stationNo) }}
       </template>
       <template #toolbar>
         <a-button type="primary" @click="handlePickPlasma">挑浆</a-button>
@@ -35,8 +35,7 @@
   import { PageWrapper } from '@/components/Page';
   import { columns, searchSchema } from './manage.data';
 
-  import { onMounted, ref } from 'vue';
-  import { stationNameList } from '@/api/callback/list-generation';
+  import { onMounted, ref, watchEffect } from 'vue';
   import {
     DictionaryEnum,
     DictionaryItemKeyEnum,
@@ -51,15 +50,25 @@
   import PickPlasmaModal from '@/views/nonconformity/plasma-manage/PickPlasmaModal.vue';
   import InStoreModal from '@/views/nonconformity/plasma-manage/InStoreModal.vue';
   import PlasmaDetailModal from '@/views/nonconformity/plasma-manage/PlasmaDetailModal.vue';
+  import { useStation } from '@/hooks/common/useStation';
 
   const selectedRow = ref<Recordable>([]);
-  const stationNames = ref<Recordable>({});
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
 
   const { createConfirm, createMessage } = useMessage();
+  const { isLoading, stationOptions, getStationNameById } = useStation();
 
   onMounted(async () => {
-    stationNames.value = await stationNameList();
+    watchEffect(async () => {
+      if (!isLoading) {
+        await getForm().updateSchema({
+          field: 'stationNo',
+          componentProps: {
+            options: stationOptions.value,
+          },
+        });
+      }
+    });
 
     plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
       dataKey: DictionaryEnum.PlasmaFailedItem,
@@ -78,16 +87,6 @@
         options: plasmaUnqualifiedDictionary.value.map((it) => ({
           label: it.label,
           value: it.value,
-        })),
-      },
-    });
-
-    await getForm().updateSchema({
-      field: 'stationNo',
-      componentProps: {
-        options: stationNames.value.map((it) => ({
-          label: it.stationName,
-          value: it.stationNo,
         })),
       },
     });
@@ -174,10 +173,6 @@
         clearSelectedRowKeys();
       },
     });
-  }
-
-  function formatStationNo(stationNo: string) {
-    return stationNames.value.find((it) => it.stationNo === stationNo)?.stationName;
   }
 
   function formatUnqReason(unqReason: string) {

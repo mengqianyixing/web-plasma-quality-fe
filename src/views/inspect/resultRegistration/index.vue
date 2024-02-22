@@ -36,6 +36,9 @@
         <TabPane key="2" tab="效价明细">
           <TiterPage :bs-no="bsNo" @reload="saveReload" />
         </TabPane>
+        <TabPane key="3" tab="物料明细">
+          <MaterialRegistration :bs-no="bsNo" @reload="saveReload" />
+        </TabPane>
       </Tabs>
       <BatchModal @register="registerModal" @confirm="confirm" />
       <CheckItemModal @register="registerCIModal" @confirm="confirm2" />
@@ -51,6 +54,7 @@
   import { ref, unref } from 'vue';
   import CheckPage from './check/index.vue';
   import TiterPage from './titer/index.vue';
+  import MaterialRegistration from './materialRegistration/index.vue';
   import BatchModal from './batchDrawer.vue';
   import CheckItemModal from './checkItemDrawer.vue';
   import { useModal } from '@/components/Modal';

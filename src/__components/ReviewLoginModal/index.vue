@@ -17,12 +17,12 @@
   import { formSchema } from './modal.data';
   import { reCheckLogin } from '@/api/sys/login';
   import { PostApiSysReviewerCasdoorLoginRequest } from '@/api/type/login';
-  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { BaseSettingButtonEnum, ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'LoginModal' });
   const props = withDefaults(
     defineProps<{
-      authCode: ReCheckButtonEnum;
+      authCode: ReCheckButtonEnum | BaseSettingButtonEnum;
     }>(),
     {
       authCode: ReCheckButtonEnum.ResultRegistrationCheck,

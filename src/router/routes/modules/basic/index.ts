@@ -9,6 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
 
 const callManager: AppRouteModule = {
   path: '/basic',
@@ -82,6 +83,18 @@ const callManager: AppRouteModule = {
       meta: {
         title: '采浆公司',
       },
+      authElements: [
+        {
+          id: BaseSettingButtonEnum.StationEnable,
+          name: 'stationEnable',
+          title: '启用按钮权限',
+        },
+        {
+          id: BaseSettingButtonEnum.StationDisable,
+          name: 'stationDisable',
+          title: '禁用按钮权限(含审核)',
+        },
+      ],
       component: () => import('@/views/base-settings/station/index.vue'),
     },
   ],

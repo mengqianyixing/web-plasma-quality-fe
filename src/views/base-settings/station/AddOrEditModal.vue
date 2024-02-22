@@ -4,7 +4,7 @@
     @register="registerModal"
     :title="getTitle"
     @ok="handleSubmit"
-    @cancel="resetFields"
+    @cancel="handleCancel"
     :maskClosable="false"
     width="25%"
   >
@@ -24,11 +24,10 @@
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑' : '新增'));
 
-  const emit = defineEmits(['success']);
+  const emit = defineEmits(['success', 'register']);
 
   const isUpdate = ref(false);
   const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
-    console.log(data.record);
     setModalProps({
       maskClosable: false,
     });
@@ -63,7 +62,14 @@
 
   const [
     registerForm,
-    { updateSchema, validate, resetFields, setFieldsValue, appendSchemaByField },
+    {
+      updateSchema,
+      validate,
+      resetFields,
+      setFieldsValue,
+      appendSchemaByField,
+      removeSchemaByField,
+    },
   ] = useForm({
     labelWidth: 120,
     baseColProps: { span: 24 },
@@ -149,5 +155,10 @@
         confirmLoading: false,
       });
     }
+  }
+
+  function handleCancel() {
+    resetFields();
+    removeSchemaByField('remark');
   }
 </script>

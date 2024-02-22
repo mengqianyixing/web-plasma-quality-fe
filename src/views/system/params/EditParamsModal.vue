@@ -14,13 +14,13 @@
 
 <script setup lang="ts">
   import { useModalInner } from '@/components/Modal';
-  import { ref, computed, unref } from 'vue';
-
+  import { ref, computed, unref, h } from 'vue';
+  import { Input, Select } from 'ant-design-vue';
   import BasicModal from '@/components/Modal/src/BasicModal.vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { addSysParams, editSysParams } from '@/api/systemServer/params';
   import { PostApiSysParamRequest, PutApiSysParamRequest } from '@/api/type/systemParamsManage';
-  import { hasKey, isDecimal, isInteger, isJSON, isStr } from 'js-xxx';
+  import { hasKey, isDecimal, isInteger, isJSON, isObj, isStr, textTransferCase } from 'js-xxx';
   import { useMessage } from '@/hooks/web/useMessage';
 
   const { createMessage } = useMessage();
@@ -74,6 +74,35 @@
         component: 'Input',
         colProps: { span: 20 },
         required: true,
+        render: ({ model, field }) => {
+          const $input = h(Input, {
+            value: model[field],
+            onChange: (e) => {
+              model[field] = e.target.value;
+            },
+          });
+          if (model['valueType'] == 'SELECT' && isJSON(model['valueContext'])) {
+            const data = JSON.parse(model['valueContext'] ?? '{}');
+            if (!isObj(data)) {
+              return $input;
+            }
+            const selectList: any[] = [];
+            Object.keys(data).map((item) => {
+              selectList.push({
+                label: `${data[item]}(${item})`,
+                value: item,
+              });
+            });
+            return h(Select, {
+              options: selectList,
+              value: model[field],
+              onChange: (e) => {
+                model[field] = e;
+              },
+            });
+          }
+          return $input;
+        },
       },
       {
         field: 'valueType',
@@ -81,9 +110,15 @@
         show: false,
       },
       {
+        label: '参数值提示',
         field: 'valueContext',
-        slot: 'valueContext',
         show: false,
+        component: 'InputTextArea',
+        componentProps: {
+          placeholder: '-',
+          readonly: true,
+        },
+        colProps: { span: 20 },
       },
       {
         label: '备注',
@@ -111,17 +146,27 @@
 
   function _checkParamsValue(values: any) {
     const value: any = values.paramValue;
-    switch (values.valueType) {
+    const rules = JSON.parse(values?.valueContext ?? '{}');
+    switch (textTransferCase(values.valueType, 'lower')) {
       case 'float':
+        if (hasKey(rules, 'min') && hasKey(rules, 'max')) {
+          return isDecimal(value) && value >= rules.min && value <= rules.max;
+        }
         return isDecimal(value);
+      case 'int':
+        if (hasKey(rules, 'min') && hasKey(rules, 'max')) {
+          return isInteger(value) && value >= rules.min && value <= rules.max;
+        }
+        return isInteger(value);
       case 'text':
         return isStr(value);
-      case 'int':
-        return isInteger(value);
       case 'json':
         return isJSON(value);
       case 'select':
-        return hasKey(JSON.parse(values?.valueContext ?? '{}'), value);
+        if (!isObj(rules)) {
+          return true;
+        }
+        return hasKey(rules, value);
       default:
         return true;
     }

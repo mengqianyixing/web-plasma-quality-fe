@@ -91,9 +91,9 @@
       onChange: (_, selectedRows: any) => {
         selectedRow.value = selectedRows;
       },
-      getCheckboxProps: (record: any) => ({
-        disabled: record.state != 'W', // 仅未复核状态可以操作
-      }),
+      // getCheckboxProps: (record: any) => ({
+      //   disabled: record.state != 'W', // 仅未复核状态可以操作
+      // }),
     },
     useSearchForm: true,
 

@@ -2,14 +2,15 @@
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-19 13:48:54
+ * @LastEditTime: 2024-02-19 17:30:19
  * @Description: 用户管理数据源
  * @FilePath: \psms-fe\src\views\system\users\users.data.ts
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
-import { Tag } from 'ant-design-vue';
+import { Select, Tag } from 'ant-design-vue';
 import { customRenderDate } from '@/utils/tableHelpRender';
+import { routeIdMap } from '@/router/routes';
 
 export const columns: BasicColumn[] = [
   {
@@ -53,6 +54,11 @@ export const searchFormSchema: FormSchema[] = [
     label: '用户 id',
     component: 'Input',
   },
+  {
+    field: 'displayName',
+    label: '用户名称',
+    component: 'Input',
+  },
 ];
 
 export const formSchema: FormSchema[] = [
@@ -90,6 +96,76 @@ export const addFormSchema: FormSchema[] = [
     required: true,
   },
   ...formSchema,
+];
+
+export const userDetailFormSchema: FormSchema[] = [
+  {
+    field: 'name',
+    label: '用户 id',
+    component: 'Input',
+    componentProps: {
+      readonly: true,
+    },
+  },
+  {
+    label: '用户名称',
+    field: 'displayName',
+    component: 'Input',
+    componentProps: {
+      readonly: true,
+    },
+  },
+  {
+    field: 'forbidden',
+    label: '状态',
+    component: 'Select',
+    defaultValue: false,
+    componentProps: {
+      disabled: true,
+      options: [
+        { label: '停用', value: true },
+        { label: '启用', value: false },
+      ],
+    },
+  },
+  {
+    field: 'roles',
+    label: '角色',
+    component: 'Select',
+    render: ({ model, field }) => {
+      return h(Select, {
+        value: model[field]?.map((item) => item.name),
+        mode: 'multiple',
+        options: model.roles?.map((item) => ({
+          label: `${item.displayName}(${item.name})`,
+          value: item.name,
+        })),
+        placeholder: '-',
+        disabled: true,
+      });
+    },
+  },
+  {
+    field: 'menuIds',
+    label: '权限',
+    component: 'Select',
+    render: ({ model, field }) => {
+      return h(Select, {
+        value: model[field]
+          ?.filter((item) => routeIdMap[item])
+          ?.map((item) => routeIdMap[item]?.title ?? item),
+        mode: 'multiple',
+        options: model.roles
+          ?.filter((item) => routeIdMap[item])
+          ?.map((item) => ({
+            label: routeIdMap[item]?.title ?? item,
+            value: routeIdMap[item]?.title ?? item,
+          })),
+        placeholder: '-',
+        disabled: true,
+      });
+    },
+  },
 ];
 
 export const passwordFormSchema: FormSchema[] = [
