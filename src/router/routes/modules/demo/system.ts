@@ -1,8 +1,8 @@
 /*
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
- * @LastEditors: zcc
- * @LastEditTime: 2024-02-01 14:40:34
+ * @LastEditors: DoubleAm
+ * @LastEditTime: 2024-02-22 10:09:13
  * @Description: 系统管理
  * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
  */
@@ -14,7 +14,7 @@ const system: AppRouteModule = {
   path: '/system',
   name: 'System',
   menuWeight: 1010,
-  id: 92,
+  id: 101,
   component: LAYOUT,
   redirect: '/system/account',
   meta: {
