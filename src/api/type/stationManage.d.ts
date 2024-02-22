@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [基础设置-采浆公司管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5703)
  * @请求头 `GET /api/sys/station`
- * @更新时间 `2024-02-21 16:50:50`
+ * @更新时间 `2024-02-21 17:04:11`
  */
 export interface GetApiSysStationRequest {}
 
@@ -21,7 +21,7 @@ export interface GetApiSysStationRequest {}
  *
  * @分类 [基础设置-采浆公司管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5703)
  * @请求头 `GET /api/sys/station`
- * @更新时间 `2024-02-21 16:50:50`
+ * @更新时间 `2024-02-21 17:04:11`
  */
 export interface GetApiSysStationResponse {
   /**
@@ -56,6 +56,10 @@ export interface GetApiSysStationResponse {
    * 所在省份
    */
   province: string;
+  /**
+   * 所在省份编码
+   */
+  provinceCode: string;
   /**
    * 记录人
    */

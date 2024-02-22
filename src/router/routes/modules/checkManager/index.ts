@@ -23,7 +23,7 @@ const checkManager: AppRouteModule = {
   },
   children: [
     {
-      path: '/inspect/resultRegistration',
+      path: 'resultRegistration',
       name: 'resultRegistration',
       meta: {
         title: '检验结果录入',
@@ -44,13 +44,22 @@ const checkManager: AppRouteModule = {
       ],
     },
     {
-      path: '/inspect/reportRelease',
+      path: 'reportRelease',
       name: 'reportRelease',
       meta: {
         title: '检验报告生成',
       },
       id: 960020,
       component: () => import('/@/views/inspect/reportRelease/index.vue'),
+    },
+    {
+      path: 'materialPreRegistration',
+      name: 'materialPreRegistration',
+      id: 960030,
+      meta: {
+        title: '物料预登记',
+      },
+      component: () => import('@/views/inspect/materialPreRegistration/index.vue'),
     },
   ],
 };
