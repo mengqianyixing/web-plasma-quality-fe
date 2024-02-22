@@ -97,7 +97,6 @@
   });
 
   function handleOpenUnqualifiedDrawer(batchSampleNo: string) {
-    console.log(batchSampleNo, 'batchSampleNo');
     openUnqualifiedModal(true, {
       record: {
         batchSampleNo,
