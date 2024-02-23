@@ -39,4 +39,6 @@ export enum SERVER_ENUM {
   BagPickType = 'BagPickType',
   DonorStatus = 'DonorStatus',
   ParamValueType = 'ParamValueType',
+  BloodType = 'BloodType',
+  SampleType = 'SampleType',
 }

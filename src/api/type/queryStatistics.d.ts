@@ -311,7 +311,7 @@ export interface GetApiCoreBagStatisticsResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/plasma/statistic`
- * @更新时间 `2024-02-22 17:57:32`
+ * @更新时间 `2024-02-22 22:35:23`
  */
 export interface GetApiCoreBatchPlasmaStatisticRequest {
   /**
@@ -333,7 +333,7 @@ export interface GetApiCoreBatchPlasmaStatisticRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/plasma/statistic`
- * @更新时间 `2024-02-22 17:57:32`
+ * @更新时间 `2024-02-22 22:35:23`
  */
 export interface GetApiCoreBatchPlasmaStatisticResponse {
   batchNo: string;
@@ -362,6 +362,84 @@ export interface GetApiCoreBatchPlasmaStatisticResponse {
      * 验收血浆不合格编号
      */
     verifyUnqNos?: string;
+  }[];
+}
+
+/**
+ * 接口 [批号查询-检疫期↗](https://yapi.sharing8.cn/project/529/interface/api/33412) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/batch/quarantine/statistic`
+ * @更新时间 `2024-02-22 23:00:21`
+ */
+export interface GetApiCoreBatchQuarantineStatisticRequest {
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 血浆批号起
+   */
+  batchStartNo?: string;
+  /**
+   * 血浆批号止
+   */
+  batchEndNo?: string;
+}
+
+/**
+ * 接口 [批号查询-检疫期↗](https://yapi.sharing8.cn/project/529/interface/api/33412) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/batch/quarantine/statistic`
+ * @更新时间 `2024-02-22 23:00:21`
+ */
+export interface GetApiCoreBatchQuarantineStatisticResponse {
+  /**
+   * 批号
+   */
+  batchNo: string;
+  typeList: {
+    /**
+     * 检疫期类型
+     */
+    quarantineType: string;
+    /**
+     * 效价类型
+     */
+    titerType: string;
+    /**
+     * 批检疫期报告情况血浆数量
+     */
+    batchStatusTotal: number;
+    /**
+     * 批检疫期报告情况验收净重
+     */
+    batchStatusWeight: number;
+    /**
+     * 当前检疫期状态血浆数量
+     */
+    nowStatusTotal: number;
+    /**
+     * 当前检疫期状态验收净重
+     */
+    nowStatusWeight: number;
+    /**
+     * 库存状态在库数量
+     */
+    stockTotal: number;
+    /**
+     * 库存状态在库净重
+     */
+    stockWeight: number;
+    /**
+     * 库存状态出库数量
+     */
+    outTotal: number;
+    /**
+     * 库存状态出库净重
+     */
+    outWeight: number;
   }[];
 }
 

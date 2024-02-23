@@ -742,7 +742,7 @@ export type GetApiCoreLabRegistrationPlasmaTypesBsNoResponse = {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `GET /api/core/lab/registration/labProjects/{bsNo}`
- * @更新时间 `2023-12-29 18:30:12`
+ * @更新时间 `2024-02-23 09:55:56`
  */
 export interface GetApiCoreLabRegistrationLabProjectsBsNoRequest {
   bsNo: string;
@@ -753,7 +753,7 @@ export interface GetApiCoreLabRegistrationLabProjectsBsNoRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `GET /api/core/lab/registration/labProjects/{bsNo}`
- * @更新时间 `2023-12-29 18:30:12`
+ * @更新时间 `2024-02-23 09:55:56`
  */
 export type GetApiCoreLabRegistrationLabProjectsBsNoResponse = {
   plasmaType: string;
@@ -770,6 +770,10 @@ export type GetApiCoreLabRegistrationLabProjectsBsNoResponse = {
      * 血浆类型
      */
     plasmaType?: string;
+    /**
+     * 默认选择
+     */
+    check: boolean;
   }[];
 }[];
 

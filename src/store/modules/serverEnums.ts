@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { store } from '@/store';
-import { getServerEnumsApi } from '@/api/sys/index';
+import { getServerEnumsApi } from '@/api/sys';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 
 interface ITEM {
@@ -10,7 +10,7 @@ interface ITEM {
 interface EnumState {
   enumMapData: Map<SERVER_ENUM | string, ITEM[]>;
   enumTextMapData: Map<string, Map<string, string>>;
-  isRequestSucess: boolean;
+  isRequestSuccess: boolean;
   loading: boolean;
 }
 export const useServerEnumStore = defineStore({
@@ -18,7 +18,7 @@ export const useServerEnumStore = defineStore({
   state: (): EnumState => ({
     enumMapData: new Map(),
     enumTextMapData: new Map(),
-    isRequestSucess: false,
+    isRequestSuccess: false,
     loading: false,
   }),
   getters: {
@@ -35,7 +35,7 @@ export const useServerEnumStore = defineStore({
   actions: {
     setServerEnum() {
       return new Promise((rs) => {
-        if (this.isRequestSucess || this.loading) {
+        if (this.isRequestSuccess || this.loading) {
           rs(true);
           return;
         }
@@ -55,7 +55,7 @@ export const useServerEnumStore = defineStore({
                 }, new Map()),
               );
             });
-            this.isRequestSucess = true;
+            this.isRequestSuccess = true;
             rs(true);
           })
           .catch(() => {

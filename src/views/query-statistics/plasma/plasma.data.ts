@@ -1,8 +1,16 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
-import { donorStatusMap } from '@/enums/callbackEnum';
 import { operationMap, operationValueEnum } from '@/enums/stockoutEnum';
 import dayjs from 'dayjs';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import {
+  DictionaryEnum,
+  DictionaryItemKeyEnum,
+  getSysSecondaryDictionary,
+} from '@/api/_dictionary';
+
+const serverEnumStore = useServerEnumStoreWithOut();
 
 export const columns: BasicColumn[] = [
   {
@@ -234,7 +242,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '浆员状态',
     component: 'Select',
     componentProps: {
-      options: [...donorStatusMap.entries()].map(([value, label]) => ({ label, value })),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.DonorStatus),
     },
   },
   {
@@ -242,12 +250,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '血型',
     component: 'Select',
     componentProps: {
-      options: [
-        { label: 'A', value: 'A' },
-        { label: 'B', value: 'B' },
-        { label: 'AB', value: 'AB' },
-        { label: 'O', value: 'O' },
-      ],
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BloodType),
     },
   },
   {
@@ -260,7 +263,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '来浆类型',
     component: 'Select',
     componentProps: {
-      options: [...operationMap.entries()].map(([value, label]) => ({ label, value })),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
     },
   },
   {
@@ -287,7 +290,9 @@ export const searchFormSchema: FormSchema[] = [
     field: 'warehousingStatus',
     label: '入库状态',
     component: 'Select',
-    componentProps: {},
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.WarehousingStatusEnum),
+    },
   },
   {
     field: 'minVerifyNetweight',
@@ -308,11 +313,17 @@ export const searchFormSchema: FormSchema[] = [
     field: 'plasmaStatus',
     label: '血浆过程状态',
     component: 'Select',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BagFlow),
+    },
   },
   {
     field: 'plasmaType',
     label: '血浆类型',
     component: 'Select',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+    },
   },
   {
     field: 'minTiter',
@@ -328,6 +339,9 @@ export const searchFormSchema: FormSchema[] = [
     field: 'seeSampleType',
     label: '参考样本类型',
     component: 'Select',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+    },
   },
   {
     field: 'trackedStatus',
@@ -354,6 +368,9 @@ export const searchFormSchema: FormSchema[] = [
     field: 'trackedType',
     label: '检疫期类型',
     component: 'Select',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BagTrackedType),
+    },
   },
   {
     field: 'reCheckResult',
@@ -369,7 +386,22 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'plasmaUnqualifiedReason',
     label: '血浆不合格原因',
-    component: 'Select',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getSysSecondaryDictionary,
+      params: {
+        dataKey: DictionaryEnum.PlasmaFailedItem,
+        dictNos: [
+          DictionaryItemKeyEnum.Accept,
+          DictionaryItemKeyEnum.Track,
+          DictionaryItemKeyEnum.Test,
+          DictionaryItemKeyEnum.Quarantine,
+          DictionaryItemKeyEnum.Sample,
+          DictionaryItemKeyEnum.Other,
+        ],
+      },
+      valueField: 'dictItemId',
+    },
   },
   {
     field: 'seeSampleResult',
