@@ -109,7 +109,7 @@
       await submitNotCheckApi({ sampleNo, bsNo: unref(bsno), projectIds });
       message.success(sampleNo + '登记成功');
       if (close === false) {
-        setFieldsValue({ sampleNo: '' });
+        setFieldsValue({ sampleNo: '', account: '' });
         clearValidate();
       } else {
         emit('confirm');

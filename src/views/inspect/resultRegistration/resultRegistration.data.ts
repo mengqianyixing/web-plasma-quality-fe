@@ -29,11 +29,15 @@ export const cellList = [
   },
   {
     field: 'totalCount',
-    label: '样本总数',
+    label: '浆站来样数量',
   },
   {
     field: 'totalQualified',
-    label: '合格样本总数',
+    label: '验收合格样本总数',
+  },
+  {
+    field: 'totalUnqualified',
+    label: '验收不合格样本总数',
   },
   {
     field: 'status',
@@ -56,13 +60,18 @@ export const batchColumns: BasicColumn[] = [
     format: (text) => SampleType(text),
   },
   {
-    title: '样本总数',
+    title: '浆站来样数量',
     dataIndex: 'totalCount',
   },
   {
-    title: '合格样本数',
+    title: '验收合格样本总数',
     dataIndex: 'totalQualified',
   },
+  {
+    title: '验收不合格样本总数',
+    dataIndex: 'totalUnqualified',
+  },
+
   {
     title: '浆站出库日期',
     dataIndex: 'outDate',

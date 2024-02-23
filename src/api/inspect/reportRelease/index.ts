@@ -13,6 +13,8 @@ import {
   PutApiCoreLabReportReviewRevokeResponse,
   PutApiCoreLabReportReviewReleaseReportNoRequest,
   PutApiCoreLabReportReviewReleaseReportNoResponse,
+  PostApiCoreLabReportUnqualifiedRequest,
+  PostApiCoreLabReportUnqualifiedResponse,
 } from '@/api/type/inspectManage';
 
 enum Api {
@@ -22,7 +24,14 @@ enum Api {
   PROCESS_REPROT = '/api/core/lab/report/review/',
   PROCESS_REVOKE = '/api/core/lab/report/review/revoke',
   RELEASE_REPORT = '/api/core/lab/report/review/release/',
+  UNQUALIFIED_LIST = '/api/core/lab/report/unqualified',
 }
+
+export const getUnqualifiedApi = (data: PostApiCoreLabReportUnqualifiedRequest) =>
+  defHttp.post<PostApiCoreLabReportUnqualifiedResponse>({
+    url: Api.UNQUALIFIED_LIST,
+    data,
+  });
 
 export const getListApi = (data: PostApiCoreLabReportsRequest) =>
   defHttp.post<PostApiCoreLabReportsResponse>({

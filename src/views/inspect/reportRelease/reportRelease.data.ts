@@ -22,12 +22,13 @@ export const columns: BasicColumn[] = [
     format: (text) => SampleType(text),
   },
   {
-    title: '合格样本总数',
+    title: '检测合格样本总数',
     dataIndex: 'totalQualified',
   },
   {
-    title: '不合格样本总数',
+    title: '检测不合格样本总数',
     dataIndex: 'totalUnqualified',
+    slots: { customRender: 'totalUnqualified' },
   },
   {
     title: '高效价总数',
@@ -84,6 +85,11 @@ export const searchFormschema: FormSchema[] = [
     },
   },
   {
+    field: 'bsNo',
+    component: 'Input',
+    label: '样本批号',
+  },
+  {
     field: 'sampleCode',
     component: 'Select',
     label: '样本类型',
@@ -107,5 +113,40 @@ export const searchFormschema: FormSchema[] = [
     componentProps: {
       class: 'w-full',
     },
+  },
+];
+
+export const totalUnqualifiedColumns: BasicColumn[] = [
+  {
+    dataIndex: 'sampleNo',
+    title: '样品编号',
+  },
+  {
+    dataIndex: 'donorNo',
+    title: '浆员编号',
+  },
+  {
+    dataIndex: 'donorName',
+    title: '浆员姓名',
+  },
+  {
+    dataIndex: 'projectName',
+    title: '不合格项目',
+  },
+  {
+    dataIndex: 'od',
+    title: 'OD值',
+  },
+  {
+    dataIndex: 'cutoff',
+    title: 'Cutoff值',
+  },
+  {
+    dataIndex: 'checkAt',
+    title: '检测时间',
+  },
+  {
+    dataIndex: 'methodName',
+    title: '检测方法',
   },
 ];
