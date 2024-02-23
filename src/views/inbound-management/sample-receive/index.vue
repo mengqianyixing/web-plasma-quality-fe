@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="tsx">
-  import { computed, reactive, ref, onMounted } from 'vue';
+  import { computed, reactive, ref } from 'vue';
 
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import Description from '@/components/Description/src/Description.vue';
@@ -49,31 +49,21 @@
   import { useModal } from '@/components/Modal';
 
   import SelectSampleBatchModal from './SelectSampleBatchModal.vue';
-  import {
-    receiveSample,
-    getSampleReceiveDetail,
-    getSampleDictionary,
-  } from '@/api/inbound-management/sample-receive';
+  import { receiveSample, getSampleReceiveDetail } from '@/api/inbound-management/sample-receive';
   import { GetApiCoreBatchSampleAcceptBatchSampleNoResponse } from '@/api/type/batchManage';
   import { useMessage } from '@/hooks/web/useMessage';
   import dayjs from 'dayjs';
-  import { sampleDictionary } from '@/enums/sampleEnum';
   import { VxeGridProps } from 'vxe-table';
   import { GetApiCoreBankStockRequest } from '@/api/type/plasmaStoreManage';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 
   const sampleBatchData = ref<GetApiCoreBatchSampleAcceptBatchSampleNoResponse>({});
   const inputValue = ref('');
-  const sampleTypeDictionary = ref<Recordable[] | undefined>([]);
   const tableLoading = ref(false);
-
-  onMounted(async () => {
-    const dictionaryArr = await getSampleDictionary([sampleDictionary.SampleType]);
-    if (!dictionaryArr) return;
-
-    sampleTypeDictionary.value = dictionaryArr.find(
-      (it) => it.dictNo === sampleDictionary.SampleType,
-    )?.dictImtes;
-  });
 
   const { createConfirm } = useMessage();
 
@@ -108,8 +98,7 @@
       field: 'sampleType',
       label: '样本类型',
       render(text) {
-        const label = sampleTypeDictionary.value!.find((it) => it.value === text)?.label;
-        return <span>{label}</span>;
+        return <span>{SampleType(text)}</span>;
       },
     },
     {
@@ -140,7 +129,7 @@
       openSelectSampleBatchModal(true, {
         reload: true,
         record: {
-          sampleType: sampleTypeDictionary.value,
+          sampleType: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
         },
       });
     }

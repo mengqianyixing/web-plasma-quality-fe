@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="tsx">
-  import { onMounted, reactive, ref, computed, unref } from 'vue';
+  import { reactive, ref, computed, unref } from 'vue';
   import { isEmpty } from 'lodash-es';
   import { ActionItem, TableAction } from '@/components/Table';
 
@@ -69,15 +69,12 @@
   import PlasmaVerifyNonconformityModal from '@/views/inbound-management/sample-verify/PlasmaVerifyNonconformityModal.vue';
   import NonconformityModal from './NonconformityModal.vue';
   import RevokeVerifySampleModal from './RevokeVerifySampleModal.vue';
-
-  import { getSampleDictionary } from '@/api/inbound-management/sample-receive';
   import {
     GetApiCoreBatchSampleVerifyBatchSampleNoResponse,
     GetApiCoreBatchSampleVerifyNonConformanceBatchSampleNoResponse,
   } from '@/api/type/batchManage';
   import {
     nonconformityReasonEnum,
-    sampleDictionary,
     sampleTypeEnum,
     sampleVerifyResultMap,
     sampleVerifyResultValueEnum,
@@ -93,6 +90,11 @@
   import { VxeGridProps } from 'vxe-table';
   import { GetApiCoreBankStockRequest } from '@/api/type/plasmaStoreManage';
   import dayjs from 'dayjs';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 
   const sampleBatchData = ref<GetApiCoreBatchSampleVerifyBatchSampleNoResponse>({});
   const verifyNonconformityData =
@@ -100,18 +102,8 @@
   const sampleVerifyNo = ref(null);
 
   const inputValue = ref('');
-  const sampleTypeDictionary = ref<Recordable[] | undefined>([]);
 
   const { createConfirm, createMessage } = useMessage();
-
-  onMounted(async () => {
-    const dictionaryArr = await getSampleDictionary([sampleDictionary.SampleType]);
-    if (!dictionaryArr) return;
-
-    sampleTypeDictionary.value = dictionaryArr.find(
-      (it) => it.dictNo === sampleDictionary.SampleType,
-    )?.dictImtes;
-  });
 
   const unAcceptList = computed(() => sampleBatchData.value.unVerifyList);
 
@@ -161,8 +153,7 @@
       field: 'sampleType',
       label: '样本类型',
       render(text) {
-        const label = sampleTypeDictionary.value?.find((it) => it.value === text)?.label;
-        return <span>{label}</span>;
+        return <span>{SampleType(text)}</span>;
       },
     },
     {
@@ -327,7 +318,7 @@
       openSampleVerifyBatchModal(true, {
         reload: true,
         record: {
-          sampleType: sampleTypeDictionary.value,
+          sampleType: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
         },
       });
     }

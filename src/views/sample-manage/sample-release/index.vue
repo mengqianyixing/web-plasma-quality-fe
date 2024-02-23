@@ -11,7 +11,6 @@
         </span>
         <span v-else>-</span>
       </template>
-      <template #sampleType="{ record }"> {{ formatSampleType(record?.sampleType) }} </template>
       <template #toolbar>
         <a-button type="primary" @click="handleRelease">发布</a-button>
       </template>
@@ -30,7 +29,6 @@
 
   import UnqualifiedModal from '@/views/sample-manage/sample-release/unqualifiedModal.vue';
   import { onMounted, ref, watchEffect } from 'vue';
-  import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
   import { useStation } from '@/hooks/common/useStation';
 
   const { createMessage, createConfirm } = useMessage();
@@ -38,7 +36,6 @@
   const [registerUnqualifiedModal, { openModal: openUnqualifiedModal }] = useModal();
 
   const selectedRow = ref<Recordable>([]);
-  const sampleTypeDictionary = ref<Recordable[] | undefined>([]);
 
   const { isLoading, stationOptions } = useStation();
 
@@ -52,17 +49,6 @@
           },
         });
       }
-    });
-
-    sampleTypeDictionary.value = (await getSysDictionary([DictionaryEnum.SampleType])).find(
-      (it) => it.dictNo === DictionaryEnum.SampleType,
-    )?.dictImtes;
-
-    await getForm().updateSchema({
-      field: 'sampleType',
-      componentProps: {
-        options: sampleTypeDictionary.value,
-      },
     });
   });
 
@@ -123,9 +109,5 @@
         await reload();
       },
     });
-  }
-
-  function formatSampleType(sampleType: string) {
-    return sampleTypeDictionary.value?.find((it) => it.value === sampleType)?.label;
   }
 </script>

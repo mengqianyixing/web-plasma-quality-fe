@@ -1,6 +1,10 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { getDictItemListByNoApi } from '@/api/dictionary';
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 
 enum STATE {
   TBG = '报告待生成',
@@ -22,7 +26,7 @@ export const columns: BasicColumn[] = [
   {
     title: '样本类型',
     dataIndex: 'sampleCode',
-    slots: { customRender: 'sampleCode' },
+    format: (text) => SampleType(text),
   },
   {
     title: '合格样本总数',
@@ -90,17 +94,10 @@ export const searchFormschema: FormSchema[] = [
   },
   {
     field: 'sampleCode',
-    component: 'ApiSelect',
+    component: 'Select',
     label: '样本类型',
     componentProps: {
-      api: () =>
-        new Promise((rs, rj) => {
-          getDictItemListByNoApi(['sampleType'])
-            .then((res) => {
-              rs(res[0]['dictImtes']);
-            })
-            .catch(rj);
-        }),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
     },
   },
 

@@ -7,9 +7,12 @@
  * @LastEditTime: 2024-01-09 17:46:44
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { getDictItemListByNoApi } from '@/api/dictionary';
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+const serverEnumStore = useServerEnumStoreWithOut();
+const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 export const cellList = [
   {
     field: 'stationName',
@@ -20,8 +23,9 @@ export const cellList = [
     label: '样本批号',
   },
   {
-    field: 'sampleTypeName',
+    field: 'sampleCode',
     label: '样本类型',
+    format: (data: Recordable) => SampleType(data.sampleCode),
   },
   {
     field: 'totalCount',
@@ -49,7 +53,7 @@ export const batchColumns: BasicColumn[] = [
   {
     title: '样本类型',
     dataIndex: 'sampleCode',
-    slots: { customRender: 'sampleCode' },
+    format: (text) => SampleType(text),
   },
   {
     title: '样本总数',
@@ -85,17 +89,10 @@ export const batchSearchScheam: FormSchema[] = [
   },
   {
     field: 'sampleCode',
-    component: 'ApiSelect',
+    component: 'Select',
     label: '样本类型',
     componentProps: {
-      api: () =>
-        new Promise((rs, rj) => {
-          getDictItemListByNoApi(['sampleType'])
-            .then((res) => {
-              rs(res[0]['dictImtes']);
-            })
-            .catch(rj);
-        }),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
     },
   },
   {
