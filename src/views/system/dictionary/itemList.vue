@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-02-23 17:23:45
+ * @LastEditTime: 2024-02-23 17:34:14
 -->
 <template>
   <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -44,7 +44,7 @@
   const currentRoute = useRoute();
   const dictId = ref(currentRoute.meta.dictId);
   const dictName = ref('');
-  const systemLevel = ref(0);
+  const systemLevel = ref(currentRoute.meta.systemLevel || 0);
   const linkMap = ref(new Map());
   const enumsMap = ref(new Map());
   const formSchema = ref<FormSchema[]>([]);

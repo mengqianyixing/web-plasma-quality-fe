@@ -29,6 +29,7 @@ async function getRoutes() {
     meta: {
       title: x.dictName,
       dictId: x.dictId,
+      systemLevel: x.systemLevel,
     },
     id: 100061 + i,
     component: () => import('@/views/system/dictionary/itemList.vue'),
