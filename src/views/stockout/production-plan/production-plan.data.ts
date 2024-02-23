@@ -18,7 +18,11 @@ import {
   statusList,
   PLASMA_STATUS_TEXT,
 } from '@/enums/productionPlanEnum';
-import { PLASMA_TYPE_LIST, PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 const formatKg = (text) => (text || text === 0 ? (text / 1000).toFixed(3) : '');
 
@@ -33,7 +37,7 @@ export const columns: BasicColumn[] = [
     title: '投产类型',
     dataIndex: 'orderType',
     customRender: ({ record }) => {
-      return PLASMA_TYPE_TEXT[record.orderType];
+      return PlasmaType(record.orderType);
     },
   },
   {
@@ -118,7 +122,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '投产类型',
     component: 'Select',
     componentProps: {
-      options: PLASMA_TYPE_LIST,
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {
@@ -202,7 +206,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
       title: '投产类型',
       dataIndex: 'prodType',
       customRender: ({ record }) => {
-        return PLASMA_TYPE_TEXT[record.prodType];
+        return PlasmaType(record.prodType);
       },
     },
     {
@@ -397,7 +401,7 @@ export const pickingColumns: Record<string, BasicColumn[]> = {
       title: '投产类型',
       dataIndex: 'prodType',
       customRender: ({ record }) => {
-        return PLASMA_TYPE_TEXT[record.prodType];
+        return PlasmaType(record.prodType);
       },
     },
     {
@@ -475,7 +479,7 @@ export const pickingSearchForm: FormSchema[] = [
     field: 'prodType',
     component: 'Select',
     componentProps: {
-      options: PLASMA_TYPE_LIST,
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
 ];
@@ -488,7 +492,7 @@ export const cellList: Cell[] = [
   {
     field: 'orderType',
     label: '投产类型',
-    format: (data) => PLASMA_TYPE_TEXT[data.orderType],
+    format: (data) => PlasmaType(data.orderType),
   },
   {
     field: 'expiration',

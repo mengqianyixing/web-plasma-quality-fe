@@ -1,6 +1,10 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { PLASMA_TYPE_LIST, PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 export const columns: BasicColumn[] = [
   {
@@ -17,7 +21,7 @@ export const columns: BasicColumn[] = [
     title: '检测类型',
     dataIndex: 'type',
     customRender: ({ record }) => {
-      return PLASMA_TYPE_TEXT[record.type];
+      return PlasmaType(record.type);
     },
   },
   {
@@ -63,7 +67,7 @@ export const searchFormschema: FormSchema[] = [
     component: 'Select',
     label: '检测类型',
     componentProps: {
-      options: PLASMA_TYPE_LIST,
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {
@@ -94,7 +98,7 @@ export const importDrwaerColumns: BasicColumn[] = [
     title: '效价类型',
     dataIndex: 'type',
     customRender: ({ record }) => {
-      return PLASMA_TYPE_TEXT[record.type];
+      return PlasmaType(record.type);
     },
   },
   {

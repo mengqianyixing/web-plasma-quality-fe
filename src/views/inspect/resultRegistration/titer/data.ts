@@ -1,6 +1,10 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { getDictItemListByNoApi } from '@/api/dictionary';
-import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 export const columns: BasicColumn[] = [
   { title: '检测项目', dataIndex: 'projectAbbr', slots: { customRender: 'projectAbbr' } },
@@ -15,7 +19,7 @@ export const dtRusultColumns: BasicColumn[] = [
     title: '血浆类型',
     dataIndex: 'plasmaType',
     customRender: ({ record }) => {
-      return PLASMA_TYPE_TEXT[record.plasmaType];
+      return PlasmaType(record.plasmaType);
     },
   },
   {
@@ -157,7 +161,7 @@ export const importSuccessColumns: BasicColumn[] = [
     title: '血浆类型',
     dataIndex: 'plasmaType',
     customRender: ({ record }) => {
-      return PLASMA_TYPE_TEXT[record.plasmaType];
+      return PlasmaType(record.plasmaType);
     },
   },
   { title: '效价类型', dataIndex: 'titerType' },

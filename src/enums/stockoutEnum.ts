@@ -1,30 +1,3 @@
-export enum operationEnum {
-  N = '普通',
-  B = '乙免',
-  R = '狂免',
-  A = '炭疽',
-  T = '破免',
-  G = '巨细胞',
-}
-
-export enum operationValueEnum {
-  N = 'N',
-  B = 'B',
-  R = 'R',
-  A = 'A',
-  T = 'T',
-  G = 'G',
-}
-
-export const operationMap = new Map<operationValueEnum, string>();
-
-operationMap.set(operationValueEnum.N, operationEnum.N);
-operationMap.set(operationValueEnum.B, operationEnum.B);
-operationMap.set(operationValueEnum.R, operationEnum.R);
-operationMap.set(operationValueEnum.A, operationEnum.A);
-operationMap.set(operationValueEnum.T, operationEnum.T);
-operationMap.set(operationValueEnum.G, operationEnum.G);
-
 export enum statusEnum {
   TBR = '待复核',
   RVD = '待审核',

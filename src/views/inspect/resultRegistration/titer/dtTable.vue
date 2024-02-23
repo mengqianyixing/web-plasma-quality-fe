@@ -31,8 +31,12 @@
   import Login from '@/__components/ReviewLoginModal/index.vue';
   import { nextTick } from 'vue';
   import { getCheckItemDtListApi, updateTiterCheckApi } from '@/api/inspect/resultRegistration';
-  import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
   const props = defineProps({
     checkResult: {
@@ -144,12 +148,12 @@
       componentProps: {
         options: [
           {
-            label: PLASMA_TYPE_TEXT[row.plasmaType] + '高效价',
-            value: PLASMA_TYPE_TEXT[row.plasmaType] + '高效价',
+            label: PlasmaType(row.plasmaType) + '高效价',
+            value: PlasmaType(row.plasmaType) + '高效价',
           },
           {
-            label: PLASMA_TYPE_TEXT[row.plasmaType] + '低效价',
-            value: PLASMA_TYPE_TEXT[row.plasmaType] + '低效价',
+            label: PlasmaType(row.plasmaType) + '低效价',
+            value: PlasmaType(row.plasmaType) + '低效价',
           },
           { label: '合格普通浆', value: '合格普通浆' },
         ],

@@ -1,10 +1,14 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { statusList, STATUS_TEXT } from '@/enums/batchReleaseEnum';
-import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
 import {
   nonconformityPlasmaMap,
   NonconformityPlasmaStatusValueEnum,
 } from '@/enums/nonconforityEnum';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 const formatKg = (text) => (text || text === 0 ? (text / 1000).toFixed(3) : '');
 
@@ -17,7 +21,7 @@ export const columns: BasicColumn[] = [
   {
     title: '投产类型',
     dataIndex: 'orderType',
-    format: (text) => PLASMA_TYPE_TEXT[text],
+    format: (text) => PlasmaType(text),
   },
   {
     title: '计划投产日期',

@@ -1,7 +1,11 @@
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { operationMap, operationValueEnum } from '@/enums/stockoutEnum';
 import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 export const entryColumns: BasicColumn[] = [
   {
@@ -191,7 +195,7 @@ export const entryDetailModalColumns: BasicColumn[] = [
     title: '血浆类型',
     dataIndex: 'immType',
     format: (text) => {
-      return operationMap.get(text as operationValueEnum) as string;
+      return PlasmaType(text);
     },
     width: 100,
   },
@@ -307,7 +311,7 @@ export const verifyDetailColumns: BasicColumn[] = [
     title: '血浆类型',
     dataIndex: 'immuType',
     format: (text) => {
-      return operationMap.get(text as operationValueEnum) as string;
+      return PlasmaType(text);
     },
     width: 90,
   },
@@ -333,7 +337,7 @@ export const verifySumColumns: BasicColumn[] = [
     title: '血浆类型',
     dataIndex: 'immuType',
     format: (text) => {
-      return operationMap.get(text as operationValueEnum) as string;
+      return PlasmaType(text);
     },
     width: 100,
   },

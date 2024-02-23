@@ -5,14 +5,7 @@ import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
-
-enum STATE {
-  TBG = '报告待生成',
-  TBR = '待复核',
-  UND = '待发布',
-  PUD = '已发布',
-}
-const stateList = (() => Object.keys(STATE).map((_) => ({ label: STATE[_], value: _ })))();
+const ReportStateType = serverEnumStore.getServerEnumText(SERVER_ENUM.ReportStateType);
 
 export const columns: BasicColumn[] = [
   {
@@ -50,10 +43,8 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '当前状态',
-    dataIndex: '',
-    customRender: ({ record }) => {
-      return STATE[record.state];
-    },
+    dataIndex: 'state',
+    format: (text) => ReportStateType(text),
   },
   {
     title: '报告人',
@@ -106,7 +97,7 @@ export const searchFormschema: FormSchema[] = [
     component: 'Select',
     label: '样本状态',
     componentProps: {
-      options: stateList,
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.ReportStateType),
     },
   },
   {

@@ -63,7 +63,11 @@
     submitRegistrationApi,
     sumbitRevokeRegistrationApi,
   } from '@/api/inspect/resultRegistration';
-  import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
   const activeKey = ref('1');
   const bsNo = ref('');
@@ -93,7 +97,7 @@
       data: {},
     };
     const { list, data } = res.reduce((t, row, i) => {
-      t.list.push({ field: i.toString(), label: PLASMA_TYPE_TEXT[row.plasmaType] });
+      t.list.push({ field: i.toString(), label: PlasmaType(row.plasmaType) });
       t.data[i] = row.count;
       return t;
     }, initValue);

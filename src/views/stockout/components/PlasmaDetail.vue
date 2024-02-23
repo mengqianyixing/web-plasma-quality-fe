@@ -28,9 +28,12 @@
     sortingValueEnum,
     prepareProduceMap,
     prepareProduceValueEnum,
-    operationMap,
-    operationValueEnum,
   } from '@/enums/stockoutEnum';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
   let prepareNo = ''; // 准备号
   const [registerModal] = useModalInner(async (data) => {
@@ -100,7 +103,7 @@
       title: '效价类型',
       dataIndex: 'immType',
       format(text) {
-        return `${operationMap.get(String(text) as operationValueEnum)}`;
+        return `${PlasmaType(text)}`;
       },
     },
     {
