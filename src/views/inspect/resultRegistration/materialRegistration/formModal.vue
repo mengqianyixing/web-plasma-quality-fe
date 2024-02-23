@@ -15,7 +15,7 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { reactive } from 'vue';
+  import { reactive, nextTick } from 'vue';
   import { columns } from './data';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
@@ -53,7 +53,8 @@
             field: 'projectId',
             componentProps: {
               allowClear: false,
-              onChange: () => {
+              onChange: async () => {
+                await nextTick();
                 reload();
               },
             },
