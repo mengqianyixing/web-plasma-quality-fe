@@ -29,10 +29,15 @@
   import { DescItem, Description } from '@/components/Description';
   import { ref, watch } from 'vue';
   import { getProOrderDetail } from '@/api/stockout/production-order';
-  import { expirationMap, operationMap } from '@/enums/stockoutEnum';
+  import { expirationMap } from '@/enums/stockoutEnum';
   import { Timeline, TimelineItem } from 'ant-design-vue';
   import dayjs from 'dayjs';
   import { ClockCircleOutlined } from '@ant-design/icons-vue';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
   const ATimeline = Timeline;
   const ATimelineItem = TimelineItem;
@@ -62,7 +67,7 @@
       field: 'orderType',
       label: '投产类型',
       render: (curVal) => {
-        return `${curVal}，${operationMap.get(curVal)}`;
+        return `${PlasmaType(curVal)}`;
       },
     },
     {

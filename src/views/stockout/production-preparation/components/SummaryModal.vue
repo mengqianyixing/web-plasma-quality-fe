@@ -40,14 +40,14 @@
   import { BasicTable, useTable, BasicColumn } from '@/components/Table';
   import { ref } from 'vue';
   import {
-    operationMap,
     prepareStateMap,
     bagFlagMap,
     pickModeMap,
     BagTrackMap,
     BagTrackValueEnum,
   } from '@/enums/stockoutEnum';
-
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
   import PickModal from './PickModal.vue';
   import {
     getPrepareList,
@@ -58,6 +58,9 @@
     getBagList,
   } from '@/api/stockout/production-preparation.js';
   import dayjs from 'dayjs';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
   const emit = defineEmits(['success']);
   const activeKey = ref('columnsImmunity');
@@ -89,7 +92,7 @@
       label: '投产类型',
       contentMinWidth: 100,
       render(val) {
-        return <div>{operationMap.get(val)}</div>;
+        return <div>{PlasmaType(val)}</div>;
       },
     },
     {
