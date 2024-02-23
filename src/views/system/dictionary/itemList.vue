@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-02-22 15:40:05
+ * @LastEditTime: 2024-02-23 17:23:45
 -->
 <template>
   <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -71,12 +71,78 @@
     beforeFetch: (params) => {
       return { ...params, dataDictId: dictId.value };
     },
-    afterFetch: (res) => {
+    afterFetch: async (res) => {
       clearSelectedRowKeys();
+      const data = res[0];
+      setData(data);
       return res;
     },
     rowSelection: { type: 'radio' },
   });
+  const setData = async (data) => {
+    if (data.header) {
+      const columns = data.header.map((_) => ({
+        title: _.name,
+        dataIndex: _.key,
+        className: 'empty-value',
+        format: (text: string) => {
+          if (_.linkedDict) {
+            return linkMap.value.get(_.key)?.get(text) ?? text;
+          }
+          if (_.enumKey) {
+            return enumsMap.value.get(_.key)?.get(text) ?? text;
+          }
+          return text;
+        },
+      }));
+      const _columns = itemColumns.slice();
+      _columns.splice(2, 0, ...columns);
+      setColumns(_columns);
+      const links = data.header.filter((_) => _.linkedDict);
+      const linkRes = await Promise.all(
+        links.map((_) => getDictColumnsApi({ linkedDict: _.linkedDict })),
+      );
+      linkRes.forEach((res: any, i) => {
+        links[i].options = (res?.[0]?.dictImtes ?? []).map((item) => ({
+          label: `${item.label}(${item.id}) ${item.value}`,
+          value: item.id,
+        }));
+        linkMap.value.set(
+          links[i].key,
+          links[i].options.reduce((t, c) => {
+            t.set(c.value, c.label);
+            return t;
+          }, new Map()),
+        );
+      });
+      const enums = data.header.filter((_) => _.enumKey);
+      const enumsRes = await Promise.all(enums.map((_) => getEnumsItems(_.enumKey)));
+      enumsRes.forEach((res: any, i) => {
+        enums[i].options = (res?.dataList?.[0]?.enumObjList ?? []).map((item) => ({
+          label: `${item.show}(${item.key})`,
+          value: item.key,
+        }));
+        enumsMap.value.set(
+          enums[i].key,
+          enums[i].options.reduce((t, c) => {
+            t.set(c.value, c.label);
+            return t;
+          }, new Map()),
+        );
+      });
+      formSchema.value = data.header.map((_) => ({
+        field: _.key,
+        required: _.require,
+        component: _.linkedDict || _.enumKey ? 'Select' : 'Input',
+        label: _.name,
+        componentProps: { options: _.options },
+      }));
+    } else {
+      formSchema.value = [];
+      setColumns(itemColumns.slice());
+    }
+    // reload();
+  };
   const [{ setModalProps }] = useModalInner(async ({ data }) => {
     dictId.value = data.dictId;
     dictName.value = data.dictName;
