@@ -42,6 +42,11 @@ export const columns: BasicColumn[] = [
     title: '复核人',
     dataIndex: 'reviewer',
   },
+  {
+    title: '复核日期',
+    dataIndex: 'reviewAt',
+    format: (text) => text?.slice(0, 10),
+  },
 ];
 
 export const formListSchema: FormSchema[] = [
