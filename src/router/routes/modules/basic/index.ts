@@ -97,6 +97,15 @@ const callManager: AppRouteModule = {
       ],
       component: () => import('@/views/base-settings/station/index.vue'),
     },
+    {
+      path: 'requiredItem',
+      name: 'requiredItem',
+      id: 100080,
+      meta: {
+        title: '必检项',
+      },
+      component: () => import('@/views/base-settings/requiredItem/index.vue'),
+    },
   ],
 };
 export default callManager;

@@ -1,0 +1,174 @@
+<template>
+  <PageWrapper dense contentFullHeight fixedHeight class="p-16px">
+    <BasicTable @register="registerTable">
+      <template #toolbar>
+        <a-button type="primary" @click="handleCreate">新增</a-button>
+        <a-button type="primary" @click="handleUpdate">编辑</a-button>
+        <a-button type="primary" @click="handleDelete">删除</a-button>
+      </template>
+    </BasicTable>
+    <FormModal @register="registerModal" @success="success" />
+    <Modal
+      :open="open"
+      @cancel="open = false"
+      @ok="handleSubmit"
+      okText="提交"
+      width="400px"
+      :confirmLoading="confirmLoading"
+      title="删除原因'"
+    >
+      <div class="m-20px">
+        <BasicForm @register="registerForm" />
+      </div>
+    </Modal>
+    <LoginModal
+      @register="registerLogin"
+      @success="handleLoginSuccess"
+      :auth-code="ReCheckButtonEnum.RequiredItemCheck"
+    />
+  </PageWrapper>
+</template>
+<script setup lang="ts">
+  import { BasicTable, useTable } from '@/components/Table';
+  import { PageWrapper } from '@/components/Page';
+  import { useModal } from '@/components/Modal';
+  import { columns } from './requiredItem.data';
+  import { message, Modal } from 'ant-design-vue';
+  import FormModal from './formModal.vue';
+  import { ref } from 'vue';
+  import { BasicForm, useForm } from '@/components/Form';
+  import { getListApi, removeApi } from '@/api/base-settings/requiredItem';
+  import { getDictItemListByNoApi } from '@/api/dictionary';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import LoginModal from '@/__components/ReviewLoginModal/index.vue';
+
+  const open = ref(false);
+  const confirmLoading = ref(false);
+  const userId = ref('');
+
+  const [registerLogin, { openModal: openLoginModal }] = useModal();
+
+  const [registerForm, { resetFields, clearValidate, validate, setFieldsValue }] = useForm({
+    labelWidth: 80,
+    baseColProps: { span: 24 },
+    schemas: [
+      {
+        field: 'reviewName',
+        label: '复核人',
+        component: 'InputSearch',
+        componentProps: {
+          'enter-button': '登录',
+          placeholder: '请点击登录按钮',
+          readonly: true,
+          onSearch: handleLogin,
+        },
+        required: true,
+      },
+      {
+        field: 'cause',
+        component: 'Input',
+        label: '原因',
+        required: true,
+      },
+    ],
+    showActionButtonGroup: false,
+  });
+  const [registerModal, { openModal }] = useModal();
+
+  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
+    immediate: false,
+    api: getListApi,
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    columns: columns,
+    size: 'small',
+    useSearchForm: true,
+    showTableSetting: false,
+    bordered: true,
+    formConfig: {
+      schemas: [
+        {
+          field: 'sampleCode',
+          component: 'ApiSelect',
+          label: '样本类型',
+          componentProps: {
+            api: () =>
+              new Promise((rs, rj) => {
+                getDictItemListByNoApi(['sampleType'])
+                  .then((res) => {
+                    rs(res[0]['dictImtes']);
+                  })
+                  .catch(rj);
+              }),
+          },
+        },
+      ],
+    },
+    rowSelection: { type: 'radio' },
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
+  });
+  function handleLogin() {
+    openLoginModal(true);
+  }
+  function handleLoginSuccess(name: string, userInfo: any) {
+    userId.value = userInfo.userId;
+    setFieldsValue({ reviewName: userInfo.username });
+  }
+
+  function getSelections(onlyOne: boolean, callBack?: Function) {
+    const rows = getSelectRows();
+    if (rows.length === 0) {
+      message.warning('请选择一条数据');
+      return [];
+    } else if (rows.length > 1 && onlyOne) {
+      message.warning('只能选择一条数据');
+      return [];
+    }
+    rows.length && callBack?.(rows);
+    return rows;
+  }
+  function handleCreate() {
+    openModal(true, {});
+  }
+  function handleUpdate() {
+    getSelections(true, ([row]) => {
+      openModal(true, { ...row });
+    });
+  }
+  function handleDelete() {
+    getSelections(true, () => {
+      open.value = true;
+      resetFields();
+      clearValidate();
+    });
+  }
+  async function handleSubmit() {
+    const values = await validate();
+    const [row] = getSelections(true);
+    try {
+      confirmLoading.value = true;
+      await removeApi({
+        ...values,
+        reviewNo: userId.value,
+        rawImm: row.rawImm,
+        sampleType: row.sampleType,
+      } as any);
+      open.value = false;
+      message.success('删除成功');
+      reload();
+    } finally {
+      confirmLoading.value = false;
+    }
+  }
+  function success() {
+    clearSelectedRowKeys();
+    reload();
+  }
+</script>

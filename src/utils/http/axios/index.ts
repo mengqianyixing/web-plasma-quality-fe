@@ -52,7 +52,7 @@ const transform: AxiosTransform = {
       throw new Error(t('sys.api.apiRequestFailed'));
     }
     //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    const { code, data, msg } = resData;
+    const { code, data, msg, dataList } = resData;
 
     // 这里逻辑可以根据项目进行修改
     const hasSuccess = code === ResultEnum.SUCCESS;
@@ -68,7 +68,7 @@ const transform: AxiosTransform = {
       } else if (options.successMessageMode === 'message') {
         createMessage.success(successMsg);
       }
-      return data;
+      return data || dataList;
     }
 
     // 在此处根据自己项目的实际情况对不同的code执行不同的操作

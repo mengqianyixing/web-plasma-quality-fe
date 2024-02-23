@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/statistics`
- * @更新时间 `2024-02-19 17:14:24`
+ * @更新时间 `2024-02-22 17:42:44`
  */
 export interface GetApiCoreBagStatisticsRequest {
   /**
@@ -108,7 +108,7 @@ export interface GetApiCoreBagStatisticsRequest {
    */
   trackedQualifiedEndAt?: string;
   /**
-   * 血浆过程状态，-----待定，涉及多个存储状态
+   * 血浆过程状态（读取后端枚举）
    */
   plasmaStatus?: string;
   /**
@@ -140,7 +140,7 @@ export interface GetApiCoreBagStatisticsRequest {
    */
   seeSampleNo?: string;
   /**
-   * 检疫期类型（检疫期合格/首次续追踪/反复续追踪/非生产出库/不合格）  ------待定
+   * 检疫期类型，PASS-检疫期合格，UN_TRACK-待追踪，FIRST_UN_TRACK-首次续追踪，RE_UN_TRACK-反复续追踪，UN_PROD_OUT-非生产出库，FAILED-血浆不合格
    */
   trackedType?: string;
   /**
@@ -162,7 +162,7 @@ export interface GetApiCoreBagStatisticsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/statistics`
- * @更新时间 `2024-02-19 17:14:24`
+ * @更新时间 `2024-02-22 17:42:44`
  */
 export interface GetApiCoreBagStatisticsResponse {
   currPage?: number;
@@ -310,10 +310,10 @@ export interface GetApiCoreBagStatisticsResponse {
  * 接口 [批号查询-来浆数据↗](https://yapi.sharing8.cn/project/529/interface/api/33367) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/batch/statistic`
- * @更新时间 `2024-02-22 15:03:24`
+ * @请求头 `GET /api/core/batch/plasma/statistic`
+ * @更新时间 `2024-02-22 17:57:32`
  */
-export interface GetApiCoreBatchStatisticRequest {
+export interface GetApiCoreBatchPlasmaStatisticRequest {
   /**
    * 采浆公司
    */
@@ -332,10 +332,10 @@ export interface GetApiCoreBatchStatisticRequest {
  * 接口 [批号查询-来浆数据↗](https://yapi.sharing8.cn/project/529/interface/api/33367) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/batch/statistic`
- * @更新时间 `2024-02-22 15:03:24`
+ * @请求头 `GET /api/core/batch/plasma/statistic`
+ * @更新时间 `2024-02-22 17:57:32`
  */
-export interface GetApiCoreBatchStatisticResponse {
+export interface GetApiCoreBatchPlasmaStatisticResponse {
   batchNo: string;
   typeList: {
     /**
