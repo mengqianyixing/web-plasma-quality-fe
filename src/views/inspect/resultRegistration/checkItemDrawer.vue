@@ -78,10 +78,11 @@
           ..._,
           checkAll: false,
           indeterminate: false,
-          values: [],
+          values: _.labProjects.filter((it) => it.check).map((it) => it.projectId),
           options: _.labProjects.map((_) => ({
             value: _.projectId,
             label: _.projectAbbr,
+            disabled: _.check,
           })),
         };
       })
@@ -116,7 +117,8 @@
     if (event.target.checked) {
       item.values = item.options.map((_) => _.value);
     } else {
-      item.values.splice(0, item.values.length);
+      const disabledList = item.options.filter((it) => it.disabled).map((it) => it.value);
+      item.values.splice(0, item.values.length, ...disabledList);
     }
   }
   function change(values: any[], item: CheckGrop) {

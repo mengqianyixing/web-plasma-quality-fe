@@ -31,21 +31,30 @@
       showActionButtonGroup: false,
     });
   const [registerModal, { setModalProps, closeModal }] = useModalInner(
-    async ({ sampleType, rawImm }) => {
+    async ({ sampleType, rawImmEnum, sampleTypeEnum }) => {
       resetFields();
+      const disabledSchema = formListSchema
+        .slice(0, 2)
+        .map((it) => ({ ...it, componentProps: { disabled: !!sampleType } }));
+      updateSchema(disabledSchema);
+      const sampleTypeChangeSchema = {
+        field: 'sampleType',
+        componentProps: {
+          onChange: (value: string) => {
+            const isNor = value === 'NOR';
+            updateSchema({ field: 'rawImm', ifShow: isNor, required: isNor });
+          },
+        },
+      };
+      updateSchema(sampleTypeChangeSchema);
       state.api = addApi;
       state.type = '新增';
       if (sampleType) {
         state.type = '编辑';
-        const res = await getDtApi({ sampleType, rawImm });
+        const res = await getDtApi({ sampleType: sampleTypeEnum, rawImm: rawImmEnum });
         setFieldsValue(res);
         state.api = updateApi;
       }
-      updateSchema(
-        formListSchema
-          .slice(0, 2)
-          .map((it) => ({ ...it, componentProps: { disabled: !!sampleType } })),
-      );
       clearValidate();
     },
   );

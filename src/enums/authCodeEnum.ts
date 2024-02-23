@@ -19,7 +19,7 @@ export enum ReCheckButtonEnum {
   PlasmaInboundRecordCheck = 'E_980080',
   RegisterWeightCheck = 'E_980090',
   ProductionSortingReCheck = 'E_910020',
-  RequiredItemCheck = 'E_100010',
+  RequiredItemCheck = 'E_10008010',
 }
 
 export enum BaseSettingButtonEnum {

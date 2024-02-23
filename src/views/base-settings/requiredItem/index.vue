@@ -32,13 +32,12 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { useModal } from '@/components/Modal';
-  import { columns } from './requiredItem.data';
+  import { columns, sampleTypeSchema } from './requiredItem.data';
   import { message, Modal } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import { ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { getListApi, removeApi } from '@/api/base-settings/requiredItem';
-  import { getDictItemListByNoApi } from '@/api/dictionary';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
 
@@ -76,7 +75,6 @@
   const [registerModal, { openModal }] = useModal();
 
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
-    immediate: false,
     api: getListApi,
     fetchSetting: {
       pageField: 'currPage',
@@ -90,23 +88,7 @@
     showTableSetting: false,
     bordered: true,
     formConfig: {
-      schemas: [
-        {
-          field: 'sampleCode',
-          component: 'ApiSelect',
-          label: '样本类型',
-          componentProps: {
-            api: () =>
-              new Promise((rs, rj) => {
-                getDictItemListByNoApi(['sampleType'])
-                  .then((res) => {
-                    rs(res[0]['dictImtes']);
-                  })
-                  .catch(rj);
-              }),
-          },
-        },
-      ],
+      schemas: [{ ...sampleTypeSchema, required: false }],
     },
     rowSelection: { type: 'radio' },
     afterFetch: (res) => {
@@ -157,8 +139,8 @@
       await removeApi({
         ...values,
         reviewNo: userId.value,
-        rawImm: row.rawImm,
-        sampleType: row.sampleType,
+        rawImm: row.rawImmEnum,
+        sampleType: row.sampleTypeEnum,
       } as any);
       open.value = false;
       message.success('删除成功');
