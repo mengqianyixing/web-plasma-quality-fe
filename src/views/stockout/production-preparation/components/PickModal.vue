@@ -12,8 +12,8 @@
   >
     <BasicForm @register="registerForm" @submit="queryUntable" />
     <div class="flex gap-1 mt-1">
-      <BasicTable @register="registerTableUn" class="inline-block w-15/20 pr-2" />
-      <div class="w-1/20 pr-2 icon-box">
+      <BasicTable @register="registerTableUn" class="inline-block pr-2 w-15/20" />
+      <div class="pr-2 w-1/20 icon-box">
         <Button :icon="h(DoubleRightOutlined)" @click="pick" :loading="pickLoading" />
         <Button
           :icon="h(DoubleLeftOutlined)"
@@ -22,7 +22,7 @@
           :loading="pickLoading"
         />
       </div>
-      <BasicTable @register="registerTableEd" class="inline-block w-4/20 pr-2" />
+      <BasicTable @register="registerTableEd" class="inline-block pr-2 w-4/20" />
     </div>
     <Description @register="register" :data="prepareDetail" />
   </BasicModal>
@@ -50,8 +50,12 @@
     getSummaryPreview,
   } from '@/api/stockout/production-preparation.js';
   import { stationNameList } from '@/api/callback/list-generation';
-  import { operationMap, prepareStateMap, bagFlagMap, pickModeMap } from '@/enums/stockoutEnum';
+  import { prepareStateMap, bagFlagMap, pickModeMap } from '@/enums/stockoutEnum';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
 
@@ -66,7 +70,7 @@
     pickMode.value = data.isBatch;
     prepareNo.value = data.prepareNo;
     prodType.value = data.prodType;
-    const prodTypeName = operationMap.get(prodType.value);
+    const prodTypeName = PlasmaType(prodType.value);
     const untablePropsCols = [...columnsUn]; // 未挑选表格列
     // 更新汇总数据
     _getPrepareList();
@@ -496,7 +500,7 @@
       label: '投产类型',
       contentMinWidth: 100,
       render(val) {
-        return <div>{operationMap.get(val)}</div>;
+        return <div>{PlasmaType(val)}</div>;
       },
     },
     {
