@@ -20,7 +20,7 @@
     <div class="flex h-full ml-20px mr-20px">
       <div class="container flex-1 h-full w-160px" v-for="item in state" :key="item.plasmaType">
         <div class="text-center text-white title bg-slate-100">
-          {{ PLASMA_TYPE_TEXT[item.plasmaType] }}
+          {{ PlasmaType(item.plasmaType) }}
         </div>
         <div class="title">
           <a-checkbox
@@ -48,7 +48,12 @@
   import { CheckboxGroup as ACheckboxGroup, message, Checkbox as ACheckbox } from 'ant-design-vue';
   import { getCheckItemListApi, addItemApi } from '@/api/inspect/resultRegistration';
   import { GetApiCoreLabRegistrationLabProjectsBsNoResponse } from '@/api/type/inspectManage';
-  import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
+
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
   type CheckGrop = {
     values: string[];
@@ -78,10 +83,11 @@
           ..._,
           checkAll: false,
           indeterminate: false,
-          values: [],
+          values: _.labProjects.filter((it) => it.check).map((it) => it.projectId),
           options: _.labProjects.map((_) => ({
             value: _.projectId,
             label: _.projectAbbr,
+            disabled: _.check,
           })),
         };
       })
@@ -116,7 +122,8 @@
     if (event.target.checked) {
       item.values = item.options.map((_) => _.value);
     } else {
-      item.values.splice(0, item.values.length);
+      const disabledList = item.options.filter((it) => it.disabled).map((it) => it.value);
+      item.values.splice(0, item.values.length, ...disabledList);
     }
   }
   function change(values: any[], item: CheckGrop) {

@@ -17,9 +17,6 @@
         <a-button type="primary" @click="handleRelease">发布</a-button>
         <a-button type="primary" @click="handlePrint">打印</a-button>
       </template>
-      <template #sampleCode="{ record }: { record: Recordable }">
-        {{ sampleTypeMap.get(record.sampleCode) }}
-      </template>
     </BasicTable>
     <Modal
       :open="open"
@@ -48,12 +45,10 @@
     precessRevokeApi,
     releaseReportApi,
   } from '@/api/inspect/reportRelease';
-  import { getDictItemListByNoApi } from '@/api/dictionary';
-  import { onMounted, ref } from 'vue';
+  import { ref } from 'vue';
   import { message, Modal } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
 
-  const sampleTypeMap = ref(new Map());
   const open = ref(false);
   const confirmLoading = ref(false);
   let revokeApi = revokeReportApi;
@@ -162,10 +157,4 @@
     const [row] = getSelections(true);
     if (!row) return;
   }
-  onMounted(async () => {
-    const [res] = await getDictItemListByNoApi(['sampleType']);
-    res.dictImtes?.forEach((_) => {
-      sampleTypeMap.value.set(_.value, _.label);
-    });
-  });
 </script>

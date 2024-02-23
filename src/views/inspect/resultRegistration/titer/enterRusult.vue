@@ -41,7 +41,11 @@
   import { ref, unref } from 'vue';
   import { message } from 'ant-design-vue';
   import { submitTiterCheckApi, getCheckItemDtListApi } from '@/api/inspect/resultRegistration';
-  import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
   const emit = defineEmits(['close', 'confirm']);
   let fieldList: string[] = [];
@@ -96,11 +100,11 @@
         componentProps: {
           options: [
             {
-              label: PLASMA_TYPE_TEXT[plasmaType] + '高效价',
+              label: PlasmaType(plasmaType) + '高效价',
               value: plasmaType + 'H',
             },
             {
-              label: PLASMA_TYPE_TEXT[plasmaType] + '低效价',
+              label: PlasmaType(plasmaType) + '低效价',
               value: plasmaType + 'L',
             },
             {

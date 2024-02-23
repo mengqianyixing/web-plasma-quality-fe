@@ -21,8 +21,6 @@
   import BasicModal from '@/components/Modal/src/BasicModal.vue';
   import { getPrepareList } from '@/api/stockout/production-preparation.js';
   import {
-    operationMap,
-    operationValueEnum,
     prepareStateMap,
     prepareStateValueEnum,
     pickModeMap,
@@ -30,6 +28,11 @@
   } from '@/enums/stockoutEnum';
   import dayjs from 'dayjs';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
   const { createMessage } = useMessage();
   const { warning } = createMessage;
@@ -50,7 +53,7 @@
       dataIndex: 'prodType',
       width: 100,
       format(text) {
-        return `${operationMap.get(text as operationValueEnum)}`;
+        return `${PlasmaType(text)}`;
       },
     },
     {
@@ -135,10 +138,7 @@
       colProps: { span: 5 },
       defaultValue: [],
       componentProps: {
-        options: [...operationMap.entries()].map(([key, value]) => ({
-          value: key,
-          label: `${value}`,
-        })),
+        options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
       },
     },
     {

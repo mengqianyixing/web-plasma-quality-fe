@@ -1,3 +1,5 @@
+// 之前统一设置的审核按钮权限enum，不够通用因为有的场景不一定是单一的审核场景，可能是某个操作需要审核人登录，后续添加还是以模块划分比较合理
+
 export enum ReCheckButtonEnum {
   ResultRegistrationCheck = 'E_960010',
   ResultRegistrationTiter = 'E_960020',
@@ -17,4 +19,10 @@ export enum ReCheckButtonEnum {
   PlasmaInboundRecordCheck = 'E_980080',
   RegisterWeightCheck = 'E_980090',
   ProductionSortingReCheck = 'E_910020',
+  RequiredItemCheck = 'E_10008010',
+}
+
+export enum BaseSettingButtonEnum {
+  StationEnable = 'E_100070',
+  StationDisable = 'E_100080',
 }

@@ -3,13 +3,15 @@ import { BasicColumn } from '@/components/Table';
 import {
   expirationMap,
   expirationValueEnum,
-  operationMap,
-  operationValueEnum,
   statusMap,
   statusValueEnum,
 } from '@/enums/stockoutEnum';
 import dayjs from 'dayjs';
-import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 export const columns: BasicColumn[] = [
   {
@@ -28,7 +30,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'orderType',
     width: 100,
     format(text) {
-      return `${text}，${operationMap.get(<operationValueEnum>text)}`;
+      return `${PlasmaType(text)}`;
     },
   },
   {
@@ -109,10 +111,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '投产类型',
     component: 'Select',
     componentProps: {
-      options: [...operationMap.entries()].map(([key, value]) => ({
-        value: key,
-        label: `${key}，${value}`,
-      })),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {
@@ -184,7 +183,7 @@ export const detailColumns: BasicColumn[] = [
     title: '效价类型',
     dataIndex: 'immunity',
     customRender: ({ record }) => {
-      return PLASMA_TYPE_TEXT[record.type];
+      return PlasmaType(record.type);
     },
   },
   {

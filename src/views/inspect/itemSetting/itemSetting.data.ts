@@ -1,6 +1,10 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { PLASMA_TYPE_LIST } from '@/enums/inspectEnum';
 import { getInspectMethodListApi } from '@/api/inspect/inspectMethod';
+
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
 
 export const columns: BasicColumn[] = [
   {
@@ -96,9 +100,8 @@ export const formListSchema: FormSchema[] = [
     field: 'plasmaType',
     component: 'Select',
     label: '血浆类型',
-
     componentProps: {
-      options: PLASMA_TYPE_LIST,
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {

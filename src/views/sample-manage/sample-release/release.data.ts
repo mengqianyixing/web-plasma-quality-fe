@@ -1,6 +1,11 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import dayjs from 'dayjs';
 import { sampleVerifyStatusMap, sampleVerifyStatusValueEnum } from '@/enums/sampleEnum';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 
 export const columns: BasicColumn[] = [
   {
@@ -15,7 +20,7 @@ export const columns: BasicColumn[] = [
   {
     title: '样本类型',
     dataIndex: 'sampleType',
-    slots: { customRender: 'sampleType' },
+    format: (text) => SampleType(text),
   },
   {
     title: '浆站出库日期',
@@ -97,6 +102,9 @@ export const searchReleaseSchema: FormSchema[] = [
     field: 'sampleType',
     component: 'Select',
     label: '样本类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+    },
   },
   {
     field: 'verifyState',

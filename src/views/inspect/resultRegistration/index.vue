@@ -36,6 +36,9 @@
         <TabPane key="2" tab="效价明细">
           <TiterPage :bs-no="bsNo" @reload="saveReload" />
         </TabPane>
+        <TabPane key="3" tab="物料明细">
+          <MaterialRegistration :bs-no="bsNo" @reload="saveReload" />
+        </TabPane>
       </Tabs>
       <BatchModal @register="registerModal" @confirm="confirm" />
       <CheckItemModal @register="registerCIModal" @confirm="confirm2" />
@@ -51,6 +54,7 @@
   import { ref, unref } from 'vue';
   import CheckPage from './check/index.vue';
   import TiterPage from './titer/index.vue';
+  import MaterialRegistration from './materialRegistration/index.vue';
   import BatchModal from './batchDrawer.vue';
   import CheckItemModal from './checkItemDrawer.vue';
   import { useModal } from '@/components/Modal';
@@ -59,7 +63,11 @@
     submitRegistrationApi,
     sumbitRevokeRegistrationApi,
   } from '@/api/inspect/resultRegistration';
-  import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
   const activeKey = ref('1');
   const bsNo = ref('');
@@ -89,7 +97,7 @@
       data: {},
     };
     const { list, data } = res.reduce((t, row, i) => {
-      t.list.push({ field: i.toString(), label: PLASMA_TYPE_TEXT[row.plasmaType] });
+      t.list.push({ field: i.toString(), label: PlasmaType(row.plasmaType) });
       t.data[i] = row.count;
       return t;
     }, initValue);

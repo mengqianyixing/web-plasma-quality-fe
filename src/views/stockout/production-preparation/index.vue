@@ -71,8 +71,6 @@
     checkPrepare,
   } from '@/api/stockout/production-preparation.js';
   import {
-    operationMap,
-    operationValueEnum,
     prepareStateMap,
     prepareStateValueEnum,
     bagFlagMap,
@@ -81,6 +79,11 @@
     pickModeValueEnum,
   } from '@/enums/stockoutEnum';
   import { useUserStore } from '@/store/modules/user';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
   const userInfo = useUserStore();
   const { createMessage } = useMessage();
@@ -101,7 +104,7 @@
       dataIndex: 'prodType',
       width: 100,
       format(text) {
-        return `${operationMap.get(text as operationValueEnum)}`;
+        return `${PlasmaType(text)}`;
       },
     },
     {
@@ -208,10 +211,7 @@
       component: 'Select',
       colProps: { span: 6 },
       componentProps: {
-        options: [...operationMap.entries()].map(([key, value]) => ({
-          value: key,
-          label: `${value}`,
-        })),
+        options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
       },
     },
     {

@@ -40,6 +40,16 @@ import {
   GetApiCoreLabRegistrationDonorSampleNoResponse,
   PostApiCoreLabRegistrationTiterUploadRequest,
   PostApiCoreLabRegistrationTiterUploadResponse,
+  GetApiCoreLabItemProjectBsNoRequest,
+  GetApiCoreLabItemProjectBsNoResponse,
+  GetApiCoreLabProjectMaterialProjectIdRequest,
+  GetApiCoreLabProjectMaterialProjectIdResponse,
+  GetApiCoreLabMaterialDetailsBsNoRequest,
+  GetApiCoreLabMaterialDetailsBsNoResponse,
+  PostApiCoreLabMaterialDetailRequest,
+  PostApiCoreLabMaterialDetailResponse,
+  DeleteApiCoreLabMaterialDetailRequest,
+  DeleteApiCoreLabMaterialDetailResponse,
 } from '@/api/type/inspectManage';
 
 enum Api {
@@ -50,14 +60,11 @@ enum Api {
   ADD_ITEM = '/api/core/lab/registration/labItem',
 
   CHECK_LIST = '/api/core/lab/registration/labItem/',
-  // REMOVE_CHECK = '/api/core/lab/registration/labItem',
 
   TITER_LIST = '/api/core/lab/registration/labItem/titer/',
 
   REGISTRATION = '/api/core/lab/registration/labItem/labReport',
   REVOKE_REGISTRATION = '/api/core/lab/registration/labItem/labReport/',
-
-  // UNQUALIFIED = '/api/core/lab/registration/labItem',
 
   NOT_CHECK = '/api/core/lab/registration/labItem/notCheck/',
 
@@ -67,6 +74,11 @@ enum Api {
   DONOR = '/api/core/lab/registration/donor/',
 
   IMPORT = '/api/core/lab/registration/titer/upload',
+
+  TITER_ITEMS = '/api/core/lab/item/project/',
+  TITER_ITEM_MATERIAL = '/api/core/lab/project/material/',
+  MATERIAL_LIST = '/api/core/lab/material/details/',
+  MATERIAL_ADD_RE = '/api/core/lab/material/detail',
 }
 
 export const uploadItemTiter = (data: PostApiCoreLabRegistrationTiterUploadRequest) =>
@@ -129,5 +141,32 @@ export const submitTiterCheckApi = (data: PostApiCoreLabRegistrationLabItemTiter
 export const getCheckItemDtListApi = (data: PostApiCoreLabRegistrationLabItemsRequest) =>
   defHttp.post<PostApiCoreLabRegistrationLabItemsResponse>({
     url: Api.CHECK_ITEM_DT_LIST,
+    data,
+  });
+
+export const getTiterItemsApi = (data: GetApiCoreLabItemProjectBsNoRequest) =>
+  defHttp.get<GetApiCoreLabItemProjectBsNoResponse>({
+    url: Api.TITER_ITEMS + data.bsNo,
+  });
+
+export const getTiterItemMaterialApi = (data: GetApiCoreLabProjectMaterialProjectIdRequest) =>
+  defHttp.get<GetApiCoreLabProjectMaterialProjectIdResponse>({
+    url: Api.TITER_ITEM_MATERIAL + data.projectId,
+  });
+
+export const getMaterialListApi = (data: GetApiCoreLabMaterialDetailsBsNoRequest) =>
+  defHttp.get<GetApiCoreLabMaterialDetailsBsNoResponse>({
+    url: Api.MATERIAL_LIST + data.bsNo,
+  });
+
+export const submitMaterialApi = (data: PostApiCoreLabMaterialDetailRequest) =>
+  defHttp.post<PostApiCoreLabMaterialDetailResponse>({
+    url: Api.MATERIAL_ADD_RE,
+    data,
+  });
+
+export const deleteMaterialApi = (data: DeleteApiCoreLabMaterialDetailRequest) =>
+  defHttp.delete<DeleteApiCoreLabMaterialDetailResponse>({
+    url: Api.MATERIAL_ADD_RE,
     data,
   });

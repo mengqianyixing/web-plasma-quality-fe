@@ -4,11 +4,15 @@ import {
   expirationMap,
   expirationValueEnum,
   operationMap,
-  operationValueEnum,
   statusMap,
   statusValueEnum,
 } from '@/enums/stockoutEnum';
 import dayjs, { Dayjs } from 'dayjs';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 export const columns: BasicColumn[] = [
   {
@@ -22,7 +26,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'orderType',
     width: 100,
     format(text) {
-      return `${text}，${operationMap.get(<operationValueEnum>text)}`;
+      return `${PlasmaType(text)}}`;
     },
   },
   {
