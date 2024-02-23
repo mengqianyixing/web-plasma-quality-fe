@@ -1,14 +1,8 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
-import { operationMap, operationValueEnum } from '@/enums/stockoutEnum';
 import dayjs from 'dayjs';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { SERVER_ENUM } from '@/enums/serverEnum';
-import {
-  DictionaryEnum,
-  DictionaryItemKeyEnum,
-  getSysSecondaryDictionary,
-} from '@/api/_dictionary';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 
@@ -16,7 +10,7 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    width: 100,
+    width: 150,
   },
   {
     title: '血浆批号',
@@ -71,7 +65,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'plasmaTypeFromStation',
     width: 100,
     format: (text) => {
-      return `${text}, ${operationMap.get(text as operationValueEnum) as string}`;
+      return `${text}, ${serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType)(text)}`;
     },
   },
   {
@@ -79,7 +73,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'titerType',
     width: 100,
     format: (text) => {
-      return `${text}, ${operationMap.get(text as operationValueEnum) as string}`;
+      return `${text}, ${serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType)(text)}`;
     },
   },
   {
@@ -95,7 +89,7 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆过程状态',
     dataIndex: 'plasmaStatus',
-    width: 100,
+    width: 200,
   },
   {
     title: '检疫期类型',
@@ -105,6 +99,7 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆不合格原因',
     dataIndex: 'plasmaUnqualifiedReason',
+    slots: { customRender: 'plasmaUnqualifiedReason' },
     width: 150,
   },
   {
@@ -131,6 +126,9 @@ export const columns: BasicColumn[] = [
       {
         title: '血浆类型',
         dataIndex: ['reCheckInfo', 'immunityType'],
+        format: (text) => {
+          return `${text}, ${serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType)(text)}`;
+        },
         width: 150,
       },
       {
@@ -201,7 +199,7 @@ export const columns: BasicColumn[] = [
   {
     title: '地址',
     dataIndex: 'address',
-    width: 150,
+    width: 200,
   },
 ];
 
@@ -386,22 +384,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'plasmaUnqualifiedReason',
     label: '血浆不合格原因',
-    component: 'ApiSelect',
-    componentProps: {
-      api: getSysSecondaryDictionary,
-      params: {
-        dataKey: DictionaryEnum.PlasmaFailedItem,
-        dictNos: [
-          DictionaryItemKeyEnum.Accept,
-          DictionaryItemKeyEnum.Track,
-          DictionaryItemKeyEnum.Test,
-          DictionaryItemKeyEnum.Quarantine,
-          DictionaryItemKeyEnum.Sample,
-          DictionaryItemKeyEnum.Other,
-        ],
-      },
-      valueField: 'dictItemId',
-    },
+    component: 'Select',
   },
   {
     field: 'seeSampleResult',
