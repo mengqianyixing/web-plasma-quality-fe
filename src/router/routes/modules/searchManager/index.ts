@@ -39,6 +39,105 @@ const trayManager: AppRouteModule = {
       id: 900020,
       component: () => import('/@/views/query-statistics/plasma/index.vue'),
     },
+    {
+      path: 'checkResult',
+      name: 'CheckResult',
+      meta: {
+        title: '检测结果查询',
+      },
+      id: 9000100,
+      component: () => import('/@/views/query-statistics/checkResult/index.vue'),
+    },
+    {
+      path: 'factoryCheckFail',
+      name: 'FactoryCheckFail',
+      meta: {
+        title: '厂家检测不合格查询',
+      },
+      id: 9000110,
+      component: () => import('/@/views/query-statistics/factoryCheckFail/index.vue'),
+    },
+    {
+      path: 'sampleCheck',
+      name: 'SampleCheck',
+      meta: {
+        title: '样本检测查询',
+      },
+      id: 9000120,
+      component: () => import('/@/views/query-statistics/sampleCheck/index.vue'),
+    },
+    {
+      path: 'sampleStat',
+      name: 'sampleStat',
+      meta: {
+        title: '样本统计查询',
+      },
+      id: 9000100,
+      component: () => import('/@/views/query-statistics/sampleStat/index.vue'),
+    },
+    {
+      path: 'sampleQuery',
+      name: 'sampleQuery',
+      meta: {
+        title: '样本查询',
+      },
+      id: 9000130,
+      component: () => import('/@/views/query-statistics/sampleQuery/index.vue'),
+    },
+    {
+      path: 'donorState',
+      name: 'DonorState',
+      meta: {
+        title: '浆员状态查询',
+      },
+      id: 9000140,
+      component: () => import('/@/views/query-statistics/donorState/index.vue'),
+    },
+    {
+      path: 'titerPlasmaStat',
+      name: 'TiterPlasmaStat',
+      meta: {
+        title: '特免血浆统计',
+      },
+      id: 9000150,
+      component: () => import('/@/views/query-statistics/titerPlasmaStat/index.vue'),
+    },
+    {
+      path: 'titerPlasmaQuery',
+      name: 'TiterPlasmaQuery',
+      meta: {
+        title: '特免血浆查询',
+      },
+      id: 9000160,
+      component: () => import('/@/views/query-statistics/titerPlasmaQuery/index.vue'),
+    },
+    {
+      path: 'relocation',
+      name: 'Relocation',
+      meta: {
+        title: '货位查询',
+      },
+      id: 9000170,
+      component: () => import('/@/views/query-statistics/relocation/index.vue'),
+    },
+    {
+      path: 'stereoWarehouse',
+      name: 'stereoWarehouse',
+      meta: {
+        title: '立体库血浆量查询',
+      },
+      id: 9000180,
+      component: () => import('/@/views/query-statistics/stereoWarehouse/index.vue'),
+    },
+    {
+      path: 'plasmaCheck',
+      name: 'PlasmaCheck',
+      meta: {
+        title: '血浆检测查询',
+      },
+      id: 9000190,
+      component: () => import('/@/views/query-statistics/plasmaCheck/index.vue'),
+    },
   ],
 };
 export default trayManager;
