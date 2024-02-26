@@ -42,7 +42,7 @@
   import { ref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { exportFile, formatDate, transferCSVData } from 'js-xxx';
-  import { routeIdMap } from '@/router/routes';
+  import { modulesRouteList } from '@/router/routes';
 
   const { createMessage } = useMessage();
 
@@ -99,24 +99,55 @@
       createMessage.warn('请选择一条记录');
       return;
     }
-    const records: any[] = selectedRowsRef.value.map((item) => ({
-      ...item,
-      domainsStr: (item.domains ?? [])
-        .filter((item) => routeIdMap[item])
-        ?.map((item) => routeIdMap[item]?.title ?? item)
-        .join('、'),
-      usersStr: (item.users ?? []).join('、'),
+    const menuList: any[] = modulesRouteList.filter((x) => x.id);
+    const results: any[] = [];
+    menuList.forEach((x) => {
+      if (x.children) {
+        x.children.forEach((v) => {
+          if (v.authElements) {
+            v.authElements.forEach((a) => {
+              results.push({
+                btn: a,
+                grand: x,
+                parent: v,
+              });
+            });
+          } else {
+            results.push({
+              btn: { title: null },
+              grand: x,
+              parent: v,
+            });
+          }
+        });
+      }
+    });
+    const excelCol = [
+      { label: '一级菜单', prop: 'grand' },
+      { label: '二级菜单', prop: 'parent' },
+      { label: '按钮', prop: 'btn' },
+    ];
+    selectedRowsRef.value.forEach((x) => {
+      const usersStr = (x.users ?? []).join('、');
+      excelCol.push({ label: `${x.name}/${x.displayName}/${usersStr}`, prop: 'domainsStr' });
+      results.forEach((v) => {
+        if (
+          x.domains.includes(v.grand.id) ||
+          x.domains.includes(v.parent.id) ||
+          x.domains.includes(v.btn.id)
+        ) {
+          v.domainsStr = '√';
+        }
+      });
+    });
+    const exportData = results.map((x) => ({
+      btn: x.btn.title,
+      grand: x.grand.meta.title,
+      parent: x.parent.meta.title,
+      domainsStr: x.domainsStr,
     }));
     exportFile(
-      transferCSVData(
-        [
-          { label: '角色 id', prop: 'name' },
-          { label: '角色名称', prop: 'displayName' },
-          { label: '用户', prop: 'usersStr' },
-          { label: '菜单权限', prop: 'domainsStr' },
-        ],
-        records,
-      ),
+      transferCSVData(excelCol, exportData),
       `角色权限导出-${formatDate(new Date(), 'yyyymmddhhiissS')}`,
       'csv',
     );
