@@ -20,11 +20,7 @@
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">
       <div class="flex-1 w-full">
-        <BasicTable @register="registerTable">
-          <template #sampleCode="{ record }: { record: Recordable }">
-            {{ sampleTypeMap.get(record.sampleCode) }}
-          </template>
-        </BasicTable>
+        <BasicTable @register="registerTable" />
       </div>
     </div>
   </BasicModal>
@@ -33,14 +29,12 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { batchColumns, batchSearchScheam } from './resultRegistration.data';
-  import { defineEmits, onMounted, ref } from 'vue';
+  import { defineEmits } from 'vue';
   import { getBatchListApi } from '@/api/inspect/resultRegistration';
   import { message } from 'ant-design-vue';
-  import { getDictItemListByNoApi } from '@/api/dictionary';
 
   defineOptions({ name: 'LocationModel' });
   const emit = defineEmits(['confirm', 'register']);
-  const sampleTypeMap = ref(new Map());
 
   let rawData: Recordable[] = [];
 
@@ -100,12 +94,6 @@
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     const [row] = rows;
-    emit('confirm', { ...row, sampleTypeName: sampleTypeMap.value.get(row.sampleCode) });
+    emit('confirm', row);
   }
-  onMounted(async () => {
-    const [res] = await getDictItemListByNoApi(['sampleType']);
-    res.dictImtes?.forEach((_) => {
-      sampleTypeMap.value.set(_.value, _.label);
-    });
-  });
 </script>

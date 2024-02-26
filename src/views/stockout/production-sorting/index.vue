@@ -23,7 +23,7 @@
     </div>
     <Description @register="registerBatch" :data="batchData" class="mt-3" />
     <div class="card-bar mt-1 mb-1 bg-[#fff] h-73.5">
-      <div class="card-bar-header h-10 lh-10 pl-3">{{ pickTitle.bottom }}</div>
+      <div class="h-10 pl-3 card-bar-header lh-10">{{ pickTitle.bottom }}</div>
       <div class="card-bar-body flex w-100% p-3 bg-[#fff] overflow-x-auto" ref="bottomBoxBarRef">
         <Card
           v-for="item in bottomBoxData"
@@ -70,12 +70,7 @@
   import PackingInfoModal from '@/views/stockout/production-sorting/components/packing-info-modal.vue';
   import PickBatchDetail from '../components/PickBatchDetail.vue';
   import PlasmaDetail from '../components/PlasmaDetail.vue';
-  import {
-    prepareStateMap,
-    prepareStateValueEnum,
-    operationMap,
-    operationValueEnum,
-  } from '@/enums/stockoutEnum';
+  import { prepareStateMap, prepareStateValueEnum } from '@/enums/stockoutEnum';
   import {
     getPrepareSorting,
     pickSortingBag,
@@ -89,6 +84,11 @@
   import UnqualifiedModal from './components/unqualified-modal.vue';
   import PrepareSuspendModal from './components/prepare-suspend-modal.vue';
   import BatchSuspendModal from './components/batch-suspend-modal.vue';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
   const { createMessage } = useMessage();
   const { warning, success } = createMessage;
@@ -476,16 +476,12 @@
                 if (item?.bagNos?.length) {
                   scollToIndex = index + 1;
                 }
+
                 return {
                   immTypeName: item?.immTypeName,
                   immType: item?.immType,
                   pickType: data.unPro?.pickType,
-                  title:
-                    item?.immType === 'N'
-                      ? `${item?.immType},普通`
-                      : `${item?.immType}${item?.titerLevel},${operationMap.get(
-                          item?.immType as operationValueEnum,
-                        )}${item?.titerLevel === 'H' ? '高' : '低'}效价`,
+                  title: getTiterText(item),
                   sortCount: item?.sortCount,
                   totalCount: item?.totalCount,
                   bagNos: item?.bagNos,
@@ -527,12 +523,7 @@
                   immTypeName: item?.immTypeName,
                   immType: item?.immType,
                   pickType: data.utrkUnPro?.pickType,
-                  title:
-                    item?.immType === 'N'
-                      ? `${item?.immType},普通`
-                      : `${item?.immType}${item?.titerLevel},${operationMap.get(
-                          item?.immType as operationValueEnum,
-                        )}${item?.titerLevel === 'H' ? '高' : '低'}效价`,
+                  title: getTiterText(item),
                   sortCount: item?.sortCount,
                   totalCount: item?.totalCount,
                   bagNos: item?.bagNos,
@@ -756,12 +747,7 @@
           immTypeName: item?.immTypeName,
           immType: item?.immType,
           pickType: data.unPro?.pickType,
-          title:
-            item?.immType === 'N'
-              ? `${item?.immType},普通`
-              : `${item?.immType}${item?.titerLevel},${operationMap.get(
-                  item?.immType as operationValueEnum,
-                )}${item?.titerLevel === 'H' ? '高' : '低'}效价`,
+          title: getTiterText(item),
           sortCount: item?.sortCount,
           totalCount: item?.totalCount,
           bagNos: item?.bagNos,
@@ -775,12 +761,7 @@
           immTypeName: item?.immTypeName,
           immType: item?.immType,
           pickType: data.utrkUnPro?.pickType,
-          title:
-            item?.immType === 'N'
-              ? `${item?.immType},普通`
-              : `${item?.immType}${item?.titerLevel},${operationMap.get(
-                  item?.immType as operationValueEnum,
-                )}${item?.titerLevel === 'H' ? '高' : '低'}效价`,
+          title: getTiterText(item),
           sortCount: item?.sortCount,
           totalCount: item?.totalCount,
           bagNos: item?.bagNos,
@@ -791,7 +772,13 @@
       closeFullLoading();
     }
   }
-
+  function getTiterText(item: Recordable | void) {
+    const { immType, titerLevel } = item || {};
+    const titerLevelText = (titerLevel === 'H' ? '高' : '低') + '效价';
+    return immType === 'N'
+      ? `${immType},${PlasmaType(immType)}`
+      : `${immType + titerLevel},${PlasmaType(immType) + titerLevelText}`;
+  }
   // 定位到操作箱
   function scollToBox(isTop, childId) {
     const parentDom = isTop ? topBoxBarRef.value : bottomBoxBarRef.value;

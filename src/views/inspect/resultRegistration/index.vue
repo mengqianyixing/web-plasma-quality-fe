@@ -26,7 +26,13 @@
           </a-button>
         </div>
       </div>
-      <CellWapper :data="rowData" cell-width="16.66%" :cell-list="cellList" :gap="0" />
+      <CellWapper
+        :data="rowData"
+        cell-width="16.66%"
+        labelWidth="160px"
+        :cell-list="cellList"
+        :gap="0"
+      />
       <div class="title">血浆信息</div>
       <CellWapper :data="countData" :cell-list="plasmaCellList" :gap="0" />
       <Tabs v-model:activeKey="activeKey" class="flex-1 bg-white mt-10px" type="card" size="small">
@@ -63,7 +69,11 @@
     submitRegistrationApi,
     sumbitRevokeRegistrationApi,
   } from '@/api/inspect/resultRegistration';
-  import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
   const activeKey = ref('1');
   const bsNo = ref('');
@@ -93,7 +103,7 @@
       data: {},
     };
     const { list, data } = res.reduce((t, row, i) => {
-      t.list.push({ field: i.toString(), label: PLASMA_TYPE_TEXT[row.plasmaType] });
+      t.list.push({ field: i.toString(), label: PlasmaType(row.plasmaType) });
       t.data[i] = row.count;
       return t;
     }, initValue);

@@ -9,7 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
-import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
+import { BaseSettingButtonEnum, ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
 const callManager: AppRouteModule = {
   path: '/basic',
@@ -96,6 +96,22 @@ const callManager: AppRouteModule = {
         },
       ],
       component: () => import('@/views/base-settings/station/index.vue'),
+    },
+    {
+      path: 'requiredItem',
+      name: 'requiredItem',
+      id: 100080,
+      meta: {
+        title: '必检项',
+      },
+      authElements: [
+        {
+          id: ReCheckButtonEnum.RequiredItemCheck,
+          name: 'requiredItemCheck',
+          title: '必检项复核人登录',
+        },
+      ],
+      component: () => import('@/views/base-settings/requiredItem/index.vue'),
     },
   ],
 };

@@ -14,10 +14,14 @@
   import { ref, computed, unref } from 'vue';
   import { FormSchema, BasicForm, useForm } from '@/components/Form';
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { operationMap, bagFlagMap, pickModeMap } from '@/enums/stockoutEnum';
+  import { bagFlagMap, pickModeMap } from '@/enums/stockoutEnum';
   import { addPrepare, updatePrepare } from '@/api/stockout/production-preparation.js';
   import { useMessage } from '@/hooks/web/useMessage';
 
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
   const { createMessage } = useMessage();
   const { success } = createMessage;
 
@@ -41,10 +45,7 @@
       required: true,
       defaultValue: 'N',
       componentProps: {
-        options: [...operationMap.entries()].map(([key, value]) => ({
-          value: key,
-          label: `${key}，${value}`,
-        })),
+        options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
       },
     },
     {

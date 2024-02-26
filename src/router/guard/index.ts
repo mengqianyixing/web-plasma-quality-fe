@@ -1,6 +1,7 @@
 import type { Router, RouteLocationNormalized } from 'vue-router';
 import { useAppStoreWithOut } from '@/store/modules/app';
 import { useUserStoreWithOut } from '@/store/modules/user';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { useTransitionSetting } from '@/hooks/setting/useTransitionSetting';
 import { AxiosCanceler } from '@/utils/http/axios/axiosCancel';
 import { Modal, notification } from 'ant-design-vue';
@@ -12,12 +13,14 @@ import { createStateGuard } from './stateGuard';
 import nProgress from 'nprogress';
 import projectSetting from '@/settings/projectSetting';
 import { createParamMenuGuard } from './paramMenuGuard';
+import { PAGE_NOT_FOUND_NAME } from '@/router/constant';
 
 // Don't change the order of creation
 export function setupRouterGuard(router: Router) {
   createPageGuard(router);
   createPageLoadingGuard(router);
   createHttpGuard(router);
+  createServerEnumsGuard(router);
   createScrollGuard(router);
   createMessageGuard(router);
   createProgressGuard(router);
@@ -92,6 +95,25 @@ function createHttpGuard(router: Router) {
     // Switching the route will delete the previous request
     axiosCanceler?.removeAllPending();
     return true;
+  });
+}
+
+async function createServerEnumsGuard(router: Router) {
+  const userStore = useUserStoreWithOut();
+  const serverEnumStore = useServerEnumStoreWithOut();
+  router.beforeEach(async (to) => {
+    if (to.name === PAGE_NOT_FOUND_NAME) {
+      return true;
+    }
+    if (!userStore.getToken) {
+      return true;
+    }
+    await serverEnumStore.setServerEnum();
+    return true;
+  });
+  router.afterEach(() => {
+    const appLoadingNode = document.querySelector('#app-loading');
+    appLoadingNode && document.body.removeChild(appLoadingNode);
   });
 }
 

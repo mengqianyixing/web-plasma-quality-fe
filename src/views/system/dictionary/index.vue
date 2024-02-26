@@ -3,8 +3,8 @@
  * @version:
  * @Author: zcc
  * @Date: 2023-12-21 17:29:52
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-02-20 15:47:19
+ * @LastEditors: Ding 1326587277@qq.com
+ * @LastEditTime: 2024-02-21 16:34:13
 -->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
@@ -61,6 +61,9 @@
     },
     rowSelection: { type: 'radio' },
     canResize: true,
+    beforeFetch: (params) => {
+      return { ...params, queryMenu: false };
+    },
   });
   function formSuccess() {
     reload();

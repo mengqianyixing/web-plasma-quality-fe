@@ -1,6 +1,10 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
 import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 export const columns: BasicColumn[] = [
   {
@@ -33,7 +37,7 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆类型',
     dataIndex: 'plasmaImmType',
-    format: (text) => PLASMA_TYPE_TEXT[text],
+    format: (text) => PlasmaType(text),
   },
   {
     title: '采浆日期',

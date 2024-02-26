@@ -1,14 +1,11 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { getDictItemListByNoApi } from '@/api/dictionary';
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
-enum STATE {
-  TBG = '报告待生成',
-  TBR = '待复核',
-  UND = '待发布',
-  PUD = '已发布',
-}
-const stateList = (() => Object.keys(STATE).map((_) => ({ label: STATE[_], value: _ })))();
+const serverEnumStore = useServerEnumStoreWithOut();
+const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
+const ReportStateType = serverEnumStore.getServerEnumText(SERVER_ENUM.ReportStateType);
 
 export const columns: BasicColumn[] = [
   {
@@ -22,15 +19,16 @@ export const columns: BasicColumn[] = [
   {
     title: '样本类型',
     dataIndex: 'sampleCode',
-    slots: { customRender: 'sampleCode' },
+    format: (text) => SampleType(text),
   },
   {
-    title: '合格样本总数',
+    title: '检测合格样本总数',
     dataIndex: 'totalQualified',
   },
   {
-    title: '不合格样本总数',
+    title: '检测不合格样本总数',
     dataIndex: 'totalUnqualified',
+    slots: { customRender: 'totalUnqualified' },
   },
   {
     title: '高效价总数',
@@ -46,10 +44,8 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '当前状态',
-    dataIndex: '',
-    customRender: ({ record }) => {
-      return STATE[record.state];
-    },
+    dataIndex: 'state',
+    format: (text) => ReportStateType(text),
   },
   {
     title: '报告人',
@@ -89,18 +85,16 @@ export const searchFormschema: FormSchema[] = [
     },
   },
   {
+    field: 'bsNo',
+    component: 'Input',
+    label: '样本批号',
+  },
+  {
     field: 'sampleCode',
-    component: 'ApiSelect',
+    component: 'Select',
     label: '样本类型',
     componentProps: {
-      api: () =>
-        new Promise((rs, rj) => {
-          getDictItemListByNoApi(['sampleType'])
-            .then((res) => {
-              rs(res[0]['dictImtes']);
-            })
-            .catch(rj);
-        }),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
     },
   },
 
@@ -109,7 +103,7 @@ export const searchFormschema: FormSchema[] = [
     component: 'Select',
     label: '样本状态',
     componentProps: {
-      options: stateList,
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.ReportStateType),
     },
   },
   {
@@ -119,5 +113,40 @@ export const searchFormschema: FormSchema[] = [
     componentProps: {
       class: 'w-full',
     },
+  },
+];
+
+export const totalUnqualifiedColumns: BasicColumn[] = [
+  {
+    dataIndex: 'sampleNo',
+    title: '样品编号',
+  },
+  {
+    dataIndex: 'donorNo',
+    title: '浆员编号',
+  },
+  {
+    dataIndex: 'donorName',
+    title: '浆员姓名',
+  },
+  {
+    dataIndex: 'projectName',
+    title: '不合格项目',
+  },
+  {
+    dataIndex: 'od',
+    title: 'OD值',
+  },
+  {
+    dataIndex: 'cutoff',
+    title: 'Cutoff值',
+  },
+  {
+    dataIndex: 'checkAt',
+    title: '检测时间',
+  },
+  {
+    dataIndex: 'methodName',
+    title: '检测方法',
   },
 ];

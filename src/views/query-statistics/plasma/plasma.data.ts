@@ -1,14 +1,16 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
-import { donorStatusMap } from '@/enums/callbackEnum';
-import { operationMap, operationValueEnum } from '@/enums/stockoutEnum';
 import dayjs from 'dayjs';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+
+const serverEnumStore = useServerEnumStoreWithOut();
 
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    width: 100,
+    width: 150,
   },
   {
     title: '血浆批号',
@@ -63,7 +65,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'plasmaTypeFromStation',
     width: 100,
     format: (text) => {
-      return `${text}, ${operationMap.get(text as operationValueEnum) as string}`;
+      return `${text}, ${serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType)(text)}`;
     },
   },
   {
@@ -71,7 +73,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'titerType',
     width: 100,
     format: (text) => {
-      return `${text}, ${operationMap.get(text as operationValueEnum) as string}`;
+      return `${text}, ${serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType)(text)}`;
     },
   },
   {
@@ -87,7 +89,7 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆过程状态',
     dataIndex: 'plasmaStatus',
-    width: 100,
+    width: 200,
   },
   {
     title: '检疫期类型',
@@ -97,15 +99,15 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆不合格原因',
     dataIndex: 'plasmaUnqualifiedReason',
+    slots: { customRender: 'plasmaUnqualifiedReason' },
     width: 150,
   },
   {
     title: '血浆复检信息',
-    dataIndex: 'reCheckInfo',
     children: [
       {
         title: '结果发布日期',
-        dataIndex: 'reCheckInfo.issueAt',
+        dataIndex: ['reCheckInfo', 'issueAt'],
         width: 150,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
@@ -113,22 +115,25 @@ export const columns: BasicColumn[] = [
       },
       {
         title: '复检结果',
-        dataIndex: 'reCheckInfo.reCheckResult',
+        dataIndex: ['reCheckInfo', 'reCheckResult'],
         width: 150,
       },
       {
         title: '不合格项目',
-        dataIndex: 'reCheckInfo.unqualifiedItems',
+        dataIndex: ['reCheckInfo', 'unqualifiedItems'],
         width: 150,
       },
       {
         title: '血浆类型',
-        dataIndex: 'reCheckInfo.immunityType',
+        dataIndex: ['reCheckInfo', 'immunityType'],
+        format: (text) => {
+          return `${text}, ${serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType)(text)}`;
+        },
         width: 150,
       },
       {
         title: '效价结果值',
-        dataIndex: 'reCheckInfo.titer',
+        dataIndex: ['reCheckInfo', 'titer'],
         width: 150,
       },
     ],
@@ -139,7 +144,7 @@ export const columns: BasicColumn[] = [
     children: [
       {
         title: '满足日期',
-        dataIndex: 'trackedSeeInfo.qualifiedDate',
+        dataIndex: ['trackedSeeInfo', 'qualifiedDate'],
         width: 150,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
@@ -147,17 +152,17 @@ export const columns: BasicColumn[] = [
       },
       {
         title: '样本批号',
-        dataIndex: 'trackedSeeInfo.batchSampleNo',
+        dataIndex: ['trackedSeeInfo', 'batchSampleNo'],
         width: 150,
       },
       {
         title: '样本编号',
-        dataIndex: 'trackedSeeInfo.sampleNo',
+        dataIndex: ['trackedSeeInfo', 'sampleNo'],
         width: 150,
       },
       {
         title: '采集日期',
-        dataIndex: 'trackedSeeInfo.collectAt',
+        dataIndex: ['trackedSeeInfo', 'collectAt'],
         width: 150,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
@@ -165,7 +170,7 @@ export const columns: BasicColumn[] = [
       },
       {
         title: '浆站检验日期',
-        dataIndex: 'trackedSeeInfo.stationCheckDate',
+        dataIndex: ['trackedSeeInfo', 'stationCheckDate'],
         width: 150,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
@@ -173,7 +178,7 @@ export const columns: BasicColumn[] = [
       },
       {
         title: '厂家复检日期',
-        dataIndex: 'trackedSeeInfo.reCheckDate',
+        dataIndex: ['trackedSeeInfo', 'reCheckDate'],
         width: 150,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
@@ -181,12 +186,12 @@ export const columns: BasicColumn[] = [
       },
       {
         title: '样本结果',
-        dataIndex: 'trackedSeeInfo.reCheckResult',
+        dataIndex: ['trackedSeeInfo', 'reCheckResult'],
         width: 150,
       },
       {
         title: '不合格项目',
-        dataIndex: 'trackedSeeInfo.unqualifiedItems',
+        dataIndex: ['trackedSeeInfo', 'unqualifiedItems'],
         width: 150,
       },
     ],
@@ -194,7 +199,7 @@ export const columns: BasicColumn[] = [
   {
     title: '地址',
     dataIndex: 'address',
-    width: 150,
+    width: 200,
   },
 ];
 
@@ -235,7 +240,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '浆员状态',
     component: 'Select',
     componentProps: {
-      options: [...donorStatusMap.entries()].map(([value, label]) => ({ label, value })),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.DonorStatus),
     },
   },
   {
@@ -243,12 +248,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '血型',
     component: 'Select',
     componentProps: {
-      options: [
-        { label: 'A', value: 'A' },
-        { label: 'B', value: 'B' },
-        { label: 'AB', value: 'AB' },
-        { label: 'O', value: 'O' },
-      ],
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BloodType),
     },
   },
   {
@@ -261,7 +261,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '来浆类型',
     component: 'Select',
     componentProps: {
-      options: [...operationMap.entries()].map(([value, label]) => ({ label, value })),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
     },
   },
   {
@@ -288,7 +288,9 @@ export const searchFormSchema: FormSchema[] = [
     field: 'warehousingStatus',
     label: '入库状态',
     component: 'Select',
-    componentProps: {},
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.WarehousingStatusEnum),
+    },
   },
   {
     field: 'minVerifyNetweight',
@@ -309,11 +311,17 @@ export const searchFormSchema: FormSchema[] = [
     field: 'plasmaStatus',
     label: '血浆过程状态',
     component: 'Select',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BagFlow),
+    },
   },
   {
     field: 'plasmaType',
     label: '血浆类型',
     component: 'Select',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+    },
   },
   {
     field: 'minTiter',
@@ -329,6 +337,9 @@ export const searchFormSchema: FormSchema[] = [
     field: 'seeSampleType',
     label: '参考样本类型',
     component: 'Select',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+    },
   },
   {
     field: 'trackedStatus',
@@ -355,6 +366,9 @@ export const searchFormSchema: FormSchema[] = [
     field: 'trackedType',
     label: '检疫期类型',
     component: 'Select',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BagTrackedType),
+    },
   },
   {
     field: 'reCheckResult',

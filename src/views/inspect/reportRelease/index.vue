@@ -15,10 +15,16 @@
         <a-button type="primary" @click="handleProcess">复核</a-button>
         <a-button type="primary" @click="handleUnProcess">撤销复核</a-button>
         <a-button type="primary" @click="handleRelease">发布</a-button>
-        <a-button type="primary" @click="handlePrint">打印</a-button>
+        <a-button type="primary" @click="handlePrint">打印回访样本检检验报告</a-button>
+        <a-button type="primary" @click="handlePrint">打印原料血浆检验报告</a-button>
       </template>
-      <template #sampleCode="{ record }: { record: Recordable }">
-        {{ sampleTypeMap.get(record.sampleCode) }}
+      <template #totalUnqualified="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetails(record)"
+        >
+          {{ record.totalUnqualified }}
+        </span>
       </template>
     </BasicTable>
     <Modal
@@ -34,12 +40,15 @@
         <BasicForm @register="registerForm" />
       </div>
     </Modal>
+    <TabelModal @register="registerModal" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { columns, searchFormschema } from './reportRelease.data';
+  import { useModal } from '@/components/Modal';
+
   import {
     getListApi,
     createReportApi,
@@ -48,16 +57,16 @@
     precessRevokeApi,
     releaseReportApi,
   } from '@/api/inspect/reportRelease';
-  import { getDictItemListByNoApi } from '@/api/dictionary';
-  import { onMounted, ref } from 'vue';
+  import { ref } from 'vue';
   import { message, Modal } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
+  import TabelModal from './tabelModal.vue';
 
-  const sampleTypeMap = ref(new Map());
   const open = ref(false);
   const confirmLoading = ref(false);
   let revokeApi = revokeReportApi;
 
+  const [registerModal, { openModal }] = useModal();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,
     fetchSetting: {
@@ -162,10 +171,7 @@
     const [row] = getSelections(true);
     if (!row) return;
   }
-  onMounted(async () => {
-    const [res] = await getDictItemListByNoApi(['sampleType']);
-    res.dictImtes?.forEach((_) => {
-      sampleTypeMap.value.set(_.value, _.label);
-    });
-  });
+  function handleDetails(row) {
+    openModal(true, row);
+  }
 </script>

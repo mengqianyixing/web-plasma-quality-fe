@@ -88,9 +88,10 @@
     });
   }
 
-  function handleEdit(record: Recordable) {
+  async function handleEdit(record: Recordable) {
+    const res: any = await getCasDoorUserDetail(record);
     openModal(true, {
-      record,
+      record: { ...record, ...(res ?? {}) },
       isUpdate: true,
     });
   }

@@ -76,6 +76,7 @@
   import OutModal from '@/views/tray/outInStore/outModal.vue';
   import { getBoxListApi, getOutStoreListApi } from '@/api/stockout/production-sorting/index';
   import { TRAY_STORE_STATE, TRAY_STORE_STATE_TEXT } from '@/enums/stockoutEnum';
+  import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
 
   const state = reactive({
     prepareNo: '',
@@ -153,7 +154,7 @@
     if (rows.some((_) => _.wareHouseName !== row.wareHouseName)) {
       return message.warning('请选择相同库房的数据');
     }
-    openOutModal(true, { data: rows });
+    openOutModal(true, { data: rows, showSite: row.houseType[1] === STORE_FLAG.S });
   }
   function handleUnbind() {
     const rows: Recordable[] = getBindSelectRows();

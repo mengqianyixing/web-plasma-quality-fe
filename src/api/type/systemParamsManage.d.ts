@@ -209,4 +209,29 @@ export interface DeleteApiSysParamIdRequest {
  */
 export type DeleteApiSysParamIdResponse = string;
 
+/**
+ * 接口 [获取服务端枚举↗](https://yapi.sharing8.cn/project/521/interface/api/33397) 的 **请求类型**
+ *
+ * @分类 [系统参数↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5397)
+ * @请求头 `GET /api/sys/enums`
+ * @更新时间 `2024-02-22 18:10:22`
+ */
+export interface GetApiSysEnumsRequest {}
+
+/**
+ * 接口 [获取服务端枚举↗](https://yapi.sharing8.cn/project/521/interface/api/33397) 的 **返回类型**
+ *
+ * @分类 [系统参数↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5397)
+ * @请求头 `GET /api/sys/enums`
+ * @更新时间 `2024-02-22 18:10:22`
+ */
+export type GetApiSysEnumsResponse = {
+  path: string;
+  desc: string;
+  enumObjList: {
+    key: string;
+    show: string;
+  }[];
+}[];
+
 /* prettier-ignore-end */
