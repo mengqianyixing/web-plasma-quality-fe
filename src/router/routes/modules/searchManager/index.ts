@@ -40,6 +40,15 @@ const trayManager: AppRouteModule = {
       component: () => import('/@/views/query-statistics/plasma/index.vue'),
     },
     {
+      path: 'PlasmaBatch',
+      name: 'PlasmaBatch',
+      meta: {
+        title: '血浆批号查询',
+      },
+      id: 900030,
+      component: () => import('/@/views/query-statistics/plasma-batch/index.vue'),
+    },
+    {
       path: 'checkResult',
       name: 'CheckResult',
       meta: {
@@ -137,15 +146,6 @@ const trayManager: AppRouteModule = {
       },
       id: 9000190,
       component: () => import('/@/views/query-statistics/plasmaCheck/index.vue'),
-    },
-    {
-      path: 'PlasmaBatch',
-      name: 'PlasmaBatch',
-      meta: {
-        title: '血浆批号查询',
-      },
-      id: 9000200,
-      component: () => import('/@/views/query-statistics/plasma-batch/index.vue'),
     },
   ],
 };
