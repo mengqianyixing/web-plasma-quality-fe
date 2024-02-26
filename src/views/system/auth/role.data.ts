@@ -5,7 +5,7 @@ import { customRenderDate } from '@/utils/tableHelpRender';
 
 export const columns: BasicColumn[] = [
   {
-    title: '角色 id',
+    title: '角色编码',
     dataIndex: 'name',
     width: 100,
   },
@@ -58,7 +58,7 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'name',
-    label: '角色 id',
+    label: '角色编码',
     component: 'Input',
   },
   {
@@ -77,7 +77,7 @@ export const searchFormSchema: FormSchema[] = [
 export const formSchema: FormSchema[] = [
   {
     field: 'name',
-    label: '角色 id',
+    label: '角色编码',
     required: true,
     component: 'Input',
     colProps: {
