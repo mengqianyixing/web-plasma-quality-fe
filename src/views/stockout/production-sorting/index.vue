@@ -107,6 +107,7 @@
       batchNo: String;
       sortTotal: Number;
       sortCount: Number;
+      proSortTotal: Number;
     };
     pros?: {
       totalCount: Number;
@@ -346,7 +347,7 @@
         return (
           <div>
             {batchData.value.pros?.totalCount
-              ? `${batchData.value.pros?.sortCount}/${batchData.value.pros?.totalCount}`
+              ? `${batchData.value.batchSummary?.proSortTotal}/${batchData.value.pros?.totalCount}`
               : ''}
           </div>
         );
@@ -454,11 +455,10 @@
             }
           }
           // 可投产箱子
-          topBoxData.value[0].sortCount = data.pros?.sortCount;
-          topBoxData.value[0].totalCount = data.pros?.totalCount;
-          topBoxData.value[0].immType = data.pros?.immType;
-          // topBoxData.value[0].immTypeName = data.pros?.immTypeName;
           if (data.pros?.bagNos?.length) {
+            topBoxData.value[0].sortCount = data.pros?.sortCount;
+            topBoxData.value[0].totalCount = data.pros?.totalCount;
+            topBoxData.value[0].immType = data.pros?.immType;
             // 可投产血浆列表有长度，说明正在挑的是可投产的，更新血浆列表
             topBoxData.value[0].bagNos = data.pros?.bagNos;
             topBoxData.value[0].isSelected = true;
@@ -495,11 +495,11 @@
               topBoxData.value.push(...unProArr);
             } else {
               data.unPro?.sortImmTypes.forEach((item, index) => {
-                topBoxData.value[index + 1].sortCount =
-                  data.unPro?.sortImmTypes?.[index]?.sortCount;
-                topBoxData.value[index + 1].totalCount =
-                  data.unPro?.sortImmTypes?.[index]?.totalCount;
                 if (data.unPro?.sortImmTypes?.[index]?.bagNos?.length) {
+                  topBoxData.value[index + 1].sortCount =
+                    data.unPro?.sortImmTypes?.[index]?.sortCount;
+                  topBoxData.value[index + 1].totalCount =
+                    data.unPro?.sortImmTypes?.[index]?.totalCount;
                   topBoxData.value[index + 1].bagNos = data.unPro?.sortImmTypes?.[index]?.bagNos;
                   scollToIndex = index + 1;
                 }
@@ -541,9 +541,9 @@
               });
             } else {
               bottomBoxData.value.forEach((item, index) => {
-                item.sortCount = data.utrkUnPro?.sortImmTypes?.[index]?.sortCount;
-                item.totalCount = data.utrkUnPro?.sortImmTypes?.[index]?.totalCount;
                 if (data.utrkUnPro?.sortImmTypes?.[index]?.bagNos?.length) {
+                  item.sortCount = data.utrkUnPro?.sortImmTypes?.[index]?.sortCount;
+                  item.totalCount = data.utrkUnPro?.sortImmTypes?.[index]?.totalCount;
                   item.bagNos = data.utrkUnPro?.sortImmTypes?.[index]?.bagNos;
                   scollToIndex = index;
                 }
