@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-02-22 17:41:31
+ * @LastEditTime: 2024-02-26 11:47:56
  * @Description: 用户管理数据源
  * @FilePath: \psms-fe\src\views\system\users\users.data.ts
  */
@@ -10,7 +10,6 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Select, Tag } from 'ant-design-vue';
 import { customRenderDate } from '@/utils/tableHelpRender';
-import { routeIdMap } from '@/router/routes';
 
 export const columns: BasicColumn[] = [
   {
@@ -151,27 +150,27 @@ export const userDetailFormSchema: FormSchema[] = [
       });
     },
   },
-  {
-    field: 'menuIds',
-    label: '权限',
-    component: 'Select',
-    render: ({ model, field }) => {
-      return h(Select, {
-        value: model[field]
-          ?.filter((item) => routeIdMap[item])
-          ?.map((item) => routeIdMap[item]?.title ?? item),
-        mode: 'multiple',
-        options: model.roles
-          ?.filter((item) => routeIdMap[item])
-          ?.map((item) => ({
-            label: routeIdMap[item]?.title ?? item,
-            value: routeIdMap[item]?.title ?? item,
-          })),
-        placeholder: '-',
-        disabled: true,
-      });
-    },
-  },
+  // {
+  //   field: 'menuIds',
+  //   label: '权限',
+  //   component: 'Select',
+  //   render: ({ model, field }) => {
+  //     return h(Select, {
+  //       value: model[field]
+  //         ?.filter((item) => routeIdMap[item])
+  //         ?.map((item) => routeIdMap[item]?.title ?? item),
+  //       mode: 'multiple',
+  //       options: model.roles
+  //         ?.filter((item) => routeIdMap[item])
+  //         ?.map((item) => ({
+  //           label: routeIdMap[item]?.title ?? item,
+  //           value: routeIdMap[item]?.title ?? item,
+  //         })),
+  //       placeholder: '-',
+  //       disabled: true,
+  //     });
+  //   },
+  // },
 ];
 
 export const passwordFormSchema: FormSchema[] = [
