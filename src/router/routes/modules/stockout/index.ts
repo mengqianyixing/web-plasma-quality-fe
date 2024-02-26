@@ -84,6 +84,15 @@ const nonconformity: AppRouteModule = {
       },
       component: () => import('/@/views/stockout/non-production-put-into/index.vue'),
     },
+    {
+      path: 'plasmaSummary',
+      name: 'PlasmaSummary',
+      id: 910070,
+      meta: {
+        title: '血浆汇总',
+      },
+      component: () => import('/@/views/stockout/plasma-summary/index.vue'),
+    },
   ],
 };
 
