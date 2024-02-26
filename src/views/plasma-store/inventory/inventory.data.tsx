@@ -83,7 +83,6 @@ export const formSchema: FormSchema[] = [
     },
   },
   {
-    required: true,
     field: 'dateKey',
     defaultValue: 'receipt',
     fields: ['date'],
