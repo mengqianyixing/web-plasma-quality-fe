@@ -523,4 +523,76 @@ export type GetApiCoreDonorCallbackDefeatResponse = {
   failureReason?: string;
 }[];
 
+/**
+ * 接口 [浆站永拒查询↗](https://yapi.sharing8.cn/project/529/interface/api/33507) 的 **请求类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `GET /api/core/donor/block`
+ * @更新时间 `2024-02-27 15:49:19`
+ */
+export interface GetApiCoreDonorBlockRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 建档开始日期
+   */
+  createAtBegin?: string;
+  /**
+   * 建档结束日期
+   */
+  createAtEnd?: string;
+  /**
+   * 永拒原因
+   */
+  blockReason?: string;
+  /**
+   * 永拒开始日期
+   */
+  blockAtBegin?: string;
+  /**
+   * 永拒结束日期
+   */
+  blockAtEnd: string;
+}
+
+/**
+ * 接口 [浆站永拒查询↗](https://yapi.sharing8.cn/project/529/interface/api/33507) 的 **返回类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `GET /api/core/donor/block`
+ * @更新时间 `2024-02-27 15:49:19`
+ */
+export interface GetApiCoreDonorBlockResponse {
+  totalCount?: number;
+  pageSize?: null;
+  totalPage?: null;
+  currPage?: null;
+  result?: {
+    /**
+     * 浆站名称
+     */
+    stationName: string;
+    /**
+     * 浆站编号
+     */
+    donorNo: string;
+    /**
+     * 浆员名称
+     */
+    donorName: number;
+    /**
+     * 永拒原因
+     */
+    blockReason: string;
+    /**
+     * 永拒日期
+     */
+    blockAt: string;
+  }[];
+}
+
 /* prettier-ignore-end */

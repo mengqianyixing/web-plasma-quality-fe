@@ -475,7 +475,7 @@ export type GetApiProductPrepareSortingBatchPrepareNoResponse = {
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `GET /api/product/prepare/sorting/{prepareNo}`
- * @更新时间 `2024-02-04 15:59:26`
+ * @更新时间 `2024-02-27 09:34:17`
  */
 export interface GetApiProductPrepareSortingPrepareNoRequest {
   prepareNo: string;
@@ -486,7 +486,7 @@ export interface GetApiProductPrepareSortingPrepareNoRequest {
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `GET /api/product/prepare/sorting/{prepareNo}`
- * @更新时间 `2024-02-04 15:59:26`
+ * @更新时间 `2024-02-27 09:34:17`
  */
 export interface GetApiProductPrepareSortingPrepareNoResponse {
   /**
@@ -530,6 +530,10 @@ export interface GetApiProductPrepareSortingPrepareNoResponse {
      * 已分拣总数
      */
     sortCount: number;
+    /**
+     * 投产已分拣数
+     */
+    proSortTotal: string;
   };
   /**
    * 批次 投产
@@ -616,7 +620,7 @@ export interface GetApiProductPrepareSortingPrepareNoResponse {
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `POST /api/product/prepare/sorting/bag`
- * @更新时间 `2024-02-04 15:56:08`
+ * @更新时间 `2024-02-27 09:34:00`
  */
 export interface PostApiProductPrepareSortingBagRequest {
   prepareNo: string;
@@ -635,7 +639,7 @@ export interface PostApiProductPrepareSortingBagRequest {
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `POST /api/product/prepare/sorting/bag`
- * @更新时间 `2024-02-04 15:56:08`
+ * @更新时间 `2024-02-27 09:34:00`
  */
 export interface PostApiProductPrepareSortingBagResponse {
   /**
@@ -679,6 +683,10 @@ export interface PostApiProductPrepareSortingBagResponse {
      * 已分拣总数
      */
     sortCount: number;
+    /**
+     * 投产已分拣数
+     */
+    proSortTotal: number;
   };
   /**
    * 批次 投产

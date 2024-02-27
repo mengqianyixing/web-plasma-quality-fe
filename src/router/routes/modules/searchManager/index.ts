@@ -147,6 +147,33 @@ const trayManager: AppRouteModule = {
       id: 9000190,
       component: () => import('/@/views/query-statistics/plasmaCheck/index.vue'),
     },
+    {
+      path: 'stationBox',
+      name: 'StationBox',
+      meta: {
+        title: '浆站箱号查询',
+      },
+      id: 9000200,
+      component: () => import('/@/views/query-statistics/stationBox/index.vue'),
+    },
+    {
+      path: 'prepareNo',
+      name: 'PrepareNo',
+      meta: {
+        title: '投产准备号查询',
+      },
+      id: 9000210,
+      component: () => import('/@/views/query-statistics/prepareNo/index.vue'),
+    },
+    {
+      path: 'stationRefuse',
+      name: 'StationRefuse',
+      meta: {
+        title: '浆站永拒查询',
+      },
+      id: 9000220,
+      component: () => import('/@/views/query-statistics/stationRefuse/index.vue'),
+    },
   ],
 };
 export default trayManager;
