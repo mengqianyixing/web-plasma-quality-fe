@@ -1,88 +1,86 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import dayjs from 'dayjs';
-import { sampleVerifyStatusMap, sampleVerifyStatusValueEnum } from '@/enums/sampleEnum';
 
 export const columns: BasicColumn[] = [
   {
     title: '申请单号',
-    dataIndex: 'stationName',
+    dataIndex: 'dlvNo',
+    slots: { customRender: 'dlvNo' },
   },
   {
     title: '申请原因',
-    dataIndex: 'batchSampleNo',
+    dataIndex: 'reason',
+    width: 200,
   },
   {
     title: '转移部门',
-    dataIndex: 'sampleType',
+    dataIndex: 'transferDepartment',
   },
   {
     title: '转移申请人',
-    dataIndex: 'outStationDate',
+    dataIndex: 'applicant',
   },
   {
     title: '申请日期',
-    dataIndex: 'sampleCount',
+    dataIndex: 'applicationDate',
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
     title: '记录人',
-    dataIndex: 'acceptor',
+    dataIndex: 'creator',
   },
   {
     title: '记录日期',
-    dataIndex: 'acceptAt',
+    dataIndex: 'createDate',
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
     title: '准备人',
-    dataIndex: 'qualifiedCount',
+    dataIndex: 'preparedBy',
   },
   {
     title: '准备日期',
-    dataIndex: 'acceptAt',
+    dataIndex: 'prepareAt',
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
     title: '复核人',
-    dataIndex: 'verifier',
+    dataIndex: 'reviewer',
   },
   {
     title: '复核日期',
-    dataIndex: 'verifyAt',
+    dataIndex: 'reviewDate',
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
     title: '审核人',
-    dataIndex: 'verifyAt',
+    dataIndex: 'checker',
   },
   {
     title: '审核日期',
-    dataIndex: 'titerExpired',
+    dataIndex: 'checkDate',
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
     title: '出库扫描日期',
-    dataIndex: 'thersExpired',
+    dataIndex: 'outDate',
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
     title: '状态',
-    dataIndex: 'verifyState',
-    format(text) {
-      return sampleVerifyStatusMap.get(<sampleVerifyStatusValueEnum>text) as string;
-    },
+    dataIndex: 'status',
   },
 ];
 
@@ -101,5 +99,90 @@ export const searchSchema: FormSchema[] = [
     field: 'status',
     component: 'Select',
     label: '状态',
+  },
+];
+
+export const plasmaDetailColumns: BasicColumn[] = [
+  {
+    title: '采浆公司',
+    dataIndex: 'stationName',
+  },
+  {
+    title: '血浆批号',
+    dataIndex: 'batchNo',
+  },
+  {
+    title: '血浆箱号',
+    dataIndex: 'boxNo',
+  },
+  {
+    title: '血浆编号',
+    dataIndex: 'bagNo',
+  },
+  {
+    title: '浆员编号',
+    dataIndex: 'donorNo',
+  },
+  {
+    title: '血型',
+    dataIndex: 'bloodType',
+  },
+  {
+    title: '效价类型',
+    dataIndex: 'titerType',
+  },
+  {
+    title: '效价值',
+    dataIndex: 'titerNum',
+  },
+  {
+    title: '血浆状态',
+    dataIndex: 'plasmaStatus',
+  },
+];
+
+export const plasmaBoxColumns: BasicColumn[] = [
+  {
+    title: '采浆公司',
+    dataIndex: 'stationName',
+  },
+  {
+    title: '血浆批号',
+    dataIndex: 'batchNo',
+  },
+  {
+    title: '血浆箱号',
+    dataIndex: 'boxNo',
+  },
+  {
+    title: '血浆数量',
+    dataIndex: 'plasmaTotal',
+  },
+  {
+    title: '血浆净重(kg)',
+    dataIndex: 'totalWeight',
+  },
+];
+
+export const plasmaBatchColumns: BasicColumn[] = [
+  {
+    title: '采浆公司',
+    dataIndex: 'stationName',
+  },
+  {
+    title: '血浆批号',
+    dataIndex: 'batchNo',
+  },
+  {
+    title: '效价类型',
+    dataIndex: 'titerType',
+  },
+  {
+    title: '血浆总数',
+    dataIndex: 'plasmaTotal',
+  },
+  {
+    title: '血浆净重(kg)',
+    dataIndex: 'totalWeight',
   },
 ];

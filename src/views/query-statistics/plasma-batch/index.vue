@@ -3,7 +3,11 @@
     <a-tab-pane key="come" tab="来浆数据">
       <PageWrapper dense contentFullHeight>
         <div class="overflow-auto flex-grow h-83vh">
-          <BasicTable @register="registerTableLeft" />
+          <BasicTable @register="registerTableLeft">
+            <template #toolbar>
+              <a-button type="primary" @click="handleExportComeData">导出</a-button>
+            </template>
+          </BasicTable>
         </div>
         <div class="flex justify-end bg-white mx-5 mt-3">
           <a-pagination
@@ -235,6 +239,8 @@
     pager.total = 0;
     pager.pageSize = 10;
   }
+
+  function handleExportComeData() {}
 </script>
 <style scoped>
   :deep(.vben-basic-table-form-container) {

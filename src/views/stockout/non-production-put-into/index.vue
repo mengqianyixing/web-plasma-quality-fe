@@ -3,7 +3,7 @@
     <BasicTable @register="registerTable">
       <template #mesId="{ record }">
         <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleMesClick()">
-          {{ record?.mesId }}
+          {{ record?.dlvNo }}
         </span>
       </template>
       <template #toolbar>
@@ -22,28 +22,44 @@
       </template>
     </BasicTable>
 
-    <OperateModal @register="registerOperateModal" />
+    <OperateModal @register="registerOperateModal" @success="handleSuccess" />
+    <RevokeDlvModal @register="registerRevokeDlvModal" @success="handleSuccess" />
+    <PlasmaOutModal @register="registerPlasmaOutModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
-  import { ref } from 'vue';
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { createVNode, ref } from 'vue';
   import { useModal } from '@/components/Modal';
 
   import { columns, searchSchema } from './non.data';
   import OperateModal from '@/views/stockout/non-production-put-into/operateModal.vue';
+  import RevokeDlvModal from '@/views/stockout/non-production-put-into/RevokeDlvModal.vue';
+  import PlasmaOutModal from '@/views/stockout/non-production-put-into/plasmaOutModal.vue';
 
   import { PageWrapper } from '@/components/Page';
-  import { getProOrders } from '@/api/stockout/production-order';
+  import {
+    checkDeliverNonProductive,
+    completeDeliverNonProductive,
+    getCoreBankDelivers,
+    reviewDeliverNonProductive,
+    revokeCheckDeliverNonProductive,
+    revokeDeliverNonProductive,
+    revokeReviewDeliverNonProductive,
+  } from '@/api/stockout/non-productin-put-into';
 
   defineOptions({ name: 'NonProductionPutInto' });
 
   const [registerOperateModal, { openModal: openOperateModal }] = useModal();
+  const [registerRevokeDlvModal, { openModal: openRevokeDlvModal }] = useModal();
+  const [registerPlasmaOutModal, { openModal: openPlasmaOutModal }] = useModal();
 
   const selectedRow = ref<Recordable>([]);
+  const { createMessage, createConfirm } = useMessage();
 
-  const [registerTable] = useTable({
-    api: getProOrders,
+  const [registerTable, { reload }] = useTable({
+    api: getCoreBankDelivers,
     columns,
     formConfig: {
       schemas: searchSchema,
@@ -59,7 +75,7 @@
     },
     clickToRowSelect: true,
     rowSelection: {
-      type: 'checkbox',
+      type: 'radio',
       onChange: (_, selectedRows: any) => {
         selectedRow.value = selectedRows;
       },
@@ -73,50 +89,172 @@
     canResize: true,
   });
 
-  // function selectRowsCheck() {
-  //   if (selectedRow.value.length > 1) {
-  //     warning('只能选择一条数据');
-  //     return false;
-  //   } else if (selectedRow.value.length === 0) {
-  //     warning('请先选择一条数据');
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
+  function selectRowsCheck() {
+    if (selectedRow.value.length === 0) {
+      createMessage.warning('请先选择一条数据');
+      return false;
+    } else {
+      return true;
+    }
+  }
 
-  function handleMesClick() {}
+  function handleMesClick() {
+    openOperateModal(true, {
+      isPreview: true,
+    });
+  }
 
   function handleAdd() {
     openOperateModal(true, {
-      type: 'add',
+      isUpdate: false,
     });
   }
 
   function handleEdit() {
+    if (!selectRowsCheck()) return;
+
     openOperateModal(true, {
-      type: 'edit',
+      isUpdate: true,
+      record: selectedRow.value[0],
     });
   }
 
-  function handleCancel() {}
+  function handleCancel() {
+    if (!selectRowsCheck()) return;
 
-  function handleCompletePrepare() {}
+    openRevokeDlvModal(true, {
+      record: selectedRow.value[0],
+    });
+  }
 
-  function handleCancelPrepare() {}
+  function handleCompletePrepare() {
+    createConfirm({
+      title: '确认',
+      content: `确认完成准备？`,
+      iconType: 'warning',
+      onOk: async () => {
+        await completeDeliverNonProductive(selectedRow.value[0]?.dlvNo);
 
-  function handleReCheck() {}
+        createMessage.success('操作成功');
+        handleSuccess();
+      },
+    });
+  }
 
-  function handleCancelReCheck() {}
+  function handleCancelPrepare() {
+    createConfirm({
+      title: '确认',
+      content: `是否撤销准备？`,
+      iconType: 'warning',
+      onOk: async () => {
+        await revokeDeliverNonProductive(selectedRow.value[0]?.dlvNo);
 
-  function handleCheck() {}
+        createMessage.success('操作成功');
+        handleSuccess();
+      },
+    });
+  }
 
-  function handleCancelCheck() {}
+  function handleReCheck() {
+    createConfirm({
+      iconType: 'warning',
+      title: '确定要通过复核吗？',
+      content: () =>
+        createVNode('span', { style: 'color: red;' }, [
+          '申请单号：  ',
+          createVNode(
+            'span',
+            { style: 'color: red; font-size: 20px;' },
+            `${selectedRow.value[0]?.dlvNo}`,
+          ),
+        ]),
+      onOk: async () => {
+        await reviewDeliverNonProductive(selectedRow.value[0]?.dlvNo);
 
-  function handleScan() {}
+        createMessage.success('操作成功');
+        handleSuccess();
+      },
+    });
+  }
 
-  // function handleSuccess() {
-  //   reload();
-  //   selectedRow.value = [];
-  // }
+  function handleCancelReCheck() {
+    createConfirm({
+      iconType: 'warning',
+      title: '是否撤销复核吗？',
+      content: () =>
+        createVNode('span', { style: 'color: red;' }, [
+          '申请单号：  ',
+          createVNode(
+            'span',
+            { style: 'color: red; font-size: 20px;' },
+            `${selectedRow.value[0]?.dlvNo}`,
+          ),
+        ]),
+      onOk: async () => {
+        await revokeReviewDeliverNonProductive(selectedRow.value[0]?.dlvNo);
+
+        createMessage.success('操作成功');
+        handleSuccess();
+      },
+    });
+  }
+
+  function handleCheck() {
+    createConfirm({
+      iconType: 'warning',
+      title: '确定要通过审核吗？',
+      content: () =>
+        createVNode('span', { style: 'color: red;' }, [
+          '申请单号：  ',
+          createVNode(
+            'span',
+            { style: 'color: red; font-size: 20px;' },
+            `${selectedRow.value[0]?.dlvNo}`,
+          ),
+        ]),
+      onOk: async () => {
+        await checkDeliverNonProductive(selectedRow.value[0]?.dlvNo);
+
+        createMessage.success('操作成功');
+        handleSuccess();
+      },
+    });
+  }
+
+  function handleCancelCheck() {
+    createConfirm({
+      iconType: 'warning',
+      title: '是否撤销审核吗？',
+      content: () =>
+        createVNode('span', { style: 'color: red;' }, [
+          '申请单号：  ',
+          createVNode(
+            'span',
+            { style: 'color: red; font-size: 20px;' },
+            `${selectedRow.value[0]?.dlvNo}`,
+          ),
+        ]),
+      onOk: async () => {
+        await revokeCheckDeliverNonProductive(selectedRow.value[0]?.dlvNo);
+
+        createMessage.success('操作成功');
+        handleSuccess();
+      },
+    });
+  }
+
+  function handleScan() {
+    if (!selectRowsCheck()) return;
+
+    openPlasmaOutModal(true, {
+      record: {
+        dlvNo: selectedRow.value[0]?.dlvNo,
+      },
+    });
+  }
+
+  function handleSuccess() {
+    reload();
+    selectedRow.value = [];
+  }
 </script>

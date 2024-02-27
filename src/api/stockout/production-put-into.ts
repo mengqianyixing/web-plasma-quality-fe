@@ -7,7 +7,8 @@ import {
   GetApiProductPrepareTrayOutResponse,
   PostApiProductOutStoreBatchRequest,
   PostApiProductOutStoreBoxRequest,
-} from '@/api/type/stockoutManage';
+} from '@/api/type/productionSortingMangeMain';
+
 import {
   PostApiProductReceptionAcceptBatchRequest,
   PostApiProductReceptionAcceptBoxRequest,

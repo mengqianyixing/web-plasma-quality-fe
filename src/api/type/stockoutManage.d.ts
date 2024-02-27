@@ -1227,4 +1227,698 @@ export interface GetApiProductPrepareSortingBagsResponse {
   }[];
 }
 
+/**
+ * 接口 [创建非生产出库申请单↗](https://yapi.sharing8.cn/project/529/interface/api/33417) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `POST /api/core/bank/deliver/nonproductive`
+ * @更新时间 `2024-02-23 14:35:50`
+ */
+export interface PostApiCoreBankDeliverNonproductiveRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo?: string;
+  /**
+   * 申请日期
+   */
+  applicationDate?: string;
+  /**
+   * 转移申请人
+   */
+  applicant?: string;
+  /**
+   * 转移部门
+   */
+  transferDepartment?: string;
+  /**
+   * 申请原因
+   */
+  reason?: string;
+}
+
+/**
+ * 接口 [创建非生产出库申请单↗](https://yapi.sharing8.cn/project/529/interface/api/33417) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `POST /api/core/bank/deliver/nonproductive`
+ * @更新时间 `2024-02-23 14:35:50`
+ */
+export interface PostApiCoreBankDeliverNonproductiveResponse {}
+
+/**
+ * 接口 [非生产出库申请单列表↗](https://yapi.sharing8.cn/project/529/interface/api/33422) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `GET /api/core/bank/deliver/nonproductive`
+ * @更新时间 `2024-02-27 21:23:38`
+ */
+export interface GetApiCoreBankDeliverNonproductiveRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 申请单号
+   */
+  dlvNo?: string;
+  /**
+   * 申请日期起
+   */
+  applicationStartDate?: string;
+  /**
+   * 申请日期止
+   */
+  applicationEndDate?: string;
+}
+
+/**
+ * 接口 [非生产出库申请单列表↗](https://yapi.sharing8.cn/project/529/interface/api/33422) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `GET /api/core/bank/deliver/nonproductive`
+ * @更新时间 `2024-02-27 21:23:38`
+ */
+export interface GetApiCoreBankDeliverNonproductiveResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 申请单号
+     */
+    dlvNo: string;
+    /**
+     * 申请原因
+     */
+    reason: string;
+    /**
+     * 转移部门
+     */
+    transferDepartment: string;
+    /**
+     * 申请日期
+     */
+    applicationDate: string;
+    /**
+     * 转移申请人
+     */
+    applicant: string;
+    /**
+     * 记录人
+     */
+    creator: string;
+    /**
+     * 记录日期
+     */
+    createDate: string;
+    /**
+     * 准备人
+     */
+    preparedBy?: string;
+    /**
+     * 准备日期
+     */
+    prepareAt?: string;
+    /**
+     * 复核人
+     */
+    reviewer?: string;
+    /**
+     * 复核日期
+     */
+    reviewDate?: string;
+    /**
+     * 审核人
+     */
+    checker?: string;
+    /**
+     * 审核日期
+     */
+    checkDate?: string;
+    /**
+     * 出库扫描日期
+     */
+    outDate?: string;
+    /**
+     * 状态
+     */
+    status: string;
+  }[];
+}
+
+/**
+ * 接口 [编辑非生产出库申请单↗](https://yapi.sharing8.cn/project/529/interface/api/33432) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `PUT /api/core/bank/deliver/nonproductive`
+ * @更新时间 `2024-02-23 15:22:46`
+ */
+export interface PutApiCoreBankDeliverNonproductiveRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+  /**
+   * 转移申请人
+   */
+  applicant?: string;
+  /**
+   * 转移部门
+   */
+  transferDepartment?: string;
+  /**
+   * 申请原因
+   */
+  reason?: string;
+}
+
+/**
+ * 接口 [编辑非生产出库申请单↗](https://yapi.sharing8.cn/project/529/interface/api/33432) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `PUT /api/core/bank/deliver/nonproductive`
+ * @更新时间 `2024-02-23 15:22:46`
+ */
+export interface PutApiCoreBankDeliverNonproductiveResponse {}
+
+/**
+ * 接口 [挑选血浆列表↗](https://yapi.sharing8.cn/project/529/interface/api/33437) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `GET /api/core/bank/deliver/nonproductive/pick-plasma`
+ * @更新时间 `2024-02-23 15:39:33`
+ */
+export interface GetApiCoreBankDeliverNonproductivePickPlasmaRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 浆站编号
+   */
+  stationNo?: string;
+  /**
+   * 浆员编号
+   */
+  donorNo?: string;
+  /**
+   * 采集日期起
+   */
+  collStartDate?: string;
+  /**
+   * 采集日期止
+   */
+  collEndDate?: string;
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 血浆编号
+   */
+  bagNo?: string;
+  /**
+   * 效价类型
+   */
+  titerType?: string;
+}
+
+/**
+ * 接口 [挑选血浆列表↗](https://yapi.sharing8.cn/project/529/interface/api/33437) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `GET /api/core/bank/deliver/nonproductive/pick-plasma`
+ * @更新时间 `2024-02-23 15:39:33`
+ */
+export interface GetApiCoreBankDeliverNonproductivePickPlasmaResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 浆站编号
+     */
+    stationNo: string;
+    /**
+     * 浆站名称
+     */
+    stationName: string;
+    /**
+     * 血浆编号
+     */
+    bagNo: string;
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
+    /**
+     * 浆员编号
+     */
+    donorNo: string;
+    /**
+     * 采集日期
+     */
+    collDate: string;
+    /**
+     * 效价类型
+     */
+    titerType: string;
+    /**
+     * 血浆状态
+     */
+    plasmaStatus: string;
+  }[];
+}
+
+/**
+ * 接口 [非生产出库单号详情血浆批号列表↗](https://yapi.sharing8.cn/project/529/interface/api/33442) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `GET /api/core/bank/deliver/nonproductive/detail-batch`
+ * @更新时间 `2024-02-27 17:53:08`
+ */
+export interface GetApiCoreBankDeliverNonproductiveDetailBatchRequest {
+  dlvNo: string;
+}
+
+/**
+ * 接口 [非生产出库单号详情血浆批号列表↗](https://yapi.sharing8.cn/project/529/interface/api/33442) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `GET /api/core/bank/deliver/nonproductive/detail-batch`
+ * @更新时间 `2024-02-27 17:53:08`
+ */
+export interface GetApiCoreBankDeliverNonproductiveDetailBatchResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 采浆公司编号
+     */
+    stationNo: string;
+    /**
+     * 采浆公司
+     */
+    stationName: string;
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
+    /**
+     * 效价类型
+     */
+    titerType: string;
+    /**
+     * 血浆总数
+     */
+    plasmaTotal: number;
+    /**
+     * 血浆净重(kg)
+     */
+    totalWeight: number;
+  }[];
+}
+
+/**
+ * 接口 [非生产出库单号详情血浆箱号列表↗](https://yapi.sharing8.cn/project/529/interface/api/33447) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `GET /api/core/bank/deliver/nonproductive/detail-box`
+ * @更新时间 `2024-02-27 17:53:26`
+ */
+export interface GetApiCoreBankDeliverNonproductiveDetailBoxRequest {
+  dlvNo: string;
+}
+
+/**
+ * 接口 [非生产出库单号详情血浆箱号列表↗](https://yapi.sharing8.cn/project/529/interface/api/33447) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `GET /api/core/bank/deliver/nonproductive/detail-box`
+ * @更新时间 `2024-02-27 17:53:26`
+ */
+export interface GetApiCoreBankDeliverNonproductiveDetailBoxResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 浆站编号
+     */
+    stationNo: string;
+    /**
+     * 采浆公司
+     */
+    stationName: string;
+    /**
+     * 血浆箱号
+     */
+    boxNo: string;
+    /**
+     * 血浆数量
+     */
+    plasmaTotal: number;
+    /**
+     * 血浆净重(kg)
+     */
+    totalWeight: number;
+  }[];
+}
+
+/**
+ * 接口 [非生产出库单号详情血浆明细列表↗](https://yapi.sharing8.cn/project/529/interface/api/33452) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `GET /api/core/bank/deliver/nonproductive/detail-plasma`
+ * @更新时间 `2024-02-27 17:54:02`
+ */
+export interface GetApiCoreBankDeliverNonproductiveDetailPlasmaRequest {
+  dlvNo: string;
+}
+
+/**
+ * 接口 [非生产出库单号详情血浆明细列表↗](https://yapi.sharing8.cn/project/529/interface/api/33452) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `GET /api/core/bank/deliver/nonproductive/detail-plasma`
+ * @更新时间 `2024-02-27 17:54:02`
+ */
+export interface GetApiCoreBankDeliverNonproductiveDetailPlasmaResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 浆站编号
+     */
+    stationNo: string;
+    /**
+     * 采浆公司
+     */
+    stationName: string;
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
+    /**
+     * 血浆箱号
+     */
+    boxNo: string;
+    /**
+     * 血浆编号
+     */
+    bagNo: string;
+    /**
+     * 浆员编号
+     */
+    donorNo: string;
+    /**
+     * 血型
+     */
+    bloodType: string;
+    /**
+     * 效价类型
+     */
+    titerType: string;
+    /**
+     * 效价值
+     */
+    titerNum: string;
+    /**
+     * 血浆状态
+     */
+    plasmaStatus: string;
+  }[];
+}
+
+/**
+ * 接口 [非生产出库申请单完成准备↗](https://yapi.sharing8.cn/project/529/interface/api/33517) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `PUT /api/core/bank/deliver/nonproductive/ready/{dlvNo}`
+ * @更新时间 `2024-02-27 17:07:46`
+ */
+export interface PutApiCoreBankDeliverNonproductiveReadyDlvNoRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+}
+
+/**
+ * 接口 [非生产出库申请单完成准备↗](https://yapi.sharing8.cn/project/529/interface/api/33517) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `PUT /api/core/bank/deliver/nonproductive/ready/{dlvNo}`
+ * @更新时间 `2024-02-27 17:07:46`
+ */
+export interface PutApiCoreBankDeliverNonproductiveReadyDlvNoResponse {}
+
+/**
+ * 接口 [非生产出库申请单完成准备撤销↗](https://yapi.sharing8.cn/project/529/interface/api/33522) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `DELETE /api/core/bank/deliver/nonproductive/ready/{dlvNo}`
+ * @更新时间 `2024-02-27 17:07:10`
+ */
+export interface DeleteApiCoreBankDeliverNonproductiveReadyDlvNoRequest {
+  dlvNo: string;
+}
+
+/**
+ * 接口 [非生产出库申请单完成准备撤销↗](https://yapi.sharing8.cn/project/529/interface/api/33522) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `DELETE /api/core/bank/deliver/nonproductive/ready/{dlvNo}`
+ * @更新时间 `2024-02-27 17:07:10`
+ */
+export interface DeleteApiCoreBankDeliverNonproductiveReadyDlvNoResponse {}
+
+/**
+ * 接口 [非生产出库申请单复核↗](https://yapi.sharing8.cn/project/529/interface/api/33527) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `PUT /api/core/bank/deliver/nonproductive/review/{dlvNo}`
+ * @更新时间 `2024-02-27 17:07:38`
+ */
+export interface PutApiCoreBankDeliverNonproductiveReviewDlvNoRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+}
+
+/**
+ * 接口 [非生产出库申请单复核↗](https://yapi.sharing8.cn/project/529/interface/api/33527) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `PUT /api/core/bank/deliver/nonproductive/review/{dlvNo}`
+ * @更新时间 `2024-02-27 17:07:38`
+ */
+export interface PutApiCoreBankDeliverNonproductiveReviewDlvNoResponse {}
+
+/**
+ * 接口 [非生产出库申请单复核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/33532) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `DELETE /api/core/bank/deliver/nonproductive/review/{dlvNo}`
+ * @更新时间 `2024-02-27 17:08:08`
+ */
+export interface DeleteApiCoreBankDeliverNonproductiveReviewDlvNoRequest {
+  dlvNo: string;
+}
+
+/**
+ * 接口 [非生产出库申请单复核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/33532) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `DELETE /api/core/bank/deliver/nonproductive/review/{dlvNo}`
+ * @更新时间 `2024-02-27 17:08:08`
+ */
+export interface DeleteApiCoreBankDeliverNonproductiveReviewDlvNoResponse {}
+
+/**
+ * 接口 [非生产出库申请单审核↗](https://yapi.sharing8.cn/project/529/interface/api/33537) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `PUT /api/core/bank/deliver/nonproductive/process/{dlvNo}`
+ * @更新时间 `2024-02-27 17:08:30`
+ */
+export interface PutApiCoreBankDeliverNonproductiveProcessDlvNoRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+}
+
+/**
+ * 接口 [非生产出库申请单审核↗](https://yapi.sharing8.cn/project/529/interface/api/33537) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `PUT /api/core/bank/deliver/nonproductive/process/{dlvNo}`
+ * @更新时间 `2024-02-27 17:08:30`
+ */
+export interface PutApiCoreBankDeliverNonproductiveProcessDlvNoResponse {}
+
+/**
+ * 接口 [非生产出库申请单审核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/33542) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `DELETE /api/core/bank/deliver/nonproductive/process/{dlvNo}`
+ * @更新时间 `2024-02-27 17:08:56`
+ */
+export interface DeleteApiCoreBankDeliverNonproductiveProcessDlvNoRequest {
+  dlvNo: string;
+}
+
+/**
+ * 接口 [非生产出库申请单审核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/33542) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `DELETE /api/core/bank/deliver/nonproductive/process/{dlvNo}`
+ * @更新时间 `2024-02-27 17:08:56`
+ */
+export interface DeleteApiCoreBankDeliverNonproductiveProcessDlvNoResponse {}
+
+/**
+ * 接口 [新增非生产出库明细↗](https://yapi.sharing8.cn/project/529/interface/api/33552) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `POST /api/core/bank/deliver/nonproductive/pick-plasma`
+ * @更新时间 `2024-02-27 17:30:03`
+ */
+export interface PostApiCoreBankDeliverNonproductivePickPlasmaRequest {
+  plasmaNos: string[];
+  dlvNo: string;
+}
+
+/**
+ * 接口 [新增非生产出库明细↗](https://yapi.sharing8.cn/project/529/interface/api/33552) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `POST /api/core/bank/deliver/nonproductive/pick-plasma`
+ * @更新时间 `2024-02-27 17:30:03`
+ */
+export type PostApiCoreBankDeliverNonproductivePickPlasmaResponse = string;
+
+/**
+ * 接口 [移除出库单明细↗](https://yapi.sharing8.cn/project/529/interface/api/33557) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `DELETE /api/core/bank/deliver/nonproductive/pick-plasma/{bagNo}`
+ * @更新时间 `2024-02-27 21:24:28`
+ */
+export interface DeleteApiCoreBankDeliverNonproductivePickPlasmaBagNoRequest {
+  bagNo: string;
+}
+
+/**
+ * 接口 [移除出库单明细↗](https://yapi.sharing8.cn/project/529/interface/api/33557) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `DELETE /api/core/bank/deliver/nonproductive/pick-plasma/{bagNo}`
+ * @更新时间 `2024-02-27 21:24:28`
+ */
+export type DeleteApiCoreBankDeliverNonproductivePickPlasmaBagNoResponse = string;
+
+/**
+ * 接口 [非生产出库扫描出库↗](https://yapi.sharing8.cn/project/529/interface/api/33572) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `POST /api/core/bank/deliver/nonproductive/scan`
+ * @更新时间 `2024-02-27 22:07:09`
+ */
+export interface PostApiCoreBankDeliverNonproductiveScanRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+  /**
+   * 浆袋号
+   */
+  bagNo: string;
+}
+
+/**
+ * 接口 [非生产出库扫描出库↗](https://yapi.sharing8.cn/project/529/interface/api/33572) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `POST /api/core/bank/deliver/nonproductive/scan`
+ * @更新时间 `2024-02-27 22:07:09`
+ */
+export interface PostApiCoreBankDeliverNonproductiveScanResponse {}
+
+/**
+ * 接口 [非生产出库扫描列表↗](https://yapi.sharing8.cn/project/529/interface/api/33577) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `GET /api/core/bank/deliver/nonproductive/scan`
+ * @更新时间 `2024-02-27 22:07:21`
+ */
+export interface GetApiCoreBankDeliverNonproductiveScanRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+}
+
+/**
+ * 接口 [非生产出库扫描列表↗](https://yapi.sharing8.cn/project/529/interface/api/33577) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `GET /api/core/bank/deliver/nonproductive/scan`
+ * @更新时间 `2024-02-27 22:07:21`
+ */
+export interface GetApiCoreBankDeliverNonproductiveScanResponse {
+  waitList?: {
+    /**
+     * 血浆编号
+     */
+    bagNo: string;
+    /**
+     * 浆员编号
+     */
+    donorNo: string;
+    /**
+     * 浆员姓名
+     */
+    donorName: string;
+  }[];
+  outList?: {
+    bagNo?: string;
+    donorNo?: string;
+    donorName?: string;
+  }[];
+}
+
+/**
+ * 接口 [非生产出库单撤销↗](https://yapi.sharing8.cn/project/529/interface/api/33582) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `DELETE /api/core/bank/deliver/nonproductive`
+ * @更新时间 `2024-02-27 21:18:55`
+ */
+export interface DeleteApiCoreBankDeliverNonproductiveRequest {
+  /**
+   * 单号
+   */
+  dlvNo?: string;
+  /**
+   * 原因
+   */
+  reason?: string;
+}
+
+/**
+ * 接口 [非生产出库单撤销↗](https://yapi.sharing8.cn/project/529/interface/api/33582) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `DELETE /api/core/bank/deliver/nonproductive`
+ * @更新时间 `2024-02-27 21:18:55`
+ */
+export interface DeleteApiCoreBankDeliverNonproductiveResponse {}
+
 /* prettier-ignore-end */

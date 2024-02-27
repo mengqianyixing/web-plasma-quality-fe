@@ -202,7 +202,7 @@ export default defineConfig([
             outputFilePath: 'src/api/type/qualityMange.d.ts',
           },
           {
-            id: 5390,
+            id: [5390, 5757],
             getRequestFunctionName(interfaceInfo, changeCase) {
               return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
             },
