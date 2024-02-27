@@ -7,7 +7,7 @@
     width="400px"
     @ok="handleSubmit"
   >
-    <BasicForm @register="registerForm" />
+    <BasicForm @register="registerForm" :showActionButtonGroup="true" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -29,7 +29,7 @@
       labelWidth: 120,
       baseColProps: { span: 24 },
       schemas: formListSchema,
-      showActionButtonGroup: false,
+      showActionButtonGroup: true,
     });
   const [registerModal, { setModalProps, closeModal }] = useModalInner(
     async ({ sampleType, rawImmEnum, sampleTypeEnum }) => {
@@ -65,7 +65,7 @@
       setModalProps({ confirmLoading: true });
       await state.api({
         ...values,
-        sampleType: values.rawImm === NOR ? values.sampleType : void 0,
+        rawImm: values.sampleType === NOR ? values.rawImm : void 0,
       } as any);
       message.success(state.type + '成功');
       setModalProps({ confirmLoading: false });
