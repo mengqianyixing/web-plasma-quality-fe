@@ -1,6 +1,11 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
+import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+const serverEnumStore = useServerEnumStoreWithOut();
+const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 export const columns: BasicColumn[] = [
   {
     width: 150,
@@ -11,6 +16,7 @@ export const columns: BasicColumn[] = [
     width: 150,
     title: '样本类型',
     dataIndex: 'stationName',
+    format: (text) => SampleType(text),
   },
 
   {
@@ -95,22 +101,38 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     field: '',
-    component: 'Input',
+    component: 'ApiSelect',
     label: '采浆公司',
+    componentProps: {
+      api: stationNameSearchApi,
+      labelField: 'stationName',
+      valueField: 'stationName',
+    },
   },
   {
-    field: '',
-    component: 'Input',
+    field: 'sampleType',
+    component: 'Select',
     label: '样本类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+    },
   },
   {
     field: '',
-    component: 'Input',
+    component: 'DatePicker',
     label: '采集日期',
+    componentProps: {
+      class: 'w-full',
+      valueFormat: 'YYYY-MM-DD',
+    },
   },
   {
     field: '',
-    component: 'Input',
+    component: 'DatePicker',
     label: '发布日期',
+    componentProps: {
+      class: 'w-full',
+      valueFormat: 'YYYY-MM-DD',
+    },
   },
 ];

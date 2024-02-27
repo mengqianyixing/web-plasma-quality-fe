@@ -1,26 +1,33 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
+import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: 'batchNo',
+    dataIndex: 'stationName',
     width: 150,
   },
   {
     title: '样本批号',
-    dataIndex: 'stationName',
+    dataIndex: 'bsNo',
     width: 150,
   },
 
   {
     title: '样本类型',
-    dataIndex: 'stationBoxNo',
+    dataIndex: 'sampleType',
     width: 150,
+    format: (text) => SampleType(text),
   },
   {
     title: '样本数量',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'sampleCount',
     width: 150,
   },
   {
@@ -28,24 +35,24 @@ export const columns: BasicColumn[] = [
     children: [
       {
         title: '合格数',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'verification.passCount',
         width: 150,
       },
       {
         title: '不合格数',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'verification.failedCount',
         width: 150,
       },
       {
         title: '不合格比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'verification.ratio',
         width: 150,
       },
     ],
   },
   {
     title: '检测数量',
-    dataIndex: 'collectAt',
+    dataIndex: 'testCount',
     width: 150,
   },
   {
@@ -53,12 +60,12 @@ export const columns: BasicColumn[] = [
     children: [
       {
         title: '合格数',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'qualified.passCount',
         width: 150,
       },
       {
         title: '合格比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'qualified.ratio',
         width: 150,
       },
     ],
@@ -68,57 +75,57 @@ export const columns: BasicColumn[] = [
     children: [
       {
         title: 'HBV-DNA',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'unqualified.hbvdna',
         width: 150,
       },
       {
         title: 'HCV-RNA',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'unqualified.hcvrna',
         width: 150,
       },
       {
         title: 'HIV-RNA',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'unqualified.hivrna',
         width: 150,
       },
       {
         title: 'HBsAg',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'unqualified.hbsag',
         width: 150,
       },
       {
         title: 'HCV抗体',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'unqualified.hcv',
         width: 150,
       },
       {
         title: 'HIV-1/HIV-2抗体',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'unqualified.hiv',
         width: 150,
       },
       {
         title: 'TP抗体',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'unqualified.tpAntibody',
         width: 150,
       },
       {
         title: 'ALT',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'unqualified.alt',
         width: 150,
       },
       {
         title: 'TP',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'unqualified.tp',
         width: 150,
       },
       {
         title: '合计',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'unqualified.count',
         width: 150,
       },
       {
         title: '不合格比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'unqualified.ratio',
         width: 150,
       },
     ],
@@ -127,28 +134,45 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: '',
+    field: 'fkStationNo',
+    component: 'ApiSelect',
+    label: '采浆公司',
+    componentProps: {
+      api: stationNameSearchApi,
+      labelField: 'stationName',
+      valueField: 'stationName',
+    },
+  },
+  {
+    field: 'sampleType',
+    component: 'Select',
+    label: '样本类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+    },
+  },
+  {
+    field: 'bsNo',
     component: 'Input',
     label: '样本批号',
   },
+
   {
-    field: '',
-    component: 'Input',
-    label: '样本类型',
-  },
-  {
-    field: '',
-    component: 'Input',
-    label: '采浆公司',
-  },
-  {
-    field: '',
-    component: 'Input',
+    field: 'issueAt',
+    component: 'DatePicker',
     label: '结果发布日期',
+    componentProps: {
+      class: 'w-full',
+      valueFormat: 'YYYY-MM-DD',
+    },
   },
   {
-    field: '',
-    component: 'Input',
+    field: 'collectAt',
+    component: 'DatePicker',
     label: '样本采集日期',
+    componentProps: {
+      class: 'w-full',
+      valueFormat: 'YYYY-MM-DD',
+    },
   },
 ];

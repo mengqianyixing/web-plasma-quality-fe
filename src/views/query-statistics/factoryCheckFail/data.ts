@@ -1,5 +1,6 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
+import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 
 export const columns: BasicColumn[] = [
   {
@@ -51,9 +52,14 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    component: 'Input',
     field: '',
+    component: 'ApiSelect',
     label: '采浆公司',
+    componentProps: {
+      api: stationNameSearchApi,
+      labelField: 'stationName',
+      valueField: 'stationName',
+    },
   },
   {
     component: 'Input',
@@ -61,18 +67,30 @@ export const searchFormSchema: FormSchema[] = [
     label: '血浆批号',
   },
   {
-    component: 'Input',
+    component: 'DatePicker',
     field: '',
     label: '采集日期',
+    componentProps: {
+      class: 'w-full',
+      valueFormat: 'YYYY-MM-DD',
+    },
   },
   {
-    component: 'Input',
+    component: 'DatePicker',
     field: '',
     label: '验收发布日期',
+    componentProps: {
+      class: 'w-full',
+      valueFormat: 'YYYY-MM-DD',
+    },
   },
   {
-    component: 'Input',
+    component: 'DatePicker',
     field: '',
     label: '检验发布日期',
+    componentProps: {
+      class: 'w-full',
+      valueFormat: 'YYYY-MM-DD',
+    },
   },
 ];
