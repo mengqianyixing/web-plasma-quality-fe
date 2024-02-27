@@ -129,13 +129,15 @@
     }
   }
 
-  const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
-    initTareWeight(data);
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
+    await initTareWeight(data);
 
-    setFieldsValue({
-      verifyNum: Number(data.record.passBagNum) + Number(data.record.noPassBagNum),
+    const verifyNum = Number(data.record.passBagNum) + Number(data.record.noPassBagNum);
+
+    await setFieldsValue({
+      verifyNum,
       totalGrossWeight: data.record.verifyWeight
-        ? data.record.verifyWeight * 1000 + tareWeight.value! * data.record.verifyNum
+        ? data.record.verifyWeight * 1000 + tareWeight.value! * verifyNum
         : 0,
       batchNo: data.record.batchNo,
     });
