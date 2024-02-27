@@ -8,19 +8,15 @@
       </template>
     </BasicTable>
     <FormModal @register="registerModal" @success="success" />
-    <Modal
-      :open="open"
-      @cancel="open = false"
-      @ok="handleSubmit"
+    <BasicModal
+      @register="registerCancelModal"
+      title="删除"
       okText="提交"
       width="400px"
-      :confirmLoading="confirmLoading"
-      title="删除原因'"
+      @ok="handleSubmit"
     >
-      <div class="m-20px">
-        <BasicForm @register="registerForm" />
-      </div>
-    </Modal>
+      <BasicForm @register="registerForm" />
+    </BasicModal>
     <LoginModal
       @register="registerLogin"
       @success="handleLoginSuccess"
@@ -31,9 +27,9 @@
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { useModal } from '@/components/Modal';
+  import { useModal, BasicModal } from '@/components/Modal';
   import { columns, sampleTypeSchema } from './requiredItem.data';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import { ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
@@ -41,11 +37,10 @@
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
 
-  const open = ref(false);
-  const confirmLoading = ref(false);
   const userId = ref('');
 
   const [registerLogin, { openModal: openLoginModal }] = useModal();
+  const [registerCancelModal, { openModal: openCancelModal, setModalProps }] = useModal();
 
   const [registerForm, { resetFields, clearValidate, validate, setFieldsValue }] = useForm({
     labelWidth: 80,
@@ -126,7 +121,7 @@
   }
   function handleDelete() {
     getSelections(true, () => {
-      open.value = true;
+      openCancelModal(true);
       resetFields();
       clearValidate();
     });
@@ -135,18 +130,17 @@
     const values = await validate();
     const [row] = getSelections(true);
     try {
-      confirmLoading.value = true;
+      setModalProps({ confirmLoading: true });
       await removeApi({
         ...values,
         reviewNo: userId.value,
         rawImm: row.rawImmEnum,
         sampleType: row.sampleTypeEnum,
       } as any);
-      open.value = false;
       message.success('删除成功');
       reload();
     } finally {
-      confirmLoading.value = false;
+      setModalProps({ confirmLoading: false });
     }
   }
   function success() {

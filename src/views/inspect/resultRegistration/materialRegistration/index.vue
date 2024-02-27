@@ -7,29 +7,25 @@
       </template>
     </BasicTable>
     <FormModal @register="registerModal" @success="success" />
-    <Modal
-      :open="open"
-      @cancel="open = false"
-      @ok="handleSubmit"
+    <BasicModal
+      @register="registerCancelModal"
+      title="撤销原因"
       okText="提交"
       width="300px"
-      :confirmLoading="confirmLoading"
-      title="撤销原因'"
+      @ok="handleSubmit"
     >
-      <div class="m-20px">
-        <BasicForm @register="registerForm" />
-      </div>
-    </Modal>
+      <BasicForm @register="registerForm" />
+    </BasicModal>
   </PageWrapper>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { useModal } from '@/components/Modal';
+  import { useModal, BasicModal } from '@/components/Modal';
   import { columns } from './data';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import FormModal from './formModal.vue';
-  import { onMounted, ref } from 'vue';
+  import { onMounted } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { getMaterialListApi, deleteMaterialApi } from '@/api/inspect/resultRegistration';
 
@@ -37,9 +33,6 @@
   const props = defineProps({
     bsNo: { type: String, default: '' },
   });
-
-  const open = ref(false);
-  const confirmLoading = ref(false);
 
   const [registerForm, { resetFields, clearValidate, validate }] = useForm({
     labelWidth: 80,
@@ -55,6 +48,7 @@
     showActionButtonGroup: false,
   });
   const [registerModal, { openModal }] = useModal();
+  const [registerCancelModal, { openModal: openCancelModal, setModalProps }] = useModal();
 
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     immediate: false,
@@ -94,7 +88,7 @@
   }
   function handleDelete() {
     getSelections(true, () => {
-      open.value = true;
+      openCancelModal(true);
       resetFields();
       clearValidate();
     });
@@ -103,13 +97,13 @@
     const { cause } = await validate();
     const [row] = getSelections(true);
     try {
-      confirmLoading.value = true;
+      setModalProps({ confirmLoading: true });
       await deleteMaterialApi({ id: row.id, cause });
-      open.value = false;
+      openCancelModal(false);
       message.success('撤销成功');
       reload();
     } finally {
-      confirmLoading.value = false;
+      setModalProps({ confirmLoading: false });
     }
   }
   function success() {

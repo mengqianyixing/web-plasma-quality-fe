@@ -22,6 +22,7 @@
   defineOptions({ name: 'FormModel' });
 
   const state = reactive({ type: '', api: addApi });
+  const NOR = 'NOR'; //血浆样本
 
   const [registerForm, { validate, setFieldsValue, clearValidate, resetFields, updateSchema }] =
     useForm({
@@ -41,7 +42,7 @@
         field: 'sampleType',
         componentProps: {
           onChange: (value: string) => {
-            const isNor = value === 'NOR';
+            const isNor = value === NOR;
             updateSchema({ field: 'rawImm', ifShow: isNor, required: isNor });
           },
         },
@@ -62,7 +63,10 @@
     try {
       const values = await validate();
       setModalProps({ confirmLoading: true });
-      await state.api(values as any);
+      await state.api({
+        ...values,
+        sampleType: values.rawImm === NOR ? values.sampleType : void 0,
+      } as any);
       message.success(state.type + '成功');
       setModalProps({ confirmLoading: false });
       closeModal();
