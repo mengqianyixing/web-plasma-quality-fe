@@ -41,7 +41,7 @@ const trayManager: AppRouteModule = {
     },
     {
       path: 'PlasmaBatch',
-      name: 'PlasmaBatch',
+      name: 'PlasmaBatchQueryStatistics',
       meta: {
         title: '血浆批号查询',
       },
