@@ -1,124 +1,153 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
+import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: 'batchNo',
+    dataIndex: 'stationName',
   },
   {
     title: '样本批号',
-    dataIndex: 'stationName',
+    dataIndex: 'sampleBatchNo',
   },
 
   {
     title: '样本类型',
-    dataIndex: 'stationBoxNo',
+    dataIndex: 'sampleType',
+    format: (text) => SampleType(text),
   },
   {
     title: '样本编号',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'sampleNo',
   },
   {
     title: '采集日期',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'collectAt',
   },
   {
     title: '来浆类型',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'plasmaTypeFromStation',
   },
   {
     title: '血浆类型',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'plasmaType',
   },
   {
     title: '浆员编号',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'donorNo',
   },
   {
     title: '浆员姓名',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'donorName',
   },
   {
     title: '接收人',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'acceptor',
   },
   {
     title: '接收日期',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'acceptAt',
   },
   {
     title: '样本状态',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'sampleStatus',
   },
   {
     title: '检测结果',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'testResult',
   },
   {
     title: '不合格原因',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'unqualifiedReason',
   },
   {
     title: '效价',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'titer',
   },
 ];
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: '',
-    component: 'Input',
+    field: 'stationNo',
+    component: 'ApiSelect',
     label: '采浆公司',
+    componentProps: {
+      api: stationNameSearchApi,
+      labelField: 'stationName',
+      valueField: 'stationName',
+    },
   },
   {
-    field: '',
+    field: 'sampleBatchNo',
     component: 'Input',
     label: '样本批号',
   },
   {
-    field: '',
-    component: 'Input',
+    field: 'sampleType',
+    component: 'Select',
     label: '样本类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+    },
   },
   {
-    field: '',
+    field: 'sampleNo',
     component: 'Input',
     label: '样本编号',
   },
   {
-    field: '',
-    component: 'Input',
+    field: '[collectBeginAt,collectEndAt]',
+    component: 'RangePicker',
     label: '采集日期',
+    componentProps: {
+      class: 'w-full',
+      valueFormat: 'YYYY-MM-DD',
+    },
   },
   {
-    field: '',
+    field: 'donorNo',
     component: 'Input',
     label: '浆员编号',
   },
   {
-    field: '',
+    field: 'donorName',
     component: 'Input',
     label: '浆员姓名',
   },
   {
-    field: '',
-    component: 'Input',
+    field: '[issueBeginAt,issueEndAt]',
+    component: 'RangePicker',
     label: '检测发布日期',
+    componentProps: {
+      class: 'w-full',
+      valueFormat: 'YYYY-MM-DD',
+    },
   },
   {
-    field: '',
-    component: 'Input',
+    field: 'sampleStatus',
+    component: 'Select',
     label: '样本状态',
   },
   {
-    field: '',
-    component: 'Input',
+    field: 'plasmaTypeFromStation',
+    component: 'Select',
     label: '来浆类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+    },
   },
   {
-    field: '',
+    field: 'plasmaType',
     component: 'Input',
     label: '血浆类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+    },
   },
 ];

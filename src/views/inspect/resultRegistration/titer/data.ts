@@ -35,8 +35,8 @@ export const dtRusultColumns: BasicColumn[] = [
     dataIndex: 'checkAt',
   },
   {
-    title: 'OD值',
-    dataIndex: 'od',
+    title: '效价值',
+    dataIndex: 'titerValue',
   },
   // {
   //   title: '效价结果值',

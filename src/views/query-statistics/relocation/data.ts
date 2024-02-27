@@ -1,95 +1,90 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
+import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const BankTrayTypeEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayTypeEnum);
 
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: 'batchNo',
+    dataIndex: 'stationName',
   },
   {
-    title: '血浆批号',
-    dataIndex: 'stationName',
+    title: '血浆(样本)批号',
+    dataIndex: 'batchNo',
   },
 
   {
-    title: '样品批号',
-    dataIndex: 'stationBoxNo',
-  },
-  {
     title: '箱号',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'boxNo',
   },
   {
     title: '数量',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'bagCount',
   },
   {
     title: '托盘编号',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'trayNo',
   },
   {
     title: '存放库房',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'warehouseName',
   },
   {
     title: '货位号',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'locationNo',
   },
   {
     title: '存放类型',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'trayType',
+    format: (text) => BankTrayTypeEnum(text),
   },
 ];
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: '',
-    component: 'Input',
+    field: 'stationNo',
+    component: 'ApiSelect',
     label: '采浆公司',
+    componentProps: {
+      api: stationNameSearchApi,
+      labelField: 'stationName',
+      valueField: 'stationName',
+    },
   },
   {
-    field: '',
+    field: 'batchNo',
     component: 'Input',
-    label: '样品箱号',
+    label: '血浆(样本)批号',
   },
   {
-    field: '',
+    field: 'boxNo',
     component: 'Input',
-    label: '样本批号',
+    label: '血浆(样本)编号',
   },
+
   {
-    field: '',
-    component: 'Input',
-    label: '样本编号',
-  },
-  {
-    field: '',
-    component: 'Input',
-    label: '血浆箱号',
-  },
-  {
-    field: '',
-    component: 'Input',
-    label: '血浆批号',
-  },
-  {
-    field: '',
-    component: 'Input',
-    label: '血浆编号',
-  },
-  {
-    field: '',
-    component: 'Input',
+    field: 'plasmaType',
+    component: 'Select',
     label: '血浆类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+    },
   },
   {
-    field: '',
+    field: 'trayNo',
     component: 'Input',
     label: '托盘编号',
   },
   {
-    field: '',
-    component: 'Input',
+    field: 'trayType',
+    component: 'Select',
     label: '存放类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankTrayTypeEnum),
+    },
   },
 ];

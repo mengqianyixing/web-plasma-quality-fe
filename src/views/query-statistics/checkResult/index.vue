@@ -24,6 +24,9 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
-    canResize: true,
+    beforeFetch: (p) => {
+      console.log(p);
+      return p;
+    },
   });
 </script>

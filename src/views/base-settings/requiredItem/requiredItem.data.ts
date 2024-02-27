@@ -9,11 +9,13 @@ export const columns: BasicColumn[] = [
   {
     title: '样本类型',
     dataIndex: 'sampleType',
+    width: 150,
   },
 
   {
     title: '血浆类型',
     dataIndex: 'rawImm',
+    width: 150,
   },
   {
     title: '必检项目',
