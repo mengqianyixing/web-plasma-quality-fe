@@ -20,29 +20,32 @@ Object.keys(modules).forEach(async (key) => {
   routeModuleList.push(...modList);
 });
 
-async function getRoutes() {
-  const res = await getDictListApi({ pageSize: 1000, currPage: 1, queryMenu: true });
-  const { refreshMenu } = usePermission();
-  const result = res.result?.map((x, i) => ({
-    path: `/${x.dictNo}`,
-    name: x.dictNo,
-    meta: {
-      title: x.dictName,
-      dictId: x.dictId,
-      systemLevel: x.systemLevel,
-    },
-    id: 100061 + i,
-    component: () => import('@/views/system/dictionary/itemList.vue'),
-  }));
-  const index = routeModuleList.findIndex((x) => x.name === 'Basic');
-  result?.forEach((x) => {
-    routeModuleList[index].children?.push(x);
+export async function getRoutes() {
+  return new Promise((resolve) => {
+    getDictListApi({ pageSize: 1000, currPage: 1, queryMenu: true }).then((res) => {
+      const { refreshMenu } = usePermission();
+      const result = res.result?.map((x, i) => ({
+        path: `/${x.dictNo}`,
+        name: x.dictNo,
+        meta: {
+          title: x.dictName,
+          dictId: x.dictId,
+          systemLevel: x.systemLevel,
+        },
+        id: 100061 + i,
+        component: () => import('@/views/system/dictionary/itemList.vue'),
+      }));
+      const index = routeModuleList.findIndex((x) => x.name === 'Basic');
+      result?.forEach((x) => {
+        routeModuleList[index].children?.push(x);
+      });
+      modulesRouteList = jsonClone(routeModuleList);
+      routeIdMap = getRouteIdMap(modulesRouteList);
+      refreshMenu();
+      resolve(true);
+    });
   });
-  modulesRouteList = jsonClone(routeModuleList);
-  routeIdMap = getRouteIdMap(modulesRouteList);
-  refreshMenu();
 }
-getRoutes();
 
 function getRouteIdMap(routes: any[]) {
   let ret: any = {};
