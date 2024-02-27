@@ -82,7 +82,7 @@
         forbidden: data.record.isForbidden,
         oldName: data.record.name,
         userName: data.record.name,
-        roles: data.record.roles.map((_) => _.name),
+        roles: data.record.roles ? data.record.roles.map((_) => _.name) : '',
       });
     }
   });
