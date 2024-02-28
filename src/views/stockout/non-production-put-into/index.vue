@@ -36,7 +36,7 @@
   import { columns, searchSchema } from './non.data';
   import OperateModal from '@/views/stockout/non-production-put-into/operateModal.vue';
   import RevokeDlvModal from '@/views/stockout/non-production-put-into/RevokeDlvModal.vue';
-  import PlasmaOutModal from '@/views/stockout/non-production-put-into/plasmaOutModal.vue';
+  import PlasmaOutModal from '@/views/stockout/non-production-put-into/PlasmaOutModal.vue';
 
   import { PageWrapper } from '@/components/Page';
   import {
