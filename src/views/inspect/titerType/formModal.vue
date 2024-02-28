@@ -28,7 +28,6 @@
     addTitlerTypeApi,
     updateTitlerTypeApi,
   } from '@/api/inspect/titerType';
-  import { getDictItemListByNoApi } from '@/api/dictionary';
   import { isNumber } from '@/utils/is';
 
   const emit = defineEmits(['success', 'register']);
@@ -57,10 +56,7 @@
   const [registerModal, { setModalProps, closeModal }] = useModalInner(
     async ({ data, disabled }) => {
       state.dictItemId = data.dictItemId;
-      if (state.isRequest === false) {
-        state.isRequest = true;
-        getDict();
-      }
+
       const disabledOptions = formListSchema.map((_) => ({
         field: _.field,
         componentProps: { disabled: false },
@@ -121,9 +117,5 @@
     } finally {
       setModalProps({ confirmLoading: false });
     }
-  }
-  async function getDict() {
-    const [res] = await getDictItemListByNoApi(['titerResult']);
-    updateSchema({ field: 'titerType', componentProps: { options: res.dictImtes } });
   }
 </script>

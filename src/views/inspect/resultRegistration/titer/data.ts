@@ -1,5 +1,4 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { getDictItemListByNoApi } from '@/api/dictionary';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
@@ -81,16 +80,9 @@ export const dtSearchSchema: FormSchema[] = [
   {
     field: 'valenceResult',
     label: '效价结果',
-    component: 'ApiSelect',
+    component: 'Select',
     componentProps: {
-      api: () =>
-        new Promise((rs, rj) => {
-          getDictItemListByNoApi(['titerResult'])
-            .then((res) => {
-              rs(res[0]['dictImtes']);
-            })
-            .catch(rj);
-        }),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.TiterLevel),
     },
   },
   {
