@@ -127,25 +127,24 @@
       { label: '二级菜单', prop: 'parent' },
       { label: '按钮', prop: 'btn' },
     ];
-    selectedRowsRef.value.forEach((x) => {
+    const exportData = results.map((x) => ({
+      btn: x.btn.title,
+      grand: x.grand.meta.title,
+      parent: x.parent.meta.title,
+    }));
+    selectedRowsRef.value.forEach((x, i) => {
       const usersStr = (x.users ?? []).join('、');
-      excelCol.push({ label: `${x.name}/${x.displayName}/${usersStr}`, prop: 'domainsStr' });
-      results.forEach((v) => {
+      excelCol.push({ label: `${x.name}/${x.displayName}/${usersStr}`, prop: `domainsStr${i}` });
+      results.forEach((v, n) => {
         if (
           x.domains.includes(v.grand.id) ||
           x.domains.includes(v.parent.id) ||
           x.domains.includes(v.btn.id)
         ) {
-          v.domainsStr = '√';
+          exportData[n][`domainsStr${i}`] = '√';
         }
       });
     });
-    const exportData = results.map((x) => ({
-      btn: x.btn.title,
-      grand: x.grand.meta.title,
-      parent: x.parent.meta.title,
-      domainsStr: x.domainsStr,
-    }));
     exportFile(
       transferCSVData(excelCol, exportData),
       `角色权限导出-${formatDate(new Date(), 'yyyymmddhhiissS')}`,
