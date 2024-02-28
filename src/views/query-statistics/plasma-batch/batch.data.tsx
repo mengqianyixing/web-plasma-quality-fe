@@ -27,7 +27,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '血浆数量',
-    dataIndex: 'plasmaNum',
+    dataIndex: 'totalNum',
   },
   {
     title: '验收净重（kg）',
@@ -35,7 +35,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '验收血浆不合格编号',
-    dataIndex: 'verifyLackNos',
+    dataIndex: 'verifyUnqNos',
   },
 ];
 
