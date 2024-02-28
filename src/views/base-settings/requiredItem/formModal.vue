@@ -29,7 +29,7 @@
       labelWidth: 120,
       baseColProps: { span: 24 },
       schemas: formListSchema,
-      showActionButtonGroup: true,
+      showActionButtonGroup: false,
     });
   const [registerModal, { setModalProps, closeModal }] = useModalInner(
     async ({ sampleType, rawImmEnum, sampleTypeEnum }) => {
