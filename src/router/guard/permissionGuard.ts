@@ -7,7 +7,7 @@ import { useUserStoreWithOut } from '@/store/modules/user';
 
 import { PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic';
 
-import { RootRoute } from '@/router/routes';
+import { getRoutes, RootRoute } from '@/router/routes';
 
 const LOGIN_PATH = PageEnum.BASE_LOGIN;
 
@@ -97,7 +97,7 @@ export function createPermissionGuard(router: Router) {
     }
 
     const routes = await permissionStore.buildRoutesAction();
-
+    await getRoutes();
     routes.forEach((route) => {
       router.addRoute(route as unknown as RouteRecordRaw);
     });
