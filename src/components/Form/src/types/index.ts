@@ -119,4 +119,5 @@ export type ComponentType =
   | 'ApiTransfer'
   | 'Transfer'
   | 'CropperAvatar'
-  | 'BasicTitle';
+  | 'BasicTitle'
+  | 'InputRange';

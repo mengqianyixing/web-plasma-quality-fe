@@ -101,7 +101,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: '',
-    component: 'Input',
+    component: 'InputRange',
     label: '效价结果值',
   },
   {

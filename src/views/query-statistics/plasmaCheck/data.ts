@@ -181,7 +181,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: '',
-    component: 'Input',
+    component: 'InputRange',
     label: '血浆批号',
   },
   {

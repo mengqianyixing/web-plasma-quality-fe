@@ -287,8 +287,11 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: '',
-    component: 'Input',
+    component: 'InputRange',
     label: '血浆批号',
+    componentProps: {
+      isBetween: false,
+    },
   },
   {
     field: '',
@@ -331,7 +334,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: '',
-    component: 'Input',
+    component: 'InputRange',
     label: '效价值',
   },
   {
