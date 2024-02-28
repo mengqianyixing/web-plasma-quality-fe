@@ -7,7 +7,7 @@
     width="400px"
     @ok="handleSubmit"
   >
-    <BasicForm @register="registerForm" :showActionButtonGroup="true" />
+    <BasicForm @register="registerForm" />
   </BasicModal>
 </template>
 <script lang="ts" setup>

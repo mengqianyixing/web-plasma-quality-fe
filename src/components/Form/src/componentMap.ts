@@ -28,6 +28,7 @@ import ApiTree from './components/ApiTree.vue';
 import ApiTreeSelect from './components/ApiTreeSelect.vue';
 import ApiCascader from './components/ApiCascader.vue';
 import ApiTransfer from './components/ApiTransfer.vue';
+import InputRange from './components/InputRange.vue';
 import { BasicUpload, ImageUpload } from '@/components/Upload';
 import { StrengthMeter } from '@/components/StrengthMeter';
 import { IconPicker } from '@/components/Icon';
@@ -72,11 +73,13 @@ componentMap.set('TimeRangePicker', TimePicker.TimeRangePicker);
 componentMap.set('StrengthMeter', StrengthMeter);
 componentMap.set('IconPicker', IconPicker);
 componentMap.set('InputCountDown', CountdownInput);
+componentMap.set('InputRange', InputRange);
 
 componentMap.set('Upload', BasicUpload);
 componentMap.set('Divider', Divider);
 componentMap.set('CropperAvatar', CropperAvatar);
 
+componentMap.set('BasicTitle', BasicTitle);
 componentMap.set('BasicTitle', BasicTitle);
 
 export function add(compName: ComponentType, component: Component) {

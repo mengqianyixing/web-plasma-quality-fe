@@ -98,20 +98,10 @@
       updateSchema({
         field: 'conclusion',
         componentProps: {
-          options: [
-            {
-              label: PlasmaType(plasmaType) + '高效价',
-              value: plasmaType + 'H',
-            },
-            {
-              label: PlasmaType(plasmaType) + '低效价',
-              value: plasmaType + 'L',
-            },
-            {
-              label: '合格普通浆',
-              value: 'N',
-            },
-          ],
+          options: serverEnumStore.getServerEnum(SERVER_ENUM.TiterLevel).map((it) => ({
+            value: it.value === 'N' ? it.value : plasmaType + it.value,
+            label: it.value === 'N' ? it.label : PlasmaType(plasmaType) + it.label,
+          })),
         },
       });
     },

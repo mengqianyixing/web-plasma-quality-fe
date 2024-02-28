@@ -4,6 +4,7 @@ import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
+const TiterLevel = serverEnumStore.getServerEnumText(SERVER_ENUM.TiterLevel);
 
 export const columns: BasicColumn[] = [
   {
@@ -25,6 +26,7 @@ export const columns: BasicColumn[] = [
   {
     title: '效价结果',
     dataIndex: 'titerType',
+    format: (text) => TiterLevel(text),
   },
 
   {
@@ -118,7 +120,7 @@ export const formListSchema: FormSchema[] = [
     label: '效价结果',
     required: true,
     componentProps: {
-      options: [],
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.TiterLevel),
     },
   },
   {
