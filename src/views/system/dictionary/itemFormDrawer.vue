@@ -3,8 +3,8 @@
  * @version: 
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-02-20 16:48:56
+ * @LastEditors: Ding 1326587277@qq.com
+ * @LastEditTime: 2024-02-28 15:58:05
 -->
 <template>
   <BasicModal
@@ -26,6 +26,7 @@
   import { getDictItemDtApi, addDictItemApi, updateDictItemApi } from '@/api/dictionary';
   import { PostApiSysDictItemRequest, PutApiSysDictItemRequest } from '@/api/type/dictionary';
   import { FormSchema } from '@/components/Table';
+  import { useRoute } from 'vue-router';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -37,7 +38,7 @@
     dictId: '',
   });
   let fields: string[] = [];
-
+  const currentRoute = useRoute();
   const [
     registerForm,
     {
@@ -48,6 +49,7 @@
       appendSchemaByField,
       removeSchemaByField,
       updateSchema,
+      resetSchema,
     },
   ] = useForm({
     labelWidth: 140,
@@ -62,8 +64,11 @@
   };
   const [registerModal, { setModalProps, closeModal }] = useModalInner(
     async ({ isUpdate, data, formSchema = [] }: Data) => {
-      await removeSchemaByField(fields);
       fields = formSchema.map((_) => _.field);
+      await removeSchemaByField(fields);
+      if (['sampleFailedReason', 'plasmaFailedReason'].includes(currentRoute.name)) {
+        resetSchema();
+      }
       appendSchemaByField(formSchema, 'itemValue');
       setModalProps({ confirmLoading: false });
       state.isUpdate = isUpdate;
