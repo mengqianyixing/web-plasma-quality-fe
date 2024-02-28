@@ -1752,4 +1752,91 @@ export interface PostApiCoreLabBagTrackResponse {
   }[];
 }
 
+/**
+ * 接口 [回访统计↗](https://yapi.sharing8.cn/project/529/interface/api/33587) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/donor/callback/statistic-station`
+ * @更新时间 `2024-02-28 16:07:09`
+ */
+export interface GetApiCoreDonorCallbackStatisticStationRequest {
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 回访发布日期起
+   */
+  pubStartDate?: string;
+  /**
+   * 回访发布日期止
+   */
+  pubEndDate?: string;
+  /**
+   * 回访日期起
+   */
+  callbackStartDate?: string;
+  /**
+   * 回访日期止
+   */
+  callbackEndDate?: string;
+  /**
+   * 回访样本检测发布日期起
+   */
+  samplePubStartDate?: string;
+  /**
+   * 回访样本检测发布日期止
+   */
+  samplePubEndDate?: string;
+  pageSize: string;
+  currPage: string;
+}
+
+/**
+ * 接口 [回访统计↗](https://yapi.sharing8.cn/project/529/interface/api/33587) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/donor/callback/statistic-station`
+ * @更新时间 `2024-02-28 16:07:09`
+ */
+export interface GetApiCoreDonorCallbackStatisticStationResponse {
+  stationNo?: string;
+  /**
+   * 浆站名称
+   */
+  stationName?: string;
+  /**
+   * 应回访人次
+   */
+  totalNum?: number;
+  /**
+   * 恢复采浆人次
+   */
+  recoverNum?: number;
+  /**
+   * 回访样本数
+   */
+  sampleNum?: number;
+  /**
+   * 回访失败人次
+   */
+  failedNum?: number;
+  /**
+   * 终止回访人次
+   */
+  endNum?: number;
+  /**
+   * 回访率
+   */
+  callbackRate?: string;
+  /**
+   * 放行血浆数量
+   */
+  passPlasmaNum?: string;
+  /**
+   * 可放行血浆数量
+   */
+  canPassPlasmaNum?: string;
+}
+
 /* prettier-ignore-end */

@@ -174,6 +174,33 @@ const trayManager: AppRouteModule = {
       id: 9000220,
       component: () => import('/@/views/query-statistics/stationRefuse/index.vue'),
     },
+    {
+      path: 'ERPEntryStore',
+      name: 'ERPEntryStore',
+      meta: {
+        title: 'ERP-入库查询',
+      },
+      id: 9000230,
+      component: () => import('/@/views/query-statistics/ERPEntryStore/index.vue'),
+    },
+    {
+      path: 'ERPInspectionReport',
+      name: 'ERPInspectionReport',
+      meta: {
+        title: 'ERP-检验报告查询',
+      },
+      id: 9000240,
+      component: () => import('/@/views/query-statistics/ERPEntryStore/index.vue'),
+    },
+    {
+      path: 'CallbackStatistics',
+      name: 'CallbackStatistics',
+      meta: {
+        title: '回访统计',
+      },
+      id: 9000250,
+      component: () => import('/@/views/query-statistics/callback/index.vue'),
+    },
   ],
 };
 export default trayManager;
