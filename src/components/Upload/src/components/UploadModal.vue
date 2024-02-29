@@ -12,6 +12,8 @@
     class="upload-modal"
     :okButtonProps="getOkButtonProps"
     :cancelButtonProps="{ disabled: isUploadingRef }"
+    :showCancelBtn="showCancelBtn"
+    :showOkBtn="showOkBtn"
   >
     <template #centerFooter>
       <a-button
@@ -73,6 +75,14 @@
       type: Array as PropType<string[]>,
       default: () => [],
     },
+    showCancelBtn: {
+      type: Boolean as PropType<boolean>,
+      default: true,
+    },
+    showOkBtn: {
+      type: Boolean as PropType<boolean>,
+      default: true,
+    },
   });
 
   const emit = defineEmits(['change', 'register', 'delete']);
@@ -83,7 +93,7 @@
   // 是否正在上传
   const isUploadingRef = ref(false);
   const fileListRef = ref<FileItem[]>([]);
-  const { accept, helpText, maxNumber, maxSize } = toRefs(props);
+  const { accept, helpText, maxNumber, maxSize, showCancelBtn, showOkBtn } = toRefs(props);
 
   const { t } = useI18n();
   const [register, { closeModal }] = useModalInner();
@@ -118,8 +128,8 @@
     return isUploadingRef.value
       ? t('component.upload.uploading')
       : someError
-      ? t('component.upload.reUploadFailed')
-      : t('component.upload.startUpload');
+        ? t('component.upload.reUploadFailed')
+        : t('component.upload.startUpload');
   });
 
   // 上传前校验
