@@ -1,7 +1,11 @@
 import { DescItem } from '@/components/Description';
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { PLASMA_TYPE_TEXT } from '@/enums/inspectEnum';
 import dayjs from 'dayjs';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 // 查询条件：浆员编号、临时编号、浆员姓名
 export const searchFormSchema: FormSchema[] = [
@@ -144,7 +148,7 @@ export const batchColumns: BasicColumn[] = [
     dataIndex: 'titerType',
     width: 120,
     customRender: ({ record }) => {
-      return PLASMA_TYPE_TEXT[record.type];
+      return PlasmaType(record.type);
     },
   },
   {
