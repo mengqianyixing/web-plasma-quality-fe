@@ -29,7 +29,6 @@ export interface PostApiCoreDonorListRequest {
  * @更新时间 `2024-02-23 15:55:32`
  */
 export interface PostApiCoreDonorListResponse {
-  [x: string]: any;
   /**
    * 浆员编号
    */

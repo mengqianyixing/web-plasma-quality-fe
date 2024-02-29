@@ -4,14 +4,13 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup>
-  import { onMounted, watchEffect } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
-  import { useStation } from '@/hooks/common/useStation';
-  import { columns, searchFormSchema } from './data';
+  import { columns, searchFormSchema } from './batch.data';
   import { PageWrapper } from '@/components/Page';
+  import { getCallbackBatchStatistics } from '@/api/query-statistics/callback';
 
-  const [registerTable, { getForm }] = useTable({
-    api: () => Promise.resolve({ result: [{}] }),
+  const [registerTable] = useTable({
+    api: getCallbackBatchStatistics,
     columns,
     formConfig: {
       schemas: searchFormSchema,
@@ -26,19 +25,5 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
-  });
-
-  const { isLoading, stationOptions } = useStation();
-  onMounted(async () => {
-    watchEffect(async () => {
-      if (!isLoading) {
-        await getForm().updateSchema({
-          field: 'stationNo',
-          componentProps: {
-            options: stationOptions.value,
-          },
-        });
-      }
-    });
   });
 </script>

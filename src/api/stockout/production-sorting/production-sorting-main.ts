@@ -22,6 +22,8 @@ import {
   PostApiProductPrepareSortingAllQuaBoxResponse,
   PostApiProductPrepareCommitSortingPrepareNoRequest,
   PostApiProductPrepareCommitSortingPrepareNoResponse,
+  PostApiProductPrepareCommitSortingBatchPrepareNoBatchNoRequest,
+  PostApiProductPrepareCommitSortingBatchPrepareNoBatchNoResponse,
 } from '@/api/type/productionSortingMangeMain';
 
 enum Api {
@@ -38,6 +40,7 @@ enum Api {
   SORTING_BOX_SEALING = '/api/product/prepare/sorting/box-sealing',
   SORTING_ALL_QUA = '/api/product/prepare/sorting/all-qua/box',
   COMPLETE_SORTING = '/api/product/prepare/commit/sorting',
+  COMPLETE_SORTING_BATCHNO = '/api/product/prepare/commit/sorting/batch',
   GET_PAUSE_LIST = '/api/product/prepare/sorting/prepare/pause',
   BATCH_PAUSE = '/api/product/prepare/sorting/batch/pause',
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
@@ -132,6 +135,15 @@ export const sortingAllQua = (params: PostApiProductPrepareSortingAllQuaBoxReque
 export const completeSorting = (params: PostApiProductPrepareCommitSortingPrepareNoRequest) => {
   return defHttp.post<PostApiProductPrepareCommitSortingPrepareNoResponse>({
     url: `${Api.COMPLETE_SORTING}/${params.prepareNo}`,
+  });
+};
+
+// 血浆分拣-完成分拣-批
+export const completeSortingBatchNo = (
+  params: PostApiProductPrepareCommitSortingBatchPrepareNoBatchNoRequest,
+) => {
+  return defHttp.post<PostApiProductPrepareCommitSortingBatchPrepareNoBatchNoResponse>({
+    url: `${Api.COMPLETE_SORTING_BATCHNO}/${params.prepareNo}/${params.batchNo}`,
   });
 };
 

@@ -1271,7 +1271,7 @@ export interface PostApiCoreBankDeliverNonproductiveResponse {}
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive`
- * @更新时间 `2024-02-27 21:23:38`
+ * @更新时间 `2024-02-29 14:27:12`
  */
 export interface GetApiCoreBankDeliverNonproductiveRequest {
   pageSize: string;
@@ -1288,6 +1288,10 @@ export interface GetApiCoreBankDeliverNonproductiveRequest {
    * 申请日期止
    */
   applicationEndDate?: string;
+  /**
+   * 状态 枚举名称BankDeliverstateType
+   */
+  state?: string;
 }
 
 /**
@@ -1295,7 +1299,7 @@ export interface GetApiCoreBankDeliverNonproductiveRequest {
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive`
- * @更新时间 `2024-02-27 21:23:38`
+ * @更新时间 `2024-02-29 14:27:12`
  */
 export interface GetApiCoreBankDeliverNonproductiveResponse {
   totalCount?: number;
@@ -1340,19 +1344,19 @@ export interface GetApiCoreBankDeliverNonproductiveResponse {
      */
     prepareAt?: string;
     /**
-     * 复核人
+     * 审核人
      */
     reviewer?: string;
     /**
-     * 复核日期
+     * 审核日期
      */
     reviewDate?: string;
     /**
-     * 审核人
+     * 复核人
      */
     checker?: string;
     /**
-     * 审核日期
+     * 复核日期
      */
     checkDate?: string;
     /**
@@ -1545,7 +1549,7 @@ export interface GetApiCoreBankDeliverNonproductiveDetailBatchResponse {
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive/detail-box`
- * @更新时间 `2024-02-27 17:53:26`
+ * @更新时间 `2024-02-29 13:49:22`
  */
 export interface GetApiCoreBankDeliverNonproductiveDetailBoxRequest {
   dlvNo: string;
@@ -1556,7 +1560,7 @@ export interface GetApiCoreBankDeliverNonproductiveDetailBoxRequest {
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive/detail-box`
- * @更新时间 `2024-02-27 17:53:26`
+ * @更新时间 `2024-02-29 13:49:22`
  */
 export interface GetApiCoreBankDeliverNonproductiveDetailBoxResponse {
   totalCount?: number;
@@ -1576,6 +1580,10 @@ export interface GetApiCoreBankDeliverNonproductiveDetailBoxResponse {
      * 血浆箱号
      */
     boxNo: string;
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
     /**
      * 血浆数量
      */
