@@ -10,11 +10,36 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button type="primary" @click="handleUpdate">编辑</a-button>
-        <a-button type="primary" @click="handleRemove">删除</a-button>
-        <a-button type="primary" @click="handleCheckStatus(false)">禁用</a-button>
-        <a-button type="primary" @click="handleCheckStatus(true)">启用</a-button>
+        <a-button
+          type="primary"
+          @click="handleCreate"
+          v-auth="BaseSettingButtonEnum.InspectMethodAdd"
+          >新增</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleUpdate"
+          v-auth="BaseSettingButtonEnum.InspectMethodUpdate"
+          >编辑</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleRemove"
+          v-auth="BaseSettingButtonEnum.InspectMethodDelete"
+          >删除</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCheckStatus(false)"
+          v-auth="BaseSettingButtonEnum.InspectMethodDisable"
+          >禁用</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCheckStatus(true)"
+          v-auth="BaseSettingButtonEnum.InspectMethodEnable"
+          >启用</a-button
+        >
       </template>
       <template #itemKey="{ record }: { record: Recordable }">
         <span
@@ -40,6 +65,7 @@
     updateInspectMethodApi,
     removeInspectMethodApi,
   } from '@/api/inspect/inspectMethod';
+  import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
 
   const [registerModal, { openModal }] = useModal();
 

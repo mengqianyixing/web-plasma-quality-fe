@@ -4,11 +4,24 @@
       <div class="title">
         基本信息
         <div class="float-right">
-          <a-button class="mr-15px" type="primary" @click="handleSelect">选择</a-button>
-          <a-button class="mr-15px" type="primary" @click="handleAddItem" :disabled="!bsNo">
+          <a-button
+            class="mr-15px"
+            type="primary"
+            @click="handleSelect"
+            v-auth="InspectButtonEnum.ResultRegistrationSelect"
+            >选择</a-button
+          >
+          <a-button
+            class="mr-15px"
+            type="primary"
+            @click="handleAddItem"
+            :disabled="!bsNo"
+            v-auth="InspectButtonEnum.ResultRegistrationItemAdd"
+          >
             新增检测项目
           </a-button>
           <a-button
+            v-auth="InspectButtonEnum.ResultRegistrationRegist"
             class="mr-15px"
             type="primary"
             @click="registration"
@@ -17,6 +30,7 @@
             >登记完成</a-button
           >
           <a-button
+            v-auth="InspectButtonEnum.ResultRegistrationReRegist"
             type="primary"
             @click="unRegistration"
             :loading="unregistrationLoading"
@@ -71,6 +85,7 @@
   } from '@/api/inspect/resultRegistration';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { InspectButtonEnum } from '@/enums/authCodeEnum';
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);

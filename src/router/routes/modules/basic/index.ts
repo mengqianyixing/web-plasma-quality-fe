@@ -28,17 +28,61 @@ const callManager: AppRouteModule = {
       meta: {
         title: '效价类型',
       },
+      authElements: [
+        {
+          id: BaseSettingButtonEnum.TiterTypeAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.TiterTypeUpdate,
+          title: '编辑',
+        },
+        {
+          id: BaseSettingButtonEnum.TiterTypeDelete,
+          title: '删除',
+        },
+        {
+          id: BaseSettingButtonEnum.TiterTypeEnable,
+          title: '启用',
+        },
+        {
+          id: BaseSettingButtonEnum.TiterTypeDisable,
+          title: '禁用',
+        },
+      ],
       id: 100010,
-      component: () => import('/@/views/inspect/titerType/index.vue'),
+      component: () => import('@/views/inspect/titerType/index.vue'),
     },
     {
       path: 'inspectMethod',
       name: 'inspectMethod',
       id: 100020,
+      authElements: [
+        {
+          id: BaseSettingButtonEnum.InspectMethodAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.InspectMethodUpdate,
+          title: '编辑',
+        },
+        {
+          id: BaseSettingButtonEnum.InspectMethodDelete,
+          title: '删除',
+        },
+        {
+          id: BaseSettingButtonEnum.InspectMethodEnable,
+          title: '启用',
+        },
+        {
+          id: BaseSettingButtonEnum.InspectMethodDisable,
+          title: '禁用',
+        },
+      ],
       meta: {
         title: '检测方法',
       },
-      component: () => import('/@/views/inspect/inspectMethod/index.vue'),
+      component: () => import('@/views/inspect/inspectMethod/index.vue'),
     },
     {
       path: 'itemSetting',
@@ -46,8 +90,30 @@ const callManager: AppRouteModule = {
       meta: {
         title: '检验项目设置',
       },
+      authElements: [
+        {
+          id: BaseSettingButtonEnum.ItemSettingAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.ItemSettingUpdate,
+          title: '编辑',
+        },
+        {
+          id: BaseSettingButtonEnum.ItemSettingDelete,
+          title: '删除',
+        },
+        {
+          id: BaseSettingButtonEnum.ItemSettingEnable,
+          title: '启用',
+        },
+        {
+          id: BaseSettingButtonEnum.ItemSettingDisable,
+          title: '禁用',
+        },
+      ],
       id: 100030,
-      component: () => import('/@/views/inspect/itemSetting/index.vue'),
+      component: () => import('@/views/inspect/itemSetting/index.vue'),
     },
     {
       path: 'dictionary',
@@ -56,12 +122,40 @@ const callManager: AppRouteModule = {
         title: '字典管理',
       },
       id: 100040,
+      authElements: [
+        {
+          id: BaseSettingButtonEnum.DictionaryAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.DictionaryUpdate,
+          title: '编辑',
+        },
+        {
+          id: BaseSettingButtonEnum.DictionaryDelete,
+          title: '删除',
+        },
+        {
+          id: BaseSettingButtonEnum.DictionaryItemAdd,
+          title: '字典项配置',
+        },
+      ],
       component: () => import('@/views/system/dictionary/index.vue'),
     },
     {
       path: 'report',
-      name: 'report',
+      name: 'Report',
       id: 100050,
+      authElements: [
+        {
+          id: BaseSettingButtonEnum.ReportAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.ReportUpdate,
+          title: '编辑',
+        },
+      ],
       meta: {
         title: '报表设置',
       },
@@ -99,7 +193,7 @@ const callManager: AppRouteModule = {
     },
     {
       path: 'requiredItem',
-      name: 'requiredItem',
+      name: 'RequiredItem',
       id: 100080,
       meta: {
         title: '必检项',
@@ -109,6 +203,18 @@ const callManager: AppRouteModule = {
           id: ReCheckButtonEnum.RequiredItemCheck,
           name: 'requiredItemCheck',
           title: '必检项复核人登录',
+        },
+        {
+          id: BaseSettingButtonEnum.RequiredItemAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.RequiredItemUpdate,
+          title: '编辑',
+        },
+        {
+          id: BaseSettingButtonEnum.RequiredItemDelete,
+          title: '删除',
         },
       ],
       component: () => import('@/views/base-settings/requiredItem/index.vue'),

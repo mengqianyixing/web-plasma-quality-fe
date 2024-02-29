@@ -10,9 +10,24 @@
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button type="primary" @click="handleCheckStatus('CLOSED')">禁用</a-button>
-        <a-button type="primary" @click="handleCheckStatus('NORMAL')">启用</a-button>
+        <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.StoreSettingAdd"
+          >新增</a-button
+        >
+        <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.StoreSettingUpdate"
+          >编辑</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCheckStatus('CLOSED')"
+          v-auth="StoreButtonEnum.StoreSettingDisable"
+          >禁用</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCheckStatus('NORMAL')"
+          v-auth="StoreButtonEnum.StoreSettingEnable"
+          >启用</a-button
+        >
       </template>
       <template #houseName="{ record }: { record: Recordable }">
         <span
@@ -53,6 +68,7 @@
   import LocationModel from './locationModel.vue';
   import AreaModel from './areaModel.vue';
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
+  import { StoreButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'PlasmaStoreSetting' });
 

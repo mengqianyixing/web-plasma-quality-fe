@@ -10,8 +10,12 @@
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleOutStore">出库</a-button>
-        <a-button type="primary" @click="handleInStore">入库</a-button>
+        <a-button type="primary" @click="handleOutStore" v-auth="StoreButtonEnum.TrayOutStore"
+          >出库</a-button
+        >
+        <a-button type="primary" @click="handleInStore" v-auth="StoreButtonEnum.TrayInStore"
+          >入库</a-button
+        >
       </template>
     </BasicTable>
     <OutModal @register="registerOutModal" @success="success" />
@@ -28,6 +32,7 @@
   import InModal from './inModal.vue';
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
   import { getListApi } from '@/api/tray/list';
+  import { StoreButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'OutInStore' });
 

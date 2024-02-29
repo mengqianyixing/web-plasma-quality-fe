@@ -2,9 +2,28 @@
   <div class="h-full">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleRemove" :disabled="!props.bsNo"> 删除 </a-button>
-        <a-button type="primary" @click="handleUnq" :disabled="!props.bsNo"> 不合格登记 </a-button>
-        <a-button type="primary" @click="handleNotCheck" :disabled="!props.bsNo">
+        <a-button
+          type="primary"
+          @click="handleRemove"
+          :disabled="!props.bsNo"
+          v-auth="InspectButtonEnum.ResultRegistrationItemDelete"
+        >
+          删除
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleUnq"
+          :disabled="!props.bsNo"
+          v-auth="InspectButtonEnum.ResultRegistrationItemUnq"
+        >
+          不合格登记
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleNotCheck"
+          :disabled="!props.bsNo"
+          v-auth="InspectButtonEnum.ResultRegistrationItemNotCheck"
+        >
           未检测登记
         </a-button>
       </template>
@@ -57,6 +76,7 @@
   import { watch, nextTick, onMounted, ref } from 'vue';
   import { getCheckListApi, removeCheckApi } from '@/api/inspect/resultRegistration';
   import { BasicForm, useForm } from '@/components/Form';
+  import { InspectButtonEnum } from '@/enums/authCodeEnum';
 
   const emit = defineEmits(['reload']);
 

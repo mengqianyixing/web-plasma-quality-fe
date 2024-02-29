@@ -10,11 +10,33 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button type="primary" @click="handleUpdate">编辑</a-button>
-        <a-button type="primary" @click="handleRemove">删除</a-button>
-        <a-button type="primary" @click="handleCheckStatus(1)">禁用</a-button>
-        <a-button type="primary" @click="handleCheckStatus(0)">启用</a-button>
+        <a-button type="primary" @click="handleCreate" v-auth="BaseSettingButtonEnum.ItemSettingAdd"
+          >新增</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleUpdate"
+          v-auth="BaseSettingButtonEnum.ItemSettingUpdate"
+          >编辑</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleRemove"
+          v-auth="BaseSettingButtonEnum.ItemSettingDelete"
+          >删除</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCheckStatus(1)"
+          v-auth="BaseSettingButtonEnum.ItemSettingDisable"
+          >禁用</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCheckStatus(0)"
+          v-auth="BaseSettingButtonEnum.ItemSettingEnable"
+          >启用</a-button
+        >
       </template>
       <template #projectCode="{ record }: { record: Recordable }">
         <span
@@ -40,6 +62,7 @@
     updateItemSettingApi,
     removeItemSettingApi,
   } from '@/api/inspect/itemSetting';
+  import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
 
   const [registerModal, { openModal }] = useModal();
 

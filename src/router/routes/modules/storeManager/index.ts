@@ -9,7 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
-import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+import { ReCheckButtonEnum, StoreButtonEnum } from '@/enums/authCodeEnum';
 
 const storeManager: AppRouteModule = {
   path: '/plasma-store',
@@ -29,7 +29,25 @@ const storeManager: AppRouteModule = {
         title: '库房设置',
       },
       id: 990010,
-      component: () => import('/@/views/plasma-store/setting/index.vue'),
+      authElements: [
+        {
+          id: StoreButtonEnum.StoreSettingAdd,
+          title: '新增',
+        },
+        {
+          id: StoreButtonEnum.StoreSettingUpdate,
+          title: '编辑',
+        },
+        {
+          id: StoreButtonEnum.StoreSettingEnable,
+          title: '启用',
+        },
+        {
+          id: StoreButtonEnum.StoreSettingDisable,
+          title: '禁用',
+        },
+      ],
+      component: () => import('@/views/plasma-store/setting/index.vue'),
     },
     {
       path: 'manage',
@@ -38,12 +56,24 @@ const storeManager: AppRouteModule = {
         title: '托盘管理',
       },
       id: 990020,
-      component: () => import('/@/views/tray/manage/index.vue'),
+      component: () => import('@/views/tray/manage/index.vue'),
       authElements: [
         {
           id: ReCheckButtonEnum.TrayManageCheck,
           name: 'reRecheck',
           title: '复核权限',
+        },
+        {
+          id: StoreButtonEnum.TrayListPrint,
+          title: '打印',
+        },
+        {
+          id: StoreButtonEnum.TrayListRePrint,
+          title: '补打',
+        },
+        {
+          id: StoreButtonEnum.TrayListDisable,
+          title: '停用',
         },
       ],
     },
@@ -54,7 +84,7 @@ const storeManager: AppRouteModule = {
         title: '托盘移库',
       },
       id: 990030,
-      component: () => import('/@/views/tray/relocation/index.vue'),
+      component: () => import('@/views/tray/relocation/index.vue'),
     },
     {
       path: 'outInStore',
@@ -62,8 +92,18 @@ const storeManager: AppRouteModule = {
       meta: {
         title: '托盘出入库',
       },
+      authElements: [
+        {
+          id: StoreButtonEnum.TrayOutStore,
+          title: '出库',
+        },
+        {
+          id: StoreButtonEnum.TrayInStore,
+          title: '入库',
+        },
+      ],
       id: 990040,
-      component: () => import('/@/views/tray/outInStore/index.vue'),
+      component: () => import('@/views/tray/outInStore/index.vue'),
     },
     {
       path: 'site',
@@ -71,8 +111,27 @@ const storeManager: AppRouteModule = {
       meta: {
         title: '站点管理',
       },
+      authElements: [
+        {
+          id: StoreButtonEnum.PlasmaSiteAdd,
+          title: '新增',
+        },
+        {
+          id: StoreButtonEnum.PlasmaSiteUpdate,
+          title: '编辑',
+        },
+
+        {
+          id: StoreButtonEnum.PlasmaSiteDisable,
+          title: '禁用',
+        },
+        {
+          id: StoreButtonEnum.PlasmaSiteEnable,
+          title: '启用',
+        },
+      ],
       id: 990050,
-      component: () => import('/@/views/plasma-store/site/index.vue'),
+      component: () => import('@/views/plasma-store/site/index.vue'),
     },
     {
       path: 'entry-plasma',
@@ -81,7 +140,7 @@ const storeManager: AppRouteModule = {
         title: '入库查询',
       },
       id: 990060,
-      component: () => import('/@/views/plasma-store/entry-plasma/index.vue'),
+      component: () => import('@/views/plasma-store/entry-plasma/index.vue'),
     },
   ],
 };

@@ -2,9 +2,24 @@
   <PageWrapper dense contentFullHeight fixedHeight class="p-16px">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button type="primary" @click="handleUpdate">编辑</a-button>
-        <a-button type="primary" @click="handleDelete">删除</a-button>
+        <a-button
+          type="primary"
+          @click="handleCreate"
+          v-auth="BaseSettingButtonEnum.RequiredItemAdd"
+          >新增</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleUpdate"
+          v-auth="BaseSettingButtonEnum.RequiredItemUpdate"
+          >编辑</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleDelete"
+          v-auth="BaseSettingButtonEnum.RequiredItemDelete"
+          >删除</a-button
+        >
       </template>
     </BasicTable>
     <FormModal @register="registerModal" @success="success" />
@@ -34,7 +49,7 @@
   import { ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { getListApi, removeApi } from '@/api/base-settings/requiredItem';
-  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { ReCheckButtonEnum, BaseSettingButtonEnum } from '@/enums/authCodeEnum';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
 
   const userId = ref('');

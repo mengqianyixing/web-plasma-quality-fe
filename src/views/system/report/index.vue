@@ -2,8 +2,12 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button type="primary" @click="handleUpdate">编辑</a-button>
+        <a-button type="primary" @click="handleCreate" v-auth="BaseSettingButtonEnum.ReportAdd"
+          >新增</a-button
+        >
+        <a-button type="primary" @click="handleUpdate" v-auth="BaseSettingButtonEnum.ReportUpdate"
+          >编辑</a-button
+        >
       </template>
     </BasicTable>
     <FormModal @register="registerFormModal" @success="reload" />
@@ -16,6 +20,7 @@
   import { columns } from './report.data';
   import { message } from 'ant-design-vue';
   import FormModal from './form-modal.vue';
+  import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
 
   const [registerFormModal, { openModal: openFormModal }] = useModal();
 

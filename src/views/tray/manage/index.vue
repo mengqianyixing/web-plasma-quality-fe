@@ -2,9 +2,15 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handlePrint">打印</a-button>
-        <a-button type="primary" @click="handlePrintAgain">补打</a-button>
-        <a-button type="primary" @click="handleDiscard(1)">停用</a-button>
+        <a-button type="primary" @click="handlePrint" v-auth="StoreButtonEnum.TrayListPrint"
+          >打印</a-button
+        >
+        <a-button type="primary" @click="handlePrintAgain" v-auth="StoreButtonEnum.TrayListRePrint"
+          >补打</a-button
+        >
+        <a-button type="primary" @click="handleDiscard(1)" v-auth="StoreButtonEnum.TrayListDisable"
+          >停用</a-button
+        >
       </template>
       <template #trayNo="{ record }: { record: Recordable }">
         <span
@@ -50,7 +56,7 @@
   import { message } from 'ant-design-vue';
   import TableModal from './tableDrawer.vue';
   import BoxTableModal from './boxTableDrawer.vue';
-  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { ReCheckButtonEnum, StoreButtonEnum } from '@/enums/authCodeEnum';
 
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
   const [registerModal, { openModal, closeModal, setModalProps }] = useModal();

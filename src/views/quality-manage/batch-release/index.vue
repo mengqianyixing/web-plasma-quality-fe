@@ -2,12 +2,40 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate()" :loading="loading.add">新增</a-button>
-        <a-button type="primary" @click="handleUpdate()">编辑</a-button>
-        <a-button type="primary" @click="handleReview" :loading="loading.review">复核</a-button>
-        <a-button type="primary" @click="handleRelease" :loading="loading.release">放行</a-button>
-        <a-button type="primary" @click="handleCancelRelease">取消放行</a-button>
-        <a-button type="primary">打印</a-button>
+        <a-button
+          type="primary"
+          @click="handleCreate()"
+          :loading="loading.add"
+          v-auth="QualityButtonEnum.BatchReleaseAdd"
+          >新增</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleUpdate()"
+          v-auth="QualityButtonEnum.BatchReleaseUpdate"
+          >编辑</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleReview"
+          :loading="loading.review"
+          v-auth="QualityButtonEnum.BatchReleaseUpdate"
+          >复核</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleRelease"
+          :loading="loading.release"
+          v-auth="QualityButtonEnum.BatchReleaseRelease"
+          >放行</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCancelRelease"
+          v-auth="QualityButtonEnum.BatchReleaseUnRelease"
+          >取消放行</a-button
+        >
+        <a-button type="primary" v-auth="QualityButtonEnum.BatchReleasePrint">打印</a-button>
       </template>
       <template #mesId="{ record }: { record: Recordable }">
         <span
@@ -59,6 +87,7 @@
   import { getSysParamsList } from '@/api/systemServer/params';
   import { STATUS, STATUS_TEXT } from '@/enums/batchReleaseEnum';
   import { getBindBoxsListApi } from '@/api/quality/plasma-restriction';
+  import { QualityButtonEnum } from '@/enums/authCodeEnum';
 
   const open = ref(false);
   const confirmLoading = ref(false);

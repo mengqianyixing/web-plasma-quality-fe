@@ -7,6 +7,7 @@
  * @FilePath: \psms-fe\src\router\routes\modules\QuarantineManager\index.ts
  */
 import type { AppRouteModule } from '@/router/types';
+import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
 
 import { LAYOUT } from '@/router/constant';
 
@@ -32,8 +33,14 @@ const quarantineManager: AppRouteModule = {
       path: '/quarantine/overdue-confirmation',
       name: 'OverdueConfirmation',
       id: 950020,
+      authElements: [
+        {
+          id: QuarantineButtonEnum.OverdueConfirmationConfim,
+          title: '确认',
+        },
+      ],
       meta: { title: '超一年期确认' },
-      component: () => import('/@/views/quarantine/overdue-confirmation/index.vue'),
+      component: () => import('@/views/quarantine/overdue-confirmation/index.vue'),
     },
     {
       path: '/quarantine/plasma-batch',

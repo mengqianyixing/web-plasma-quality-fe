@@ -10,7 +10,12 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleReview">确认</a-button>
+        <a-button
+          type="primary"
+          @click="handleReview"
+          v-auth="QuarantineButtonEnum.OverdueConfirmationConfim"
+          >确认</a-button
+        >
       </template>
     </BasicTable>
   </PageWrapper>
@@ -21,6 +26,7 @@
   import { message, Modal } from 'ant-design-vue';
   import { columns, searchFormSchema } from './overdue-confirmation.data';
   import { getListApi, submitConfirmApi } from '@/api/quarantine/overdue-confirmation';
+  import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
 
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,

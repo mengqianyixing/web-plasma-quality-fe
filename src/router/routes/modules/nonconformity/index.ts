@@ -9,7 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
-import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+import { ReCheckButtonEnum, NonconformityButtonEnum } from '@/enums/authCodeEnum';
 
 const nonconformity: AppRouteModule = {
   path: '/nonconformity',
@@ -51,12 +51,59 @@ const nonconformity: AppRouteModule = {
     },
     {
       path: 'plasmaOut',
-      name: 'plasmaOut',
+      name: 'PlasmaOut',
       meta: {
         title: '不合格血浆出库',
       },
+      authElements: [
+        {
+          id: NonconformityButtonEnum.PlasmaOutAdd,
+
+          title: '新增',
+        },
+        {
+          id: NonconformityButtonEnum.PlasmaOutUpdate,
+
+          title: '编辑',
+        },
+        {
+          id: NonconformityButtonEnum.PlasmaOutRemove,
+
+          title: '撤销',
+        },
+        {
+          id: NonconformityButtonEnum.PlasmaOutProcess,
+
+          title: '审核',
+        },
+        {
+          id: NonconformityButtonEnum.PlasmaOutUnProcess,
+
+          title: '取消审核',
+        },
+        {
+          id: NonconformityButtonEnum.PlasmaOutScan,
+
+          title: '出库扫描',
+        },
+        {
+          id: NonconformityButtonEnum.PlasmaOutTransferPrint,
+
+          title: '转移记录打印',
+        },
+        {
+          id: NonconformityButtonEnum.PlasmaOutPlasmaPrint,
+
+          title: '不合格原料血浆信息清单打印',
+        },
+        {
+          id: NonconformityButtonEnum.PlasmaOutDestructionPrint,
+
+          title: '不合格原理血浆销毁处理申请审批表',
+        },
+      ],
       id: 920030,
-      component: () => import('/@/views/nonconformity/plasmaOut/index.vue'),
+      component: () => import('@/views/nonconformity/plasmaOut/index.vue'),
     },
     {
       path: 'plasma-manage',

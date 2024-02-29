@@ -2,8 +2,20 @@
   <PageWrapper dense contentFullHeight fixedHeight class="p-16px">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate" :disabled="!props.bsNo">新增</a-button>
-        <a-button type="primary" @click="handleDelete" :disabled="!props.bsNo">撤销</a-button>
+        <a-button
+          type="primary"
+          @click="handleCreate"
+          :disabled="!props.bsNo"
+          v-auth="InspectButtonEnum.ResultRegistrationMaterialRegist"
+          >新增</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleDelete"
+          :disabled="!props.bsNo"
+          v-auth="InspectButtonEnum.ResultRegistrationMaterialReRegist"
+          >撤销</a-button
+        >
       </template>
     </BasicTable>
     <FormModal @register="registerModal" @success="success" />
@@ -28,6 +40,7 @@
   import { onMounted } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { getMaterialListApi, deleteMaterialApi } from '@/api/inspect/resultRegistration';
+  import { InspectButtonEnum } from '@/enums/authCodeEnum';
 
   const emit = defineEmits(['reload']);
   const props = defineProps({
