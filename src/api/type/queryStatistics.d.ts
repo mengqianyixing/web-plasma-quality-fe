@@ -845,7 +845,7 @@ export interface GetApiCoreSampleQueryResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/sample/statistics`
- * @更新时间 `2024-02-26 15:31:14`
+ * @更新时间 `2024-02-29 13:52:30`
  */
 export interface GetApiCoreSampleStatisticsRequest {
   /**
@@ -883,7 +883,7 @@ export interface GetApiCoreSampleStatisticsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/sample/statistics`
- * @更新时间 `2024-02-26 15:31:14`
+ * @更新时间 `2024-02-29 13:52:30`
  */
 export interface GetApiCoreSampleStatisticsResponse {
   currPage?: number;
@@ -919,11 +919,7 @@ export interface GetApiCoreSampleStatisticsResponse {
      */
     acceptAt?: string;
     /**
-     * 检测结果
-     */
-    testResult?: string;
-    /**
-     * 发布人
+     * 检测结果发布人
      */
     issuer?: string;
     /**
