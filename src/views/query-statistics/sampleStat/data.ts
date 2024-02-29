@@ -9,61 +9,61 @@ const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: 'batchNo',
+    dataIndex: 'stationName',
   },
   {
     title: '样本批号',
-    dataIndex: 'stationName',
+    dataIndex: 'sampleBatchNo',
   },
 
   {
     title: '样本类型',
-    dataIndex: 'stationBoxNo',
+    dataIndex: 'sampleType',
     format: (text) => SampleType(text),
   },
   {
     title: '样本总数',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'sampleCount',
   },
   {
     title: '接收人',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'acceptor',
   },
   {
     title: '接收日期',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'acceptAt',
   },
   {
     title: '检测结果发布人',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'issuer',
   },
   {
     title: '发布日期',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'issueAt',
   },
   {
     title: '合格总数',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'qualifiedCount',
   },
   {
     title: '不合格总数',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'unqualifiedCount',
   },
   {
     title: '高效价总数',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'totalHighTiter',
   },
   {
     title: '低效价总数',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'totalLowTiter',
   },
   {
     title: '无效价总数',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'totalNoTiter',
   },
   {
     title: '试剂批号',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'reagentBatchNo',
   },
 ];
 
