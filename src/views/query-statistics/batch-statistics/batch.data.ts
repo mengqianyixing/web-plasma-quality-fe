@@ -20,52 +20,79 @@ export const columns: BasicColumn[] = [
     dataIndex: 'collEndDate',
   },
   {
-    title: '接收日期',
-    dataIndex: 'acceptDate',
+    title: '入库情况',
+    children: [
+      {
+        title: '接收日期',
+        dataIndex: 'acceptDate',
+        width: 150,
+      },
+      {
+        title: '验收发布人',
+        dataIndex: 'verifyPubBy',
+        width: 150,
+      },
+      {
+        title: '验收发布日期',
+        dataIndex: 'verifyPubDate',
+        width: 150,
+      },
+      {
+        title: '验收数量袋',
+        dataIndex: 'verifyNum',
+        width: 150,
+      },
+      {
+        title: '验收验收净重（kg）',
+        dataIndex: 'verifyWeight',
+        width: 150,
+      },
+    ],
   },
   {
-    title: '验收发布人',
-    dataIndex: 'verifyPubBy',
+    title: '检测情况',
+    children: [
+      {
+        title: '结果发布人',
+        dataIndex: 'issueBy',
+        width: 150,
+      },
+      {
+        title: '结果发布日期',
+        dataIndex: 'issueDate',
+        width: 150,
+      },
+      {
+        title: '合格数量袋',
+        dataIndex: 'passNum',
+        width: 150,
+      },
+      {
+        title: '不合格数量袋',
+        dataIndex: 'noPassNum',
+        width: 150,
+      },
+    ],
   },
   {
-    title: '验收发布日期',
-    dataIndex: 'verifyPubDate',
-  },
-  {
-    title: '验收数量袋',
-    dataIndex: 'verifyNum',
-  },
-  {
-    title: '验收验收净重（kg）',
-    dataIndex: 'verifyWeight',
-  },
-  {
-    title: '结果发布人',
-    dataIndex: 'issueBy',
-  },
-  {
-    title: '结果发布日期',
-    dataIndex: 'issueDate',
-  },
-  {
-    title: '合格数量袋',
-    dataIndex: 'passNum',
-  },
-  {
-    title: '不合格数量袋',
-    dataIndex: 'noPassNum',
-  },
-  {
-    title: '参考样本批号',
-    dataIndex: 'referBatchNo',
-  },
-  {
-    title: '样本检测发布人',
-    dataIndex: 'samplePubBy',
-  },
-  {
-    title: '样本检测发布日期',
-    dataIndex: 'samplePubDate',
+    title: '检疫期情况',
+    children: [
+      {
+        title: '参考样本批号',
+        dataIndex: 'referBatchNo',
+        width: 150,
+      },
+      {
+        title: '样本检测发布人',
+        dataIndex: 'samplePubBy',
+        width: 150,
+      },
+      {
+        title: '样本检测发布日期',
+        dataIndex: 'samplePubDate',
+        width: 150,
+      },
+    ],
   },
 ];
 
