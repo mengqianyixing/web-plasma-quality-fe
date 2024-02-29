@@ -5,11 +5,12 @@
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
-  import { columns, searchFormSchema } from './data';
+  import { columns, searchFormSchema } from './batch.data';
   import { PageWrapper } from '@/components/Page';
+  import { getCallbackBatchStatistics } from '@/api/query-statistics/callback';
 
   const [registerTable] = useTable({
-    api: () => Promise.resolve({ result: [{}] }),
+    api: getCallbackBatchStatistics,
     columns,
     formConfig: {
       schemas: searchFormSchema,

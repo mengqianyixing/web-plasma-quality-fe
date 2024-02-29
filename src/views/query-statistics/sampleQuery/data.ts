@@ -80,7 +80,7 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       api: stationNameSearchApi,
       labelField: 'stationName',
-      valueField: 'stationName',
+      valueField: 'stationNo',
     },
   },
   {
@@ -133,6 +133,9 @@ export const searchFormSchema: FormSchema[] = [
     field: 'sampleStatus',
     component: 'Select',
     label: '样本状态',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleExperimentType),
+    },
   },
   {
     field: 'plasmaTypeFromStation',
@@ -144,7 +147,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: 'plasmaType',
-    component: 'Input',
+    component: 'Select',
     label: '血浆类型',
     componentProps: {
       options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),

@@ -121,13 +121,13 @@ const trayManager: AppRouteModule = {
       component: () => import('/@/views/query-statistics/titerPlasmaQuery/index.vue'),
     },
     {
-      path: 'relocation',
-      name: 'Relocation',
+      path: 'location',
+      name: 'Location',
       meta: {
         title: '货位查询',
       },
       id: 9000170,
-      component: () => import('/@/views/query-statistics/relocation/index.vue'),
+      component: () => import('/@/views/query-statistics/location/index.vue'),
     },
     {
       path: 'stereoWarehouse',
@@ -200,6 +200,24 @@ const trayManager: AppRouteModule = {
       },
       id: 9000250,
       component: () => import('/@/views/query-statistics/callback/index.vue'),
+    },
+    {
+      path: 'CallbackBatchStatistics',
+      name: 'CallbackBatchStatistics',
+      meta: {
+        title: '回访批号查询',
+      },
+      id: 9000260,
+      component: () => import('/@/views/query-statistics/callback-batch/index.vue'),
+    },
+    {
+      path: 'donor',
+      name: 'DonorQuery',
+      meta: {
+        title: '浆员查询',
+      },
+      id: 9000270,
+      component: () => import('/@/views/query-statistics/donor/index.vue'),
     },
   ],
 };

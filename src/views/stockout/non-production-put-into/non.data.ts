@@ -51,7 +51,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '复核人',
-    dataIndex: 'reviewer',
+    dataIndex: 'checker',
   },
   {
     title: '复核日期',
@@ -62,7 +62,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '审核人',
-    dataIndex: 'checker',
+    dataIndex: 'reviewer',
   },
   {
     title: '审核日期',
