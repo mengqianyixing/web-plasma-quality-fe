@@ -135,7 +135,7 @@ export const batchColumns: BasicColumn[] = [
   },
   {
     title: '浆站净重 g',
-    dataIndex: 'stationNetweight',
+    dataIndex: 'rawWeight',
     width: 100,
   },
   {
@@ -154,12 +154,12 @@ export const batchColumns: BasicColumn[] = [
   {
     title: '血浆过程状态',
     dataIndex: 'processState',
-    width: 100,
+    width: 120,
   },
   {
     title: '血浆不合格原因',
     dataIndex: 'failed',
-    width: 100,
+    width: 120,
   },
   {
     title: '血浆复检信息',
