@@ -1890,17 +1890,79 @@ export type PostApiCoreBagTiterResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/sample/callback/statistic`
- * @更新时间 `2024-02-29 09:40:12`
+ * @更新时间 `2024-02-29 11:09:02`
  */
-export interface GetApiCoreBatchSampleCallbackStatisticRequest {}
+export interface GetApiCoreBatchSampleCallbackStatisticRequest {
+  /**
+   * 采浆公司编号
+   */
+  stationNo?: string;
+  /**
+   * 样本接收日期起
+   */
+  sampleReceiveStartDate?: string;
+  /**
+   * 样本接收日期止
+   */
+  sampleReceiveEndDate?: string;
+  /**
+   * 样本批号
+   */
+  sampleBatchNo?: string;
+  pageSize: string;
+  currPage: string;
+}
 
 /**
  * 接口 [回访批号查询↗](https://yapi.sharing8.cn/project/529/interface/api/33601) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/sample/callback/statistic`
- * @更新时间 `2024-02-29 09:40:12`
+ * @更新时间 `2024-02-29 11:09:02`
  */
-export interface GetApiCoreBatchSampleCallbackStatisticResponse {}
+export interface GetApiCoreBatchSampleCallbackStatisticResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 浆站编号
+     */
+    stationNo: string;
+    /**
+     * 浆站名称
+     */
+    stationName: string;
+    /**
+     * 样本批号
+     */
+    sampleBatchNo: string;
+    /**
+     * 回访样本数量
+     */
+    sampleNum: number;
+    /**
+     * 检测结果审核人
+     */
+    reviewer?: string;
+    /**
+     * 接收日期
+     */
+    receiveDate: string;
+    /**
+     * 采集日期起止
+     */
+    collectDateString: string;
+    /**
+     * 检测结果发布人
+     */
+    issueBy?: string;
+    /**
+     * 检测结果发布日期
+     */
+    issueDate?: string;
+  }[];
+}
 
 /* prettier-ignore-end */

@@ -202,12 +202,21 @@ const trayManager: AppRouteModule = {
       component: () => import('/@/views/query-statistics/callback/index.vue'),
     },
     {
+      path: 'CallbackBatchStatistics',
+      name: 'CallbackBatchStatistics',
+      meta: {
+        title: '回访批号查询',
+      },
+      id: 9000260,
+      component: () => import('/@/views/query-statistics/callback-batch/index.vue'),
+    },
+    {
       path: 'donor',
       name: 'DonorQuery',
       meta: {
         title: '浆员查询',
       },
-      id: 9000260,
+      id: 9000270,
       component: () => import('/@/views/query-statistics/donor/index.vue'),
     },
   ],
