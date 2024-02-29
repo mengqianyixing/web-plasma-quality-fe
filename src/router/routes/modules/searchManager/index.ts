@@ -201,6 +201,15 @@ const trayManager: AppRouteModule = {
       id: 9000250,
       component: () => import('/@/views/query-statistics/callback/index.vue'),
     },
+    {
+      path: 'donor',
+      name: 'DonorQuery',
+      meta: {
+        title: '浆员查询',
+      },
+      id: 9000260,
+      component: () => import('/@/views/query-statistics/donor/index.vue'),
+    },
   ],
 };
 export default trayManager;
