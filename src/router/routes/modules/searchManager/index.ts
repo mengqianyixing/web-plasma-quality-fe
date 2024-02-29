@@ -219,6 +219,15 @@ const trayManager: AppRouteModule = {
       id: 9000270,
       component: () => import('/@/views/query-statistics/donor/index.vue'),
     },
+    {
+      path: 'BatchStatistics',
+      name: 'BatchStatistics',
+      meta: {
+        title: '批号查询',
+      },
+      id: 9000280,
+      component: () => import('/@/views/query-statistics/batch-statistics/index.vue'),
+    },
   ],
 };
 export default trayManager;

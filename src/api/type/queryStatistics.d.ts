@@ -1321,17 +1321,9 @@ export interface PostApiProductInquiryResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/stock/statistics`
- * @更新时间 `2024-02-26 18:03:08`
+ * @更新时间 `2024-02-29 18:07:50`
  */
 export interface GetApiCoreBatchStockStatisticsRequest {
-  /**
-   * 当前页码
-   */
-  currPage: string;
-  /**
-   * 分页大小
-   */
-  pageSize: string;
   /**
    * 采浆公司
    */
@@ -1387,13 +1379,222 @@ export interface GetApiCoreBatchStockStatisticsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/stock/statistics`
- * @更新时间 `2024-02-26 18:03:08`
+ * @更新时间 `2024-02-29 18:07:50`
  */
 export interface GetApiCoreBatchStockStatisticsResponse {
-  currPage?: number;
-  pageSize?: number;
-  totalCount?: number;
-  result?: {}[];
+  /**
+   * 入库汇总
+   */
+  inStockSummary?: {
+    /**
+     * 采浆公司编号
+     */
+    stationNo?: string;
+    /**
+     * 采浆公司
+     */
+    stationName?: string;
+    /**
+     * 批次数量
+     */
+    batchCount?: number;
+    /**
+     * 血浆数量
+     */
+    bagCount?: number;
+    /**
+     * 验收净重（kg）
+     */
+    totalVerifyWeight?: number;
+  }[];
+  /**
+   * 出库汇总
+   */
+  outStockSummary?: {
+    /**
+     * 采浆公司编号
+     */
+    stationNo?: string;
+    /**
+     * 采浆公司
+     */
+    stationName?: string;
+    /**
+     * 批次数量
+     */
+    batchCount?: number;
+    /**
+     * 血浆数量
+     */
+    bagCount?: number;
+    /**
+     * 验收净重（kg）
+     */
+    totalVerifyWeight?: number;
+  }[];
+  /**
+   * 满足检疫期未投产
+   */
+  meetQuarantineUnProduct?: {
+    /**
+     * 效价类型
+     */
+    titerType?: string;
+    /**
+     * 血浆数量
+     */
+    bagCount?: number;
+    /**
+     * 验收净重（kg）
+     */
+    totalVerifyWeight?: number;
+    /**
+     * 最早采集日期
+     */
+    earliestCollectAt?: string;
+  }[];
+  /**
+   * 未满足—首次续追踪
+   */
+  unMeetQuarantineFirstTrace?: {
+    /**
+     * 效价类型
+     */
+    titerType?: string;
+    /**
+     * 血浆数量
+     */
+    bagCount?: number;
+    /**
+     * 验收净重（kg）
+     */
+    totalVerifyWeight?: number;
+    /**
+     * 最早采集日期
+     */
+    earliestCollectAt?: string;
+  }[];
+  /**
+   * 未满足—反复续追踪
+   */
+  unMeetQuarantineRepeateTrace?: {
+    /**
+     * 效价类型
+     */
+    titerType?: string;
+    /**
+     * 血浆数量
+     */
+    bagCount?: number;
+    /**
+     * 验收净重（kg）
+     */
+    totalVerifyWeight?: number;
+    /**
+     * 最早采集日期
+     */
+    earliestCollectAt?: string;
+  }[];
+  /**
+   * 待验收汇总
+   */
+  waitVerifySummary?: {
+    /**
+     * 采浆公司编号
+     */
+    stationNo?: string;
+    /**
+     * 采浆公司
+     */
+    stationName?: string;
+    /**
+     * 批次数量
+     */
+    batchCount?: number;
+    /**
+     * 血浆数量
+     */
+    bagCount?: number;
+    /**
+     * 验收净重（kg）
+     */
+    totalVerifyWeight?: number;
+  }[];
+  /**
+   * 待检测汇总
+   */
+  waitTestSummary?: {
+    /**
+     * 采浆公司编号
+     */
+    stationNo?: string;
+    /**
+     * 采浆公司
+     */
+    stationName?: string;
+    /**
+     * 批次数量
+     */
+    batchCount?: number;
+    /**
+     * 血浆数量
+     */
+    bagCount?: number;
+    /**
+     * 验收净重（kg）
+     */
+    totalVerifyWeight?: number;
+  }[];
+  /**
+   * 检查合格汇总
+   */
+  testQualifiedSummary?: {
+    /**
+     * 采浆公司编号
+     */
+    stationNo?: string;
+    /**
+     * 采浆公司
+     */
+    stationName?: string;
+    /**
+     * 批次数量
+     */
+    batchCount?: number;
+    /**
+     * 血浆数量
+     */
+    bagCount?: number;
+    /**
+     * 验收净重（kg）
+     */
+    totalVerifyWeight?: number;
+  }[];
+  /**
+   * 检测不合格汇总
+   */
+  testUnqualifiedSummary?: {
+    /**
+     * 采浆公司编号
+     */
+    stationNo?: string;
+    /**
+     * 采浆公司
+     */
+    stationName?: string;
+    /**
+     * 批次数量
+     */
+    batchCount?: number;
+    /**
+     * 血浆数量
+     */
+    bagCount?: number;
+    /**
+     * 验收净重（kg）
+     */
+    totalVerifyWeight?: number;
+  }[];
 }
 
 /**
@@ -1965,33 +2166,130 @@ export interface GetApiCoreBatchSampleCallbackStatisticResponse {
 }
 
 /**
- * 接口 [特免血浆查询↗](https://yapi.sharing8.cn/project/529/interface/api/33594) 的 **请求类型**
+ * 接口 [批号统计↗](https://yapi.sharing8.cn/project/529/interface/api/33643) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/bag/titer`
- * @更新时间 `2024-02-28 20:31:55`
+ * @请求头 `GET /api/core/batch/statistic`
+ * @更新时间 `2024-02-29 18:22:14`
  */
-export interface PostApiCoreBagTiterRequest {
+export interface GetApiCoreBatchStatisticRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 接收日期起
+   */
+  acceptStartDate?: string;
+  /**
+   * 接收日期止
+   */
+  acceptEndDate?: string;
+  /**
+   * 参考样本批次号
+   */
+  sampleBatchNo?: string;
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 血浆批号
+   */
+  bagBatchNo?: string;
+}
+
+/**
+ * 接口 [批号统计↗](https://yapi.sharing8.cn/project/529/interface/api/33643) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/batch/statistic`
+ * @更新时间 `2024-02-29 18:22:14`
+ */
+export interface GetApiCoreBatchStatisticResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    stationNo: string;
+    /**
+     * 采浆公司
+     */
+    stationName: string;
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
+    /**
+     * 采集开始日期
+     */
+    collStartDate: string;
+    /**
+     * 采集结束日期
+     */
+    collEndDate: string;
+    /**
+     * 接收日期
+     */
+    acceptDate?: string;
+    /**
+     * 验收发布人
+     */
+    verifyPubBy?: string;
+    /**
+     * 验收发布日期
+     */
+    verifyPubDate?: string;
+    /**
+     * 验收数量袋
+     */
+    verifyNum?: number;
+    /**
+     * 验收验收净重（kg）
+     */
+    verifyWeight?: number;
+    /**
+     * 结果发布人
+     */
+    issueBy?: string;
+    /**
+     * 结果发布日期
+     */
+    issueDate?: string;
+    /**
+     * 合格数量袋
+     */
+    passNum?: number;
+    /**
+     * 不合格数量袋
+     */
+    noPassNum?: number;
+    /**
+     * 参考样本批号
+     */
+    referBatchNo?: string;
+    /**
+     * 样本检测发布人
+     */
+    samplePubBy?: string;
+    /**
+     * 样本检测发布日期
+     */
+    samplePubDate?: string;
+  }[];
+}
+
+/**
+ * 接口 [特免血浆统计↗](https://yapi.sharing8.cn/project/529/interface/api/33650) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `POST /api/core/bag/titer/count`
+ * @更新时间 `2024-02-29 15:58:36`
+ */
+export interface PostApiCoreBagTiterCountRequest {
   /**
    * 采浆公司
    */
   sationNo?: string;
-  /**
-   * 血浆批号开始
-   */
-  batchBegin?: string;
-  /**
-   * 血浆批号结束
-   */
-  batchEnd?: string;
-  /**
-   * 验收发布日开始
-   */
-  verificationBegin?: string;
-  /**
-   * 验收发布日结束
-   */
-  verificationEnd?: string;
   /**
    * 采集日期开始
    */
@@ -2001,25 +2299,9 @@ export interface PostApiCoreBagTiterRequest {
    */
   collectionEnd?: string;
   /**
-   * 试剂批号
-   */
-  reagentBatch?: string;
-  /**
    * 来浆类型
    */
   rawImm?: string;
-  /**
-   * 血浆类型
-   */
-  immunity?: string;
-  /**
-   * 效价值开始
-   */
-  titerBegin?: string;
-  /**
-   * 效价值结束
-   */
-  titerEnd?: string;
   /**
    * 检测发布日期开始
    */
@@ -2031,150 +2313,58 @@ export interface PostApiCoreBagTiterRequest {
 }
 
 /**
- * 接口 [特免血浆查询↗](https://yapi.sharing8.cn/project/529/interface/api/33594) 的 **返回类型**
+ * 接口 [特免血浆统计↗](https://yapi.sharing8.cn/project/529/interface/api/33650) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/bag/titer`
- * @更新时间 `2024-02-28 20:31:55`
+ * @请求头 `POST /api/core/bag/titer/count`
+ * @更新时间 `2024-02-29 15:58:36`
  */
-export type PostApiCoreBagTiterResponse = {
+export type PostApiCoreBagTiterCountResponse = {
   /**
    * 采浆公司
    */
   stationName: string;
   /**
-   * 血浆批号
-   */
-  batchNo: string;
-  /**
-   * 采浆量
-   */
-  weight: string;
-  /**
    * 血浆数量（袋）
    */
   bagCount: string;
   /**
-   * 血浆类型
+   * 来浆类型
    */
-  titers: {
+  rawImm: string;
+  /**
+   * 详情
+   */
+  details: {
     /**
-     * 来浆数量
+     * 数量
      */
     bagCount: string;
     /**
-     * 剂批号
-     */
-    reagentBatch?: string;
-    /**
-     * 合计
-     */
-    count: string;
-    /**
-     * 高效价
-     */
-    hTiter: string;
-    /**
      * 比率%
      */
-    hRatio: string;
+    ratio: string;
     /**
-     * 低效价
+     * 检测合格数量  （袋）
      */
-    lTiter: string;
+    checkPassCount: string;
     /**
-     * 比率%
+     * 检测合格验收净重（kg）
      */
-    lRatio: string;
+    checkPassWeight: string;
     /**
-     * 普通
+     * 检疫期合格数量（袋）
      */
-    nTiter: string;
+    passCount: string;
     /**
-     * 比率%
+     * 检疫期合格验收净重（kg）
      */
-    nRatio: string;
+    passWeight: string;
+    /**
+     * 效价级别
+     */
+    level: string;
   }[];
 }[];
-
-/**
- * 接口 [回访批号查询↗](https://yapi.sharing8.cn/project/529/interface/api/33601) 的 **请求类型**
- *
- * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/batch/sample/callback/statistic`
- * @更新时间 `2024-02-29 11:09:02`
- */
-export interface GetApiCoreBatchSampleCallbackStatisticRequest {
-  /**
-   * 采浆公司编号
-   */
-  stationNo?: string;
-  /**
-   * 样本接收日期起
-   */
-  sampleReceiveStartDate?: string;
-  /**
-   * 样本接收日期止
-   */
-  sampleReceiveEndDate?: string;
-  /**
-   * 样本批号
-   */
-  sampleBatchNo?: string;
-  pageSize: string;
-  currPage: string;
-}
-
-/**
- * 接口 [回访批号查询↗](https://yapi.sharing8.cn/project/529/interface/api/33601) 的 **返回类型**
- *
- * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/batch/sample/callback/statistic`
- * @更新时间 `2024-02-29 11:09:02`
- */
-export interface GetApiCoreBatchSampleCallbackStatisticResponse {
-  totalCount?: number;
-  pageSize?: number;
-  totalPage?: number;
-  currPage?: number;
-  result?: {
-    /**
-     * 浆站编号
-     */
-    stationNo: string;
-    /**
-     * 浆站名称
-     */
-    stationName: string;
-    /**
-     * 样本批号
-     */
-    sampleBatchNo: string;
-    /**
-     * 回访样本数量
-     */
-    sampleNum: number;
-    /**
-     * 检测结果审核人
-     */
-    reviewer?: string;
-    /**
-     * 接收日期
-     */
-    receiveDate: string;
-    /**
-     * 采集日期起止
-     */
-    collectDateString: string;
-    /**
-     * 检测结果发布人
-     */
-    issueBy?: string;
-    /**
-     * 检测结果发布日期
-     */
-    issueDate?: string;
-  }[];
-}
 
 /* prettier-ignore-end */
