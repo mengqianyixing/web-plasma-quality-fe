@@ -118,9 +118,10 @@
   const [
     registerBindTable,
     {
-      getSelectRows: getBindSelectRows,
+      getSelectRowKeys,
       clearSelectedRowKeys: clearBindSelectedRowKeys,
       reload: reloadBind,
+      setSelectedRowKeys: setBindSelectedRowKeys,
     },
   ] = useTable({
     immediate: false,
@@ -128,14 +129,16 @@
     columns: boxBindColumns,
     inset: true,
     isCanResizeParent: true,
+    rowKey: 'boxNo',
     pagination: false,
     size: 'small',
     showTableSetting: false,
     bordered: true,
-    rowSelection: { type: 'radio' },
+    rowSelection: { type: 'checkbox' },
     beforeFetch: (p) => ({ ...p, ...state }),
-    afterFetch: (res) => {
+    afterFetch: (res: any[]) => {
       clearBindSelectedRowKeys();
+      setBindSelectedRowKeys(res.filter((it) => !it.sortState).map((it) => it.boxNo));
       return res;
     },
   });
@@ -157,13 +160,12 @@
     openOutModal(true, { data: rows, showSite: row.houseType[1] === STORE_FLAG.S });
   }
   function handleUnbind() {
-    const rows: Recordable[] = getBindSelectRows();
-    if (rows.length === 0) return message.warning('请选择数据');
-    const [row] = rows;
+    const boxNos = getSelectRowKeys();
+    if (boxNos.length === 0) return message.warning('请选择数据');
     Modal.confirm({
-      content: '确定解绑箱号【' + row.boxNo + '】?',
+      content: '确定解绑箱号【' + boxNos.join('、') + '】?',
       onOk: async () => {
-        await bindBoxApi({ trayNo: state.trayNo, type: 'unbind', boxes: [row.boxNo] });
+        await bindBoxApi({ trayNo: state.trayNo, type: 'unbind', boxes: boxNos as string[] });
         message.success('解绑成功');
         reloadBind();
       },

@@ -121,6 +121,7 @@ export const trayOutStoreColumns: BasicColumn[] = [
   {
     title: '血浆批号',
     dataIndex: 'batchNoes',
+    ellipsis: false,
   },
   {
     title: '存放血浆箱数',
