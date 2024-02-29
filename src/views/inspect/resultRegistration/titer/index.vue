@@ -10,11 +10,28 @@
   <div class="h-full">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleImport" :disabled="!props.bsNo"> 效价导入 </a-button>
-        <a-button type="primary" @click="handleEnter" :disabled="!props.bsNo">
+        <a-button
+          type="primary"
+          @click="handleImport"
+          :disabled="!props.bsNo"
+          v-auth="InspectButtonEnum.ResultRegistrationTiterImport"
+        >
+          效价导入
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleEnter"
+          :disabled="!props.bsNo"
+          v-auth="InspectButtonEnum.ResultRegistrationTiterRegist"
+        >
           录入效价结果
         </a-button>
-        <a-button type="primary" @click="handleNotCheck" :disabled="!props.bsNo">
+        <a-button
+          type="primary"
+          @click="handleNotCheck"
+          :disabled="!props.bsNo"
+          v-auth="InspectButtonEnum.ResultRegistrationTiterNotCheck"
+        >
           未检测登记
         </a-button>
       </template>
@@ -59,6 +76,7 @@
   import { watch, nextTick, onMounted, ref } from 'vue';
   import { message } from 'ant-design-vue';
   import { getInspectMethodListApi } from '@/api/inspect/inspectMethod';
+  import { InspectButtonEnum } from '@/enums/authCodeEnum';
 
   const emit = defineEmits(['reload']);
   const props = defineProps({

@@ -10,11 +10,35 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button type="primary" @click="handleUpdate">编辑</a-button>
-        <a-button type="primary" @click="handleRemove">删除</a-button>
-        <a-button type="primary" @click="handleCheckStatus(false)">禁用</a-button>
-        <a-button type="primary" @click="handleCheckStatus(true)">启用</a-button>
+        <a-button type="primary" @click="handleCreate" v-auth="BaseSettingButtonEnum.TiterTypeAdd">
+          新增
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleUpdate"
+          v-auth="BaseSettingButtonEnum.TiterTypeUpdate"
+        >
+          编辑
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleRemove"
+          v-auth="BaseSettingButtonEnum.TiterTypeDelete"
+        >
+          删除
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleCheckStatus(false)"
+          v-auth="BaseSettingButtonEnum.TiterTypeDisable"
+          >禁用
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleCheckStatus(true)"
+          v-auth="BaseSettingButtonEnum.TiterTypeEnable"
+          >启用
+        </a-button>
       </template>
       <template #itemValue="{ record }: { record: Recordable }">
         <span
@@ -36,6 +60,7 @@
   import { message, Modal } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import { getListApi, updateTitlerTypeApi, removeTitlerTypeApi } from '@/api/inspect/titerType';
+  import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
 
   const [registerModal, { openModal }] = useModal();
 

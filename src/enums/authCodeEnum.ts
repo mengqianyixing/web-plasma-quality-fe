@@ -25,4 +25,125 @@ export enum ReCheckButtonEnum {
 export enum BaseSettingButtonEnum {
   StationEnable = 'E_100070',
   StationDisable = 'E_100080',
+
+  TiterTypeAdd = 'E_1000101',
+  TiterTypeUpdate = 'E_1000102',
+  TiterTypeDelete = 'E_1000103',
+  TiterTypeDisable = 'E_1000104',
+  TiterTypeEnable = 'E_1000105',
+
+  InspectMethodAdd = 'E_1000201',
+  InspectMethodUpdate = 'E_1000202',
+  InspectMethodDelete = 'E_1000203',
+  InspectMethodDisable = 'E_1000204',
+  InspectMethodEnable = 'E_1000205',
+
+  ItemSettingAdd = 'E_1000301',
+  ItemSettingUpdate = 'E_1000302',
+  ItemSettingDelete = 'E_1000303',
+  ItemSettingDisable = 'E_1000304',
+  ItemSettingEnable = 'E_1000305',
+
+  DictionaryAdd = 'E_1000401',
+  DictionaryUpdate = 'E_1000402',
+  DictionaryDelete = 'E_1000403',
+  DictionaryItemAdd = 'E_1000404',
+
+  ReportAdd = 'E_1000501',
+  ReportUpdate = 'E_1000502',
+
+  RequiredItemAdd = 'E_1000801',
+  RequiredItemUpdate = 'E_1000802',
+  RequiredItemDelete = 'E_1000803',
+}
+
+export enum StoreButtonEnum {
+  StoreSettingAdd = 'E_99001001',
+  StoreSettingUpdate = 'E_99001002',
+  StoreSettingDisable = 'E_99001004',
+  StoreSettingEnable = 'E_99001005',
+
+  TrayListPrint = 'E_99002001',
+  TrayListRePrint = 'E_99002002',
+  TrayListDisable = 'E_99002004',
+
+  TrayInStore = 'E_99004001',
+  TrayOutStore = 'E_99004002',
+
+  PlasmaSiteAdd = 'E_99005001',
+  PlasmaSiteUpdate = 'E_99005002',
+  PlasmaSiteDisable = 'E_99005004',
+  PlasmaSiteEnable = 'E_99005005',
+}
+
+export enum InspectButtonEnum {
+  ResultRegistrationSelect = 'E_96001001',
+  ResultRegistrationItemAdd = 'E_96001002',
+  ResultRegistrationRegist = 'E_96001003',
+  ResultRegistrationReRegist = 'E_96001004',
+
+  ResultRegistrationItemDelete = 'E_96001005',
+  ResultRegistrationItemNotCheck = 'E_96001006',
+  ResultRegistrationItemUnq = 'E_96001007',
+
+  ResultRegistrationTiterImport = 'E_96001008',
+  ResultRegistrationTiterRegist = 'E_96001009',
+  ResultRegistrationTiterNotCheck = 'E_960010010',
+
+  ResultRegistrationMaterialRegist = 'E_960010011',
+  ResultRegistrationMaterialReRegist = 'E_960010012',
+
+  ReportReleaseCreate = 'E_96002001',
+  ReportReleaseUnCreate = 'E_96002002',
+  ReportReleaseProcess = 'E_96002003',
+  ReportReleaseUnProcess = 'E_96002004',
+  ReportReleaseRelease = 'E_96002005',
+  ReportReleasePrintBack = 'E_96002006',
+  ReportReleasePrintCheck = 'E_96002007',
+
+  MaterialPreRegistrationAdd = 'E_96003001',
+  MaterialPreRegistrationUpdate = 'E_96003002',
+  MaterialPreRegistrationReview = 'E_96003003',
+  MaterialPreRegistrationUnReview = 'E_96003004',
+  MaterialPreRegistrationDisable = 'E_96003005',
+  MaterialPreRegistrationEnable = 'E_96003006',
+}
+
+export enum QuarantineButtonEnum {
+  OverdueConfirmationConfim = 'E_95001001',
+}
+
+export enum QualityButtonEnum {
+  PlasmaRestrictionAdd = 'E_94001001',
+  PlasmaRestrictionRemove = 'E_94001002',
+  PlasmaRestrictionReview = 'E_94001003',
+
+  BatchReleaseAdd = 'E_94003001',
+  BatchReleaseUpdate = 'E_94003002',
+  BatchReleaseReview = 'E_94003003',
+  BatchReleaseRelease = 'E_94003004',
+  BatchReleaseUnRelease = 'E_94003005',
+  BatchReleasePrint = 'E_94003006',
+}
+
+export enum NonconformityButtonEnum {
+  PlasmaOutAdd = 'E_92003001',
+  PlasmaOutUpdate = 'E_92003002',
+  PlasmaOutRemove = 'E_92003003',
+  PlasmaOutProcess = 'E_92003004',
+  PlasmaOutUnProcess = 'E_92003005',
+  PlasmaOutScan = 'E_92003006',
+  PlasmaOutTransferPrint = 'E_92003007',
+  PlasmaOutPlasmaPrint = 'E_92003008',
+  PlasmaOutDestructionPrint = 'E_92003009',
+}
+
+export enum StockOutButtonEnum {
+  ProductionPlanPick = 'E_91004001',
+  ProductionPlanComplate = 'E_91004002',
+  ProductionPlanReComplate = 'E_91004003',
+  ProductionPlanReview = 'E_91004004',
+  ProductionPlanReReview = 'E_91004005',
+  ProductionPlanCheck = 'E_91004006',
+  ProductionPlanReCheck = 'E_91004007',
 }

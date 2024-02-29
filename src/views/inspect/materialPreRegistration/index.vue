@@ -10,12 +10,42 @@
   <PageWrapper dense contentFullHeight fixedHeight class="p-16px">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button type="primary" @click="handleUpdate">编辑</a-button>
-        <a-button type="primary" @click="handleReview">复核</a-button>
-        <a-button type="primary" @click="handleCancelReview">取消复核</a-button>
-        <a-button type="primary" @click="handleCheckStatus(disableApi, '停用')">停用</a-button>
-        <a-button type="primary" @click="handleCheckStatus(enableApi, '启用')">启用</a-button>
+        <a-button
+          type="primary"
+          @click="handleCreate"
+          v-auth="InspectButtonEnum.MaterialPreRegistrationAdd"
+          >新增</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleUpdate"
+          v-auth="InspectButtonEnum.MaterialPreRegistrationUpdate"
+          >编辑</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleReview"
+          v-auth="InspectButtonEnum.MaterialPreRegistrationReview"
+          >复核</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCancelReview"
+          v-auth="InspectButtonEnum.MaterialPreRegistrationUnReview"
+          >取消复核</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCheckStatus(disableApi, '停用')"
+          v-auth="InspectButtonEnum.MaterialPreRegistrationDisable"
+          >停用</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCheckStatus(enableApi, '启用')"
+          v-auth="InspectButtonEnum.MaterialPreRegistrationEnable"
+          >启用</a-button
+        >
       </template>
     </BasicTable>
     <FormModal @register="registerModal" @success="success" />
@@ -50,6 +80,7 @@
     enableApi,
     disableApi,
   } from '@/api/inspect/materialPreRegistration/index';
+  import { InspectButtonEnum } from '@/enums/authCodeEnum';
 
   const open = ref(false);
   const confirmLoading = ref(false);

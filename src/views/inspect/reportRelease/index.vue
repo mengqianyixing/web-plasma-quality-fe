@@ -10,13 +10,48 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">报告生成</a-button>
-        <a-button type="primary" @click="handleUnCreate">撤销生成</a-button>
-        <a-button type="primary" @click="handleProcess">复核</a-button>
-        <a-button type="primary" @click="handleUnProcess">撤销复核</a-button>
-        <a-button type="primary" @click="handleRelease">发布</a-button>
-        <a-button type="primary" @click="handlePrint">打印回访样本检检验报告</a-button>
-        <a-button type="primary" @click="handlePrint">打印原料血浆检验报告</a-button>
+        <a-button
+          type="primary"
+          @click="handleCreate"
+          v-auth="InspectButtonEnum.ReportReleaseCreate"
+          >报告生成</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleUnCreate"
+          v-auth="InspectButtonEnum.ReportReleaseUnCreate"
+          >撤销生成</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleProcess"
+          v-auth="InspectButtonEnum.ReportReleaseProcess"
+          >复核</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleUnProcess"
+          v-auth="InspectButtonEnum.ReportReleaseUnProcess"
+          >撤销复核</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleRelease"
+          v-auth="InspectButtonEnum.ReportReleaseRelease"
+          >发布</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handlePrint"
+          v-auth="InspectButtonEnum.ReportReleasePrintBack"
+          >打印回访样本检检验报告</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handlePrint"
+          v-auth="InspectButtonEnum.ReportReleasePrintCheck"
+          >打印原料血浆检验报告</a-button
+        >
       </template>
       <template #totalUnqualified="{ record }: { record: Recordable }">
         <span
@@ -61,6 +96,7 @@
   import { message, Modal } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
   import TabelModal from './tabelModal.vue';
+  import { InspectButtonEnum } from '@/enums/authCodeEnum';
 
   const open = ref(false);
   const confirmLoading = ref(false);

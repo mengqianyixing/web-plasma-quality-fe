@@ -2,15 +2,57 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="openModal(true, {})">新增</a-button>
-        <a-button type="primary" @click="handleEdit">编辑</a-button>
-        <a-button type="primary" @click="handleRemove">撤销</a-button>
-        <a-button type="primary" @click="handleProcess">审核</a-button>
-        <a-button type="primary" @click="handleUnProcess">取消审核</a-button>
-        <a-button type="primary" @click="handleScan">出库扫描</a-button>
-        <a-button type="primary" @click="handlePrint">转移记录打印</a-button>
-        <a-button type="primary" @click="handlePrint">不合格原料血浆信息清单打印</a-button>
-        <a-button type="primary" @click="handlePrint">不合格原理血浆销毁处理申请审批表</a-button>
+        <a-button
+          type="primary"
+          @click="openModal(true, {})"
+          v-auth="NonconformityButtonEnum.PlasmaOutAdd"
+          >新增</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleEdit"
+          v-auth="NonconformityButtonEnum.PlasmaOutUpdate"
+          >编辑</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleRemove"
+          v-auth="NonconformityButtonEnum.PlasmaOutRemove"
+          >撤销</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleProcess"
+          v-auth="NonconformityButtonEnum.PlasmaOutProcess"
+          >审核</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleUnProcess"
+          v-auth="NonconformityButtonEnum.PlasmaOutUnProcess"
+          >取消审核</a-button
+        >
+        <a-button type="primary" @click="handleScan" v-auth="NonconformityButtonEnum.PlasmaOutScan"
+          >出库扫描</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handlePrint"
+          v-auth="NonconformityButtonEnum.PlasmaOutTransferPrint"
+          >转移记录打印</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handlePrint"
+          v-auth="NonconformityButtonEnum.PlasmaOutPlasmaPrint"
+          >不合格原料血浆信息清单打印</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handlePrint"
+          v-auth="NonconformityButtonEnum.PlasmaOutDestructionPrint"
+          >不合格原理血浆销毁处理申请审批表</a-button
+        >
       </template>
       <template #dlvNo="{ record }: { record: Recordable }">
         <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleDt(record)">
@@ -51,6 +93,7 @@
   import { ref } from 'vue';
   import { message, Modal } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
+  import { NonconformityButtonEnum } from '@/enums/authCodeEnum';
 
   const open = ref(false);
   const confirmLoading = ref(false);

@@ -2,7 +2,9 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleUpdate">编辑</a-button>
+        <a-button type="primary" @click="handleUpdate" v-auth="BaseSettingButtonEnum.ReportUpdate"
+          >编辑</a-button
+        >
         <BasicUpload
           ref="basicUpload"
           :maxSize="20"
@@ -32,6 +34,7 @@
   import FormModal from './form-modal.vue';
   import { getReportList, uploadReportApi } from '@/api/report';
   import { ref } from 'vue';
+  import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
 
   let uploadParams = ref({});
   const [registerFormModal, { openModal: openFormModal }, closeModal] = useModal();

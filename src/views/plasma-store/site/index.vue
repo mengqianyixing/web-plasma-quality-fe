@@ -10,10 +10,24 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button type="primary" @click="handleUpdate">编辑</a-button>
-        <a-button type="primary" @click="handleCheckStatus(1)">禁用</a-button>
-        <a-button type="primary" @click="handleCheckStatus(0)">启用</a-button>
+        <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.PlasmaSiteAdd"
+          >新增</a-button
+        >
+        <a-button type="primary" @click="handleUpdate" v-auth="StoreButtonEnum.PlasmaSiteUpdate"
+          >编辑</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCheckStatus(1)"
+          v-auth="StoreButtonEnum.PlasmaSiteDisable"
+          >禁用</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCheckStatus(0)"
+          v-auth="StoreButtonEnum.PlasmaSiteEnable"
+          >启用</a-button
+        >
       </template>
     </BasicTable>
     <FormModal @register="registerModal" @success="success" />
@@ -27,6 +41,7 @@
   import { message, Modal } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import { getListApi, updateSiteApi } from '@/api/plasmaStore/site';
+  import { StoreButtonEnum } from '@/enums/authCodeEnum';
 
   const [registerModal, { openModal }] = useModal();
 

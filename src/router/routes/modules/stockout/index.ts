@@ -9,7 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
-import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+import { ReCheckButtonEnum, StockOutButtonEnum } from '@/enums/authCodeEnum';
 
 const nonconformity: AppRouteModule = {
   path: '/stockout',
@@ -64,7 +64,37 @@ const nonconformity: AppRouteModule = {
       meta: {
         title: '投产计划',
       },
-      component: () => import('/@/views/stockout/production-plan/index.vue'),
+      authElements: [
+        {
+          id: StockOutButtonEnum.ProductionPlanPick,
+          title: '挑选血浆',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPlanComplate,
+          title: '完成计划',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPlanReComplate,
+          title: '撤销计划',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPlanReview,
+          title: '复核',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPlanReReview,
+          title: '撤销复核',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPlanCheck,
+          title: '审核',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPlanReCheck,
+          title: '撤销审核',
+        },
+      ],
+      component: () => import('@/views/stockout/production-plan/index.vue'),
     },
     {
       path: 'productionPutInto',

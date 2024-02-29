@@ -18,13 +18,45 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handlePick">挑选血浆</a-button>
-        <a-button type="primary" @click="handleComplate">完成计划</a-button>
-        <a-button type="primary" @click="handleCancelComplate">撤销计划</a-button>
-        <a-button type="primary" @click="handleReview()">复核</a-button>
-        <a-button type="primary" @click="handleCancelReview()">撤销复核</a-button>
-        <a-button type="primary" @click="handleCheck()">审核</a-button>
-        <a-button type="primary" @click="handleCancelCheck()">撤销审核</a-button>
+        <a-button type="primary" @click="handlePick" v-auth="StockOutButtonEnum.ProductionPlanPick"
+          >挑选血浆</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleComplate"
+          v-auth="StockOutButtonEnum.ProductionPlanComplate"
+          >完成计划</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCancelComplate"
+          v-auth="StockOutButtonEnum.ProductionPlanReComplate"
+          >撤销计划</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleReview()"
+          v-auth="StockOutButtonEnum.ProductionPlanReview"
+          >复核</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCancelReview()"
+          v-auth="StockOutButtonEnum.ProductionPlanReReview"
+          >撤销复核</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCheck()"
+          v-auth="StockOutButtonEnum.ProductionPlanCheck"
+          >审核</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCancelCheck()"
+          v-auth="StockOutButtonEnum.ProductionPlanReCheck"
+          >撤销审核</a-button
+        >
       </template>
       <template #mesId="{ record }: { record: Recordable }">
         <span
@@ -70,6 +102,7 @@
   } from '@/api/stockout/production-plan';
   import { nextTick, ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
+  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
 
   const [registerModal, { openModal }] = useModal();
   const confirmLoading = ref(false);

@@ -10,9 +10,24 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button type="primary" @click="handleCancel">撤销</a-button>
-        <a-button type="primary" @click="handleReview">复核</a-button>
+        <a-button
+          type="primary"
+          @click="handleCreate"
+          v-auth="QualityButtonEnum.PlasmaRestrictionAdd"
+          >新增</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCancel"
+          v-auth="QualityButtonEnum.PlasmaRestrictionRemove"
+          >撤销</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleReview"
+          v-auth="QualityButtonEnum.PlasmaRestrictionReview"
+          >复核</a-button
+        >
       </template>
       <template #boxCount="{ record }: { record: Recordable }">
         <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleDt(record)">
@@ -53,6 +68,7 @@
     getBindBoxListApi,
   } from '@/api/quality/plasma-restriction';
   import { ref, nextTick } from 'vue';
+  import { QualityButtonEnum } from '@/enums/authCodeEnum';
 
   const batchNo = ref('');
   const [registerModal, { openModal }] = useModal();

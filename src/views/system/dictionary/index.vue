@@ -10,10 +10,27 @@
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
     <BasicTable @register="registerTable" @expand="expand">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button type="primary" @click="handleUpdate">编辑</a-button>
-        <a-button type="primary" @click="handleRemove">删除</a-button>
-        <a-button type="primary" @click="handleCreateItem()">字典项配置</a-button>
+        <a-button type="primary" @click="handleCreate" v-auth="BaseSettingButtonEnum.DictionaryAdd"
+          >新增</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleUpdate"
+          v-auth="BaseSettingButtonEnum.DictionaryUpdate"
+          >编辑</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleRemove"
+          v-auth="BaseSettingButtonEnum.DictionaryDelete"
+          >删除</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCreateItem()"
+          v-auth="BaseSettingButtonEnum.DictionaryItemAdd"
+          >字典项配置</a-button
+        >
       </template>
     </BasicTable>
     <FormModel @register="registerModal" @success="formSuccess" />
@@ -30,6 +47,7 @@
   import ItemListModal from './itemListDrawer.vue';
   import { getDictListApi, removeDictApi, getDictItemListApi } from '@/api/dictionary';
   import { PostApiSysDictsResponse } from '@/api/type/dictionary';
+  import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'Dictionary' });
 
