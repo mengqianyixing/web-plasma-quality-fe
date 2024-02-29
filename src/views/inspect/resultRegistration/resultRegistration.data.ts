@@ -93,7 +93,7 @@ export const batchSearchScheam: FormSchema[] = [
     componentProps: {
       api: stationNameSearchApi,
       labelField: 'stationName',
-      valueField: 'stationName',
+      valueField: 'stationNo',
     },
   },
   {

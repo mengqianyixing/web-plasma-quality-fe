@@ -1,6 +1,6 @@
 <template>
   <div class="p-3 root">
-    <div class="bg-white pt-5 mb-16px">
+    <div class="pt-5 bg-white mb-16px">
       <BasicForm @register="registerForm" @reset="handleResetBtn" @submit="handleSubmit" />
     </div>
 

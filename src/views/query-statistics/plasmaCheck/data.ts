@@ -176,7 +176,7 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       api: stationNameSearchApi,
       labelField: 'stationName',
-      valueField: 'stationName',
+      valueField: 'stationNo',
     },
   },
   {

@@ -121,13 +121,13 @@ const trayManager: AppRouteModule = {
       component: () => import('/@/views/query-statistics/titerPlasmaQuery/index.vue'),
     },
     {
-      path: 'relocation',
-      name: 'Relocation',
+      path: 'location',
+      name: 'Location',
       meta: {
         title: '货位查询',
       },
       id: 9000170,
-      component: () => import('/@/views/query-statistics/relocation/index.vue'),
+      component: () => import('/@/views/query-statistics/location/index.vue'),
     },
     {
       path: 'stereoWarehouse',
