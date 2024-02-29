@@ -5,12 +5,12 @@
       <div class="title">浆员明细</div>
       <Description @register="donorTable" class="mt-4" :data="mockData" />
     </div>
-    <Card
+    <!-- <Card
       :tab-list="tabListTitle"
       :active-tab-key="activeKey"
-      @tab-change="onTabChange"
       class="mb-20"
       @ok="handleSubmit"
+      v-model:activeKey="currentKey"
     >
       <p v-if="activeKey === 'tab1'">
         <BasicTable @register="batchTable" :key="donorNo" />
@@ -21,15 +21,34 @@
       <p v-if="activeKey === 'tab3'">
         <Chart />
       </p>
-    </Card>
+    </Card> -->
+
+    <Tabs
+      class="flex-1 bg-white pb-16px m-16px"
+      type="card"
+      size="small"
+      v-model:activeKey="activeKey"
+    >
+      <TabPane key="1" tab="血浆明细">
+        <BasicTable @register="batchTable" :key="donorNo" />
+      </TabPane>
+      <TabPane key="2" tab="回访明细">
+        <BasicTable @register="callBackTable" :key="donorNo" />
+      </TabPane>
+      <TabPane key="3" tab="效价趋势">
+        <Chart />
+      </TabPane>
+    </Tabs>
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { PageWrapper } from '@/components/Page';
   import { batchColumns, callbackColumns, donorSchema, searchFormSchema } from './donor.data';
   import { BasicForm, useForm } from '@/components/Form';
-  import { ref } from 'vue';
-  import { Card } from 'ant-design-vue';
+  import { ref, watch, unref } from 'vue';
+  import { TabPane, Tabs } from 'ant-design-vue';
+
+  // import { Card } from 'ant-design-vue';
   import Chart from './chart.vue';
   import { BasicTable, useTable } from '@/components/Table';
   import {
@@ -46,24 +65,45 @@
     baseColProps: { flex: '0 0 370px' },
     autoSubmitOnEnter: true,
   });
+  const isUpdate = ref(false);
 
-  const activeKey = ref('tab1');
-  const tabListTitle = [
-    { key: 'tab1', tab: '血浆明细' },
-    { key: 'tab2', tab: '回访明细' },
-    { key: 'tab3', tab: '效价趋势' },
-  ];
+  const activeKey = ref('1');
+  // const tabListTitle = [
+  //   { key: 'tab1', tab: '血浆明细' },
+  //   { key: 'tab2', tab: '回访明细' },
+  //   { key: 'tab3', tab: '效价趋势' },
+  // ];
 
-  function onTabChange(key) {
-    activeKey.value = key;
-    if (key === 'tab1') {
-      reloadBatchTable();
-    } else if (key === 'tab2') {
-      reloadCallbackTable();
-    } else {
-      console.log('趋势图~');
-    }
-  }
+  // function onTabChange(key) {
+  //   activeKey.value = key;
+  //   if (key === 'tab1') {
+  //     reloadBatchTable();
+  //   } else if (key === 'tab2') {
+  //     reloadCallbackTable();
+  //   } else {
+  //     console.log('趋势图~');
+  //   }
+  // }
+  watch(
+    () => activeKey.value,
+    (key) => {
+      if (!unref(isUpdate)) return;
+
+      if (key === '1') {
+        setTimeout(() => {
+          reloadBatchTable();
+        }, 0);
+      } else if (key === '2') {
+        setTimeout(() => {
+          reloadCallbackTable();
+        }, 0);
+      } else {
+        setTimeout(() => {
+          console.log('趋势图~');
+        }, 0);
+      }
+    },
+  );
   // 浆员查询
   const mockData = ref({});
   const donorNo = ref('');
