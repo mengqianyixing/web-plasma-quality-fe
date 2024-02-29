@@ -1,11 +1,14 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
-import { FormItem, FormItemRest } from 'ant-design-vue';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
 
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: 'batchNo',
+    dataIndex: 'stationName',
   },
   {
     title: '血浆批号',
@@ -35,50 +38,38 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: '',
-    component: 'Input',
+    field: 'stationNo',
     label: '采浆公司',
+    component: 'Select',
   },
   {
-    field: 'batchStartNo',
-    fields: ['batchEndNo'],
-    component: 'Input',
-    label: '血浆批号起止',
-    render({ model, field }) {
-      return (
-        <div class="flex gap-2 items-center justify-center ">
-          <FormItem name="batchEndNo">
-            <FormItemRest>
-              <a-input v-model:value={model[field]} />
-            </FormItemRest>
-          </FormItem>
-          <span>-</span>
-          <FormItem name="batchEndNo">
-            <FormItemRest>
-              <a-input v-model:value={model['batchEndNo']} />
-            </FormItemRest>
-          </FormItem>
-        </div>
-      );
+    field: '',
+    component: 'InputRange',
+    label: '血浆批号',
+    componentProps: {
+      isBetween: false,
     },
   },
   {
-    field: '',
+    field: 'wqd',
     component: 'Input',
     label: '浆站箱号',
   },
   {
-    field: '',
-    component: 'Input',
+    field: 'plasmaTypeFromStation',
+    component: 'Select',
     label: '来浆类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+    },
   },
   {
-    field: '',
+    field: 'www',
     component: 'Input',
     label: '血浆类型',
   },
   {
-    field: '',
+    field: 'fff',
     component: 'Input',
     label: '效价类型',
   },

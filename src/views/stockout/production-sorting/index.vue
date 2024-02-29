@@ -78,6 +78,7 @@
     sortingMouldAssembling,
     sortingAllQua,
     completeSorting,
+    completeSortingBatchNo,
   } from '@/api/stockout/production-sorting/production-sorting-main';
   import InStoreModal from './components/in-store-modal.vue';
   import OutStoreModal from './components/out-store-modal.vue';
@@ -270,6 +271,9 @@
             <a-button disabled={!prepareNo.value} onclick={_completeSorting}>
               分拣完成
             </a-button>
+            <a-button disabled={!prepareNo.value} onclick={_completeBatchNo}>
+              批次完成
+            </a-button>
           </div>
         );
       },
@@ -435,6 +439,15 @@
           nextTick(() => {
             bagNoRef.value.focus();
           });
+
+          // 分拣的是另外一批的血浆
+          if (
+            batchData.value?.batchSummary?.batchNo &&
+            batchData.value?.batchSummary?.batchNo != data.batchSummary.batchNo
+          ) {
+            prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode, scoll: true });
+            return;
+          }
 
           // 准备号、批次详情数据
           prepareData.value = { ...data.preSummary };
@@ -714,6 +727,10 @@
           });
         }
       }
+      const scroll = {
+        top: true,
+        index: -1,
+      };
       // 处理箱数据 pros => 投产列表  unPro => 不投产列表(A时为空、B时为不投产)  utrkUnPro => 不投产或待放行（A时为不投产、B时为待放行）作为 bottomBoxData 数据
       if (data.pros?.bagNos.length) {
         topBoxData.value.push({
@@ -742,7 +759,10 @@
           isSelected: false,
         });
       }
-      const unProArr = data.unPro?.sortImmTypes?.map((item) => {
+      const unProArr = data.unPro?.sortImmTypes?.map((item, index) => {
+        if (item?.bagNos?.length) {
+          scroll.index = index + 1;
+        }
         return {
           immTypeName: item?.immTypeName,
           immType: item?.immType,
@@ -756,7 +776,11 @@
       });
       unProArr?.length && topBoxData.value.push(...unProArr);
 
-      bottomBoxData.value = data.utrkUnPro?.sortImmTypes?.map((item) => {
+      bottomBoxData.value = data.utrkUnPro?.sortImmTypes?.map((item, index) => {
+        if (item?.bagNos?.length) {
+          scroll.index = index;
+          scroll.top = false;
+        }
         return {
           immTypeName: item?.immTypeName,
           immType: item?.immType,
@@ -768,6 +792,25 @@
           isSelected: false,
         };
       });
+
+      // 混批情况，高亮选中有数据的箱
+      if (prepareNoData.scoll) {
+        if (scroll.index !== -1) {
+          nextTick(() => {
+            if (scroll.top) {
+              topBoxData.value[scroll.index].isSelected = true;
+            } else {
+              bottomBoxData.value[scroll.index].isSelected = true;
+            }
+            scollToBox(scroll.top, bottomBoxData.value[scroll.index].immTypeName);
+          });
+        } else {
+          // 不投产、待放行都无数据，选中可投产箱
+          topBoxData.value[0].isSelected = true;
+          scollToBox(true, topBoxData.value[0].immTypeName);
+        }
+        bagNoRef.value.focus();
+      }
     } finally {
       closeFullLoading();
     }
@@ -909,6 +952,44 @@
             bottomBoxData.value = [];
             prepareNo.value = '';
             pickMode = '';
+          } finally {
+            closeFullLoading();
+          }
+        },
+        onCancel() {
+          console.log('Cancel');
+        },
+        class: 'test',
+      });
+    } else {
+      warning('请先分拣完血浆!');
+    }
+  }
+
+  // 完成批次
+  async function _completeBatchNo() {
+    if (
+      batchData.value?.batchSummary?.sortTotal &&
+      batchData.value?.batchSummary.sortTotal > 0 &&
+      batchData.value?.batchSummary.sortTotal === batchData.value?.batchSummary.sortCount
+    ) {
+      Modal.confirm({
+        title: '提示?',
+        icon: createVNode(ExclamationCircleOutlined),
+        content: createVNode(
+          'div',
+          { style: 'color:red;' },
+          '批次完成后不能进行合箱操作，确认要完成批次吗?',
+        ),
+        async onOk() {
+          try {
+            openFullLoading();
+            await completeSortingBatchNo({
+              prepareNo: prepareNo.value,
+              batchNo: batchData.value?.batchSummary?.batchNo,
+            });
+            success('操作成功!');
+            prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
           } finally {
             closeFullLoading();
           }
