@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-03-01 09:47:05
+ * @LastEditTime: 2024-03-01 10:09:46
 -->
 <template>
   <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -63,7 +63,6 @@
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, setColumns, setProps }] =
     useTable({
       title: '',
-      isCanResizeParent: true,
       api: getDictItemListApi,
       fetchSetting: {
         pageField: 'currPage',
@@ -80,6 +79,7 @@
       useSearchForm: true,
       showTableSetting: false,
       bordered: true,
+      canResize: true,
       beforeFetch: (params) => {
         return { ...params, dataDictId: dictId.value };
       },
