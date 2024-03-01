@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-02-28 16:38:29
+ * @LastEditTime: 2024-03-01 09:47:05
 -->
 <template>
   <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -179,7 +179,10 @@
               {
                 required: _.required,
                 validator: (x, value) => {
-                  if (_.minSize && value.length < _.minSize) {
+                  if (_.required && (!value || value === '')) {
+                    return Promise.reject(`必填!`);
+                  }
+                  if (_.required && _.minSize && value.length < _.minSize) {
                     return Promise.reject(`长度必须大于${_.minSize}!`);
                   }
                   return Promise.resolve();
