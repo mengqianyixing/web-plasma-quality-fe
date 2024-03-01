@@ -1,8 +1,8 @@
 /*
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-24 14:49:40
+ * @LastEditors: Ding 1326587277@qq.com
+ * @LastEditTime: 2024-03-01 10:21:20
  * @Description: 血浆批检疫期报告 data
  * @FilePath: \psms-fe\src\views\quarantine\plasma-batch\plasma-batch.data.ts
  */
@@ -52,12 +52,12 @@ export const columns: BasicColumn[] = [
     dataIndex: 'fkBpNo',
     className: 'primary-text font-bold',
   },
-  {
-    title: '血浆总数量',
-    dataIndex: 'summary.totalCount',
-    className: 'empty-value',
-    customRender: ({ record }) => record?.summary?.totalCount,
-  },
+  // {
+  //   title: '血浆总数量',
+  //   dataIndex: 'summary.totalCount',
+  //   className: 'empty-value',
+  //   customRender: ({ record }) => record?.summary?.totalCount,
+  // },
   {
     title: '状态',
     dataIndex: 'state',
