@@ -237,6 +237,15 @@ const trayManager: AppRouteModule = {
       id: 9000290,
       component: () => import('/@/views/query-statistics/unqualified-plasma-batch/index.vue'),
     },
+    {
+      path: 'ProductionInquiry',
+      name: 'ProductionInquiry',
+      meta: {
+        title: '投产查询',
+      },
+      id: 9000300,
+      component: () => import('/@/views/query-statistics/production-inquiry/index.vue'),
+    },
   ],
 };
 export default trayManager;
