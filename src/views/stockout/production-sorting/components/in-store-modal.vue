@@ -11,7 +11,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    :title="`血浆入库`"
+    :title="`托盘入库`"
     width="1200px"
     :show-ok-btn="false"
     cancelText="关闭"
@@ -28,7 +28,7 @@
           size="small"
         >
           <TabPane tab="分拣血浆箱" key="1">
-            <BasicForm @register="registerForm" @submit="handleSubmit" />
+            <BasicForm @register="registerForm" />
             <div class="border border-slate-100"></div>
             <div style="height: calc(100% - 60px)">
               <BasicTable @register="registerBindTable">
@@ -76,14 +76,21 @@
   });
   const emit = defineEmits(['close']);
   const [registerModal] = useModalInner(async ({ prepareNo }) => {
+    resetFields();
     state.prepareNo = prepareNo;
     change(state.activeKey);
   });
   const [registerInModal, { openModal: openInModal }] = useModal();
-  const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
+  const [registerForm, { getFieldsValue, setFieldsValue, resetFields }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 8 },
-    schemas: bindFormSchema,
+    schemas: bindFormSchema.map((schems) => ({
+      ...schems,
+      componentProps: {
+        ...schems.componentProps,
+        onkeyup: handleSubmit,
+      },
+    })),
     showActionButtonGroup: false,
     showResetButton: false,
     autoSubmitOnEnter: true,
@@ -192,7 +199,8 @@
     message.success('绑定成功');
     reloadBind();
   }
-  async function handleSubmit() {
+  async function handleSubmit(e: KeyboardEvent) {
+    if (e.code !== 'Enter' && e.code !== 'NumpadEnter') return;
     const { boxId, trayNo } = getFieldsValue();
     let count = 0;
     if (trayNo) {
