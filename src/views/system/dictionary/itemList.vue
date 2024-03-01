@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-03-01 10:09:46
+ * @LastEditTime: 2024-03-01 10:17:46
 -->
 <template>
   <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -136,7 +136,7 @@
       });
       linkRes.forEach((res: any, i) => {
         links[i].options = (res?.[0]?.dictImtes ?? []).map((item) => ({
-          label: `${item.label}(${item.id}) ${item.value}`,
+          label: `${item.label}`,
           value: res[0].linkedDictKey ? item[res[0].linkedDictKey] : item.id,
         }));
         linkMap.value.set(
