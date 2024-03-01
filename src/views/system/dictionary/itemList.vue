@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-03-01 10:17:46
+ * @LastEditTime: 2024-03-01 10:48:31
 -->
 <template>
   <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -51,8 +51,8 @@
 
   const currentRoute = useRoute();
   const dictId = ref(currentRoute.meta.dictId);
+  console.log('currentRoute--', currentRoute);
   // const dictName = ref('');
-  console.log('currentRoute', currentRoute);
   const systemLevel = ref(currentRoute.meta.systemLevel || 0);
   const linkMap = ref(new Map());
   const enumsMap = ref(new Map());
@@ -60,6 +60,7 @@
   let updataFormSchema = ref<FormSchema[]>([]);
   let isDelete = ref(true);
   const [registerItemFormModal, { openModal }] = useModal();
+  const indexn = itemColumns.findIndex((x) => x.dataIndex === 'itemValue');
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, setColumns, setProps }] =
     useTable({
       title: '',
@@ -71,7 +72,10 @@
         listField: 'result',
       },
       rowKey: 'dictItemId',
-      columns: itemColumns,
+      columns:
+        ['sampleFailedReason', 'plasmaFailedReason'].includes(currentRoute.name) && indexn >= 0
+          ? itemColumns.splice(indexn, 1)
+          : itemColumns,
       size: 'small',
       formConfig: {
         schemas: itemSearchFormSchema,
