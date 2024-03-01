@@ -14,7 +14,7 @@ import {
 
 enum Api {
   DICTIONARY = '/api/sys/dictionaryItems',
-  DICTIONARY_ITEM_KEY = '/api/sys/item/itemKey',
+  DICTIONARY_ITEM_KEY = '/api/sys/dictItems',
 }
 
 export enum DictionaryEnum {
@@ -26,11 +26,20 @@ export enum DictionaryEnum {
   StockPlasmaProcessStatus = 'stockPlasmaProcessStatus',
   ProvinceCode = 'provinceCode',
 }
+
+export enum DictionaryReasonEnum {
+  PlasmaFailedReason = 'plasmaFailedReason',
+  SampleFailedReason = 'sampleFailedReason',
+}
+
 export enum DictionaryItemKeyEnum {
-  Accept = 'accept',
+  PlasmaAccept = 'plasmaAccept',
+  SampleAccept = 'sampleAccept',
   Track = 'track',
   Test = 'test',
   Quarantine = 'quarantine',
+  PlasmaFailed = 'plasmaFailed',
+  SampleFailed = 'sampleFailed',
   Sample = 'sample',
   Other = 'other',
 }
@@ -43,5 +52,5 @@ export const getSysDictionary = (params: DictionaryEnum[]) =>
 
 export const getSysSecondaryDictionary = (params: {
   dataKey: DictionaryEnum;
-  dictNos: DictionaryItemKeyEnum[];
+  dictItemTypes: DictionaryItemKeyEnum[];
 }) => defHttp.post<PostApiSysItemItemKeyResponse>({ url: Api.DICTIONARY_ITEM_KEY, params });

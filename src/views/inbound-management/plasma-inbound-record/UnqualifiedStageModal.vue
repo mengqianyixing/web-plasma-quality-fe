@@ -10,7 +10,7 @@
   <PickBatchModal @register="registerPickBatch" @success="handlePickSuccess" />
 </template>
 <script lang="ts" setup>
-  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
+  import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { onMounted, ref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
   import { unqualifiedColumns } from './record.data';
@@ -21,8 +21,8 @@
     NonconformityPlasmaStatusValueEnum,
   } from '@/enums/nonconforityEnum';
   import {
-    DictionaryEnum,
     DictionaryItemKeyEnum,
+    DictionaryReasonEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
 
@@ -37,9 +37,13 @@
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
   onMounted(async () => {
     plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
-      dataKey: DictionaryEnum.PlasmaFailedItem,
-      dictNos: [
-        DictionaryItemKeyEnum.Accept,
+      dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+      dictItemTypes: [
+        DictionaryItemKeyEnum.PlasmaAccept,
+        DictionaryItemKeyEnum.SampleAccept,
+        DictionaryItemKeyEnum.PlasmaFailed,
+        DictionaryItemKeyEnum.SampleFailed,
+        DictionaryItemKeyEnum.Sample,
         DictionaryItemKeyEnum.Track,
         DictionaryItemKeyEnum.Test,
         DictionaryItemKeyEnum.Quarantine,

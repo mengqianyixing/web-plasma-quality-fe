@@ -219,6 +219,33 @@ const trayManager: AppRouteModule = {
       id: 9000270,
       component: () => import('/@/views/query-statistics/donor/index.vue'),
     },
+    {
+      path: 'BatchStatistics',
+      name: 'BatchStatistics',
+      meta: {
+        title: '批号查询',
+      },
+      id: 9000280,
+      component: () => import('/@/views/query-statistics/batch-statistics/index.vue'),
+    },
+    {
+      path: 'UnqualifiedPlasmaByStation',
+      name: 'UnqualifiedPlasmaByStation',
+      meta: {
+        title: '不合格血浆按站查询',
+      },
+      id: 9000290,
+      component: () => import('/@/views/query-statistics/unqualified-plasma-batch/index.vue'),
+    },
+    {
+      path: 'ProductionInquiry',
+      name: 'ProductionInquiry',
+      meta: {
+        title: '投产查询',
+      },
+      id: 9000300,
+      component: () => import('/@/views/query-statistics/production-inquiry/index.vue'),
+    },
   ],
 };
 export default trayManager;

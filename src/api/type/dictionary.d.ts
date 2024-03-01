@@ -215,7 +215,7 @@ export interface GetApiSysDictDictIdResponse {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dict/items`
- * @更新时间 `2024-01-25 17:26:14`
+ * @更新时间 `2024-02-29 19:44:18`
  */
 export interface PostApiSysDictItemsRequest {
   currPage: number;
@@ -223,6 +223,7 @@ export interface PostApiSysDictItemsRequest {
   dataDictId: string;
   itemKey?: string;
   itemValue?: string;
+  itemDesc: string;
 }
 
 /**
@@ -230,7 +231,7 @@ export interface PostApiSysDictItemsRequest {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dict/items`
- * @更新时间 `2024-01-25 17:26:14`
+ * @更新时间 `2024-02-29 19:44:18`
  */
 export interface PostApiSysDictItemsResponse {
   totalCount: number;
@@ -514,6 +515,36 @@ export type PostApiSysItemItemKeyResponse = {
   dataDictId: string;
   dictItemId: string;
   dictName: string;
+}[];
+
+/**
+ * 接口 [根据字典编码和字典项类别获取字典项↗](https://yapi.sharing8.cn/project/521/interface/api/33664) 的 **请求类型**
+ *
+ * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
+ * @请求头 `POST /api/sys/dictItems`
+ * @更新时间 `2024-03-01 10:53:30`
+ */
+export interface PostApiSysDictItemsRequest {
+  dataKey?: string;
+  dictItemTypes?: string[];
+}
+
+/**
+ * 接口 [根据字典编码和字典项类别获取字典项↗](https://yapi.sharing8.cn/project/521/interface/api/33664) 的 **返回类型**
+ *
+ * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
+ * @请求头 `POST /api/sys/dictItems`
+ * @更新时间 `2024-03-01 10:53:30`
+ */
+export type PostApiSysDictItemsResponse = {
+  dictItemId: string;
+  dataDictId: string;
+  dictName: string;
+  label: string;
+  sort: number;
+  spLink: string;
+  type: string;
+  value: string;
 }[];
 
 /* prettier-ignore-end */

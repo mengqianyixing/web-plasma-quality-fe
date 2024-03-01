@@ -37,8 +37,8 @@
 
   import { onMounted, ref, watchEffect } from 'vue';
   import {
-    DictionaryEnum,
     DictionaryItemKeyEnum,
+    DictionaryReasonEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
   import {
@@ -71,14 +71,8 @@
     });
 
     plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
-      dataKey: DictionaryEnum.PlasmaFailedItem,
-      dictNos: [
-        DictionaryItemKeyEnum.Accept,
-        DictionaryItemKeyEnum.Track,
-        DictionaryItemKeyEnum.Test,
-        DictionaryItemKeyEnum.Quarantine,
-        DictionaryItemKeyEnum.Other,
-      ],
+      dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+      dictItemTypes: [DictionaryItemKeyEnum.PlasmaFailed],
     });
 
     await getForm().updateSchema({
