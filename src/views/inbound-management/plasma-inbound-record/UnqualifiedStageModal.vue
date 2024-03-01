@@ -21,7 +21,7 @@
     NonconformityPlasmaStatusValueEnum,
   } from '@/enums/nonconforityEnum';
   import {
-    DictionaryEnum,
+    DictionaryReasonEnum,
     DictionaryItemKeyEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
@@ -37,9 +37,9 @@
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
   onMounted(async () => {
     plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
-      dataKey: DictionaryEnum.PlasmaFailedItem,
-      dictNos: [
-        DictionaryItemKeyEnum.Accept,
+      dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+      dictItemTypes: [
+        DictionaryItemKeyEnum.PlasmaFailed,
         DictionaryItemKeyEnum.Track,
         DictionaryItemKeyEnum.Test,
         DictionaryItemKeyEnum.Quarantine,

@@ -23,8 +23,8 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import {
-    DictionaryEnum,
     DictionaryItemKeyEnum,
+    DictionaryReasonEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
   import { PostApiCoreBatchSampleUnqualifiedPlasmaRequest } from '@/api/type/batchManage';
@@ -60,8 +60,8 @@
         componentProps: {
           api: getSysSecondaryDictionary,
           params: {
-            dataKey: DictionaryEnum.PlasmaFailedItem,
-            dictNos: [DictionaryItemKeyEnum.Sample],
+            dataKey: DictionaryReasonEnum.SampleFailedReason,
+            dictItemTypes: [DictionaryItemKeyEnum.SampleAccept],
           },
           valueField: 'dictItemId',
         },

@@ -19,8 +19,8 @@
   import { registerNonconformity } from '@/api/inbound-management/sample-verify';
   import { PostApiCoreBatchSampleUnqualifiedRequest } from '@/api/type/batchManage';
   import {
-    DictionaryEnum,
     DictionaryItemKeyEnum,
+    DictionaryReasonEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
@@ -62,8 +62,8 @@
         componentProps: {
           api: getSysSecondaryDictionary,
           params: {
-            dataKey: DictionaryEnum.PlasmaFailedItem,
-            dictNos: [DictionaryItemKeyEnum.Sample],
+            dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+            dictItemTypes: [DictionaryItemKeyEnum.PlasmaFailed],
           },
           valueField: 'dictItemId',
         },

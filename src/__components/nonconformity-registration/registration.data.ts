@@ -1,7 +1,7 @@
 import { FormSchema } from '@/components/Form';
 import {
-  DictionaryEnum,
   DictionaryItemKeyEnum,
+  DictionaryReasonEnum,
   getSysSecondaryDictionary,
 } from '@/api/_dictionary';
 
@@ -21,8 +21,8 @@ export const schemas: FormSchema[] = [
     componentProps: {
       api: getSysSecondaryDictionary,
       params: {
-        dataKey: DictionaryEnum.PlasmaFailedItem,
-        dictNos: [
+        dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+        dictItemTypes: [
           DictionaryItemKeyEnum.Track,
           DictionaryItemKeyEnum.Test,
           DictionaryItemKeyEnum.Quarantine,

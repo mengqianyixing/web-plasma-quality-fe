@@ -1602,7 +1602,7 @@ export interface GetApiCoreBatchStockStatisticsResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/lab/bag/check`
- * @更新时间 `2024-02-28 20:15:05`
+ * @更新时间 `2024-02-29 20:39:17`
  */
 export interface PostApiCoreLabBagCheckRequest {
   /**
@@ -1660,21 +1660,13 @@ export interface PostApiCoreLabBagCheckRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/lab/bag/check`
- * @更新时间 `2024-02-28 20:15:05`
+ * @更新时间 `2024-02-29 20:39:17`
  */
 export type PostApiCoreLabBagCheckResponse = {
   stationName: string;
   other: string;
-  checkUn: {
-    project?: string;
-    ratio?: string;
-    num?: string;
-  };
-  exterior: {
-    num: string;
-    project: string;
-    ratio: string;
-  }[];
+  checkUn: {};
+  exterior: {};
   check: {
     num?: string;
     ratio?: string;
@@ -2320,6 +2312,169 @@ export interface PostApiCoreBagTiterCountRequest {
  * @更新时间 `2024-02-29 15:58:36`
  */
 export type PostApiCoreBagTiterCountResponse = {
+  /**
+   * 采浆公司
+   */
+  stationName: string;
+  /**
+   * 血浆数量（袋）
+   */
+  bagCount: string;
+  /**
+   * 来浆类型
+   */
+  rawImm: string;
+  /**
+   * 详情
+   */
+  details: {
+    /**
+     * 数量
+     */
+    bagCount: string;
+    /**
+     * 比率%
+     */
+    ratio: string;
+    /**
+     * 检测合格数量  （袋）
+     */
+    checkPassCount: string;
+    /**
+     * 检测合格验收净重（kg）
+     */
+    checkPassWeight: string;
+    /**
+     * 检疫期合格数量（袋）
+     */
+    passCount: string;
+    /**
+     * 检疫期合格验收净重（kg）
+     */
+    passWeight: string;
+    /**
+     * 效价级别
+     */
+    level: string;
+  }[];
+}[];
+
+/**
+ * 接口 [不合格血浆按批统计↗](https://yapi.sharing8.cn/project/529/interface/api/33657) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-station`
+ * @更新时间 `2024-02-29 20:06:58`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticStationRequest {
+  pageSize: string;
+  currPage: string;
+  stationNo?: string;
+  verifyPubStartDate?: string;
+  verifyPubEndDate?: string;
+  inStoreStartDate?: string;
+  inStoreEndDate?: string;
+  issueStartDate?: string;
+  issueEndDate?: string;
+  unqInStoreStartDate?: string;
+  unqInStoreEndDate?: string;
+}
+
+/**
+ * 接口 [不合格血浆按批统计↗](https://yapi.sharing8.cn/project/529/interface/api/33657) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-station`
+ * @更新时间 `2024-02-29 20:06:58`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticStationResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    stationNo: string;
+    /**
+     * 采浆公司
+     */
+    stationName: string;
+    /**
+     * 入库数量（袋）
+     */
+    inNum: number;
+    /**
+     * 验收数量（袋）
+     */
+    verifyNum: number;
+    /**
+     * 验收合格数量（袋）
+     */
+    verifyPassNum?: number;
+    /**
+     * 验收不合格
+     */
+    verifyUnqNum?: number;
+    /**
+     * 检测不合格
+     */
+    testUnqNum?: number;
+    /**
+     * 检疫期不合格
+     */
+    quarantineUnqNum?: number;
+    /**
+     * 续追踪不合格
+     */
+    trackUnqNum?: number;
+    /**
+     * 其他不合格
+     */
+    otherUnqNum?: number;
+  }[];
+}
+
+/**
+ * 接口 [样本检测↗](https://yapi.sharing8.cn/project/529/interface/api/33671) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `POST /api/core/bag/lab/sample/detail`
+ * @更新时间 `2024-03-01 10:52:15`
+ */
+export interface PostApiCoreBagLabSampleDetailRequest {
+  /**
+   * 采浆公司
+   */
+  sationNo?: string;
+  /**
+   * 采集日期开始
+   */
+  collectionBegin?: string;
+  /**
+   * 采集日期结束
+   */
+  collectionEnd?: string;
+  /**
+   * 来浆类型
+   */
+  rawImm?: string;
+  /**
+   * 检测发布日期开始
+   */
+  issueBegin?: string;
+  /**
+   * 检测发布日期结束
+   */
+  issueEnd?: string;
+}
+
+/**
+ * 接口 [样本检测↗](https://yapi.sharing8.cn/project/529/interface/api/33671) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `POST /api/core/bag/lab/sample/detail`
+ * @更新时间 `2024-03-01 10:52:15`
+ */
+export type PostApiCoreBagLabSampleDetailResponse = {
   /**
    * 采浆公司
    */
