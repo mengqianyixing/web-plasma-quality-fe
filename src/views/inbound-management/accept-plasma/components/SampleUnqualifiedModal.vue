@@ -61,7 +61,7 @@
           api: getSysSecondaryDictionary,
           params: {
             dataKey: DictionaryReasonEnum.SampleFailedReason,
-            dictItemTypes: [DictionaryItemKeyEnum.SampleAccept],
+            dictItemTypes: [DictionaryItemKeyEnum.PlasmaAccept],
           },
           valueField: 'dictItemId',
         },

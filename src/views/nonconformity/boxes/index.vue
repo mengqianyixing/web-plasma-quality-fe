@@ -40,10 +40,13 @@
     const originDictionaryData = await getSysSecondaryDictionary({
       dataKey: DictionaryReasonEnum.PlasmaFailedReason,
       dictItemTypes: [
+        DictionaryItemKeyEnum.PlasmaAccept,
+        DictionaryItemKeyEnum.SampleAccept,
         DictionaryItemKeyEnum.PlasmaFailed,
+        DictionaryItemKeyEnum.SampleFailed,
+        DictionaryItemKeyEnum.Sample,
         DictionaryItemKeyEnum.Track,
         DictionaryItemKeyEnum.Test,
-        DictionaryItemKeyEnum.Sample,
         DictionaryItemKeyEnum.Quarantine,
         DictionaryItemKeyEnum.Other,
       ],

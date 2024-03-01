@@ -22,12 +22,7 @@ export const schemas: FormSchema[] = [
       api: getSysSecondaryDictionary,
       params: {
         dataKey: DictionaryReasonEnum.PlasmaFailedReason,
-        dictItemTypes: [
-          DictionaryItemKeyEnum.Track,
-          DictionaryItemKeyEnum.Test,
-          DictionaryItemKeyEnum.Quarantine,
-          DictionaryItemKeyEnum.Other,
-        ],
+        dictItemTypes: [DictionaryItemKeyEnum.PlasmaFailed],
       },
       valueField: 'dictItemId',
     },
