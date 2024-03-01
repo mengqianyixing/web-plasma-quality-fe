@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-03-01 10:55:31
+ * @LastEditTime: 2024-03-01 11:47:25
 -->
 <template>
   <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -48,6 +48,7 @@
   import { getEnumsItems } from '@/api/enums';
   import { ref, onMounted } from 'vue';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { cloneDeep } from 'lodash-es';
 
   const currentRoute = useRoute();
   const dictId = ref(currentRoute.meta.dictId);
@@ -102,12 +103,14 @@
     const res = await getDictListApi({ pageSize: 1000, currPage: 1, queryMenu: true });
     const result = res.result.filter((x) => x.dictId === dictId.value);
     const data = result && result.length > 0 ? result[0] : {};
+    setColumns(itemColumns);
     if (data.header) {
-      const _columns = itemColumns.slice();
+      const _columns = cloneDeep(itemColumns.slice());
       const columns = data.header
         .map((_) => {
-          if (_.key === 'itemKey') {
-            const index = _columns.findIndex((x) => x.dataIndex === 'itemKey');
+          if (itemColumns.filter((x) => x.dataIndex === _.key).length > 0) {
+            const index = _columns.findIndex((x) => x.dataIndex === _.key);
+            console.log('index', index, _columns, _columns[index], _.key, itemColumns);
             _columns[index].title = _.name;
           } else {
             return {
