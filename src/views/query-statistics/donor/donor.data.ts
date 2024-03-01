@@ -5,7 +5,7 @@ import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 
 const serverEnumStore = useServerEnumStoreWithOut();
-const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
+const ConclusionType = serverEnumStore.getServerEnumText(SERVER_ENUM.ConclusionType);
 
 // 查询条件：浆员编号、临时编号、浆员姓名
 export const searchFormSchema: FormSchema[] = [
@@ -147,8 +147,8 @@ export const batchColumns: BasicColumn[] = [
     title: '效价类型',
     dataIndex: 'titerType',
     width: 120,
-    customRender: ({ record }) => {
-      return PlasmaType(record.type);
+    format(text) {
+      return `${ConclusionType(text)}`;
     },
   },
   {
@@ -163,11 +163,10 @@ export const batchColumns: BasicColumn[] = [
   },
   {
     title: '血浆复检信息',
-    dataIndex: 'reCheckInfo',
     children: [
       {
         title: '结果发布日期',
-        dataIndex: 'issueAt',
+        dataIndex: ['reCheckInfo', 'issueAt'],
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
@@ -175,33 +174,33 @@ export const batchColumns: BasicColumn[] = [
       },
       {
         title: '复检结果',
-        dataIndex: 'reCheckResult',
+        dataIndex: ['reCheckInfo', 'reCheckResult'],
         width: 100,
       },
       {
         title: '不合格项目',
-        dataIndex: 'unqualifiedItems',
+        dataIndex: ['reCheckInfo', 'unqualifiedItems'],
         width: 100,
       },
       {
         title: '血浆类型',
-        dataIndex: 'immunityType',
+        dataIndex: ['reCheckInfo', 'immunityType'],
         width: 100,
       },
       {
         title: '效价结果值',
-        dataIndex: 'titer',
+        dataIndex: ['reCheckInfo', 'titer'],
         width: 100,
       },
     ],
   },
   {
     title: '检疫期参考信息',
-    dataIndex: 'trackedSeeInfo',
+    // dataIndex: 'trackedSeeInfo',
     children: [
       {
         title: '满足日期',
-        dataIndex: 'qualifiedDate',
+        dataIndex: ['trackedSeeInfo', 'qualifiedDate'],
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
@@ -209,17 +208,17 @@ export const batchColumns: BasicColumn[] = [
       },
       {
         title: '样本批号',
-        dataIndex: 'batchSampleNo',
+        dataIndex: ['trackedSeeInfo', 'batchSampleNo'],
         width: 100,
       },
       {
         title: '样本编号',
-        dataIndex: 'sampleNo',
+        dataIndex: ['trackedSeeInfo', 'sampleNo'],
         width: 100,
       },
       {
         title: '采集日期',
-        dataIndex: 'collectAt',
+        dataIndex: ['trackedSeeInfo', 'collectAt'],
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
@@ -227,7 +226,7 @@ export const batchColumns: BasicColumn[] = [
       },
       {
         title: '浆站检验日期',
-        dataIndex: 'stationCheckDate',
+        dataIndex: ['trackedSeeInfo', 'stationCheckDate'],
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
@@ -235,7 +234,7 @@ export const batchColumns: BasicColumn[] = [
       },
       {
         title: '厂家复检日期',
-        dataIndex: 'reCheckDate',
+        dataIndex: ['trackedSeeInfo', 'reCheckDate'],
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
@@ -243,12 +242,12 @@ export const batchColumns: BasicColumn[] = [
       },
       {
         title: '样本结果',
-        dataIndex: 'reCheckResult',
+        dataIndex: ['trackedSeeInfo', 'reCheckResult'],
         width: 100,
       },
       {
         title: '不合格项目',
-        dataIndex: 'unqualifiedItems',
+        dataIndex: ['trackedSeeInfo', 'unqualifiedItems'],
         width: 120,
       },
     ],
