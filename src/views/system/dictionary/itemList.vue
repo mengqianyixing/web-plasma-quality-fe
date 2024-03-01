@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-02-28 16:38:29
+ * @LastEditTime: 2024-03-01 11:47:25
 -->
 <template>
   <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -48,11 +48,12 @@
   import { getEnumsItems } from '@/api/enums';
   import { ref, onMounted } from 'vue';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { cloneDeep } from 'lodash-es';
 
   const currentRoute = useRoute();
   const dictId = ref(currentRoute.meta.dictId);
+  console.log('currentRoute--', currentRoute);
   // const dictName = ref('');
-  console.log('currentRoute', currentRoute);
   const systemLevel = ref(currentRoute.meta.systemLevel || 0);
   const linkMap = ref(new Map());
   const enumsMap = ref(new Map());
@@ -60,10 +61,10 @@
   let updataFormSchema = ref<FormSchema[]>([]);
   let isDelete = ref(true);
   const [registerItemFormModal, { openModal }] = useModal();
+  const indexn = itemColumns.findIndex((x) => x.dataIndex === 'itemValue');
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, setColumns, setProps }] =
     useTable({
       title: '',
-      isCanResizeParent: true,
       api: getDictItemListApi,
       fetchSetting: {
         pageField: 'currPage',
@@ -72,7 +73,10 @@
         listField: 'result',
       },
       rowKey: 'dictItemId',
-      columns: itemColumns,
+      columns:
+        ['sampleFailedReason', 'plasmaFailedReason'].includes(currentRoute.name) && indexn >= 0
+          ? itemColumns.splice(indexn, 1)
+          : itemColumns,
       size: 'small',
       formConfig: {
         schemas: itemSearchFormSchema,
@@ -80,6 +84,7 @@
       useSearchForm: true,
       showTableSetting: false,
       bordered: true,
+      canResize: true,
       beforeFetch: (params) => {
         return { ...params, dataDictId: dictId.value };
       },
@@ -98,12 +103,14 @@
     const res = await getDictListApi({ pageSize: 1000, currPage: 1, queryMenu: true });
     const result = res.result.filter((x) => x.dictId === dictId.value);
     const data = result && result.length > 0 ? result[0] : {};
+    setColumns(itemColumns);
     if (data.header) {
-      const _columns = itemColumns.slice();
+      const _columns = cloneDeep(itemColumns.slice());
       const columns = data.header
         .map((_) => {
-          if (_.key === 'itemKey') {
-            const index = _columns.findIndex((x) => x.dataIndex === 'itemKey');
+          if (itemColumns.filter((x) => x.dataIndex === _.key).length > 0) {
+            const index = _columns.findIndex((x) => x.dataIndex === _.key);
+            console.log('index', index, _columns, _columns[index], _.key, itemColumns);
             _columns[index].title = _.name;
           } else {
             return {
@@ -136,7 +143,7 @@
       });
       linkRes.forEach((res: any, i) => {
         links[i].options = (res?.[0]?.dictImtes ?? []).map((item) => ({
-          label: `${item.label}(${item.id}) ${item.value}`,
+          label: `${item.label}`,
           value: res[0].linkedDictKey ? item[res[0].linkedDictKey] : item.id,
         }));
         linkMap.value.set(
@@ -173,13 +180,17 @@
           componentProps: {
             options: _.options,
             maxlength: _.maxSize,
+            min: 1,
           },
           dynamicRules: () => {
             return [
               {
                 required: _.required,
                 validator: (x, value) => {
-                  if (_.minSize && value.length < _.minSize) {
+                  if (_.required && (!value || value === '')) {
+                    return Promise.reject(`必填!`);
+                  }
+                  if (_.required && _.minSize && value.length < _.minSize) {
                     return Promise.reject(`长度必须大于${_.minSize}!`);
                   }
                   return Promise.resolve();

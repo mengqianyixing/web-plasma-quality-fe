@@ -15,26 +15,29 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { formSchema } from './report.data';
   import { reactive } from 'vue';
+  import { updateReportApi } from '@/api/report';
 
   const emit = defineEmits(['success', 'register']);
 
   const state = reactive<{
     title: string;
-  }>({ title: '' });
-  const [registerForm, { validate, clearValidate, resetFields, setFieldsValue, updateSchema }] =
-    useForm({
-      labelWidth: 120,
-      baseColProps: { span: 24 },
-      schemas: formSchema,
-      showActionButtonGroup: false,
-    });
+    id: string;
+  }>({ title: '', id: '' });
+  const [registerForm, { validate, clearValidate, resetFields, setFieldsValue }] = useForm({
+    labelWidth: 120,
+    baseColProps: { span: 24 },
+    schemas: formSchema,
+    showActionButtonGroup: false,
+  });
   const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
+    console.log('data--', data);
     if (data.isUpdate) {
       state.title = '编辑';
-      formSchema.slice(0, 1).forEach((schema) => {
-        updateSchema({ ...schema, componentProps: { disabled: true } });
-      });
-      setFieldsValue({});
+      state.id = data.id;
+      // formSchema.slice(0, 1).forEach((schema) => {
+      //   updateSchema({ ...schema, componentProps: { disabled: true } });
+      // });
+      setFieldsValue(data);
     } else {
       state.title = '新增';
       resetFields();
@@ -45,7 +48,10 @@
 
   async function handleSubmit() {
     const values = await validate();
-    console.log(values);
+    await updateReportApi({
+      ...values,
+      id: state.id,
+    });
     closeModal();
     emit('success');
   }
