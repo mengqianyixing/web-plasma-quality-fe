@@ -228,6 +228,15 @@ const trayManager: AppRouteModule = {
       id: 9000280,
       component: () => import('/@/views/query-statistics/batch-statistics/index.vue'),
     },
+    {
+      path: 'UnqualifiedPlasmaByStation',
+      name: 'UnqualifiedPlasmaByStation',
+      meta: {
+        title: '不合格血浆按站查询',
+      },
+      id: 9000290,
+      component: () => import('/@/views/query-statistics/unqualified-plasma-batch/index.vue'),
+    },
   ],
 };
 export default trayManager;
