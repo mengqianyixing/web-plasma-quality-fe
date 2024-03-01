@@ -3,6 +3,7 @@ import { BasicColumn } from '@/components/Table';
 import dayjs from 'dayjs';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { SERVER_ENUM } from '@/enums/serverEnum';
+import { stationNameList } from '@/api/callback/list-generation';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 
@@ -71,7 +72,7 @@ export const columns: BasicColumn[] = [
   {
     title: '效价类型',
     dataIndex: 'titerType',
-    width: 100,
+    minWidth: 200,
     format: (text) => {
       return `${text}, ${serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType)(text)}`;
     },
@@ -116,6 +117,15 @@ export const columns: BasicColumn[] = [
       {
         title: '复检结果',
         dataIndex: ['reCheckInfo', 'reCheckResult'],
+        format(text) {
+          if (text === 1) {
+            return '合格';
+          } else if (text === 0) {
+            return '不合格';
+          } else {
+            return '-';
+          }
+        },
         width: 150,
       },
       {
@@ -127,7 +137,7 @@ export const columns: BasicColumn[] = [
         title: '血浆类型',
         dataIndex: ['reCheckInfo', 'immunityType'],
         format: (text) => {
-          return `${text}, ${serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType)(text)}`;
+          return `${text}`;
         },
         width: 150,
       },
@@ -187,6 +197,15 @@ export const columns: BasicColumn[] = [
       {
         title: '样本结果',
         dataIndex: ['trackedSeeInfo', 'reCheckResult'],
+        format(text) {
+          if (text === 1) {
+            return '合格';
+          } else if (text === 0) {
+            return '不合格';
+          } else {
+            return '-';
+          }
+        },
         width: 150,
       },
       {
@@ -204,6 +223,16 @@ export const columns: BasicColumn[] = [
 ];
 
 export const searchFormSchema: FormSchema[] = [
+  {
+    field: 'stationNo',
+    label: '采浆公司',
+    component: 'ApiSelect',
+    componentProps: {
+      api: stationNameList,
+      labelField: 'stationName',
+      valueField: 'stationNo',
+    },
+  },
   {
     field: 'stationOutboundStatus',
     label: '浆站出库状态',
