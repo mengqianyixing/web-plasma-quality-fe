@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-03-01 10:48:31
+ * @LastEditTime: 2024-03-01 10:55:31
 -->
 <template>
   <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -177,6 +177,7 @@
           componentProps: {
             options: _.options,
             maxlength: _.maxSize,
+            min: 1,
           },
           dynamicRules: () => {
             return [
