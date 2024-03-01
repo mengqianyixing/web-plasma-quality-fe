@@ -11,7 +11,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    :title="`血浆出库`"
+    :title="`托盘出库`"
     width="1200px"
     :show-ok-btn="false"
     cancelText="关闭"
