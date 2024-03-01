@@ -152,6 +152,10 @@
   async function handleSubmit() {
     try {
       const values = await validate();
+      if (!values.users) {
+        values.users = [];
+      }
+      console.log('values--', values);
       if (treeData.value.length === 0) {
         closeModal();
         emit('success');
