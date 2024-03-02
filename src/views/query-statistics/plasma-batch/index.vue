@@ -236,13 +236,21 @@
   function handlePageChange(e) {
     pager.current = e;
 
-    reloadLeft();
+    if (currentKey.value === 'come') {
+      reloadLeft();
+    } else {
+      reloadRight();
+    }
   }
 
   function handleSizeChange(_, size) {
     pager.pageSize = size;
 
-    reloadLeft();
+    if (currentKey.value === 'come') {
+      reloadLeft();
+    } else {
+      reloadRight();
+    }
   }
 
   async function handleResetBtn() {
