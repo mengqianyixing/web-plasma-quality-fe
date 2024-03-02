@@ -2360,11 +2360,11 @@ export type PostApiCoreBagTiterCountResponse = {
 }[];
 
 /**
- * 接口 [不合格血浆按批统计↗](https://yapi.sharing8.cn/project/529/interface/api/33657) 的 **请求类型**
+ * 接口 [不合格血浆按浆站统计↗](https://yapi.sharing8.cn/project/529/interface/api/33657) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-station`
- * @更新时间 `2024-02-29 20:06:58`
+ * @更新时间 `2024-03-01 15:42:25`
  */
 export interface GetApiCoreBagUnqualifiedStatisticStationRequest {
   pageSize: string;
@@ -2381,11 +2381,11 @@ export interface GetApiCoreBagUnqualifiedStatisticStationRequest {
 }
 
 /**
- * 接口 [不合格血浆按批统计↗](https://yapi.sharing8.cn/project/529/interface/api/33657) 的 **返回类型**
+ * 接口 [不合格血浆按浆站统计↗](https://yapi.sharing8.cn/project/529/interface/api/33657) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-station`
- * @更新时间 `2024-02-29 20:06:58`
+ * @更新时间 `2024-03-01 15:42:25`
  */
 export interface GetApiCoreBagUnqualifiedStatisticStationResponse {
   totalCount?: number;
@@ -2437,10 +2437,10 @@ export interface GetApiCoreBagUnqualifiedStatisticStationResponse {
  * 接口 [样本检测↗](https://yapi.sharing8.cn/project/529/interface/api/33671) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/bag/lab/sample/detail`
- * @更新时间 `2024-03-01 10:52:15`
+ * @请求头 `POST /api/core/lab/sample/detail`
+ * @更新时间 `2024-03-01 17:07:33`
  */
-export interface PostApiCoreBagLabSampleDetailRequest {
+export interface PostApiCoreLabSampleDetailRequest {
   /**
    * 采浆公司
    */
@@ -2454,9 +2454,9 @@ export interface PostApiCoreBagLabSampleDetailRequest {
    */
   collectionEnd?: string;
   /**
-   * 来浆类型
+   * 样本类型
    */
-  rawImm?: string;
+  sampleType?: string;
   /**
    * 检测发布日期开始
    */
@@ -2471,55 +2471,349 @@ export interface PostApiCoreBagLabSampleDetailRequest {
  * 接口 [样本检测↗](https://yapi.sharing8.cn/project/529/interface/api/33671) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/bag/lab/sample/detail`
- * @更新时间 `2024-03-01 10:52:15`
+ * @请求头 `POST /api/core/lab/sample/detail`
+ * @更新时间 `2024-03-01 17:07:33`
  */
-export type PostApiCoreBagLabSampleDetailResponse = {
+export type PostApiCoreLabSampleDetailResponse = {
   /**
    * 采浆公司
    */
   stationName: string;
   /**
-   * 血浆数量（袋）
+   * 样本类型
    */
-  bagCount: string;
+  sampleType: string;
   /**
-   * 来浆类型
+   * 样本总数
    */
-  rawImm: string;
+  sampleCount: string;
   /**
-   * 详情
+   * 已接收未检测
    */
-  details: {
+  acceptCount: string;
+  /**
+   * 检测样本
+   */
+  checkCount: string;
+  /**
+   * 检测中
+   */
+  checkingCount: string;
+  /**
+   * 检测合格
+   */
+  check: {
     /**
-     * 数量
+     * 合计
      */
-    bagCount: string;
+    count: string;
     /**
      * 比率%
      */
     ratio: string;
+  };
+  /**
+   * 检测不合格分项目列出
+   */
+  failed: string[];
+  /**
+   * 验收不合格
+   */
+  verification: {
     /**
-     * 检测合格数量  （袋）
+     * 血浆验收不合格
      */
-    checkPassCount: string;
+    bag: string;
     /**
-     * 检测合格验收净重（kg）
+     * 样本验收不合格
      */
-    checkPassWeight: string;
+    sample: string;
     /**
-     * 检疫期合格数量（袋）
+     * 献血浆者符合性
      */
-    passCount: string;
+    donor: string;
     /**
-     * 检疫期合格验收净重（kg）
+     * 合计
      */
-    passWeight: string;
+    count: string;
     /**
-     * 效价级别
+     * 比率%
      */
-    level: string;
-  }[];
+    ratio: string;
+  };
+  /**
+   * 其他不合格
+   */
+  other: string;
 }[];
+
+/**
+ * 接口 [浆站箱号查询↗](https://yapi.sharing8.cn/project/529/interface/api/33685) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/batch/station/box`
+ * @更新时间 `2024-03-01 15:35:26`
+ */
+export interface GetApiCoreBatchStationBoxRequest {
+  /**
+   * 浆站编号
+   */
+  stationNo: string;
+  /**
+   * 开始批号
+   */
+  batchStartNo?: string;
+  /**
+   * 结束批号
+   */
+  batchEndNo: string;
+  /**
+   * 箱号
+   */
+  boxNo: string;
+  /**
+   * 来浆类型
+   */
+  rawImm?: string;
+  /**
+   * 血浆类型
+   */
+  immunity?: string;
+  /**
+   * 效价类型
+   */
+  titerLevel: string;
+  currPage: string;
+  pageSize: string;
+}
+
+/**
+ * 接口 [浆站箱号查询↗](https://yapi.sharing8.cn/project/529/interface/api/33685) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/batch/station/box`
+ * @更新时间 `2024-03-01 15:35:26`
+ */
+export interface GetApiCoreBatchStationBoxResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 采浆公司名称
+     */
+    stationName: string;
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
+    /**
+     * 浆站箱号
+     */
+    boxNo: string;
+    /**
+     * 来浆类型
+     */
+    rawImm: string;
+    /**
+     * 最小血浆编号
+     */
+    minBagNo: string;
+    /**
+     * 最大血浆编号
+     */
+    maxBagNo: string;
+    /**
+     * 血浆数量
+     */
+    bagCount: number;
+  }[];
+}
+
+/**
+ * 接口 [投产准备号查询↗](https://yapi.sharing8.cn/project/529/interface/api/33692) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/product/prepare/out-store/list`
+ * @更新时间 `2024-03-01 17:21:17`
+ */
+export interface GetApiProductPrepareOutStoreListRequest {
+  /**
+   * 血浆批号
+   */
+  batchNo: string;
+  /**
+   * 血浆编号
+   */
+  bagNo?: string;
+  /**
+   * 效价类型
+   */
+  immType: string;
+  currPage: string;
+  pageSize: string;
+}
+
+/**
+ * 接口 [投产准备号查询↗](https://yapi.sharing8.cn/project/529/interface/api/33692) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/product/prepare/out-store/list`
+ * @更新时间 `2024-03-01 17:21:17`
+ */
+export interface GetApiProductPrepareOutStoreListResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 采浆公司名称
+     */
+    prepareNo: string;
+    /**
+     * 投产血浆数量
+     */
+    prodBagCount: number;
+    /**
+     * 总净重（kg）
+     */
+    netWeight: number;
+    /**
+     * 投产类型
+     */
+    prodType: string;
+    /**
+     * 已出库 血浆数量
+     */
+    outBagCount: number;
+    /**
+     * 已出库 总净重（kg）
+     */
+    outNetWeight: number;
+    /**
+     * 出库日期
+     */
+    outAt: number;
+    /**
+     * 未出库 血浆数量
+     */
+    unOutBagCount: string;
+    /**
+     * 未出库 总净重（kg）
+     */
+    unOutNetWeight: string;
+  }[];
+}
+
+/**
+ * 接口 [不合格血浆按批次统计↗](https://yapi.sharing8.cn/project/529/interface/api/33699) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-batch`
+ * @更新时间 `2024-03-01 18:01:03`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticBatchRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 验收发布日期起止
+   */
+  verifyPubStartDate?: string;
+  verifyPubEndDate?: string;
+  /**
+   * 入库日期起止
+   */
+  inStoreStartDate?: string;
+  inStoreEndDate?: string;
+  /**
+   * 检测发布日期起止
+   */
+  issueStartDate?: string;
+  issueEndDate?: string;
+  /**
+   * 不合格入库日期起止
+   */
+  unqInStoreStartDate?: string;
+  unqInStoreEndDate?: string;
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+}
+
+/**
+ * 接口 [不合格血浆按批次统计↗](https://yapi.sharing8.cn/project/529/interface/api/33699) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-batch`
+ * @更新时间 `2024-03-01 18:01:03`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    stationNo: string;
+    /**
+     * 采浆公司
+     */
+    stationName: string;
+    /**
+     * 批次号
+     */
+    batchNo: string;
+    /**
+     * 入库日期
+     */
+    inStoreDate?: string;
+    /**
+     * 入库数量（袋）
+     */
+    inStoreNum: number;
+    /**
+     * 验收数量（袋）
+     */
+    verifyNum: number;
+    /**
+     * 验收合格数量（袋）
+     */
+    verifyPassNum?: number;
+    /**
+     * 验收不合格
+     */
+    verifyUnqNum?: number;
+    /**
+     * 检测不合格
+     */
+    testUnqNum?: number;
+    /**
+     * 检疫期不合格
+     */
+    quarantineUnqNum?: number;
+    /**
+     * 续追踪不合格
+     */
+    trackUnqNum?: number;
+    /**
+     * 其他不合格
+     */
+    otherUnqNum?: number;
+    /**
+     * 合计
+     */
+    totalNum: string;
+    /**
+     * 不合格率
+     */
+    unqRate: string;
+  }[];
+}
 
 /* prettier-ignore-end */
