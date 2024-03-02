@@ -23,6 +23,41 @@ const checkManager: AppRouteModule = {
   },
   children: [
     {
+      path: 'materialPreRegistration',
+      name: 'MaterialPreRegistration',
+      id: 960030,
+      authElements: [
+        {
+          id: InspectButtonEnum.MaterialPreRegistrationAdd,
+          title: '新增',
+        },
+        {
+          id: InspectButtonEnum.MaterialPreRegistrationUpdate,
+          title: '编辑',
+        },
+        {
+          id: InspectButtonEnum.MaterialPreRegistrationReview,
+          title: '复核',
+        },
+        {
+          id: InspectButtonEnum.MaterialPreRegistrationUnReview,
+          title: '取消复核',
+        },
+        {
+          id: InspectButtonEnum.MaterialPreRegistrationDisable,
+          title: '停用',
+        },
+        {
+          id: InspectButtonEnum.MaterialPreRegistrationEnable,
+          title: '启用',
+        },
+      ],
+      meta: {
+        title: '检测物料登记',
+      },
+      component: () => import('@/views/inspect/materialPreRegistration/index.vue'),
+    },
+    {
       path: 'resultRegistration',
       name: 'ResultRegistration',
       meta: {
@@ -95,7 +130,7 @@ const checkManager: AppRouteModule = {
       path: 'reportRelease',
       name: 'ReportRelease',
       meta: {
-        title: '检验报告生成',
+        title: '检验报告发布',
       },
       id: 960020,
       authElements: [
@@ -129,41 +164,6 @@ const checkManager: AppRouteModule = {
         },
       ],
       component: () => import('@/views/inspect/reportRelease/index.vue'),
-    },
-    {
-      path: 'materialPreRegistration',
-      name: 'MaterialPreRegistration',
-      id: 960030,
-      authElements: [
-        {
-          id: InspectButtonEnum.MaterialPreRegistrationAdd,
-          title: '新增',
-        },
-        {
-          id: InspectButtonEnum.MaterialPreRegistrationUpdate,
-          title: '编辑',
-        },
-        {
-          id: InspectButtonEnum.MaterialPreRegistrationReview,
-          title: '复核',
-        },
-        {
-          id: InspectButtonEnum.MaterialPreRegistrationUnReview,
-          title: '取消复核',
-        },
-        {
-          id: InspectButtonEnum.MaterialPreRegistrationDisable,
-          title: '停用',
-        },
-        {
-          id: InspectButtonEnum.MaterialPreRegistrationEnable,
-          title: '启用',
-        },
-      ],
-      meta: {
-        title: '物料预登记',
-      },
-      component: () => import('@/views/inspect/materialPreRegistration/index.vue'),
     },
   ],
 };

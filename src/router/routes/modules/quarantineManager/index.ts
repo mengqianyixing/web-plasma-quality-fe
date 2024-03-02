@@ -18,7 +18,7 @@ const quarantineManager: AppRouteModule = {
   menuWeight: 950,
   component: LAYOUT,
   meta: {
-    title: '检疫管理',
+    title: '检疫期管理',
     icon: 'ant-design:windows-outlined',
   },
   children: [
@@ -28,6 +28,33 @@ const quarantineManager: AppRouteModule = {
       id: 950010,
       meta: { title: '检疫期计算' },
       component: () => import('/@/views/quarantine/computed/index.vue'),
+    },
+    {
+      path: '/quarantine/plasma-batch',
+      name: 'PlasmaBatch',
+      id: 950030,
+      meta: {
+        title: '血浆批检疫期报告',
+      },
+      component: () => import('/@/views/quarantine/plasma-batch/index.vue'),
+    },
+    {
+      path: 'stationRefuse',
+      name: 'StationRefuse',
+      meta: {
+        title: '浆站永拒查询',
+      },
+      id: 9000220,
+      component: () => import('/@/views/query-statistics/stationRefuse/index.vue'),
+    },
+    {
+      path: 'factoryCheckFail',
+      name: 'FactoryCheckFail',
+      meta: {
+        title: '厂家检测不合格查询',
+      },
+      id: 9000110,
+      component: () => import('/@/views/query-statistics/factoryCheckFail/index.vue'),
     },
     {
       path: '/quarantine/overdue-confirmation',
@@ -41,15 +68,6 @@ const quarantineManager: AppRouteModule = {
       ],
       meta: { title: '超一年期确认' },
       component: () => import('@/views/quarantine/overdue-confirmation/index.vue'),
-    },
-    {
-      path: '/quarantine/plasma-batch',
-      name: 'PlasmaBatch',
-      id: 950030,
-      meta: {
-        title: '血浆批检疫期报告',
-      },
-      component: () => import('/@/views/quarantine/plasma-batch/index.vue'),
     },
   ],
 };
