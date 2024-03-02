@@ -27,6 +27,8 @@
       @register="registerUploadModal"
       @change="handleChange"
       @delete="handleDelete"
+      :showCancelBtn="showCancelBtn"
+      :showOkBtn="showOkBtn"
     />
 
     <UploadPreviewModal
@@ -106,4 +108,5 @@
   function handlePreviewDelete(url: string) {
     emit('preview-delete', url);
   }
+  defineExpose({ openUploadModal });
 </script>
