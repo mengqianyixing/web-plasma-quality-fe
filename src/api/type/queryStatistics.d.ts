@@ -2440,7 +2440,7 @@ export interface GetApiCoreBagUnqualifiedStatisticStationResponse {
  * @请求头 `POST /api/core/bag/lab/sample/detail`
  * @更新时间 `2024-03-01 15:02:34`
  */
-export interface PostApiCoreBagLabSampleDetailRequest {
+export interface PostApiCoreLabSampleDetailRequest {
   /**
    * 采浆公司
    */
@@ -2474,7 +2474,7 @@ export interface PostApiCoreBagLabSampleDetailRequest {
  * @请求头 `POST /api/core/bag/lab/sample/detail`
  * @更新时间 `2024-03-01 15:02:34`
  */
-export type PostApiCoreBagLabSampleDetailResponse = {
+export type PostApiCoreLabSampleDetailResponse = {
   /**
    * 采浆公司
    */
@@ -2628,6 +2628,191 @@ export interface GetApiCoreBatchStationBoxResponse {
      * 血浆数量
      */
     bagCount: number;
+  }[];
+}
+
+/**
+ * 接口 [投产准备号查询↗](https://yapi.sharing8.cn/project/529/interface/api/33692) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/product/prepare/out-store/list`
+ * @更新时间 `2024-03-01 17:21:17`
+ */
+export interface GetApiProductPrepareOutStoreListRequest {
+  /**
+   * 血浆批号
+   */
+  batchNo: string;
+  /**
+   * 血浆编号
+   */
+  bagNo?: string;
+  /**
+   * 效价类型
+   */
+  immType: string;
+  currPage: string;
+  pageSize: string;
+}
+
+/**
+ * 接口 [投产准备号查询↗](https://yapi.sharing8.cn/project/529/interface/api/33692) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/product/prepare/out-store/list`
+ * @更新时间 `2024-03-01 17:21:17`
+ */
+export interface GetApiProductPrepareOutStoreListResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 采浆公司名称
+     */
+    prepareNo: string;
+    /**
+     * 投产血浆数量
+     */
+    prodBagCount: number;
+    /**
+     * 总净重（kg）
+     */
+    netWeight: number;
+    /**
+     * 投产类型
+     */
+    prodType: string;
+    /**
+     * 已出库 血浆数量
+     */
+    outBagCount: number;
+    /**
+     * 已出库 总净重（kg）
+     */
+    outNetWeight: number;
+    /**
+     * 出库日期
+     */
+    outAt: number;
+    /**
+     * 未出库 血浆数量
+     */
+    unOutBagCount: string;
+    /**
+     * 未出库 总净重（kg）
+     */
+    unOutNetWeight: string;
+  }[];
+}
+
+/**
+ * 接口 [不合格血浆按批次统计↗](https://yapi.sharing8.cn/project/529/interface/api/33699) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-batch`
+ * @更新时间 `2024-03-01 18:01:03`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticBatchRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 验收发布日期起止
+   */
+  verifyPubStartDate?: string;
+  verifyPubEndDate?: string;
+  /**
+   * 入库日期起止
+   */
+  inStoreStartDate?: string;
+  inStoreEndDate?: string;
+  /**
+   * 检测发布日期起止
+   */
+  issueStartDate?: string;
+  issueEndDate?: string;
+  /**
+   * 不合格入库日期起止
+   */
+  unqInStoreStartDate?: string;
+  unqInStoreEndDate?: string;
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+}
+
+/**
+ * 接口 [不合格血浆按批次统计↗](https://yapi.sharing8.cn/project/529/interface/api/33699) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-batch`
+ * @更新时间 `2024-03-01 18:01:03`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    stationNo: string;
+    /**
+     * 采浆公司
+     */
+    stationName: string;
+    /**
+     * 批次号
+     */
+    batchNo: string;
+    /**
+     * 入库日期
+     */
+    inStoreDate?: string;
+    /**
+     * 入库数量（袋）
+     */
+    inStoreNum: number;
+    /**
+     * 验收数量（袋）
+     */
+    verifyNum: number;
+    /**
+     * 验收合格数量（袋）
+     */
+    verifyPassNum?: number;
+    /**
+     * 验收不合格
+     */
+    verifyUnqNum?: number;
+    /**
+     * 检测不合格
+     */
+    testUnqNum?: number;
+    /**
+     * 检疫期不合格
+     */
+    quarantineUnqNum?: number;
+    /**
+     * 续追踪不合格
+     */
+    trackUnqNum?: number;
+    /**
+     * 其他不合格
+     */
+    otherUnqNum?: number;
+    /**
+     * 合计
+     */
+    totalNum: string;
+    /**
+     * 不合格率
+     */
+    unqRate: string;
   }[];
 }
 
