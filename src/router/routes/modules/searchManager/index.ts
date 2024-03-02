@@ -190,7 +190,7 @@ const trayManager: AppRouteModule = {
         title: 'ERP-检验报告查询',
       },
       id: 9000240,
-      component: () => import('/@/views/query-statistics/ERPEntryStore/index.vue'),
+      component: () => import('/@/views/query-statistics/ERPInspectionReport/index.vue'),
     },
     {
       path: 'CallbackStatistics',
