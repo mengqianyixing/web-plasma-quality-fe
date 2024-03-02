@@ -1,16 +1,16 @@
 import { defHttp } from '@/utils/http/axios';
 
 import {
-  GetApiCoreBagStatisticsRequest,
-  GetApiCoreBagStatisticsResponse,
+  GetApiProductPrepareOutStoreListRequest,
+  GetApiProductPrepareOutStoreListResponse,
 } from '@/api/type/queryStatistics';
 
 enum Api {
-  Plasma_Statistics = '/api/core/bag/statistics',
+  Prepare_Query = '/api/product/prepare/out-store/list',
 }
 
-export const getPlasmaQueryList = (params: GetApiCoreBagStatisticsRequest) =>
-  defHttp.get<GetApiCoreBagStatisticsResponse>(
-    { url: Api.Plasma_Statistics, params },
+export const getPrepareQuery = (params: GetApiProductPrepareOutStoreListRequest) =>
+  defHttp.get<GetApiProductPrepareOutStoreListResponse>(
+    { url: Api.Prepare_Query, params },
     { joinParamsToUrl: true },
   );

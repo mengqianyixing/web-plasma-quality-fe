@@ -1,26 +1,36 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
+import dayjs from 'dayjs';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 export const columns: BasicColumn[] = [
   {
     title: '投产准备号',
-    dataIndex: 'batchNo',
+    dataIndex: 'prepareNo',
   },
   {
     title: '投产类型',
-    dataIndex: 'stationName',
+    dataIndex: 'prodType',
+    format(text) {
+      return `${PlasmaType(text)}`;
+    },
   },
   {
     title: '准备总量',
     children: [
       {
         title: '数量(袋)',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'prodBagCount',
         width: 150,
       },
       {
         title: '投产净重(kg)',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'netWeight',
         width: 150,
       },
     ],
@@ -30,18 +40,21 @@ export const columns: BasicColumn[] = [
     children: [
       {
         title: '数量(袋)',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'outBagCount',
         width: 150,
       },
       {
         title: '投产净重(kg)',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'outNetWeight',
         width: 150,
       },
       {
         title: '出库日期',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'outAt',
         width: 150,
+        format(text) {
+          return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+        },
       },
     ],
   },
@@ -50,12 +63,12 @@ export const columns: BasicColumn[] = [
     children: [
       {
         title: '数量(袋)',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'unOutBagCount',
         width: 150,
       },
       {
         title: '投产净重(kg)',
-        dataIndex: 'currBoxNo',
+        dataIndex: 'unOutNetWeight',
         width: 150,
       },
     ],
@@ -64,18 +77,23 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: '',
+    field: 'batchNo',
     component: 'Input',
     label: '血浆批号',
   },
   {
-    field: '',
+    field: 'bagNo',
     component: 'Input',
     label: '血浆编号',
   },
   {
-    field: '',
-    component: 'Input',
+    field: 'immTypeLevel',
     label: '效价类型',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getDilutionTypeApi,
+      labelField: 'key',
+      valueField: 'value',
+    },
   },
 ];

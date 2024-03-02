@@ -9,9 +9,10 @@
   import { useStation } from '@/hooks/common/useStation';
   import { columns, searchFormSchema } from './data';
   import { PageWrapper } from '@/components/Page';
+  import { getStationBoxList } from '@/api/query-statistics/stationBox.js';
 
   const [registerTable, { getForm }] = useTable({
-    api: () => Promise.resolve({ result: [{}] }),
+    api: getStationBoxList,
     columns,
     formConfig: {
       schemas: searchFormSchema,
