@@ -60,6 +60,9 @@
   import { watchEffect, reactive, ref, onMounted, watch } from 'vue';
   import { doExportMultipleTable } from '@/components/Excel/src/Export2Excel';
   import { Range } from 'xlsx';
+  import { useRouter } from 'vue-router';
+
+  const { currentRoute } = useRouter();
 
   const { isLoading, stationOptions } = useStation();
 
@@ -286,7 +289,12 @@
       );
     });
 
-    doExportMultipleTable(data, 'demoExport', '物品杂费统计', merges);
+    doExportMultipleTable(
+      data,
+      currentRoute.value.meta.title,
+      currentRoute.value.meta.title,
+      merges,
+    );
   }
 
   function handleExportQuarantineData() {}
