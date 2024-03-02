@@ -85,6 +85,14 @@ export const uploadContainerProps = {
     type: Boolean as PropType<boolean>,
     default: false,
   },
+  showCancelBtn: {
+    type: Boolean as PropType<boolean>,
+    default: true,
+  },
+  showOkBtn: {
+    type: Boolean as PropType<boolean>,
+    default: true,
+  },
 };
 
 export const previewProps = {

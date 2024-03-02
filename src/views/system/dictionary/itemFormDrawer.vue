@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-02-28 15:58:05
+ * @LastEditTime: 2024-02-29 18:06:12
 -->
 <template>
   <BasicModal
@@ -91,7 +91,7 @@
       const value = await validate();
       setModalProps({ confirmLoading: true });
       const newFields = fields.reduce((t, c) => {
-        t[c] = value[c];
+        t[c] = value[c] || '';
         return t;
       }, Object.create(null));
       if (state.isUpdate) {

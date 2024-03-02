@@ -62,8 +62,8 @@
         componentProps: {
           api: getSysSecondaryDictionary,
           params: {
-            dataKey: DictionaryReasonEnum.PlasmaFailedReason,
-            dictItemTypes: [DictionaryItemKeyEnum.PlasmaFailed],
+            dataKey: DictionaryReasonEnum.SampleFailedReason,
+            dictItemTypes: [DictionaryItemKeyEnum.SampleAccept],
           },
           valueField: 'dictItemId',
         },
