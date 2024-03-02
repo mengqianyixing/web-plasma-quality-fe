@@ -203,7 +203,7 @@
           field: 'itemDesc',
           label: '描述',
           component: 'InputTextArea',
-          colProps: { span: 24 },
+          colProps: { span: 22 },
         },
       ];
       updataFormSchema.value = formSchema.value.map((_) => ({
