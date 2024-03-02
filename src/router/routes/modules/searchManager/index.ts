@@ -235,6 +235,15 @@ const trayManager: AppRouteModule = {
         title: '不合格血浆按站查询',
       },
       id: 9000290,
+      component: () => import('/@/views/query-statistics/unqualified-plasma-station/index.vue'),
+    },
+    {
+      path: 'UnqualifiedPlasmaByBatch',
+      name: 'UnqualifiedPlasmaByBatch',
+      meta: {
+        title: '不合格血浆按批号查询',
+      },
+      id: 9000291,
       component: () => import('/@/views/query-statistics/unqualified-plasma-batch/index.vue'),
     },
     {
@@ -245,6 +254,15 @@ const trayManager: AppRouteModule = {
       },
       id: 9000300,
       component: () => import('/@/views/query-statistics/production-inquiry/index.vue'),
+    },
+    {
+      path: 'InventoryStatistics',
+      name: 'InventoryStatistics',
+      meta: {
+        title: '库存统计',
+      },
+      id: 9000310,
+      component: () => import('/@/views/query-statistics/inventory-statistics/index.vue'),
     },
   ],
 };

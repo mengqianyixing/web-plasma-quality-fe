@@ -1,5 +1,9 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
 
 export const columns: BasicColumn[] = [
   {
@@ -60,6 +64,9 @@ export const searchFormSchema: FormSchema[] = [
     field: 'orderType',
     component: 'Select',
     label: '投产类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
+    },
   },
   {
     field: '[planOutBegin, planOutEnd]',

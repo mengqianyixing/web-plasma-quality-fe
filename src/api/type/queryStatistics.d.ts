@@ -2437,8 +2437,8 @@ export interface GetApiCoreBagUnqualifiedStatisticStationResponse {
  * 接口 [样本检测↗](https://yapi.sharing8.cn/project/529/interface/api/33671) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/bag/lab/sample/detail`
- * @更新时间 `2024-03-01 15:02:34`
+ * @请求头 `POST /api/core/lab/sample/detail`
+ * @更新时间 `2024-03-01 17:07:33`
  */
 export interface PostApiCoreLabSampleDetailRequest {
   /**
@@ -2471,8 +2471,8 @@ export interface PostApiCoreLabSampleDetailRequest {
  * 接口 [样本检测↗](https://yapi.sharing8.cn/project/529/interface/api/33671) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/bag/lab/sample/detail`
- * @更新时间 `2024-03-01 15:02:34`
+ * @请求头 `POST /api/core/lab/sample/detail`
+ * @更新时间 `2024-03-01 17:07:33`
  */
 export type PostApiCoreLabSampleDetailResponse = {
   /**
