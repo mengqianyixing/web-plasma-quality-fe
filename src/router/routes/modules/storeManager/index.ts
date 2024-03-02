@@ -133,15 +133,6 @@ const storeManager: AppRouteModule = {
       id: 990050,
       component: () => import('@/views/plasma-store/site/index.vue'),
     },
-    {
-      path: 'entry-plasma',
-      name: 'EntryPlasma',
-      meta: {
-        title: '入库查询',
-      },
-      id: 990060,
-      component: () => import('@/views/plasma-store/entry-plasma/index.vue'),
-    },
   ],
 };
 
