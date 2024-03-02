@@ -117,7 +117,7 @@ export const columns: BasicColumn[] = [
       {
         title: '复检结果',
         dataIndex: ['reCheckInfo', 'reCheckResult'],
-        format(text) {
+        format(text: any) {
           if (text === 1) {
             return '合格';
           } else if (text === 0) {
@@ -197,7 +197,7 @@ export const columns: BasicColumn[] = [
       {
         title: '样本结果',
         dataIndex: ['trackedSeeInfo', 'reCheckResult'],
-        format(text) {
+        format(text: any) {
           if (text === 1) {
             return '合格';
           } else if (text === 0) {

@@ -42,4 +42,5 @@ export enum SERVER_ENUM {
   BloodType = 'BloodType',
   SampleType = 'SampleType',
   BankTrayTypeEnum = 'BankTrayTypeEnum',
+  DlvType = 'DlvType',
 }
