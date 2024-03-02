@@ -7,9 +7,10 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './data';
   import { PageWrapper } from '@/components/Page';
+  import { getListApi } from '@/api/query-statistics/checkResult';
 
   const [registerTable] = useTable({
-    api: () => Promise.resolve({ result: [{}] }),
+    api: getListApi,
     columns,
     formConfig: {
       schemas: searchFormSchema,
@@ -24,9 +25,5 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
-    beforeFetch: (p) => {
-      console.log(p);
-      return p;
-    },
   });
 </script>

@@ -32,6 +32,7 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
+    afterFetch: (res: any[]) => res.map((it) => ({ ...it, a: { b: { c: '111' } } })),
   });
   async function handleExport() {
     const { getFieldsValue } = getForm();
@@ -39,7 +40,10 @@
     jsonToSheetXlsx<any>({
       header: getHeader(columns),
       filename: `${currentRoute.value.meta.title}.xlsx`,
-      data: formatData(columns, data.result || []),
+      data: formatData(
+        columns,
+        (data.result || []).map((it) => ({ ...it, a: { b: { c: '111' } } })),
+      ),
     });
   }
 </script>

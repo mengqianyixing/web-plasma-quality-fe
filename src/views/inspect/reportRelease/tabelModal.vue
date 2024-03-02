@@ -5,7 +5,7 @@
     showFooter
     title="检验不合格样本详情"
     :minHeight="520"
-    width="800px"
+    width="1000px"
     @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">

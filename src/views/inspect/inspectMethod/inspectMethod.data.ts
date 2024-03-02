@@ -10,10 +10,7 @@ export const columns: BasicColumn[] = [
     title: '简称',
     dataIndex: 'methodAbbr',
   },
-  {
-    title: '检疫期间隔天数',
-    dataIndex: 'intervalDays',
-  },
+
   {
     title: '排序号',
     dataIndex: 'sort',
@@ -64,16 +61,7 @@ export const formListSchema: FormSchema[] = [
     label: '简称',
     required: true,
   },
-  {
-    field: 'intervalDays',
-    component: 'InputNumber',
-    label: '检疫期间隔天数',
-    required: true,
-    componentProps: {
-      min: 0,
-      formatter: (n: number) => n && parseInt(n),
-    },
-  },
+
   {
     field: 'detectionMode',
     component: 'Select',
