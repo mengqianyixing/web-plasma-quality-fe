@@ -6,27 +6,37 @@ import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
 const serverEnumStore = useServerEnumStoreWithOut();
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
+const ConclusionType = serverEnumStore.getServerEnumText(SERVER_ENUM.ConclusionType);
+
+export const exteriorKey = 'exterior';
+export const checkUnKey = 'checkUn';
+export const checkKey = 'check';
+export const bagCountKey = 'bagCount';
+export const numKey = 'num';
+export const ratioKey = 'ratio';
+
 export const checkColumns: BasicColumn[] = [
   {
     width: 150,
     title: '采浆公司',
-    dataIndex: 'batchNo',
+    dataIndex: 'stationName',
   },
   {
-    width: 150,
+    width: 250,
     title: '血浆批号',
-    dataIndex: 'stationName',
+    dataIndex: 'batch',
   },
 
   {
     width: 150,
     title: '批次数量(批)',
-    dataIndex: 'stationBoxNo',
+    dataIndex: 'batchCount',
   },
   {
     width: 150,
     title: '血浆数量(袋)',
-    dataIndex: 'currBoxNo',
+    dataIndex: bagCountKey,
   },
   {
     width: 150,
@@ -35,12 +45,13 @@ export const checkColumns: BasicColumn[] = [
       {
         width: 150,
         title: '合格数量',
-        dataIndex: 'currBoxNo',
+        dataIndex: [checkKey, numKey],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: [checkKey, ratioKey],
+        format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
       },
     ],
   },
@@ -50,13 +61,14 @@ export const checkColumns: BasicColumn[] = [
     children: [
       {
         width: 150,
-        title: '合格数量',
-        dataIndex: 'currBoxNo',
+        title: '合计',
+        dataIndex: [exteriorKey, numKey],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: [exteriorKey, ratioKey],
+        format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
       },
     ],
   },
@@ -66,111 +78,121 @@ export const checkColumns: BasicColumn[] = [
     children: [
       {
         width: 150,
-        title: '合格数量',
-        dataIndex: 'currBoxNo',
+        title: '合计',
+        dataIndex: [checkUnKey, numKey],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: [checkUnKey, ratioKey],
+        format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
       },
     ],
   },
   {
     width: 150,
     title: '其他血浆不合格',
-    children: [
-      {
-        width: 150,
-        title: '合格数量',
-        dataIndex: 'currBoxNo',
-      },
-      {
-        width: 150,
-        title: '比率(%)',
-        dataIndex: 'currBoxNo',
-      },
-    ],
+    dataIndex: '',
   },
 ];
 
 export const titerColumns: BasicColumn[] = [
   {
-    dataIndex: '采浆公司',
-    title: '',
+    title: '采浆公司',
+    dataIndex: 'stationName',
   },
   {
-    dataIndex: '来浆类型',
-    title: '',
+    title: '来浆类型',
+    dataIndex: 'rawImm',
+    format: (text) => PlasmaType(text),
   },
   {
-    dataIndex: '来浆总数量',
-    title: '',
+    title: '来浆总数量',
+    dataIndex: 'bagCount',
   },
   {
-    dataIndex: '效价类型',
-    title: '',
+    title: '效价类型',
+    dataIndex: 'titerTypes',
+    ellipsis: false,
+    format: (text) =>
+      (text || '')
+        .split(',')
+        .map((it) => ConclusionType(it))
+        .join(',') || text,
   },
   {
-    dataIndex: '效价数量',
-    title: '',
+    title: '效价数量',
+    dataIndex: 'titerCount',
   },
   {
-    dataIndex: '比率(%)',
-    title: '',
+    title: '比率(%)',
+    dataIndex: 'ratio',
+    format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
   },
 ];
 export const followUpColumns: BasicColumn[] = [
   {
-    dataIndex: '采浆公司',
-    title: '',
+    title: '采浆公司',
+    dataIndex: 'stationName',
+    width: 150,
   },
   {
-    dataIndex: '血浆批号',
-    title: '',
+    title: '血浆批号',
+    dataIndex: 'batch',
+    width: 250,
   },
   {
-    dataIndex: '血浆数量(袋)',
-    title: '',
+    title: '血浆数量(袋)',
+    dataIndex: 'bagCount',
+    width: 150,
   },
   {
-    dataIndex: '首次续追踪',
+    title: '首次续追踪',
     children: [
       {
-        dataIndex: '数量',
-        title: '',
+        title: '数量',
+        dataIndex: 'sTrack',
+        width: 150,
       },
       {
-        dataIndex: '比率(%)',
-        title: '',
+        title: '比率(%)',
+        dataIndex: 'sRatio',
+        width: 150,
+        format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
       },
     ],
   },
   {
-    dataIndex: '反复续追踪',
+    title: '反复续追踪',
     children: [
       {
-        dataIndex: '数量',
-        title: '',
+        title: '数量',
+        width: 150,
+        dataIndex: 'fTrack',
       },
       {
-        dataIndex: '比率(%)',
-        title: '',
+        title: '比率(%)',
+        dataIndex: 'fRatio',
+        width: 150,
+        format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
       },
     ],
   },
   {
-    dataIndex: '合计',
-    title: '',
+    title: '合计',
+    width: 150,
+    dataIndex: 'count',
   },
   {
-    dataIndex: '比率(%)',
-    title: '',
+    title: '比率(%)',
+    dataIndex: 'ratio',
+    width: 150,
+    format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
   },
 ];
 export const searchFormSchema: FormSchema[] = [
   {
-    field: '',
+    field: 'stationNo',
     component: 'ApiSelect',
     label: '采浆公司',
     componentProps: {
@@ -180,12 +202,15 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: '[batchNoBegin, batchNoEnd]',
     component: 'InputRange',
     label: '血浆批号',
+    componentProps: {
+      isBetween: false,
+    },
   },
   {
-    field: '',
+    field: '[verificationBegin,verificationEnd]',
     component: 'RangePicker',
     label: '验收发布日期',
     componentProps: {
@@ -194,7 +219,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: '[acceptBegin,acceptEnd]',
     component: 'RangePicker',
     label: '接收日期',
     componentProps: {
@@ -203,31 +228,33 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: 'rawImm',
     component: 'Select',
     label: '来浆类型',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {
-    field: '',
+    field: 'plasmaType',
     component: 'Select',
     label: '血浆类型',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {
-    field: '',
+    field: 'titerType',
     component: 'ApiSelect',
     label: '效价类型',
     componentProps: {
       api: getDilutionTypeApi,
+      labelField: 'key',
+      valueField: 'value',
     },
   },
   {
-    field: '',
+    field: '[issueBegin,issueEnd]',
     component: 'RangePicker',
     label: '检测发布日期',
     componentProps: {
