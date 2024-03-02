@@ -2,6 +2,7 @@ import * as xlsx from 'xlsx';
 import type { WorkBook } from 'xlsx';
 import type { JsonToSheet, AoAToSheet } from './typing';
 import { AoaToMultipleSheet, JsonToMultipleSheet } from './typing';
+import { Range } from 'xlsx';
 
 const { utils, writeFile } = xlsx;
 
@@ -146,4 +147,25 @@ export function aoaToMultipleSheetXlsx<T = any>({
   /* output format determined by filename */
   writeFile(workbook, filename, write2excelOpts);
   /* at this point, out.xlsb will have been downloaded */
+}
+
+export function doExportMultipleTable(
+  dataList,
+  title = DEF_FILE_NAME,
+  sheetName = 'Sheet',
+  merges: Range[] = [],
+) {
+  const filename = `${title}.xlsx`;
+
+  const ws = utils.aoa_to_sheet(dataList);
+
+  setColumnWidth(dataList, ws);
+
+  if (!ws['!merges']) ws['!merges'] = [];
+  ws['!merges'] = merges;
+
+  const wb = utils.book_new();
+  utils.book_append_sheet(wb, ws, sheetName);
+
+  writeFile(wb, filename);
 }

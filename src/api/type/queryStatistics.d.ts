@@ -311,7 +311,7 @@ export interface GetApiCoreBagStatisticsResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/plasma/statistic`
- * @更新时间 `2024-02-22 22:35:23`
+ * @更新时间 `2024-03-02 17:10:03`
  */
 export interface GetApiCoreBatchPlasmaStatisticRequest {
   /**
@@ -326,6 +326,8 @@ export interface GetApiCoreBatchPlasmaStatisticRequest {
    * 血浆批号止
    */
   batchEndNo?: string;
+  pageSize: string;
+  currPage: string;
 }
 
 /**
@@ -333,35 +335,41 @@ export interface GetApiCoreBatchPlasmaStatisticRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/plasma/statistic`
- * @更新时间 `2024-02-22 22:35:23`
+ * @更新时间 `2024-03-02 17:10:03`
  */
 export interface GetApiCoreBatchPlasmaStatisticResponse {
-  batchNo: string;
-  typeList: {
-    /**
-     * 来浆类型
-     */
-    plasmaType: string;
-    /**
-     * 血浆编号（起止）
-     */
-    batchNoRange: string;
-    /**
-     * 浆站不合格
-     */
-    lackNos?: string;
-    /**
-     * 血浆数量
-     */
-    totalNum: number;
-    /**
-     * 验收净重
-     */
-    verifyWeight: number;
-    /**
-     * 验收血浆不合格编号
-     */
-    verifyUnqNos?: string;
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    batchNo?: string;
+    typeList?: {
+      /**
+       * 来浆类型
+       */
+      plasmaType: string;
+      /**
+       * 血浆编号（起止）
+       */
+      batchNoRange: string;
+      /**
+       * 血浆数量
+       */
+      totalNum: number;
+      /**
+       * 验收净重
+       */
+      verifyWeight: number;
+      /**
+       * 浆站不合格
+       */
+      lackNos: string;
+      /**
+       * 验收血浆不合格编号
+       */
+      verifyUnqNos: string;
+    }[];
   }[];
 }
 
@@ -370,7 +378,7 @@ export interface GetApiCoreBatchPlasmaStatisticResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/quarantine/statistic`
- * @更新时间 `2024-02-22 23:00:21`
+ * @更新时间 `2024-03-02 17:08:22`
  */
 export interface GetApiCoreBatchQuarantineStatisticRequest {
   /**
@@ -385,6 +393,8 @@ export interface GetApiCoreBatchQuarantineStatisticRequest {
    * 血浆批号止
    */
   batchEndNo?: string;
+  pageSize: string;
+  currPage: string;
 }
 
 /**
@@ -392,54 +402,57 @@ export interface GetApiCoreBatchQuarantineStatisticRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/quarantine/statistic`
- * @更新时间 `2024-02-22 23:00:21`
+ * @更新时间 `2024-03-02 17:08:22`
  */
 export interface GetApiCoreBatchQuarantineStatisticResponse {
-  /**
-   * 批号
-   */
-  batchNo: string;
-  typeList: {
-    /**
-     * 检疫期类型
-     */
-    quarantineType: string;
-    /**
-     * 效价类型
-     */
-    titerType: string;
-    /**
-     * 批检疫期报告情况血浆数量
-     */
-    batchStatusTotal: number;
-    /**
-     * 批检疫期报告情况验收净重
-     */
-    batchStatusWeight: number;
-    /**
-     * 当前检疫期状态血浆数量
-     */
-    nowStatusTotal: number;
-    /**
-     * 当前检疫期状态验收净重
-     */
-    nowStatusWeight: number;
-    /**
-     * 库存状态在库数量
-     */
-    stockTotal: number;
-    /**
-     * 库存状态在库净重
-     */
-    stockWeight: number;
-    /**
-     * 库存状态出库数量
-     */
-    outTotal: number;
-    /**
-     * 库存状态出库净重
-     */
-    outWeight: number;
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    batchNo?: string;
+    typeList?: {
+      /**
+       * 检疫期类型
+       */
+      quarantineType: string;
+      /**
+       * 效价类型
+       */
+      titerType: string;
+      /**
+       * 批检疫期报告情况血浆数量
+       */
+      batchStatusTotal: number;
+      /**
+       * 批检疫期报告情况验收净重
+       */
+      batchStatusWeight: number;
+      /**
+       * 当前检疫期状态血浆数量
+       */
+      nowStatusTotal: number;
+      /**
+       * 当前检疫期状态验收净重
+       */
+      nowStatusWeight: number;
+      /**
+       * 库存状态在库数量
+       */
+      stockTotal: number;
+      /**
+       * 库存状态在库净重
+       */
+      stockWeight: number;
+      /**
+       * 库存状态出库数量
+       */
+      outTotal: number;
+      /**
+       * 库存状态出库净重
+       */
+      outWeight: number;
+    }[];
   }[];
 }
 
@@ -1112,7 +1125,7 @@ export interface GetApiCoreBatchErpInboundQueryResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/lab/erp/test-report/query`
- * @更新时间 `2024-02-26 17:27:03`
+ * @更新时间 `2024-03-02 15:54:21`
  */
 export interface GetApiCoreLabErpTestReportQueryRequest {
   /**
@@ -1146,7 +1159,7 @@ export interface GetApiCoreLabErpTestReportQueryRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/lab/erp/test-report/query`
- * @更新时间 `2024-02-26 17:27:03`
+ * @更新时间 `2024-03-02 15:54:21`
  */
 export interface GetApiCoreLabErpTestReportQueryResponse {
   currPage?: number;
@@ -1174,33 +1187,38 @@ export interface GetApiCoreLabErpTestReportQueryResponse {
      */
     collectEndAt?: string;
     /**
-     * 血浆类型（例如：乙免、狂免）
-     */
-    plasmaType?: string;
-    /**
-     * 效价类型 （例如：乙免高效价、狂免低效价）
-     */
-    titerType?: string;
-    /**
      * 物料编码
      */
     materialNo?: string;
     /**
-     * 血浆合格总数
+     * 效价详情
      */
-    totalQualified?: number;
-    /**
-     * 血浆验收净重（g）
-     */
-    netWeight?: number;
-    /**
-     * 不合格血浆总数
-     */
-    totalUnqualified?: number;
-    /**
-     * 不合格验收净重（g）
-     */
-    unqualifiedNetWeight?: number;
+    titerDetailList?: {
+      /**
+       * 效价类型
+       */
+      titerType?: string;
+      /**
+       * 血浆类型
+       */
+      plasmaType?: string;
+      /**
+       * 合格血浆总数
+       */
+      totalQualified?: number;
+      /**
+       * 合格血浆验收净重（g）
+       */
+      qualifiedNetWeight?: number;
+      /**
+       * 不合格血浆总数
+       */
+      totalUnqualified?: number;
+      /**
+       * 不合格血浆验收净重 （g）
+       */
+      unqualifiedNetWeight?: number;
+    }[];
   }[];
 }
 
@@ -1949,13 +1967,13 @@ export interface GetApiCoreDonorCallbackStatisticStationResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/bag/titer`
- * @更新时间 `2024-02-28 20:31:55`
+ * @更新时间 `2024-03-02 11:17:35`
  */
 export interface PostApiCoreBagTiterRequest {
   /**
    * 采浆公司
    */
-  sationNo?: string;
+  stationNo?: string;
   /**
    * 血浆批号开始
    */
@@ -2015,7 +2033,7 @@ export interface PostApiCoreBagTiterRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/bag/titer`
- * @更新时间 `2024-02-28 20:31:55`
+ * @更新时间 `2024-03-02 11:17:35`
  */
 export type PostApiCoreBagTiterResponse = {
   /**
@@ -2074,6 +2092,10 @@ export type PostApiCoreBagTiterResponse = {
      * 比率%
      */
     nRatio: string;
+    /**
+     * 来浆类型
+     */
+    rawImm: string;
   }[];
 }[];
 
@@ -2082,7 +2104,7 @@ export type PostApiCoreBagTiterResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/sample/callback/statistic`
- * @更新时间 `2024-02-29 11:09:02`
+ * @更新时间 `2024-03-02 11:17:46`
  */
 export interface GetApiCoreBatchSampleCallbackStatisticRequest {
   /**
@@ -2110,7 +2132,7 @@ export interface GetApiCoreBatchSampleCallbackStatisticRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/sample/callback/statistic`
- * @更新时间 `2024-02-29 11:09:02`
+ * @更新时间 `2024-03-02 11:17:46`
  */
 export interface GetApiCoreBatchSampleCallbackStatisticResponse {
   totalCount?: number;
@@ -2275,13 +2297,13 @@ export interface GetApiCoreBatchStatisticResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/bag/titer/count`
- * @更新时间 `2024-02-29 15:58:36`
+ * @更新时间 `2024-03-02 11:18:23`
  */
 export interface PostApiCoreBagTiterCountRequest {
   /**
    * 采浆公司
    */
-  sationNo?: string;
+  stationNo?: string;
   /**
    * 采集日期开始
    */
@@ -2309,7 +2331,7 @@ export interface PostApiCoreBagTiterCountRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/bag/titer/count`
- * @更新时间 `2024-02-29 15:58:36`
+ * @更新时间 `2024-03-02 11:18:23`
  */
 export type PostApiCoreBagTiterCountResponse = {
   /**
@@ -2438,13 +2460,13 @@ export interface GetApiCoreBagUnqualifiedStatisticStationResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/lab/sample/detail`
- * @更新时间 `2024-03-01 17:07:33`
+ * @更新时间 `2024-03-02 11:18:58`
  */
 export interface PostApiCoreLabSampleDetailRequest {
   /**
    * 采浆公司
    */
-  sationNo?: string;
+  stationNo?: string;
   /**
    * 采集日期开始
    */
@@ -2472,7 +2494,7 @@ export interface PostApiCoreLabSampleDetailRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/lab/sample/detail`
- * @更新时间 `2024-03-01 17:07:33`
+ * @更新时间 `2024-03-02 11:18:58`
  */
 export type PostApiCoreLabSampleDetailResponse = {
   /**
@@ -2552,7 +2574,7 @@ export type PostApiCoreLabSampleDetailResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/station/box`
- * @更新时间 `2024-03-01 15:35:26`
+ * @更新时间 `2024-03-02 10:44:51`
  */
 export interface GetApiCoreBatchStationBoxRequest {
   /**
@@ -2582,7 +2604,7 @@ export interface GetApiCoreBatchStationBoxRequest {
   /**
    * 效价类型
    */
-  titerLevel: string;
+  immTypeLevel: string;
   currPage: string;
   pageSize: string;
 }
@@ -2592,7 +2614,7 @@ export interface GetApiCoreBatchStationBoxRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/station/box`
- * @更新时间 `2024-03-01 15:35:26`
+ * @更新时间 `2024-03-02 10:44:51`
  */
 export interface GetApiCoreBatchStationBoxResponse {
   totalCount?: number;
@@ -2814,6 +2836,138 @@ export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
      */
     unqRate: string;
   }[];
+}
+
+/**
+ * 接口 [浆员状态查询↗](https://yapi.sharing8.cn/project/529/interface/api/33706) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `POST /api/core/donor/state`
+ * @更新时间 `2024-03-02 17:09:46`
+ */
+export interface PostApiCoreDonorStateRequest {
+  /**
+   * 采浆公司
+   */
+  stationNo: string;
+  /**
+   * 血浆批号
+   */
+  batch: string;
+  /**
+   * 采集日期开始
+   */
+  collectBegin: string;
+  /**
+   * 采集日期结束
+   */
+  collectEnd: string;
+  /**
+   * 血浆类型
+   */
+  immunity: string;
+  /**
+   * 淘汰原 因
+   */
+  cause: string;
+  /**
+   * 效价结果开始
+   */
+  titerBeign: string;
+  /**
+   * 效价结果结束
+   */
+  titerEnd: string;
+  /**
+   * 浆员状态
+   */
+  state: string;
+  /**
+   * 淘汰系统
+   */
+  system: string;
+  /**
+   * 检测发布日期开始
+   */
+  checkBegin: string;
+  /**
+   * 检测发布日期结束
+   */
+  checkEnd: string;
+  /**
+   * 回访状态
+   */
+  callback: string;
+  /**
+   * 不合格依据日期开始
+   */
+  listenBegin: string;
+  /**
+   * 不合格依据日期结束
+   */
+  listenEnd: string;
+}
+
+/**
+ * 接口 [浆员状态查询↗](https://yapi.sharing8.cn/project/529/interface/api/33706) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `POST /api/core/donor/state`
+ * @更新时间 `2024-03-02 17:09:46`
+ */
+export interface PostApiCoreDonorStateResponse {
+  /**
+   * 采浆公司
+   */
+  stationName: string;
+  /**
+   * 浆员编号
+   */
+  donorNo: string;
+  /**
+   * 浆员姓名
+   */
+  name: string;
+  /**
+   * 血型
+   */
+  bloodType: string;
+  /**
+   * 无检疫期后续的血浆数量
+   */
+  bagCount: string;
+  /**
+   * 血浆验收净重 g
+   */
+  netWeight: string;
+  /**
+   * 最早采集日期
+   */
+  earlier: string;
+  /**
+   * 地址
+   */
+  idcardAddress: string;
+  /**
+   * 血浆总袋数
+   */
+  field_47: string;
+  /**
+   * 最晚采集日期
+   */
+  field_49: string;
+  /**
+   * 淘汰原因
+   */
+  field_51: string;
+  /**
+   * 淘汰系统
+   */
+  field_50: string;
+  /**
+   * 不合格依据日期
+   */
+  field_52: string;
 }
 
 /* prettier-ignore-end */

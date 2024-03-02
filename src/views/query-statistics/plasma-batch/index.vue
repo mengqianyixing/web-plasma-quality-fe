@@ -25,7 +25,11 @@
     <a-tab-pane key="quarantine" tab="检疫期">
       <PageWrapper dense contentFullHeight fixedHeight>
         <div class="overflow-auto flex-grow h-83vh">
-          <BasicTable @register="registerTableRight" />
+          <BasicTable @register="registerTableRight">
+            <template #toolbar>
+              <a-button type="primary" @click="handleExportQuarantineData">导出</a-button>
+            </template>
+          </BasicTable>
         </div>
         <div class="flex justify-end bg-white mx-5 mt-3">
           <a-pagination
@@ -54,6 +58,8 @@
   } from '@/api/query-statistics/plasma-batch';
   import { useStation } from '@/hooks/common/useStation';
   import { watchEffect, reactive, ref, onMounted, watch } from 'vue';
+  import { doExportMultipleTable } from '@/components/Excel/src/Export2Excel';
+  import { Range } from 'xlsx';
 
   const { isLoading, stationOptions } = useStation();
 
@@ -145,6 +151,7 @@
     formConfig: {
       schemas: searchFormSchema,
       resetFunc: handleResetBtn,
+      actionColOptions: { style: 'max-width:unset; position: absolute; right: 10px;' },
       baseColProps: {
         span: 24,
       },
@@ -204,6 +211,7 @@
     formConfig: {
       schemas: searchFormSchema,
       resetFunc: handleResetBtn,
+      actionColOptions: { style: 'max-width:unset; position: absolute; right: 10px;' },
       baseColProps: {
         span: 24,
       },
@@ -240,7 +248,48 @@
     pager.pageSize = 10;
   }
 
-  function handleExportComeData() {}
+  async function handleExportComeData() {
+    const result = (
+      await getPlasmaBatchList({
+        ...getFormLeft().getFieldsValue(),
+        currPage: '1',
+        pageSize: '1000',
+      })
+    ).result!;
+    let data: any[] = [
+      [
+        '血浆批号',
+        '来浆类型',
+        '血浆编号(起止)',
+        '浆站不合格',
+        '血浆数量',
+        '验收净重',
+        '验收血浆不合格编号',
+      ],
+    ];
+    let merges: Range[] = [];
+    result.forEach((item) => {
+      merges.push({
+        s: { r: data.length, c: 0 },
+        e: { r: data.length - 1 + item.typeList!.length, c: 0 },
+      });
+      data = data.concat(
+        item.typeList!.map((it) => [
+          item.batchNo,
+          it.plasmaType,
+          it.batchNoRange,
+          it.lackNos,
+          it.totalNum,
+          it.verifyWeight,
+          it.verifyUnqNos,
+        ]),
+      );
+    });
+
+    doExportMultipleTable(data, 'demoExport', '物品杂费统计', merges);
+  }
+
+  function handleExportQuarantineData() {}
 </script>
 <style scoped>
   :deep(.vben-basic-table-form-container) {

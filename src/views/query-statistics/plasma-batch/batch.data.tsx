@@ -138,7 +138,7 @@ export const searchFormSchema: FormSchema[] = [
     },
     render({ model, field }) {
       return (
-        <div class="flex gap-2 items-center justify-center ">
+        <div class="flex gap-2 items-center justify-center">
           <FormItem name="batchEndNo">
             <FormItemRest>
               <a-input class="w-200px" v-model:value={model[field]} />
