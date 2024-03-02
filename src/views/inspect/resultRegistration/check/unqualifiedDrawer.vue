@@ -96,7 +96,7 @@
     resetFields();
     clearValidate();
   }
-  async function handleSubmit(close: boolean) {
+  async function handleSubmit(isClose: boolean) {
     const { sampleNo, unqualified, od, cutoff, ct } = await validate();
     const { username, userId } = userData as any;
     try {
@@ -114,10 +114,11 @@
         projectIds: [pid],
       });
       message.success(sampleNo + '登记成功');
-      if (close === false) {
+      if (isClose === false) {
         reloadPage();
         setFieldsValue({ account: userData.username });
       } else {
+        close();
         emit('confirm');
       }
     } finally {
