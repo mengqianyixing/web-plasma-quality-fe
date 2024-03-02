@@ -76,6 +76,7 @@
     columns: dtColumns,
     size: 'small',
     useSearchForm: false,
+    isCanResizeParent: true,
     bordered: true,
     rowSelection: { type: 'checkbox' },
     beforeFetch: (p) => ({
