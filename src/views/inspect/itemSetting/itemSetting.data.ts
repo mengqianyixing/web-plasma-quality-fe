@@ -1,6 +1,10 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { getInspectMethodListApi } from '@/api/inspect/inspectMethod';
-
+import {
+  DictionaryItemKeyEnum,
+  DictionaryReasonEnum,
+  getSysSecondaryDictionary,
+} from '@/api/_dictionary';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
@@ -202,26 +206,41 @@ export const formListSchema: FormSchema[] = [
   },
   {
     field: 'checkUnqualifiedReason',
-    component: 'Select',
+    component: 'ApiSelect',
     label: '检测不合格',
     componentProps: {
-      options: [],
+      api: getSysSecondaryDictionary,
+      params: {
+        dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+        dictItemTypes: [DictionaryItemKeyEnum.Test],
+      },
+      valueField: 'dictItemId',
     },
   },
   {
     field: 'periodUnqualifiedReason',
-    component: 'Select',
+    component: 'ApiSelect',
     label: '检疫期不合格',
     componentProps: {
-      options: [],
+      api: getSysSecondaryDictionary,
+      params: {
+        dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+        dictItemTypes: [DictionaryItemKeyEnum.Quarantine],
+      },
+      valueField: 'dictItemId',
     },
   },
   {
     field: 'traceUnqualifiedReason',
-    component: 'Select',
+    component: 'ApiSelect',
     label: '续追踪不合格',
     componentProps: {
-      options: [],
+      api: getSysSecondaryDictionary,
+      params: {
+        dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+        dictItemTypes: [DictionaryItemKeyEnum.Track],
+      },
+      valueField: 'dictItemId',
     },
   },
   {

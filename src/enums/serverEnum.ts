@@ -17,7 +17,7 @@ export enum SERVER_ENUM {
   StateEnum = 'StateEnum',
   CallbackState = 'CallbackState',
   MaterialStateType = 'MaterialStateType',
-  PlasmaType = 'PlasmaType',
+  PlasmaType = 'plasmaImmType',
   RefuseType = 'RefuseType',
   ReportStateType = 'ReportStateType',
   ConclusionType = 'ConclusionType',

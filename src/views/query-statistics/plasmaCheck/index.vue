@@ -33,7 +33,6 @@
   import { PageWrapper } from '@/components/Page';
   import { TabPane, Tabs } from 'ant-design-vue';
   import { nextTick, ref } from 'vue';
-  import { getDictItemListApi } from '@/api/dictionary';
   import { cloneDeep } from 'lodash-es';
   import { isArray, isObject } from '@/utils/is';
   import {
@@ -41,6 +40,11 @@
     getFollowUpListApi,
     getTiterListApi,
   } from '@/api/query-statistics/plasmaCheck';
+  import {
+    DictionaryItemKeyEnum,
+    DictionaryReasonEnum,
+    getSysSecondaryDictionary,
+  } from '@/api/_dictionary';
 
   const activeKey = ref('0');
   const CheckColumns = cloneDeep(checkColumns);
@@ -196,31 +200,27 @@
   }
 
   Promise.all([
-    getDictItemListApi({
-      pageSize: 100,
-      currPage: 1,
-      dataDictId: '110001',
-      itemDesc: 'plasmaAccept',
+    getSysSecondaryDictionary({
+      dataKey: DictionaryReasonEnum.PlasmaFailedReason as any,
+      dictItemTypes: [DictionaryItemKeyEnum.PlasmaAccept],
     }),
-    getDictItemListApi({
-      pageSize: 100,
-      currPage: 1,
-      dataDictId: '110001',
-      itemDesc: 'test',
+    getSysSecondaryDictionary({
+      dataKey: DictionaryReasonEnum.PlasmaFailedReason as any,
+      dictItemTypes: [DictionaryItemKeyEnum.Test],
     }),
   ]).then(([res1, res2]) => {
     CheckColumns[5].children?.unshift(
-      ...(res1.result || []).map((it) => ({
+      ...(res1 || []).map((it) => ({
         dataIndex: [exteriorKey, it.dictItemId],
-        title: it.itemKey,
-        width: it.itemKey.length * 18,
+        title: it.label,
+        width: it.label.length * 18,
       })),
     );
     CheckColumns[6].children?.unshift(
-      ...(res2.result || []).map((it) => ({
+      ...(res2 || []).map((it) => ({
         dataIndex: [checkUnKey, it.dictItemId],
-        title: it.itemKey,
-        width: it.itemKey.length * 18,
+        title: it.label,
+        width: it.label.length * 18,
       })),
     );
     tableList[0][1].setColumns(CheckColumns);
