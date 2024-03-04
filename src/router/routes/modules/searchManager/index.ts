@@ -1,8 +1,8 @@
 /*
  * @Author: HxB
  * @Date: 2023-12-28 18:11:32
- * @LastEditors: zcc
- * @LastEditTime: 2024-02-01 15:55:34
+ * @LastEditors: Ding 1326587277@qq.com
+ * @LastEditTime: 2024-03-04 14:05:54
  * @Description: 托盘管理
  * @FilePath: \psms-fe\src\router\routes\modules\trayManager\index.ts
  */
@@ -254,6 +254,26 @@ const trayManager: AppRouteModule = {
       },
       id: 9000100,
       component: () => import('/@/views/query-statistics/checkResult/index.vue'),
+    },
+    {
+      path: 'followDisqualificationStatistics',
+      name: 'FollowDisqualificationStatistics',
+      meta: {
+        title: '续追踪不合格统计',
+      },
+      id: 9000270,
+      component: () =>
+        import('/@/views/query-statistics/followDisqualificationStatistics/index.vue'),
+    },
+    {
+      path: 'quarantinePeriodUnqualifiedStatistics',
+      name: 'QuarantinePeriodUnqualifiedStatistics',
+      meta: {
+        title: '检疫期不合格统计',
+      },
+      id: 9000280,
+      component: () =>
+        import('/@/views/query-statistics/quarantinePeriodUnqualifiedStatistics/index.vue'),
     },
   ],
 };

@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-03-01 11:47:25
+ * @LastEditTime: 2024-03-04 10:51:24
 -->
 <template>
   <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -203,7 +203,12 @@
           field: 'itemDesc',
           label: '描述',
           component: 'InputTextArea',
-          colProps: { span: 22 },
+          colProps: {
+            span: 22,
+          },
+          componentProps: {
+            maxlength: 100,
+          },
         },
       ];
       updataFormSchema.value = formSchema.value.map((_) => ({
