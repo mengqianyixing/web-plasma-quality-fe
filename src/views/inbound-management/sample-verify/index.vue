@@ -166,7 +166,7 @@
     },
     {
       field: 'lackCount',
-      label: '浆站缺号数量',
+      label: '缺号数量',
       render(text) {
         return (
           <span onClick={handleLackCountClick} class="underline text-#2d5cf6 cursor-pointer">

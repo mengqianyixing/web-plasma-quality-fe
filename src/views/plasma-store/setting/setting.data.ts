@@ -98,6 +98,7 @@ export const initFormSchema: (opt: {
       options: [
         { label: TYPE_FLAG_TEXT.N, value: TYPE_FLAG.N },
         { label: TYPE_FLAG_TEXT.F, value: TYPE_FLAG.F },
+        { label: TYPE_FLAG_TEXT.V, value: TYPE_FLAG.V },
       ],
     },
   },

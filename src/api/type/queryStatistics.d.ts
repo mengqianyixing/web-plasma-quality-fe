@@ -2843,7 +2843,7 @@ export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/donor/state`
- * @更新时间 `2024-03-02 17:09:46`
+ * @更新时间 `2024-03-04 14:30:11`
  */
 export interface PostApiCoreDonorStateRequest {
   /**
@@ -2885,7 +2885,7 @@ export interface PostApiCoreDonorStateRequest {
   /**
    * 淘汰系统
    */
-  system: string;
+  blockBy: string;
   /**
    * 检测发布日期开始
    */
@@ -2906,6 +2906,8 @@ export interface PostApiCoreDonorStateRequest {
    * 不合格依据日期结束
    */
   listenEnd: string;
+  pageSize: string;
+  currPage: string;
 }
 
 /**
@@ -2913,61 +2915,48 @@ export interface PostApiCoreDonorStateRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/donor/state`
- * @更新时间 `2024-03-02 17:09:46`
+ * @更新时间 `2024-03-04 14:30:11`
  */
 export interface PostApiCoreDonorStateResponse {
-  /**
-   * 采浆公司
-   */
-  stationName: string;
-  /**
-   * 浆员编号
-   */
-  donorNo: string;
-  /**
-   * 浆员姓名
-   */
-  name: string;
-  /**
-   * 血型
-   */
-  bloodType: string;
-  /**
-   * 无检疫期后续的血浆数量
-   */
-  bagCount: string;
-  /**
-   * 血浆验收净重 g
-   */
-  netWeight: string;
-  /**
-   * 最早采集日期
-   */
-  earlier: string;
-  /**
-   * 地址
-   */
-  idcardAddress: string;
-  /**
-   * 血浆总袋数
-   */
-  field_47: string;
-  /**
-   * 最晚采集日期
-   */
-  field_49: string;
-  /**
-   * 淘汰原因
-   */
-  field_51: string;
-  /**
-   * 淘汰系统
-   */
-  field_50: string;
-  /**
-   * 不合格依据日期
-   */
-  field_52: string;
+  currPage: number;
+  pageSize: number;
+  totalCount: number;
+  result?: {
+    stationName?: string;
+    netWeight?: string;
+    /**
+     * 无检疫期后续的血浆数量
+     */
+    ambiguityBagCount?: string;
+    bloodType?: string;
+    name?: string;
+    donorNo?: string;
+    /**
+     * 最早  采集日期
+     */
+    earlier?: string;
+    /**
+     * 血浆总袋数
+     */
+    bagCount?: string;
+    idcardAddress?: string;
+    /**
+     * 最晚采集日期
+     */
+    late?: string;
+    /**
+     * 淘汰系统
+     */
+    blockBy?: string;
+    /**
+     * 淘汰原因
+     */
+    cause?: string;
+    /**
+     * 不合格依据日期
+     */
+    listen?: string;
+  }[];
 }
 
 /* prettier-ignore-end */
