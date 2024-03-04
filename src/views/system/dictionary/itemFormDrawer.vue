@@ -4,7 +4,7 @@
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-02-29 18:06:12
+ * @LastEditTime: 2024-03-01 18:25:56
 -->
 <template>
   <BasicModal
@@ -12,7 +12,7 @@
     @register="registerModal"
     showFooter
     :title="state.isUpdate ? '编辑' : '新增'"
-    width="500px"
+    width="600px"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
@@ -26,7 +26,6 @@
   import { getDictItemDtApi, addDictItemApi, updateDictItemApi } from '@/api/dictionary';
   import { PostApiSysDictItemRequest, PutApiSysDictItemRequest } from '@/api/type/dictionary';
   import { FormSchema } from '@/components/Table';
-  import { useRoute } from 'vue-router';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -38,7 +37,6 @@
     dictId: '',
   });
   let fields: string[] = [];
-  const currentRoute = useRoute();
   const [
     registerForm,
     {
@@ -49,11 +47,10 @@
       appendSchemaByField,
       removeSchemaByField,
       updateSchema,
-      resetSchema,
     },
   ] = useForm({
-    labelWidth: 140,
-    baseColProps: { span: 24 },
+    labelWidth: 160,
+    baseColProps: { span: 22 },
     schemas: itemFormSchema,
     showActionButtonGroup: false,
   });
@@ -66,10 +63,7 @@
     async ({ isUpdate, data, formSchema = [] }: Data) => {
       fields = formSchema.map((_) => _.field);
       await removeSchemaByField(fields);
-      if (['sampleFailedReason', 'plasmaFailedReason'].includes(currentRoute.name)) {
-        resetSchema();
-      }
-      appendSchemaByField(formSchema, 'itemValue');
+      appendSchemaByField(formSchema, 'itemValue', true);
       setModalProps({ confirmLoading: false });
       state.isUpdate = isUpdate;
       state.dictItemId = data.dictItemId;

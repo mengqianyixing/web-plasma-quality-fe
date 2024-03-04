@@ -25,7 +25,7 @@ const callManager: AppRouteModule = {
       path: 'list-generation',
       name: 'CallbackGeneration',
       meta: {
-        title: '回访名单',
+        title: '回访名单生成',
       },
       id: 930010,
       component: () => import('/@/views/callback/list-generation/index.vue'),
@@ -34,7 +34,7 @@ const callManager: AppRouteModule = {
       path: 'callback-complete',
       name: 'CallbackComplete',
       meta: {
-        title: '回访完成',
+        title: '回访名单完成',
       },
       id: 930020,
       component: () => import('/@/views/callback/callback-complete/index.vue'),
@@ -43,7 +43,7 @@ const callManager: AppRouteModule = {
       path: 'callback-failure',
       name: 'CallbackFailure',
       meta: {
-        title: '回访失败',
+        title: '回访名单失败',
       },
       id: 930030,
       component: () => import('/@/views/callback/callback-failure/index.vue'),

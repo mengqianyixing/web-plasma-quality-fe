@@ -8,10 +8,18 @@ export const columns: BasicColumn[] = [
     dataIndex: 'stationName',
   },
   {
-    title: '入库数量（袋）',
-    dataIndex: 'inNum',
+    title: '批次号',
+    dataIndex: 'batchNo',
   },
 
+  {
+    title: '入库日期',
+    dataIndex: 'inStoreDate',
+  },
+  {
+    title: '入库数量（袋）',
+    dataIndex: 'inStoreNum',
+  },
   {
     title: '验收数量（袋）',
     dataIndex: 'verifyNum',
@@ -40,6 +48,14 @@ export const columns: BasicColumn[] = [
     title: '其他不合格',
     dataIndex: 'otherUnqNum',
   },
+  {
+    title: '合计',
+    dataIndex: 'totalNum',
+  },
+  {
+    title: '不合格率',
+    dataIndex: 'unqRate',
+  },
 ];
 
 export const searchFormSchema: FormSchema[] = [
@@ -54,12 +70,9 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '[inStoreStartDate, inStoreEndDate]',
-    component: 'RangePicker',
-    label: '入库日期',
-    componentProps: {
-      valueFormat: 'YYYY-MM-DD',
-    },
+    field: 'batchNo',
+    component: 'Input',
+    label: '血浆批号',
   },
   {
     field: '[verifyPubStartDate, verifyPubEndDate]',
@@ -70,9 +83,17 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
+    field: '[inStoreStartDate, inStoreEndDate]',
+    component: 'RangePicker',
+    label: '入库日期',
+    componentProps: {
+      valueFormat: 'YYYY-MM-DD',
+    },
+  },
+  {
     field: '[issueStartDate, issueEndDate]',
     component: 'RangePicker',
-    label: '验收发布日期',
+    label: '检测发布日期',
     componentProps: {
       valueFormat: 'YYYY-MM-DD',
     },
@@ -80,7 +101,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: '[unqInStoreStartDate, unqInStoreEndDate]',
     component: 'RangePicker',
-    label: '入库日期',
+    label: '不合格入库日期',
     componentProps: {
       valueFormat: 'YYYY-MM-DD',
     },

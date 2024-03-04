@@ -13,9 +13,9 @@
         <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.StoreSettingAdd"
           >新增</a-button
         >
-        <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.StoreSettingUpdate"
+        <!-- <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.StoreSettingUpdate"
           >编辑</a-button
-        >
+        > -->
         <a-button
           type="primary"
           @click="handleCheckStatus('CLOSED')"

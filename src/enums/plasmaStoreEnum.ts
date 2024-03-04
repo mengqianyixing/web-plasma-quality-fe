@@ -1,10 +1,12 @@
 export enum TYPE_FLAG {
   N = 'N' /**普通库 */,
   F = 'F' /**不合格库 */,
+  V = 'V' /**暂存库 */,
 }
 export enum TYPE_FLAG_TEXT {
   N = '普通库',
   F = '不合格库',
+  V = '暂存库',
 }
 export enum STORE_FLAG {
   S = 'S' /**高架库 */,

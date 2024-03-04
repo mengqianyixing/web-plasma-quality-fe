@@ -1,6 +1,10 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import dayjs from 'dayjs';
-import { getDictItemListByNoApi, getDictItemListByNo2Api } from '@/api/dictionary';
+import {
+  DictionaryItemKeyEnum,
+  DictionaryReasonEnum,
+  getSysSecondaryDictionary,
+} from '@/api/_dictionary';
 
 export enum USE_TO {
   DET = 'DET',
@@ -212,19 +216,22 @@ export const dtSearchFormSchema: FormSchema[] = [
     component: 'ApiSelect',
     label: '不合格原因',
     componentProps: {
-      api: () =>
-        new Promise((rs, rj) => {
-          getDictItemListByNoApi(['plasmaFailedItem'])
-            .then(([result]) => {
-              const dictNos = (result.dictImtes || []).map((_) => _.value);
-              getDictItemListByNo2Api({ dictNos, dataKey: 'plasmaFailedItem' })
-                .then((res) => {
-                  rs(res.map((_) => ({ label: _.label, value: _.dictItemId })));
-                })
-                .catch(rj);
-            })
-            .catch(rj);
-        }),
+      api: getSysSecondaryDictionary,
+      params: {
+        dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+        dictItemTypes: [
+          DictionaryItemKeyEnum.PlasmaAccept,
+          DictionaryItemKeyEnum.SampleAccept,
+          DictionaryItemKeyEnum.PlasmaFailed,
+          DictionaryItemKeyEnum.SampleFailed,
+          DictionaryItemKeyEnum.Sample,
+          DictionaryItemKeyEnum.Track,
+          DictionaryItemKeyEnum.Test,
+          DictionaryItemKeyEnum.Quarantine,
+          DictionaryItemKeyEnum.Other,
+        ],
+      },
+      valueField: 'dictItemId',
     },
   },
 ];

@@ -12,6 +12,9 @@
     @register="registerModal"
     showFooter
     :title="state.type"
+    :showOkBtn="state.type !== '查看'"
+    cancelText="关闭"
+    :showActionButtonGroup="false"
     width="800px"
     @ok="handleSubmit"
   >

@@ -138,7 +138,7 @@
     beforeFetch: (p) => ({ ...p, ...state }),
     afterFetch: (res: any[]) => {
       clearBindSelectedRowKeys();
-      setBindSelectedRowKeys(res.filter((it) => !it.sortState).map((it) => it.boxNo));
+      setBindSelectedRowKeys(res.filter((it) => it.sortState).map((it) => it.boxNo));
       return res;
     },
   });

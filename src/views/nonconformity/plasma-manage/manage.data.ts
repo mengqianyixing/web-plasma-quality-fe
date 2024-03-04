@@ -8,6 +8,11 @@ import {
 import { DescItem } from '@/components/Description';
 import dayjs from 'dayjs';
 import { PlasmaUnqualifiedTypeMap, PlasmaUnqualifiedTypeValueEnum } from '@/enums/plasmaEnum';
+import {
+  DictionaryItemKeyEnum,
+  DictionaryReasonEnum,
+  getSysSecondaryDictionary,
+} from '@/api/_dictionary';
 
 export const columns: BasicColumn[] = [
   {
@@ -93,7 +98,25 @@ export const searchSchema: FormSchema[] = [
   {
     field: 'unqReason',
     label: '不合格原因',
-    component: 'Select',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getSysSecondaryDictionary,
+      params: {
+        dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+        dictItemTypes: [
+          DictionaryItemKeyEnum.PlasmaAccept,
+          DictionaryItemKeyEnum.SampleAccept,
+          DictionaryItemKeyEnum.PlasmaFailed,
+          DictionaryItemKeyEnum.SampleFailed,
+          DictionaryItemKeyEnum.Sample,
+          DictionaryItemKeyEnum.Track,
+          DictionaryItemKeyEnum.Test,
+          DictionaryItemKeyEnum.Quarantine,
+          DictionaryItemKeyEnum.Other,
+        ],
+      },
+      valueField: 'dictItemId',
+    },
   },
   {
     field: 'flow',

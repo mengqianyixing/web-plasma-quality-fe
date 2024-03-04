@@ -1,5 +1,9 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import dayjs from 'dayjs';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+
+const serverEnumStore = useServerEnumStoreWithOut();
 
 export const columns: BasicColumn[] = [
   {
@@ -86,18 +90,21 @@ export const columns: BasicColumn[] = [
 
 export const searchSchema: FormSchema[] = [
   {
-    field: 'stationNo',
+    field: 'dlvNo',
     component: 'Input',
     label: '申请单号',
   },
   {
-    field: '[batchSampleNoStart, batchSampleNoEnd]',
+    field: '[applicationStartDate, applicationEndDate]',
     component: 'RangePicker',
     label: '申请日期',
   },
   {
-    field: 'status',
+    field: 'state',
     component: 'Select',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankDeliverstateType),
+    },
     label: '状态',
   },
 ];

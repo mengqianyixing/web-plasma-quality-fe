@@ -202,6 +202,7 @@
   async function handleSubmit(e: KeyboardEvent) {
     if (e.code !== 'Enter' && e.code !== 'NumpadEnter') return;
     const { boxId, trayNo } = getFieldsValue();
+    if (boxId && !trayNo) message.warning('请扫描托盘编号');
     let count = 0;
     if (trayNo) {
       const list = await trayBoxListApi({ trayNo });

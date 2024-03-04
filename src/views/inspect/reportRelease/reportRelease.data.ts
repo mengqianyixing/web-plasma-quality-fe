@@ -142,9 +142,14 @@ export const totalUnqualifiedColumns: BasicColumn[] = [
     title: 'Cutoff值',
   },
   {
-    dataIndex: 'checkAt',
-    title: '检测时间',
+    dataIndex: 'ct',
+    title: 'CT值',
   },
+  {
+    dataIndex: 'unqualified',
+    title: '不合格',
+  },
+
   {
     dataIndex: 'methodName',
     title: '检测方法',

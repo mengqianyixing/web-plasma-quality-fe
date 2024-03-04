@@ -21,12 +21,12 @@
     <div class="flex mt-3">
       <BasicTable
         @register="registerNoOutTable"
-        :title="'未出库箱数: ' + noOutTableData?.length"
+        :title="'未出库袋数: ' + noOutTableData?.length"
         :dataSource="noOutTableData"
       />
       <BasicTable
         @register="registerOutStoreTable"
-        :title="'已出库箱数: ' + outTableData?.length"
+        :title="'已出库袋数: ' + outTableData?.length"
         :dataSource="outTableData"
       />
     </div>

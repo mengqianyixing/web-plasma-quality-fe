@@ -17,7 +17,7 @@ export enum SERVER_ENUM {
   StateEnum = 'StateEnum',
   CallbackState = 'CallbackState',
   MaterialStateType = 'MaterialStateType',
-  PlasmaType = 'PlasmaType',
+  PlasmaType = 'plasmaImmType',
   RefuseType = 'RefuseType',
   ReportStateType = 'ReportStateType',
   ConclusionType = 'ConclusionType',
@@ -42,4 +42,8 @@ export enum SERVER_ENUM {
   BloodType = 'BloodType',
   SampleType = 'SampleType',
   BankTrayTypeEnum = 'BankTrayTypeEnum',
+  DlvType = 'DlvType',
+  BatchOperationSumState = 'BatchOperationSumState',
+  BankDeliverstateType = 'BankDeliverstateType',
+  BlockSource = 'BlockSource',
 }

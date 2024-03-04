@@ -1,6 +1,9 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { PlasmaStateMap, PlasmaStateValueEnum } from '@/enums/plasmaEnum';
 import dayjs from 'dayjs';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+
+const serverEnumStore = useServerEnumStoreWithOut();
 
 export const columns: BasicColumn[] = [
   {
@@ -71,9 +74,9 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '状态',
-    dataIndex: 'verifyState',
+    dataIndex: 'state',
     format(text) {
-      return PlasmaStateMap.get(text as PlasmaStateValueEnum) as string;
+      return serverEnumStore.getServerEnumText(SERVER_ENUM.BatchOperationSumState)(text);
     },
   },
 ];
@@ -94,7 +97,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '状态',
     component: 'Select',
     componentProps: {
-      options: [...PlasmaStateMap].map(([value, label]) => ({ value, label })),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BatchOperationSumState),
     },
   },
   {

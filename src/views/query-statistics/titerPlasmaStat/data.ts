@@ -5,94 +5,96 @@ import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
 const serverEnumStore = useServerEnumStoreWithOut();
+const ImmType = serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType);
 export const columns: BasicColumn[] = [
   {
     width: 150,
     title: '采浆公司',
-    dataIndex: 'batchNo',
+    dataIndex: 'stationName',
   },
   {
     width: 150,
     title: '来浆类型',
-    dataIndex: 'stationName',
+    dataIndex: 'rawImm',
+    format: (t) => ImmType(t),
   },
 
   {
     width: 150,
     title: '血浆数量(袋)',
-    dataIndex: 'stationBoxNo',
+    dataIndex: 'bagCount',
   },
   {
     width: 150,
     title: '高效价',
-    dataIndex: 'currBoxNo',
     children: [
       {
         width: 150,
         title: '数量',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['H', 'bagCount'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['H', 'ratio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
         width: 180,
         title: '检测合格数量(袋)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['H', 'checkPassCount'],
       },
       {
         width: 180,
         title: '检测合格验收净重(kg)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['H', 'checkPassWeight'],
       },
       {
         width: 180,
         title: '检疫期合格数量(袋)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['H', 'passCount'],
       },
       {
         width: 180,
         title: '检疫期合格验收净重(kg)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['H', 'passWeight'],
       },
     ],
   },
   {
     width: 150,
     title: '低效价',
-    dataIndex: 'currBoxNo',
     children: [
       {
         width: 150,
         title: '数量',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['L', 'bagCount'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['L', 'ratio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
         width: 180,
         title: '检测合格数量(袋)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['L', 'checkPassCount'],
       },
       {
         width: 180,
         title: '检测合格验收净重(kg)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['L', 'checkPassWeight'],
       },
       {
         width: 180,
         title: '检疫期合格数量(袋)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['L', 'passCount'],
       },
       {
         width: 180,
         title: '检疫期合格验收净重(kg)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['L', 'passWeight'],
       },
     ],
   },
@@ -104,32 +106,33 @@ export const columns: BasicColumn[] = [
       {
         width: 150,
         title: '数量',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'bagCount'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'ratio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
         width: 180,
         title: '检测合格数量(袋)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'checkPassCount'],
       },
       {
         width: 180,
         title: '检测合格验收净重(kg)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'checkPassWeight'],
       },
       {
         width: 180,
         title: '检疫期合格数量(袋)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'passCount'],
       },
       {
         width: 180,
         title: '检疫期合格验收净重(kg)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'passWeight'],
       },
     ],
   },
@@ -137,7 +140,7 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: '',
+    field: 'stationNo',
     component: 'ApiSelect',
     label: '采浆公司',
     componentProps: {
@@ -147,7 +150,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: 'rawImm',
     component: 'Select',
     label: '来浆类型',
     componentProps: {
@@ -155,7 +158,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: '[collectionBegin,collectionEnd]',
     component: 'RangePicker',
     label: '采集日期',
     componentProps: {
@@ -164,7 +167,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: '[issueBegin,issueEnd]',
     component: 'RangePicker',
     label: '检测发布日期',
     componentProps: {

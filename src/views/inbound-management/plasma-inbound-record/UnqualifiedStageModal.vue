@@ -16,10 +16,8 @@
   import { unqualifiedColumns } from './record.data';
   import { useMessage } from '@/hooks/web/useMessage';
   import { nonconformityPlasmaList } from '@/api/nonconformity/plasma-manage';
-  import {
-    nonconformityPlasmaMap,
-    NonconformityPlasmaStatusValueEnum,
-  } from '@/enums/nonconforityEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
   import {
     DictionaryItemKeyEnum,
     DictionaryReasonEnum,
@@ -27,6 +25,8 @@
   } from '@/api/_dictionary';
 
   import PickBatchModal from './PickBatchModal.vue';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
 
   const selectedRow = ref<Recordable>([]);
   const { createMessage } = useMessage();
@@ -76,9 +76,9 @@
           label: '状态',
           component: 'Select',
           componentProps: {
-            options: [...nonconformityPlasmaMap].map(([value, label]) => ({ value, label })),
+            options: serverEnumStore.getServerEnum(SERVER_ENUM.UnquaState),
           },
-          defaultValue: NonconformityPlasmaStatusValueEnum.REG,
+          defaultValue: 'PIK',
         },
       ],
     },

@@ -10,10 +10,7 @@ export const columns: BasicColumn[] = [
     title: '简称',
     dataIndex: 'methodAbbr',
   },
-  {
-    title: '检疫期间隔天数',
-    dataIndex: 'intervalDays',
-  },
+
   {
     title: '排序号',
     dataIndex: 'sort',
@@ -31,7 +28,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '记录人',
-    dataIndex: 'creater',
+    dataIndex: 'creator',
   },
   {
     title: '记录时间',
@@ -64,23 +61,19 @@ export const formListSchema: FormSchema[] = [
     label: '简称',
     required: true,
   },
-  {
-    field: 'intervalDays',
-    component: 'InputNumber',
-    label: '检疫期间隔天数',
-    required: true,
-    componentProps: {
-      min: 0,
-      formatter: (n: number) => n && parseInt(n),
-    },
-  },
+
   {
     field: 'detectionMode',
     component: 'Select',
     label: '检测模式',
     required: true,
     componentProps: {
-      options: [],
+      options: [
+        { value: '酶联检测', label: '酶联检测' },
+        { value: '生化检测', label: '生化检测' },
+        { value: '核酸检测', label: '核酸检测' },
+        { value: '细胞检测', label: '细胞检测' },
+      ],
     },
   },
   {

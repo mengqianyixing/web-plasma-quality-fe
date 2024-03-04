@@ -10,34 +10,34 @@ export const columns: BasicColumn[] = [
   {
     width: 150,
     title: '采浆公司',
-    dataIndex: 'batchNo',
+    dataIndex: 'stationName',
   },
   {
     width: 150,
     title: '样本类型',
-    dataIndex: 'stationName',
+    dataIndex: 'sampleType',
     format: (text) => SampleType(text),
   },
 
   {
     width: 150,
     title: '样本总数',
-    dataIndex: 'stationBoxNo',
+    dataIndex: 'sampleCount',
   },
   {
     width: 150,
     title: '已接收未检测',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'acceptCount',
   },
   {
     width: 150,
     title: '检测样本',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'checkCount',
   },
   {
     width: 150,
     title: '检测中',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'checkingCount',
   },
   {
     width: 150,
@@ -46,19 +46,22 @@ export const columns: BasicColumn[] = [
       {
         width: 150,
         title: '合格',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['check', 'count'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['check', 'ratio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
     ],
   },
   {
     width: 150,
     title: '检测不合格',
-    children: [],
+    dataIndex: 'failed',
+    format: (t: any) => t?.join('、'),
+    ellipsis: false,
   },
   {
     width: 150,
@@ -67,40 +70,37 @@ export const columns: BasicColumn[] = [
       {
         width: 150,
         title: '血浆验收不合格',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['verification', 'bag'],
       },
       {
         width: 150,
         title: '样本验收不合格',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['verification', 'sample'],
       },
-      {
-        width: 150,
-        title: '献血浆者符合性',
-        dataIndex: 'currBoxNo',
-      },
+
       {
         width: 150,
         title: '合计',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['verification', 'count'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['verification', 'ratio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
     ],
   },
   {
     width: 150,
     title: '其他不合格',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'other',
   },
 ];
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: '',
+    field: 'stationNo',
     component: 'ApiSelect',
     label: '采浆公司',
     componentProps: {
@@ -118,8 +118,8 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
-    component: 'DatePicker',
+    field: '[collectionBegin,collectionEnd]',
+    component: 'RangePicker',
     label: '采集日期',
     componentProps: {
       class: 'w-full',
@@ -127,8 +127,8 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
-    component: 'DatePicker',
+    field: '[issueBegin,issueEnd]',
+    component: 'RangePicker',
     label: '发布日期',
     componentProps: {
       class: 'w-full',

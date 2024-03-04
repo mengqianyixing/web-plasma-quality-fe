@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { store } from '@/store';
 import { getServerEnumsApi } from '@/api/sys';
 import { SERVER_ENUM } from '@/enums/serverEnum';
+import { getDictItemListByNoApi } from '@/api/dictionary';
 
 interface ITEM {
   value: string;
@@ -40,9 +41,9 @@ export const useServerEnumStore = defineStore({
           return;
         }
         this.loading = true;
-        getServerEnumsApi()
-          .then((res) => {
-            res.forEach((it) => {
+        Promise.all([getServerEnumsApi(), getDictItemListByNoApi([SERVER_ENUM.PlasmaType])])
+          .then(([res1, res2]) => {
+            res1.forEach((it) => {
               this.enumMapData.set(
                 it.path,
                 it.enumObjList.map((it) => ({ value: it.key, label: it.show })),
@@ -55,6 +56,14 @@ export const useServerEnumStore = defineStore({
                 }, new Map()),
               );
             });
+            this.enumMapData.set(SERVER_ENUM.PlasmaType, res2[0].dictImtes || []);
+            this.enumTextMapData.set(
+              SERVER_ENUM.PlasmaType,
+              (res2[0].dictImtes || []).reduce((t, c) => {
+                t.set(c.value, c.label);
+                return t;
+              }, new Map()),
+            );
             this.isRequestSuccess = true;
             rs(true);
           })

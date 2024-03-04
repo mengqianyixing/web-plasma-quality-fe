@@ -8,62 +8,68 @@ const serverEnumStore = useServerEnumStoreWithOut();
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: 'batchNo',
+    dataIndex: 'stationName',
   },
   {
     title: '浆员编号',
-    dataIndex: 'stationName',
+    dataIndex: 'donorNo',
   },
 
   {
     title: '浆员姓名',
-    dataIndex: 'stationBoxNo',
+    dataIndex: 'name',
   },
   {
     title: '血型',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'bloodType',
   },
   {
     title: '无检疫期后续的血浆数量',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'ambiguityBagCount',
+    width: 180,
   },
   {
     title: '血浆验收净重(g)',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'netWeight',
   },
   {
     title: '最早采集日期',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'earlier',
+    format: (t) => t?.slice(0, 10),
   },
   {
     title: '地址',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'idcardAddress',
+    width: 300,
+    ellipsis: false,
   },
   {
     title: '血浆总袋数',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'bagCount',
   },
   {
     title: '最晚采集日期',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'late',
+    format: (t) => t?.slice(0, 10),
   },
   {
     title: '淘汰原因',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'cause',
   },
   {
     title: '淘汰系统',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'blockBy',
   },
   {
     title: '不合格依据日期',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'listen',
+    format: (t) => t?.slice(0, 10),
   },
 ];
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: '',
+    field: 'stationNo',
     component: 'ApiSelect',
     label: '采浆公司',
     componentProps: {
@@ -73,12 +79,12 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: 'batch',
     component: 'Input',
     label: '血浆批号',
   },
   {
-    field: '',
+    field: '[collectBegin , collectEnd]',
     component: 'RangePicker',
     label: '采集日期',
     componentProps: {
@@ -87,35 +93,41 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: 'immunity',
     component: 'Select',
     label: '血浆类型',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {
-    field: '',
+    field: 'cause',
     component: 'Input',
     label: '淘汰原因',
   },
   {
-    field: '',
+    field: '[titerBenign, titerEnd]',
     component: 'InputRange',
     label: '效价结果值',
   },
   {
-    field: '',
+    field: 'state',
     component: 'Select',
     label: '浆员状态',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.DonorStatus),
+    },
   },
   {
-    field: '',
+    field: 'blockBy',
     component: 'Select',
     label: '淘汰系统',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BlockSource),
+    },
   },
   {
-    field: '',
+    field: '[checkBegin, checkEnd]',
     component: 'RangePicker',
     label: '检测发布日期',
     componentProps: {
@@ -124,12 +136,15 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: 'callback',
     component: 'Select',
     label: '回访状态',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.CallbackState),
+    },
   },
   {
-    field: '',
+    field: '[listenBegin, listenEnd]',
     component: 'RangePicker',
     label: '不合格依据日期',
     componentProps: {
