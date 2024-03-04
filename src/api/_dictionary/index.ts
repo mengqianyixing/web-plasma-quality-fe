@@ -51,6 +51,6 @@ export const getSysDictionary = (params: DictionaryEnum[]) =>
   defHttp.post<PostApiSysDictionaryItemsResponse>({ url: Api.DICTIONARY, params });
 
 export const getSysSecondaryDictionary = (params: {
-  dataKey: DictionaryEnum;
+  dataKey: DictionaryReasonEnum;
   dictItemTypes: DictionaryItemKeyEnum[];
 }) => defHttp.post<PostApiSysItemItemKeyResponse>({ url: Api.DICTIONARY_ITEM_KEY, params });

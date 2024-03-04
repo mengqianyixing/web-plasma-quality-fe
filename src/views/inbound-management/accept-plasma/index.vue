@@ -43,6 +43,9 @@
               <a-button @click="openOutModal(true, filterForm)" :disabled="!filterForm.batchNo">
                 托盘出库
               </a-button>
+              <!-- <a-button @click="openReprintModal(true, { boxNo: filterForm.boxNo ?? '104B1004' })"
+                >打印</a-button
+              > -->
             </div>
           </div>
         </template>
@@ -83,6 +86,7 @@
       @success="handleModalSuccess"
     />
     <MissNumModal @register="registerMissNumModal" @success="handleModalSuccess" />
+    <!-- <ReprintModal @register="registerReprintModal" @success="handleReprintSuccess" /> -->
   </PageWrapper>
 </template>
 
@@ -100,6 +104,7 @@
     plasmaVerifyBag,
     plasmaComplete,
   } from '@/api/inbound-management/accept-plasma';
+  // import { printRecord } from '@/api/tag/printRecord';
   import { Modal } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import dayjs from 'dayjs';
@@ -112,12 +117,13 @@
   import OutStoreDrawer from '../components/outStoreDrawer/index.vue';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
+  // import ReprintModal from './components/reprint-modal.vue';
   import PlasmaUnqualifiedModal from '@/views/inbound-management/accept-plasma/components/PlasmaUnqualifiedModal.vue';
   import SampleUnqualifiedModal from '@/views/inbound-management/accept-plasma/components/SampleUnqualifiedModal.vue';
   import MissNumModal from '@/views/inbound-management/accept-plasma/components/MissNumModal.vue';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
-  const { createMessage, createErrorModal } = useMessage();
+  const { createMessage, createWarningModal } = useMessage();
   const { success, warning } = createMessage;
 
   const filterForm = ref<any>({}); // 本批数据
@@ -178,9 +184,10 @@
         return (
           <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
             <a-input
-              placeholder="请输入"
+              placeholder="请扫描"
               onChange={(event) => (trayNo.value = event.target.value)}
               value={trayNo}
+              onkeyup={debounce(handlePressEnterTrayNo, 500)}
             />
           </div>
         );
@@ -287,6 +294,7 @@
   const [registerPlasmaUnqualifiedModal, { openModal: openPlasmaUnqualifiedModal }] = useModal();
   const [registerSampleUnqualifiedModal, { openModal: openSampleUnqualifiedModal }] = useModal();
   const [registerMissNumModal, { openModal: openMissNumModal }] = useModal();
+  // const [registerReprintModal, { openModal: openReprintModal }] = useModal();
 
   // 表格数据
   const unAcceptList = computed(() => filterForm.value?.unVerifyBag ?? []);
@@ -388,6 +396,15 @@
     showFooter: false,
   });
 
+  // 托盘号扫描
+  function handlePressEnterTrayNo(e) {
+    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+      nextTick(() => {
+        bagNoRef.value.focus();
+      });
+    }
+  }
+
   // 血浆扫描
   async function handlePressEnter(e) {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
@@ -424,12 +441,6 @@
           filterForm.value.stationNo = data.stationNo;
           filterForm.value.boxNo = data.boxNo;
           trayNo.value = data?.trayNo || '';
-          if (data.donorFailed) {
-            createErrorModal({
-              title: '提示',
-              content: createVNode('div', { style: 'color:red;' }, data.donorFailed),
-            });
-          }
           filterForm.value.unVerifyBag = data.unVerifyBag.map((item: any) => {
             return {
               bagNo: item,
@@ -442,14 +453,9 @@
             success('验收成功');
             donorFailed.value = data.donorFailed; // 献血浆者不符合
             if (data.donorFailed) {
-              Modal.confirm({
-                title: '提示?',
+              createWarningModal({
+                title: '提示',
                 content: createVNode('div', { style: 'color:red;' }, data.donorFailed),
-                onOk() {},
-                onCancel() {
-                  console.log('Cancel');
-                },
-                class: 'test',
               });
             }
             if (
@@ -692,4 +698,14 @@
       class: 'test',
     });
   }
+
+  // // 打印箱签
+  // async function handleReprintSuccess(data) {
+  //   const params = {
+  //     ...data.labelObj,
+  //     dpi: data.labelObj.resolution,
+  //   };
+  //   delete params.resolution;
+  //   await printRecord(params);
+  // }
 </script>
