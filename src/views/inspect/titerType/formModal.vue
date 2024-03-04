@@ -13,6 +13,8 @@
     showFooter
     :title="state.type"
     width="800px"
+    :showOkBtn="state.type !== '查看'"
+    cancelText="关闭"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
