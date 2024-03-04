@@ -63,7 +63,7 @@
     async ({ isUpdate, data, formSchema = [] }: Data) => {
       fields = formSchema.map((_) => _.field);
       await removeSchemaByField(fields);
-      appendSchemaByField(formSchema, 'itemValue');
+      appendSchemaByField(formSchema, 'itemValue', true);
       setModalProps({ confirmLoading: false });
       state.isUpdate = isUpdate;
       state.dictItemId = data.dictItemId;
