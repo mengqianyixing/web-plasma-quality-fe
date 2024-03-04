@@ -68,7 +68,12 @@ export const formListSchema: FormSchema[] = [
     label: '检测模式',
     required: true,
     componentProps: {
-      options: [],
+      options: [
+        { value: '酶联检测', label: '酶联检测' },
+        { value: '生化检测', label: '生化检测' },
+        { value: '核酸检测', label: '核酸检测' },
+        { value: '细胞检测', label: '细胞检测' },
+      ],
     },
   },
   {
