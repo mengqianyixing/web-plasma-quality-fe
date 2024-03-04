@@ -28,7 +28,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '记录人',
-    dataIndex: 'creater',
+    dataIndex: 'creator',
   },
   {
     title: '记录时间',
