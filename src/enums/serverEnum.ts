@@ -44,4 +44,5 @@ export enum SERVER_ENUM {
   BankTrayTypeEnum = 'BankTrayTypeEnum',
   DlvType = 'DlvType',
   BatchOperationSumState = 'BatchOperationSumState',
+  BankDeliverstateType = 'BankDeliverstateType',
 }
