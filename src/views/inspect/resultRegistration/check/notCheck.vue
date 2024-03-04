@@ -6,14 +6,11 @@
     title="未检测"
     width="360px"
     cancelText="关闭"
-    okText="提交&关闭"
+    okText="提交"
     :min-height="300"
     @cancel="emit('close')"
     @ok="handleSubmit(true)"
   >
-    <template #appendFooter>
-      <a-button type="primary" @click="handleSubmit(false)" :loading="loading">提交&继续</a-button>
-    </template>
     <BasicForm @register="registerForm" />
     <CellWapper :data="donorData" cell-width="50%" :cell-list="cellList" :gap="0" />
   </BasicModal>
