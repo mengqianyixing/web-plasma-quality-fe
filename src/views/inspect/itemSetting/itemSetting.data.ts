@@ -206,7 +206,10 @@ export const formListSchema: FormSchema[] = [
     component: 'Select',
     label: '检测性质',
     componentProps: {
-      options: [],
+      options: [
+        { label: '定量', value: '定量' },
+        { label: '定性', value: '定性' },
+      ],
     },
   },
   {
