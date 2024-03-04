@@ -150,7 +150,12 @@ export const formListSchema: FormSchema[] = [
     label: '判断标准',
     required: true,
     componentProps: {
-      options: [],
+      options: [
+        { value: '阴性', label: '阴性' },
+        { value: '效价', label: '效价' },
+        { value: '≤50U/L', label: '≤50U/L' },
+        { value: '≥50g/L', label: '≥50g/L' },
+      ],
     },
   },
   {
