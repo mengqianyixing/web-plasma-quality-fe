@@ -58,7 +58,7 @@ export const formListSchema: FormSchema[] = [
     componentProps: {
       api: () =>
         new Promise((rs) => {
-          getListApi({ currPage: 1, pageSize: 100 }).then((res) => {
+          getListApi({ currPage: 1, pageSize: 100, state: 'NORMAL' }).then((res) => {
             rs(res.result);
           });
         }),
