@@ -68,6 +68,8 @@
       } else if (data.projectId) {
         state.type = '编辑';
         disabledOptions.slice(0, 2).forEach((_) => (_.componentProps.disabled = true));
+        const res = await getItemSettingDtApi({ id: data.projectId });
+        setFieldsValue(res);
       } else {
         state.type = '新增';
         resetFields();
