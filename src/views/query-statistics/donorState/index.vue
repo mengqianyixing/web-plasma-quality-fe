@@ -7,9 +7,10 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './data';
   import { PageWrapper } from '@/components/Page';
+  import { getListApi } from '@/api/query-statistics/donorState';
 
   const [registerTable] = useTable({
-    api: () => Promise.resolve({ result: [{}] }),
+    api: getListApi,
     columns,
     formConfig: {
       schemas: searchFormSchema,
