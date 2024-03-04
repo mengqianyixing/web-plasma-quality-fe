@@ -86,7 +86,7 @@ export const columns: BasicColumn[] = [
 
 export const searchSchema: FormSchema[] = [
   {
-    field: 'stationNo',
+    field: 'dlvNo',
     component: 'Input',
     label: '申请单号',
   },
