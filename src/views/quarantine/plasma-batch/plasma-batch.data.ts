@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-03-01 10:21:20
+ * @LastEditTime: 2024-03-05 11:01:35
  * @Description: 血浆批检疫期报告 data
  * @FilePath: \psms-fe\src\views\quarantine\plasma-batch\plasma-batch.data.ts
  */
@@ -68,7 +68,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '检测合格血浆',
-    dataIndex: 'summary.checkOK',
+    dataIndex: 'summary.checkedCount',
     className: 'empty-value',
     customRender: ({ record }) =>
       calculate(
