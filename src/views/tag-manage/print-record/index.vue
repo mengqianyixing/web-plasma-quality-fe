@@ -65,8 +65,6 @@
     });
   });
 
-  defineOptions({ name: 'TagRecord' });
-
   const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
   const [registerReprintModal, { openModal: openReprintModal }] = useModal();
 
