@@ -3,8 +3,9 @@ import { BasicColumn } from '@/components/Table';
 import {
   boxTypeMap,
   boxTypeEnum,
+  TRAY_IN_STATE_TEXT,
+  TRAY_IN_STATE_LIST,
   TRAY_STORE_STATE_TEXT,
-  TRAY_STORE_STATE_LIST,
 } from '@/enums/stockoutEnum';
 
 export const trayInStoreColumns: BasicColumn[] = [
@@ -145,7 +146,7 @@ export const trayOutStoreColumns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'state',
-    format: (text) => TRAY_STORE_STATE_TEXT.get(text) as string,
+    format: (text) => TRAY_IN_STATE_TEXT.get(text) as string,
   },
   {
     title: '存放库房',
@@ -177,7 +178,7 @@ export const trayOutStoreFormSchema: FormSchema[] = [
     field: 'state',
     component: 'Select',
     componentProps: {
-      options: TRAY_STORE_STATE_LIST,
+      options: TRAY_IN_STATE_LIST,
     },
   },
   {

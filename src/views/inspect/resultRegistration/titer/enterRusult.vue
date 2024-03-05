@@ -13,16 +13,13 @@
     showFooter
     :title="projectName + '录入效价结果'"
     width="800px"
-    okText="提交&关闭"
+    okText="提交"
     cancelText="关闭"
     :minHeight="520"
     @cancel="close"
     @fullscreen="redoHeight"
     @ok="handleSubmit(true)"
   >
-    <template #appendFooter>
-      <a-button type="primary" @click="handleSubmit(false)" :loading="loading">提交&继续</a-button>
-    </template>
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
         <BasicForm @register="registerForm" />

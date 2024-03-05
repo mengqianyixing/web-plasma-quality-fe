@@ -14,13 +14,10 @@
     :title="projectName + '不合格登记'"
     width="400px"
     cancelText="关闭"
-    okText="提交&关闭"
+    okText="提交"
     @cancel="close"
     @ok="handleSubmit(true)"
   >
-    <template #appendFooter>
-      <a-button type="primary" @click="handleSubmit(false)" :loading="loading">提交&继续</a-button>
-    </template>
     <BasicForm @register="registerForm" />
     <Login
       @register="registerLoginModal"

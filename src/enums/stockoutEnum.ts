@@ -232,9 +232,17 @@ export const TRAY_STORE_STATE_TEXT: Map<string, string> = new Map([
   [TRAY_STORE_STATE.R, '入库中'],
   [TRAY_STORE_STATE.S, '已入库'],
 ]);
-
+export const TRAY_IN_STATE_TEXT: Map<string, string> = new Map([
+  [TRAY_STORE_STATE.W, '未出库'],
+  [TRAY_STORE_STATE.R, '出库中'],
+  [TRAY_STORE_STATE.S, '已出库'],
+]);
 export const TRAY_STORE_STATE_LIST = Object.keys(TRAY_STORE_STATE).map((_) => ({
   label: TRAY_STORE_STATE_TEXT.get(_),
+  value: _,
+}));
+export const TRAY_IN_STATE_LIST = Object.keys(TRAY_STORE_STATE).map((_) => ({
+  label: TRAY_IN_STATE_TEXT.get(_),
   value: _,
 }));
 
