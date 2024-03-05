@@ -411,7 +411,7 @@
   async function handlePressEnter(e) {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
       if (!bagNo.value) {
-        warning('请扫描袋号！');
+        warning('请扫描血浆编号！');
         return;
       }
       if (!checker.value) {
@@ -442,7 +442,8 @@
           filterForm.value.boxCount = data.boxCount;
           filterForm.value.stationNo = data.stationNo;
           filterForm.value.boxNo = data.boxNo;
-          trayNo.value = data?.trayNo || '';
+          // trayNo.value = data?.trayNo || '';
+          if (data?.trayNo) trayNo.value;
           filterForm.value.unVerifyBag = data.unVerifyBag.map((item: any) => {
             return {
               bagNo: item,
