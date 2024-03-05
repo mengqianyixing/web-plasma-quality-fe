@@ -16,6 +16,7 @@
     columns,
     formConfig: {
       schemas: searchFormSchema,
+      labelWidth: 80,
     },
     fetchSetting: {
       pageField: 'currPage',
