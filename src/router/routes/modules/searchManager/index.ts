@@ -85,6 +85,16 @@ const trayManager: AppRouteModule = {
       component: () => import('/@/views/query-statistics/prepareNo/index.vue'),
     },
     {
+      path: 'quarantinePeriodUnqualifiedStatistics',
+      name: 'QuarantinePeriodUnqualifiedStatistics',
+      meta: {
+        title: '检疫期不合格统计',
+      },
+      id: 9000280,
+      component: () =>
+        import('/@/views/query-statistics/quarantinePeriodUnqualifiedStatistics/index.vue'),
+    },
+    {
       path: 'titerPlasmaQuery',
       name: 'TiterPlasmaQuery',
       meta: {
@@ -119,6 +129,16 @@ const trayManager: AppRouteModule = {
       },
       id: 9000290,
       component: () => import('/@/views/query-statistics/unqualified-plasma-station/index.vue'),
+    },
+    {
+      path: 'followDisqualificationStatistics',
+      name: 'FollowDisqualificationStatistics',
+      meta: {
+        title: '续追踪不合格统计',
+      },
+      id: 9000270,
+      component: () =>
+        import('/@/views/query-statistics/followDisqualificationStatistics/index.vue'),
     },
     {
       path: 'entry-plasma',
@@ -254,26 +274,6 @@ const trayManager: AppRouteModule = {
       },
       id: 9000100,
       component: () => import('/@/views/query-statistics/checkResult/index.vue'),
-    },
-    {
-      path: 'followDisqualificationStatistics',
-      name: 'FollowDisqualificationStatistics',
-      meta: {
-        title: '续追踪不合格统计',
-      },
-      id: 9000270,
-      component: () =>
-        import('/@/views/query-statistics/followDisqualificationStatistics/index.vue'),
-    },
-    {
-      path: 'quarantinePeriodUnqualifiedStatistics',
-      name: 'QuarantinePeriodUnqualifiedStatistics',
-      meta: {
-        title: '检疫期不合格统计',
-      },
-      id: 9000280,
-      component: () =>
-        import('/@/views/query-statistics/quarantinePeriodUnqualifiedStatistics/index.vue'),
     },
   ],
 };
