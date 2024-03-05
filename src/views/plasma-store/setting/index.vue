@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-19 16:45:20
  * @LastEditors: zcc
@@ -70,7 +70,7 @@
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
   import { StoreButtonEnum } from '@/enums/authCodeEnum';
 
-  defineOptions({ name: 'PlasmaStoreSetting' });
+  defineOptions({ name: 'StoreSetting' });
 
   const [registerModal, { openModal }] = useModal();
   const [registerLoactionModal, { openModal: openLoactionModal }] = useModal();

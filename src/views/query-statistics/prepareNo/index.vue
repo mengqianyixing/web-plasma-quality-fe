@@ -9,6 +9,8 @@
   import { PageWrapper } from '@/components/Page';
   import { getPrepareQuery } from '@/api/query-statistics/prepareNo';
 
+  defineOptions({ name: 'PrepareNo' });
+
   const [registerTable] = useTable({
     api: getPrepareQuery,
     columns,

@@ -30,7 +30,7 @@ const nonconformity: AppRouteModule = {
       meta: {
         title: '投产准备',
       },
-      component: () => import('/@/views/stockout/production-preparation/index.vue'),
+      component: () => import('@/views/stockout/production-preparation/index.vue'),
     },
     {
       path: 'ps',
@@ -39,7 +39,7 @@ const nonconformity: AppRouteModule = {
       meta: {
         title: '血浆分拣',
       },
-      component: () => import('/@/views/stockout/production-sorting/index.vue'),
+      component: () => import('@/views/stockout/production-sorting/index.vue'),
       authElements: [
         {
           id: ReCheckButtonEnum.ProductionSortingReCheck,
@@ -55,7 +55,7 @@ const nonconformity: AppRouteModule = {
       meta: {
         title: '生产指令',
       },
-      component: () => import('/@/views/stockout/production-order/index.vue'),
+      component: () => import('@/views/stockout/production-order/index.vue'),
     },
     {
       path: 'productionPlan',
@@ -103,7 +103,7 @@ const nonconformity: AppRouteModule = {
       meta: {
         title: '投产出库',
       },
-      component: () => import('/@/views/stockout/production-put-into/index.vue'),
+      component: () => import('@/views/stockout/production-put-into/index.vue'),
     },
     {
       path: 'NonProductionPutInto',
@@ -112,7 +112,7 @@ const nonconformity: AppRouteModule = {
       meta: {
         title: '非生产出库',
       },
-      component: () => import('/@/views/stockout/non-production-put-into/index.vue'),
+      component: () => import('@/views/stockout/non-production-put-into/index.vue'),
     },
     {
       path: 'plasmaSummary',
@@ -121,7 +121,7 @@ const nonconformity: AppRouteModule = {
       meta: {
         title: '血浆汇总',
       },
-      component: () => import('/@/views/stockout/plasma-summary/index.vue'),
+      component: () => import('@/views/stockout/plasma-summary/index.vue'),
     },
   ],
 };

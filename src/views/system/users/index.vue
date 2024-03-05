@@ -52,7 +52,7 @@
 
   import { columns, searchFormSchema } from './users.data';
 
-  defineOptions({ name: 'UsersAuthManagement' });
+  defineOptions({ name: 'Users' });
 
   const [registerModal, { openModal }] = useModal();
   const [registerUserDetailModal, { openModal: openUsersDetailModal }] = useModal();

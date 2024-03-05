@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-25 14:30:13
  * @LastEditors: zcc
@@ -63,6 +63,8 @@
     removeItemSettingApi,
   } from '@/api/inspect/itemSetting';
   import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
+
+  defineOptions({ name: 'ItemSetting' });
 
   const [registerModal, { openModal }] = useModal();
 

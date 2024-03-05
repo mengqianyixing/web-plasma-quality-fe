@@ -11,6 +11,8 @@
   import { isArray, isObject } from '@/utils/is';
   import { PostApiCoreBagTiterResponse } from '@/api/type/queryStatistics';
 
+  defineOptions({ name: 'TiterPlasmaQuery' });
+
   const [registerTable] = useTable({
     api: getListApi,
     columns,

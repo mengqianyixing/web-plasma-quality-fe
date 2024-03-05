@@ -24,19 +24,19 @@ const quarantineManager: AppRouteModule = {
   children: [
     {
       path: '/quarantine/computed',
-      name: 'computed',
+      name: 'Computed',
       id: 950010,
       meta: { title: '检疫期计算' },
-      component: () => import('/@/views/quarantine/computed/index.vue'),
+      component: () => import('@/views/quarantine/computed/index.vue'),
     },
     {
       path: '/quarantine/plasma-batch',
-      name: 'PlasmaBatch',
+      name: 'PlasmaBatchReport',
       id: 950030,
       meta: {
         title: '血浆批检疫期报告',
       },
-      component: () => import('/@/views/quarantine/plasma-batch/index.vue'),
+      component: () => import('@/views/quarantine/plasma-batch/index.vue'),
     },
     {
       path: 'stationRefuse',
@@ -45,7 +45,7 @@ const quarantineManager: AppRouteModule = {
         title: '浆站永拒查询',
       },
       id: 9000220,
-      component: () => import('/@/views/query-statistics/stationRefuse/index.vue'),
+      component: () => import('@/views/query-statistics/stationRefuse/index.vue'),
     },
     {
       path: 'factoryCheckFail',
@@ -54,7 +54,7 @@ const quarantineManager: AppRouteModule = {
         title: '厂家检测不合格查询',
       },
       id: 9000110,
-      component: () => import('/@/views/query-statistics/factoryCheckFail/index.vue'),
+      component: () => import('@/views/query-statistics/factoryCheckFail/index.vue'),
     },
     {
       path: '/quarantine/overdue-confirmation',

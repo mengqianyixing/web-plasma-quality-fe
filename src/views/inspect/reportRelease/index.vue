@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
@@ -97,6 +97,8 @@
   import { BasicForm, useForm } from '@/components/Form';
   import TabelModal from './tabelModal.vue';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
+
+  defineOptions({ name: 'ReportRelease' });
 
   const open = ref(false);
   const confirmLoading = ref(false);

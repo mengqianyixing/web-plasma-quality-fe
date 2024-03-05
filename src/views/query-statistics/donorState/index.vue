@@ -9,6 +9,8 @@
   import { PageWrapper } from '@/components/Page';
   import { getListApi } from '@/api/query-statistics/donorState';
 
+  defineOptions({ name: 'DonorState' });
+
   const [registerTable] = useTable({
     api: getListApi,
     columns,

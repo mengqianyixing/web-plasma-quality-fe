@@ -28,7 +28,7 @@ const callManager: AppRouteModule = {
         title: '回访名单生成',
       },
       id: 930010,
-      component: () => import('/@/views/callback/list-generation/index.vue'),
+      component: () => import('@/views/callback/list-generation/index.vue'),
     },
     {
       path: 'callback-complete',
@@ -37,7 +37,7 @@ const callManager: AppRouteModule = {
         title: '回访名单完成',
       },
       id: 930020,
-      component: () => import('/@/views/callback/callback-complete/index.vue'),
+      component: () => import('@/views/callback/callback-complete/index.vue'),
     },
     {
       path: 'callback-failure',
@@ -46,7 +46,7 @@ const callManager: AppRouteModule = {
         title: '回访名单失败',
       },
       id: 930030,
-      component: () => import('/@/views/callback/callback-failure/index.vue'),
+      component: () => import('@/views/callback/callback-failure/index.vue'),
     },
   ],
 };

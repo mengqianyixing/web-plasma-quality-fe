@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-18 14:18:08
  * @LastEditors: zcc
@@ -34,7 +34,7 @@
   import { getListApi } from '@/api/tray/list';
   import { StoreButtonEnum } from '@/enums/authCodeEnum';
 
-  defineOptions({ name: 'OutInStore' });
+  defineOptions({ name: 'TrayOutInStore' });
 
   const [registerOutModal, { openModal }] = useModal();
   const [registerInModal, { openModal: openInModal }] = useModal();

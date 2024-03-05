@@ -24,8 +24,8 @@ const inboundmanagement: AppRouteModule = {
   },
   children: [
     {
-      path: 'receiveplasma',
-      name: 'Receiveplasma',
+      path: 'ReceivePlasma',
+      name: 'ReceivePlasma',
       id: 980010,
       meta: {
         title: '血浆接收',
@@ -40,8 +40,8 @@ const inboundmanagement: AppRouteModule = {
       ],
     },
     {
-      path: 'acceptplasma',
-      name: 'Acceptplasma',
+      path: 'AcceptPlasma',
+      name: 'AcceptPlasma',
       id: 980020,
       meta: {
         title: '血浆验收',

@@ -9,6 +9,8 @@
   import { PageWrapper } from '@/components/Page';
   import { getERPInboundList } from '@/api/query-statistics/ERP';
 
+  defineOptions({ name: 'ERPEntryStore' });
+
   const [registerTable] = useTable({
     api: getERPInboundList,
     columns,

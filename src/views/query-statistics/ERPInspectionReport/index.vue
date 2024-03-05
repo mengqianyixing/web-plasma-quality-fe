@@ -32,6 +32,8 @@
   import { doExportMultipleTable } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
 
+  defineOptions({ name: 'ERPInspectionReport' });
+
   const { currentRoute } = useRouter();
   const APagination = Pagination;
 

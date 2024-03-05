@@ -31,7 +31,7 @@ const nonconformity: AppRouteModule = {
         title: '不合格血浆登记',
       },
       id: 920020,
-      component: () => import('/@/views/nonconformity/nonconformity-registration/index.vue'),
+      component: () => import('@/views/nonconformity/nonconformity-registration/index.vue'),
       authElements: [
         {
           id: ReCheckButtonEnum.NonconformityRegistrationCheck,
@@ -47,16 +47,16 @@ const nonconformity: AppRouteModule = {
       meta: {
         title: '不合格库房箱',
       },
-      component: () => import('/@/views/nonconformity/boxes/index.vue'),
+      component: () => import('@/views/nonconformity/boxes/index.vue'),
     },
     {
       path: 'plasma-manage',
-      name: 'plasmaManage',
+      name: 'PlasmaManage',
       meta: {
         title: '不合格血浆入库',
       },
       id: 920040,
-      component: () => import('/@/views/nonconformity/plasma-manage/index.vue'),
+      component: () => import('@/views/nonconformity/plasma-manage/index.vue'),
       authElements: [
         {
           id: ReCheckButtonEnum.NonconformityPickCheck,

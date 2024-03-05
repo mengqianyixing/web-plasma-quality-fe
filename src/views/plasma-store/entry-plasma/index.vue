@@ -60,7 +60,7 @@
   const [registerNoPass, { openModal: openNoPassModal }] = useModal();
   const [registerHortFall, { openModal: openHortFallModal }] = useModal();
 
-  defineOptions({ name: 'PlasmaStoreSetting' });
+  defineOptions({ name: 'EntryPlasma' });
 
   const [registerTable] = useTable({
     api: receptionDetailApi,

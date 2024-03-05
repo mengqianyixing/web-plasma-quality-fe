@@ -87,6 +87,8 @@
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
 
+  defineOptions({ name: 'ResultRegistration' });
+
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 

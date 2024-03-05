@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-25 14:30:13
  * @LastEditors: zcc
@@ -66,6 +66,8 @@
     removeInspectMethodApi,
   } from '@/api/inspect/inspectMethod';
   import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
+
+  defineOptions({ name: 'InspectMethod' });
 
   const [registerModal, { openModal }] = useModal();
 

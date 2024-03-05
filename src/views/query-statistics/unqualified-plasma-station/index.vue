@@ -9,6 +9,8 @@
   import { PageWrapper } from '@/components/Page';
   import { getUnqualifiedPlasmaStation } from '@/api/query-statistics/batch-statistics';
 
+  defineOptions({ name: 'UnqualifiedPlasmaByStation' });
+
   const [registerTable] = useTable({
     api: getUnqualifiedPlasmaStation,
     columns,

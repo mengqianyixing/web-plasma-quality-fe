@@ -54,7 +54,7 @@
   import { getProOrders } from '@/api/stockout/production-order';
   import { statusValueEnum } from '@/enums/stockoutEnum';
 
-  defineOptions({ name: 'DeptManagement' });
+  defineOptions({ name: 'ProductionPutInto' });
 
   const [registerBoxOutStoreModal, { openModal: openBoxOutStoreModal }] = useModal();
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();

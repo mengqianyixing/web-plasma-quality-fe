@@ -62,6 +62,8 @@
   import { Range } from 'xlsx';
   import { useRouter } from 'vue-router';
 
+  defineOptions({ name: 'PlasmaBatchQueryStatistics' });
+
   const { currentRoute } = useRouter();
 
   const { isLoading, stationOptions } = useStation();

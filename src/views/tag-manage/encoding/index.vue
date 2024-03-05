@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-26 14:35:04
  * @LastEditors: zcc
@@ -35,7 +35,7 @@
 
   import EncodingDrawer from './EncodingDrawer.vue';
 
-  defineOptions({ name: 'EncodingManagement' });
+  defineOptions({ name: 'TagEncoding' });
 
   const [registerEncodingDrawer, { openDrawer: openEncodingDrawer }] = useDrawer();
 

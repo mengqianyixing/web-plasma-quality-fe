@@ -18,6 +18,8 @@
   import { PageWrapper } from '@/components/Page';
   import { getCallbackFailureList } from '@/api/callback/callback-failure';
 
+  defineOptions({ name: 'CallbackFailure' });
+
   const { isLoading, stationOptions, getStationNameById } = useStation();
   onMounted(() => {
     watchEffect(() => {

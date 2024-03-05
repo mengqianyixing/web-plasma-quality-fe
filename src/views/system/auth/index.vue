@@ -46,7 +46,8 @@
 
   const { createMessage } = useMessage();
 
-  defineOptions({ name: 'RoleAuthManagement' });
+  defineOptions({ name: 'AuthMenus' });
+
   const selectedRowsRef = ref<Recordable>([]);
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload }] = useTable({

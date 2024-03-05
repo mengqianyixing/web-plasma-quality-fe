@@ -16,6 +16,8 @@
   import { useRouter } from 'vue-router';
   import { getCallbackBatchStatistics } from '@/api/query-statistics/callback';
 
+  defineOptions({ name: 'CallbackBatchStatistics' });
+
   const { currentRoute } = useRouter();
 
   const [registerTable, { getForm }] = useTable({

@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-26 14:02:29
  * @LastEditors: zcc
@@ -27,6 +27,8 @@
   import { columns, searchFormSchema } from './overdue-confirmation.data';
   import { getListApi, submitConfirmApi } from '@/api/quarantine/overdue-confirmation';
   import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
+
+  defineOptions({ name: 'OverdueConfirmation' });
 
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,

@@ -23,8 +23,8 @@ const callManager: AppRouteModule = {
   },
   children: [
     {
-      path: 'titerType',
-      name: 'titerType',
+      path: 'TiterType',
+      name: 'TiterType',
       meta: {
         title: '效价类型',
       },
@@ -54,8 +54,8 @@ const callManager: AppRouteModule = {
       component: () => import('@/views/inspect/titerType/index.vue'),
     },
     {
-      path: 'inspectMethod',
-      name: 'inspectMethod',
+      path: 'InspectMethod',
+      name: 'InspectMethod',
       id: 100020,
       authElements: [
         {
@@ -85,8 +85,8 @@ const callManager: AppRouteModule = {
       component: () => import('@/views/inspect/inspectMethod/index.vue'),
     },
     {
-      path: 'itemSetting',
-      name: 'itemSetting',
+      path: 'ItemSetting',
+      name: 'ItemSetting',
       meta: {
         title: '检验项目设置',
       },

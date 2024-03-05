@@ -51,7 +51,7 @@
   import { useStation } from '@/hooks/common/useStation';
   import { onMounted, ref, watchEffect } from 'vue';
 
-  defineOptions({ name: 'UsersAuthManagement' });
+  defineOptions({ name: 'PlasmaBatchReport' });
 
   const selectedRow = ref<Recordable>([]);
   const { isLoading, stationOptions, getStationNameById } = useStation();

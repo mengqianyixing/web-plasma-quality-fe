@@ -93,6 +93,8 @@
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+  defineOptions({ name: 'SampleVerify' });
+
   const serverEnumStore = useServerEnumStoreWithOut();
   const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 

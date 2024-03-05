@@ -46,6 +46,8 @@
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
 
+  defineOptions({ name: 'PlasmaTest' });
+
   const activeKey = ref('0');
   const CheckColumns = cloneDeep(checkColumns);
   let params = {};

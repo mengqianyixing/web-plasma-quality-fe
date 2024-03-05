@@ -28,7 +28,7 @@ const labelManager: AppRouteModule = {
         title: '标签样式管理',
       },
       id: 890010,
-      component: () => import('/@/views/tag-manage/style/index.vue'),
+      component: () => import('@/views/tag-manage/style/index.vue'),
     },
     {
       path: 'encoding',
@@ -37,7 +37,7 @@ const labelManager: AppRouteModule = {
         title: '标签编码管理',
       },
       id: 890020,
-      component: () => import('/@/views/tag-manage/encoding/index.vue'),
+      component: () => import('@/views/tag-manage/encoding/index.vue'),
     },
     {
       path: 'print-record',
@@ -46,7 +46,7 @@ const labelManager: AppRouteModule = {
         title: '标签打印记录',
       },
       id: 890030,
-      component: () => import('/@/views/tag-manage/print-record/index.vue'),
+      component: () => import('@/views/tag-manage/print-record/index.vue'),
     },
   ],
 };

@@ -15,6 +15,8 @@
   import { jsonToSheetXlsx, formatData, getHeader } from '@/components/Excel';
   import { useRouter } from 'vue-router';
 
+  defineOptions({ name: 'CallbackStatistics' });
+
   const { currentRoute } = useRouter();
 
   const [registerTable, { getForm }] = useTable({

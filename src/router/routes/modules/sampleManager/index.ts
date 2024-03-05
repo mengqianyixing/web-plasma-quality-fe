@@ -35,7 +35,7 @@ const sampleManager: AppRouteModule = {
     },
     {
       path: 'sample-verify',
-      name: '样本验收',
+      name: 'SampleVerify',
       meta: {
         title: '样本验收',
       },
@@ -61,7 +61,7 @@ const sampleManager: AppRouteModule = {
       meta: {
         title: '样本发布',
       },
-      component: () => import('/@/views/sample-manage/sample-release/index.vue'),
+      component: () => import('@/views/sample-manage/sample-release/index.vue'),
     },
   ],
 };

@@ -1,14 +1,14 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-17 10:27:50
  * @LastEditors: zcc
  * @LastEditTime: 2024-01-25 14:44:59
 -->
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-25 14:30:13
  * @LastEditors: zcc
@@ -103,6 +103,8 @@
   import { nextTick, ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
+
+  defineOptions({ name: 'ProductionPlan' });
 
   const [registerModal, { openModal }] = useModal();
   const confirmLoading = ref(false);

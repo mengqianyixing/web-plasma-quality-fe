@@ -11,6 +11,8 @@
   import { useStation } from '@/hooks/common/useStation';
   import { getStationRefuseList } from '@/api/query-statistics/stationRefuse.js';
 
+  defineOptions({ name: 'StationRefuse' });
+
   const [registerTable, { getForm }] = useTable({
     api: getStationRefuseList,
     columns,

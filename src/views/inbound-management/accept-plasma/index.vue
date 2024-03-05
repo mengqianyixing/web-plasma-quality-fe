@@ -123,6 +123,8 @@
   import MissNumModal from '@/views/inbound-management/accept-plasma/components/MissNumModal.vue';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
+  defineOptions({ name: 'AcceptPlasma' });
+
   const { createMessage, createWarningModal } = useMessage();
   const { success, warning } = createMessage;
 

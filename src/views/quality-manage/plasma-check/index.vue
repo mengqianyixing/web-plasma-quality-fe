@@ -65,7 +65,7 @@
     });
   });
 
-  defineOptions({ name: 'NonconformityBoxes' });
+  defineOptions({ name: 'PlasmaCheck' });
 
   const [registerPlasmaCheckModal, { openModal: openPlasmaCheckModal }] = useModal();
   const [registerPlasmaLimitModal, { openModal: openPlasmaLimitModal }] = useModal();

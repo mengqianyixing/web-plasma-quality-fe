@@ -11,6 +11,8 @@
   import { PageWrapper } from '@/components/Page';
   import { getStationBoxList } from '@/api/query-statistics/stationBox.js';
 
+  defineOptions({ name: 'StationBox' });
+
   const [registerTable, { getForm }] = useTable({
     api: getStationBoxList,
     columns,

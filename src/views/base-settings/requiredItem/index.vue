@@ -52,6 +52,8 @@
   import { ReCheckButtonEnum, BaseSettingButtonEnum } from '@/enums/authCodeEnum';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
 
+  defineOptions({ name: 'RequiredItem' });
+
   const userId = ref('');
 
   const [registerLogin, { openModal: openLoginModal }] = useModal();
