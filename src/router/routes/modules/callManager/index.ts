@@ -9,6 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import { CallbackButtonEnum } from '@/enums/authCodeEnum';
 
 const callManager: AppRouteModule = {
   path: '/callback',
@@ -29,6 +30,33 @@ const callManager: AppRouteModule = {
       },
       id: 930010,
       component: () => import('@/views/callback/list-generation/index.vue'),
+      authElements: [
+        {
+          id: CallbackButtonEnum.ListGeneAdd,
+          name: 'add',
+          title: '新增',
+        },
+        {
+          id: CallbackButtonEnum.ListGeneEdit,
+          name: 'edit',
+          title: '编辑',
+        },
+        {
+          id: CallbackButtonEnum.ListGeneDelete,
+          name: 'delete',
+          title: '撤销',
+        },
+        {
+          id: CallbackButtonEnum.ListGeneEnter,
+          name: 'enter',
+          title: '确认',
+        },
+        {
+          id: CallbackButtonEnum.ListGeneExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'callback-complete',

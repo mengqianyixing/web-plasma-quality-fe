@@ -21,11 +21,37 @@
         {{ getStationNameById(record?.stationNo) }}
       </template>
       <template #toolbar>
-        <a-button type="primary" @click="handleUnqualifiedStage"> 不合格暂存 </a-button>
-        <a-button type="primary" @click="handleWeightRegister"> 重量登记 </a-button>
-        <a-button type="primary" @click="handleVerifyRelease">验收发布</a-button>
-        <a-button type="primary" @click="handleVerifyList">验收清单</a-button>
-        <a-button type="primary" @click="handleVisualInspectionList">外观检查清单</a-button>
+        <a-button
+          type="primary"
+          @click="handleUnqualifiedStage"
+          v-auth="ReCheckButtonEnum.UnqualifiedStage"
+        >
+          不合格暂存
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleWeightRegister"
+          v-auth="ReCheckButtonEnum.WeightRegister"
+        >
+          重量登记
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleVerifyRelease"
+          v-auth="ReCheckButtonEnum.VerifyRelease"
+        >
+          验收发布
+        </a-button>
+        <a-button type="primary" @click="handleVerifyList" v-auth="ReCheckButtonEnum.VerifyList">
+          验收清单
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleVisualInspectionList"
+          v-auth="ReCheckButtonEnum.VisualInspectionList"
+        >
+          外观检查清单
+        </a-button>
       </template>
     </BasicTable>
 
@@ -53,6 +79,7 @@
   import RegisterWeightModal from '@/views/inbound-management/plasma-inbound-record/RegisterWeightModal.vue';
   import UnqualifiedStageModal from '@/views/inbound-management/plasma-inbound-record/UnqualifiedStageModal.vue';
   import { omit } from 'lodash-es';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { isLoading, stationOptions, getStationNameById } = useStation();
   const { createMessage, createConfirm } = useMessage();
