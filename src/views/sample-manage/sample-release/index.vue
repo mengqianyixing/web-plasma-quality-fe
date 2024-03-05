@@ -12,7 +12,12 @@
         <span v-else>-</span>
       </template>
       <template #toolbar>
-        <a-button type="primary" @click="handleRelease">发布</a-button>
+        <a-button
+          type="primary"
+          @click="handleRelease"
+          v-auth="SampleManageButtonEnum.SampleRelease"
+          >发布
+        </a-button>
       </template>
     </BasicTable>
 
@@ -30,6 +35,7 @@
   import UnqualifiedModal from '@/views/sample-manage/sample-release/unqualifiedModal.vue';
   import { onMounted, ref, watchEffect } from 'vue';
   import { useStation } from '@/hooks/common/useStation';
+  import { SampleManageButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'SampleRelease' });
 

@@ -20,6 +20,11 @@ export enum ReCheckButtonEnum {
   RegisterWeightCheck = 'E_980090',
   ProductionSortingReCheck = 'E_910020',
   RequiredItemCheck = 'E_10008010',
+  UnqualifiedStage = 'E_98003001',
+  WeightRegister = 'E_98003002',
+  VerifyRelease = 'E_98003003',
+  VerifyList = 'E_98003004',
+  VisualInspectionList = 'E_98003005',
 }
 
 export enum BaseSettingButtonEnum {
@@ -111,12 +116,24 @@ export enum InspectButtonEnum {
 
 export enum QuarantineButtonEnum {
   OverdueConfirmationConfim = 'E_95001001',
+  CreateQuarantine = 'E_95003001',
+  ResetQuarantine = 'E_95003002',
+  ReCheckQuarantine = 'E_95003003',
+  PrintQuarantine = 'E_95003004',
 }
 
 export enum QualityButtonEnum {
   PlasmaRestrictionAdd = 'E_94001001',
   PlasmaRestrictionRemove = 'E_94001002',
   PlasmaRestrictionReview = 'E_94001003',
+
+  PlasmaCheckAdd = 'E_94002001',
+  PlasmaCheckEdit = 'E_94002002',
+  PlasmaCheckDelete = 'E_94002003',
+  PlasmaCheckReCheck = 'E_94002004',
+  PlasmaCheckCancelReCheck = 'E_94002005',
+  PlasmaCheckPrint = 'E_94002006',
+  PlasmaCheckApproval = 'E_94002007',
 
   BatchReleaseAdd = 'E_94003001',
   BatchReleaseUpdate = 'E_94003002',
@@ -146,4 +163,16 @@ export enum StockOutButtonEnum {
   ProductionPlanReReview = 'E_91004005',
   ProductionPlanCheck = 'E_91004006',
   ProductionPlanReCheck = 'E_91004007',
+}
+
+export enum SampleManageButtonEnum {
+  SampleRelease = 'E_97003001',
+}
+
+export enum CallbackButtonEnum {
+  ListGeneAdd = 'E_93001001',
+  ListGeneEdit = 'E_93001002',
+  ListGeneDelete = 'E_93001003',
+  ListGeneEnter = 'E_93001004',
+  ListGeneExport = 'E_93001005',
 }
