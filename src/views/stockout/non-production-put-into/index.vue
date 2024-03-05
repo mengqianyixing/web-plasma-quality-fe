@@ -113,6 +113,11 @@
   function handleEdit() {
     if (!selectRowsCheck()) return;
 
+    if (selectedRow.value[0].status !== '待准备') {
+      createMessage.warn('该状态不支持编辑');
+      return;
+    }
+
     openOperateModal(true, {
       isUpdate: true,
       record: selectedRow.value[0],

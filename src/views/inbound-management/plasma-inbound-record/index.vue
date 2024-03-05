@@ -115,6 +115,11 @@
       return;
     }
 
+    if (selectedRowsRef.value[0].state === 'VFP') {
+      createMessage.warning('批次已发布，不支持该操作!');
+      return;
+    }
+
     openStageModal(true, {
       record: selectedRowsRef.value[0],
     });
@@ -123,6 +128,11 @@
   function handleWeightRegister() {
     if (!selectedRowsRef.value.length) {
       createMessage.warning('请选择一条数据');
+      return;
+    }
+
+    if (selectedRowsRef.value[0].state === 'VFP') {
+      createMessage.warning('批次已发布，不支持该操作!');
       return;
     }
 
