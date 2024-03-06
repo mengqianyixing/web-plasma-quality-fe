@@ -106,6 +106,11 @@
       if (x.children) {
         x.children.forEach((v) => {
           if (v.authElements) {
+            results.push({
+              btn: { title: v.meta.title },
+              grand: x,
+              parent: v,
+            });
             v.authElements.forEach((a) => {
               results.push({
                 btn: a,
@@ -115,7 +120,7 @@
             });
           } else {
             results.push({
-              btn: { title: null },
+              btn: { title: v.meta.title },
               grand: x,
               parent: v,
             });
@@ -137,12 +142,14 @@
       const usersStr = (x.users ?? []).join('、');
       excelCol.push({ label: `${x.name}/${x.displayName}/${usersStr}`, prop: `domainsStr${i}` });
       results.forEach((v, n) => {
-        if (
-          x.domains.includes(v.grand.id) ||
-          x.domains.includes(v.parent.id) ||
-          x.domains.includes(v.btn.id)
-        ) {
-          exportData[n][`domainsStr${i}`] = '√';
+        if (v.btn.id) {
+          if (x.domains.includes(v.btn.id)) {
+            exportData[n][`domainsStr${i}`] = '√';
+          }
+        } else {
+          if (x.domains.includes(v.grand.id + '') || x.domains.includes(v.parent.id + '')) {
+            exportData[n][`domainsStr${i}`] = '√';
+          }
         }
       });
     });
