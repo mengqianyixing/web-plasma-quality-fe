@@ -182,16 +182,6 @@ export const formListSchema: FormSchema[] = [
     },
   },
   {
-    field: 'odValidBit',
-    component: 'InputNumber',
-    label: 'OD值有效位数',
-    required: true,
-    componentProps: {
-      min: 0,
-      formatter: (n: number) => n && parseInt(n),
-    },
-  },
-  {
     field: 'priceValidBit',
     component: 'InputNumber',
     label: '结果值有效位数',

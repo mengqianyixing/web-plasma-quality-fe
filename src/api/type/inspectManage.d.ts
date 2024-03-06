@@ -1770,7 +1770,7 @@ export type DeleteApiCoreLabMaterialDetailResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `DELETE /api/core/lab/registration/labItem/unqualified`
- * @更新时间 `2024-03-06 11:26:17`
+ * @更新时间 `2024-03-06 15:07:14`
  */
 export interface DeleteApiCoreLabRegistrationLabItemUnqualifiedRequest {
   /**
@@ -1784,7 +1784,8 @@ export interface DeleteApiCoreLabRegistrationLabItemUnqualifiedRequest {
   /**
    * 检验项目id
    */
-  projectId: string[];
+  projectId: string;
+  cause: string;
 }
 
 /**
@@ -1792,7 +1793,7 @@ export interface DeleteApiCoreLabRegistrationLabItemUnqualifiedRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `DELETE /api/core/lab/registration/labItem/unqualified`
- * @更新时间 `2024-03-06 11:26:17`
+ * @更新时间 `2024-03-06 15:07:14`
  */
 export type DeleteApiCoreLabRegistrationLabItemUnqualifiedResponse = string;
 

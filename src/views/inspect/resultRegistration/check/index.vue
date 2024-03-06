@@ -8,7 +8,7 @@
           :disabled="!props.bsNo"
           v-auth="InspectButtonEnum.ResultRegistrationItemDelete"
         >
-          删除
+          撤销项目
         </a-button>
         <a-button
           type="primary"
@@ -33,7 +33,7 @@
         </span>
       </template>
     </BasicTable>
-    <DtModal @register="registerDtModal" />
+    <DtModal @register="registerDtModal" @close="reload" />
     <NotCheck
       @register="registerNotCheckModal"
       @close="reload"

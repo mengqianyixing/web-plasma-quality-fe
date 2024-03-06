@@ -11,8 +11,8 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    :title="state.type"
-    width="800px"
+    title="登记使用截止日期"
+    width="400px"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
@@ -23,42 +23,36 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { formListSchema } from './materialPreRegistration.data';
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { addFormApi, updateFormApi, getDtApi } from '@/api/inspect/materialPreRegistration';
+  import { getDtApi, updateDateApi } from '@/api/inspect/materialPreRegistration';
   import { message } from 'ant-design-vue';
   import dayjs from 'dayjs';
 
   const emit = defineEmits(['success', 'register']);
 
-  defineOptions({ name: 'FormModel' });
-  const state = reactive({ id: '', type: '' });
+  defineOptions({ name: 'DateFormModel' });
+  const state = reactive({ id: '', expireDate: '' });
 
-  const [
-    registerForm,
-    { validate, setFieldsValue, clearValidate, resetFields, updateSchema, getFieldsValue },
-  ] = useForm({
-    labelWidth: 120,
-    baseColProps: { span: 12 },
-    schemas: formListSchema,
-    showActionButtonGroup: false,
-    transformDateFunc(date) {
-      return date ? date.format('YYYY-MM-DD') : '';
-    },
-  });
+  const [registerForm, { validate, setFieldsValue, clearValidate, resetFields, updateSchema }] =
+    useForm({
+      labelWidth: 120,
+      baseColProps: { span: 24 },
+      schemas: formListSchema.slice(-1).map((schema) => ({ ...schema, required: true })),
+      showActionButtonGroup: false,
+      transformDateFunc(date) {
+        return date ? date.format('YYYY-MM-DD') : '';
+      },
+    });
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async ({ data }) => {
     resetFields();
     clearValidate();
-    state.type = '新增';
     state.id = data.id;
-    if (data.id) {
-      const res = await getDtApi({ id: data.id });
-      setFieldsValue(res);
-      state.type = '编辑';
-    }
-    updateSchema({ field: 'fkProjectId', componentProps: { disabled: !!data.id } });
+    const res = await getDtApi({ id: data.id });
+    setFieldsValue(res);
+    state.expireDate = res.expireDate;
     updateSchema({ field: 'deadline', rules: [{ validator: validator }] });
   });
   function validator(rule, value) {
-    const { expireDate } = getFieldsValue();
+    const { expireDate } = state;
     if (!value || !expireDate) return Promise.resolve();
     if (dayjs(dayjs(value).format('YYYY-MM-DD')) > dayjs(expireDate)) {
       return Promise.reject('使用截止日期不能大于试剂有效期');
@@ -67,15 +61,10 @@
   }
   async function handleSubmit() {
     try {
-      const values = await validate();
+      const { deadline } = await validate();
       setModalProps({ confirmLoading: true });
-      if (state.id) {
-        await updateFormApi({ ...values, id: state.id });
-        message.success('编辑成功');
-      } else {
-        message.success('新增成功');
-        await addFormApi({ ...values } as any);
-      }
+      await updateDateApi({ deadline, id: state.id });
+      message.success('编辑成功');
       setModalProps({ confirmLoading: false });
       closeModal();
       emit('success');

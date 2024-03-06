@@ -28,6 +28,10 @@ const checkManager: AppRouteModule = {
       id: 960030,
       authElements: [
         {
+          id: InspectButtonEnum.MaterialPreRegistrationUpdateDate,
+          title: '登记使用截止日期',
+        },
+        {
           id: InspectButtonEnum.MaterialPreRegistrationAdd,
           title: '新增',
         },
