@@ -157,6 +157,23 @@ export enum NonconformityButtonEnum {
 }
 
 export enum StockOutButtonEnum {
+  ProductionPreparationAdd = 'E_91001001',
+  ProductionPreparationEdit = 'E_91001002',
+  ProductionPreparationDelete = 'E_91001003',
+  ProductionPreparationSelect = 'E_91001004',
+  ProductionPreparationFinish = 'E_91001005',
+  ProductionPreparationReset = 'E_91001006',
+  ProductionPreparationReCheck = 'E_91001007',
+  ProductionPreparationResetReCheck = 'E_91001008',
+
+  ProductionOrderAdd = 'E_91003001',
+  ProductionOrderEdit = 'E_91003002',
+  ProductionOrderDelete = 'E_91003003',
+  ProductionOrderRecheck = 'E_91003004',
+  ProductionOrderCancelRecheck = 'E_91003005',
+  ProductionOrderExamine = 'E_91003006',
+  ProductionOrderCancelExamine = 'E_91003007',
+
   ProductionPlanPick = 'E_91004001',
   ProductionPlanComplate = 'E_91004002',
   ProductionPlanReComplate = 'E_91004003',
@@ -164,6 +181,26 @@ export enum StockOutButtonEnum {
   ProductionPlanReReview = 'E_91004005',
   ProductionPlanCheck = 'E_91004006',
   ProductionPlanReCheck = 'E_91004007',
+
+  PutIntoTrayStockOut = 'E_91005001',
+  PutIntoBoxStockOut = 'E_91005002',
+  PutIntoBatchStockOut = 'E_91005003',
+  PutIntoPickPlasmaSystem = 'E_91005004',
+  PutIntoCancelStockOut = 'E_91005005',
+  PutIntoBoxReceive = 'E_91005006',
+  PutIntoBatchReceive = 'E_91005007',
+  PutIntoCancelExamine = 'E_91005008',
+
+  NonPutIntoAdd = 'E_91006001',
+  NonPutIntoEdit = 'E_91006002',
+  NonPutIntoCancel = 'E_91006003',
+  NonPutIntoCompletePrepare = 'E_91006004',
+  NonPutIntoCancelPrepare = 'E_91006005',
+  NonPutIntoReCheck = 'E_91006006',
+  NonPutIntoCancelReCheck = 'E_91006007',
+  NonPutIntoCheck = 'E_91006008',
+  NonPutIntoCancelCheck = 'E_91006009',
+  NonPutIntoScan = 'E_91006010',
 }
 
 export enum SampleManageButtonEnum {
