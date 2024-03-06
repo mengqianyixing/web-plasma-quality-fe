@@ -8,7 +8,7 @@
       </BasicTable>
     </div>
 
-    <div class="flex justify-end bg-white mx-5 mt-3">
+    <div class="flex justify-end mx-5 mt-3">
       <a-pagination
         @change="handlePageChange"
         @show-size-change="handleSizeChange"
@@ -28,8 +28,7 @@
   import { getERPInspectionReportList } from '@/api/query-statistics/ERP';
   import { reactive, ref } from 'vue';
   import { Pagination } from 'ant-design-vue';
-  import { Range } from 'xlsx';
-  import { doExportMultipleTable } from '@/components/Excel/src/Export2Excel';
+  import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
 
   defineOptions({ name: 'ERPInspectionReport' });
@@ -42,6 +41,23 @@
     pageSize: 10,
     total: 0,
   });
+
+  function afterFetchDataFormat(data) {
+    const res: any[] = [];
+
+    data.forEach((item) => {
+      item.titerDetailList.forEach((it, i) => {
+        res.push({
+          ...item,
+          ...it,
+          rowSpan: i === 0 ? item.titerDetailList.length : 0,
+        });
+      });
+    });
+
+    return res;
+  }
+
   const [registerTable, { reload, getRawDataSource, getForm }] = useTable({
     api: getERPInspectionReportList,
     beforeFetch: (params) => {
@@ -57,19 +73,7 @@
       pager.pageSize = _data.pageSize;
       pager.current = _data.currPage;
 
-      const res: any[] = [];
-
-      data.forEach((item) => {
-        item.titerDetailList.forEach((it, i) => {
-          res.push({
-            ...item,
-            ...it,
-            rowSpan: i === 0 ? item.titerDetailList.length : 0,
-          });
-        });
-      });
-
-      return res;
+      return afterFetchDataFormat(data);
     },
     columns,
     formConfig: {
@@ -104,47 +108,27 @@
   let buttonLoading = ref(false);
   async function handleExport() {
     buttonLoading.value = true;
-    const result = (
+    const data = (
       await getERPInspectionReportList({
         ...getForm().getFieldsValue(),
         currPage: '1',
         pageSize: '999',
       })
     ).result!;
+
     buttonLoading.value = false;
 
-    let data: any[] = [columns.map((it) => it.title)];
-    let merges: Range[] = [];
-    result.forEach((item) => {
-      Array.from({ length: 6 }).forEach((_, i) => {
-        merges.push({
-          s: { r: data.length, c: i },
-          e: { r: data.length - 1 + item.titerDetailList!.length, c: i },
-        });
-      });
-      data = data.concat(
-        item.titerDetailList!.map((it) => [
-          item.batchNo,
-          item.batchNoFromErp,
-          item.recheckAt,
-          item.collectBeginAt,
-          item.collectEndAt,
-          item.materialNo,
-          it.plasmaType,
-          it.titerType,
-          it.totalQualified,
-          it.qualifiedNetWeight,
-          it.totalUnqualified,
-          it.unqualifiedNetWeight,
-        ]),
-      );
-    });
-
-    doExportMultipleTable(
-      data,
-      currentRoute.value.meta.title,
-      currentRoute.value.meta.title,
-      merges,
+    const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+    const { result, merge: bodyMerge } = formatData(
+      lastLevelCols,
+      afterFetchDataFormat(data),
+      rows.length,
     );
+    jsonToSheetXlsx({
+      data: [...rows, ...result],
+      json2sheetOpts: { skipHeader: true },
+      merges: [...headerMerge, ...bodyMerge],
+      filename: currentRoute.value.meta.title + '.xlsx',
+    });
   }
 </script>
