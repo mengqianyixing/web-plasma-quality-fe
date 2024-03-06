@@ -59,7 +59,7 @@
   import dayjs from 'dayjs';
   import { callbackConfirm } from '@/api/callback/list-confirm';
 
-  defineOptions({ name: 'CallbackListGeneration' });
+  defineOptions({ name: 'CallbackGeneration' });
 
   const selectedRow = ref<Recordable>([]);
   const stationNames = ref<Recordable>({});

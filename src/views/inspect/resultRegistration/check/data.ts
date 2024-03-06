@@ -21,7 +21,7 @@ export const dtColumnsMap = {
   '1': [
     {
       title: '不合格',
-      dataIndex: 'od',
+      dataIndex: 'unqualified',
     },
   ],
   '2': [

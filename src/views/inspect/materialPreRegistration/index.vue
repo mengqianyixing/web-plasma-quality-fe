@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-25 14:30:13
  * @LastEditors: zcc
@@ -79,8 +79,10 @@
     cancelReviewApi,
     enableApi,
     disableApi,
-  } from '@/api/inspect/materialPreRegistration/index';
+  } from '@/api/inspect/materialPreRegistration';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
+
+  defineOptions({ name: 'MaterialPreRegistration' });
 
   const open = ref(false);
   const confirmLoading = ref(false);

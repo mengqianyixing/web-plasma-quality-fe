@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-25 14:30:13
  * @LastEditors: zcc
@@ -69,6 +69,8 @@
   } from '@/api/quality/plasma-restriction';
   import { ref, nextTick } from 'vue';
   import { QualityButtonEnum } from '@/enums/authCodeEnum';
+
+  defineOptions({ name: 'PlasmaRestriction' });
 
   const batchNo = ref('');
   const [registerModal, { openModal }] = useModal();

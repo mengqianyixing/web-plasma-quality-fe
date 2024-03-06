@@ -15,6 +15,8 @@
 
   import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 
+  defineOptions({ name: 'PlasmaSummary' });
+
   const columns: BasicColumn[] = [
     {
       title: '血浆批号',

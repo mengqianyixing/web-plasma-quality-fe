@@ -1,6 +1,7 @@
 import { defHttp } from '@/utils/http/axios';
 import {
   GetApiCoreBatchSampleAcceptBatchSampleNoRequest,
+  GetApiCoreBatchSampleAcceptBatchSampleNoResponse,
   GetApiCoreBatchSampleAcceptRequest,
   GetApiCoreBatchSampleAcceptResponse,
   PostApiCoreBatchSampleAcceptRequest,
@@ -23,7 +24,10 @@ export const getSampleReceiveList = (params: GetApiCoreBatchSampleAcceptRequest)
 
 export const getSampleReceiveDetail = (
   params: GetApiCoreBatchSampleAcceptBatchSampleNoRequest['batchSampleNo'],
-) => defHttp.get({ url: Api.SAMPLE_ACCEPT_RESTFUL + '/' + params });
+) =>
+  defHttp.get<GetApiCoreBatchSampleAcceptBatchSampleNoResponse>({
+    url: Api.SAMPLE_ACCEPT_RESTFUL + '/' + params,
+  });
 
 export const receiveSample = (params: PostApiCoreBatchSampleAcceptRequest) =>
   defHttp.post({ url: Api.SAMPLE_ACCEPT_RESTFUL, params });

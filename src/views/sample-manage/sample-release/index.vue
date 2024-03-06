@@ -31,6 +31,8 @@
   import { onMounted, ref, watchEffect } from 'vue';
   import { useStation } from '@/hooks/common/useStation';
 
+  defineOptions({ name: 'SampleRelease' });
+
   const { createMessage, createConfirm } = useMessage();
 
   const [registerUnqualifiedModal, { openModal: openUnqualifiedModal }] = useModal();

@@ -70,6 +70,7 @@
   }
   async function handleSubmit() {
     const { boxId, trayNo } = getFieldsValue();
+    if (boxId && !trayNo) message.warning('请扫描托盘编号');
     if (trayNo) {
       const list = await trayBoxListApi({ trayNo });
       count.value = list.length;

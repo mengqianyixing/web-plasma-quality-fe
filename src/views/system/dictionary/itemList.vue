@@ -1,34 +1,36 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: Ding 1326587277@qq.com
  * @LastEditTime: 2024-03-04 10:51:24
 -->
 <template>
-  <div class="flex h-inherit max-h-inherit min-h-inherit">
-    <div class="flex-1 w-full">
-      <BasicTable @register="registerTable">
-        <template #toolbar>
-          <a-button type="primary" @click="handleCreate">新增</a-button>
-          <a-button type="primary" @click="handleUpdate">编辑</a-button>
-          <template v-if="!(systemLevel > 0)">
-            <a-button type="primary" @click="handleRemove">删除</a-button>
-            <a-button type="primary" @click="handleSwitch(true)">启用</a-button>
-            <a-button type="primary" @click="handleSwitch(false)">禁用</a-button>
+  <div class="root">
+    <div class="flex h-inherit max-h-inherit min-h-inherit">
+      <div class="flex-1 w-full">
+        <BasicTable @register="registerTable">
+          <template #toolbar>
+            <a-button type="primary" @click="handleCreate">新增</a-button>
+            <a-button type="primary" @click="handleUpdate">编辑</a-button>
+            <template v-if="!(systemLevel > 0)">
+              <a-button type="primary" @click="handleRemove">删除</a-button>
+              <a-button type="primary" @click="handleSwitch(true)">启用</a-button>
+              <a-button type="primary" @click="handleSwitch(false)">禁用</a-button>
+            </template>
           </template>
-        </template>
-      </BasicTable>
+        </BasicTable>
+      </div>
     </div>
-  </div>
 
-  <ItemFormModal @register="registerItemFormModal" @success="formSuccess" />
-  <Login
-    @register="registerLoginModal"
-    @success="login"
-    :auth-code="ReCheckButtonEnum.TrayManageCheck"
-  />
+    <ItemFormModal @register="registerItemFormModal" @success="formSuccess" />
+    <Login
+      @register="registerLoginModal"
+      @success="login"
+      :auth-code="ReCheckButtonEnum.TrayManageCheck"
+    />
+  </div>
 </template>
 <script lang="ts" setup>
   import Login from '@/__components/ReviewLoginModal/index.vue';
@@ -52,8 +54,6 @@
 
   const currentRoute = useRoute();
   const dictId = ref(currentRoute.meta.dictId);
-  console.log('currentRoute--', currentRoute);
-  // const dictName = ref('');
   const systemLevel = ref(currentRoute.meta.systemLevel || 0);
   const linkMap = ref(new Map());
   const enumsMap = ref(new Map());
@@ -110,7 +110,6 @@
         .map((_) => {
           if (itemColumns.filter((x) => x.dataIndex === _.key).length > 0) {
             const index = _columns.findIndex((x) => x.dataIndex === _.key);
-            console.log('index', index, _columns, _columns[index], _.key, itemColumns);
             _columns[index].title = _.name;
           } else {
             return {

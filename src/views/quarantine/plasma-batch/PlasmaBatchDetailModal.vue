@@ -28,6 +28,7 @@
   // import { useMessage } from '@/hooks/web/useMessage';
   import {
     DictionaryEnum,
+    DictionaryReasonEnum,
     DictionaryItemKeyEnum,
     getSysDictionary,
     getSysSecondaryDictionary,
@@ -48,9 +49,9 @@
     if (!dictionaryArr) return;
 
     plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
-      dataKey: DictionaryEnum.PlasmaFailedItem,
-      dictNos: [
-        DictionaryItemKeyEnum.Accept,
+      dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+      dictItemTypes: [
+        DictionaryItemKeyEnum.PlasmaFailed,
         DictionaryItemKeyEnum.Track,
         DictionaryItemKeyEnum.Test,
         DictionaryItemKeyEnum.Quarantine,

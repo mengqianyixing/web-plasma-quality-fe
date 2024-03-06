@@ -22,6 +22,14 @@ import {
   PostApiProductPrepareSortingAllQuaBoxResponse,
   PostApiProductPrepareCommitSortingPrepareNoRequest,
   PostApiProductPrepareCommitSortingPrepareNoResponse,
+  PostApiProductPrepareCommitSortingBatchPrepareNoBatchNoRequest,
+  PostApiProductPrepareCommitSortingBatchPrepareNoBatchNoResponse,
+  GetApiProductPrepareSortingPreparePausePrepareNoPatternRequest,
+  GetApiProductPrepareSortingPreparePausePrepareNoPatternResponse,
+  PostApiProductPrepareSortingBatchPauseRequest,
+  PostApiProductPrepareSortingBatchPauseResponse,
+  PostApiProductPrepareSortingPreparePauseRequest,
+  PostApiProductPrepareSortingPreparePauseResponse,
 } from '@/api/type/productionSortingMangeMain';
 
 enum Api {
@@ -38,6 +46,7 @@ enum Api {
   SORTING_BOX_SEALING = '/api/product/prepare/sorting/box-sealing',
   SORTING_ALL_QUA = '/api/product/prepare/sorting/all-qua/box',
   COMPLETE_SORTING = '/api/product/prepare/commit/sorting',
+  COMPLETE_SORTING_BATCHNO = '/api/product/prepare/commit/sorting/batch',
   GET_PAUSE_LIST = '/api/product/prepare/sorting/prepare/pause',
   BATCH_PAUSE = '/api/product/prepare/sorting/batch/pause',
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
@@ -135,24 +144,35 @@ export const completeSorting = (params: PostApiProductPrepareCommitSortingPrepar
   });
 };
 
+// 血浆分拣-完成分拣-批
+export const completeSortingBatchNo = (
+  params: PostApiProductPrepareCommitSortingBatchPrepareNoBatchNoRequest,
+) => {
+  return defHttp.post<PostApiProductPrepareCommitSortingBatchPrepareNoBatchNoResponse>({
+    url: `${Api.COMPLETE_SORTING_BATCHNO}/${params.prepareNo}/${params.batchNo}`,
+  });
+};
+
 // 获取分拣暂停列表
-export const getPauseList = (params: any) => {
-  return defHttp.get<any>({
+export const getPauseList = (
+  params: GetApiProductPrepareSortingPreparePausePrepareNoPatternRequest,
+) => {
+  return defHttp.get<GetApiProductPrepareSortingPreparePausePrepareNoPatternResponse>({
     url: `${Api.GET_PAUSE_LIST}/${params.prepareNo}/${params.pattern}`,
   });
 };
 
 // 分拣批次暂停/继续
-export const batchPause = (params: any) => {
-  return defHttp.post<any>({
+export const batchPause = (params: PostApiProductPrepareSortingBatchPauseRequest) => {
+  return defHttp.post<PostApiProductPrepareSortingBatchPauseResponse>({
     url: Api.BATCH_PAUSE,
     params,
   });
 };
 
 // 分拣准备号暂停/继续
-export const preparePause = (params: any) => {
-  return defHttp.post<any>({
+export const preparePause = (params: PostApiProductPrepareSortingPreparePauseRequest) => {
+  return defHttp.post<PostApiProductPrepareSortingPreparePauseResponse>({
     url: Api.PREPARE_PAUSE,
     params,
   });

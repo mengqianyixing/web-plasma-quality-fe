@@ -25,8 +25,8 @@
   import { nonconformityRegistration } from '@/api/nonconformity/box-manage';
   import { PostApiCoreBagUnqualifiedRequest } from '@/api/type/nonconformityManage';
   import {
-    DictionaryEnum,
     DictionaryItemKeyEnum,
+    DictionaryReasonEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
@@ -59,14 +59,8 @@
         componentProps: {
           api: getSysSecondaryDictionary,
           params: {
-            dataKey: DictionaryEnum.PlasmaFailedItem,
-            dictNos: [
-              DictionaryItemKeyEnum.Accept,
-              DictionaryItemKeyEnum.Track,
-              DictionaryItemKeyEnum.Test,
-              DictionaryItemKeyEnum.Quarantine,
-              DictionaryItemKeyEnum.Other,
-            ],
+            dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+            dictItemTypes: [DictionaryItemKeyEnum.PlasmaAccept],
           },
           valueField: 'dictItemId',
         },

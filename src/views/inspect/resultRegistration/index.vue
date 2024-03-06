@@ -47,7 +47,7 @@
         :cell-list="cellList"
         :gap="0"
       />
-      <div class="title">血浆信息</div>
+      <div class="title">样本汇总信息</div>
       <CellWapper :data="countData" :cell-list="plasmaCellList" :gap="0" />
       <Tabs v-model:activeKey="activeKey" class="flex-1 bg-white mt-10px" type="card" size="small">
         <TabPane key="1" tab="检测明细">
@@ -86,6 +86,8 @@
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
+
+  defineOptions({ name: 'ResultRegistration' });
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);

@@ -21,10 +21,7 @@ export const dtRusultColumns: BasicColumn[] = [
       return PlasmaType(record.plasmaType);
     },
   },
-  {
-    title: '效价类型',
-    dataIndex: 'titerType',
-  },
+
   {
     title: '效价结果',
     dataIndex: 'conclusion',
@@ -156,10 +153,8 @@ export const importSuccessColumns: BasicColumn[] = [
       return PlasmaType(record.plasmaType);
     },
   },
-  { title: '效价类型', dataIndex: 'titerType' },
   { title: '效价结果', dataIndex: 'conclusion' },
   { title: '检测日期', dataIndex: 'checkAt' },
-  { title: 'OD值', dataIndex: 'od' },
   { title: '效价结果值', dataIndex: 'titerResult' },
 ];
 

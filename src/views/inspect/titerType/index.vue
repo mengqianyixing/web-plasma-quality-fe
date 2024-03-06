@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-25 14:30:13
  * @LastEditors: zcc
@@ -61,6 +61,8 @@
   import FormModal from './formModal.vue';
   import { getListApi, updateTitlerTypeApi, removeTitlerTypeApi } from '@/api/inspect/titerType';
   import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
+
+  defineOptions({ name: 'TiterType' });
 
   const [registerModal, { openModal }] = useModal();
 

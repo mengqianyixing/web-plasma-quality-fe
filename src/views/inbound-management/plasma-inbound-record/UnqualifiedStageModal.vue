@@ -10,23 +10,23 @@
   <PickBatchModal @register="registerPickBatch" @success="handlePickSuccess" />
 </template>
 <script lang="ts" setup>
-  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
+  import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { onMounted, ref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
   import { unqualifiedColumns } from './record.data';
   import { useMessage } from '@/hooks/web/useMessage';
   import { nonconformityPlasmaList } from '@/api/nonconformity/plasma-manage';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
   import {
-    nonconformityPlasmaMap,
-    NonconformityPlasmaStatusValueEnum,
-  } from '@/enums/nonconforityEnum';
-  import {
-    DictionaryEnum,
     DictionaryItemKeyEnum,
+    DictionaryReasonEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
 
   import PickBatchModal from './PickBatchModal.vue';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
 
   const selectedRow = ref<Recordable>([]);
   const { createMessage } = useMessage();
@@ -37,9 +37,13 @@
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
   onMounted(async () => {
     plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
-      dataKey: DictionaryEnum.PlasmaFailedItem,
-      dictNos: [
-        DictionaryItemKeyEnum.Accept,
+      dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+      dictItemTypes: [
+        DictionaryItemKeyEnum.PlasmaAccept,
+        DictionaryItemKeyEnum.SampleAccept,
+        DictionaryItemKeyEnum.PlasmaFailed,
+        DictionaryItemKeyEnum.SampleFailed,
+        DictionaryItemKeyEnum.Sample,
         DictionaryItemKeyEnum.Track,
         DictionaryItemKeyEnum.Test,
         DictionaryItemKeyEnum.Quarantine,
@@ -72,9 +76,9 @@
           label: '状态',
           component: 'Select',
           componentProps: {
-            options: [...nonconformityPlasmaMap].map(([value, label]) => ({ value, label })),
+            options: serverEnumStore.getServerEnum(SERVER_ENUM.UnquaState),
           },
-          defaultValue: NonconformityPlasmaStatusValueEnum.REG,
+          defaultValue: 'PIK',
         },
       ],
     },

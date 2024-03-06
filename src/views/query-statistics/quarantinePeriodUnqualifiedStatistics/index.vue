@@ -8,6 +8,8 @@
   import { columns, searchFormSchema } from './quarantinePeriodUnqualifiedStatistics.data';
   import { PageWrapper } from '@/components/Page';
 
+  defineOptions({ name: 'QuarantinePeriodUnqualifiedStatistics' });
+
   const [registerTable] = useTable({
     api: new Promise(() => {}),
     columns,

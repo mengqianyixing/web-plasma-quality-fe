@@ -93,6 +93,8 @@
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+  defineOptions({ name: 'SampleVerify' });
+
   const serverEnumStore = useServerEnumStoreWithOut();
   const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 
@@ -166,7 +168,7 @@
     },
     {
       field: 'lackCount',
-      label: '浆站缺号数量',
+      label: '缺号数量',
       render(text) {
         return (
           <span onClick={handleLackCountClick} class="underline text-#2d5cf6 cursor-pointer">

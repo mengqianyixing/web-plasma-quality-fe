@@ -8,6 +8,8 @@
   import { columns, searchFormSchema } from './data';
   import { PageWrapper } from '@/components/Page';
 
+  defineOptions({ name: 'FactoryCheckFail' });
+
   const [registerTable] = useTable({
     api: () => Promise.resolve({ result: [{}] }),
     columns,

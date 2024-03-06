@@ -63,6 +63,8 @@
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import dayjs from 'dayjs';
 
+  defineOptions({ name: 'ReceivePlasma' });
+
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
   const [registerModal, { openModal }] = useModal();

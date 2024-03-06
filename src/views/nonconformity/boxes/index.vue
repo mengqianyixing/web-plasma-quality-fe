@@ -24,8 +24,8 @@
   import { deleteBox, nonconformityBoxList } from '@/api/nonconformity/box-manage';
   import { getPrintRecord } from '@/api/tag/printRecord';
   import {
-    DictionaryEnum,
     DictionaryItemKeyEnum,
+    DictionaryReasonEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
   import { groupBy, entries } from 'lodash-es';
@@ -38,12 +38,15 @@
 
   onMounted(async () => {
     const originDictionaryData = await getSysSecondaryDictionary({
-      dataKey: DictionaryEnum.PlasmaFailedItem,
-      dictNos: [
-        DictionaryItemKeyEnum.Accept,
+      dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+      dictItemTypes: [
+        DictionaryItemKeyEnum.PlasmaAccept,
+        DictionaryItemKeyEnum.SampleAccept,
+        DictionaryItemKeyEnum.PlasmaFailed,
+        DictionaryItemKeyEnum.SampleFailed,
+        DictionaryItemKeyEnum.Sample,
         DictionaryItemKeyEnum.Track,
         DictionaryItemKeyEnum.Test,
-        DictionaryItemKeyEnum.Sample,
         DictionaryItemKeyEnum.Quarantine,
         DictionaryItemKeyEnum.Other,
       ],

@@ -13,6 +13,8 @@
     showFooter
     :title="state.type + '检验项目'"
     width="800px"
+    :showOkBtn="state.type !== '查看'"
+    cancelText="关闭"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
@@ -37,7 +39,7 @@
 
   const [registerForm, { validate, setFieldsValue, clearValidate, resetFields, updateSchema }] =
     useForm({
-      labelWidth: 120,
+      labelWidth: 130,
       baseColProps: { span: 12 },
       schemas: formListSchema,
       showActionButtonGroup: false,
@@ -58,14 +60,16 @@
         field: _.field,
         componentProps: { disabled: false },
       }));
-      if (data.projectId) {
+      if (disabled) {
         const res = await getItemSettingDtApi({ id: data.projectId });
         setFieldsValue(res);
-        state.type = '编辑';
-        disabledOptions.slice(0, 2).forEach((_) => (_.componentProps.disabled = true));
-      } else if (disabled) {
         state.type = '查看';
         disabledOptions.forEach((_) => (_.componentProps.disabled = true));
+      } else if (data.projectId) {
+        state.type = '编辑';
+        disabledOptions.slice(0, 2).forEach((_) => (_.componentProps.disabled = true));
+        const res = await getItemSettingDtApi({ id: data.projectId });
+        setFieldsValue(res);
       } else {
         state.type = '新增';
         resetFields();

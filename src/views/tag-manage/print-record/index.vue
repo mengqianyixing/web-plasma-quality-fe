@@ -35,6 +35,8 @@
   import PrintPreviewModal from './PrintPreviewModal.vue';
   import ReprintRecordModal from './ReprintRecordModal.vue';
 
+  defineOptions({ name: 'TagPrintRecord' });
+
   const { createMessage } = useMessage();
   const { warning } = createMessage;
 

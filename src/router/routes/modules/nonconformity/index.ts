@@ -20,19 +20,10 @@ const nonconformity: AppRouteModule = {
   menuWeight: 920,
   meta: {
     orderNo: 10000,
-    title: '不合格管理',
+    title: '不合格血浆管理',
     icon: 'ant-design:windows-outlined',
   },
   children: [
-    {
-      path: 'nb',
-      name: 'NonconformityBoxes',
-      id: 920010,
-      meta: {
-        title: '不合格库房管理',
-      },
-      component: () => import('/@/views/nonconformity/boxes/index.vue'),
-    },
     {
       path: 'nonconformity-registration',
       name: 'NonconformityRegistration',
@@ -40,12 +31,42 @@ const nonconformity: AppRouteModule = {
         title: '不合格血浆登记',
       },
       id: 920020,
-      component: () => import('/@/views/nonconformity/nonconformity-registration/index.vue'),
+      component: () => import('@/views/nonconformity/nonconformity-registration/index.vue'),
       authElements: [
         {
           id: ReCheckButtonEnum.NonconformityRegistrationCheck,
           name: 'reCheck',
           title: '复核人登录权限',
+        },
+      ],
+    },
+    {
+      path: 'nb',
+      name: 'NonconformityBoxes',
+      id: 920010,
+      meta: {
+        title: '不合格库房箱',
+      },
+      component: () => import('@/views/nonconformity/boxes/index.vue'),
+    },
+    {
+      path: 'plasma-manage',
+      name: 'PlasmaManage',
+      meta: {
+        title: '不合格血浆入库',
+      },
+      id: 920040,
+      component: () => import('@/views/nonconformity/plasma-manage/index.vue'),
+      authElements: [
+        {
+          id: ReCheckButtonEnum.NonconformityPickCheck,
+          name: 'reCheckPick',
+          title: '挑浆复核权限',
+        },
+        {
+          id: ReCheckButtonEnum.NonconformityInStoreCheck,
+          name: 'recheckInStore',
+          title: '入库登录权限',
         },
       ],
     },
@@ -104,27 +125,6 @@ const nonconformity: AppRouteModule = {
       ],
       id: 920030,
       component: () => import('@/views/nonconformity/plasmaOut/index.vue'),
-    },
-    {
-      path: 'plasma-manage',
-      name: 'plasmaManage',
-      meta: {
-        title: '不合格血浆管理',
-      },
-      id: 920040,
-      component: () => import('/@/views/nonconformity/plasma-manage/index.vue'),
-      authElements: [
-        {
-          id: ReCheckButtonEnum.NonconformityPickCheck,
-          name: 'reCheckPick',
-          title: '挑浆复核权限',
-        },
-        {
-          id: ReCheckButtonEnum.NonconformityInStoreCheck,
-          name: 'recheckInStore',
-          title: '入库登录权限',
-        },
-      ],
     },
   ],
 };

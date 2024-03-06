@@ -29,7 +29,6 @@ const system: AppRouteModule = {
       id: 101010,
       meta: {
         title: '权限管理',
-        ignoreKeepAlive: true,
       },
       component: () => import('@/views/system/auth/index.vue'),
       authElements: [
@@ -51,7 +50,6 @@ const system: AppRouteModule = {
       id: 101020,
       meta: {
         title: '用户管理',
-        ignoreKeepAlive: true,
       },
       authElements: [
         {

@@ -46,7 +46,7 @@
   import Login from '@/__components/ReviewLoginModal/index.vue';
   import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
 
-  defineOptions({ name: 'CallbackListGeneration' });
+  defineOptions({ name: 'Station' });
 
   const { createMessage, createConfirm } = useMessage();
   const selectedRow = ref<Recordable>([]);

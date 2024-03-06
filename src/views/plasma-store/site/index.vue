@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-20 09:47:04
  * @LastEditors: zcc
@@ -42,6 +42,8 @@
   import FormModal from './formModal.vue';
   import { getListApi, updateSiteApi } from '@/api/plasmaStore/site';
   import { StoreButtonEnum } from '@/enums/authCodeEnum';
+
+  defineOptions({ name: 'PlasmaSite' });
 
   const [registerModal, { openModal }] = useModal();
 

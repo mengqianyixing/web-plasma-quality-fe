@@ -9,6 +9,8 @@
   import { PageWrapper } from '@/components/Page';
   import { getListApi } from '@/api/query-statistics/stereoWarehouse';
 
+  defineOptions({ name: 'StereoWarehouse' });
+
   const [registerTable] = useTable({
     api: getListApi,
     columns,

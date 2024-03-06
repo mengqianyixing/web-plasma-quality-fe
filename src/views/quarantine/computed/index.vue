@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-26 14:02:36
  * @LastEditors: zcc
@@ -20,6 +20,8 @@
   import { PageWrapper } from '@/components/Page';
   import { submitComputed } from '@/api/quarantine/computed';
   import { ref } from 'vue';
+
+  defineOptions({ name: 'Computed' });
 
   const loading = ref(false);
   function handleComputed() {

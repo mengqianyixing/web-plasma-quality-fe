@@ -58,6 +58,8 @@
   import BoxTableModal from './boxTableDrawer.vue';
   import { ReCheckButtonEnum, StoreButtonEnum } from '@/enums/authCodeEnum';
 
+  defineOptions({ name: 'TrayList' });
+
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
   const [registerModal, { openModal, closeModal, setModalProps }] = useModal();
   const [registerTableModal, { openModal: openTableModal }] = useModal();

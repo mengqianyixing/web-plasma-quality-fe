@@ -10,11 +10,6 @@
     <BasicForm @register="registerForm" />
     <BasicTable @register="registerTable" />
   </BasicModal>
-  <!-- <LoginModal
-    @register="registerLoginModal"
-    @success="handleSuccess"
-    :auth-code="ReCheckButtonEnum.PlasmaReceiveSuspendCheck"
-  /> -->
 </template>
 
 <script setup lang="tsx">
@@ -66,18 +61,6 @@
       componentProps: { disabled: true },
       required: true,
     },
-    // {
-    //   field: 'checker',
-    //   component: 'InputSearch',
-    //   label: '复核人',
-    //   required: true,
-    //   componentProps: {
-    //     'enter-button': '登录',
-    //     placeholder: '请点击登录按钮',
-    //     readonly: true,
-    //     onSearch: handleLogin,
-    //   },
-    // },
     {
       field: 'remark',
       component: 'InputTextArea',
@@ -178,8 +161,6 @@
     canResize: false,
   });
 
-  // const [registerLoginModal, { openModal }] = useModal();
-
   // 提交暂停
   async function submitReceivePause() {
     await validate();
@@ -197,7 +178,7 @@
       if (res === null) {
         success('暂停成功!');
         closeModalThis();
-        emit('clearInfo');
+        // emit('clearInfo');
       }
     } finally {
       pauseLoading.value = false;
@@ -231,16 +212,4 @@
       resumeLoading.value = false;
     }
   }
-
-  // // 点击登录按钮
-  // function handleLogin() {
-  //   openModal(true);
-  // }
-
-  // 登录成功事件
-  // function handleSuccess(nickname: string) {
-  //   setFieldsValue({
-  //     checker: nickname,
-  //   });
-  // }
 </script>

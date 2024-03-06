@@ -39,7 +39,7 @@
 
   import { columns, searchFormSchema } from './policies.data';
 
-  defineOptions({ name: 'PolicyManagement' });
+  defineOptions({ name: 'Policies' });
 
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload }] = useTable({

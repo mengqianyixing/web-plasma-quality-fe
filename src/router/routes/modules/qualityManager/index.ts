@@ -47,12 +47,12 @@ const checkManager: AppRouteModule = {
     },
     {
       path: '/quality/plasma-check',
-      name: 'plasma-check',
+      name: 'PlasmaCheck',
       id: 940020,
       meta: {
         title: '血浆审核',
       },
-      component: () => import('/@/views/quality-manage/plasma-check/index.vue'),
+      component: () => import('@/views/quality-manage/plasma-check/index.vue'),
     },
 
     {

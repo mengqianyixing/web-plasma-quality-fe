@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-19 16:45:20
  * @LastEditors: zcc
@@ -13,9 +13,9 @@
         <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.StoreSettingAdd"
           >新增</a-button
         >
-        <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.StoreSettingUpdate"
+        <!-- <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.StoreSettingUpdate"
           >编辑</a-button
-        >
+        > -->
         <a-button
           type="primary"
           @click="handleCheckStatus('CLOSED')"
@@ -70,7 +70,7 @@
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
   import { StoreButtonEnum } from '@/enums/authCodeEnum';
 
-  defineOptions({ name: 'PlasmaStoreSetting' });
+  defineOptions({ name: 'StoreSetting' });
 
   const [registerModal, { openModal }] = useModal();
   const [registerLoactionModal, { openModal: openLoactionModal }] = useModal();

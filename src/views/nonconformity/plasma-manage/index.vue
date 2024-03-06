@@ -37,8 +37,8 @@
 
   import { onMounted, ref, watchEffect } from 'vue';
   import {
-    DictionaryEnum,
     DictionaryItemKeyEnum,
+    DictionaryReasonEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
   import {
@@ -51,6 +51,8 @@
   import InStoreModal from '@/views/nonconformity/plasma-manage/InStoreModal.vue';
   import PlasmaDetailModal from '@/views/nonconformity/plasma-manage/PlasmaDetailModal.vue';
   import { useStation } from '@/hooks/common/useStation';
+
+  defineOptions({ name: 'PlasmaManage' });
 
   const selectedRow = ref<Recordable>([]);
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
@@ -71,14 +73,8 @@
     });
 
     plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
-      dataKey: DictionaryEnum.PlasmaFailedItem,
-      dictNos: [
-        DictionaryItemKeyEnum.Accept,
-        DictionaryItemKeyEnum.Track,
-        DictionaryItemKeyEnum.Test,
-        DictionaryItemKeyEnum.Quarantine,
-        DictionaryItemKeyEnum.Other,
-      ],
+      dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+      dictItemTypes: [DictionaryItemKeyEnum.PlasmaFailed],
     });
 
     await getForm().updateSchema({

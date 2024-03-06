@@ -1,6 +1,10 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { getInspectMethodListApi } from '@/api/inspect/inspectMethod';
-
+import {
+  DictionaryItemKeyEnum,
+  DictionaryReasonEnum,
+  getSysSecondaryDictionary,
+} from '@/api/_dictionary';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
@@ -146,7 +150,12 @@ export const formListSchema: FormSchema[] = [
     label: '判断标准',
     required: true,
     componentProps: {
-      options: [],
+      options: [
+        { value: '阴性', label: '阴性' },
+        { value: '效价', label: '效价' },
+        { value: '≤50U/L', label: '≤50U/L' },
+        { value: '≥50g/L', label: '≥50g/L' },
+      ],
     },
   },
   {
@@ -197,31 +206,49 @@ export const formListSchema: FormSchema[] = [
     component: 'Select',
     label: '检测性质',
     componentProps: {
-      options: [],
+      options: [
+        { label: '定量', value: '定量' },
+        { label: '定性', value: '定性' },
+      ],
     },
   },
   {
     field: 'checkUnqualifiedReason',
-    component: 'Select',
+    component: 'ApiSelect',
     label: '检测不合格',
     componentProps: {
-      options: [],
+      api: getSysSecondaryDictionary,
+      params: {
+        dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+        dictItemTypes: [DictionaryItemKeyEnum.Test],
+      },
+      valueField: 'dictItemId',
     },
   },
   {
     field: 'periodUnqualifiedReason',
-    component: 'Select',
+    component: 'ApiSelect',
     label: '检疫期不合格',
     componentProps: {
-      options: [],
+      api: getSysSecondaryDictionary,
+      params: {
+        dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+        dictItemTypes: [DictionaryItemKeyEnum.Quarantine],
+      },
+      valueField: 'dictItemId',
     },
   },
   {
     field: 'traceUnqualifiedReason',
-    component: 'Select',
+    component: 'ApiSelect',
     label: '续追踪不合格',
     componentProps: {
-      options: [],
+      api: getSysSecondaryDictionary,
+      params: {
+        dataKey: DictionaryReasonEnum.PlasmaFailedReason,
+        dictItemTypes: [DictionaryItemKeyEnum.Track],
+      },
+      valueField: 'dictItemId',
     },
   },
   {

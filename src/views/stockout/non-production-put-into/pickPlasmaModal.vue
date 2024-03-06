@@ -44,7 +44,7 @@
     });
   });
 
-  const [registerTable, { getForm }] = useTable({
+  const [registerTable, { getForm, clearSelectedRowKeys }] = useTable({
     api: getPickPlasmaList,
     columns: [
       {
@@ -171,6 +171,7 @@
 
       emit('success');
 
+      clearSelectedRowKeys();
       setModalProps({ confirmLoading: true });
       closeModal();
     } finally {

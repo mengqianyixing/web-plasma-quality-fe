@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-21 17:21:16
  * @LastEditors: zcc
@@ -9,6 +9,8 @@
 <script setup lang="ts">
   import { Card } from 'ant-design-vue';
   import NonconformityRegistration from '@/__components/nonconformity-registration/index.vue';
+
+  defineOptions({ name: 'NonconformityRegistration' });
 </script>
 
 <template>

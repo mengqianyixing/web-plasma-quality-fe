@@ -18,6 +18,12 @@
   import { reCheckLogin } from '@/api/sys/login';
   import { PostApiSysReviewerCasdoorLoginRequest } from '@/api/type/login';
   import { BaseSettingButtonEnum, ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { useUserStore } from '@/store/modules/user';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  const { createMessage } = useMessage();
+  const userInfo = useUserStore();
+  const { warning } = createMessage;
 
   defineOptions({ name: 'LoginModal' });
   const props = withDefaults(
@@ -53,6 +59,10 @@
         ...values,
         buttonId: props.authCode,
       } as PostApiSysReviewerCasdoorLoginRequest);
+      if (loginRes.username === userInfo.getUserInfo.username) {
+        warning('复核人不能与当前登录人相同!');
+        return;
+      }
       setModalProps({ confirmLoading: true });
       closeModal();
       emit('success', loginRes.username, loginRes);

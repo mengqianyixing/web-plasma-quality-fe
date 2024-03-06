@@ -50,7 +50,7 @@
   import { statusValueEnum } from '@/enums/stockoutEnum';
   import { PageWrapper } from '@/components/Page';
 
-  defineOptions({ name: 'DeptManagement' });
+  defineOptions({ name: 'ProductionOrder' });
 
   const [registerModal, { openModal }] = useModal();
   const [registerCheckModal, { openModal: openCheckModal }] = useModal();

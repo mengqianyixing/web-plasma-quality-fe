@@ -9,23 +9,23 @@ export const columns: BasicColumn[] = [
   {
     width: 150,
     title: '采浆公司',
-    dataIndex: 'batchNo',
+    dataIndex: 'stationName',
   },
   {
     width: 150,
     title: '血浆批号',
-    dataIndex: 'stationName',
+    dataIndex: 'batchNo',
   },
 
   {
     width: 150,
     title: '采浆量',
-    dataIndex: 'stationBoxNo',
+    dataIndex: 'weight',
   },
   {
     width: 150,
     title: '血浆数量(袋)',
-    dataIndex: 'currBoxNo',
+    dataIndex: 'bagCount',
   },
   {
     width: 150,
@@ -34,47 +34,50 @@ export const columns: BasicColumn[] = [
       {
         width: 150,
         title: '来浆数量',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['B', 'bagCount'],
       },
       {
         width: 150,
         title: '试剂批号',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['B', 'reagentBatch'],
       },
       {
         width: 150,
         title: '合计',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['B', 'count'],
       },
       {
         width: 150,
         title: '高效价',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['B', 'hTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['B', 'hRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
         width: 150,
         title: '低效价',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['B', 'lTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['B', 'lRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
         width: 150,
         title: '普通',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['B', 'nTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['B', 'nRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
     ],
   },
@@ -85,47 +88,50 @@ export const columns: BasicColumn[] = [
       {
         width: 150,
         title: '来浆数量',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['R', 'bagCount'],
       },
       {
         width: 150,
         title: '试剂批号',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['R', 'reagentBatch'],
       },
       {
         width: 150,
         title: '合计',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['R', 'count'],
       },
       {
         width: 150,
         title: '高效价',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['R', 'hTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['R', 'hRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
         width: 150,
         title: '低效价',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['R', 'lTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['R', 'lRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
         width: 150,
         title: '普通',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['R', 'nTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['R', 'nRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
     ],
   },
@@ -136,47 +142,50 @@ export const columns: BasicColumn[] = [
       {
         width: 150,
         title: '来浆数量',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['T', 'bagCount'],
       },
       {
         width: 150,
         title: '试剂批号',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['T', 'reagentBatch'],
       },
       {
         width: 150,
         title: '合计',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['T', 'count'],
       },
       {
         width: 150,
         title: '高效价',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['T', 'hTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['T', 'hRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
         width: 150,
         title: '低效价',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['T', 'lTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['T', 'lRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
         width: 150,
         title: '普通',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['T', 'nTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['T', 'nRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
     ],
   },
@@ -187,42 +196,45 @@ export const columns: BasicColumn[] = [
       {
         width: 150,
         title: '来浆数量',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['G', 'bagCount'],
       },
       {
         width: 150,
         title: '合计',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['G', 'count'],
       },
       {
         width: 150,
         title: '高效价',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['G', 'hTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['G', 'hRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
         width: 150,
         title: '低效价',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['G', 'lTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['G', 'lRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
         width: 150,
         title: '普通',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['G', 'nTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['G', 'nRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
     ],
   },
@@ -233,42 +245,45 @@ export const columns: BasicColumn[] = [
       {
         width: 150,
         title: '来浆数量',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'bagCount'],
       },
       {
         width: 150,
         title: '合计',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'count'],
       },
       {
         width: 150,
         title: '高效价',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'hTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'hRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
         width: 150,
         title: '低效价',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'lTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'lRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
         width: 150,
         title: '普通',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'nTiter'],
       },
       {
         width: 150,
         title: '比率(%)',
-        dataIndex: 'currBoxNo',
+        dataIndex: ['N', 'nRatio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
     ],
   },
@@ -276,7 +291,7 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: '',
+    field: 'stationNo',
     component: 'ApiSelect',
     label: '采浆公司',
     componentProps: {
@@ -286,7 +301,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: '[batchBegin,batchEnd]',
     component: 'InputRange',
     label: '血浆批号',
     componentProps: {
@@ -294,7 +309,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: '[verificationBegin,verificationEnd]',
     component: 'RangePicker',
     label: '验收发布日期',
     componentProps: {
@@ -303,7 +318,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: '[collectionBegin,collectionEnd]',
     component: 'RangePicker',
     label: '采集日期',
     componentProps: {
@@ -312,12 +327,12 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: 'reagentBatch',
     component: 'Input',
     label: '试剂批号',
   },
   {
-    field: '',
+    field: 'rawImm',
     component: 'Select',
     label: '来浆类型',
     componentProps: {
@@ -325,7 +340,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: 'immunity',
     component: 'Select',
     label: '血浆类型',
     componentProps: {
@@ -333,12 +348,12 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '',
+    field: '[titerBegin,titerEnd]',
     component: 'InputRange',
     label: '效价值',
   },
   {
-    field: '',
+    field: '[issueBegin,issueEnd]',
     component: 'RangePicker',
     label: '检测发布日期',
     componentProps: {

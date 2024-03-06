@@ -36,8 +36,10 @@
   import { ref } from 'vue';
   import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
 
+  defineOptions({ name: 'Report' });
+
   let uploadParams = ref({});
-  const [registerFormModal, { openModal: openFormModal }, closeModal] = useModal();
+  const [registerFormModal, { openModal: openFormModal, closeModal }] = useModal();
   const basicUpload = ref<any>();
   const [registerTable, { clearSelectedRowKeys, getSelectRows, reload }] = useTable({
     api: getReportList,

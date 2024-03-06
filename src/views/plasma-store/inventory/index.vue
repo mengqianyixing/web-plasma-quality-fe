@@ -28,6 +28,8 @@
   import { jsonToSheetXlsx } from '@/components/Excel';
   import { omit } from 'lodash-es';
 
+  defineOptions({ name: 'StoreInventory' });
+
   const { createMessage } = useMessage();
 
   const { isLoading, stationOptions, getStationNameById } = useStation();

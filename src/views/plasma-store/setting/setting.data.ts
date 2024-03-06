@@ -67,7 +67,6 @@ export const capacitySchema: FormSchema = {
   label: '货位数量',
   component: 'InputNumber',
   colProps: { span: 24 },
-  required: true,
   componentProps: {
     min: 1,
     formatter: (n: number) => n && parseInt(n),
@@ -99,6 +98,7 @@ export const initFormSchema: (opt: {
       options: [
         { label: TYPE_FLAG_TEXT.N, value: TYPE_FLAG.N },
         { label: TYPE_FLAG_TEXT.F, value: TYPE_FLAG.F },
+        { label: TYPE_FLAG_TEXT.V, value: TYPE_FLAG.V },
       ],
     },
   },
@@ -143,7 +143,6 @@ export const initFormSchema: (opt: {
   },
   {
     ...capacitySchema,
-    required: true,
     colProps: { span: 12 },
   },
   {

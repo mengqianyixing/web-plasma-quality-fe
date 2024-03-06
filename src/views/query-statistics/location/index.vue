@@ -15,6 +15,8 @@
   import { jsonToSheetXlsx, formatData, getHeader } from '@/components/Excel';
   import { useRouter } from 'vue-router';
 
+  defineOptions({ name: 'Location' });
+
   const { currentRoute } = useRouter();
   const [registerTable, { getForm }] = useTable({
     api: getListApi,
@@ -32,6 +34,7 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
+    afterFetch: (res: any[]) => res.map((it) => ({ ...it, a: { b: { c: '111' } } })),
   });
   async function handleExport() {
     const { getFieldsValue } = getForm();
@@ -39,7 +42,10 @@
     jsonToSheetXlsx<any>({
       header: getHeader(columns),
       filename: `${currentRoute.value.meta.title}.xlsx`,
-      data: formatData(columns, data.result || []),
+      data: formatData(
+        columns,
+        (data.result || []).map((it) => ({ ...it, a: { b: { c: '111' } } })),
+      ),
     });
   }
 </script>
