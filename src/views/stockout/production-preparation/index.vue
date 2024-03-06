@@ -31,45 +31,59 @@
       </template>
       <template #toolbar>
         <div class="flex gap-2">
-          <a-button @click="openPreparation" v-auth="StockOutButtonEnum.ProductionPreparationAdd">
+          <a-button
+            @click="openPreparation"
+            v-auth="StockOutButtonEnum.ProductionPreparationAdd"
+            type="primary"
+          >
             新增
           </a-button>
           <a-button
             @click="editPreparationModal"
             v-auth="StockOutButtonEnum.ProductionPreparationEdit"
+            type="primary"
           >
             修改
           </a-button>
           <a-button
             @click="clickRevokeModal"
             v-auth="StockOutButtonEnum.ProductionPreparationDelete"
+            type="primary"
           >
             撤销
           </a-button>
           <a-button
             @click="clickSummaryModal"
             v-auth="StockOutButtonEnum.ProductionPreparationSelect"
+            type="primary"
           >
             挑选血浆
           </a-button>
           <a-button
             @click="completePreparation"
             v-auth="StockOutButtonEnum.ProductionPreparationFinish"
+            type="primary"
           >
             完成准备
           </a-button>
           <a-button
             @click="clickRevokeModal('isPicked')"
             v-auth="StockOutButtonEnum.ProductionPreparationReset"
+            type="primary"
           >
             撤销准备
           </a-button>
-          <a-button @click="clickCheck" v-auth="StockOutButtonEnum.ProductionPreparationReCheck">
+          <a-button
+            @click="clickCheck"
+            v-auth="StockOutButtonEnum.ProductionPreparationReCheck"
+            type="primary"
+          >
             复核
           </a-button>
           <a-button
             @click="revokeCheck"
             v-auth="StockOutButtonEnum.ProductionPreparationResetReCheck"
+            type="primary"
           >
             撤销复核
           </a-button>
@@ -328,7 +342,7 @@
 
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    canResize: true,
   });
 
   // 新增/修改投产准备框
