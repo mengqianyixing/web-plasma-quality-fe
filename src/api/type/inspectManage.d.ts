@@ -1766,6 +1766,37 @@ export interface DeleteApiCoreLabMaterialDetailRequest {
 export type DeleteApiCoreLabMaterialDetailResponse = string;
 
 /**
+ * 接口 [撤销检测明细不合格登记↗](https://yapi.sharing8.cn/project/529/interface/api/33776) 的 **请求类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `DELETE /api/core/lab/registration/labItem/unqualified`
+ * @更新时间 `2024-03-06 11:26:17`
+ */
+export interface DeleteApiCoreLabRegistrationLabItemUnqualifiedRequest {
+  /**
+   * 样品编号
+   */
+  sampleNo: string;
+  /**
+   * 批次信息
+   */
+  bsNo: string;
+  /**
+   * 检验项目id
+   */
+  projectId: string[];
+}
+
+/**
+ * 接口 [撤销检测明细不合格登记↗](https://yapi.sharing8.cn/project/529/interface/api/33776) 的 **返回类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `DELETE /api/core/lab/registration/labItem/unqualified`
+ * @更新时间 `2024-03-06 11:26:17`
+ */
+export type DeleteApiCoreLabRegistrationLabItemUnqualifiedResponse = string;
+
+/**
  * 接口 [检验报告审核↗](https://yapi.sharing8.cn/project/529/interface/api/32022) 的 **请求类型**
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)

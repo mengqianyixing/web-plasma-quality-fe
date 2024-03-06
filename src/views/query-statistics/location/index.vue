@@ -12,7 +12,7 @@
   import { columns, searchFormSchema } from './data';
   import { PageWrapper } from '@/components/Page';
   import { getListApi } from '@/api/query-statistics/location';
-  import { jsonToSheetXlsx, formatData, getHeader } from '@/components/Excel';
+  import { jsonToSheetXlsx, formatData, getHeader } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
 
   defineOptions({ name: 'Location' });
@@ -34,18 +34,17 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
-    afterFetch: (res: any[]) => res.map((it) => ({ ...it, a: { b: { c: '111' } } })),
   });
   async function handleExport() {
     const { getFieldsValue } = getForm();
-    const data = await getListApi({ ...getFieldsValue(), currPage: 1, pageSize: 999 } as any);
-    jsonToSheetXlsx<any>({
-      header: getHeader(columns),
-      filename: `${currentRoute.value.meta.title}.xlsx`,
-      data: formatData(
-        columns,
-        (data.result || []).map((it) => ({ ...it, a: { b: { c: '111' } } })),
-      ),
+    const data = await getListApi({ ...getFieldsValue(), currPage: 1, pageSize: 50000 } as any);
+    const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+    const { result, merge: bodyMerge } = formatData(lastLevelCols, data.result || [], rows.length);
+    jsonToSheetXlsx({
+      data: [...rows, ...result],
+      json2sheetOpts: { skipHeader: true },
+      merges: [...headerMerge, ...bodyMerge],
+      filename: currentRoute.value.meta.title + '.xlsx',
     });
   }
 </script>

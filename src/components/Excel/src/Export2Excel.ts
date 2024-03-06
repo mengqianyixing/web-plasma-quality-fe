@@ -3,6 +3,10 @@ import type { WorkBook } from 'xlsx';
 import type { JsonToSheet, AoAToSheet } from './typing';
 import { AoaToMultipleSheet, JsonToMultipleSheet } from './typing';
 import { Range } from 'xlsx';
+import { pick, get, set } from 'lodash-es';
+import { isArray } from '@/utils/is';
+import { BasicColumn } from '@/components/Table';
+import { treeLevelGroup } from '@/utils';
 
 const { utils, writeFile } = xlsx;
 
@@ -38,6 +42,7 @@ export function jsonToSheetXlsx<T = any>({
   sheetName = DEF_SHEET_NAME,
   json2sheetOpts = {},
   write2excelOpts = { bookType: 'xlsx' },
+  merges = [],
 }: JsonToSheet<T>) {
   const arrData = [...data];
   if (header) {
@@ -46,9 +51,11 @@ export function jsonToSheetXlsx<T = any>({
   }
 
   const worksheet = utils.json_to_sheet(arrData, json2sheetOpts);
+
+  if (!worksheet['!merges']) worksheet['!merges'] = [];
+  worksheet['!merges'] = merges;
   setColumnWidth(arrData, worksheet);
   /* add worksheet to workbook */
-  console.log(worksheet);
   const workbook: WorkBook = {
     SheetNames: [sheetName],
     Sheets: {
@@ -170,3 +177,123 @@ export function doExportMultipleTable(
 
   writeFile(wb, filename);
 }
+
+interface LvColumns extends BasicColumn {
+  lv: number;
+}
+interface TitleArrColumns extends LvColumns {
+  titleArr: any[];
+  children?: TitleArrColumns[];
+}
+
+function mergeDeepField(deepField: string, char = '') {
+  return Array.prototype.join.call(deepField, char);
+}
+function getLeafNodeLength(node: LvColumns, lastLevelCols: TitleArrColumns[]) {
+  return lastLevelCols.filter((col) => col.titleArr.includes(node.title)).length;
+}
+const getHeaderMerge = (
+  columns: LvColumns[],
+  rowCount: number,
+  lastLevelCols: TitleArrColumns[],
+) => {
+  if (rowCount === 1) return [];
+  const list: BasicColumn[] = columns.slice();
+  const merge: Range[] = [];
+  let columnsIndex = 0;
+  while (list.length) {
+    const node = list.shift() as LvColumns;
+    const { children = [] } = node;
+    if (children.length) {
+      list.unshift(...children);
+      merge.push({
+        s: { r: node.lv - 1, c: columnsIndex },
+        e: { r: node.lv - 1, c: columnsIndex + getLeafNodeLength(node, lastLevelCols) - 1 },
+      });
+    } else if (node.lv !== rowCount) {
+      merge.push({
+        s: { r: node.lv - 1, c: columnsIndex },
+        e: { r: rowCount - 1, c: columnsIndex },
+      });
+      columnsIndex++;
+    } else {
+      columnsIndex++;
+    }
+  }
+  return merge;
+};
+const columnsToRows = (columns: LvColumns[], rowCount: number) => {
+  const list = columns.slice().map((it) => ({ ...it, titleArr: [it.title] })) as TitleArrColumns[];
+  const lastLevelCols: TitleArrColumns[] = [];
+  while (list.length) {
+    const node = list.shift() as TitleArrColumns;
+    const { children = [] } = node;
+    list.unshift(...children.map((it) => ({ ...it, titleArr: [...node.titleArr, it.title] })));
+    if (children.length === 0) lastLevelCols.push(node);
+  }
+  return {
+    rows: Array.from({ length: rowCount }, (_, index) => {
+      const row = {};
+      lastLevelCols.forEach((col) => {
+        const { titleArr } = col;
+        set(row, mergeDeepField(col.dataIndex as string), titleArr[index] || titleArr[0]);
+      });
+      return row;
+    }),
+    lastLevelCols,
+  };
+};
+
+/** col 必须带有 dataIndex  */
+export const formatData = (
+  lastLevelCols: TitleArrColumns[],
+  data: any[],
+  headerRowCount: number,
+) => {
+  const mergeColumns = lastLevelCols.map((col, i) => ({
+    field: mergeDeepField(col.dataIndex as string),
+    ...col,
+    i,
+  }));
+  const fields = mergeColumns.map((col) => col.field);
+  const deepFields = lastLevelCols
+    .filter((col) => isArray(col.dataIndex))
+    .map((col) => col.dataIndex);
+  const formatCols = mergeColumns.filter((col) => col.format);
+  const customCellCols = mergeColumns.filter((col) => col.customCell);
+  const map = {};
+  const merge: Range[] = [];
+  const result = data.map((row, ri) => {
+    deepFields.forEach((field: any) => {
+      row[mergeDeepField(field)] = get(row, field.join('.'));
+    });
+    customCellCols.forEach((col) => {
+      if (map[col.field]) {
+        return map[col.field]--;
+      }
+      const { rowSpan = 1, colSpan = 1 } = col.customCell?.(row) || {};
+      merge.push({
+        s: { r: ri + headerRowCount, c: col.i },
+        e: { r: ri + rowSpan + headerRowCount - 1, c: col.i + colSpan - 1 },
+      });
+      map[col.field] = rowSpan - 1;
+    });
+    formatCols.forEach((col: any) => {
+      row[col.field] = col.format(get(row, mergeDeepField(col.field)));
+    });
+    return pick(row, fields);
+  });
+  return { result, merge };
+};
+
+export const getHeader = (columns: any[]) => {
+  const treeGroup = treeLevelGroup(columns);
+  const level = Object.keys(treeGroup).length;
+  const { rows, lastLevelCols } = columnsToRows(columns, level);
+  const merges = getHeaderMerge(columns, level, lastLevelCols);
+  return {
+    merges,
+    rows,
+    lastLevelCols,
+  };
+};

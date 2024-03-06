@@ -1,4 +1,4 @@
-import type { JSON2SheetOpts, WritingOptions, BookType } from 'xlsx';
+import type { JSON2SheetOpts, WritingOptions, BookType, Range } from 'xlsx';
 
 export interface ExcelData<T = any> {
   header: string[];
@@ -13,6 +13,7 @@ export interface JsonToSheet<T = any> {
   sheetName?: string;
   json2sheetOpts?: JSON2SheetOpts;
   write2excelOpts?: WritingOptions;
+  merges?: Range[];
 }
 
 export interface AoAToSheet<T = any> {
