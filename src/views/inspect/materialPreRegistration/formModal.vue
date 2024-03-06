@@ -25,22 +25,25 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { addFormApi, updateFormApi, getDtApi } from '@/api/inspect/materialPreRegistration';
   import { message } from 'ant-design-vue';
+  import dayjs from 'dayjs';
 
   const emit = defineEmits(['success', 'register']);
 
   defineOptions({ name: 'FormModel' });
   const state = reactive({ id: '', type: '' });
 
-  const [registerForm, { validate, setFieldsValue, clearValidate, resetFields, updateSchema }] =
-    useForm({
-      labelWidth: 120,
-      baseColProps: { span: 12 },
-      schemas: formListSchema,
-      showActionButtonGroup: false,
-      transformDateFunc(date) {
-        return date ? date.format('YYYY-MM-DD') : '';
-      },
-    });
+  const [
+    registerForm,
+    { validate, setFieldsValue, clearValidate, resetFields, updateSchema, getFieldsValue },
+  ] = useForm({
+    labelWidth: 120,
+    baseColProps: { span: 12 },
+    schemas: formListSchema,
+    showActionButtonGroup: false,
+    transformDateFunc(date) {
+      return date ? date.format('YYYY-MM-DD') : '';
+    },
+  });
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async ({ data }) => {
     resetFields();
     clearValidate();
@@ -52,7 +55,16 @@
       state.type = '编辑';
     }
     updateSchema({ field: 'fkProjectId', componentProps: { disabled: !!data.id } });
+    updateSchema({ field: 'deadline', rules: [{ validator: validator }] });
   });
+  function validator(rule, value) {
+    const { expireDate } = getFieldsValue();
+    if (!value || !expireDate) return Promise.resolve();
+    if (dayjs(dayjs(value).format('YYYY-MM-DD')) > dayjs(expireDate)) {
+      return Promise.reject('使用截止日期不能大于试剂有效期');
+    }
+    return Promise.resolve();
+  }
   async function handleSubmit() {
     try {
       const values = await validate();

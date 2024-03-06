@@ -126,7 +126,7 @@ export const formListSchema: FormSchema[] = [
   {
     field: 'min',
     component: 'InputNumber',
-    label: '效价最小值',
+    label: '效价最小值(大于等于)',
     defaultValue: null,
     componentProps: {
       min: 0,
@@ -135,7 +135,7 @@ export const formListSchema: FormSchema[] = [
   {
     field: 'max',
     component: 'InputNumber',
-    label: '效价最大值',
+    label: '效价最大值(小于等于)',
     defaultValue: null,
     componentProps: {
       min: 0,

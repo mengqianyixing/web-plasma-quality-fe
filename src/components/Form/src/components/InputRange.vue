@@ -47,7 +47,7 @@
       if (props.isBetween && rightValue.value !== undefined && value > rightValue.value) {
         emit('change', props.value);
       } else {
-        emit('change', [value || void 0, rightValue.value]);
+        emit('change', [value || (props.isBetween ? 0 : void 0), rightValue.value]);
       }
     },
   });
@@ -58,7 +58,7 @@
       if (props.isBetween && leftValue.value !== undefined && value < leftValue.value) {
         emit('change', props.value);
       } else {
-        emit('change', [leftValue.value, value || void 0]);
+        emit('change', [leftValue.value, value || (props.isBetween ? 0 : void 0)]);
       }
     },
   });
