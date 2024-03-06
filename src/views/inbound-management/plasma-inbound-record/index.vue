@@ -142,8 +142,8 @@
       return;
     }
 
-    if (selectedRowsRef.value[0].state === 'VFP') {
-      createMessage.warning('批次已发布，不支持该操作!');
+    if (selectedRowsRef.value[0].state !== 'VFD') {
+      createMessage.warning('该状态不支持该操作!');
       return;
     }
 
@@ -158,8 +158,8 @@
       return;
     }
 
-    if (selectedRowsRef.value[0].state === 'VFP') {
-      createMessage.warning('批次已发布，不支持该操作!');
+    if (selectedRowsRef.value[0].state !== 'VFD') {
+      createMessage.warning('该状态不支持该操作!');
       return;
     }
 
