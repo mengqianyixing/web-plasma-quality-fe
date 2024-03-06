@@ -283,7 +283,7 @@
       })
     ).result!;
     const { rows, merges: headerMerge, lastLevelCols } = getHeader(columnsByQuarantine);
-    const { result, merge: bodyMerge } = formatData(lastLevelCols, leftFormat(data), rows.length);
+    const { result, merge: bodyMerge } = formatData(lastLevelCols, rightFormat(data), rows.length);
     jsonToSheetXlsx({
       data: [...rows, ...result],
       json2sheetOpts: { skipHeader: true },
