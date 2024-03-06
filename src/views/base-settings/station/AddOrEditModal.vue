@@ -122,7 +122,7 @@
         required: true,
       },
       {
-        label: '血浆皮重',
+        label: '血浆皮重（g）',
         field: 'tareWeight',
         component: 'Input',
         colProps: { span: 20 },
