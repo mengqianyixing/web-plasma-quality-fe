@@ -31,6 +31,48 @@ const nonconformity: AppRouteModule = {
         title: '投产准备',
       },
       component: () => import('@/views/stockout/production-preparation/index.vue'),
+      authElements: [
+        {
+          id: StockOutButtonEnum.ProductionPreparationAdd,
+          name: 'add',
+          title: '新增',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPreparationEdit,
+          name: 'edit',
+          title: '修改',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPreparationDelete,
+          name: 'delete',
+          title: '撤销',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPreparationSelect,
+          name: 'select',
+          title: '挑选血浆',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPreparationFinish,
+          name: 'finish',
+          title: '完成准备',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPreparationReset,
+          name: 'reset',
+          title: '撤销准备',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPreparationReCheck,
+          name: 'recheck',
+          title: '复核',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPreparationResetReCheck,
+          name: 'resetReCheck',
+          title: '撤销复核',
+        },
+      ],
     },
     {
       path: 'ps',
@@ -56,6 +98,43 @@ const nonconformity: AppRouteModule = {
         title: '生产指令',
       },
       component: () => import('@/views/stockout/production-order/index.vue'),
+      authElements: [
+        {
+          id: StockOutButtonEnum.ProductionOrderAdd,
+          name: 'add',
+          title: '新增',
+        },
+        {
+          id: StockOutButtonEnum.ProductionOrderEdit,
+          name: 'edit',
+          title: '编辑',
+        },
+        {
+          id: StockOutButtonEnum.ProductionOrderDelete,
+          name: 'delete',
+          title: '撤销',
+        },
+        {
+          id: StockOutButtonEnum.ProductionOrderRecheck,
+          name: 'recheck',
+          title: '复核',
+        },
+        {
+          id: StockOutButtonEnum.ProductionOrderCancelRecheck,
+          name: 'cancelRecheck',
+          title: '取消复核',
+        },
+        {
+          id: StockOutButtonEnum.ProductionOrderExamine,
+          name: 'exam',
+          title: '审核',
+        },
+        {
+          id: StockOutButtonEnum.ProductionOrderCancelExamine,
+          name: 'cancelExam',
+          title: '取消审核',
+        },
+      ],
     },
     {
       path: 'productionPlan',
@@ -104,6 +183,48 @@ const nonconformity: AppRouteModule = {
         title: '投产出库',
       },
       component: () => import('@/views/stockout/production-put-into/index.vue'),
+      authElements: [
+        {
+          id: StockOutButtonEnum.PutIntoTrayStockOut,
+          name: 'trayStockOut',
+          title: '托盘出库',
+        },
+        {
+          id: StockOutButtonEnum.PutIntoBoxStockOut,
+          name: 'boxStockOut',
+          title: '逐箱出库',
+        },
+        {
+          id: StockOutButtonEnum.PutIntoBatchStockOut,
+          name: 'batchStockOut',
+          title: '整批出库',
+        },
+        {
+          id: StockOutButtonEnum.PutIntoPickPlasmaSystem,
+          name: 'pickPlasmaSystem',
+          title: '挑浆系统',
+        },
+        {
+          id: StockOutButtonEnum.PutIntoCancelStockOut,
+          name: 'cancelStockOut',
+          title: '撤销出库',
+        },
+        {
+          id: StockOutButtonEnum.PutIntoBoxReceive,
+          name: 'boxReceive',
+          title: '逐箱接收',
+        },
+        {
+          id: StockOutButtonEnum.PutIntoBatchReceive,
+          name: 'batchReceive',
+          title: '整批接收',
+        },
+        {
+          id: StockOutButtonEnum.PutIntoCancelExamine,
+          name: 'cancelExamine',
+          title: '撤销接收',
+        },
+      ],
     },
     {
       path: 'NonProductionPutInto',
@@ -113,6 +234,58 @@ const nonconformity: AppRouteModule = {
         title: '非生产出库',
       },
       component: () => import('@/views/stockout/non-production-put-into/index.vue'),
+      authElements: [
+        {
+          id: StockOutButtonEnum.NonPutIntoAdd,
+          name: 'add',
+          title: '新增',
+        },
+        {
+          id: StockOutButtonEnum.NonPutIntoEdit,
+          name: 'edit',
+          title: '编辑',
+        },
+        {
+          id: StockOutButtonEnum.NonPutIntoCancel,
+          name: 'cancel',
+          title: '撤销',
+        },
+        {
+          id: StockOutButtonEnum.NonPutIntoCompletePrepare,
+          name: 'completePrepare',
+          title: '完成准备',
+        },
+        {
+          id: StockOutButtonEnum.NonPutIntoCancelPrepare,
+          name: 'cancelPrepare',
+          title: '撤销准备',
+        },
+        {
+          id: StockOutButtonEnum.NonPutIntoReCheck,
+          name: 'recheck',
+          title: '复核',
+        },
+        {
+          id: StockOutButtonEnum.NonPutIntoCancelReCheck,
+          name: 'cancelReCheck',
+          title: '撤销复核',
+        },
+        {
+          id: StockOutButtonEnum.NonPutIntoCheck,
+          name: 'check',
+          title: '审核',
+        },
+        {
+          id: StockOutButtonEnum.NonPutIntoCancelCheck,
+          name: 'cancelCheck',
+          title: '撤销审核',
+        },
+        {
+          id: StockOutButtonEnum.NonPutIntoScan,
+          name: 'scan',
+          title: '扫描出库',
+        },
+      ],
     },
     {
       path: 'plasmaSummary',
@@ -122,6 +295,7 @@ const nonconformity: AppRouteModule = {
         title: '血浆汇总',
       },
       component: () => import('@/views/stockout/plasma-summary/index.vue'),
+      authElements: [],
     },
   ],
 };
