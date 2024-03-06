@@ -112,6 +112,7 @@ export enum InspectButtonEnum {
   MaterialPreRegistrationUnReview = 'E_96003004',
   MaterialPreRegistrationDisable = 'E_96003005',
   MaterialPreRegistrationEnable = 'E_96003006',
+  MaterialPreRegistrationUpdateDate = 'E_96003007',
 }
 
 export enum QuarantineButtonEnum {
