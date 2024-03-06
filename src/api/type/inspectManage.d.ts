@@ -2333,6 +2333,33 @@ export interface GetApiCoreLabMaterialTemplateIdResponse {
 }
 
 /**
+ * 接口 [修改物料预登记使用截至日期↗](https://yapi.sharing8.cn/project/529/interface/api/33769) 的 **请求类型**
+ *
+ * @分类 [物料预登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5739)
+ * @请求头 `PUT /api/core/lab/material/template/deadline`
+ * @更新时间 `2024-03-06 09:43:52`
+ */
+export interface PutApiCoreLabMaterialTemplateDeadlineRequest {
+  /**
+   * 截至使用时间(yyyy-MM-dd)
+   */
+  deadline: string;
+  /**
+   * 主键id
+   */
+  id: string;
+}
+
+/**
+ * 接口 [修改物料预登记使用截至日期↗](https://yapi.sharing8.cn/project/529/interface/api/33769) 的 **返回类型**
+ *
+ * @分类 [物料预登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5739)
+ * @请求头 `PUT /api/core/lab/material/template/deadline`
+ * @更新时间 `2024-03-06 09:43:52`
+ */
+export type PutApiCoreLabMaterialTemplateDeadlineResponse = string;
+
+/**
  * 接口 [新增必检项↗](https://yapi.sharing8.cn/project/529/interface/api/33372) 的 **请求类型**
  *
  * @分类 [必检项↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5748)

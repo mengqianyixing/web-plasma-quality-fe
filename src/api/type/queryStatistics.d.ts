@@ -2964,7 +2964,7 @@ export interface PostApiCoreDonorStateResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/lab/item/query`
- * @更新时间 `2024-03-05 10:15:20`
+ * @更新时间 `2024-03-05 17:42:43`
  */
 export interface PostApiCoreLabItemQueryRequest {
   pageSize: string;
@@ -2999,7 +2999,7 @@ export interface PostApiCoreLabItemQueryRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/lab/item/query`
- * @更新时间 `2024-03-05 10:15:20`
+ * @更新时间 `2024-03-05 17:42:43`
  */
 export interface PostApiCoreLabItemQueryResponse {
   currPage: number;
@@ -3033,7 +3033,7 @@ export interface PostApiCoreLabItemQueryResponse {
     /**
      * 采集日期
      */
-    CollectionAt: string;
+    collectionAt: string;
     /**
      * 不合格原因
      */

@@ -66,6 +66,10 @@ export const missingNumberListColumns: BasicColumn[] = [
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
+  {
+    title: '缺号说明',
+    dataIndex: 'remark',
+  },
 ];
 
 export const plasmaUnqualifiedColumns: BasicColumn[] = [
