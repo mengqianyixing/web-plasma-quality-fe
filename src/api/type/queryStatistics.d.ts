@@ -3053,4 +3053,100 @@ export interface PostApiCoreLabItemQueryResponse {
   }[];
 }
 
+/**
+ * 接口 [不合格追踪↗](https://yapi.sharing8.cn/project/529/interface/api/33783) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/donor/unqualified/track`
+ * @更新时间 `2024-03-07 10:31:36`
+ */
+export interface GetApiCoreDonorUnqualifiedTrackRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * 浆站编码
+   */
+  stationNo?: string;
+  /**
+   * 样本批次号
+   */
+  sampleBatchNo?: string;
+  /**
+   * 样本编码
+   */
+  sampleNo?: string;
+  /**
+   * 采集日期开始
+   */
+  collectStartDate?: string;
+  collectEndDate?: string;
+  /**
+   * 不合格来源(浆站报送/厂家检测)
+   */
+  blockBy: string;
+  /**
+   * 不合格原因(需追溯检疫期的项目相关)
+   */
+  failedCode: string;
+  /**
+   * 不合格日期查询
+   */
+  blockStartDate: string;
+  blockEndDate: string;
+}
+
+/**
+ * 接口 [不合格追踪↗](https://yapi.sharing8.cn/project/529/interface/api/33783) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/donor/unqualified/track`
+ * @更新时间 `2024-03-07 10:31:36`
+ */
+export interface GetApiCoreDonorUnqualifiedTrackResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 采浆公司
+     */
+    stationName?: null;
+    stationNo?: string;
+    /**
+     * 样本批号
+     */
+    sampleBatchNo?: null;
+    /**
+     * 样本编号
+     */
+    sampleNo?: string;
+    /**
+     * 采集日期
+     */
+    collectAt?: string;
+    /**
+     * 浆员编号
+     */
+    donorNo?: string;
+    /**
+     * 姓名
+     */
+    donorName?: string;
+    failedCode?: string;
+    /**
+     * 不合格原因
+     */
+    failedReason?: null;
+    /**
+     * 不合格日期
+     */
+    blockAt?: string;
+    /**
+     * 不合格来源
+     */
+    blockBy?: string;
+  }[];
+}
+
 /* prettier-ignore-end */

@@ -467,7 +467,7 @@ export interface GetApiCoreBagUnqualifiedBagNoResponse {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-02-01 16:45:24`
+ * @更新时间 `2024-03-07 10:45:20`
  */
 export interface GetApiCoreBagUnqualifiedRequest {
   pageSize: string;
@@ -517,7 +517,7 @@ export interface GetApiCoreBagUnqualifiedRequest {
    */
   outStoreEndDate?: string;
   /**
-   * 不合格类型
+   * 不合格类型  不合格暂存页面默认传flow = PCP   （验收血浆不合格）
    */
   flow?: string;
 }
@@ -527,7 +527,7 @@ export interface GetApiCoreBagUnqualifiedRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-02-01 16:45:24`
+ * @更新时间 `2024-03-07 10:45:20`
  */
 export interface GetApiCoreBagUnqualifiedResponse {
   totalCount?: number;

@@ -2019,12 +2019,16 @@ export interface PostApiCoreLabReportsResponse {
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/report/unqualified`
- * @更新时间 `2024-02-20 15:55:44`
+ * @更新时间 `2024-03-06 19:18:03`
  */
 export interface PostApiCoreLabReportUnqualifiedRequest {
   reportNo: string;
   pageSize: number;
   currPage: number;
+  /**
+   * H,LU,Q
+   */
+  type: string;
 }
 
 /**
@@ -2032,7 +2036,7 @@ export interface PostApiCoreLabReportUnqualifiedRequest {
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/report/unqualified`
- * @更新时间 `2024-02-20 15:55:44`
+ * @更新时间 `2024-03-06 19:18:03`
  */
 export interface PostApiCoreLabReportUnqualifiedResponse {
   totalCount: number;
@@ -2064,6 +2068,12 @@ export interface PostApiCoreLabReportUnqualifiedResponse {
      * Cutoff值
      */
     cutoff?: string;
+    ct?: string;
+    unqualified?: string;
+    /**
+     * 效价值
+     */
+    titerValue?: string;
     /**
      * 检测时间
      */
