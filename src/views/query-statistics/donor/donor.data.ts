@@ -7,22 +7,13 @@ import { SERVER_ENUM } from '@/enums/serverEnum';
 const serverEnumStore = useServerEnumStoreWithOut();
 const ConclusionType = serverEnumStore.getServerEnumText(SERVER_ENUM.ConclusionType);
 
-// 查询条件：浆员编号、临时编号、浆员姓名
+// 查询条件：浆员编号
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'donorNo',
     label: '浆员编号',
     component: 'Input',
-  },
-  // {
-  //   field: '',
-  //   label: '临时编号',
-  //   component: 'Input',
-  // },
-  {
-    field: 'name',
-    label: '浆员姓名',
-    component: 'Input',
+    required: true,
   },
 ];
 // 查询结果1————浆员信息
