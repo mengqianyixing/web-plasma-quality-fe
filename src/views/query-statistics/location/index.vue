@@ -2,7 +2,9 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleExport"> 导出 </a-button>
+        <a-button type="primary" @click="handleExport" v-auth="SearchManager.LocationExport">
+          导出
+        </a-button>
       </template>
     </BasicTable>
   </PageWrapper>
@@ -14,6 +16,7 @@
   import { getListApi } from '@/api/query-statistics/location';
   import { jsonToSheetXlsx, formatData, getHeader } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
+  import { SearchManager } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'Location' });
 

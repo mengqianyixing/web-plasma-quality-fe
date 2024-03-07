@@ -46,7 +46,7 @@
   async function getUnqualifiedDictionary() {
     const dictionaryArr = await getSysDictionary([DictionaryEnum.unProdReason]);
 
-    if (!dictionaryArr) return;
+    if (!dictionaryArr.length) return;
 
     plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
       dataKey: DictionaryReasonEnum.PlasmaFailedReason,

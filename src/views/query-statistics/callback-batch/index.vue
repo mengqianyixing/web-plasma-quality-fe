@@ -2,7 +2,14 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleExport" :loading="loading">导出</a-button>
+        <a-button
+          type="primary"
+          @click="handleExport"
+          :loading="loading"
+          v-auth="SearchManager.CallbackBatchExport"
+        >
+          导出
+        </a-button>
       </template>
     </BasicTable>
   </PageWrapper>
@@ -16,6 +23,7 @@
   import { useRouter } from 'vue-router';
   import { ref } from 'vue';
   import { getCallbackBatchStatistics } from '@/api/query-statistics/callback';
+  import { SearchManager } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'CallbackBatchStatistics' });
 
