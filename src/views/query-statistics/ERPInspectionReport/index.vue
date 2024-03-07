@@ -3,7 +3,14 @@
     <div class="overflow-auto flex-grow h-87vh">
       <BasicTable @register="registerTable">
         <template #toolbar>
-          <a-button type="primary" @click="handleExport" :loading="buttonLoading">导出</a-button>
+          <a-button
+            type="primary"
+            @click="handleExport"
+            :loading="buttonLoading"
+            v-auth="SearchManager.ERPReportExport"
+          >
+            导出
+          </a-button>
         </template>
       </BasicTable>
     </div>
@@ -22,6 +29,7 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup>
+  import { SearchManager } from '@/enums/authCodeEnum';
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './report.data';
   import { PageWrapper } from '@/components/Page';

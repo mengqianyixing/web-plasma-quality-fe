@@ -5,7 +5,13 @@
         <div class="flex-grow overflow-auto h-83vh">
           <BasicTable @register="registerTableLeft">
             <template #toolbar>
-              <a-button type="primary" @click="handleExportComeData">导出</a-button>
+              <a-button
+                type="primary"
+                @click="handleExportComeData"
+                v-auth="SearchManager.PlasmaBatchExport"
+              >
+                导出
+              </a-button>
             </template>
           </BasicTable>
         </div>
@@ -47,6 +53,8 @@
   </a-tabs>
 </template>
 <script lang="ts" setup>
+  import { SearchManager } from '@/enums/authCodeEnum';
+
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema, columnsByQuarantine } from './batch.data';
   import { Pagination, Tabs } from 'ant-design-vue';

@@ -214,3 +214,19 @@ export enum CallbackButtonEnum {
   ListGeneEnter = 'E_93001004',
   ListGeneExport = 'E_93001005',
 }
+
+export enum SearchManager {
+  InventoryExport = 'E_90003101',
+
+  LocationExport = 'E_900017001',
+
+  PlasmaBatchExport = 'E_90003001',
+
+  ERPReportExport = 'E_90002401',
+
+  DonorStateExport = 'E_90001401',
+
+  CallbackExport = 'E_90002501',
+
+  CallbackBatchExport = 'E_90002601',
+}
