@@ -41,7 +41,7 @@ export async function getRoutes() {
       });
       modulesRouteList = jsonClone(routeModuleList);
       routeIdMap = getRouteIdMap(modulesRouteList);
-      refreshMenu();
+      refreshMenu(false);
       resolve(true);
     });
   });
