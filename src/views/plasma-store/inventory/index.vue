@@ -7,7 +7,14 @@
     <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData">
       <template #toolbar>
         <div class="h-32px">
-          <a-button type="primary" class="absolute right-0" @click="handleExport"> 导出 </a-button>
+          <a-button
+            type="primary"
+            class="absolute right-10"
+            @click="handleExport"
+            v-auth="SearchManager.InventoryExport"
+          >
+            导出
+          </a-button>
         </div>
       </template>
     </vxe-grid>
@@ -15,6 +22,7 @@
 </template>
 
 <script lang="ts" setup>
+  import { SearchManager } from '@/enums/authCodeEnum';
   import { onMounted, reactive, watchEffect, ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { useStation } from '@/hooks/common/useStation';
