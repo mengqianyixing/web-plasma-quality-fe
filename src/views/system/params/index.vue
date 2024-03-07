@@ -24,7 +24,7 @@
 
   const { createMessage, createConfirm } = useMessage();
 
-  defineOptions({ name: 'NonconformityBoxes' });
+  defineOptions({ name: 'Params' });
 
   const selectedRowsRef = ref<Recordable>([]);
   const [registerTable, { reload, clearSelectedRowKeys }] = useTable({

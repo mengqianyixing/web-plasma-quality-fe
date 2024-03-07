@@ -145,3 +145,27 @@ export const withInstall = <T extends CustomComponent>(component: T, alias?: str
   };
   return component as WithInstall<T>;
 };
+
+/**
+ *
+ * @param list
+ * @param children
+ * @param lv
+ * @returns
+ * 树分层
+ */
+export const treeLevelGroup = <T>(
+  list: T[],
+  children = 'children',
+  lv = 'lv',
+): Record<number, T[]> => {
+  const mapList = list.slice().map((item) => ((item[lv] = 1), item));
+  const levelGroup = {};
+  while (mapList.length) {
+    const node = mapList.shift() || {};
+    const list = levelGroup[node[lv]] || [];
+    levelGroup[node[lv]] = [...list, node];
+    mapList.push(...(node[children] || []).map((item) => ((item[lv] = node[lv] + 1), item)));
+  }
+  return levelGroup;
+};

@@ -10,6 +10,8 @@
   import { getListApi } from '@/api/query-statistics/sampleCheck';
   import { isArray, isObject } from '@/utils/is';
 
+  defineOptions({ name: 'SampleCheck' });
+
   const [registerTable] = useTable({
     api: getListApi,
     columns,

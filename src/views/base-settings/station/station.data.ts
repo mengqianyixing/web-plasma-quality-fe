@@ -10,7 +10,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'fullName',
   },
   {
-    title: '血浆皮重',
+    title: '血浆皮重（g）',
     dataIndex: 'tareWeight',
   },
   {

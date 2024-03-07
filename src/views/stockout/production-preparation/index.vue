@@ -31,14 +31,62 @@
       </template>
       <template #toolbar>
         <div class="flex gap-2">
-          <a-button @click="openPreparation"> 新增 </a-button>
-          <a-button @click="editPreparationModal"> 修改 </a-button>
-          <a-button @click="clickRevokeModal"> 撤销 </a-button>
-          <a-button @click="clickSummaryModal"> 挑选血浆 </a-button>
-          <a-button @click="completePreparation"> 完成准备 </a-button>
-          <a-button @click="clickRevokeModal('isPicked')"> 撤销准备 </a-button>
-          <a-button @click="clickCheck"> 复核 </a-button>
-          <a-button @click="revokeCheck"> 撤销复核 </a-button>
+          <a-button
+            @click="openPreparation"
+            v-auth="StockOutButtonEnum.ProductionPreparationAdd"
+            type="primary"
+          >
+            新增
+          </a-button>
+          <a-button
+            @click="editPreparationModal"
+            v-auth="StockOutButtonEnum.ProductionPreparationEdit"
+            type="primary"
+          >
+            修改
+          </a-button>
+          <a-button
+            @click="clickRevokeModal"
+            v-auth="StockOutButtonEnum.ProductionPreparationDelete"
+            type="primary"
+          >
+            撤销
+          </a-button>
+          <a-button
+            @click="clickSummaryModal"
+            v-auth="StockOutButtonEnum.ProductionPreparationSelect"
+            type="primary"
+          >
+            挑选血浆
+          </a-button>
+          <a-button
+            @click="completePreparation"
+            v-auth="StockOutButtonEnum.ProductionPreparationFinish"
+            type="primary"
+          >
+            完成准备
+          </a-button>
+          <a-button
+            @click="clickRevokeModal('isPicked')"
+            v-auth="StockOutButtonEnum.ProductionPreparationReset"
+            type="primary"
+          >
+            撤销准备
+          </a-button>
+          <a-button
+            @click="clickCheck"
+            v-auth="StockOutButtonEnum.ProductionPreparationReCheck"
+            type="primary"
+          >
+            复核
+          </a-button>
+          <a-button
+            @click="revokeCheck"
+            v-auth="StockOutButtonEnum.ProductionPreparationResetReCheck"
+            type="primary"
+          >
+            撤销复核
+          </a-button>
         </div>
       </template>
     </BasicTable>
@@ -51,6 +99,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
   import { BasicTable, useTable, BasicColumn } from '@/components/Table';
   import { FormSchema } from '@/components/Form';
   import { useModal } from '@/components/Modal';
@@ -81,6 +130,8 @@
   import { useUserStore } from '@/store/modules/user';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+  defineOptions({ name: 'ProductionPreparation' });
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -291,7 +342,7 @@
 
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    canResize: true,
   });
 
   // 新增/修改投产准备框

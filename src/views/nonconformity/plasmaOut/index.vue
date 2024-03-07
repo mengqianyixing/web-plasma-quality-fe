@@ -95,6 +95,8 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { NonconformityButtonEnum } from '@/enums/authCodeEnum';
 
+  defineOptions({ name: 'PlasmaOut' });
+
   const open = ref(false);
   const confirmLoading = ref(false);
   const type = ref('');

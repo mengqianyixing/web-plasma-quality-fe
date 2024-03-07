@@ -16,6 +16,8 @@ import {
   PostApiCoreLabMaterialTemplatesResponse,
   GetApiCoreLabMaterialTemplateIdRequest,
   GetApiCoreLabMaterialTemplateIdResponse,
+  PutApiCoreLabMaterialTemplateDeadlineRequest,
+  PutApiCoreLabMaterialTemplateDeadlineResponse,
 } from '@/api/type/inspectManage';
 
 enum Api {
@@ -26,6 +28,7 @@ enum Api {
   ENABLE = '/api/core/lab/material/template/enable/',
   DISABLE = '/api/core/lab/material/template/disable/',
   DT = '/api/core/lab/material/template/',
+  UPDATE_DATE = '/api/core/lab/material/template/deadline',
 }
 
 export const getListApi = (data: PostApiCoreLabMaterialTemplatesRequest) =>
@@ -60,3 +63,6 @@ export const enableApi = ({ id }: PutApiCoreLabMaterialTemplateEnableIdRequest) 
 
 export const disableApi = ({ id }: PutApiCoreLabMaterialTemplateDisableIdRequest) =>
   defHttp.put<PutApiCoreLabMaterialTemplateDisableIdResponse>({ url: Api.DISABLE + id });
+
+export const updateDateApi = (data: PutApiCoreLabMaterialTemplateDeadlineRequest) =>
+  defHttp.put<PutApiCoreLabMaterialTemplateDeadlineResponse>({ url: Api.UPDATE_DATE, data });

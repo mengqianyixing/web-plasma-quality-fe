@@ -8,6 +8,8 @@
   import { columns, searchFormSchema } from './followDisqualificationStatistics.data';
   import { PageWrapper } from '@/components/Page';
 
+  defineOptions({ name: 'FollowDisqualificationStatistics' });
+
   const [registerTable] = useTable({
     api: new Promise(() => {}),
     columns,

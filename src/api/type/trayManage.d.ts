@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2024-01-04 16:15:50`
+ * @更新时间 `2024-03-05 17:59:26`
  */
 export interface GetApiCoreBankTraiesRequest {
   /**
@@ -58,7 +58,7 @@ export interface GetApiCoreBankTraiesRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2024-01-04 16:15:50`
+ * @更新时间 `2024-03-05 17:59:26`
  */
 export interface GetApiCoreBankTraiesResponse {
   /**
@@ -125,6 +125,10 @@ export interface GetApiCoreBankTraiesResponse {
      * 更新时间
      */
     updateAt?: string;
+    /**
+     * DLV-出库中,REC-入库中,MVE-移库中,FRY-越库中,IN-在库,OUT-不在库
+     */
+    trayStatus?: string;
   }[];
 }
 
@@ -422,7 +426,7 @@ export interface PutApiCoreBankTrayWarehouseDeliverResponse {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/warehouse/move`
- * @更新时间 `2024-01-27 14:35:27`
+ * @更新时间 `2024-03-06 19:41:19`
  */
 export interface PostApiCoreBankTrayWarehouseMoveRequest {
   /**
@@ -433,6 +437,14 @@ export interface PostApiCoreBankTrayWarehouseMoveRequest {
    * 目标货位
    */
   targetLocatonNo?: string;
+  /**
+   * 库房编号
+   */
+  targetHouseNo: string;
+  /**
+   * 高架库出库站点编号
+   */
+  siteNo?: string;
 }
 
 /**
@@ -440,7 +452,7 @@ export interface PostApiCoreBankTrayWarehouseMoveRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/warehouse/move`
- * @更新时间 `2024-01-27 14:35:27`
+ * @更新时间 `2024-03-06 19:41:19`
  */
 export interface PostApiCoreBankTrayWarehouseMoveResponse {
   /**

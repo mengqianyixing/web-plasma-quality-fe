@@ -52,6 +52,8 @@
   import PlasmaDetailModal from '@/views/nonconformity/plasma-manage/PlasmaDetailModal.vue';
   import { useStation } from '@/hooks/common/useStation';
 
+  defineOptions({ name: 'PlasmaManage' });
+
   const selectedRow = ref<Recordable>([]);
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
 

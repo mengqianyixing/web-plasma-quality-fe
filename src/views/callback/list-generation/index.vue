@@ -14,11 +14,26 @@
       </template>
       <template #toolbar>
         <div class="flex gap-2">
-          <a-button type="primary" @click="handleAdd"> 新增 </a-button>
-          <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
-          <a-button type="primary" @click="handleDelete"> 撤销 </a-button>
-          <a-button type="primary" @click="handleEnter">确认</a-button>
-          <a-button type="primary" @click="handleExport" :loading="exportLoading"> 导出 </a-button>
+          <a-button type="primary" @click="handleAdd" v-auth="CallbackButtonEnum.ListGeneAdd">
+            新增
+          </a-button>
+          <a-button type="primary" @click="handleEdit" v-auth="CallbackButtonEnum.ListGeneEdit">
+            编辑
+          </a-button>
+          <a-button type="primary" @click="handleDelete" v-auth="CallbackButtonEnum.ListGeneDelete">
+            撤销
+          </a-button>
+          <a-button type="primary" @click="handleEnter" v-auth="CallbackButtonEnum.ListGeneEnter">
+            确认
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleExport"
+            v-auth="CallbackButtonEnum.ListGeneExport"
+            :loading="exportLoading"
+          >
+            导出
+          </a-button>
         </div>
       </template>
     </BasicTable>
@@ -58,8 +73,9 @@
   } from '@/enums/callbackEnum';
   import dayjs from 'dayjs';
   import { callbackConfirm } from '@/api/callback/list-confirm';
+  import { CallbackButtonEnum } from '@/enums/authCodeEnum';
 
-  defineOptions({ name: 'CallbackListGeneration' });
+  defineOptions({ name: 'CallbackGeneration' });
 
   const selectedRow = ref<Recordable>([]);
   const stationNames = ref<Recordable>({});

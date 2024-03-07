@@ -10,13 +10,39 @@
         </span>
       </template>
       <template #toolbar>
-        <a-button type="primary" @click="handleAdd"> 新增 </a-button>
-        <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
-        <a-button type="primary" @click="handleDelete"> 撤销审核 </a-button>
-        <a-button type="primary" @click="handleReCheck"> 复核 </a-button>
-        <a-button type="primary" @click="handleCancelReCheck">撤销复核</a-button>
-        <a-button type="primary" @click="handlePrint">打印</a-button>
-        <a-button type="primary" @click="handleApproval">批准</a-button>
+        <a-button type="primary" @click="handleAdd" v-auth="QualityButtonEnum.PlasmaCheckAdd">
+          新增
+        </a-button>
+        <a-button type="primary" @click="handleEdit" v-auth="QualityButtonEnum.PlasmaCheckEdit">
+          编辑
+        </a-button>
+        <a-button type="primary" @click="handleDelete" v-auth="QualityButtonEnum.PlasmaCheckDelete">
+          撤销审核
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleReCheck"
+          v-auth="QualityButtonEnum.PlasmaCheckReCheck"
+        >
+          复核
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleCancelReCheck"
+          v-auth="QualityButtonEnum.PlasmaCheckCancelReCheck"
+        >
+          撤销复核
+        </a-button>
+        <a-button type="primary" @click="handlePrint" v-auth="QualityButtonEnum.PlasmaCheckPrint">
+          打印
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleApproval"
+          v-auth="QualityButtonEnum.PlasmaCheckApproval"
+        >
+          批准
+        </a-button>
       </template>
     </BasicTable>
 
@@ -49,6 +75,8 @@
   import { useStation } from '@/hooks/common/useStation';
   import { PlasmaCheckStateValueEnum } from '@/enums/plasmaEnum';
 
+  import { QualityButtonEnum } from '@/enums/authCodeEnum';
+
   const { isLoading, stationOptions } = useStation();
   const { createMessage, createConfirm } = useMessage();
 
@@ -65,7 +93,7 @@
     });
   });
 
-  defineOptions({ name: 'NonconformityBoxes' });
+  defineOptions({ name: 'PlasmaCheck' });
 
   const [registerPlasmaCheckModal, { openModal: openPlasmaCheckModal }] = useModal();
   const [registerPlasmaLimitModal, { openModal: openPlasmaLimitModal }] = useModal();

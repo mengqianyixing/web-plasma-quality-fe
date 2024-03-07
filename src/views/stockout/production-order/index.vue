@@ -11,13 +11,55 @@
       </template>
       <template #toolbar>
         <div class="flex gap-2">
-          <a-button type="primary" @click="handleAdd"> 新增 </a-button>
-          <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
-          <a-button type="primary" @click="handleDelete"> 撤销 </a-button>
-          <a-button type="primary" @click="handleRecheck"> 复核 </a-button>
-          <a-button type="primary" @click="handleCancelRecheck"> 取消复核 </a-button>
-          <a-button type="primary" @click="handleExamine"> 审核 </a-button>
-          <a-button type="primary" @click="handleCancelExamine"> 取消审核 </a-button>
+          <a-button
+            type="primary"
+            @click="handleAdd"
+            v-auth="StockOutButtonEnum.ProductionOrderAdd"
+          >
+            新增
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleEdit"
+            v-auth="StockOutButtonEnum.ProductionOrderEdit"
+          >
+            编辑
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleDelete"
+            v-auth="StockOutButtonEnum.ProductionOrderDelete"
+          >
+            撤销
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleRecheck"
+            v-auth="StockOutButtonEnum.ProductionOrderRecheck"
+          >
+            复核
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleCancelRecheck"
+            v-auth="StockOutButtonEnum.ProductionOrderCancelRecheck"
+          >
+            取消复核
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleExamine"
+            v-auth="StockOutButtonEnum.ProductionOrderExamine"
+          >
+            审核
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleCancelExamine"
+            v-auth="StockOutButtonEnum.ProductionOrderCancelExamine"
+          >
+            取消审核
+          </a-button>
         </div>
       </template>
     </BasicTable>
@@ -28,6 +70,7 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup>
+  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
   import { BasicTable, useTable } from '@/components/Table';
 
   import { useModal } from '@/components/Modal';
@@ -50,7 +93,7 @@
   import { statusValueEnum } from '@/enums/stockoutEnum';
   import { PageWrapper } from '@/components/Page';
 
-  defineOptions({ name: 'DeptManagement' });
+  defineOptions({ name: 'ProductionOrder' });
 
   const [registerModal, { openModal }] = useModal();
   const [registerCheckModal, { openModal: openCheckModal }] = useModal();

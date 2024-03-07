@@ -21,14 +21,31 @@
         </span>
       </template>
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button :disabled="!selectedRow.length" type="primary" @click="handleOption('C')"
-          >撤销</a-button
+        <a-button
+          type="primary"
+          @click="handleCreate"
+          v-auth="QuarantineButtonEnum.CreateQuarantine"
+          >新增
+        </a-button>
+        <a-button
+          :disabled="!selectedRow.length"
+          type="primary"
+          @click="handleOption('C')"
+          v-auth="QuarantineButtonEnum.ResetQuarantine"
         >
-        <a-button :disabled="!selectedRow.length" type="primary" @click="handleOption('R')"
-          >复核</a-button
+          撤销
+        </a-button>
+        <a-button
+          :disabled="!selectedRow.length"
+          type="primary"
+          @click="handleOption('R')"
+          v-auth="QuarantineButtonEnum.ReCheckQuarantine"
         >
-        <a-button type="primary" @click="handlePrint">打印</a-button>
+          复核
+        </a-button>
+        <a-button type="primary" @click="handlePrint" v-auth="QuarantineButtonEnum.PrintQuarantine">
+          打印
+        </a-button>
       </template>
     </BasicTable>
     <PlasmaBatchDetailModal @register="registerDetailModal" />
@@ -50,8 +67,9 @@
   import { columns, searchFormSchema } from './plasma-batch.data';
   import { useStation } from '@/hooks/common/useStation';
   import { onMounted, ref, watchEffect } from 'vue';
+  import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
 
-  defineOptions({ name: 'UsersAuthManagement' });
+  defineOptions({ name: 'PlasmaBatchReport' });
 
   const selectedRow = ref<Recordable>([]);
   const { isLoading, stationOptions, getStationNameById } = useStation();

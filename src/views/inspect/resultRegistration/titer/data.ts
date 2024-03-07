@@ -29,6 +29,7 @@ export const dtRusultColumns: BasicColumn[] = [
   {
     title: '检测日期',
     dataIndex: 'checkAt',
+    format: (t) => t?.slice(0, 10),
   },
   {
     title: '效价值',

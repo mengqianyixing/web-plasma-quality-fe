@@ -1,6 +1,12 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" />
+    <BasicTable @register="registerTable">
+      <template #toolbar>
+        <a-button type="primary" @click="handleExport" v-auth="SearchManager.DonorStateExport">
+          导出
+        </a-button>
+      </template>
+    </BasicTable>
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -8,8 +14,15 @@
   import { columns, searchFormSchema } from './data';
   import { PageWrapper } from '@/components/Page';
   import { getListApi } from '@/api/query-statistics/donorState';
+  import { jsonToSheetXlsx, formatData, getHeader } from '@/components/Excel/src/Export2Excel';
+  import { useRouter } from 'vue-router';
+  import { SearchManager } from '@/enums/authCodeEnum';
 
-  const [registerTable] = useTable({
+  const { currentRoute } = useRouter();
+
+  defineOptions({ name: 'DonorState' });
+
+  const [registerTable, { getForm }] = useTable({
     api: getListApi,
     columns,
     formConfig: {
@@ -26,4 +39,16 @@
     useSearchForm: true,
     bordered: true,
   });
+  async function handleExport() {
+    const { getFieldsValue } = getForm();
+    const data = await getListApi({ ...getFieldsValue(), currPage: 1, pageSize: 50000 } as any);
+    const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+    const { result, merge: bodyMerge } = formatData(lastLevelCols, data.result || [], rows.length);
+    jsonToSheetXlsx({
+      data: [...rows, ...result],
+      json2sheetOpts: { skipHeader: true },
+      merges: [...headerMerge, ...bodyMerge],
+      filename: currentRoute.value.meta.title + '.xlsx',
+    });
+  }
 </script>

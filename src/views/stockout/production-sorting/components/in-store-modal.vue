@@ -68,7 +68,7 @@
   import { bindBoxApi } from '@/api/tray/relocation';
   import { trayBoxListApi } from '@/api/tray/list';
   import { getInStoreListApi, getSortingBoxListApi } from '@/api/stockout/production-sorting/index';
-  import { TRAY_STORE_STATE, TRAY_STORE_STATE_TEXT } from '@/enums/stockoutEnum';
+  import { TRAY_STORE_STATE, TRAY_IN_STATE_TEXT } from '@/enums/stockoutEnum';
 
   const state = reactive({
     activeKey: '1',
@@ -185,9 +185,9 @@
   function handleInStore() {
     const rows: Recordable[] = getSelectRows();
     if (rows.length === 0) return message.warning('请选择数据');
-    if (rows.some((_) => _.state !== TRAY_STORE_STATE.W)) {
+    if (rows.some((_) => _.state !== TRAY_STORE_STATE.OUT)) {
       return message.warning(
-        '请选择【' + TRAY_STORE_STATE_TEXT.get(TRAY_STORE_STATE.W) + '】的数据',
+        '请选择【' + TRAY_IN_STATE_TEXT.get(TRAY_STORE_STATE.OUT) + '】的数据',
       );
     }
     openInModal(true, { data: rows });

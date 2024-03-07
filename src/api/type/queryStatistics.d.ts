@@ -2843,7 +2843,7 @@ export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/donor/state`
- * @更新时间 `2024-03-04 14:30:11`
+ * @更新时间 `2024-03-04 16:04:04`
  */
 export interface PostApiCoreDonorStateRequest {
   /**
@@ -2873,7 +2873,7 @@ export interface PostApiCoreDonorStateRequest {
   /**
    * 效价结果开始
    */
-  titerBeign: string;
+  titerBenign: string;
   /**
    * 效价结果结束
    */
@@ -2915,7 +2915,7 @@ export interface PostApiCoreDonorStateRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/donor/state`
- * @更新时间 `2024-03-04 14:30:11`
+ * @更新时间 `2024-03-04 16:04:04`
  */
 export interface PostApiCoreDonorStateResponse {
   currPage: number;
@@ -2956,6 +2956,196 @@ export interface PostApiCoreDonorStateResponse {
      * 不合格依据日期
      */
     listen?: string;
+  }[];
+}
+
+/**
+ * 接口 [厂家检测不合格查询↗](https://yapi.sharing8.cn/project/529/interface/api/33713) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `POST /api/core/lab/item/query`
+ * @更新时间 `2024-03-05 17:42:43`
+ */
+export interface PostApiCoreLabItemQueryRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 采集日期
+   */
+  collectionBegin?: string;
+  collectionEnd?: string;
+  /**
+   * 验收发布日期
+   */
+  releaseBegin?: string;
+  releaseEnd?: string;
+  /**
+   * 检测发布日期
+   */
+  issueBegin?: string;
+  issueEnd?: string;
+}
+
+/**
+ * 接口 [厂家检测不合格查询↗](https://yapi.sharing8.cn/project/529/interface/api/33713) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `POST /api/core/lab/item/query`
+ * @更新时间 `2024-03-05 17:42:43`
+ */
+export interface PostApiCoreLabItemQueryResponse {
+  currPage: number;
+  pageSize: number;
+  totalCount: number;
+  result?: {
+    /**
+     * 采浆公司
+     */
+    stationName: string;
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
+    /**
+     * 报告发布日期
+     */
+    issueAt: string;
+    /**
+     * 样本编号
+     */
+    sampleNo: string;
+    /**
+     * 献血浆者编号
+     */
+    donorNo: string;
+    /**
+     * 姓名
+     */
+    name: string;
+    /**
+     * 采集日期
+     */
+    collectionAt: string;
+    /**
+     * 不合格原因
+     */
+    cause: string;
+    /**
+     * 已销毁血浆批号
+     */
+    destroyedBatchNo: string;
+    /**
+     * 已销毁血浆编号
+     */
+    destroyedBagNo: string;
+    /**
+     * 献血浆者永久拒绝日期
+     */
+    rejectAt: string;
+  }[];
+}
+
+/**
+ * 接口 [不合格追踪↗](https://yapi.sharing8.cn/project/529/interface/api/33783) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/donor/unqualified/track`
+ * @更新时间 `2024-03-07 10:31:36`
+ */
+export interface GetApiCoreDonorUnqualifiedTrackRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * 浆站编码
+   */
+  stationNo?: string;
+  /**
+   * 样本批次号
+   */
+  sampleBatchNo?: string;
+  /**
+   * 样本编码
+   */
+  sampleNo?: string;
+  /**
+   * 采集日期开始
+   */
+  collectStartDate?: string;
+  collectEndDate?: string;
+  /**
+   * 不合格来源(浆站报送/厂家检测)
+   */
+  blockBy: string;
+  /**
+   * 不合格原因(需追溯检疫期的项目相关)
+   */
+  failedCode: string;
+  /**
+   * 不合格日期查询
+   */
+  blockStartDate: string;
+  blockEndDate: string;
+}
+
+/**
+ * 接口 [不合格追踪↗](https://yapi.sharing8.cn/project/529/interface/api/33783) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/donor/unqualified/track`
+ * @更新时间 `2024-03-07 10:31:36`
+ */
+export interface GetApiCoreDonorUnqualifiedTrackResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 采浆公司
+     */
+    stationName?: null;
+    stationNo?: string;
+    /**
+     * 样本批号
+     */
+    sampleBatchNo?: null;
+    /**
+     * 样本编号
+     */
+    sampleNo?: string;
+    /**
+     * 采集日期
+     */
+    collectAt?: string;
+    /**
+     * 浆员编号
+     */
+    donorNo?: string;
+    /**
+     * 姓名
+     */
+    donorName?: string;
+    failedCode?: string;
+    /**
+     * 不合格原因
+     */
+    failedReason?: null;
+    /**
+     * 不合格日期
+     */
+    blockAt?: string;
+    /**
+     * 不合格来源
+     */
+    blockBy?: string;
   }[];
 }
 

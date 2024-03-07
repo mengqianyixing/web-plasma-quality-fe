@@ -65,31 +65,43 @@ export const formSchemaMap: Record<number, FormSchema[]> = {
   1: [
     {
       field: 'unqualified',
-      component: 'Input',
+      component: 'InputNumber',
       label: '不合格',
       required: true,
+      componentProps: {
+        min: 0,
+      },
     },
   ],
   2: [
     {
       field: 'od',
-      component: 'Input',
+      component: 'InputNumber',
       label: 'OD值',
       required: true,
+      componentProps: {
+        min: 0,
+      },
     },
     {
       field: 'cutoff',
-      component: 'Input',
+      component: 'InputNumber',
       label: 'Cutoff值',
       required: true,
+      componentProps: {
+        min: 0,
+      },
     },
   ],
   3: [
     {
       field: 'ct',
-      component: 'Input',
+      component: 'InputNumber',
       label: 'CT值',
       required: true,
+      componentProps: {
+        min: 0,
+      },
     },
   ],
 };

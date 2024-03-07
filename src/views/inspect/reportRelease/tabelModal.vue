@@ -3,7 +3,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    title="检验不合格样本详情"
+    :title="`检验${state.title}样本详情`"
     :minHeight="520"
     width="1000px"
     :showOkBtn="false"
@@ -17,14 +17,14 @@
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
-  import { totalUnqualifiedColumns } from './reportRelease.data';
+  import { totalUnqualifiedColumns, columnsMap } from './reportRelease.data';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { getUnqualifiedApi } from '@/api/inspect/reportRelease';
 
-  const state = reactive({ reportNo: '' });
+  const state = reactive({ reportNo: '', type: 1, title: '' });
 
-  const [registerTable, { redoHeight, reload }] = useTable({
+  const [registerTable, { redoHeight, reload, setColumns }] = useTable({
     immediate: false,
     api: getUnqualifiedApi,
     columns: totalUnqualifiedColumns,
@@ -43,8 +43,12 @@
       return { ...p, ...state };
     },
   });
-  const [registerModal] = useModalInner(async ({ reportNo }) => {
+  const [registerModal] = useModalInner(async ({ reportNo, type, title }) => {
     state.reportNo = reportNo;
+    state.type = type;
+    state.title = title;
+    const columns = [...totalUnqualifiedColumns, ...(columnsMap[type] || [])];
+    setColumns(columns);
     reload();
   });
 </script>

@@ -89,6 +89,8 @@
   import { getBindBoxsListApi } from '@/api/quality/plasma-restriction';
   import { QualityButtonEnum } from '@/enums/authCodeEnum';
 
+  defineOptions({ name: 'BatchRelease' });
+
   const open = ref(false);
   const confirmLoading = ref(false);
   const releaseUnqualifiedStorage = ref(false);

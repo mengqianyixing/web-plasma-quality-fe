@@ -80,6 +80,13 @@
           },
           defaultValue: 'PIK',
         },
+        {
+          field: 'flow',
+          label: '标志',
+          component: 'Input',
+          defaultValue: 'PCP',
+          show: false,
+        },
       ],
     },
     fetchSetting: {
@@ -99,7 +106,6 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-
     bordered: true,
     showIndexColumn: false,
     canResize: false,

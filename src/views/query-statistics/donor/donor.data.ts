@@ -7,22 +7,13 @@ import { SERVER_ENUM } from '@/enums/serverEnum';
 const serverEnumStore = useServerEnumStoreWithOut();
 const ConclusionType = serverEnumStore.getServerEnumText(SERVER_ENUM.ConclusionType);
 
-// 查询条件：浆员编号、临时编号、浆员姓名
+// 查询条件：浆员编号
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'donorNo',
     label: '浆员编号',
     component: 'Input',
-  },
-  // {
-  //   field: '',
-  //   label: '临时编号',
-  //   component: 'Input',
-  // },
-  {
-    field: 'name',
-    label: '浆员姓名',
-    component: 'Input',
+    required: true,
   },
 ];
 // 查询结果1————浆员信息
@@ -147,9 +138,11 @@ export const batchColumns: BasicColumn[] = [
     title: '效价类型',
     dataIndex: 'titerType',
     width: 120,
-    format(text) {
-      return `${ConclusionType(text)}`;
-    },
+    format: (text) =>
+      (text || '')
+        .split(',')
+        .map((it) => ConclusionType(it))
+        .join(',') || text,
   },
   {
     title: '血浆过程状态',
@@ -175,6 +168,15 @@ export const batchColumns: BasicColumn[] = [
       {
         title: '复检结果',
         dataIndex: ['reCheckInfo', 'reCheckResult'],
+        format(text: any) {
+          if (text === 1) {
+            return '合格';
+          } else if (text === 0) {
+            return '不合格';
+          } else {
+            return '-';
+          }
+        },
         width: 100,
       },
       {

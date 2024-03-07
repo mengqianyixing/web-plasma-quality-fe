@@ -18,6 +18,8 @@
   import { PageWrapper } from '@/components/Page';
   import { getCallbackCompleteList } from '@/api/callback/callback-complete';
 
+  defineOptions({ name: 'CallbackComplete' });
+
   const { isLoading, stationOptions, getStationNameById } = useStation();
   onMounted(() => {
     watchEffect(() => {

@@ -9,6 +9,8 @@
   import { PageWrapper } from '@/components/Page';
   import { getBatchList } from '@/api/query-statistics/batch-statistics';
 
+  defineOptions({ name: 'BatchStatistics' });
+
   const [registerTable] = useTable({
     api: getBatchList,
     columns,

@@ -21,6 +21,8 @@
   import { getInventoryList } from '@/api/query-statistics/inventory';
   import { GetApiCoreBatchStockStatisticsResponse } from '@/api/type/queryStatistics';
 
+  defineOptions({ name: 'InventoryStatistics' });
+
   const ATabs = Tabs;
   const ATabPane = Tabs.TabPane;
 

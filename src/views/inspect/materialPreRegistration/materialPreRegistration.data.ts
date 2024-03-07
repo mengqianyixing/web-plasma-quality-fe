@@ -1,5 +1,6 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { getListApi } from '@/api/inspect/itemSetting';
+import dayjs, { Dayjs } from 'dayjs';
 
 export const columns: BasicColumn[] = [
   {
@@ -31,7 +32,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'releaseNo',
   },
   {
-    title: '有效期至',
+    title: '试剂有效期',
     dataIndex: 'expireDate',
   },
   {
@@ -48,7 +49,6 @@ export const columns: BasicColumn[] = [
     format: (text) => text?.slice(0, 10),
   },
 ];
-
 export const formListSchema: FormSchema[] = [
   {
     field: 'fkProjectId',
@@ -111,17 +111,17 @@ export const formListSchema: FormSchema[] = [
   {
     field: 'expireDate',
     component: 'DatePicker',
-    label: '有效期至',
+    label: '试剂有效期',
     required: true,
     componentProps: {
       class: 'w-full',
+      disabledDate: (date: Dayjs) => date && date < dayjs(dayjs().format('YYYY-MM-DD')),
     },
   },
   {
     field: 'deadline',
     component: 'DatePicker',
     label: '使用截至日期',
-    required: true,
     componentProps: {
       class: 'w-full',
     },

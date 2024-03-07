@@ -8,16 +8,60 @@
       </template>
       <template #toolbar>
         <div class="flex gap-2">
-          <a-button type="primary" @click="handleAdd"> 新增 </a-button>
-          <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
-          <a-button type="primary" @click="handleCancel"> 撤销 </a-button>
-          <a-button type="primary" @click="handleCompletePrepare"> 完成准备 </a-button>
-          <a-button type="primary" @click="handleCancelPrepare"> 撤销准备 </a-button>
-          <a-button type="primary" @click="handleReCheck"> 复核 </a-button>
-          <a-button type="primary" @click="handleCancelReCheck"> 撤销复核 </a-button>
-          <a-button type="primary" @click="handleCheck"> 审核 </a-button>
-          <a-button type="primary" @click="handleCancelCheck"> 撤销审核 </a-button>
-          <a-button type="primary" @click="handleScan"> 扫描出库 </a-button>
+          <a-button type="primary" @click="handleAdd" v-auth="StockOutButtonEnum.NonPutIntoAdd">
+            新增
+          </a-button>
+          <a-button type="primary" @click="handleEdit" v-auth="StockOutButtonEnum.NonPutIntoEdit">
+            编辑
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleCancel"
+            v-auth="StockOutButtonEnum.NonPutIntoCancel"
+          >
+            撤销
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleCompletePrepare"
+            v-auth="StockOutButtonEnum.NonPutIntoCompletePrepare"
+          >
+            完成准备
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleCancelPrepare"
+            v-auth="StockOutButtonEnum.NonPutIntoCancelPrepare"
+          >
+            撤销准备
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleReCheck"
+            v-auth="StockOutButtonEnum.NonPutIntoReCheck"
+          >
+            复核
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleCancelReCheck"
+            v-auth="StockOutButtonEnum.NonPutIntoCancelReCheck"
+          >
+            撤销复核
+          </a-button>
+          <a-button type="primary" @click="handleCheck" v-auth="StockOutButtonEnum.NonPutIntoCheck">
+            审核
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleCancelCheck"
+            v-auth="StockOutButtonEnum.NonPutIntoCancelCheck"
+          >
+            撤销审核
+          </a-button>
+          <a-button type="primary" @click="handleScan" v-auth="StockOutButtonEnum.NonPutIntoScan">
+            扫描出库
+          </a-button>
         </div>
       </template>
     </BasicTable>
@@ -48,6 +92,7 @@
     revokeDeliverNonProductive,
     revokeReviewDeliverNonProductive,
   } from '@/api/stockout/non-productin-put-into';
+  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'NonProductionPutInto' });
 

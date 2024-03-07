@@ -88,6 +88,8 @@
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+  defineOptions({ name: 'ProductionSorting' });
+
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
@@ -260,13 +262,13 @@
               disabled={!prepareNo.value}
               onclick={() => openOutStoreModal(true, { prepareNo: prepareNo.value })}
             >
-              血浆出库
+              托盘出库
             </a-button>
             <a-button
               disabled={!prepareNo.value}
               onclick={() => openInStoreModal(true, { prepareNo: prepareNo.value })}
             >
-              血浆入库
+              托盘入库
             </a-button>
             <a-button disabled={!prepareNo.value} onclick={_completeSorting}>
               分拣完成

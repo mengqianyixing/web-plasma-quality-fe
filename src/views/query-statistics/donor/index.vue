@@ -39,6 +39,8 @@
   import { PostApiCoreDonorListRequest } from '@/api/type/donorQuery';
   import { Description, useDescription } from '@/components/Description';
 
+  defineOptions({ name: 'DonorQuery' });
+
   const [register, { getFieldsValue }] = useForm({
     schemas: searchFormSchema,
     submitOnReset: true,

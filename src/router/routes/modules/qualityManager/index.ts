@@ -47,12 +47,49 @@ const checkManager: AppRouteModule = {
     },
     {
       path: '/quality/plasma-check',
-      name: 'plasma-check',
+      name: 'PlasmaCheck',
       id: 940020,
       meta: {
         title: '血浆审核',
       },
-      component: () => import('/@/views/quality-manage/plasma-check/index.vue'),
+      component: () => import('@/views/quality-manage/plasma-check/index.vue'),
+      authElements: [
+        {
+          id: QualityButtonEnum.PlasmaCheckAdd,
+          name: 'add',
+          title: '新增',
+        },
+        {
+          id: QualityButtonEnum.PlasmaCheckEdit,
+          name: 'edit',
+          title: '编辑',
+        },
+        {
+          id: QualityButtonEnum.PlasmaCheckDelete,
+          name: 'delete',
+          title: '撤销审核',
+        },
+        {
+          id: QualityButtonEnum.PlasmaCheckReCheck,
+          name: 'recheck',
+          title: '复核',
+        },
+        {
+          id: QualityButtonEnum.PlasmaCheckCancelReCheck,
+          name: 'cancelReCheck',
+          title: '撤销审核',
+        },
+        {
+          id: QualityButtonEnum.PlasmaCheckPrint,
+          name: 'print',
+          title: '打印',
+        },
+        {
+          id: QualityButtonEnum.PlasmaCheckApproval,
+          name: 'approval',
+          title: '批准',
+        },
+      ],
     },
 
     {

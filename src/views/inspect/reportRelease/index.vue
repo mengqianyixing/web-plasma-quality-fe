@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-02 13:43:33
  * @LastEditors: zcc
@@ -56,9 +56,41 @@
       <template #totalUnqualified="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetails(record)"
+          @click.stop.self="handleDetails(record, 3, '不合格')"
         >
           {{ record.totalUnqualified }}
+        </span>
+      </template>
+      <template #totalQualified="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetails(record, 4, '合格')"
+        >
+          {{ record.totalQualified }}
+        </span>
+      </template>
+      <template #totalHighTiter="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetails(record, 1, '高效价')"
+        >
+          {{ record.totalHighTiter }}
+        </span>
+      </template>
+      <template #totalLowTiter="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetails(record, 2, '低效价')"
+        >
+          {{ record.totalLowTiter }}
+        </span>
+      </template>
+      <template #totalNormal="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetails(record, 5, '无效价')"
+        >
+          {{ record.totalNormal }}
         </span>
       </template>
     </BasicTable>
@@ -97,6 +129,8 @@
   import { BasicForm, useForm } from '@/components/Form';
   import TabelModal from './tabelModal.vue';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
+
+  defineOptions({ name: 'ReportRelease' });
 
   const open = ref(false);
   const confirmLoading = ref(false);
@@ -207,7 +241,7 @@
     const [row] = getSelections(true);
     if (!row) return;
   }
-  function handleDetails(row) {
-    openModal(true, row);
+  function handleDetails(row: Recordable, type: number, title: string) {
+    openModal(true, { ...row, type, title });
   }
 </script>

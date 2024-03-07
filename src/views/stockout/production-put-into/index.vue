@@ -11,14 +11,62 @@
       </template>
       <template #toolbar>
         <div class="flex gap-2">
-          <a-button type="primary" @click="handleTrayStockOut"> 托盘出库 </a-button>
-          <a-button type="primary" @click="handleBoxStockOut"> 逐箱出库 </a-button>
-          <a-button type="primary" @click="handleBatchStockOut"> 整批出库 </a-button>
-          <a-button type="primary" @click="handlePickPlasmaSystem"> 挑浆系统 </a-button>
-          <a-button type="primary" @click="handleCancelStockOut"> 撤销出库 </a-button>
-          <a-button type="primary" @click="handleBoxReceive"> 逐箱接收 </a-button>
-          <a-button type="primary" @click="handleBatchReceive"> 整批接收 </a-button>
-          <a-button type="primary" @click="handleCancelExamine"> 撤销接收 </a-button>
+          <a-button
+            type="primary"
+            @click="handleTrayStockOut"
+            v-auth="StockOutButtonEnum.PutIntoTrayStockOut"
+          >
+            托盘出库
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleBoxStockOut"
+            v-auth="StockOutButtonEnum.PutIntoBoxStockOut"
+          >
+            逐箱出库
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleBatchStockOut"
+            v-auth="StockOutButtonEnum.PutIntoBatchStockOut"
+          >
+            整批出库
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handlePickPlasmaSystem"
+            v-auth="StockOutButtonEnum.PutIntoPickPlasmaSystem"
+          >
+            挑浆系统
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleCancelStockOut"
+            v-auth="StockOutButtonEnum.PutIntoCancelStockOut"
+          >
+            撤销出库
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleBoxReceive"
+            v-auth="StockOutButtonEnum.PutIntoBoxReceive"
+          >
+            逐箱接收
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleBatchReceive"
+            v-auth="StockOutButtonEnum.PutIntoBatchReceive"
+          >
+            整批接收
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleCancelExamine"
+            v-auth="StockOutButtonEnum.PutIntoCancelExamine"
+          >
+            撤销接收
+          </a-button>
         </div>
       </template>
     </BasicTable>
@@ -38,6 +86,8 @@
 
   import { ref } from 'vue';
 
+  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
+
   import DetailModal from './DetailModal.vue';
   import BoxReceiveModal from '@/views/stockout/production-put-into/BoxReceiveModal.vue';
   import BoxOutStoreModal from '@/views/stockout/production-put-into/BoxOutStoreModal.vue';
@@ -54,7 +104,7 @@
   import { getProOrders } from '@/api/stockout/production-order';
   import { statusValueEnum } from '@/enums/stockoutEnum';
 
-  defineOptions({ name: 'DeptManagement' });
+  defineOptions({ name: 'ProductionPutInto' });
 
   const [registerBoxOutStoreModal, { openModal: openBoxOutStoreModal }] = useModal();
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();

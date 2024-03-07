@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-15 17:42:17
  * @LastEditors: zcc
@@ -46,6 +46,8 @@
   import PlasmaBoxHand from './plasmaBoxHand.vue';
   import SampleBoxScan from './sampleBoxScan.vue';
   import SampleBoxHand from './sampleBoxHand.vue';
+
+  defineOptions({ name: 'TrayRelocation' });
 
   const activeKey = ref('1');
 </script>

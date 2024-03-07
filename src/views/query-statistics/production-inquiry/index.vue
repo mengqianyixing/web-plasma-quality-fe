@@ -9,6 +9,8 @@
   import { PageWrapper } from '@/components/Page';
   import { getProductionInquiry } from '@/api/query-statistics/production';
 
+  defineOptions({ name: 'ProductionInquiry' });
+
   const [registerTable] = useTable({
     api: getProductionInquiry,
     columns,

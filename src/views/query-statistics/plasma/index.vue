@@ -20,6 +20,8 @@
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
 
+  defineOptions({ name: 'PlasmaQuery' });
+
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
   onMounted(async () => {
     plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({

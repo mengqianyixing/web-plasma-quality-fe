@@ -9,6 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import { SearchManager } from '@/enums/authCodeEnum';
 
 const trayManager: AppRouteModule = {
   path: '/search',
@@ -28,16 +29,16 @@ const trayManager: AppRouteModule = {
         title: '血浆查询',
       },
       id: 900020,
-      component: () => import('/@/views/query-statistics/plasma/index.vue'),
+      component: () => import('@/views/query-statistics/plasma/index.vue'),
     },
     {
-      path: 'plasmaCheck',
-      name: 'PlasmaCheck',
+      path: 'PlasmaTest',
+      name: 'PlasmaTest',
       meta: {
         title: '血浆检测',
       },
       id: 9000190,
-      component: () => import('/@/views/query-statistics/plasmaCheck/index.vue'),
+      component: () => import('@/views/query-statistics/plasmaCheck/index.vue'),
     },
     {
       path: 'inventory',
@@ -46,7 +47,7 @@ const trayManager: AppRouteModule = {
         title: '库存查询',
       },
       id: 900010,
-      component: () => import('/@/views/plasma-store/inventory/index.vue'),
+      component: () => import('@/views/plasma-store/inventory/index.vue'),
     },
     {
       path: 'InventoryStatistics',
@@ -55,16 +56,23 @@ const trayManager: AppRouteModule = {
         title: '库存统计',
       },
       id: 9000310,
-      component: () => import('/@/views/query-statistics/inventory-statistics/index.vue'),
+      component: () => import('@/views/query-statistics/inventory-statistics/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.InventoryExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'stereoWarehouse',
-      name: 'stereoWarehouse',
+      name: 'StereoWarehouse',
       meta: {
         title: '立体库血浆量查询',
       },
       id: 9000180,
-      component: () => import('/@/views/query-statistics/stereoWarehouse/index.vue'),
+      component: () => import('@/views/query-statistics/stereoWarehouse/index.vue'),
     },
     {
       path: 'location',
@@ -73,7 +81,14 @@ const trayManager: AppRouteModule = {
         title: '货位查询',
       },
       id: 9000170,
-      component: () => import('/@/views/query-statistics/location/index.vue'),
+      component: () => import('@/views/query-statistics/location/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.LocationExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'prepareNo',
@@ -82,7 +97,7 @@ const trayManager: AppRouteModule = {
         title: '投产准备号查询',
       },
       id: 9000210,
-      component: () => import('/@/views/query-statistics/prepareNo/index.vue'),
+      component: () => import('@/views/query-statistics/prepareNo/index.vue'),
     },
     {
       path: 'quarantinePeriodUnqualifiedStatistics',
@@ -92,7 +107,7 @@ const trayManager: AppRouteModule = {
       },
       id: 9000280,
       component: () =>
-        import('/@/views/query-statistics/quarantinePeriodUnqualifiedStatistics/index.vue'),
+        import('@/views/query-statistics/quarantinePeriodUnqualifiedStatistics/index.vue'),
     },
     {
       path: 'titerPlasmaQuery',
@@ -101,7 +116,7 @@ const trayManager: AppRouteModule = {
         title: '特免血浆查询',
       },
       id: 9000160,
-      component: () => import('/@/views/query-statistics/titerPlasmaQuery/index.vue'),
+      component: () => import('@/views/query-statistics/titerPlasmaQuery/index.vue'),
     },
     {
       path: 'titerPlasmaStat',
@@ -110,7 +125,7 @@ const trayManager: AppRouteModule = {
         title: '特免血浆统计',
       },
       id: 9000150,
-      component: () => import('/@/views/query-statistics/titerPlasmaStat/index.vue'),
+      component: () => import('@/views/query-statistics/titerPlasmaStat/index.vue'),
     },
     {
       path: 'UnqualifiedPlasmaByBatch',
@@ -119,7 +134,7 @@ const trayManager: AppRouteModule = {
         title: '不合格血浆按批查询',
       },
       id: 9000291,
-      component: () => import('/@/views/query-statistics/unqualified-plasma-batch/index.vue'),
+      component: () => import('@/views/query-statistics/unqualified-plasma-batch/index.vue'),
     },
     {
       path: 'UnqualifiedPlasmaByStation',
@@ -128,7 +143,7 @@ const trayManager: AppRouteModule = {
         title: '不合格血浆按站查询',
       },
       id: 9000290,
-      component: () => import('/@/views/query-statistics/unqualified-plasma-station/index.vue'),
+      component: () => import('@/views/query-statistics/unqualified-plasma-station/index.vue'),
     },
     {
       path: 'followDisqualificationStatistics',
@@ -138,7 +153,7 @@ const trayManager: AppRouteModule = {
       },
       id: 9000270,
       component: () =>
-        import('/@/views/query-statistics/followDisqualificationStatistics/index.vue'),
+        import('@/views/query-statistics/followDisqualificationStatistics/index.vue'),
     },
     {
       path: 'entry-plasma',
@@ -156,7 +171,7 @@ const trayManager: AppRouteModule = {
         title: '箱号查询',
       },
       id: 9000200,
-      component: () => import('/@/views/query-statistics/stationBox/index.vue'),
+      component: () => import('@/views/query-statistics/stationBox/index.vue'),
     },
     {
       path: 'BatchStatistics',
@@ -165,7 +180,7 @@ const trayManager: AppRouteModule = {
         title: '批号查询',
       },
       id: 9000280,
-      component: () => import('/@/views/query-statistics/batch-statistics/index.vue'),
+      component: () => import('@/views/query-statistics/batch-statistics/index.vue'),
     },
     {
       path: 'PlasmaBatch',
@@ -174,7 +189,14 @@ const trayManager: AppRouteModule = {
         title: '血浆批号查询',
       },
       id: 900030,
-      component: () => import('/@/views/query-statistics/plasma-batch/index.vue'),
+      component: () => import('@/views/query-statistics/plasma-batch/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.PlasmaBatchExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'ERPInspectionReport',
@@ -183,7 +205,14 @@ const trayManager: AppRouteModule = {
         title: 'ERP-检验报告查询',
       },
       id: 9000240,
-      component: () => import('/@/views/query-statistics/ERPInspectionReport/index.vue'),
+      component: () => import('@/views/query-statistics/ERPInspectionReport/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.ERPReportExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'ERPEntryStore',
@@ -192,7 +221,7 @@ const trayManager: AppRouteModule = {
         title: 'ERP-入库查询',
       },
       id: 9000230,
-      component: () => import('/@/views/query-statistics/ERPEntryStore/index.vue'),
+      component: () => import('@/views/query-statistics/ERPEntryStore/index.vue'),
     },
     {
       path: 'donor',
@@ -201,7 +230,7 @@ const trayManager: AppRouteModule = {
         title: '浆员查询',
       },
       id: 9000270,
-      component: () => import('/@/views/query-statistics/donor/index.vue'),
+      component: () => import('@/views/query-statistics/donor/index.vue'),
     },
     {
       path: 'donorState',
@@ -210,25 +239,32 @@ const trayManager: AppRouteModule = {
         title: '浆员状态查询',
       },
       id: 9000140,
-      component: () => import('/@/views/query-statistics/donorState/index.vue'),
+      component: () => import('@/views/query-statistics/donorState/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.DonorStateExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
-      path: 'sampleStat',
-      name: 'sampleStat',
+      path: 'sampleStatistics',
+      name: 'SampleStatistics',
       meta: {
         title: '样本统计',
       },
       id: 9000100,
-      component: () => import('/@/views/query-statistics/sampleStat/index.vue'),
+      component: () => import('@/views/query-statistics/sampleStat/index.vue'),
     },
     {
-      path: 'sampleQuery',
-      name: 'sampleQuery',
+      path: 'SampleQuery',
+      name: 'SampleQuery',
       meta: {
         title: '样本查询',
       },
       id: 9000130,
-      component: () => import('/@/views/query-statistics/sampleQuery/index.vue'),
+      component: () => import('@/views/query-statistics/sampleQuery/index.vue'),
     },
     {
       path: 'sampleCheck',
@@ -237,7 +273,7 @@ const trayManager: AppRouteModule = {
         title: '样本检测',
       },
       id: 9000120,
-      component: () => import('/@/views/query-statistics/sampleCheck/index.vue'),
+      component: () => import('@/views/query-statistics/sampleCheck/index.vue'),
     },
     {
       path: 'ProductionInquiry',
@@ -246,7 +282,7 @@ const trayManager: AppRouteModule = {
         title: '投产查询',
       },
       id: 9000300,
-      component: () => import('/@/views/query-statistics/production-inquiry/index.vue'),
+      component: () => import('@/views/query-statistics/production-inquiry/index.vue'),
     },
     {
       path: 'CallbackStatistics',
@@ -255,7 +291,14 @@ const trayManager: AppRouteModule = {
         title: '回访统计',
       },
       id: 9000250,
-      component: () => import('/@/views/query-statistics/callback/index.vue'),
+      component: () => import('@/views/query-statistics/callback/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.CallbackExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'CallbackBatchStatistics',
@@ -264,7 +307,14 @@ const trayManager: AppRouteModule = {
         title: '回访批号查询',
       },
       id: 9000260,
-      component: () => import('/@/views/query-statistics/callback-batch/index.vue'),
+      component: () => import('@/views/query-statistics/callback-batch/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.CallbackBatchExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'checkResult',
@@ -273,7 +323,7 @@ const trayManager: AppRouteModule = {
         title: '检测结果查询',
       },
       id: 9000100,
-      component: () => import('/@/views/query-statistics/checkResult/index.vue'),
+      component: () => import('@/views/query-statistics/checkResult/index.vue'),
     },
   ],
 };

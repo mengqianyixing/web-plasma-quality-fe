@@ -24,6 +24,7 @@ export const columns: BasicColumn[] = [
   {
     title: '检测合格样本总数',
     dataIndex: 'totalQualified',
+    slots: { customRender: 'totalQualified' },
   },
   {
     title: '检测不合格样本总数',
@@ -33,14 +34,17 @@ export const columns: BasicColumn[] = [
   {
     title: '高效价总数',
     dataIndex: 'totalHighTiter',
+    slots: { customRender: 'totalHighTiter' },
   },
   {
     title: '低效价总数',
     dataIndex: 'totalLowTiter',
+    slots: { customRender: 'totalLowTiter' },
   },
   {
     title: '无效价总数',
     dataIndex: 'totalNormal',
+    slots: { customRender: 'totalNormal' },
   },
   {
     title: '当前状态',
@@ -115,7 +119,48 @@ export const searchFormschema: FormSchema[] = [
     },
   },
 ];
-
+export const columnsMap: Record<number, BasicColumn[]> = {
+  1: [
+    {
+      dataIndex: 'titerValue',
+      title: '效价值',
+    },
+  ],
+  2: [
+    {
+      dataIndex: 'titerValue',
+      title: '效价值',
+    },
+  ],
+  5: [
+    {
+      dataIndex: 'titerValue',
+      title: '效价值',
+    },
+  ],
+  3: [
+    {
+      dataIndex: 'projectName',
+      title: '不合格项目',
+    },
+    {
+      dataIndex: 'od',
+      title: 'OD值',
+    },
+    {
+      dataIndex: 'cutoff',
+      title: 'Cutoff值',
+    },
+    {
+      dataIndex: 'ct',
+      title: 'CT值',
+    },
+    {
+      dataIndex: 'unqualified',
+      title: '不合格',
+    },
+  ],
+};
 export const totalUnqualifiedColumns: BasicColumn[] = [
   {
     dataIndex: 'sampleNo',
@@ -131,25 +176,8 @@ export const totalUnqualifiedColumns: BasicColumn[] = [
   },
   {
     dataIndex: 'projectName',
-    title: '不合格项目',
+    title: '检测项目',
   },
-  {
-    dataIndex: 'od',
-    title: 'OD值',
-  },
-  {
-    dataIndex: 'cutoff',
-    title: 'Cutoff值',
-  },
-  {
-    dataIndex: 'ct',
-    title: 'CT值',
-  },
-  {
-    dataIndex: 'unqualified',
-    title: '不合格',
-  },
-
   {
     dataIndex: 'methodName',
     title: '检测方法',

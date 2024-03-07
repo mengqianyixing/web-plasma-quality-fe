@@ -2,14 +2,20 @@
   <a-tabs default-active-key="detail" v-model:activeKey="currentKey" type="card">
     <a-tab-pane key="come" tab="来浆数据">
       <PageWrapper dense contentFullHeight>
-        <div class="overflow-auto flex-grow h-83vh">
+        <div class="flex-grow overflow-auto h-83vh">
           <BasicTable @register="registerTableLeft">
             <template #toolbar>
-              <a-button type="primary" @click="handleExportComeData">导出</a-button>
+              <a-button
+                type="primary"
+                @click="handleExportComeData"
+                v-auth="SearchManager.PlasmaBatchExport"
+              >
+                导出
+              </a-button>
             </template>
           </BasicTable>
         </div>
-        <div class="flex justify-end bg-white mx-5 mt-3">
+        <div class="flex justify-end mx-5 mt-3 bg-white">
           <a-pagination
             @change="handlePageChange"
             @show-size-change="handleSizeChange"
@@ -24,14 +30,14 @@
     </a-tab-pane>
     <a-tab-pane key="quarantine" tab="检疫期">
       <PageWrapper dense contentFullHeight fixedHeight>
-        <div class="overflow-auto flex-grow h-83vh">
+        <div class="flex-grow overflow-auto h-83vh">
           <BasicTable @register="registerTableRight">
             <template #toolbar>
               <a-button type="primary" @click="handleExportQuarantineData">导出</a-button>
             </template>
           </BasicTable>
         </div>
-        <div class="flex justify-end bg-white mx-5 mt-3">
+        <div class="flex justify-end mx-5 mt-3 bg-white">
           <a-pagination
             @change="handlePageChange"
             @show-size-change="handleSizeChange"
@@ -47,6 +53,8 @@
   </a-tabs>
 </template>
 <script lang="ts" setup>
+  import { SearchManager } from '@/enums/authCodeEnum';
+
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema, columnsByQuarantine } from './batch.data';
   import { Pagination, Tabs } from 'ant-design-vue';
@@ -58,9 +66,10 @@
   } from '@/api/query-statistics/plasma-batch';
   import { useStation } from '@/hooks/common/useStation';
   import { watchEffect, reactive, ref, onMounted, watch } from 'vue';
-  import { doExportMultipleTable } from '@/components/Excel/src/Export2Excel';
-  import { Range } from 'xlsx';
+  import { getHeader, formatData, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
+
+  defineOptions({ name: 'PlasmaBatchQueryStatistics' });
 
   const { currentRoute } = useRouter();
 
@@ -116,7 +125,19 @@
     pageSize: 10,
     total: 0,
   });
-
+  function leftFormat(data) {
+    const res: any[] = [];
+    data.forEach((item) => {
+      item.typeList.forEach((it, i) => {
+        res.push({
+          ...it,
+          batchNo: item.batchNo,
+          rowSpan: i === 0 ? item.typeList.length : 0,
+        });
+      });
+    });
+    return res;
+  }
   const [
     registerTableLeft,
     { getForm: getFormLeft, getRawDataSource: getRawDataSourceLeft, reload: reloadLeft },
@@ -134,20 +155,7 @@
       pager.total = _data.totalCount;
       pager.pageSize = _data.pageSize;
       pager.current = _data.currPage;
-
-      const res: any[] = [];
-
-      data.forEach((item) => {
-        item.typeList.forEach((it, i) => {
-          res.push({
-            ...it,
-            batchNo: item.batchNo,
-            rowSpan: i === 0 ? item.typeList.length : 0,
-          });
-        });
-      });
-
-      return res;
+      return leftFormat(data);
     },
     pagination: false,
     columns,
@@ -174,6 +182,19 @@
     canResize: false,
   });
 
+  function rightFormat(data) {
+    const res: any[] = [];
+    data.forEach((item) => {
+      item.typeList.forEach((it, i) => {
+        res.push({
+          ...it,
+          batchNo: item.batchNo,
+          rowSpan: i === 0 ? item.typeList.length : 0,
+        });
+      });
+    });
+    return res;
+  }
   const [
     registerTableRight,
     { getForm: getFormRight, getRawDataSource: getRawDataSourceRight, reload: reloadRight },
@@ -191,23 +212,7 @@
       pager.total = _data.totalCount;
       pager.pageSize = _data.pageSize;
       pager.current = _data.currPage;
-
-      const res: any[] = [];
-
-      data.forEach((item) => {
-        const qualified = item.typeList.filter((it) => Boolean(it.titerType)).length;
-
-        item.typeList.forEach((it, i) => {
-          res.push({
-            ...it,
-            batchNo: item.batchNo,
-            rowSpan: i === 0 ? item.typeList.length : 0,
-            quarantineSpan: i === 0 && it.titerType ? qualified : !it.titerType ? 1 : 0,
-          });
-        });
-      });
-
-      return res;
+      return rightFormat(data);
     },
     pagination: false,
     columns: columnsByQuarantine,
@@ -260,52 +265,40 @@
   }
 
   async function handleExportComeData() {
-    const result = (
+    const data = (
       await getPlasmaBatchList({
         ...getFormLeft().getFieldsValue(),
         currPage: '1',
         pageSize: '1000',
       })
     ).result!;
-    let data: any[] = [
-      [
-        '血浆批号',
-        '来浆类型',
-        '血浆编号(起止)',
-        '浆站不合格',
-        '血浆数量',
-        '验收净重',
-        '验收血浆不合格编号',
-      ],
-    ];
-    let merges: Range[] = [];
-    result.forEach((item) => {
-      merges.push({
-        s: { r: data.length, c: 0 },
-        e: { r: data.length - 1 + item.typeList!.length, c: 0 },
-      });
-      data = data.concat(
-        item.typeList!.map((it) => [
-          item.batchNo,
-          it.plasmaType,
-          it.batchNoRange,
-          it.lackNos,
-          it.totalNum,
-          it.verifyWeight,
-          it.verifyUnqNos,
-        ]),
-      );
+    const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+    const { result, merge: bodyMerge } = formatData(lastLevelCols, leftFormat(data), rows.length);
+    jsonToSheetXlsx({
+      data: [...rows, ...result],
+      json2sheetOpts: { skipHeader: true },
+      merges: [...headerMerge, ...bodyMerge],
+      filename: currentRoute.value.meta.title + '来浆数据.xlsx',
     });
-
-    doExportMultipleTable(
-      data,
-      currentRoute.value.meta.title,
-      currentRoute.value.meta.title,
-      merges,
-    );
   }
 
-  function handleExportQuarantineData() {}
+  async function handleExportQuarantineData() {
+    const data = (
+      await getPlasmaBatchListByQuarantine({
+        ...getFormRight().getFieldsValue(),
+        currPage: '1',
+        pageSize: '1000',
+      })
+    ).result!;
+    const { rows, merges: headerMerge, lastLevelCols } = getHeader(columnsByQuarantine);
+    const { result, merge: bodyMerge } = formatData(lastLevelCols, rightFormat(data), rows.length);
+    jsonToSheetXlsx({
+      data: [...rows, ...result],
+      json2sheetOpts: { skipHeader: true },
+      merges: [...headerMerge, ...bodyMerge],
+      filename: currentRoute.value.meta.title + '检疫期.xlsx',
+    });
+  }
 </script>
 <style scoped>
   :deep(.vben-basic-table-form-container) {

@@ -24,8 +24,8 @@ const inboundmanagement: AppRouteModule = {
   },
   children: [
     {
-      path: 'receiveplasma',
-      name: 'Receiveplasma',
+      path: 'ReceivePlasma',
+      name: 'ReceivePlasma',
       id: 980010,
       meta: {
         title: '血浆接收',
@@ -40,8 +40,8 @@ const inboundmanagement: AppRouteModule = {
       ],
     },
     {
-      path: 'acceptplasma',
-      name: 'Acceptplasma',
+      path: 'AcceptPlasma',
+      name: 'AcceptPlasma',
       id: 980020,
       meta: {
         title: '血浆验收',
@@ -99,6 +99,31 @@ const inboundmanagement: AppRouteModule = {
           id: ReCheckButtonEnum.RegisterWeightCheck,
           name: 'registerWeight',
           title: '登记称重复核人',
+        },
+        {
+          id: ReCheckButtonEnum.UnqualifiedStage,
+          name: 'unqualifiedStage',
+          title: '不合格暂存',
+        },
+        {
+          id: ReCheckButtonEnum.WeightRegister,
+          name: 'weightRegister',
+          title: '重量登记',
+        },
+        {
+          id: ReCheckButtonEnum.VerifyRelease,
+          name: 'verifyRelease',
+          title: '验收发布',
+        },
+        {
+          id: ReCheckButtonEnum.VerifyList,
+          name: 'verifyList',
+          title: '验收清单',
+        },
+        {
+          id: ReCheckButtonEnum.VisualInspectionList,
+          name: 'visualInspectionList',
+          title: '外观检查单',
         },
       ],
     },
