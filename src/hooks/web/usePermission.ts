@@ -42,7 +42,7 @@ export function usePermission() {
    * 重置和重新获得权限资源信息
    * @param id
    */
-  async function resume() {
+  async function resume(isClose: boolean = true) {
     const tabStore = useMultipleTabStore();
     tabStore.clearCacheTabs();
     resetRouter();
@@ -51,7 +51,7 @@ export function usePermission() {
       router.addRoute(route as unknown as RouteRecordRaw);
     });
     permissionStore.setLastBuildMenuTime();
-    closeAll();
+    isClose && closeAll();
   }
 
   /**
@@ -111,8 +111,8 @@ export function usePermission() {
   /**
    * refresh menu data
    */
-  async function refreshMenu() {
-    resume();
+  async function refreshMenu(isClose: boolean = true) {
+    resume(isClose);
   }
 
   /**
