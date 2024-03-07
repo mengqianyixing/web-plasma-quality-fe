@@ -45,7 +45,7 @@
       field: 'times',
       label: '打印份数',
       component: 'Input',
-      defaultValue: 0,
+      // defaultValue: 0,
       colProps: {
         span: 18,
       },
@@ -64,13 +64,13 @@
   });
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
+    setModalProps({ confirmLoading: true });
     // 获取标签相关样式
     const res = await getPrintRecord({
       labelType: 'PLAIN_BOX',
       bissNo: data.boxNo, // 箱号
     });
     labelObj = res;
-    console.log(data, 'lllllllllll');
     updateSchema([
       {
         field: 'boxNo',
