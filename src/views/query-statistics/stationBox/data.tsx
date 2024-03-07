@@ -2,7 +2,7 @@ import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
+// import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -68,22 +68,22 @@ export const searchFormSchema: FormSchema[] = [
       options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
     },
   },
-  {
-    field: 'immunity',
-    component: 'Select',
-    label: '血浆类型',
-    componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
-    },
-  },
-  {
-    field: 'immTypeLevel',
-    label: '效价类型',
-    component: 'ApiSelect',
-    componentProps: {
-      api: getDilutionTypeApi,
-      labelField: 'key',
-      valueField: 'value',
-    },
-  },
+  // {
+  //   field: 'immunity',
+  //   component: 'Select',
+  //   label: '血浆类型',
+  //   componentProps: {
+  //     options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+  //   },
+  // },
+  // {
+  //   field: 'immTypeLevel',
+  //   label: '效价类型',
+  //   component: 'ApiSelect',
+  //   componentProps: {
+  //     api: getDilutionTypeApi,
+  //     labelField: 'key',
+  //     valueField: 'value',
+  //   },
+  // },
 ];

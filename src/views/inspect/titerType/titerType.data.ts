@@ -52,14 +52,6 @@ export const columns: BasicColumn[] = [
       return record.enable ? '是' : '否';
     },
   },
-  {
-    title: '记录人',
-    dataIndex: 'creator',
-  },
-  {
-    title: '记录时间',
-    dataIndex: 'createAt',
-  },
 ];
 
 export const searchFormschema: FormSchema[] = [

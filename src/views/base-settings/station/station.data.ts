@@ -33,12 +33,4 @@ export const columns: BasicColumn[] = [
     title: '所在省份',
     dataIndex: 'province',
   },
-  {
-    title: '记录人',
-    dataIndex: 'creator',
-  },
-  {
-    title: '记录日期',
-    dataIndex: 'createDate',
-  },
 ];

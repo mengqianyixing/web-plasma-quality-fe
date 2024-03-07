@@ -235,6 +235,7 @@
     const [row] = getSelections(true);
     if (!row) return;
     await releaseReportApi({ reportNo: row.reportNo });
+    reload();
     message.success('发布成功');
   }
   function handlePrint() {
