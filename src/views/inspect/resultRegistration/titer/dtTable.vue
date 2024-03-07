@@ -55,6 +55,10 @@
       type: String,
       default: '',
     },
+    plasmaType: {
+      type: String,
+      default: '',
+    },
   });
   let userData = {};
 
@@ -105,7 +109,6 @@
     },
     formConfig: {
       labelWidth: 90,
-      baseColProps: { span: 12 },
       schemas: dtSearchSchema,
     },
     rowKey: 'sampleNo',
@@ -140,7 +143,6 @@
   async function handleEdit() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
-    const [row] = rows;
     openModal(true);
     await nextTick();
     updateSchema({
@@ -148,7 +150,7 @@
       componentProps: {
         options: serverEnumStore.getServerEnum(SERVER_ENUM.TiterLevel).map((it) => ({
           ...it,
-          label: it.value === 'N' ? it.label : PlasmaType(row.plasmaType) + it.label,
+          label: it.value === 'N' ? it.label : PlasmaType(props.plasmaType) + it.label,
         })),
       },
     });

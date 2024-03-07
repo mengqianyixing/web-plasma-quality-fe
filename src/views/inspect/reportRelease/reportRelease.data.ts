@@ -132,6 +132,12 @@ export const columnsMap: Record<number, BasicColumn[]> = {
       title: '效价值',
     },
   ],
+  5: [
+    {
+      dataIndex: 'titerValue',
+      title: '效价值',
+    },
+  ],
   3: [
     {
       dataIndex: 'projectName',
@@ -167,6 +173,10 @@ export const totalUnqualifiedColumns: BasicColumn[] = [
   {
     dataIndex: 'donorName',
     title: '浆员姓名',
+  },
+  {
+    dataIndex: 'projectName',
+    title: '检测项目',
   },
   {
     dataIndex: 'methodName',
