@@ -138,9 +138,11 @@ export const batchColumns: BasicColumn[] = [
     title: '效价类型',
     dataIndex: 'titerType',
     width: 120,
-    format(text) {
-      return `${ConclusionType(text)}`;
-    },
+    format: (text) =>
+      (text || '')
+        .split(',')
+        .map((it) => ConclusionType(it))
+        .join(',') || text,
   },
   {
     title: '血浆过程状态',
@@ -166,6 +168,15 @@ export const batchColumns: BasicColumn[] = [
       {
         title: '复检结果',
         dataIndex: ['reCheckInfo', 'reCheckResult'],
+        format(text: any) {
+          if (text === 1) {
+            return '合格';
+          } else if (text === 0) {
+            return '不合格';
+          } else {
+            return '-';
+          }
+        },
         width: 100,
       },
       {
