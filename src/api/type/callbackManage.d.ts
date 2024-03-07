@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback`
- * @更新时间 `2024-01-12 18:22:35`
+ * @更新时间 `2024-03-07 21:38:00`
  */
 export interface GetApiCoreDonorCallbackRequest {
   pageSize: string;
@@ -44,7 +44,7 @@ export interface GetApiCoreDonorCallbackRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback`
- * @更新时间 `2024-01-12 18:22:35`
+ * @更新时间 `2024-03-07 21:38:00`
  */
 export interface GetApiCoreDonorCallbackResponse {
   totalCount?: number;
@@ -72,6 +72,42 @@ export interface GetApiCoreDonorCallbackResponse {
      * 生成日期
      */
     createAt: string;
+    /**
+     * 自主回访
+     */
+    selfBackNum: number;
+    /**
+     * 回访成功
+     */
+    okNum: number;
+    /**
+     * 回访失败
+     */
+    failedNum: number;
+    /**
+     * 恢复采浆
+     */
+    recoverNum: number;
+    /**
+     * 未回访
+     */
+    noVisitNum: number;
+    /**
+     * 样本接收人
+     */
+    sampleAccpetBy?: string;
+    /**
+     * 样本接收日期
+     */
+    sampleAccpetAt?: string;
+    /**
+     * 样本发布人
+     */
+    samplePublishBy?: string;
+    /**
+     * 样本发布日期
+     */
+    samplePublishAt?: string;
     /**
      * 确认人
      */
