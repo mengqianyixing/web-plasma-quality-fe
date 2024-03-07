@@ -78,7 +78,7 @@
     sortingMouldAssembling,
     sortingAllQua,
     completeSorting,
-    completeSortingBatchNo,
+    // completeSortingBatchNo,
   } from '@/api/stockout/production-sorting/production-sorting-main';
   import InStoreModal from './components/in-store-modal.vue';
   import OutStoreModal from './components/out-store-modal.vue';
@@ -271,9 +271,9 @@
             <a-button disabled={!prepareNo.value} onclick={_completeSorting}>
               分拣完成
             </a-button>
-            <a-button disabled={!prepareNo.value} onclick={_completeBatchNo}>
+            {/* <a-button disabled={!prepareNo.value} onclick={_completeBatchNo}>
               批次完成
-            </a-button>
+            </a-button> */}
           </div>
         );
       },
@@ -394,7 +394,7 @@
         batchNo: batchData.value.batchSummary?.batchNo || null,
         pickFlag: e === true, // 特殊分拣情况:整箱血浆为合格/不合格血浆复核登录后进行分拣
       };
-      let targetBox = {}; // 正在分拣的血浆属于的箱子,用于封箱
+      // let targetBox = {}; // 正在分拣的血浆属于的箱子,用于封箱
       try {
         openFullLoading();
         const res = await pickSortingBag(params);
@@ -440,14 +440,14 @@
             bagNoRef.value.focus();
           });
 
-          // 分拣的是另外一批的血浆
-          if (
-            batchData.value?.batchSummary?.batchNo &&
-            batchData.value?.batchSummary?.batchNo != data.batchSummary.batchNo
-          ) {
-            prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode, scoll: true });
-            return;
-          }
+          // // 分拣的是另外一批的血浆
+          // if (
+          //   batchData.value?.batchSummary?.batchNo &&
+          //   batchData.value?.batchSummary?.batchNo != data.batchSummary.batchNo
+          // ) {
+          //   prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode, scoll: true });
+          //   return;
+          // }
 
           // 准备号、批次详情数据
           prepareData.value = { ...data.preSummary };
@@ -475,7 +475,7 @@
             // 可投产血浆列表有长度，说明正在挑的是可投产的，更新血浆列表
             topBoxData.value[0].bagNos = data.pros?.bagNos;
             topBoxData.value[0].isSelected = true;
-            targetBox = topBoxData.value[0];
+            // targetBox = topBoxData.value[0];
             nextTick(() => {
               scollToBox(true, 'PRO');
             });
@@ -515,7 +515,7 @@
               });
             }
             if (scollToIndex !== -1) {
-              targetBox = topBoxData.value[scollToIndex];
+              // targetBox = topBoxData.value[scollToIndex];
               nextTick(() => {
                 topBoxData.value[scollToIndex].isSelected = true;
                 // 滚动逻辑...
@@ -554,7 +554,7 @@
               });
             }
             if (scollToIndex !== -1) {
-              targetBox = bottomBoxData.value[scollToIndex];
+              // targetBox = bottomBoxData.value[scollToIndex];
               nextTick(() => {
                 bottomBoxData.value[scollToIndex].isSelected = true;
                 scollToBox(false, bottomBoxData.value[scollToIndex].immTypeName);
@@ -567,14 +567,10 @@
             Modal.confirm({
               title: '提示?',
               icon: createVNode(ExclamationCircleOutlined),
-              content: createVNode(
-                'div',
-                { style: 'color:red;' },
-                '该箱已满,要进行封箱操作并打印箱签吗?',
-              ),
+              content: createVNode('div', { style: 'color:red;' }, '该箱已满,要进行打印箱签吗?'),
               onOk() {
                 // 走封箱操作 不需要提示
-                _sortingBoxSealing(targetBox, true);
+                // _sortingBoxSealing(targetBox, true);
                 // 走打印逻辑
                 console.log('OK');
               },
@@ -966,43 +962,43 @@
     }
   }
 
-  // 完成批次
-  async function _completeBatchNo() {
-    if (
-      batchData.value?.batchSummary?.sortTotal &&
-      batchData.value?.batchSummary.sortTotal > 0 &&
-      batchData.value?.batchSummary.sortTotal === batchData.value?.batchSummary.sortCount
-    ) {
-      Modal.confirm({
-        title: '提示?',
-        icon: createVNode(ExclamationCircleOutlined),
-        content: createVNode(
-          'div',
-          { style: 'color:red;' },
-          '批次完成后不能进行合箱操作，确认要完成批次吗?',
-        ),
-        async onOk() {
-          try {
-            openFullLoading();
-            await completeSortingBatchNo({
-              prepareNo: prepareNo.value,
-              batchNo: batchData.value?.batchSummary?.batchNo,
-            });
-            success('操作成功!');
-            prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
-          } finally {
-            closeFullLoading();
-          }
-        },
-        onCancel() {
-          console.log('Cancel');
-        },
-        class: 'test',
-      });
-    } else {
-      warning('请先分拣完血浆!');
-    }
-  }
+  // // 完成批次
+  // async function _completeBatchNo() {
+  //   if (
+  //     batchData.value?.batchSummary?.sortTotal &&
+  //     batchData.value?.batchSummary.sortTotal > 0 &&
+  //     batchData.value?.batchSummary.sortTotal === batchData.value?.batchSummary.sortCount
+  //   ) {
+  //     Modal.confirm({
+  //       title: '提示?',
+  //       icon: createVNode(ExclamationCircleOutlined),
+  //       content: createVNode(
+  //         'div',
+  //         { style: 'color:red;' },
+  //         '批次完成后不能进行合箱操作，确认要完成批次吗?',
+  //       ),
+  //       async onOk() {
+  //         try {
+  //           openFullLoading();
+  //           await completeSortingBatchNo({
+  //             prepareNo: prepareNo.value,
+  //             batchNo: batchData.value?.batchSummary?.batchNo,
+  //           });
+  //           success('操作成功!');
+  //           prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+  //         } finally {
+  //           closeFullLoading();
+  //         }
+  //       },
+  //       onCancel() {
+  //         console.log('Cancel');
+  //       },
+  //       class: 'test',
+  //     });
+  //   } else {
+  //     warning('请先分拣完血浆!');
+  //   }
+  // }
 
   // 分拣批次信息
   const [registerPickBatchDetailModal, { openModal: openPickBatchDetailModal }] = useModal();
