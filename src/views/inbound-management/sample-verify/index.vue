@@ -387,6 +387,7 @@
     verifyAt?: string;
     qualified?: number;
     unqualifiedReason?: string;
+    donorBlock?: boolean;
   }) => {
     const actions: ActionItem[] = [
       {
@@ -430,7 +431,7 @@
         ifShow: () =>
           verifyFlag.value !== sampleVerifyStatusValueEnum.S &&
           record?.qualified === sampleVerifyResultValueEnum.Unqualified &&
-          record?.unqualifiedReason !== nonconformityReasonEnum.DonorNonConformance,
+          record?.donorBlock === false,
       },
     ];
 
