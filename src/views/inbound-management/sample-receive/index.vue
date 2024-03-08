@@ -79,7 +79,7 @@
           <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
             <a-input-search
               readonly
-              placeholder="请选择批号或输入批号回车"
+              placeholder="请点击选择"
               enter-button="选择"
               value={inputValue}
               onSearch={handleSelectSampleBatch}
