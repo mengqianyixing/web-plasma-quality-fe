@@ -6,11 +6,10 @@ import {
 } from '@/enums/nonconforityEnum';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { formatKg } from '@/utils';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
-
-const formatKg = (text) => (text || text === 0 ? (text / 1000).toFixed(3) : '');
 
 export const columns: BasicColumn[] = [
   {

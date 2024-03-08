@@ -17,6 +17,7 @@
     <div
       :class="['item', 'flex', i === cellList.length - 1 ? 'flex-1' : '']"
       v-for="(cell, i) in cellList"
+      :style="cellStyle"
       :key="cell.field + '.' + i"
     >
       <div :class="['label', 'shrink-0', labelWidthClass]" :style="{ width: labelWidth }">
@@ -34,11 +35,11 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { PropType } from 'vue';
+  import { PropType, StyleValue } from 'vue';
   import { Cell } from './type';
   import { get } from 'lodash-es';
 
-  const { data, cellList, labelWidth, labelWidthClass } = defineProps({
+  const { data, cellList, labelWidth, labelWidthClass, cellStyle } = defineProps({
     data: {
       type: Object as PropType<any>,
     },
@@ -53,9 +54,8 @@
       type: [String, Object] as PropType<string | object>,
       default: 'w-1/2',
     },
-    cellWidth: {
-      type: [Number, String] as PropType<number | string>,
-      default: '25%',
+    cellStyle: {
+      type: [Object, String] as PropType<StyleValue>,
     },
     gap: {
       type: Number as PropType<number>,
