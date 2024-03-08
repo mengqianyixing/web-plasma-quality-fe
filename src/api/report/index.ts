@@ -32,3 +32,14 @@ export function uploadReportApi(
     params,
   );
 }
+
+/**
+ * 获取报表pdf
+ * @param params
+ * @returns
+ */
+export const getReportApi = (params?) =>
+  defHttp.get(
+    { url: '/api/report/pdf', params, responseType: 'blob' },
+    { errorMessageMode: 'none', isTransformResponse: false },
+  );
