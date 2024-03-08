@@ -1,15 +1,21 @@
 <template>
-  <a-tabs
-    class="mt-2"
-    default-active-key="inStockSummary"
-    v-model:activeKey="currentKey"
-    type="card"
-  >
-    <a-tab-pane v-for="item in tabList" :key="item.key" :tab="item.label" />
-  </a-tabs>
-  <PageWrapper dense contentFullHeight>
-    <BasicTable @register="registerTable" :columns="currentColumns" :dataSource="tableDataFields" />
-  </PageWrapper>
+  <div>
+    <a-tabs
+      class="mt-2"
+      default-active-key="inStockSummary"
+      v-model:activeKey="currentKey"
+      type="card"
+    >
+      <a-tab-pane v-for="item in tabList" :key="item.key" :tab="item.label" />
+    </a-tabs>
+    <PageWrapper dense contentFullHeight>
+      <BasicTable
+        @register="registerTable"
+        :columns="currentColumns"
+        :dataSource="tableDataFields"
+      />
+    </PageWrapper>
+  </div>
 </template>
 <script lang="ts" setup>
   import { BasicColumn, BasicTable, useTable } from '@/components/Table';
