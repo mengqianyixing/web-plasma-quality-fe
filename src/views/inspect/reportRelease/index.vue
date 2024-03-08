@@ -40,18 +40,39 @@
           v-auth="InspectButtonEnum.ReportReleaseRelease"
           >发布</a-button
         >
-        <a-button
-          type="primary"
-          @click="handlePrint"
-          v-auth="InspectButtonEnum.ReportReleasePrintBack"
-          >打印回访样本检检验报告</a-button
+        <a-dropdown
+          v-auth="[
+            InspectButtonEnum.ReportReleasePrintBack,
+            InspectButtonEnum.ReportReleasePrintCheck,
+          ]"
         >
-        <a-button
-          type="primary"
-          @click="handlePrint"
-          v-auth="InspectButtonEnum.ReportReleasePrintCheck"
-          >打印原料血浆检验报告</a-button
-        >
+          <a-button type="primary">
+            打印
+            <DownOutlined />
+          </a-button>
+          <template #overlay>
+            <Menu>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint"
+                  v-auth="InspectButtonEnum.ReportReleasePrintBack"
+                >
+                  回访样本检检验报告
+                </a-button>
+              </MenuItem>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint"
+                  v-auth="InspectButtonEnum.ReportReleasePrintCheck"
+                >
+                  原料血浆检验报告
+                </a-button>
+              </MenuItem>
+            </Menu>
+          </template>
+        </a-dropdown>
       </template>
       <template #totalUnqualified="{ record }: { record: Recordable }">
         <span
@@ -125,7 +146,7 @@
     releaseReportApi,
   } from '@/api/inspect/reportRelease';
   import { ref } from 'vue';
-  import { message, Modal } from 'ant-design-vue';
+  import { message, Modal, Dropdown as ADropdown, MenuItem, Menu } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
   import TabelModal from './tabelModal.vue';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';

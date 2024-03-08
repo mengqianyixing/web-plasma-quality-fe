@@ -44,7 +44,14 @@
                 托盘出库
               </a-button>
               <!-- <a-button
-                @click="openReprintModal(true, { boxNo: filterForm.boxNo ?? '10424N000508' })"
+                @click="
+                  openReprintModal(true, {
+                    boxNo: filterForm.boxNo,
+                    stationName: filterForm.stationName,
+                    batchNo: filterForm.batchNo,
+                    acceptList,
+                  })
+                "
                 >打印</a-button
               > -->
             </div>
@@ -470,7 +477,12 @@
               success('当前批验收完成');
             } else if (!filterForm.value.unVerifyBag.length) {
               success('当前箱验收完成');
-              openReprintModal(true, { boxNo: filterForm.value.boxNo });
+              openReprintModal(true, {
+                boxNo: filterForm.value.boxNo,
+                stationName: filterForm.value.stationName,
+                batchNo: filterForm.value.batchNo,
+                acceptList,
+              });
             }
           }
         }
