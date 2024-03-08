@@ -1,17 +1,10 @@
-<!--
- * @Descripttion:
- * @version:
- * @Author: zcc
- * @Date: 2024-01-17 17:24:09
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-22 17:56:27
--->
 <template>
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
     title="入库"
     @ok="handleSubmit"
+    @cancel="handelCancel"
     width="430px"
   >
     <BasicForm @register="registerForm" />
@@ -33,26 +26,79 @@
   import { nonconformityInStore } from '@/api/nonconformity/plasma-manage';
   import { PostApiCoreBagUnqualifiedInStoreRequest } from '@/api/type/nonconformityManage';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { useScanHelper } from '@/hooks/common/useScanHelper';
+  import { RemoveEventFn } from '@/hooks/event/useEventListener';
+  import { watch, ref } from 'vue';
 
   defineOptions({ name: 'PickPlasmaModal' });
 
   const { createMessage } = useMessage();
   const emit = defineEmits(['success', 'register']);
 
+  const { barCode, enterFlag, startEvent } = useScanHelper();
+
+  watch(
+    () => [barCode.value, enterFlag.value],
+    (val) => {
+      const { boxNo, bagNo } = getFieldsValue();
+
+      if (val[0] && val[1]) {
+        if (boxNo && !inputBlur.value) {
+          setFieldsValue({ bagNo: val[0] });
+        } else if (bagNo && !inputBlur.value) {
+          setFieldsValue({ boxNo: val[0] });
+        } else if (!boxNo && !bagNo && !inputBlur.value) {
+          setFieldsValue({ boxNo: val[0] });
+        }
+
+        handleSubmit();
+      }
+    },
+  );
+
   const [registerLoginModal, { openModal }] = useModal();
 
-  const [registerForm, { resetFields, validate, setFieldsValue, updateSchema }] = useForm({
-    labelWidth: 130,
-    baseColProps: { span: 48 },
-    schemas: inStoreSchema,
-    showActionButtonGroup: false,
-    transformDateFunc(date) {
-      return date ? date.format('YYYY-MM-DD') : '';
-    },
-  });
+  const [registerForm, { resetFields, validate, setFieldsValue, updateSchema, getFieldsValue }] =
+    useForm({
+      labelWidth: 130,
+      baseColProps: { span: 48 },
+      schemas: inStoreSchema,
+      showActionButtonGroup: false,
+      transformDateFunc(date) {
+        return date ? date.format('YYYY-MM-DD') : '';
+      },
+    });
 
-  const [registerModal, { setModalProps, closeModal }] = useModalInner(() => {
-    updateSchema({ field: 'reviewer', componentProps: { onSearch: handleLogin } });
+  let _removeEvent: RemoveEventFn = () => {};
+  const inputBlur = ref(false);
+  const [registerModal, { setModalProps }] = useModalInner(() => {
+    const { removeEvent } = startEvent();
+    _removeEvent = removeEvent;
+    updateSchema([
+      { field: 'reviewer', componentProps: { onSearch: handleLogin } },
+      {
+        field: 'boxNo',
+        componentProps: {
+          onBlur: () => {
+            inputBlur.value = false;
+          },
+          onFocus: () => {
+            inputBlur.value = true;
+          },
+        },
+      },
+      {
+        field: 'bagNo',
+        componentProps: {
+          onBlur: () => {
+            inputBlur.value = false;
+          },
+          onFocus: () => {
+            inputBlur.value = true;
+          },
+        },
+      },
+    ]);
     resetFields();
     setModalProps({ confirmLoading: false });
   });
@@ -62,10 +108,11 @@
       const values = await validate();
       setModalProps({ confirmLoading: true });
       await nonconformityInStore(values as PostApiCoreBagUnqualifiedInStoreRequest);
-
       createMessage.success('入库成功');
-      closeModal();
-      emit('success');
+      await setFieldsValue({ bagNo: '', boxNo: '' });
+    } catch (e) {
+      enterFlag.value = false;
+      throw e;
     } finally {
       setModalProps({ confirmLoading: false });
     }
@@ -77,5 +124,10 @@
 
   function handleSuccess(nickname: string) {
     setFieldsValue({ reviewer: nickname });
+  }
+
+  function handelCancel() {
+    _removeEvent();
+    emit('success');
   }
 </script>
