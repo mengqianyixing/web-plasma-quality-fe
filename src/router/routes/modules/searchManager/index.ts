@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-12-28 18:11:32
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-03-04 14:05:54
+ * @LastEditTime: 2024-03-07 13:51:19
  * @Description: 托盘管理
  * @FilePath: \psms-fe\src\router\routes\modules\trayManager\index.ts
  */
@@ -274,6 +274,15 @@ const trayManager: AppRouteModule = {
       },
       id: 9000100,
       component: () => import('@/views/query-statistics/checkResult/index.vue'),
+    },
+    {
+      path: 'nonconformityTracking',
+      name: 'NonconformityTracking',
+      meta: {
+        title: '不合格追踪',
+      },
+      id: 9000320,
+      component: () => import('@/views/query-statistics/nonconformityTracking/index.vue'),
     },
   ],
 };
