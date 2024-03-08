@@ -64,40 +64,54 @@
 
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
   const [registerModal, { openModal }] = useModal();
-  const [registerForm, { setFieldsValue, validate, updateSchema }] = useForm({
-    labelWidth: 80,
-    baseColProps: { span: 24 },
-    schemas: [
-      {
-        required: true,
-        field: 'conclusion',
-        component: 'Select',
-        label: '效价结果',
-        componentProps: {},
-      },
-      {
-        required: true,
-        field: 'account',
-        component: 'InputSearch',
-        label: '复核人',
-        componentProps: {
-          'enter-button': '登录',
-          placeholder: '请点击登录按钮',
-          readonly: true,
-          onSearch: () => {
-            openLoginModal(true, {});
+  const [registerForm, { setFieldsValue, validate, updateSchema, resetFields, clearValidate }] =
+    useForm({
+      labelWidth: 80,
+      baseColProps: { span: 24 },
+      schemas: [
+        {
+          required: true,
+          field: 'conclusion',
+          component: 'Select',
+          label: '效价结果',
+          componentProps: {},
+        },
+        {
+          required: true,
+          field: 'titerValue',
+          component: 'InputNumber',
+          label: '效价结果',
+          componentProps: {
+            min: 0,
+            formatter: (n: string) => {
+              if (/\.[0-9]{2}/.test(n)) return n.replace(/([0-9]+\.[0-9]{1,1})[0-9]+/, '$1');
+              return n;
+            },
           },
         },
-      },
-      {
-        required: true,
-        field: 'reason',
-        component: 'Input',
-        label: '编辑原因',
-      },
-    ],
-    showActionButtonGroup: false,
-  });
+        {
+          required: true,
+          field: 'account',
+          component: 'InputSearch',
+          label: '复核人',
+          componentProps: {
+            'enter-button': '登录',
+            placeholder: '请点击登录按钮',
+            readonly: true,
+            onSearch: () => {
+              openLoginModal(true, {});
+            },
+          },
+        },
+        {
+          required: true,
+          field: 'reason',
+          component: 'Input',
+          label: '编辑原因',
+        },
+      ],
+      showActionButtonGroup: false,
+    });
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     immediate: true,
     api: getCheckItemDtListApi,
@@ -126,7 +140,7 @@
     },
   });
   async function handleSubmit() {
-    const { conclusion, reason } = (await validate()) as any;
+    const { conclusion, reason, titerValue } = (await validate()) as any;
     const { username, userId } = userData as any;
     const [row] = getSelectRows();
     await updateTiterCheckApi({
@@ -136,6 +150,7 @@
       checker: userId,
       bsNo: props.bsNo,
       sampleNo: row.sampleNo,
+      titerValue,
     });
     reload();
     openModal(false);
@@ -143,17 +158,21 @@
   async function handleEdit() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
+    const [row] = rows;
     openModal(true);
     await nextTick();
     updateSchema({
       field: 'conclusion',
       componentProps: {
         options: serverEnumStore.getServerEnum(SERVER_ENUM.TiterLevel).map((it) => ({
-          ...it,
+          value: it.value === 'N' ? it.value : props.plasmaType + it.value,
           label: it.value === 'N' ? it.label : PlasmaType(props.plasmaType) + it.label,
         })),
       },
     });
+    resetFields();
+    setFieldsValue(row);
+    clearValidate();
   }
 
   function login(username, data) {

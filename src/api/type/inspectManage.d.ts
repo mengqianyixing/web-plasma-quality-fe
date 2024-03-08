@@ -1239,7 +1239,7 @@ export interface GetApiCoreLabRegistrationDonorSampleNoResponse {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem/titer`
- * @更新时间 `2024-01-03 20:11:30`
+ * @更新时间 `2024-03-07 20:37:12`
  */
 export interface PutApiCoreLabRegistrationLabItemTiterRequest {
   reason?: string;
@@ -1248,6 +1248,10 @@ export interface PutApiCoreLabRegistrationLabItemTiterRequest {
   bsNo?: string;
   conclusion?: string;
   sampleNo?: string;
+  /**
+   * 效价结果
+   */
+  titerValue?: string;
 }
 
 /**
@@ -1255,7 +1259,7 @@ export interface PutApiCoreLabRegistrationLabItemTiterRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem/titer`
- * @更新时间 `2024-01-03 20:11:30`
+ * @更新时间 `2024-03-07 20:37:12`
  */
 export interface PutApiCoreLabRegistrationLabItemTiterResponse {}
 

@@ -6,6 +6,7 @@ import { SERVER_ENUM } from '@/enums/serverEnum';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const ConclusionType = serverEnumStore.getServerEnumText(SERVER_ENUM.ConclusionType);
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 // 查询条件：浆员编号
 export const searchFormSchema: FormSchema[] = [
@@ -188,6 +189,11 @@ export const batchColumns: BasicColumn[] = [
         title: '血浆类型',
         dataIndex: ['reCheckInfo', 'immunityType'],
         width: 100,
+        format: (text) =>
+          (text || '')
+            .split(',')
+            .map((it) => PlasmaType(it))
+            .join(',') || text,
       },
       {
         title: '效价结果值',
@@ -211,12 +217,12 @@ export const batchColumns: BasicColumn[] = [
       {
         title: '样本批号',
         dataIndex: ['trackedSeeInfo', 'batchSampleNo'],
-        width: 100,
+        width: 120,
       },
       {
         title: '样本编号',
         dataIndex: ['trackedSeeInfo', 'sampleNo'],
-        width: 100,
+        width: 135,
       },
       {
         title: '采集日期',
@@ -246,6 +252,15 @@ export const batchColumns: BasicColumn[] = [
         title: '样本结果',
         dataIndex: ['trackedSeeInfo', 'reCheckResult'],
         width: 100,
+        format(text: any) {
+          if (text === 1) {
+            return '合格';
+          } else if (text === 0) {
+            return '不合格';
+          } else {
+            return '-';
+          }
+        },
       },
       {
         title: '不合格项目',
