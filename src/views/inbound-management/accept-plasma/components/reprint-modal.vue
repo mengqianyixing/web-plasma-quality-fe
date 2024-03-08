@@ -138,7 +138,7 @@
     console.log('asdasdddddddddddddddddasd');
     if (visible) {
       nextTick(() => {
-        const okButton = document.querySelector('.ant-modal .ant-btn-primary');
+        const okButton = document.querySelector('.ant-modal .ant-btn-primary') as HTMLElement;
         okButton && okButton.focus();
       });
     }
