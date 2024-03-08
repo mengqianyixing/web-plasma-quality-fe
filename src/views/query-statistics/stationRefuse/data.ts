@@ -16,6 +16,13 @@ export const columns: BasicColumn[] = [
     dataIndex: 'donorName',
   },
   {
+    title: '建档日期',
+    dataIndex: 'createAt',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
+  },
+  {
     title: '永拒原因',
     dataIndex: 'blockReason',
   },
