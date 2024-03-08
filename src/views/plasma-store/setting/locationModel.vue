@@ -15,7 +15,7 @@
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
         <CellWapper :row-count="3" :data="state" :cell-list="cellSchema(locationCell)" />
-        <div class="flex-1 shrink-1" style="height: calc(100% - 158px)">
+        <div class="flex-1 shrink-1" style="height: calc(100% - 118px)">
           <BasicTable @register="registerTable">
             <template #toolbar>
               <a-button type="primary" @click="handleCheckStatus('CLOSED')">禁用</a-button>

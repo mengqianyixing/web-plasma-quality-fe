@@ -13,8 +13,9 @@ export const columns: BasicColumn[] = [
   },
 
   {
-    title: '报告发布时间',
+    title: '报告发布日期',
     dataIndex: 'issueAt',
+    format: (t) => t?.slice(0, 10),
   },
   {
     title: '样本编号',
@@ -48,8 +49,9 @@ export const columns: BasicColumn[] = [
     ellipsis: false,
   },
   {
-    title: '永拒时间',
+    title: '永拒日期',
     dataIndex: 'rejectAt',
+    format: (t) => t?.slice(0, 10),
   },
 ];
 

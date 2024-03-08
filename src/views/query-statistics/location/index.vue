@@ -2,7 +2,12 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleExport" v-auth="SearchManager.LocationExport">
+        <a-button
+          type="primary"
+          @click="handleExport"
+          v-auth="SearchManager.LocationExport"
+          :loading="loading"
+        >
           导出
         </a-button>
       </template>
@@ -17,8 +22,10 @@
   import { jsonToSheetXlsx, formatData, getHeader } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
   import { SearchManager } from '@/enums/authCodeEnum';
+  import { ref } from 'vue';
 
   defineOptions({ name: 'Location' });
+  const loading = ref(false);
 
   const { currentRoute } = useRouter();
   const [registerTable, { getForm }] = useTable({
@@ -39,15 +46,24 @@
     bordered: true,
   });
   async function handleExport() {
-    const { getFieldsValue } = getForm();
-    const data = await getListApi({ ...getFieldsValue(), currPage: 1, pageSize: 50000 } as any);
-    const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
-    const { result, merge: bodyMerge } = formatData(lastLevelCols, data.result || [], rows.length);
-    jsonToSheetXlsx({
-      data: [...rows, ...result],
-      json2sheetOpts: { skipHeader: true },
-      merges: [...headerMerge, ...bodyMerge],
-      filename: currentRoute.value.meta.title + '.xlsx',
-    });
+    try {
+      loading.value = true;
+      const { getFieldsValue } = getForm();
+      const data = await getListApi({ ...getFieldsValue(), currPage: 1, pageSize: 50000 } as any);
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+      const { result, merge: bodyMerge } = formatData(
+        lastLevelCols,
+        data.result || [],
+        rows.length,
+      );
+      jsonToSheetXlsx({
+        data: [...rows, ...result],
+        json2sheetOpts: { skipHeader: true },
+        merges: [...headerMerge, ...bodyMerge],
+        filename: currentRoute.value.meta.title + '.xlsx',
+      });
+    } finally {
+      loading.value = false;
+    }
   }
 </script>

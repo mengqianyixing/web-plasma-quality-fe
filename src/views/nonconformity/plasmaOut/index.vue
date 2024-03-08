@@ -35,24 +35,46 @@
         <a-button type="primary" @click="handleScan" v-auth="NonconformityButtonEnum.PlasmaOutScan"
           >出库扫描</a-button
         >
-        <a-button
-          type="primary"
-          @click="handlePrint"
-          v-auth="NonconformityButtonEnum.PlasmaOutTransferPrint"
-          >转移记录打印</a-button
+        <a-dropdown
+          v-auth="[
+            NonconformityButtonEnum.PlasmaOutTransferPrint,
+            NonconformityButtonEnum.PlasmaOutPlasmaPrint,
+            NonconformityButtonEnum.PlasmaOutDestructionPrint,
+          ]"
         >
-        <a-button
-          type="primary"
-          @click="handlePrint"
-          v-auth="NonconformityButtonEnum.PlasmaOutPlasmaPrint"
-          >不合格原料血浆信息清单打印</a-button
-        >
-        <a-button
-          type="primary"
-          @click="handlePrint"
-          v-auth="NonconformityButtonEnum.PlasmaOutDestructionPrint"
-          >不合格原理血浆销毁处理申请审批表</a-button
-        >
+          <a-button type="primary">
+            打印
+            <DownOutlined />
+          </a-button>
+          <template #overlay>
+            <Menu>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint"
+                  v-auth="NonconformityButtonEnum.PlasmaOutTransferPrint"
+                  >转移记录</a-button
+                >
+              </MenuItem>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint"
+                  v-auth="NonconformityButtonEnum.PlasmaOutPlasmaPrint"
+                  >不合格原料血浆信息清单</a-button
+                >
+              </MenuItem>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint"
+                  v-auth="NonconformityButtonEnum.PlasmaOutDestructionPrint"
+                  >不合格原理血浆销毁处理申请审批表</a-button
+                >
+              </MenuItem>
+            </Menu>
+          </template>
+        </a-dropdown>
       </template>
       <template #dlvNo="{ record }: { record: Recordable }">
         <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleDt(record)">
@@ -91,7 +113,7 @@
     unProcessApi,
   } from '@/api/nonconformity/plasmaOut';
   import { ref } from 'vue';
-  import { message, Modal } from 'ant-design-vue';
+  import { message, Modal, Dropdown as ADropdown, MenuItem, Menu } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { NonconformityButtonEnum } from '@/enums/authCodeEnum';
 
