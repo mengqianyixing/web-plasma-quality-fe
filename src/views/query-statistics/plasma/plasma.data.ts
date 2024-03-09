@@ -72,9 +72,9 @@ export const columns: BasicColumn[] = [
   {
     title: '效价类型',
     dataIndex: 'titerType',
-    minWidth: 200,
+    width: 200,
     format: (text) => {
-      return `${text}, ${serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType)(text)}`;
+      return `${text ?? '--'}`;
     },
   },
   {

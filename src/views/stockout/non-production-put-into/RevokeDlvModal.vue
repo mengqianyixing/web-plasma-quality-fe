@@ -4,7 +4,7 @@
     @register="register"
     title="撤销申请单"
     showFooter
-    width="30%"
+    width="25%"
     @ok="handleOk"
   >
     <BasicForm @register="registerForm" ref="table" />
@@ -48,7 +48,9 @@
       maskClosable: false,
     });
 
-    await setFieldsValue(data.record);
+    await setFieldsValue({
+      dlvNo: data.record.dlvNo,
+    });
   });
 
   async function handleOk() {

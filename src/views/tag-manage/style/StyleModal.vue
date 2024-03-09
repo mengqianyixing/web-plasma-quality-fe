@@ -87,7 +87,7 @@
   const JsonValue = ref('');
   const modeValue = ref<MODE>(MODE.JSON);
 
-  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+  const [registerForm, { resetFields, setFieldsValue, validate, updateSchema }] = useForm({
     labelWidth: 100,
     baseColProps: { span: 24 },
     schemas: formSchema,
@@ -129,6 +129,12 @@
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     await resetFields();
+    await updateSchema({
+      field: 'labelType',
+      componentProps: {
+        options: data.labelType,
+      },
+    });
     setModalProps({ confirmLoading: false });
     isUpdate.value = !!data?.isUpdate;
 

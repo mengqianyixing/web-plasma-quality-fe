@@ -17,9 +17,6 @@
           {{ record?.boxNum }}
         </span>
       </template>
-      <template #stationNo="{ record }">
-        {{ getStationNameById(record?.stationNo) }}
-      </template>
       <template #toolbar>
         <a-button
           type="primary"

@@ -7,13 +7,13 @@
     :destroyOnClose="true"
     @ok="handleSubmit"
     @open-change="handleVisibleChange"
+    class="print-modal"
   >
     <BasicForm @register="registerForm" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
   import { nextTick } from 'vue';
-
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm, FormSchema } from '@/components/Form';
   import { getPrintRecord } from '@/api/tag/printRecord';
@@ -115,7 +115,6 @@
         defaultValue: res.times,
       },
     ]);
-
     setModalProps({ confirmLoading: false });
   });
 
@@ -135,11 +134,13 @@
   }
 
   function handleVisibleChange(visible) {
-    console.log('asdasdddddddddddddddddasd');
     if (visible) {
       nextTick(() => {
-        const okButton = document.querySelector('.ant-modal .ant-btn-primary') as HTMLElement;
-        okButton && okButton.focus();
+        const okButton = document.querySelector(
+          '.ant-modal .print-modal .ant-btn-primary',
+        ) as HTMLElement;
+        if (okButton) okButton.focus();
+        // console.log(document.activeElement);
       });
     }
   }

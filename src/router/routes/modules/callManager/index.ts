@@ -26,7 +26,7 @@ const callManager: AppRouteModule = {
       path: 'list-generation',
       name: 'CallbackGeneration',
       meta: {
-        title: '回访名单生成',
+        title: '回访名单',
       },
       id: 930010,
       component: () => import('@/views/callback/list-generation/index.vue'),
@@ -63,6 +63,7 @@ const callManager: AppRouteModule = {
       name: 'CallbackComplete',
       meta: {
         title: '回访名单完成',
+        hideMenu: true,
       },
       id: 930020,
       component: () => import('@/views/callback/callback-complete/index.vue'),
