@@ -38,6 +38,7 @@
               :projectId="pid"
               type="EFFECTIVE_PRICE"
               :plasmaType="plasmaType"
+              :pv="pv"
               :bsNo="bsno"
             />
           </TabPane>
@@ -60,12 +61,14 @@
   const bsno = ref('');
   const projectName = ref('');
   const plasmaType = ref('');
+  const pv = ref(0);
   const componentMap = ref({
     1: 'div',
     2: 'div',
     3: 'div',
   });
   const [registerModal] = useModalInner(async (data) => {
+    pv.value = data.priceValidBit;
     pid.value = data.projectId;
     bsno.value = data.bsNo;
     projectName.value = data.projectAbbr;

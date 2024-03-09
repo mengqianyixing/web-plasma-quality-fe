@@ -20,7 +20,13 @@
     @ok="handleSubmit(true)"
   >
     <BasicForm @register="registerForm" />
-    <CellWapper :data="donorData" cell-width="50%" :cell-list="cellList" :gap="0" />
+    <CellWapper
+      :data="donorData"
+      cell-width="50%"
+      :cellStyle="{ width: '100%' }"
+      :cell-list="cellList"
+      :gap="0"
+    />
   </BasicModal>
 </template>
 <script setup lang="ts">

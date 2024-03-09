@@ -3,6 +3,7 @@ import { BasicColumn } from '@/components/Table';
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { formatKg } from '@/utils';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const ImmType = serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType);
@@ -48,6 +49,7 @@ export const columns: BasicColumn[] = [
         width: 180,
         title: '检测合格验收净重(kg)',
         dataIndex: ['H', 'checkPassWeight'],
+        format: formatKg,
       },
       {
         width: 180,
@@ -58,6 +60,7 @@ export const columns: BasicColumn[] = [
         width: 180,
         title: '检疫期合格验收净重(kg)',
         dataIndex: ['H', 'passWeight'],
+        format: formatKg,
       },
     ],
   },
@@ -85,6 +88,7 @@ export const columns: BasicColumn[] = [
         width: 180,
         title: '检测合格验收净重(kg)',
         dataIndex: ['L', 'checkPassWeight'],
+        format: formatKg,
       },
       {
         width: 180,
@@ -95,6 +99,7 @@ export const columns: BasicColumn[] = [
         width: 180,
         title: '检疫期合格验收净重(kg)',
         dataIndex: ['L', 'passWeight'],
+        format: formatKg,
       },
     ],
   },
@@ -123,6 +128,7 @@ export const columns: BasicColumn[] = [
         width: 180,
         title: '检测合格验收净重(kg)',
         dataIndex: ['N', 'checkPassWeight'],
+        format: formatKg,
       },
       {
         width: 180,
@@ -133,6 +139,7 @@ export const columns: BasicColumn[] = [
         width: 180,
         title: '检疫期合格验收净重(kg)',
         dataIndex: ['N', 'passWeight'],
+        format: formatKg,
       },
     ],
   },

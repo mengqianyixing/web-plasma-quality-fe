@@ -37,6 +37,42 @@ export const columns: BasicColumn[] = [
     dataIndex: 'createAt',
   },
   {
+    title: '自主回访',
+    dataIndex: 'selfBackNum',
+  },
+  {
+    title: '回访成功',
+    dataIndex: 'okNum',
+  },
+  {
+    title: '回访失败',
+    dataIndex: 'failedNum',
+  },
+  {
+    title: '恢复采浆',
+    dataIndex: 'recoverNum',
+  },
+  {
+    title: '未回访',
+    dataIndex: 'noVisitNum',
+  },
+  {
+    title: '样本接收人',
+    dataIndex: 'sampleAcceptBy',
+  },
+  {
+    title: '样本接收日期',
+    dataIndex: 'sampleAcceptAt',
+  },
+  {
+    title: '样本发布人',
+    dataIndex: 'samplePublishBy',
+  },
+  {
+    title: '样本发布日期',
+    dataIndex: 'samplePublishAt',
+  },
+  {
     title: '确认人',
     dataIndex: 'checker',
   },

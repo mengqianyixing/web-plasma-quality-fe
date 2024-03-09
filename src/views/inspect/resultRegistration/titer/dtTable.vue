@@ -59,6 +59,10 @@
       type: String,
       default: '',
     },
+    pv: {
+      type: Number,
+      default: 0,
+    },
   });
   let userData = {};
 
@@ -139,6 +143,13 @@
       return res;
     },
   });
+  function formatter(n: string) {
+    const { pv } = props;
+    const reg1 = new RegExp(`[.]{1,1}[0-9]{${pv + 1}}`);
+    const reg2 = new RegExp(`([0-9]+[.]{1,1}[0-9]{${pv},${pv}})[0-9]+`);
+    if (reg1.test(n)) return n.replace(reg2, '$1');
+    return n;
+  }
   async function handleSubmit() {
     const { conclusion, reason, titerValue } = (await validate()) as any;
     const { username, userId } = userData as any;
@@ -161,15 +172,23 @@
     const [row] = rows;
     openModal(true);
     await nextTick();
-    updateSchema({
-      field: 'conclusion',
-      componentProps: {
-        options: serverEnumStore.getServerEnum(SERVER_ENUM.TiterLevel).map((it) => ({
-          value: it.value === 'N' ? it.value : props.plasmaType + it.value,
-          label: it.value === 'N' ? it.label : PlasmaType(props.plasmaType) + it.label,
-        })),
+    updateSchema([
+      {
+        field: 'conclusion',
+        componentProps: {
+          options: serverEnumStore.getServerEnum(SERVER_ENUM.TiterLevel).map((it) => ({
+            value: it.value === 'N' ? it.value : props.plasmaType + it.value,
+            label: it.value === 'N' ? it.label : PlasmaType(props.plasmaType) + it.label,
+          })),
+        },
       },
-    });
+      {
+        field: 'titerValue',
+        componentProps: {
+          formatter,
+        },
+      },
+    ]);
     resetFields();
     setFieldsValue(row);
     clearValidate();

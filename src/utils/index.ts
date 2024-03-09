@@ -169,3 +169,5 @@ export const treeLevelGroup = <T>(
   }
   return levelGroup;
 };
+
+export const formatKg = (text) => (text || text === 0 ? parseFloat((text / 1000).toFixed(3)) : '');
