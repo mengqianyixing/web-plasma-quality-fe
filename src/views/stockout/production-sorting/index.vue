@@ -408,10 +408,10 @@
         if (res.data.ok === true) {
           const data = res.data.data;
           // 血浆不合格
-          if (data.track) {
+          if (data.unqReason) {
             openUnqualifiedModal(true, {
               bagNo: bagNo.value,
-              track: data.track,
+              unqReason: data.unqReason,
             });
             return;
           }
