@@ -154,6 +154,7 @@
   function handleAdd(record: Recordable) {
     openStyleModal(true, {
       record,
+      labelType: labelTypeDictionary.value,
       isUpdate: false,
     });
   }
@@ -165,6 +166,7 @@
     if (action) return;
 
     openStyleModal(true, {
+      labelType: labelTypeDictionary.value,
       record: selectedRow.value[0],
       isUpdate: true,
     });

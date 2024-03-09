@@ -5,7 +5,6 @@ import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
 const serverEnumStore = useServerEnumStoreWithOut();
-const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 export const columns: BasicColumn[] = [
   {
@@ -147,17 +146,9 @@ export const callbackModalColumns: BasicColumn[] = [
     dataIndex: 'refuseReason',
   },
   {
-    title: '血浆类型',
-    dataIndex: 'immType',
-    format: (text) => {
-      return PlasmaType(text);
-    },
-  },
-  {
     title: '性别',
     dataIndex: 'gender',
   },
-
   {
     title: '最早待回访采浆日期',
     dataIndex: 'minCollTime',
