@@ -1,11 +1,11 @@
 <!--
- * @Descripttion: 
- * @version: 
- * @Author: zcc
- * @Date: 2023-12-21 09:52:52
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-31 17:05:02
--->
+    * @Descripttion: 
+    * @version: 
+    * @Author: zcc
+    * @Date: 2023-12-21 09:52:52
+    * @LastEditors: zcc
+    * @LastEditTime: 2024-01-13 18:02:10
+   -->
 <template>
   <div class="h-full">
     <div style="box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%)" class="pt-12px m-24px mt-8px">
@@ -22,16 +22,19 @@
   import {
     taryRelocationColumns,
     trayRelocationFormSchema,
+    siteSchema,
     locationSchema,
+    areaSchema,
   } from './relocation.data';
   import TrayModel from './component/trayModal.vue';
   import { useModal } from '@/components/Modal';
   import { settingListApi } from '@/api/plasmaStore/setting';
   import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
-  import { reactive, onMounted } from 'vue';
+  import { reactive, nextTick } from 'vue';
   import { submitRelocationApi, taryHouseApi } from '@/api/tray/relocation';
   import LocationModal from '@/components/BusinessDrawer/locationDrawer/index.vue';
-  import { message } from 'ant-design-vue';
+  import { getHouseSiteApi } from '@/api/plasmaStore/site';
+  import { useLoading } from '@/components/Loading';
 
   const state = reactive<{
     houseList: Recordable[];
@@ -39,17 +42,28 @@
 
   const [registerTrayModal, { openModal: openTrayModal }] = useModal();
   const [registerLocationModal, { openModal: openLocationModal }] = useModal();
+  const [openFullLoading, closeFullLoading] = useLoading({});
 
   const [
     registerForm,
-    { validate, setFieldsValue, updateSchema, getFieldsValue, resetFields, clearValidate },
+    {
+      validate,
+      setFieldsValue,
+      updateSchema,
+      appendSchemaByField,
+      removeSchemaByField,
+      getFieldsValue,
+      resetFields,
+      clearValidate,
+    },
   ] = useForm({
     labelWidth: 90,
     baseColProps: { flex: '0 0 370px' },
-    schemas: trayRelocationFormSchema,
+    schemas: trayRelocationFormSchema(handleTraySelect, houseChange),
     showActionButtonGroup: true,
     showResetButton: false,
     submitButtonOptions: { text: '确认移库' },
+    actionColOptions: { span: 4 },
   });
 
   const [registerTable] = useTable({
@@ -70,19 +84,16 @@
     size: 'small',
   });
   async function handleLoacationSelect(value: string, event: MouseEvent) {
-    const { trayNo } = getFieldsValue();
-    if (!trayNo) return message.warning('请先选择托盘');
-    const res = await taryHouseApi({ trayNo });
-    if (!res) return message.warning('未查询到托盘在库信息');
-    if (res.houseType[1] !== STORE_FLAG.S) return message.warning('请选择或输入存放于高架库的托盘');
     if (value && event.type !== 'click') return;
-    openLocationModal(true, { params: { houseNo: res.houseNo, locationStatus: 'IDLE' } });
+    const { houseNo } = getFieldsValue();
+    openLocationModal(true, { params: { houseNo, locationStatus: 'IDLE' } });
   }
   function locationConfim([{ locationNo }]) {
     setFieldsValue({ [locationSchema.field]: locationNo });
     openLocationModal(false);
   }
   async function handleTraySelect(value: string, event: MouseEvent) {
+    openTrayModal(true, { params: { closed: 0 } });
     if (value && event.type !== 'click') {
       searchTrayInfo(value);
     } else {
@@ -95,23 +106,55 @@
     openTrayModal(false);
   }
   async function searchTrayInfo(trayNo: string) {
+    const values = getFieldsValue();
+    removeSchemaByField(siteSchema.field);
+    if (!values.houseNo || !trayNo) return;
+    // 根据托盘查询老库房
     const res = await taryHouseApi({ trayNo });
-    if (!res) return message.warning('未查询到托盘在库信息');
-    const { houseType } = res;
-    if (houseType[1] !== STORE_FLAG.S) return message.warning('请选择或输入存放于高架库的托盘');
+    if (!res) return;
+    const { houseNo, houseType } = res;
+    if (!houseNo) return;
+    // 高架库
+    if (houseType[1] === STORE_FLAG.S && values.houseNo !== houseNo) {
+      const res = await getHouseSiteApi({ houseNo: houseNo });
+      appendSchemaByField({ ...siteSchema, componentProps: { options: res } }, 'houseNo');
+    }
+    updateSchema({ field: locationSchema.field, required: houseNo === values.houseNo });
+    return { houseNo, houseType };
   }
-
+  async function houseChange() {
+    await nextTick();
+    const values = getFieldsValue();
+    const res = await searchTrayInfo(values.trayNo);
+    const { houseType } = state.houseList.find((_) => _.value === values.houseNo) as Recordable;
+    removeSchemaByField(areaSchema.field);
+    removeSchemaByField(locationSchema.field);
+    if (houseType[1] === STORE_FLAG.S) {
+      const componentProps = { 'enter-button': '选择', onSearch: handleLoacationSelect };
+      appendSchemaByField(
+        {
+          ...locationSchema,
+          componentProps: componentProps,
+          required: res?.houseNo === values.houseNo,
+        },
+        void 0,
+      );
+    }
+  }
   async function inStoreConfim() {
     try {
-      const { locationNo, trayNo } = await validate();
+      const { houseNo, siteId, locationNo, trayNo } = await validate();
+      openFullLoading();
       await submitRelocationApi({
         trayNo,
         targetLocatonNo: locationNo,
+        targetHouseNo: houseNo,
+        siteNo: siteId,
       });
       resetFields();
       clearValidate();
-    } catch (e) {
-      console.log(e);
+    } finally {
+      closeFullLoading();
     }
   }
 
@@ -134,18 +177,4 @@
 
   getHouseList();
   getSiteList();
-  onMounted(() => {
-    updateSchema([
-      {
-        field: locationSchema.field,
-        componentProps: { 'enter-button': '选择', onSearch: handleLoacationSelect },
-      },
-      {
-        field: 'trayNo',
-        componentProps: {
-          onSearch: handleTraySelect,
-        },
-      },
-    ]);
-  });
 </script>

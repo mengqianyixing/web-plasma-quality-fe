@@ -1,3 +1,11 @@
+<!--
+ * @Author: chiyifan chiyf@stpass.com
+ * @Date: 2024-03-09 15:56:23
+ * @LastEditors: chiyifan chiyf@stpass.com
+ * @LastEditTime: 2024-03-09 16:58:25
+ * @FilePath: \psms-fe\src\views\stockout\production-sorting\components\unqualified-modal.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <BasicModal
     v-bind="$attrs"
@@ -20,7 +28,6 @@
   import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
-  import { BagTrackMap, BagTrackValueEnum } from '@/enums/stockoutEnum';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const emit = defineEmits(['success', 'register']);
@@ -29,7 +36,7 @@
 
   let prepareDetail = {
     bagNo: '',
-    track: '',
+    unqReason: '',
   };
   const [registerForm, { setFieldsValue, validate, resetFields }] = useForm({
     layout: 'horizontal',
@@ -63,9 +70,7 @@
     prepareDetail = { ...data };
     setModalProps({
       maskClosable: false,
-      title: `${prepareDetail.bagNo}为${BagTrackMap.get(
-        prepareDetail.track as BagTrackValueEnum,
-      )}血浆，请进行复核确认!`,
+      title: `${prepareDetail.bagNo}为${prepareDetail.unqReason}血浆，请进行复核确认!`,
     });
   });
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();

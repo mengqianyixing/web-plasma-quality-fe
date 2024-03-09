@@ -263,3 +263,26 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
 ];
+
+export const dtColumns: BasicColumn[] = [
+  {
+    dataIndex: 'donorNo',
+    title: '浆员编号',
+  },
+  {
+    dataIndex: 'name',
+    title: '浆员姓名',
+  },
+  {
+    dataIndex: 'batchNo',
+    title: '血浆批号',
+  },
+  {
+    dataIndex: 'bagNo',
+    title: '血浆编号',
+  },
+  {
+    dataIndex: 'collectionAt',
+    title: '血浆采集日期',
+  },
+];

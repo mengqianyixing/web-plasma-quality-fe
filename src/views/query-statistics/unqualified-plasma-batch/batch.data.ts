@@ -85,7 +85,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: '[inStoreStartDate, inStoreEndDate]',
     component: 'RangePicker',
-    label: '入库日期',
+    label: '入库日期起止',
     componentProps: {
       valueFormat: 'YYYY-MM-DD',
     },

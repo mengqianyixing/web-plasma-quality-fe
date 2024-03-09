@@ -4,7 +4,6 @@ import {
   boxTypeMap,
   boxTypeEnum,
   TRAY_IN_STATE_TEXT,
-  TRAY_OUT_STATE_LIST,
   TRAY_OUT_STATE_TEXT,
 } from '@/enums/stockoutEnum';
 
@@ -178,7 +177,11 @@ export const trayOutStoreFormSchema: FormSchema[] = [
     field: 'state',
     component: 'Select',
     componentProps: {
-      options: TRAY_OUT_STATE_LIST,
+      options: [
+        { value: 'S', label: '已出库' },
+        { value: 'W', label: '未出库' },
+        { value: 'R', label: '出库中' },
+      ],
     },
   },
   {

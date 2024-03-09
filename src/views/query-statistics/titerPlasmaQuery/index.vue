@@ -1,6 +1,20 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" />
+    <BasicTable @register="registerTable">
+      <template #[slot.slotName]="data" v-for="slot in slots" :key="slot.slotName">
+        <span v-if="data.record.isCount">
+          {{ get(data.record, slot.key) }}
+        </span>
+        <span
+          v-else
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="cellClick(slot.slotName, data.record)"
+        >
+          {{ get(data.record, slot.key) }}
+        </span>
+      </template>
+    </BasicTable>
+    <TabelModal @register="registerModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -10,9 +24,22 @@
   import { getListApi } from '@/api/query-statistics/titerPlasmaQuery';
   import { isArray, isObject } from '@/utils/is';
   import { PostApiCoreBagTiterResponse } from '@/api/type/queryStatistics';
+  import { get } from 'lodash-es';
+  import { useModal } from '@/components/Modal';
+  import TabelModal from './tabelModal.vue';
 
   defineOptions({ name: 'TiterPlasmaQuery' });
 
+  const [registerModal, { openModal }] = useModal();
+
+  const slots = ['B', 'R', 'T', 'N', 'G'].reduce((res: Recordable[], it) => {
+    const list = [
+      { slotName: it + 'N', key: it + '.' + 'nTiter' },
+      { slotName: it + 'L', key: it + '.' + 'lTiter' },
+      { slotName: it + 'H', key: it + '.' + 'hTiter' },
+    ];
+    return [...res, ...list];
+  }, []);
   const [registerTable] = useTable({
     api: getListApi,
     columns,
@@ -39,6 +66,11 @@
       return [...formatData, row];
     },
   });
+  function cellClick(slotName: string, data: Recordable) {
+    const [rawImm, titerLevel] = slotName.split('');
+    const { batchNo, stationNo } = data;
+    openModal(true, { rawImm, titerLevel, batchNo, stationNo });
+  }
   function getCountRow(data: Recordable[]) {
     const row = columns.reduce((row, { dataIndex, children = [] }) => {
       row[dataIndex as string] = 0;
@@ -73,6 +105,6 @@
       row[it]['nRatio'] = row[it]['nTiter'] / row['bagCount'];
     });
 
-    return { ...row, stationName: '合计', batchNo: '批次数：' + data.length + '批' };
+    return { ...row, stationName: '合计', batchNo: '批次数：' + data.length + '批', isCount: true };
   }
 </script>

@@ -1,6 +1,16 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" />
+    <BasicTable @register="registerTable">
+      <template #testCount="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="openModal(true, record)"
+        >
+          {{ record.testCount }}
+        </span>
+      </template>
+    </BasicTable>
+    <TabelModal @register="registerModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -8,8 +18,13 @@
   import { columns, searchFormSchema } from './data';
   import { PageWrapper } from '@/components/Page';
   import { getListApi } from '@/api/query-statistics/checkResult';
+  import TabelModal from './tabelModal.vue';
+
+  import { useModal } from '@/components/Modal';
 
   defineOptions({ name: 'CheckResult' });
+
+  const [registerModal, { openModal }] = useModal();
 
   const [registerTable] = useTable({
     api: getListApi,

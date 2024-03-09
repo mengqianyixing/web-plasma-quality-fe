@@ -55,6 +55,7 @@ export const columns: BasicColumn[] = [
     title: '检测数量',
     dataIndex: 'testCount',
     width: 150,
+    slots: { customRender: 'testCount' },
   },
   {
     title: '检测合格',
@@ -177,5 +178,45 @@ export const searchFormSchema: FormSchema[] = [
       class: 'w-full',
       valueFormat: 'YYYY-MM-DD',
     },
+  },
+];
+
+export const dtColumns: BasicColumn[] = [
+  {
+    dataIndex: 'sampleNo',
+    title: '样本编号',
+  },
+  {
+    dataIndex: 'project',
+    title: '检测项目',
+  },
+  {
+    dataIndex: 'conclusion',
+    title: '检测结果',
+  },
+  {
+    dataIndex: 'checkAt',
+    title: '检测日期',
+    format: (t) => t?.slice(0, 10),
+  },
+  {
+    dataIndex: 'unqualified',
+    title: '不合格',
+  },
+  {
+    dataIndex: 'od',
+    title: 'OD值',
+  },
+  {
+    dataIndex: 'Cutoff值',
+    title: 'CuttOff',
+  },
+  {
+    dataIndex: 'ct',
+    title: 'CT值',
+  },
+  {
+    dataIndex: 'titerValue',
+    title: '效价值',
   },
 ];
