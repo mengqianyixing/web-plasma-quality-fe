@@ -26,7 +26,6 @@
         <a-tab-pane key="detail" tab="血浆明细">
           <BasicTable @register="registerDetailTable">
             <template #toolbar>
-              <a-button type="primary" :disabled="isPreview"> 挑浆系统 </a-button>
               <a-button type="primary" @click="handlePickPlasma" :disabled="isPreview">
                 挑选血浆
               </a-button>

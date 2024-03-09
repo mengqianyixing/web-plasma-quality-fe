@@ -62,6 +62,7 @@
           >
             撤销审核
           </a-button>
+          <a-button type="primary"> 挑浆系统 </a-button>
           <a-button type="primary" @click="handleScan" v-auth="StockOutButtonEnum.NonPutIntoScan">
             扫描出库
           </a-button>
