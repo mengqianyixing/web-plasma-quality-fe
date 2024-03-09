@@ -736,8 +736,8 @@
    */
   function initBox(data, needSelect = false) {
     // 处理箱数据 pros => 投产列表  unPro => 不投产列表(A时为空、B时为不投产)  utrkUnPro => 不投产或待放行（A时为不投产、B时为待放行）作为 bottomBoxData 数据
+    topBoxData.value = [];
     if (data.pros?.bagNos.length) {
-      topBoxData.value = [];
       topBoxData.value.push({
         title: '可投产',
         immType: data.pros?.immType,
