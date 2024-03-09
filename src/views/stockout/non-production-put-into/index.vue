@@ -1,8 +1,11 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
-      <template #mesId="{ record }">
-        <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleMesClick()">
+      <template #dlvNo="{ record }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDlvNoClick(record)"
+        >
           {{ record?.dlvNo }}
         </span>
       </template>
@@ -59,6 +62,7 @@
           >
             撤销审核
           </a-button>
+          <a-button type="primary"> 挑浆系统 </a-button>
           <a-button type="primary" @click="handleScan" v-auth="StockOutButtonEnum.NonPutIntoScan">
             扫描出库
           </a-button>
@@ -143,14 +147,17 @@
     }
   }
 
-  function handleMesClick() {
+  function handleDlvNoClick(record) {
     openOperateModal(true, {
       isPreview: true,
+      isUpdate: false,
+      record,
     });
   }
 
   function handleAdd() {
     openOperateModal(true, {
+      isPreview: false,
       isUpdate: false,
     });
   }
@@ -164,6 +171,7 @@
     }
 
     openOperateModal(true, {
+      isPreview: false,
       isUpdate: true,
       record: selectedRow.value[0],
     });

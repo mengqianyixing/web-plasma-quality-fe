@@ -56,6 +56,9 @@
       schemas: searchFormSchema,
       alwaysShowLines: 7,
       showAdvancedButton: true,
+      transformDateFunc(date) {
+        return date ? date.format('YYYY-MM-DD') : '';
+      },
     },
     fetchSetting: {
       pageField: 'currPage',
