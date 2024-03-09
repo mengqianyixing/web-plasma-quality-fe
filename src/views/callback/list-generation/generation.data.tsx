@@ -1,10 +1,5 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import {
-  CallbackStateMap,
-  CallbackStateValueEnum,
-  donorStatusMap,
-  donorStatusValueEnum,
-} from '@/enums/callbackEnum';
+import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
 import dayjs, { Dayjs } from 'dayjs';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
@@ -21,8 +16,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '采浆公司',
-    dataIndex: 'stationNo',
-    slots: { customRender: 'stationNo' },
+    dataIndex: 'stationName',
   },
   {
     title: '浆员数量',
@@ -39,22 +33,27 @@ export const columns: BasicColumn[] = [
   {
     title: '自主回访',
     dataIndex: 'selfBackNum',
+    width: 80,
   },
   {
     title: '回访成功',
     dataIndex: 'okNum',
+    width: 80,
   },
   {
     title: '回访失败',
     dataIndex: 'failedNum',
+    width: 80,
   },
   {
     title: '恢复采浆',
     dataIndex: 'recoverNum',
+    width: 80,
   },
   {
     title: '未回访',
     dataIndex: 'noVisitNum',
+    width: 80,
   },
   {
     title: '样本接收人',
@@ -83,9 +82,8 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'state',
-    fixed: 'right',
     format(text) {
-      return CallbackStateMap.get(text as CallbackStateValueEnum) as string;
+      return serverEnumStore.getServerEnumText(SERVER_ENUM.CallbackPlanState)(text);
     },
   },
 ];
@@ -115,10 +113,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '状态',
     component: 'Select',
     componentProps: {
-      options: [...CallbackStateMap.entries()].map(([key, value]) => ({
-        label: value,
-        value: key,
-      })),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.CallbackPlanState),
     },
   },
 ];

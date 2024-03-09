@@ -9,9 +9,6 @@
           {{ record?.planNo }}
         </span>
       </template>
-      <template #stationNo="{ record }">
-        {{ formatStationNo(record) }}
-      </template>
       <template #toolbar>
         <div class="flex gap-2">
           <a-button type="primary" @click="handleAdd" v-auth="CallbackButtonEnum.ListGeneAdd">
