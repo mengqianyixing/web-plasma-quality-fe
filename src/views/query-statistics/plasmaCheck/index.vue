@@ -14,9 +14,10 @@
         <BasicTable @register="tableList[i][0]" />
       </TabPane>
     </Tabs>
+    <TabelModal @register="registerModal" />
   </PageWrapper>
 </template>
-<script lang="ts" setup>
+<script lang="tsx" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import {
     checkColumns,
@@ -45,9 +46,12 @@
     DictionaryReasonEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
+  import { useModal } from '@/components/Modal';
+  import TabelModal from './tabelModal.vue';
 
   defineOptions({ name: 'PlasmaTest' });
 
+  const [registerModal, { openModal }] = useModal();
   const activeKey = ref('0');
   const CheckColumns = cloneDeep(checkColumns);
   let params = {};
@@ -178,7 +182,7 @@
     [checkKey, checkUnKey, exteriorKey].forEach((key) => {
       row[key][ratioKey] = row[key][numKey] / (row[bagCountKey] || 1);
     });
-    return { ...row, batch: '--', batchCount: '--', stationName: '合计' };
+    return { ...row, batch: '--', batchCount: '--', stationName: '合计', isCount: true };
   }
   function getFollowUpCountRow(data: Recordable[]) {
     const row = followUpColumns.reduce((row, { dataIndex, children = [] }) => {
@@ -216,6 +220,17 @@
         dataIndex: [exteriorKey, it.dictItemId],
         title: it.label,
         width: it.label.length * 18,
+        customRender: ({ record }) => {
+          if (record.isCount) return record[exteriorKey]?.[it.dictItemId];
+          return (
+            <span
+              class="text-blue-500 underline cursor-pointer"
+              onClick={() => cellClick(it.dictItemId, it.label, record)}
+            >
+              {record[exteriorKey]?.[it.dictItemId]}
+            </span>
+          );
+        },
       })),
     );
     CheckColumns[6].children?.unshift(
@@ -223,9 +238,34 @@
         dataIndex: [checkUnKey, it.dictItemId],
         title: it.label,
         width: it.label.length * 18,
+        customRender: ({ record }) => {
+          if (record.isCount) return record[checkUnKey]?.[it.dictItemId];
+          console.log(record.isCount);
+          return (
+            <span
+              class="text-blue-500 underline cursor-pointer"
+              onClick={() => cellClick(it.dictItemId, it.label, record)}
+            >
+              {record[checkUnKey]?.[it.dictItemId]}
+            </span>
+          );
+        },
       })),
     );
     tableList[0][1].setColumns(CheckColumns);
     reload();
   });
+  function cellClick(failedCode: string, title: string, record: Recordable) {
+    const { getForm } = tableList[0][1];
+    const [batchNoBegin, batchNoEnd] = record.batch.split('~');
+    const values = getForm().getFieldsValue();
+    openModal(true, {
+      failedCode,
+      title,
+      ...values,
+      stationNo: record.stationNo,
+      batchNoBegin,
+      batchNoEnd,
+    });
+  }
 </script>
