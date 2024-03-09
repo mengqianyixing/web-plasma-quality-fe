@@ -119,17 +119,26 @@
       const res = await getHouseSiteApi({ houseNo: houseNo });
       appendSchemaByField({ ...siteSchema, componentProps: { options: res } }, 'houseNo');
     }
+    updateSchema({ field: locationSchema.field, required: houseNo === values.houseNo });
+    return { houseNo, houseType };
   }
   async function houseChange() {
     await nextTick();
     const values = getFieldsValue();
-    searchTrayInfo(values.trayNo);
+    const res = await searchTrayInfo(values.trayNo);
     const { houseType } = state.houseList.find((_) => _.value === values.houseNo) as Recordable;
     removeSchemaByField(areaSchema.field);
     removeSchemaByField(locationSchema.field);
     if (houseType[1] === STORE_FLAG.S) {
       const componentProps = { 'enter-button': '选择', onSearch: handleLoacationSelect };
-      appendSchemaByField({ ...locationSchema, componentProps: componentProps }, void 0);
+      appendSchemaByField(
+        {
+          ...locationSchema,
+          componentProps: componentProps,
+          required: res?.houseNo === values.houseNo,
+        },
+        void 0,
+      );
     }
   }
   async function inStoreConfim() {
