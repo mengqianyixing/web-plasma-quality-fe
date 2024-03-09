@@ -80,6 +80,7 @@
     completeSorting,
     // completeSortingBatchNo,
   } from '@/api/stockout/production-sorting/production-sorting-main';
+  // import { getPrintRecord, printRecord } from '@/api/tag/printRecord';
   import InStoreModal from './components/in-store-modal.vue';
   import OutStoreModal from './components/out-store-modal.vue';
   import UnqualifiedModal from './components/unqualified-modal.vue';
@@ -275,6 +276,9 @@
             </a-button>
             {/* <a-button disabled={!prepareNo.value} onclick={_completeBatchNo}>
               批次完成
+            </a-button> */}
+            {/* <a-button disabled={!prepareNo.value} onclick={printBox}>
+              打印
             </a-button> */}
           </div>
         );
@@ -570,7 +574,9 @@
                   // 走封箱操作 不需要提示
                   // _sortingBoxSealing(targetBox, true);
                   // 走打印逻辑
+                  // printBox();
                   console.log('OK');
+                  prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
                 },
                 onCancel() {
                   console.log('Cancel');
@@ -1046,6 +1052,22 @@
       batchNo: batchData.value?.batchSummary?.batchNo,
     });
   }
+
+  // // 打印箱签
+  // async function printBox() {
+  //   // 获取标签相关样式
+  //   const res = await getPrintRecord({
+  //     labelType: 'SORTING_BOX',
+  //     bissNo: data.boxNo, // 业务主键号
+  //     param: {},
+  //   });
+  //   const params = {
+  //     ...res,
+  //     dpi: res.resolution,
+  //   };
+  //   delete params.resolution;
+  //   await printRecord(params);
+  // }
 </script>
 <style lang="less" scoped>
   .card-bar-header {
