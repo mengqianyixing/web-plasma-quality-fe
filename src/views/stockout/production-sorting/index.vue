@@ -56,6 +56,7 @@
 
 <script lang="tsx" setup>
   import { ref, createVNode, nextTick } from 'vue';
+  // import { useUserStore } from '@/store/modules/user';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
@@ -65,6 +66,7 @@
   import { debounce } from 'lodash-es';
   import { useMessage } from '@/hooks/web/useMessage';
   import { useLoading } from '@/components/Loading';
+  // import dayjs from 'dayjs';
 
   import PrepareModal from '@/views/stockout/production-sorting/components/prepare-modal.vue';
   import PackingInfoModal from '@/views/stockout/production-sorting/components/packing-info-modal.vue';
@@ -89,6 +91,7 @@
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+  // const userInfo = useUserStore();
   defineOptions({ name: 'ProductionSorting' });
 
   const serverEnumStore = useServerEnumStoreWithOut();
@@ -574,7 +577,7 @@
                   // 走封箱操作 不需要提示
                   // _sortingBoxSealing(targetBox, true);
                   // 走打印逻辑
-                  // printBox();
+                  // printBox(data);
                   console.log('OK');
                   prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
                 },
@@ -928,6 +931,8 @@
         const res = await sortingBoxSealing(params);
         console.log('封箱成功:', res);
         success('封箱成功!');
+        // 走打印逻辑
+        // printBox();
         // 请求总览数据
         prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
       } finally {
@@ -1058,9 +1063,17 @@
   //   // 获取标签相关样式
   //   const res = await getPrintRecord({
   //     labelType: 'SORTING_BOX',
-  //     bissNo: data.boxNo, // 业务主键号
-  //     param: {},
+  //     bissNo: '34234',
+  //     param: {
+  //       batchNo: '2334N344003 2334N344001',
+  //       plasmaType: '暂写普浆',
+  //       creater: userInfo.getUserInfo.username,
+  //       packageDate: dayjs().format('YYYY-MM-DD'),
+  //       bagCount: '12',
+  //       boxNo: '34234',
+  //     },
   //   });
+  //   console.log(res, '1212312');
   //   const params = {
   //     ...res,
   //     dpi: res.resolution,
