@@ -7,6 +7,7 @@
  * @LastEditTime: 2024-01-17 16:41:27
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
+import { TRAY_IN_STATE_TEXT } from '@/enums/stockoutEnum';
 
 export const columns: BasicColumn[] = [
   {
@@ -20,6 +21,11 @@ export const columns: BasicColumn[] = [
   {
     title: '库房',
     dataIndex: 'wareHouseName',
+  },
+  {
+    title: '入库状态',
+    dataIndex: 'trayStatus',
+    format: (text) => TRAY_IN_STATE_TEXT.get(text) as string,
   },
 ];
 
