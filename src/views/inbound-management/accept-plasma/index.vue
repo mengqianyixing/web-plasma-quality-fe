@@ -449,8 +449,8 @@
           filterForm.value.verifyBoxCount = data.verifyBoxCount;
           filterForm.value.boxCount = data.boxCount;
           filterForm.value.stationNo = data.stationNo;
-          // filterForm.value.boxNo = data.boxNo;
-          if (data?.boxNo) filterForm.value.boxNo = data.boxNo;
+          filterForm.value.boxNo = data.boxNo;
+          // if (data?.boxNo) filterForm.value.boxNo = data.boxNo;
           // trayNo.value = data?.trayNo || '';
           if (data?.trayNo) trayNo.value = data.trayNo;
           filterForm.value.unVerifyBag = data.unVerifyBag.map((item: any) => {

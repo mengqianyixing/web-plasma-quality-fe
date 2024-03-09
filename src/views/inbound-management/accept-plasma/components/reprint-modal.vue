@@ -12,8 +12,6 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { nextTick } from 'vue';
-
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm, FormSchema } from '@/components/Form';
   import { getPrintRecord } from '@/api/tag/printRecord';
@@ -135,12 +133,11 @@
   }
 
   function handleVisibleChange(visible) {
-    console.log('asdasdddddddddddddddddasd');
     if (visible) {
-      nextTick(() => {
+      setTimeout(() => {
         const okButton = document.querySelector('.ant-modal .ant-btn-primary') as HTMLElement;
         okButton && okButton.focus();
-      });
+      }, 500);
     }
   }
 </script>
