@@ -24,10 +24,11 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup>
+  import { useRoute } from 'vue-router';
   import { PageWrapper } from '@/components/Page';
   import { batchColumns, callbackColumns, donorSchema, searchFormSchema } from './donor.data';
   import { BasicForm, useForm } from '@/components/Form';
-  import { ref, watch, unref } from 'vue';
+  import { ref, watch, unref, onMounted } from 'vue';
   import { TabPane, Tabs } from 'ant-design-vue';
   import Chart from './chart.vue';
   import { BasicTable, useTable } from '@/components/Table';
@@ -40,8 +41,9 @@
   import { Description, useDescription } from '@/components/Description';
 
   defineOptions({ name: 'DonorQuery' });
+  const router = useRoute();
 
-  const [register, { getFieldsValue }] = useForm({
+  const [register, { getFieldsValue, setFieldsValue }] = useForm({
     schemas: searchFormSchema,
     submitOnReset: true,
     baseColProps: { flex: '0 0 370px' },
@@ -147,6 +149,13 @@
     immediate: false,
     showIndexColumn: true,
     canResize: true,
+  });
+
+  onMounted(() => {
+    setFieldsValue({ donorNo: router.query.donorNo });
+    setTimeout(() => {
+      handleSubmit();
+    }, 0);
   });
 </script>
 <style scoped lang="less">
