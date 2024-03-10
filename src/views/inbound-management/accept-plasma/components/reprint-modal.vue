@@ -18,7 +18,13 @@
   import { BasicForm, useForm, FormSchema } from '@/components/Form';
   import { getPrintRecord } from '@/api/tag/printRecord';
   import { useUserStore } from '@/store/modules/user';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+
   import dayjs from 'dayjs';
+
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
   const userInfo = useUserStore();
   defineOptions({ name: 'ReprintModal' });
@@ -96,7 +102,7 @@
         stationName: data.stationName,
         batchNo: data.batchNo,
         bagNo: `${minBagNo}-${maxBagNo}`,
-        plasmaType: '暂写普通',
+        plasmaType: PlasmaType(data.plasmaType),
         bagCount: acceptList?.length,
         operator: userInfo.getUserInfo.username,
         packageDate: dayjs().format('YYYY-MM-DD'),
