@@ -10,23 +10,32 @@
       </template>
       <template #batchCount="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="goPickBatchDetail(record)">
+          <!-- <a-button type="link" @click="goPickBatchDetail(record)">
             {{ record.summary?.batchCount }}
-          </a-button>
+          </a-button> -->
+          <span>
+            {{ record.summary?.batchCount }}
+          </span>
         </div>
       </template>
       <template #pickBagCount="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="goPlasmaDetail(record)">
+          <!-- <a-button type="link" @click="goPlasmaDetail(record)">
             {{ record.summary?.pickBagCount }}
-          </a-button>
+          </a-button> -->
+          <span>
+            {{ record.summary?.pickBagCount }}
+          </span>
         </div>
       </template>
       <template #prodBagCount="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="goPlasmaDetail(record, 'prepareProduce')">
+          <!-- <a-button type="link" @click="goPlasmaDetail(record, 'prepareProduce')">
             {{ record.summary?.prodBagCount }}
-          </a-button>
+          </a-button> -->
+          <span>
+            {{ record.summary?.prodBagCount }}
+          </span>
         </div>
       </template>
       <template #toolbar>
@@ -94,8 +103,8 @@
     <RevokeModal @register="registerRevokeModal" @success="handleSuccessRevoke" />
     <RevokeCheckModal @register="registerRevokeCheckModal" @success="handleSuccessRevokeCheck" />
     <SummaryModal @register="registerSummaryModal" @success="handleSuccessSummary" />
-    <PickBatchDetail @register="registerPickBatchDetailModal" />
-    <PlasmaDetail @register="registerPlasmaDetailModal" />
+    <!-- <PickBatchDetail @register="registerPickBatchDetailModal" /> -->
+    <!-- <PlasmaDetail @register="registerPlasmaDetailModal" /> -->
   </div>
 </template>
 <script lang="ts" setup>
@@ -112,8 +121,8 @@
   import RevokeModal from './components/RevokeModal.vue';
   import RevokeCheckModal from './components/RevokeCheckModal.vue';
   import CreateModal from './components/CreateModal.vue';
-  import PickBatchDetail from '../components/PickBatchDetail.vue';
-  import PlasmaDetail from '../components/PlasmaDetail.vue';
+  // import PickBatchDetail from '../components/PickBatchDetail.vue';
+  // import PlasmaDetail from '../components/PlasmaDetail.vue';
   import {
     getPrepareList,
     completePrepare,
@@ -530,20 +539,20 @@
     });
   }
 
-  // 分拣批次信息
-  const [registerPickBatchDetailModal, { openModal: openPickBatchDetailModal }] = useModal();
-  function goPickBatchDetail(record) {
-    openPickBatchDetailModal(true, {
-      record,
-    });
-  }
+  // // 分拣批次信息
+  // const [registerPickBatchDetailModal, { openModal: openPickBatchDetailModal }] = useModal();
+  // function goPickBatchDetail(record) {
+  //   openPickBatchDetailModal(true, {
+  //     record,
+  //   });
+  // }
 
-  // 血浆明细
-  const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
-  function goPlasmaDetail(record, prepareProduce?) {
-    openPlasmaDetailModal(true, {
-      record,
-      prepareProduce,
-    });
-  }
+  // // 血浆明细
+  // const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
+  // function goPlasmaDetail(record, prepareProduce?) {
+  //   openPlasmaDetailModal(true, {
+  //     record,
+  //     prepareProduce,
+  //   });
+  // }
 </script>
