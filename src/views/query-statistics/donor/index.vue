@@ -1,38 +1,18 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight class="p-5px">
-    <BasicForm
-      @register="register"
-      class="bg-white"
-      style="height: 50px; padding: 10px 0"
-      @submit="handleSubmit"
-    />
-    <div class="m-5px bg-white p-10px">
+    <BasicForm @register="register" class="bg-white h-12 pt-2" @submit="handleSubmit" />
+    <div class="m-2 bg-white p-3">
       <div class="title">浆员基本信息</div>
       <Description @register="donorTable" :data="mockData" />
     </div>
-    <Tabs
-      class="flex-1 bg-white p-10px m-10px"
-      type="card"
-      size="small"
-      v-model:activeKey="activeKey"
-    >
+    <Tabs class="flex-1 bg-white p-4 m-2" type="card" size="small" v-model:activeKey="activeKey">
       <TabPane key="batch" tab="血浆明细">
-        <BasicTable
-          @register="batchTable"
-          :key="donorNo"
-          class="donor-tab"
-          style="margin-top: -4px"
-        />
+        <BasicTable @register="batchTable" :key="donorNo" class="donor-tab mt--2" />
       </TabPane>
       <TabPane key="callBack" tab="回访明细">
-        <BasicTable
-          @register="callBackTable"
-          :key="donorNo"
-          class="donor-tab"
-          style="margin-top: -4px"
-        />
+        <BasicTable @register="callBackTable" :key="donorNo" class="donor-tab mt--2" />
       </TabPane>
-      <TabPane key="titer" tab="效价趋势" style="margin-top: -4px">
+      <TabPane key="titer" tab="效价趋势" class="mt--2">
         <Chart />
       </TabPane>
     </Tabs>
