@@ -37,6 +37,7 @@
         return updateSchema({ field: 'optName', componentProps: { options: [] } });
       }
       const list = await getSelectListApi({ moduleName });
+      setFieldsValue({ optName: void 0 });
       updateSchema({
         field: 'optName',
         componentProps: { options: list.map((it) => ({ value: it, label: it })) },

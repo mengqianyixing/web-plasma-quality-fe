@@ -62,8 +62,6 @@
   import { propTypes } from '@/utils/propTypes';
   import { openWindow } from '@/utils';
   import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
-  import { pushLog } from '@/api/oauth/logger';
-  import { formatDate, getRandNum } from 'js-xxx';
 
   type MenuEvent = 'logout' | 'doc' | 'lock' | 'api' | 'printApi';
 
@@ -106,19 +104,6 @@
 
   //  login out
   function handleLoginOut() {
-    // 模拟登出日志-审计使用
-    const useInfo = userStore.getUserInfo;
-    pushLog({
-      usrName: useInfo.username,
-      usrId: useInfo.userId,
-      moduleType: 1,
-      optName: '用户登出',
-      optContent: `用户【${useInfo.username}】在【${formatDate(new Date())}】 注销登录`,
-      path: 'POST /api/sys/user/logout',
-      time: getRandNum(10, 50),
-      reqData: JSON.stringify(useInfo),
-      respData: JSON.stringify({ code: 0, msg: 'ok', data: null }),
-    });
     userStore.confirmLoginOut();
   }
 
