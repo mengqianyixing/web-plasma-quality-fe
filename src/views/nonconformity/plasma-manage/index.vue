@@ -12,9 +12,6 @@
           {{ record?.bagNo }}
         </span>
       </template>
-      <template #stationNo="{ record }">
-        {{ getStationNameById(record?.stationNo) }}
-      </template>
       <template #toolbar>
         <a-button type="primary" @click="handlePickPlasma">挑浆</a-button>
         <a-button type="primary" @click="handleInStore">入库</a-button>
@@ -58,7 +55,7 @@
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
 
   const { createConfirm, createMessage } = useMessage();
-  const { isLoading, stationOptions, getStationNameById } = useStation();
+  const { isLoading, stationOptions } = useStation();
 
   onMounted(async () => {
     watchEffect(async () => {
