@@ -48,4 +48,5 @@ export enum SERVER_ENUM {
   BlockSource = 'BlockSource',
   CallbackPlanState = 'CallbackPlanState',
   BizModule = 'BizModule',
+  BagCalculateReleaseState = 'BagCalculateReleaseState',
 }
