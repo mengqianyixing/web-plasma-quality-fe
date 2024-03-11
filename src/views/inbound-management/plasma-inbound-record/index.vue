@@ -221,7 +221,7 @@
     reload();
   }
 
-  function handleOpenBatchDetail(record, field) {
+  function handleOpenBatchDetail(record, field: Nullable<number> = null) {
     openBatchModal(true, {
       record: {
         ...record,
