@@ -100,7 +100,6 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆不合格原因',
     dataIndex: 'plasmaUnqualifiedReason',
-    slots: { customRender: 'plasmaUnqualifiedReason' },
     width: 150,
   },
   {
@@ -294,14 +293,9 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: 'minStationNetweight',
-    label: '最小浆站净重',
-    component: 'Input',
-  },
-  {
-    field: 'maxStationNetweight',
-    label: '最大浆站净重',
-    component: 'Input',
+    field: '[minStationNetweight, maxStationNetweight]',
+    label: '浆站净重起止',
+    component: 'InputRange',
   },
   {
     field: '[seeSampleCollectBeginAt, seeSampleCollectEndAt]',
@@ -322,14 +316,9 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: 'minVerifyNetweight',
-    label: '最小验收净重',
-    component: 'Input',
-  },
-  {
-    field: 'maxVerifyNetweight',
-    label: '最大验收净重',
-    component: 'Input',
+    field: '[minVerifyNetweight, maxVerifyNetweight]',
+    label: '验收净重起止',
+    component: 'InputRange',
   },
   {
     field: '[trackedQualifiedBeginAt, trackedQualifiedEndAt]',
@@ -353,14 +342,9 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: 'minTiter',
-    label: '最小效价结果值',
-    component: 'Input',
-  },
-  {
-    field: 'maxTiter',
-    label: '最大效价结果值',
-    component: 'Input',
+    field: '[minTiter, maxTiter]',
+    label: '效价结果值起止',
+    component: 'InputRange',
   },
   {
     field: 'seeSampleType',

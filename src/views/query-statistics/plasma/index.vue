@@ -1,8 +1,8 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
-      <template #plasmaUnqualifiedReason="{ record }">
-        {{ formatReason(record?.plasmaUnqualifiedReason) }}
+      <template #toolbar>
+        <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
       </template>
     </BasicTable>
   </PageWrapper>
@@ -19,8 +19,12 @@
     DictionaryReasonEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
+  import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
+  import { useRouter } from 'vue-router';
 
   defineOptions({ name: 'PlasmaQuery' });
+
+  const { currentRoute } = useRouter();
 
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
   onMounted(async () => {
@@ -75,9 +79,29 @@
     canResize: true,
   });
 
-  function formatReason(dictItemId: string) {
-    return (
-      plasmaUnqualifiedDictionary.value!.find((item) => item.dictItemId === dictItemId)?.label ?? ''
-    );
+  const loading = ref(false);
+  async function handleExport() {
+    try {
+      loading.value = true;
+      const data = await getPlasmaQueryList({
+        ...getForm().getFieldsValue(),
+        currPage: 1,
+        pageSize: 50000,
+      } as any);
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+      const { result, merge: bodyMerge } = formatData(
+        lastLevelCols,
+        data.result || [],
+        rows.length,
+      );
+      jsonToSheetXlsx({
+        data: [...rows, ...result],
+        json2sheetOpts: { skipHeader: true },
+        merges: [...headerMerge, ...bodyMerge],
+        filename: currentRoute.value.meta.title + '.xlsx',
+      });
+    } finally {
+      loading.value = false;
+    }
   }
 </script>

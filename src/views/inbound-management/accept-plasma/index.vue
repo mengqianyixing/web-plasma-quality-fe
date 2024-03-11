@@ -46,7 +46,8 @@
               <!-- <a-button
                 @click="
                   openReprintModal(true, {
-                    boxNo: printBoxNo,
+                    boxNo: printObj.printBoxNo,
+                    plasmaType: printObj.plasmaType,
                     stationName: filterForm.stationName,
                     batchNo: filterForm.batchNo,
                     acceptList,
@@ -143,7 +144,11 @@
   const checker = ref(''); // 当前复核人
   const tableLoading = ref(false);
   const donorFailed = ref(''); // 献血浆者不符合
-  let printBoxNo = ''; // 缓存上一次扫描血浆的箱号用于打印
+  let printObj = {
+    printBoxNo: '',
+    plasmaType: '',
+    acceptList: [] as any[],
+  }; // 缓存上一次扫描血浆的箱号用于打印
 
   const bagNoRef = ref<any>(null);
   const suspendOrResumeRef = ref<any>('');
@@ -451,7 +456,19 @@
           filterForm.value.boxCount = data.boxCount;
           filterForm.value.stationNo = data.stationNo;
           filterForm.value.boxNo = data.boxNo;
-          if (data?.boxNo) printBoxNo = data.boxNo;
+
+          // 打印相关参数 一箱的尾袋不会返回箱号等
+          if (data?.boxNo) {
+            printObj.printBoxNo = data.boxNo;
+          }
+          printObj.plasmaType = data.immType;
+          printObj.acceptList = [
+            ...filterForm.value.verifyBag.map((item: any) => {
+              return item.bagNo;
+            }),
+            bagNo.value,
+          ];
+
           // trayNo.value = data?.trayNo || '';
           if (data?.trayNo) trayNo.value = data.trayNo;
           filterForm.value.unVerifyBag = data.unVerifyBag.map((item: any) => {
@@ -477,18 +494,20 @@
             ) {
               success('当前批验收完成');
               openReprintModal(true, {
-                boxNo: printBoxNo,
+                boxNo: printObj.printBoxNo,
+                plasmaType: printObj.plasmaType,
                 stationName: filterForm.value.stationName,
                 batchNo: filterForm.value.batchNo,
-                acceptList,
+                acceptList: printObj.acceptList,
               });
             } else if (!filterForm.value.unVerifyBag.length) {
               success('当前箱验收完成');
               openReprintModal(true, {
-                boxNo: printBoxNo,
+                boxNo: printObj.printBoxNo,
+                plasmaType: printObj.plasmaType,
                 stationName: filterForm.value.stationName,
                 batchNo: filterForm.value.batchNo,
-                acceptList,
+                acceptList: printObj.acceptList,
               });
             }
           }
@@ -533,13 +552,17 @@
     const res = await getPlasmaVerify(data);
     filterForm.value = res;
     trayNo.value = res.trayNo;
-    if (res?.boxNo) printBoxNo = res.boxNo;
     _setReChecker(res.checker);
     filterForm.value.unVerifyBag = res.unVerifyBag.map((item: any) => {
       return {
         bagNo: item,
       };
     });
+    printObj = {
+      printBoxNo: '',
+      plasmaType: '',
+      acceptList: [] as any[],
+    };
   }
 
   // 点击登录按钮
@@ -733,5 +756,10 @@
     };
     delete params.resolution;
     await printRecord(params);
+    printObj = {
+      printBoxNo: '',
+      plasmaType: '',
+      acceptList: [] as any[],
+    };
   }
 </script>
