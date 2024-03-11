@@ -152,10 +152,12 @@
   });
 
   onMounted(() => {
-    setFieldsValue({ donorNo: router.query.donorNo });
-    setTimeout(() => {
-      handleSubmit();
-    }, 0);
+    if (router.query?.donorNo) {
+      setFieldsValue({ donorNo: router.query.donorNo });
+      setTimeout(() => {
+        handleSubmit();
+      }, 0);
+    }
   });
 </script>
 <style scoped lang="less">
