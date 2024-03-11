@@ -67,13 +67,11 @@
   });
 
   function formatUnReason(unqReason: string) {
-    return (
-      plasmaUnqualifiedDictionary.value?.find((it) => it.value === unqReason)?.label ?? unqReason
-    );
+    return plasmaUnqualifiedDictionary.value?.find((it) => it.id === unqReason)?.label ?? unqReason;
   }
 
   function formatProdReason(unqReason: string) {
-    return unProdReasonDictionary.value?.find((it) => it.value === unqReason)?.label ?? unqReason;
+    return unProdReasonDictionary.value?.find((it) => it.id === unqReason)?.label ?? unqReason;
   }
   const [registerTable, { reload, getForm }] = useTable({
     dataSource: bagNos,
