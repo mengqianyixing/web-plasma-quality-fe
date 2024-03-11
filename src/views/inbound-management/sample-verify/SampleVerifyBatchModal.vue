@@ -67,7 +67,6 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-
     bordered: true,
     showIndexColumn: false,
     canResize: false,

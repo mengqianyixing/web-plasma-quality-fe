@@ -522,10 +522,14 @@ export type PostApiSysItemItemKeyResponse = {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dictItems`
- * @更新时间 `2024-03-01 10:53:30`
+ * @更新时间 `2024-03-07 16:54:33`
  */
 export interface PostApiSysDictItemsRequest {
   dataKey?: string;
+  /**
+   * 1  传值展示隐藏字典，不传默认不展示
+   */
+  show?: string;
   dictItemTypes?: string[];
 }
 
@@ -534,7 +538,7 @@ export interface PostApiSysDictItemsRequest {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dictItems`
- * @更新时间 `2024-03-01 10:53:30`
+ * @更新时间 `2024-03-07 16:54:33`
  */
 export type PostApiSysDictItemsResponse = {
   dictItemId: string;

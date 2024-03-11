@@ -10,35 +10,92 @@
       </template>
       <template #batchCount="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="goPickBatchDetail(record)">
+          <!-- <a-button type="link" @click="goPickBatchDetail(record)">
             {{ record.summary?.batchCount }}
-          </a-button>
+          </a-button> -->
+          <span>
+            {{ record.summary?.batchCount }}
+          </span>
         </div>
       </template>
       <template #pickBagCount="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="goPlasmaDetail(record)">
+          <!-- <a-button type="link" @click="goPlasmaDetail(record)">
             {{ record.summary?.pickBagCount }}
-          </a-button>
+          </a-button> -->
+          <span>
+            {{ record.summary?.pickBagCount }}
+          </span>
         </div>
       </template>
       <template #prodBagCount="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="goPlasmaDetail(record, 'prepareProduce')">
+          <!-- <a-button type="link" @click="goPlasmaDetail(record, 'prepareProduce')">
             {{ record.summary?.prodBagCount }}
-          </a-button>
+          </a-button> -->
+          <span>
+            {{ record.summary?.prodBagCount }}
+          </span>
         </div>
       </template>
       <template #toolbar>
         <div class="flex gap-2">
-          <a-button @click="openPreparation"> 新增 </a-button>
-          <a-button @click="editPreparationModal"> 修改 </a-button>
-          <a-button @click="clickRevokeModal"> 撤销 </a-button>
-          <a-button @click="clickSummaryModal"> 挑选血浆 </a-button>
-          <a-button @click="completePreparation"> 完成准备 </a-button>
-          <a-button @click="clickRevokeModal('isPicked')"> 撤销准备 </a-button>
-          <a-button @click="clickCheck"> 复核 </a-button>
-          <a-button @click="revokeCheck"> 撤销复核 </a-button>
+          <a-button
+            @click="openPreparation"
+            v-auth="StockOutButtonEnum.ProductionPreparationAdd"
+            type="primary"
+          >
+            新增
+          </a-button>
+          <a-button
+            @click="editPreparationModal"
+            v-auth="StockOutButtonEnum.ProductionPreparationEdit"
+            type="primary"
+          >
+            修改
+          </a-button>
+          <a-button
+            @click="clickRevokeModal"
+            v-auth="StockOutButtonEnum.ProductionPreparationDelete"
+            type="primary"
+          >
+            撤销
+          </a-button>
+          <a-button
+            @click="clickSummaryModal"
+            v-auth="StockOutButtonEnum.ProductionPreparationSelect"
+            type="primary"
+          >
+            挑选血浆
+          </a-button>
+          <a-button
+            @click="completePreparation"
+            v-auth="StockOutButtonEnum.ProductionPreparationFinish"
+            type="primary"
+          >
+            完成准备
+          </a-button>
+          <a-button
+            @click="clickRevokeModal('isPicked')"
+            v-auth="StockOutButtonEnum.ProductionPreparationReset"
+            type="primary"
+          >
+            撤销准备
+          </a-button>
+          <a-button
+            @click="clickCheck"
+            v-auth="StockOutButtonEnum.ProductionPreparationReCheck"
+            type="primary"
+          >
+            复核
+          </a-button>
+          <a-button
+            @click="revokeCheck"
+            v-auth="StockOutButtonEnum.ProductionPreparationResetReCheck"
+            type="primary"
+          >
+            撤销复核
+          </a-button>
         </div>
       </template>
     </BasicTable>
@@ -46,11 +103,12 @@
     <RevokeModal @register="registerRevokeModal" @success="handleSuccessRevoke" />
     <RevokeCheckModal @register="registerRevokeCheckModal" @success="handleSuccessRevokeCheck" />
     <SummaryModal @register="registerSummaryModal" @success="handleSuccessSummary" />
-    <PickBatchDetail @register="registerPickBatchDetailModal" />
-    <PlasmaDetail @register="registerPlasmaDetailModal" />
+    <!-- <PickBatchDetail @register="registerPickBatchDetailModal" /> -->
+    <!-- <PlasmaDetail @register="registerPlasmaDetailModal" /> -->
   </div>
 </template>
 <script lang="ts" setup>
+  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
   import { BasicTable, useTable, BasicColumn } from '@/components/Table';
   import { FormSchema } from '@/components/Form';
   import { useModal } from '@/components/Modal';
@@ -63,8 +121,8 @@
   import RevokeModal from './components/RevokeModal.vue';
   import RevokeCheckModal from './components/RevokeCheckModal.vue';
   import CreateModal from './components/CreateModal.vue';
-  import PickBatchDetail from '../components/PickBatchDetail.vue';
-  import PlasmaDetail from '../components/PlasmaDetail.vue';
+  // import PickBatchDetail from '../components/PickBatchDetail.vue';
+  // import PlasmaDetail from '../components/PlasmaDetail.vue';
   import {
     getPrepareList,
     completePrepare,
@@ -293,7 +351,7 @@
 
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    canResize: true,
   });
 
   // 新增/修改投产准备框
@@ -481,20 +539,20 @@
     });
   }
 
-  // 分拣批次信息
-  const [registerPickBatchDetailModal, { openModal: openPickBatchDetailModal }] = useModal();
-  function goPickBatchDetail(record) {
-    openPickBatchDetailModal(true, {
-      record,
-    });
-  }
+  // // 分拣批次信息
+  // const [registerPickBatchDetailModal, { openModal: openPickBatchDetailModal }] = useModal();
+  // function goPickBatchDetail(record) {
+  //   openPickBatchDetailModal(true, {
+  //     record,
+  //   });
+  // }
 
-  // 血浆明细
-  const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
-  function goPlasmaDetail(record, prepareProduce?) {
-    openPlasmaDetailModal(true, {
-      record,
-      prepareProduce,
-    });
-  }
+  // // 血浆明细
+  // const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
+  // function goPlasmaDetail(record, prepareProduce?) {
+  //   openPlasmaDetailModal(true, {
+  //     record,
+  //     prepareProduce,
+  //   });
+  // }
 </script>

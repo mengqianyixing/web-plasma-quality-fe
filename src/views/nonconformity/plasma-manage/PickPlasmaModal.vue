@@ -4,6 +4,7 @@
     @register="registerModal"
     title="挑浆"
     @ok="handleSubmit"
+    @cancel="handelCancel"
     width="430px"
   >
     <BasicForm @register="registerForm" />
@@ -25,16 +26,32 @@
   import { nonconformityPick } from '@/api/nonconformity/plasma-manage';
   import { PostApiCoreBagUnqualifiedPickRequest } from '@/api/type/nonconformityManage';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { useScanHelper } from '@/hooks/common/useScanHelper';
+  import { watch } from 'vue';
+  import { RemoveEventFn } from '@/hooks/event/useEventListener';
 
   const { createMessage } = useMessage();
+
   defineOptions({ name: 'PickPlasmaModal' });
+
+  const { barCode, enterFlag, startEvent } = useScanHelper();
+
+  watch(
+    () => [barCode.value, enterFlag.value],
+    (val) => {
+      if (val[0] && val[1]) {
+        setFieldsValue({ bagNo: val[0] });
+        handleSubmit();
+      }
+    },
+  );
 
   const emit = defineEmits(['success', 'register']);
 
   const [registerLoginModal, { openModal }] = useModal();
 
   const [registerForm, { resetFields, validate, setFieldsValue, updateSchema }] = useForm({
-    labelWidth: 120,
+    labelWidth: 130,
     baseColProps: { span: 48 },
     schemas: pickSchema,
     showActionButtonGroup: false,
@@ -43,7 +60,10 @@
     },
   });
 
-  const [registerModal, { setModalProps, closeModal }] = useModalInner(() => {
+  let _removeEvent: RemoveEventFn = () => {};
+  const [registerModal, { setModalProps }] = useModalInner(() => {
+    const { removeEvent } = startEvent();
+    _removeEvent = removeEvent;
     updateSchema({ field: 'reviewer', componentProps: { onSearch: handleLogin } });
     resetFields();
     setModalProps({ confirmLoading: false });
@@ -56,8 +76,10 @@
       await nonconformityPick(values as PostApiCoreBagUnqualifiedPickRequest);
 
       createMessage.success('挑浆成功');
-      closeModal();
-      emit('success');
+      await setFieldsValue({ bagNo: '' });
+    } catch (e) {
+      enterFlag.value = false;
+      throw e;
     } finally {
       setModalProps({ confirmLoading: false });
     }
@@ -69,5 +91,10 @@
 
   function handleSuccess(nickname: string) {
     setFieldsValue({ reviewer: nickname });
+  }
+
+  function handelCancel() {
+    _removeEvent();
+    emit('success');
   }
 </script>

@@ -20,6 +20,11 @@ export enum ReCheckButtonEnum {
   RegisterWeightCheck = 'E_980090',
   ProductionSortingReCheck = 'E_910020',
   RequiredItemCheck = 'E_10008010',
+  UnqualifiedStage = 'E_98003001',
+  WeightRegister = 'E_98003002',
+  VerifyRelease = 'E_98003003',
+  VerifyList = 'E_98003004',
+  VisualInspectionList = 'E_98003005',
 }
 
 export enum BaseSettingButtonEnum {
@@ -92,6 +97,7 @@ export enum InspectButtonEnum {
 
   ResultRegistrationMaterialRegist = 'E_960010011',
   ResultRegistrationMaterialReRegist = 'E_960010012',
+  ResultRegistrationSqImport = 'E_960010013',
 
   ReportReleaseCreate = 'E_96002001',
   ReportReleaseUnCreate = 'E_96002002',
@@ -107,16 +113,29 @@ export enum InspectButtonEnum {
   MaterialPreRegistrationUnReview = 'E_96003004',
   MaterialPreRegistrationDisable = 'E_96003005',
   MaterialPreRegistrationEnable = 'E_96003006',
+  MaterialPreRegistrationUpdateDate = 'E_96003007',
 }
 
 export enum QuarantineButtonEnum {
   OverdueConfirmationConfim = 'E_95001001',
+  CreateQuarantine = 'E_95003001',
+  ResetQuarantine = 'E_95003002',
+  ReCheckQuarantine = 'E_95003003',
+  PrintQuarantine = 'E_95003004',
 }
 
 export enum QualityButtonEnum {
   PlasmaRestrictionAdd = 'E_94001001',
   PlasmaRestrictionRemove = 'E_94001002',
   PlasmaRestrictionReview = 'E_94001003',
+
+  PlasmaCheckAdd = 'E_94002001',
+  PlasmaCheckEdit = 'E_94002002',
+  PlasmaCheckDelete = 'E_94002003',
+  PlasmaCheckReCheck = 'E_94002004',
+  PlasmaCheckCancelReCheck = 'E_94002005',
+  PlasmaCheckPrint = 'E_94002006',
+  PlasmaCheckApproval = 'E_94002007',
 
   BatchReleaseAdd = 'E_94003001',
   BatchReleaseUpdate = 'E_94003002',
@@ -139,6 +158,23 @@ export enum NonconformityButtonEnum {
 }
 
 export enum StockOutButtonEnum {
+  ProductionPreparationAdd = 'E_91001001',
+  ProductionPreparationEdit = 'E_91001002',
+  ProductionPreparationDelete = 'E_91001003',
+  ProductionPreparationSelect = 'E_91001004',
+  ProductionPreparationFinish = 'E_91001005',
+  ProductionPreparationReset = 'E_91001006',
+  ProductionPreparationReCheck = 'E_91001007',
+  ProductionPreparationResetReCheck = 'E_91001008',
+
+  ProductionOrderAdd = 'E_91003001',
+  ProductionOrderEdit = 'E_91003002',
+  ProductionOrderDelete = 'E_91003003',
+  ProductionOrderRecheck = 'E_91003004',
+  ProductionOrderCancelRecheck = 'E_91003005',
+  ProductionOrderExamine = 'E_91003006',
+  ProductionOrderCancelExamine = 'E_91003007',
+
   ProductionPlanPick = 'E_91004001',
   ProductionPlanComplate = 'E_91004002',
   ProductionPlanReComplate = 'E_91004003',
@@ -146,4 +182,52 @@ export enum StockOutButtonEnum {
   ProductionPlanReReview = 'E_91004005',
   ProductionPlanCheck = 'E_91004006',
   ProductionPlanReCheck = 'E_91004007',
+
+  PutIntoTrayStockOut = 'E_91005001',
+  PutIntoBoxStockOut = 'E_91005002',
+  PutIntoBatchStockOut = 'E_91005003',
+  PutIntoPickPlasmaSystem = 'E_91005004',
+  PutIntoCancelStockOut = 'E_91005005',
+  PutIntoBoxReceive = 'E_91005006',
+  PutIntoBatchReceive = 'E_91005007',
+  PutIntoCancelExamine = 'E_91005008',
+
+  NonPutIntoAdd = 'E_91006001',
+  NonPutIntoEdit = 'E_91006002',
+  NonPutIntoCancel = 'E_91006003',
+  NonPutIntoCompletePrepare = 'E_91006004',
+  NonPutIntoCancelPrepare = 'E_91006005',
+  NonPutIntoReCheck = 'E_91006006',
+  NonPutIntoCancelReCheck = 'E_91006007',
+  NonPutIntoCheck = 'E_91006008',
+  NonPutIntoCancelCheck = 'E_91006009',
+  NonPutIntoScan = 'E_91006010',
+}
+
+export enum SampleManageButtonEnum {
+  SampleRelease = 'E_97003001',
+}
+
+export enum CallbackButtonEnum {
+  ListGeneAdd = 'E_93001001',
+  ListGeneEdit = 'E_93001002',
+  ListGeneDelete = 'E_93001003',
+  ListGeneEnter = 'E_93001004',
+  ListGeneExport = 'E_93001005',
+}
+
+export enum SearchManager {
+  InventoryExport = 'E_90003101',
+
+  LocationExport = 'E_900017001',
+
+  PlasmaBatchExport = 'E_90003001',
+
+  ERPReportExport = 'E_90002401',
+
+  DonorStateExport = 'E_90001401',
+
+  CallbackExport = 'E_90002501',
+
+  CallbackBatchExport = 'E_90002601',
 }

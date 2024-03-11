@@ -1,16 +1,10 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import {
-  CallbackStateMap,
-  CallbackStateValueEnum,
-  donorStatusMap,
-  donorStatusValueEnum,
-} from '@/enums/callbackEnum';
+import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
 import dayjs, { Dayjs } from 'dayjs';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
 const serverEnumStore = useServerEnumStoreWithOut();
-const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 export const columns: BasicColumn[] = [
   {
@@ -21,8 +15,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '采浆公司',
-    dataIndex: 'stationNo',
-    slots: { customRender: 'stationNo' },
+    dataIndex: 'stationName',
   },
   {
     title: '浆员数量',
@@ -37,6 +30,47 @@ export const columns: BasicColumn[] = [
     dataIndex: 'createAt',
   },
   {
+    title: '自主回访',
+    dataIndex: 'selfBackNum',
+    width: 80,
+  },
+  {
+    title: '回访成功',
+    dataIndex: 'okNum',
+    width: 80,
+  },
+  {
+    title: '回访失败',
+    dataIndex: 'failedNum',
+    width: 80,
+  },
+  {
+    title: '恢复采浆',
+    dataIndex: 'recoverNum',
+    width: 80,
+  },
+  {
+    title: '未回访',
+    dataIndex: 'noVisitNum',
+    width: 80,
+  },
+  {
+    title: '样本接收人',
+    dataIndex: 'sampleAcceptBy',
+  },
+  {
+    title: '样本接收日期',
+    dataIndex: 'sampleAcceptAt',
+  },
+  {
+    title: '样本发布人',
+    dataIndex: 'samplePublishBy',
+  },
+  {
+    title: '样本发布日期',
+    dataIndex: 'samplePublishAt',
+  },
+  {
     title: '确认人',
     dataIndex: 'checker',
   },
@@ -47,9 +81,8 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'state',
-    fixed: 'right',
     format(text) {
-      return CallbackStateMap.get(text as CallbackStateValueEnum) as string;
+      return serverEnumStore.getServerEnumText(SERVER_ENUM.CallbackPlanState)(text);
     },
   },
 ];
@@ -79,10 +112,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '状态',
     component: 'Select',
     componentProps: {
-      options: [...CallbackStateMap.entries()].map(([key, value]) => ({
-        label: value,
-        value: key,
-      })),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.CallbackPlanState),
     },
   },
 ];
@@ -116,17 +146,9 @@ export const callbackModalColumns: BasicColumn[] = [
     dataIndex: 'refuseReason',
   },
   {
-    title: '血浆类型',
-    dataIndex: 'immType',
-    format: (text) => {
-      return PlasmaType(text);
-    },
-  },
-  {
     title: '性别',
     dataIndex: 'gender',
   },
-
   {
     title: '最早待回访采浆日期',
     dataIndex: 'minCollTime',

@@ -67,6 +67,8 @@
   import DtTable from './dtTable.vue';
   import { methodsMappding } from './data';
 
+  const emit = defineEmits(['close', 'confirm']);
+
   const activeKey = ref('1');
   const pid = ref('');
   const bsno = ref('');
@@ -89,6 +91,7 @@
     componentMap.value[activeKey] = markRaw(DtTable);
   }
   function close() {
+    emit('close');
     activeKey.value = '1';
     componentMap.value = {
       1: 'div',

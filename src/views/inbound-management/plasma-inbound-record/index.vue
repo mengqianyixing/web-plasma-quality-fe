@@ -17,15 +17,62 @@
           {{ record?.boxNum }}
         </span>
       </template>
-      <template #stationNo="{ record }">
-        {{ getStationNameById(record?.stationNo) }}
+      <template #passBagNum="{ record }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleOpenBatchDetail(record, 0)"
+        >
+          {{ record?.passBagNum }}
+        </span>
+      </template>
+      <template #noPassBagNum="{ record }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleOpenBatchDetail(record, 1)"
+        >
+          {{ record?.noPassBagNum }}
+        </span>
+      </template>
+      <template #lackNoNum="{ record }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleOpenBatchDetail(record, 2)"
+        >
+          {{ record?.lackNoNum }}
+        </span>
       </template>
       <template #toolbar>
-        <a-button type="primary" @click="handleUnqualifiedStage"> 不合格暂存 </a-button>
-        <a-button type="primary" @click="handleWeightRegister"> 重量登记 </a-button>
-        <a-button type="primary" @click="handleVerifyRelease">验收发布</a-button>
-        <a-button type="primary" @click="handleVerifyList">验收清单</a-button>
-        <a-button type="primary" @click="handleVisualInspectionList">外观检查清单</a-button>
+        <a-button
+          type="primary"
+          @click="handleUnqualifiedStage"
+          v-auth="ReCheckButtonEnum.UnqualifiedStage"
+        >
+          不合格暂存
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleWeightRegister"
+          v-auth="ReCheckButtonEnum.WeightRegister"
+        >
+          重量登记
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleVerifyRelease"
+          v-auth="ReCheckButtonEnum.VerifyRelease"
+        >
+          验收发布
+        </a-button>
+        <a-button type="primary" @click="handleVerifyList" v-auth="ReCheckButtonEnum.VerifyList">
+          验收清单
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleVisualInspectionList"
+          v-auth="ReCheckButtonEnum.VisualInspectionList"
+        >
+          外观检查清单
+        </a-button>
       </template>
     </BasicTable>
 
@@ -53,6 +100,7 @@
   import RegisterWeightModal from '@/views/inbound-management/plasma-inbound-record/RegisterWeightModal.vue';
   import UnqualifiedStageModal from '@/views/inbound-management/plasma-inbound-record/UnqualifiedStageModal.vue';
   import { omit } from 'lodash-es';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { isLoading, stationOptions, getStationNameById } = useStation();
   const { createMessage, createConfirm } = useMessage();
@@ -115,8 +163,8 @@
       return;
     }
 
-    if (selectedRowsRef.value[0].state === 'VFP') {
-      createMessage.warning('批次已发布，不支持该操作!');
+    if (selectedRowsRef.value[0].state !== 'VFD') {
+      createMessage.warning('该状态不支持该操作!');
       return;
     }
 
@@ -131,8 +179,8 @@
       return;
     }
 
-    if (selectedRowsRef.value[0].state === 'VFP') {
-      createMessage.warning('批次已发布，不支持该操作!');
+    if (selectedRowsRef.value[0].state !== 'VFD') {
+      createMessage.warning('该状态不支持该操作!');
       return;
     }
 
@@ -173,11 +221,12 @@
     reload();
   }
 
-  function handleOpenBatchDetail(record) {
+  function handleOpenBatchDetail(record, field: Nullable<number> = null) {
     openBatchModal(true, {
       record: {
         ...record,
         stationName: getStationNameById(record.stationNo),
+        field,
       },
     });
   }

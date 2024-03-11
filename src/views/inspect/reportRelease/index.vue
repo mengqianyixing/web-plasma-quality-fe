@@ -40,25 +40,78 @@
           v-auth="InspectButtonEnum.ReportReleaseRelease"
           >发布</a-button
         >
-        <a-button
-          type="primary"
-          @click="handlePrint"
-          v-auth="InspectButtonEnum.ReportReleasePrintBack"
-          >打印回访样本检检验报告</a-button
+        <a-dropdown
+          v-auth="[
+            InspectButtonEnum.ReportReleasePrintBack,
+            InspectButtonEnum.ReportReleasePrintCheck,
+          ]"
         >
-        <a-button
-          type="primary"
-          @click="handlePrint"
-          v-auth="InspectButtonEnum.ReportReleasePrintCheck"
-          >打印原料血浆检验报告</a-button
-        >
+          <a-button type="primary">
+            打印
+            <DownOutlined />
+          </a-button>
+          <template #overlay>
+            <Menu>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint"
+                  v-auth="InspectButtonEnum.ReportReleasePrintBack"
+                >
+                  回访样本检检验报告
+                </a-button>
+              </MenuItem>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint"
+                  v-auth="InspectButtonEnum.ReportReleasePrintCheck"
+                >
+                  原料血浆检验报告
+                </a-button>
+              </MenuItem>
+            </Menu>
+          </template>
+        </a-dropdown>
       </template>
       <template #totalUnqualified="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetails(record)"
+          @click.stop.self="handleDetails(record, 3, '不合格')"
         >
           {{ record.totalUnqualified }}
+        </span>
+      </template>
+      <template #totalQualified="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetails(record, 4, '合格')"
+        >
+          {{ record.totalQualified }}
+        </span>
+      </template>
+      <template #totalHighTiter="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetails(record, 1, '高效价')"
+        >
+          {{ record.totalHighTiter }}
+        </span>
+      </template>
+      <template #totalLowTiter="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetails(record, 2, '低效价')"
+        >
+          {{ record.totalLowTiter }}
+        </span>
+      </template>
+      <template #totalNormal="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleDetails(record, 5, '无效价')"
+        >
+          {{ record.totalNormal }}
         </span>
       </template>
     </BasicTable>
@@ -93,7 +146,7 @@
     releaseReportApi,
   } from '@/api/inspect/reportRelease';
   import { ref } from 'vue';
-  import { message, Modal } from 'ant-design-vue';
+  import { message, Modal, Dropdown as ADropdown, MenuItem, Menu } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
   import TabelModal from './tabelModal.vue';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
@@ -203,13 +256,14 @@
     const [row] = getSelections(true);
     if (!row) return;
     await releaseReportApi({ reportNo: row.reportNo });
+    reload();
     message.success('发布成功');
   }
   function handlePrint() {
     const [row] = getSelections(true);
     if (!row) return;
   }
-  function handleDetails(row) {
-    openModal(true, row);
+  function handleDetails(row: Recordable, type: number, title: string) {
+    openModal(true, { ...row, type, title });
   }
 </script>

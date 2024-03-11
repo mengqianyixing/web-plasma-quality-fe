@@ -10,10 +10,18 @@ export const columns: BasicColumn[] = [
   {
     title: '浆员编号',
     dataIndex: 'donorNo',
+    slots: { customRender: 'donorNo' },
   },
   {
     title: '姓名',
     dataIndex: 'donorName',
+  },
+  {
+    title: '建档日期',
+    dataIndex: 'createAt',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
   },
   {
     title: '永拒原因',

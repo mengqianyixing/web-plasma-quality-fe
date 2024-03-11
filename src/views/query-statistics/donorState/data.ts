@@ -3,8 +3,10 @@ import { BasicColumn } from '@/components/Table';
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { formatKg } from '@/utils';
 
 const serverEnumStore = useServerEnumStoreWithOut();
+
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
@@ -31,6 +33,7 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆验收净重(g)',
     dataIndex: 'netWeight',
+    format: formatKg,
   },
   {
     title: '最早采集日期',

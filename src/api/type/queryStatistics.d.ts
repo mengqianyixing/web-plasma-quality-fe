@@ -2964,7 +2964,7 @@ export interface PostApiCoreDonorStateResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/lab/item/query`
- * @更新时间 `2024-03-05 10:15:20`
+ * @更新时间 `2024-03-05 17:42:43`
  */
 export interface PostApiCoreLabItemQueryRequest {
   pageSize: string;
@@ -2999,7 +2999,7 @@ export interface PostApiCoreLabItemQueryRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/lab/item/query`
- * @更新时间 `2024-03-05 10:15:20`
+ * @更新时间 `2024-03-05 17:42:43`
  */
 export interface PostApiCoreLabItemQueryResponse {
   currPage: number;
@@ -3033,7 +3033,7 @@ export interface PostApiCoreLabItemQueryResponse {
     /**
      * 采集日期
      */
-    CollectionAt: string;
+    collectionAt: string;
     /**
      * 不合格原因
      */
@@ -3050,6 +3050,388 @@ export interface PostApiCoreLabItemQueryResponse {
      * 献血浆者永久拒绝日期
      */
     rejectAt: string;
+  }[];
+}
+
+/**
+ * 接口 [不合格追踪↗](https://yapi.sharing8.cn/project/529/interface/api/33783) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/donor/unqualified/track`
+ * @更新时间 `2024-03-07 10:31:36`
+ */
+export interface GetApiCoreDonorUnqualifiedTrackRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * 浆站编码
+   */
+  stationNo?: string;
+  /**
+   * 样本批次号
+   */
+  sampleBatchNo?: string;
+  /**
+   * 样本编码
+   */
+  sampleNo?: string;
+  /**
+   * 采集日期开始
+   */
+  collectStartDate?: string;
+  collectEndDate?: string;
+  /**
+   * 不合格来源(浆站报送/厂家检测)
+   */
+  blockBy: string;
+  /**
+   * 不合格原因(需追溯检疫期的项目相关)
+   */
+  failedCode: string;
+  /**
+   * 不合格日期查询
+   */
+  blockStartDate: string;
+  blockEndDate: string;
+}
+
+/**
+ * 接口 [不合格追踪↗](https://yapi.sharing8.cn/project/529/interface/api/33783) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/donor/unqualified/track`
+ * @更新时间 `2024-03-07 10:31:36`
+ */
+export interface GetApiCoreDonorUnqualifiedTrackResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 采浆公司
+     */
+    stationName?: null;
+    stationNo?: string;
+    /**
+     * 样本批号
+     */
+    sampleBatchNo?: null;
+    /**
+     * 样本编号
+     */
+    sampleNo?: string;
+    /**
+     * 采集日期
+     */
+    collectAt?: string;
+    /**
+     * 浆员编号
+     */
+    donorNo?: string;
+    /**
+     * 姓名
+     */
+    donorName?: string;
+    failedCode?: string;
+    /**
+     * 不合格原因
+     */
+    failedReason?: null;
+    /**
+     * 不合格日期
+     */
+    blockAt?: string;
+    /**
+     * 不合格来源
+     */
+    blockBy?: string;
+  }[];
+}
+
+/**
+ * 接口 [血浆汇总↗](https://yapi.sharing8.cn/project/529/interface/api/33804) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/report/plasma/summary`
+ * @更新时间 `2024-03-08 16:40:50`
+ */
+export interface GetApiReportPlasmaSummaryRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * 浆站编码
+   */
+  stationNo?: string;
+  /**
+   * 批次号
+   */
+  batchNo?: string;
+  /**
+   * 状态
+   */
+  printState?: string;
+  /**
+   * 打印开始时间
+   */
+  printAtBegin?: string;
+  /**
+   * 打印结束时间
+   */
+  printAtEnd?: string;
+}
+
+/**
+ * 接口 [血浆汇总↗](https://yapi.sharing8.cn/project/529/interface/api/33804) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/report/plasma/summary`
+ * @更新时间 `2024-03-08 16:40:50`
+ */
+export interface GetApiReportPlasmaSummaryResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 采浆公司
+     */
+    stationName?: null;
+    /**
+     * 批号
+     */
+    batchNo?: string;
+    /**
+     * 血浆总数
+     */
+    bagCount?: number;
+    /**
+     * 生产出库数量
+     */
+    ''?: number;
+    /**
+     * 非生产出库数量
+     */
+    unProOutCount?: number;
+    /**
+     * 不合格数量
+     */
+    unqualifiedCount?: number;
+    /**
+     * 状态
+     */
+    printState?: boolean;
+    /**
+     * 打印人
+     */
+    printor?: string;
+    /**
+     * 打印时间
+     */
+    printAt?: null;
+  }[];
+}
+
+/**
+ * 接口 [检测结果查询-检验样本查询↗](https://yapi.sharing8.cn/project/529/interface/api/33811) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `POST /api/core/lab/samples/lab/item`
+ * @更新时间 `2024-03-08 18:20:13`
+ */
+export interface PostApiCoreLabSamplesLabItemRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 样本采集日期
+   */
+  batchNo: string;
+  /**
+   * 样本类型
+   */
+  sampleType: string;
+  conclusion?: string;
+}
+
+/**
+ * 接口 [检测结果查询-检验样本查询↗](https://yapi.sharing8.cn/project/529/interface/api/33811) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `POST /api/core/lab/samples/lab/item`
+ * @更新时间 `2024-03-08 18:20:13`
+ */
+export interface PostApiCoreLabSamplesLabItemResponse {
+  totalCount: number;
+  pageSize: null;
+  totalPage: null;
+  currPage: null;
+  result: {
+    /**
+     * 样本编号
+     */
+    sampleNo: string;
+    /**
+     * 检测项目
+     */
+    project: string;
+    /**
+     * 不合格
+     */
+    unqualified: string;
+    /**
+     * od
+     */
+    od: string;
+    /**
+     * cutoff
+     */
+    cutoff: string;
+    /**
+     * ct
+     */
+    ct: string;
+    titerValue: string;
+    /**
+     * 检测结果
+     */
+    conclusion: string;
+    /**
+     * 检测日期
+     */
+    checkAt: string;
+  }[];
+}
+
+/**
+ * 接口 [血浆检测-检测结果汇总-不合格详情↗](https://yapi.sharing8.cn/project/529/interface/api/33818) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `POST /api/core/lab/bag/check/details`
+ * @更新时间 `2024-03-09 14:40:25`
+ */
+export interface PostApiCoreLabBagCheckDetailsRequest {
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 血浆批号开始
+   */
+  batchNoBegin?: string;
+  /**
+   * 血浆批号结束
+   */
+  batchNoEnd?: string;
+  /**
+   * 验收发布日期开始
+   */
+  verificationBegin?: string;
+  /**
+   * 验收发布日期结束
+   */
+  verificationEnd?: string;
+  /**
+   * 接收日期开始
+   */
+  acceptBegin?: string;
+  /**
+   * 接收日期结束
+   */
+  acceptEnd?: string;
+  /**
+   * 来浆类型
+   */
+  rawImm?: string;
+  /**
+   * 血浆类型
+   */
+  plasmaType?: string;
+  /**
+   * 效价类型
+   */
+  titerType?: string;
+  /**
+   * 检测发布日期开始
+   */
+  issueBegin?: string;
+  /**
+   * 检测发布日期结束
+   */
+  issueEnd?: string;
+  failedCode: string;
+  pageSize: string;
+  currPage: string;
+}
+
+/**
+ * 接口 [血浆检测-检测结果汇总-不合格详情↗](https://yapi.sharing8.cn/project/529/interface/api/33818) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `POST /api/core/lab/bag/check/details`
+ * @更新时间 `2024-03-09 14:40:25`
+ */
+export interface PostApiCoreLabBagCheckDetailsResponse {
+  totalCount: number;
+  pageSize: number;
+  totalPage: number;
+  currPage: number;
+  result?: {
+    bagNo?: string;
+    station?: string;
+    donorNo?: string;
+    name?: string;
+    batchNo?: string;
+    collectionAt?: string;
+  }[];
+}
+
+/**
+ * 接口 [特免血浆查询-详情↗](https://yapi.sharing8.cn/project/529/interface/api/33825) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `POST /api/core/bag/titer/details`
+ * @更新时间 `2024-03-09 15:40:21`
+ */
+export interface PostApiCoreBagTiterDetailsRequest {
+  /**
+   * 采浆公司
+   */
+  stationNo: string;
+  /**
+   * 血浆批号开始
+   */
+  batchNo: string;
+  /**
+   * 来浆类型
+   */
+  rawImm: string;
+  /**
+   * 效价级别
+   */
+  titerLevel: string;
+  currPage: string;
+  pageSize: string;
+}
+
+/**
+ * 接口 [特免血浆查询-详情↗](https://yapi.sharing8.cn/project/529/interface/api/33825) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `POST /api/core/bag/titer/details`
+ * @更新时间 `2024-03-09 15:40:21`
+ */
+export interface PostApiCoreBagTiterDetailsResponse {
+  totalCount: number;
+  pageSize: number;
+  totalPage: number;
+  currPage: number;
+  result?: {
+    donorNo: string;
+    name: string;
+    bagNo: string;
+    titerValue: string;
+    collectionAt: string;
   }[];
 }
 

@@ -75,7 +75,7 @@
   } from '../production-sorting.data';
   import OutModal from '@/views/tray/outInStore/outModal.vue';
   import { getBoxListApi, getOutStoreListApi } from '@/api/stockout/production-sorting/index';
-  import { TRAY_STORE_STATE, TRAY_STORE_STATE_TEXT } from '@/enums/stockoutEnum';
+  import { TRAY_STORE_STATE, TRAY_OUT_STATE_TEXT } from '@/enums/stockoutEnum';
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
 
   const state = reactive({
@@ -149,9 +149,9 @@
     const rows: Recordable[] = getSelectRows();
     if (rows.length === 0) return message.warning('请选择数据');
     const [row] = rows;
-    if (rows.some((_) => _.state !== TRAY_STORE_STATE.S)) {
+    if (rows.some((_) => _.state !== TRAY_STORE_STATE.IN)) {
       return message.warning(
-        '请选择【' + TRAY_STORE_STATE_TEXT.get(TRAY_STORE_STATE.S) + '】的数据',
+        '请选择【' + TRAY_OUT_STATE_TEXT.get(TRAY_STORE_STATE.IN) + '】的数据',
       );
     }
     if (rows.some((_) => _.wareHouseName !== row.wareHouseName)) {

@@ -12,7 +12,9 @@
     <div>
       <BasicForm @register="registerForm" />
       <div class="flex justify-end">
-        <a-button type="primary" @click="handleSave" :loading="btnLoading"> 保存申请单 </a-button>
+        <a-button type="primary" @click="handleSave" :loading="btnLoading" :disabled="isPreview">
+          保存申请单
+        </a-button>
       </div>
       <a-tabs default-active-key="detail" v-model:activeKey="currentKey">
         <a-tab-pane key="batch" tab="血浆批号">
@@ -24,9 +26,10 @@
         <a-tab-pane key="detail" tab="血浆明细">
           <BasicTable @register="registerDetailTable">
             <template #toolbar>
-              <a-button type="primary"> 挑浆系统 </a-button>
-              <a-button type="primary" @click="handlePickPlasma"> 挑选血浆</a-button>
-              <a-button type="primary" @click="handleDelete"> 移除 </a-button>
+              <a-button type="primary" @click="handlePickPlasma" :disabled="isPreview">
+                挑选血浆
+              </a-button>
+              <a-button type="primary" @click="handleDelete" :disabled="isPreview"> 移除 </a-button>
             </template>
           </BasicTable>
         </a-tab-pane>
@@ -69,6 +72,7 @@
 
   const emit = defineEmits(['success', 'register']);
   const isUpdate = ref(false);
+  const isPreview = ref(false);
 
   const [registerPickModal, { openModal: openPickModal }] = useModal();
 
@@ -119,7 +123,7 @@
   watch(
     () => currentKey.value,
     (val) => {
-      if (!unref(isUpdate)) return;
+      if (!getFieldsValue().dlvNo) return;
 
       if (val === 'batch') {
         setTimeout(() => {
@@ -137,33 +141,34 @@
     },
   );
 
-  const [registerBatchTable, { reload: reloadBatchTable }] = useTable({
-    api: getDeliverNonProductiveDetailBatch,
-    beforeFetch(params) {
-      return {
-        ...params,
-        dlvNo: getFieldsValue().dlvNo,
-      };
-    },
-    pagination: false,
-    columns: plasmaBatchColumns,
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    size: 'small',
-    striped: false,
-    useSearchForm: false,
-    showTableSetting: false,
-    bordered: true,
-    showIndexColumn: false,
-    canResize: true,
-    immediate: false,
-  });
+  const [registerBatchTable, { reload: reloadBatchTable, setTableData: setBatchTableData }] =
+    useTable({
+      api: getDeliverNonProductiveDetailBatch,
+      beforeFetch(params) {
+        return {
+          ...params,
+          dlvNo: getFieldsValue().dlvNo,
+        };
+      },
+      pagination: false,
+      columns: plasmaBatchColumns,
+      fetchSetting: {
+        pageField: 'currPage',
+        sizeField: 'pageSize',
+        totalField: 'totalCount',
+        listField: 'result',
+      },
+      size: 'small',
+      striped: false,
+      useSearchForm: false,
+      showTableSetting: false,
+      bordered: true,
+      showIndexColumn: false,
+      canResize: true,
+      immediate: false,
+    });
 
-  const [registerBoxTable, { reload: reloadBoxTable }] = useTable({
+  const [registerBoxTable, { reload: reloadBoxTable, setTableData: setBoxTableData }] = useTable({
     api: getDeliverNonProductiveDetailBox,
     beforeFetch(params) {
       return {
@@ -189,52 +194,82 @@
     immediate: false,
   });
 
-  const [registerDetailTable, { reload: reloadDetailTable, setTableData }] = useTable({
-    api: getDeliverNonProductivePlasma,
-    beforeFetch(params) {
-      return {
-        ...params,
-        dlvNo: getFieldsValue().dlvNo,
-      };
-    },
-    pagination: false,
-    columns: plasmaDetailColumns,
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    clickToRowSelect: true,
-    rowSelection: {
-      type: 'radio',
-      onChange: (_, selectedRows: any) => {
-        selectedRow.value = selectedRows;
+  const [registerDetailTable, { reload: reloadDetailTable, setTableData: setDetailTableData }] =
+    useTable({
+      api: getDeliverNonProductivePlasma,
+      beforeFetch(params) {
+        return {
+          ...params,
+          dlvNo: getFieldsValue().dlvNo,
+        };
       },
-    },
-    size: 'small',
-    striped: false,
-    useSearchForm: false,
-    showTableSetting: false,
-    bordered: true,
-    showIndexColumn: false,
-    canResize: true,
-    immediate: false,
-  });
+      pagination: false,
+      columns: plasmaDetailColumns,
+      fetchSetting: {
+        pageField: 'currPage',
+        sizeField: 'pageSize',
+        totalField: 'totalCount',
+        listField: 'result',
+      },
+      clickToRowSelect: true,
+      rowSelection: {
+        type: 'radio',
+        onChange: (_, selectedRows: any) => {
+          selectedRow.value = selectedRows;
+        },
+      },
+      size: 'small',
+      striped: false,
+      useSearchForm: false,
+      showTableSetting: false,
+      bordered: true,
+      showIndexColumn: false,
+      canResize: true,
+      immediate: false,
+    });
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: false });
 
     isUpdate.value = !!data.isUpdate;
+    isPreview.value = !!data.isPreview;
 
     await updateSchema([
       {
         field: 'dlvNo',
         componentProps: {
-          disabled: !!data.isUpdate,
+          disabled: !!data.isUpdate || !!data.isPreview,
+        },
+      },
+      {
+        field: 'applicant',
+        componentProps: {
+          disabled: !!data.isPreview,
+        },
+      },
+      {
+        field: 'transferDepartment',
+        componentProps: {
+          disabled: !!data.isPreview,
+        },
+      },
+      {
+        field: 'reason',
+        componentProps: {
+          disabled: !!data.isPreview,
         },
       },
     ]);
+
+    if (unref(isPreview)) {
+      await setFieldsValue({
+        ...data.record,
+      });
+
+      await reloadDetailTable();
+
+      return;
+    }
 
     if (unref(isUpdate)) {
       await setFieldsValue({
@@ -243,11 +278,13 @@
 
       await reloadDetailTable();
     } else {
-      setTableData([]);
+      setBoxTableData([]);
+      setBatchTableData([]);
+      setDetailTableData([]);
     }
   });
 
-  const getTitle = computed(() => (unref(isUpdate) ? '编辑' : '新增'));
+  const getTitle = computed(() => (unref(isUpdate) ? '编辑' : unref(isPreview) ? '查看' : '新增'));
 
   async function handleSubmit() {
     emit('success');
@@ -295,6 +332,7 @@
 
   function handleClose() {
     resetFields();
+    currentKey.value = 'detail';
     emit('success');
   }
 

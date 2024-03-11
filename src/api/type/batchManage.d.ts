@@ -1315,7 +1315,7 @@ export interface GetApiCoreBatchSampleVerifyResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/verify/{batchSampleNo}`
- * @更新时间 `2023-12-29 15:05:55`
+ * @更新时间 `2024-03-06 16:04:13`
  */
 export interface GetApiCoreBatchSampleVerifyBatchSampleNoRequest {
   /**
@@ -1329,7 +1329,7 @@ export interface GetApiCoreBatchSampleVerifyBatchSampleNoRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/verify/{batchSampleNo}`
- * @更新时间 `2023-12-29 15:05:55`
+ * @更新时间 `2024-03-06 16:04:13`
  */
 export interface GetApiCoreBatchSampleVerifyBatchSampleNoResponse {
   /**
@@ -1356,6 +1356,10 @@ export interface GetApiCoreBatchSampleVerifyBatchSampleNoResponse {
      * 不合格原因
      */
     unqualifiedReason?: string;
+    /**
+     * 标识是否献血浆者不符合，true表示是，false表示不是
+     */
+    donorBlock?: boolean;
   }[];
   /**
    * 样本批号
@@ -1545,7 +1549,7 @@ export interface PostApiCoreBatchPlasmaVerifyRevokeBagResponse {}
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/verify/lack/{batchSampleNo}`
- * @更新时间 `2023-12-30 16:21:26`
+ * @更新时间 `2024-03-06 09:38:50`
  */
 export interface GetApiCoreBatchSampleVerifyLackBatchSampleNoRequest {
   /**
@@ -1559,7 +1563,7 @@ export interface GetApiCoreBatchSampleVerifyLackBatchSampleNoRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/verify/lack/{batchSampleNo}`
- * @更新时间 `2023-12-30 16:21:26`
+ * @更新时间 `2024-03-06 09:38:50`
  */
 export type GetApiCoreBatchSampleVerifyLackBatchSampleNoResponse = {
   /**
@@ -1578,6 +1582,10 @@ export type GetApiCoreBatchSampleVerifyLackBatchSampleNoResponse = {
    * 采浆日期
    */
   collectDate?: string;
+  /**
+   * 缺号说明
+   */
+  remark?: string;
 }[];
 
 /**

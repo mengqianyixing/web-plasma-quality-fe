@@ -52,14 +52,6 @@ export const columns: BasicColumn[] = [
       return record.enable ? '是' : '否';
     },
   },
-  {
-    title: '记录人',
-    dataIndex: 'creator',
-  },
-  {
-    title: '记录时间',
-    dataIndex: 'createAt',
-  },
 ];
 
 export const searchFormschema: FormSchema[] = [
@@ -126,19 +118,27 @@ export const formListSchema: FormSchema[] = [
   {
     field: 'min',
     component: 'InputNumber',
-    label: '效价最小值',
+    label: '效价最小值(大于等于)',
     defaultValue: null,
     componentProps: {
       min: 0,
+      formatter: (n: string) => {
+        if (/\.[0-9]{2}/.test(n)) return n.replace(/([0-9]+\.[0-9]{1,1})[0-9]+/, '$1');
+        return n;
+      },
     },
   },
   {
     field: 'max',
     component: 'InputNumber',
-    label: '效价最大值',
+    label: '效价最大值(小于)',
     defaultValue: null,
     componentProps: {
       min: 0,
+      formatter: (n: string) => {
+        if (/\.[0-9]{2}/.test(n)) return n.replace(/([0-9]+\.[0-9]{1,1})[0-9]+/, '$1');
+        return n;
+      },
     },
   },
   {

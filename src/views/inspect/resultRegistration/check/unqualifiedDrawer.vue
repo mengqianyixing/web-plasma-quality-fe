@@ -41,6 +41,7 @@
   let projectName = ref('');
   let pid = '';
   let bsno = '';
+  let pv = 0;
   let userData: Recordable = {};
   let fieldList: string[] = [];
   const emit = defineEmits(['close', 'confirm']);
@@ -63,13 +64,21 @@
     showActionButtonGroup: false,
   });
   const [registerModal, { setModalProps }] = useModalInner(
-    async ({ projectAbbr, projectId, bsNo, methodAbbr }) => {
+    async ({ projectAbbr, projectId, bsNo, methodAbbr, priceValidBit }) => {
+      pv = priceValidBit;
       pid = projectId;
       bsno = bsNo;
       reloadPage();
       projectName.value = projectAbbr;
       const formSchemaList = [...notCheckFormSchema];
-      formSchemaList.splice(1, 0, ...formSchemaMap[methodsMappding[methodAbbr]]);
+      formSchemaList.splice(
+        1,
+        0,
+        ...formSchemaMap[methodsMappding[methodAbbr]].map((it) => ({
+          ...it,
+          componentProps: { ...it.componentProps, formatter },
+        })),
+      );
       fieldList = formSchemaList.map((_) => _.field);
       appendSchemaByField(formSchemaList, 'sampleNo');
       updateSchema({
@@ -85,6 +94,12 @@
       });
     },
   );
+  function formatter(n: string) {
+    const reg1 = new RegExp(`[.]{1,1}[0-9]{${pv + 1}}`);
+    const reg2 = new RegExp(`([0-9]+[.]{1,1}[0-9]{${pv},${pv}})[0-9]+`);
+    if (reg1.test(n)) return n.replace(reg2, '$1');
+    return n;
+  }
   function close() {
     removeSchemaByField(fieldList);
     emit('close');

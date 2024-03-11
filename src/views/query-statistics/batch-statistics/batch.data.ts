@@ -6,18 +6,22 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 100,
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
+    width: 120,
   },
   {
     title: '采集开始日期',
     dataIndex: 'collStartDate',
+    width: 120,
   },
   {
     title: '采集结束日期',
     dataIndex: 'collEndDate',
+    width: 120,
   },
   {
     title: '入库情况',

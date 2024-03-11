@@ -5,7 +5,6 @@ import {
   tagStatusValueEnum,
   tagStyleTypeEnum,
   tagStyleTypeMap,
-  tagTypeMap,
 } from '@/enums/tagManageEnum';
 import dayjs from 'dayjs';
 
@@ -231,9 +230,6 @@ export const formSchema: FormSchema[] = [
     label: '标签类型',
     component: 'Select',
     colProps: { span: 8 },
-    componentProps: {
-      options: [...tagTypeMap.entries()].map(([value, label]) => ({ label, value })),
-    },
     required: true,
   },
   {

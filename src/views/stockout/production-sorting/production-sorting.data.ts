@@ -4,8 +4,7 @@ import {
   boxTypeMap,
   boxTypeEnum,
   TRAY_IN_STATE_TEXT,
-  TRAY_IN_STATE_LIST,
-  TRAY_STORE_STATE_TEXT,
+  TRAY_OUT_STATE_TEXT,
 } from '@/enums/stockoutEnum';
 
 export const trayInStoreColumns: BasicColumn[] = [
@@ -24,7 +23,7 @@ export const trayInStoreColumns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'state',
-    format: (text) => TRAY_STORE_STATE_TEXT.get(text) as string,
+    format: (text) => TRAY_IN_STATE_TEXT.get(text) as string,
   },
   {
     title: '存放库房',
@@ -146,7 +145,7 @@ export const trayOutStoreColumns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'state',
-    format: (text) => TRAY_IN_STATE_TEXT.get(text) as string,
+    format: (text) => TRAY_OUT_STATE_TEXT.get(text) as string,
   },
   {
     title: '存放库房',
@@ -178,7 +177,11 @@ export const trayOutStoreFormSchema: FormSchema[] = [
     field: 'state',
     component: 'Select',
     componentProps: {
-      options: TRAY_IN_STATE_LIST,
+      options: [
+        { value: 'S', label: '已出库' },
+        { value: 'W', label: '未出库' },
+        { value: 'R', label: '出库中' },
+      ],
     },
   },
   {

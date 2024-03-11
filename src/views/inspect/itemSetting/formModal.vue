@@ -22,7 +22,7 @@
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
-  import { BasicForm, FormSchema, useForm } from '@/components/Form';
+  import { BasicForm, useForm } from '@/components/Form';
   import { formListSchema } from './itemSetting.data';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import {
@@ -30,7 +30,6 @@
     addItemSettingApi,
     updateItemSettingApi,
   } from '@/api/inspect/itemSetting';
-  import { getDictItemListByNoApi } from '@/api/dictionary';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -47,15 +46,7 @@
   const [registerModal, { setModalProps, closeModal }] = useModalInner(
     async ({ data, disabled }) => {
       state.projectId = data.projectId;
-      if (state.isRequest === false) {
-        state.isRequest = true;
-        const list = formListSchema.filter((_: FormSchema & any) => {
-          return (
-            _.componentProps && _.componentProps.options && _.componentProps.options.length === 0
-          );
-        });
-        getDict(list.map((_) => _.field));
-      }
+
       const disabledOptions = formListSchema.map((_) => ({
         field: _.field,
         componentProps: { disabled: false },
@@ -93,11 +84,5 @@
     } finally {
       setModalProps({ confirmLoading: false });
     }
-  }
-  async function getDict(dictNos: string[]) {
-    const res = await getDictItemListByNoApi(dictNos);
-    const list = res.map((_) => ({ field: _.dictNo, componentProps: { options: _.dictImtes } }));
-    updateSchema(list);
-    // updateSchema({ field: dictNo, componentProps: { options: res } })
   }
 </script>

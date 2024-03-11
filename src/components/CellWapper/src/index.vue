@@ -14,7 +14,12 @@
       width: `calc(100% - ${gap}px)`,
     }"
   >
-    <div :class="`item  flex`" v-for="(cell, i) in cellList" :key="cell.field + '.' + i">
+    <div
+      :class="['item', 'flex', i === cellList.length - 1 ? 'flex-1' : '']"
+      v-for="(cell, i) in cellList"
+      :style="cellStyle"
+      :key="cell.field + '.' + i"
+    >
       <div :class="['label', 'shrink-0', labelWidthClass]" :style="{ width: labelWidth }">
         {{ cell.label }}
       </div>
@@ -30,11 +35,11 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { PropType } from 'vue';
+  import { PropType, StyleValue } from 'vue';
   import { Cell } from './type';
   import { get } from 'lodash-es';
 
-  const { data, cellList, labelWidth, labelWidthClass } = defineProps({
+  const { data, cellList, labelWidth, labelWidthClass, cellStyle } = defineProps({
     data: {
       type: Object as PropType<any>,
     },
@@ -49,9 +54,8 @@
       type: [String, Object] as PropType<string | object>,
       default: 'w-1/2',
     },
-    cellWidth: {
-      type: [Number, String] as PropType<number | string>,
-      default: '25%',
+    cellStyle: {
+      type: [Object, String] as PropType<StyleValue>,
     },
     gap: {
       type: Number as PropType<number>,
@@ -62,13 +66,14 @@
 <style scoped>
   .cell-wapper {
     width: calc(100% - 32px);
+    border-top-width: 1px;
+    border-right-width: 1px;
     border-left-width: 1px;
     border-color: #f0f0f0;
   }
 
   .item {
-    border-top-width: 1px;
-    border-right-width: 1px;
+    width: 25%;
     border-bottom-width: 1px;
     border-color: #f0f0f0;
   }
@@ -77,20 +82,22 @@
   .value {
     display: flex;
     align-items: center;
-    justify-content: center;
     padding: 8px;
   }
 
   .value {
+    justify-content: center;
     width: 165px;
   }
 
   .label {
+    justify-content: flex-end;
     width: 120px;
     min-height: 40px;
     border-right-width: 1px;
     border-color: #f0f0f0;
-    background: #fafafa;
+    background: rgb(0 0 0 / 2%);
     color: #666;
+    text-align: right;
   }
 </style>

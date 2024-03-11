@@ -50,6 +50,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '高效价',
         dataIndex: ['B', 'hTiter'],
+        slots: { customRender: 'BH' },
       },
       {
         width: 150,
@@ -61,6 +62,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '低效价',
         dataIndex: ['B', 'lTiter'],
+        slots: { customRender: 'BL' },
       },
       {
         width: 150,
@@ -72,6 +74,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '普通',
         dataIndex: ['B', 'nTiter'],
+        slots: { customRender: 'BN' },
       },
       {
         width: 150,
@@ -104,6 +107,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '高效价',
         dataIndex: ['R', 'hTiter'],
+        slots: { customRender: 'RH' },
       },
       {
         width: 150,
@@ -115,6 +119,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '低效价',
         dataIndex: ['R', 'lTiter'],
+        slots: { customRender: 'RL' },
       },
       {
         width: 150,
@@ -126,6 +131,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '普通',
         dataIndex: ['R', 'nTiter'],
+        slots: { customRender: 'RN' },
       },
       {
         width: 150,
@@ -158,6 +164,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '高效价',
         dataIndex: ['T', 'hTiter'],
+        slots: { customRender: 'TH' },
       },
       {
         width: 150,
@@ -169,6 +176,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '低效价',
         dataIndex: ['T', 'lTiter'],
+        slots: { customRender: 'TL' },
       },
       {
         width: 150,
@@ -180,6 +188,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '普通',
         dataIndex: ['T', 'nTiter'],
+        slots: { customRender: 'TN' },
       },
       {
         width: 150,
@@ -207,6 +216,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '高效价',
         dataIndex: ['G', 'hTiter'],
+        slots: { customRender: 'GH' },
       },
       {
         width: 150,
@@ -218,6 +228,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '低效价',
         dataIndex: ['G', 'lTiter'],
+        slots: { customRender: 'GL' },
       },
       {
         width: 150,
@@ -229,6 +240,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '普通',
         dataIndex: ['G', 'nTiter'],
+        slots: { customRender: 'GN' },
       },
       {
         width: 150,
@@ -256,6 +268,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '高效价',
         dataIndex: ['N', 'hTiter'],
+        slots: { customRender: 'NH' },
       },
       {
         width: 150,
@@ -267,6 +280,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '低效价',
         dataIndex: ['N', 'lTiter'],
+        slots: { customRender: 'NL' },
       },
       {
         width: 150,
@@ -278,6 +292,7 @@ export const columns: BasicColumn[] = [
         width: 150,
         title: '普通',
         dataIndex: ['N', 'nTiter'],
+        slots: { customRender: 'NN' },
       },
       {
         width: 150,
@@ -360,5 +375,28 @@ export const searchFormSchema: FormSchema[] = [
       class: 'w-full',
       valueFormat: 'YYYY-MM-DD',
     },
+  },
+];
+
+export const dtColumns: BasicColumn[] = [
+  {
+    dataIndex: 'donorNo',
+    title: '浆员编号',
+  },
+  {
+    dataIndex: 'name',
+    title: '浆员姓名',
+  },
+  {
+    dataIndex: 'bagNo',
+    title: '血浆编号',
+  },
+  {
+    dataIndex: 'titerValue',
+    title: '效价值',
+  },
+  {
+    dataIndex: 'collectionAt',
+    title: '血浆采集日期',
   },
 ];

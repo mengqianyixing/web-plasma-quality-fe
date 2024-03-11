@@ -50,6 +50,10 @@ import {
   PostApiCoreLabMaterialDetailResponse,
   DeleteApiCoreLabMaterialDetailRequest,
   DeleteApiCoreLabMaterialDetailResponse,
+  DeleteApiCoreLabRegistrationLabItemUnqualifiedRequest,
+  DeleteApiCoreLabRegistrationLabItemUnqualifiedResponse,
+  PostApiCoreLabMbBaninRequest,
+  PostApiCoreLabMbBaninResponse,
 } from '@/api/type/inspectManage';
 
 enum Api {
@@ -79,7 +83,17 @@ enum Api {
   TITER_ITEM_MATERIAL = '/api/core/lab/project/material/',
   MATERIAL_LIST = '/api/core/lab/material/details/',
   MATERIAL_ADD_RE = '/api/core/lab/material/detail',
+
+  REMOVE_UNQUA = '/api/core/lab/registration/labItem/unqualified',
+
+  SQ_IMPORT = '/api/core/lab/mbBanin',
 }
+
+export const removeUnqualified = (data: DeleteApiCoreLabRegistrationLabItemUnqualifiedRequest) =>
+  defHttp.delete<DeleteApiCoreLabRegistrationLabItemUnqualifiedResponse>({
+    url: Api.REMOVE_UNQUA,
+    data,
+  });
 
 export const uploadItemTiter = (data: PostApiCoreLabRegistrationTiterUploadRequest) =>
   defHttp.uploadFile<PostApiCoreLabRegistrationTiterUploadResponse>({ url: Api.IMPORT }, data);
@@ -170,3 +184,6 @@ export const deleteMaterialApi = (data: DeleteApiCoreLabMaterialDetailRequest) =
     url: Api.MATERIAL_ADD_RE,
     data,
   });
+
+export const submitSqImportApi = (data: PostApiCoreLabMbBaninRequest) =>
+  defHttp.post<PostApiCoreLabMbBaninResponse>({ url: Api.SQ_IMPORT, data });

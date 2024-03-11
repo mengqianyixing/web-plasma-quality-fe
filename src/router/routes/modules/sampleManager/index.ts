@@ -9,7 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
-import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+import { ReCheckButtonEnum, SampleManageButtonEnum } from '@/enums/authCodeEnum';
 
 const sampleManager: AppRouteModule = {
   path: '/sample-manage',
@@ -62,6 +62,13 @@ const sampleManager: AppRouteModule = {
         title: '样本发布',
       },
       component: () => import('@/views/sample-manage/sample-release/index.vue'),
+      authElements: [
+        {
+          id: SampleManageButtonEnum.SampleRelease,
+          name: 'sampleRelease',
+          title: '发布',
+        },
+      ],
     },
   ],
 };

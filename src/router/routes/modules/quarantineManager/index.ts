@@ -37,6 +37,28 @@ const quarantineManager: AppRouteModule = {
         title: '血浆批检疫期报告',
       },
       component: () => import('@/views/quarantine/plasma-batch/index.vue'),
+      authElements: [
+        {
+          id: QuarantineButtonEnum.CreateQuarantine,
+          name: 'create',
+          title: '新增',
+        },
+        {
+          id: QuarantineButtonEnum.ResetQuarantine,
+          name: 'reset',
+          title: '撤销',
+        },
+        {
+          id: QuarantineButtonEnum.ReCheckQuarantine,
+          name: 'recheck',
+          title: '复核',
+        },
+        {
+          id: QuarantineButtonEnum.PrintQuarantine,
+          name: 'print',
+          title: '打印',
+        },
+      ],
     },
     {
       path: 'stationRefuse',

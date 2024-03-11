@@ -12,6 +12,12 @@
       <template #toolbar>
         <a-button
           type="primary"
+          @click="handleUpdateDate"
+          v-auth="InspectButtonEnum.MaterialPreRegistrationUpdateDate"
+          >登记使用截止日期</a-button
+        >
+        <a-button
+          type="primary"
           @click="handleCreate"
           v-auth="InspectButtonEnum.MaterialPreRegistrationAdd"
           >新增</a-button
@@ -49,6 +55,7 @@
       </template>
     </BasicTable>
     <FormModal @register="registerModal" @success="success" />
+    <DateFormModal @register="registerDateModal" @success="success" />
     <Modal
       :open="open"
       @cancel="open = false"
@@ -71,6 +78,7 @@
   import { columns } from './materialPreRegistration.data';
   import { message, Modal } from 'ant-design-vue';
   import FormModal from './formModal.vue';
+  import DateFormModal from './dateFormModal.vue';
   import { ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import {
@@ -101,6 +109,7 @@
     showActionButtonGroup: false,
   });
   const [registerModal, { openModal }] = useModal();
+  const [registerDateModal, { openModal: openDateModal }] = useModal();
 
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,
@@ -139,6 +148,11 @@
   function handleUpdate() {
     getSelections(true, ([row]) => {
       openModal(true, { data: row, isUpdata: true });
+    });
+  }
+  function handleUpdateDate() {
+    getSelections(true, ([row]) => {
+      openDateModal(true, { data: row });
     });
   }
   function success() {

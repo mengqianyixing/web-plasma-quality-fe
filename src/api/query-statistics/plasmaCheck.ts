@@ -7,12 +7,15 @@ import {
   PostApiCoreLabBagTrackResponse,
   PostApiCoreLabBagCheckResponse,
   PostApiCoreLabBagCheckRequest,
+  PostApiCoreLabBagCheckDetailsRequest,
+  PostApiCoreLabBagCheckDetailsResponse,
 } from '@/api/type/queryStatistics';
 
 enum Api {
   CHECK_LIST = '/api/core/lab/bag/check',
   TITER_LIST = '/api/core/lab/bag/titer',
   FOLLOW_UP_LIST = '/api/core/lab/bag/track',
+  DT = '/api/core/lab/bag/check/details',
 }
 
 export const getCheckListApi = (params: PostApiCoreLabBagCheckRequest) =>
@@ -23,3 +26,6 @@ export const getTiterListApi = (params: PostApiCoreLabBagTiterRequest) =>
 
 export const getFollowUpListApi = (params: PostApiCoreLabBagTrackRequest) =>
   defHttp.post<PostApiCoreLabBagTrackResponse>({ url: Api.FOLLOW_UP_LIST, params });
+
+export const getDtApi = (params: PostApiCoreLabBagCheckDetailsRequest) =>
+  defHttp.post<PostApiCoreLabBagCheckDetailsResponse>({ url: Api.DT, params });

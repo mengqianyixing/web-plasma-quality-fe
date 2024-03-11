@@ -7,6 +7,7 @@
  * @LastEditTime: 2024-01-26 10:50:50
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
+import { TRAY_IN_STATE_TEXT } from '@/enums/stockoutEnum';
 
 export const columns: BasicColumn[] = [
   {
@@ -21,6 +22,7 @@ export const columns: BasicColumn[] = [
       return record.totalNumber ? '负载' : '空载';
     },
   },
+
   {
     title: '已存放容量(箱)',
     dataIndex: 'totalNumber',
@@ -39,6 +41,11 @@ export const columns: BasicColumn[] = [
     dataIndex: 'createAt',
   },
   {
+    title: '入库状态',
+    dataIndex: 'trayStatus',
+    format: (text) => TRAY_IN_STATE_TEXT.get(text) as string,
+  },
+  {
     title: '所在库房',
     dataIndex: 'wareHouseName',
   },
@@ -48,7 +55,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'locationNo',
   },
   {
-    title: '托盘状态',
+    title: '启用状态',
     dataIndex: 'closed',
     customRender: ({ record }) => {
       return record.closed ? '停用' : '启用';

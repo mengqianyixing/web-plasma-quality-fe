@@ -9,6 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import { SearchManager } from '@/enums/authCodeEnum';
 
 const trayManager: AppRouteModule = {
   path: '/search',
@@ -56,6 +57,13 @@ const trayManager: AppRouteModule = {
       },
       id: 9000310,
       component: () => import('@/views/query-statistics/inventory-statistics/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.InventoryExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'stereoWarehouse',
@@ -74,6 +82,13 @@ const trayManager: AppRouteModule = {
       },
       id: 9000170,
       component: () => import('@/views/query-statistics/location/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.LocationExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'prepareNo',
@@ -175,6 +190,13 @@ const trayManager: AppRouteModule = {
       },
       id: 900030,
       component: () => import('@/views/query-statistics/plasma-batch/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.PlasmaBatchExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'ERPInspectionReport',
@@ -184,6 +206,13 @@ const trayManager: AppRouteModule = {
       },
       id: 9000240,
       component: () => import('@/views/query-statistics/ERPInspectionReport/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.ERPReportExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'ERPEntryStore',
@@ -211,6 +240,13 @@ const trayManager: AppRouteModule = {
       },
       id: 9000140,
       component: () => import('@/views/query-statistics/donorState/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.DonorStateExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'sampleStatistics',
@@ -256,6 +292,13 @@ const trayManager: AppRouteModule = {
       },
       id: 9000250,
       component: () => import('@/views/query-statistics/callback/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.CallbackExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'CallbackBatchStatistics',
@@ -265,6 +308,13 @@ const trayManager: AppRouteModule = {
       },
       id: 9000260,
       component: () => import('@/views/query-statistics/callback-batch/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.CallbackBatchExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'checkResult',

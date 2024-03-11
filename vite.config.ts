@@ -45,17 +45,20 @@ export default defineApplicationConfig({
           ws: true,
         },
         '/basic-api/api/core': {
-          target: 'http://192.168.1.67:7001',
+          // target: 'http://192.168.1.67:7001',
+          target: 'http://192.168.1.133:7100',
           changeOrigin: true,
           rewrite: (p) => p.replace(new RegExp(`^/basic-api`), ''),
         },
         '/basic-api/api/product': {
-          target: 'http://192.168.1.67:7003',
+          // target: 'http://192.168.1.67:7003',
+          target: 'http://192.168.1.133:7100',
           changeOrigin: true,
           rewrite: (p) => p.replace(new RegExp(`^/basic-api`), ''),
         },
         '/basic-api/api/sys': {
-          target: 'http://192.168.1.67:7002',
+          // target: 'http://192.168.1.67:7002',
+          target: 'http://192.168.1.133:7100',
           changeOrigin: true,
           rewrite: (p) => p.replace(new RegExp(`^/basic-api`), ''),
         },

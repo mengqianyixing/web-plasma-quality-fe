@@ -130,10 +130,10 @@
         return (
           <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
             <a-input-search
-              placeholder="请选择批号或输入批号回车"
+              readonly
+              placeholder="请点击选择"
               enter-button="选择"
               value={inputValue}
-              onChange={(e) => (inputValue.value = e.target.value)}
               onSearch={handleSelectSampleBatch}
             />
           </div>
@@ -387,6 +387,7 @@
     verifyAt?: string;
     qualified?: number;
     unqualifiedReason?: string;
+    donorBlock?: boolean;
   }) => {
     const actions: ActionItem[] = [
       {
@@ -430,7 +431,7 @@
         ifShow: () =>
           verifyFlag.value !== sampleVerifyStatusValueEnum.S &&
           record?.qualified === sampleVerifyResultValueEnum.Unqualified &&
-          record?.unqualifiedReason !== nonconformityReasonEnum.DonorNonConformance,
+          record?.donorBlock === false,
       },
     ];
 

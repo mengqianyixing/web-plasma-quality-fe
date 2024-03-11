@@ -43,7 +43,16 @@
               <a-button @click="openOutModal(true, filterForm)" :disabled="!filterForm.batchNo">
                 托盘出库
               </a-button>
-              <!-- <a-button @click="openReprintModal(true, { boxNo: filterForm.boxNo ?? '104B1004' })"
+              <!-- <a-button
+                @click="
+                  openReprintModal(true, {
+                    boxNo: printObj.printBoxNo,
+                    plasmaType: printObj.plasmaType,
+                    stationName: filterForm.stationName,
+                    batchNo: filterForm.batchNo,
+                    acceptList,
+                  })
+                "
                 >打印</a-button
               > -->
             </div>
@@ -86,7 +95,7 @@
       @success="handleModalSuccess"
     />
     <MissNumModal @register="registerMissNumModal" @success="handleModalSuccess" />
-    <!-- <ReprintModal @register="registerReprintModal" @success="handleReprintSuccess" /> -->
+    <ReprintModal @register="registerReprintModal" @success="handleReprintSuccess" />
   </PageWrapper>
 </template>
 
@@ -104,7 +113,7 @@
     plasmaVerifyBag,
     plasmaComplete,
   } from '@/api/inbound-management/accept-plasma';
-  // import { printRecord } from '@/api/tag/printRecord';
+  import { printRecord } from '@/api/tag/printRecord';
   import { Modal } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import dayjs from 'dayjs';
@@ -117,7 +126,7 @@
   import OutStoreDrawer from '../components/outStoreDrawer/index.vue';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
-  // import ReprintModal from './components/reprint-modal.vue';
+  import ReprintModal from './components/reprint-modal.vue';
   import PlasmaUnqualifiedModal from '@/views/inbound-management/accept-plasma/components/PlasmaUnqualifiedModal.vue';
   import SampleUnqualifiedModal from '@/views/inbound-management/accept-plasma/components/SampleUnqualifiedModal.vue';
   import MissNumModal from '@/views/inbound-management/accept-plasma/components/MissNumModal.vue';
@@ -135,6 +144,11 @@
   const checker = ref(''); // 当前复核人
   const tableLoading = ref(false);
   const donorFailed = ref(''); // 献血浆者不符合
+  let printObj = {
+    printBoxNo: '',
+    plasmaType: '',
+    acceptList: [] as any[],
+  }; // 缓存上一次扫描血浆的箱号用于打印
 
   const bagNoRef = ref<any>(null);
   const suspendOrResumeRef = ref<any>('');
@@ -296,7 +310,7 @@
   const [registerPlasmaUnqualifiedModal, { openModal: openPlasmaUnqualifiedModal }] = useModal();
   const [registerSampleUnqualifiedModal, { openModal: openSampleUnqualifiedModal }] = useModal();
   const [registerMissNumModal, { openModal: openMissNumModal }] = useModal();
-  // const [registerReprintModal, { openModal: openReprintModal }] = useModal();
+  const [registerReprintModal, { openModal: openReprintModal }] = useModal();
 
   // 表格数据
   const unAcceptList = computed(() => filterForm.value?.unVerifyBag ?? []);
@@ -442,8 +456,21 @@
           filterForm.value.boxCount = data.boxCount;
           filterForm.value.stationNo = data.stationNo;
           filterForm.value.boxNo = data.boxNo;
+
+          // 打印相关参数 一箱的尾袋不会返回箱号等
+          if (data?.boxNo) {
+            printObj.printBoxNo = data.boxNo;
+          }
+          printObj.plasmaType = data.immType;
+          printObj.acceptList = [
+            ...filterForm.value.verifyBag.map((item: any) => {
+              return item.bagNo;
+            }),
+            bagNo.value,
+          ];
+
           // trayNo.value = data?.trayNo || '';
-          if (data?.trayNo) trayNo.value;
+          if (data?.trayNo) trayNo.value = data.trayNo;
           filterForm.value.unVerifyBag = data.unVerifyBag.map((item: any) => {
             return {
               bagNo: item,
@@ -466,8 +493,22 @@
               filterForm.value.verifyBagCount
             ) {
               success('当前批验收完成');
+              openReprintModal(true, {
+                boxNo: printObj.printBoxNo,
+                plasmaType: printObj.plasmaType,
+                stationName: filterForm.value.stationName,
+                batchNo: filterForm.value.batchNo,
+                acceptList: printObj.acceptList,
+              });
             } else if (!filterForm.value.unVerifyBag.length) {
               success('当前箱验收完成');
+              openReprintModal(true, {
+                boxNo: printObj.printBoxNo,
+                plasmaType: printObj.plasmaType,
+                stationName: filterForm.value.stationName,
+                batchNo: filterForm.value.batchNo,
+                acceptList: printObj.acceptList,
+              });
             }
           }
         }
@@ -517,6 +558,11 @@
         bagNo: item,
       };
     });
+    printObj = {
+      printBoxNo: '',
+      plasmaType: '',
+      acceptList: [] as any[],
+    };
   }
 
   // 点击登录按钮
@@ -702,13 +748,18 @@
     });
   }
 
-  // // 打印箱签
-  // async function handleReprintSuccess(data) {
-  //   const params = {
-  //     ...data.labelObj,
-  //     dpi: data.labelObj.resolution,
-  //   };
-  //   delete params.resolution;
-  //   await printRecord(params);
-  // }
+  // 打印箱签
+  async function handleReprintSuccess(data) {
+    const params = {
+      ...data.labelObj,
+      dpi: data.labelObj.resolution,
+    };
+    delete params.resolution;
+    await printRecord(params);
+    printObj = {
+      printBoxNo: '',
+      plasmaType: '',
+      acceptList: [] as any[],
+    };
+  }
 </script>

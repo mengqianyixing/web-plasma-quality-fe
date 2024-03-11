@@ -28,6 +28,10 @@ const checkManager: AppRouteModule = {
       id: 960030,
       authElements: [
         {
+          id: InspectButtonEnum.MaterialPreRegistrationUpdateDate,
+          title: '登记使用截止日期',
+        },
+        {
           id: InspectButtonEnum.MaterialPreRegistrationAdd,
           title: '新增',
         },
@@ -103,6 +107,10 @@ const checkManager: AppRouteModule = {
         {
           id: InspectButtonEnum.ResultRegistrationItemNotCheck,
           title: '检测不合格未登记',
+        },
+        {
+          id: InspectButtonEnum.ResultRegistrationSqImport,
+          title: '思桥效价导入',
         },
         {
           id: InspectButtonEnum.ResultRegistrationTiterImport,

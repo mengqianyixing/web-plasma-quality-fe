@@ -6,23 +6,15 @@ import { SERVER_ENUM } from '@/enums/serverEnum';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const ConclusionType = serverEnumStore.getServerEnumText(SERVER_ENUM.ConclusionType);
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
-// 查询条件：浆员编号、临时编号、浆员姓名
+// 查询条件：浆员编号
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'donorNo',
     label: '浆员编号',
     component: 'Input',
-  },
-  // {
-  //   field: '',
-  //   label: '临时编号',
-  //   component: 'Input',
-  // },
-  {
-    field: 'name',
-    label: '浆员姓名',
-    component: 'Input',
+    required: true,
   },
 ];
 // 查询结果1————浆员信息
@@ -147,9 +139,11 @@ export const batchColumns: BasicColumn[] = [
     title: '效价类型',
     dataIndex: 'titerType',
     width: 120,
-    format(text) {
-      return `${ConclusionType(text)}`;
-    },
+    format: (text) =>
+      (text || '')
+        .split(',')
+        .map((it) => ConclusionType(it))
+        .join(',') || text,
   },
   {
     title: '血浆过程状态',
@@ -175,6 +169,15 @@ export const batchColumns: BasicColumn[] = [
       {
         title: '复检结果',
         dataIndex: ['reCheckInfo', 'reCheckResult'],
+        format(text: any) {
+          if (text === 1) {
+            return '合格';
+          } else if (text === 0) {
+            return '不合格';
+          } else {
+            return '-';
+          }
+        },
         width: 100,
       },
       {
@@ -186,6 +189,11 @@ export const batchColumns: BasicColumn[] = [
         title: '血浆类型',
         dataIndex: ['reCheckInfo', 'immunityType'],
         width: 100,
+        format: (text) =>
+          (text || '')
+            .split(',')
+            .map((it) => PlasmaType(it))
+            .join(',') || text,
       },
       {
         title: '效价结果值',
@@ -209,12 +217,12 @@ export const batchColumns: BasicColumn[] = [
       {
         title: '样本批号',
         dataIndex: ['trackedSeeInfo', 'batchSampleNo'],
-        width: 100,
+        width: 120,
       },
       {
         title: '样本编号',
         dataIndex: ['trackedSeeInfo', 'sampleNo'],
-        width: 100,
+        width: 135,
       },
       {
         title: '采集日期',
@@ -244,6 +252,15 @@ export const batchColumns: BasicColumn[] = [
         title: '样本结果',
         dataIndex: ['trackedSeeInfo', 'reCheckResult'],
         width: 100,
+        format(text: any) {
+          if (text === 1) {
+            return '合格';
+          } else if (text === 0) {
+            return '不合格';
+          } else {
+            return '-';
+          }
+        },
       },
       {
         title: '不合格项目',

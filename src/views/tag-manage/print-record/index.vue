@@ -50,7 +50,7 @@
       TagDictionaryType.LabelType,
       TagDictionaryType.PrintReason,
     ]);
-    if (!dictionaryArr) return;
+    if (!dictionaryArr.length) return;
     labelTypeDictionary.value = dictionaryArr.find(
       (it) => it.dictNo === TagDictionaryType.LabelType,
     )?.dictImtes;
@@ -64,8 +64,6 @@
       },
     });
   });
-
-  defineOptions({ name: 'TagRecord' });
 
   const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
   const [registerReprintModal, { openModal: openReprintModal }] = useModal();
@@ -133,7 +131,7 @@
   }
 
   function formatLabelType(labelType: string) {
-    return labelTypeDictionary.value!.find((it) => it.value === labelType)?.label || labelType;
+    return labelTypeDictionary.value!.find((it) => it.value === labelType)?.label ?? labelType;
   }
 
   async function handleSuccess(formData: { prtNo: string; reason: string }) {

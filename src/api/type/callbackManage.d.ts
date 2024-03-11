@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback`
- * @更新时间 `2024-01-12 18:22:35`
+ * @更新时间 `2024-03-09 10:57:49`
  */
 export interface GetApiCoreDonorCallbackRequest {
   pageSize: string;
@@ -30,13 +30,25 @@ export interface GetApiCoreDonorCallbackRequest {
    */
   createEndDate?: string;
   /**
-   * 发布状态
+   * 发布状态   取CallbackPlanState
    */
   state?: string;
   /**
    * 名单编号
    */
   batchNo?: string;
+  /**
+   * 回访样本批号
+   */
+  sampleBatchNo?: string;
+  /**
+   * 回访样本接收日期起
+   */
+  sampleAcceptStartDate?: string;
+  /**
+   * 回访样本接收日期止
+   */
+  sampleAcceptEndDate?: string;
 }
 
 /**
@@ -44,7 +56,7 @@ export interface GetApiCoreDonorCallbackRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback`
- * @更新时间 `2024-01-12 18:22:35`
+ * @更新时间 `2024-03-09 10:57:49`
  */
 export interface GetApiCoreDonorCallbackResponse {
   totalCount?: number;
@@ -72,6 +84,42 @@ export interface GetApiCoreDonorCallbackResponse {
      * 生成日期
      */
     createAt: string;
+    /**
+     * 自主回访
+     */
+    selfBackNum: number;
+    /**
+     * 回访成功
+     */
+    okNum: number;
+    /**
+     * 回访失败
+     */
+    failedNum: number;
+    /**
+     * 恢复采浆
+     */
+    recoverNum: number;
+    /**
+     * 未回访
+     */
+    noVisitNum: number;
+    /**
+     * 样本接收人
+     */
+    sampleAcceptBy?: string;
+    /**
+     * 样本接收日期
+     */
+    sampleAcceptAt?: string;
+    /**
+     * 样本发布人
+     */
+    samplePublishBy?: string;
+    /**
+     * 样本发布日期
+     */
+    samplePublishAt?: string;
     /**
      * 确认人
      */

@@ -12,7 +12,7 @@
     @register="registerModal"
     showFooter
     :title="projectName + '详情'"
-    :width="isFull ? '100%' : '800px'"
+    width="1000px"
     :show-ok-btn="false"
     cancelText="关闭"
     :min-height="520"
@@ -37,6 +37,8 @@
               checkResult="true"
               :projectId="pid"
               type="EFFECTIVE_PRICE"
+              :plasmaType="plasmaType"
+              :pv="pv"
               :bsNo="bsno"
             />
           </TabPane>
@@ -54,20 +56,23 @@
   import { ref, markRaw } from 'vue';
   import DtTable from './dtTable.vue';
 
-  const isFull = ref(false);
   const activeKey = ref('1');
   const pid = ref('');
   const bsno = ref('');
   const projectName = ref('');
+  const plasmaType = ref('');
+  const pv = ref(0);
   const componentMap = ref({
     1: 'div',
     2: 'div',
     3: 'div',
   });
-  const [registerModal] = useModalInner(async ({ projectId, bsNo, projectAbbr }) => {
-    pid.value = projectId;
-    bsno.value = bsNo;
-    projectName.value = projectAbbr;
+  const [registerModal] = useModalInner(async (data) => {
+    pv.value = data.priceValidBit;
+    pid.value = data.projectId;
+    bsno.value = data.bsNo;
+    projectName.value = data.projectAbbr;
+    plasmaType.value = data.plasmaType;
     componentMap.value['1'] = markRaw(DtTable) as any;
   });
   function change(activeKey) {
@@ -75,7 +80,6 @@
   }
   function handleSubmit() {}
   function close() {
-    console.log('?????????????????????');
     activeKey.value = '1';
     componentMap.value = {
       1: 'div',

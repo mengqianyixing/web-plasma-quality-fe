@@ -137,6 +137,7 @@
         selectedRow.value = selectedRows;
       },
     },
+    clearSelectOnPageChange: true,
     size: 'small',
     striped: false,
     useSearchForm: true,

@@ -17,8 +17,7 @@ import {
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: 'stationNo',
-    slots: { customRender: 'stationNo' },
+    dataIndex: 'stationName',
   },
   {
     title: '血浆批号',
@@ -166,13 +165,6 @@ export const pickSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'bagNo',
-    label: '不合格血浆编号',
-    component: 'Input',
-    colProps: { span: 20 },
-    required: true,
-  },
-  {
     field: 'bankNo',
     label: '暂存位置',
     component: 'ApiSelect',
@@ -184,6 +176,13 @@ export const pickSchema: FormSchema[] = [
       labelField: 'bankName',
       valueField: 'bankNo',
     },
+    colProps: { span: 20 },
+    required: true,
+  },
+  {
+    field: 'bagNo',
+    label: '不合格血浆编号',
+    component: 'Input',
     colProps: { span: 20 },
     required: true,
   },

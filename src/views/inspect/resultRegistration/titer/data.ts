@@ -24,24 +24,17 @@ export const dtRusultColumns: BasicColumn[] = [
 
   {
     title: '效价结果',
-    dataIndex: 'conclusion',
+    dataIndex: 'conclusionShow',
   },
   {
     title: '检测日期',
     dataIndex: 'checkAt',
+    format: (t) => t?.slice(0, 10),
   },
   {
     title: '效价值',
     dataIndex: 'titerValue',
   },
-  // {
-  //   title: '效价结果值',
-  //   dataIndex: '',
-  // },
-  // {
-  //   title: '版号',
-  //   dataIndex: '',
-  // },
 ];
 type getColumns = (checkResult: string) => BasicColumn[];
 export const dtColumns: getColumns = (checkResult) => [

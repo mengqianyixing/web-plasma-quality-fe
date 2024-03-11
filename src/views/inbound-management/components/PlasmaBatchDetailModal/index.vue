@@ -3,7 +3,7 @@
     <template #footer>
       <a-button @click="handleClose">关闭</a-button>
     </template>
-    <BasicTable @register="registerTable" :scroll="{ y: 400 }">
+    <BasicTable @register="registerTable">
       <template #verifyState="{ record }"> {{ PlasmaStateMap.get(record?.verifyState) }} </template>
     </BasicTable>
     <div class="absolute bottom-2 right-[35px] text-right">血浆总袋数：{{ verifyCount }}</div>
@@ -44,7 +44,9 @@
     striped: false,
     pagination: false,
     useSearchForm: true,
-
+    scroll: {
+      y: 400,
+    },
     tableSetting: {
       size: false,
       redo: false,
@@ -61,6 +63,7 @@
       stationName: data.record.stationName,
       batchNo: data.record.batchNo,
       boxNo: data.record.boxNo,
+      verifyResult: data.record?.field ?? '',
     });
 
     await reload({

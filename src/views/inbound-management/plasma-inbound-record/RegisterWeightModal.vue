@@ -149,7 +149,7 @@
       setModalProps({ confirmLoading: true });
 
       if (Number(values.singleBagGrossWeight) > 600) {
-        createMessage.error('单袋净重超过 600g，录入不成功');
+        createMessage.error('血浆重量异常，请检查。');
         return;
       }
 

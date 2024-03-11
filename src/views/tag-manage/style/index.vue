@@ -61,7 +61,7 @@
 
   onMounted(async () => {
     const dictionaryArr = await getTagDictionary([TagDictionaryType.LabelType]);
-    if (!dictionaryArr) return;
+    if (!dictionaryArr.length) return;
 
     labelTypeDictionary.value = dictionaryArr.find(
       (it) => it.dictNo === TagDictionaryType.LabelType,
@@ -154,6 +154,7 @@
   function handleAdd(record: Recordable) {
     openStyleModal(true, {
       record,
+      labelType: labelTypeDictionary.value,
       isUpdate: false,
     });
   }
@@ -165,6 +166,7 @@
     if (action) return;
 
     openStyleModal(true, {
+      labelType: labelTypeDictionary.value,
       record: selectedRow.value[0],
       isUpdate: true,
     });
@@ -234,6 +236,6 @@
   }
 
   function formatLabelType(labelType: string) {
-    return labelTypeDictionary.value!.find((it) => it.value === labelType)?.label || labelType;
+    return labelTypeDictionary.value!.find((it) => it.value === labelType)?.label ?? labelType;
   }
 </script>

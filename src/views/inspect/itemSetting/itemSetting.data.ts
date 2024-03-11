@@ -44,14 +44,6 @@ export const columns: BasicColumn[] = [
       return record.state ? '否' : '是';
     },
   },
-  {
-    title: '记录人',
-    dataIndex: 'creator',
-  },
-  {
-    title: '记录时间',
-    dataIndex: 'createAt',
-  },
 ];
 
 export const searchFormschema: FormSchema[] = [
@@ -179,16 +171,6 @@ export const formListSchema: FormSchema[] = [
     required: true,
     componentProps: {
       api: getInspectMethodListApi,
-    },
-  },
-  {
-    field: 'odValidBit',
-    component: 'InputNumber',
-    label: 'OD值有效位数',
-    required: true,
-    componentProps: {
-      min: 0,
-      formatter: (n: number) => n && parseInt(n),
     },
   },
   {
