@@ -8,12 +8,12 @@
     :showOkBtn="false"
   >
     <div class="flex items-center gap-2 w-[300px]">
-      <span class="w-[80px]">袋号：</span>
+      <span class="w-[120px] ml-4">血浆编号：</span>
       <a-input
         ref="inputRef"
         size="large"
         @press-enter="handleEnter"
-        placeholder="请扫描袋号"
+        placeholder="请扫描血浆编号"
         :disabled="inputDisabled"
         v-model:value="inputValue"
       />
