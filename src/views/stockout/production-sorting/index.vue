@@ -82,7 +82,7 @@
     completeSorting,
     // completeSortingBatchNo,
   } from '@/api/stockout/production-sorting/production-sorting-main';
-  // import { getPrintRecord, printRecord } from '@/api/tag/printRecord';
+  import { getPrintRecord, printRecord } from '@/api/tag/printRecord';
   import InStoreModal from './components/in-store-modal.vue';
   import OutStoreModal from './components/out-store-modal.vue';
   import UnqualifiedModal from './components/unqualified-modal.vue';
@@ -577,7 +577,7 @@
                   // 走封箱操作 不需要提示
                   // _sortingBoxSealing(targetBox, true);
                   // 走打印逻辑
-                  // printBox(data);
+                  printBox(bagNo.value);
                   console.log('OK');
                   prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
                 },
@@ -628,6 +628,8 @@
           boxNo: e === true ? boxNoNow : boxNo.value,
         });
         success('整箱分拣成功!');
+        boxNo.value = '';
+        bagNo.value = '';
         console.log('整箱扫描', res);
         // 请求总览数据
         prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
@@ -799,6 +801,9 @@
         isSelected: false,
       };
     });
+    nextTick(() => {
+      bagNoRef.value.focus();
+    });
     if (!needSelect) return;
     const scrollObj = {
       isTop: false,
@@ -932,7 +937,7 @@
         console.log('封箱成功:', res);
         success('封箱成功!');
         // 走打印逻辑
-        // printBox();
+        printBox(data.bagNos[0]);
         // 请求总览数据
         prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
       } finally {
@@ -1059,28 +1064,19 @@
   }
 
   // // 打印箱签
-  // async function printBox() {
-  //   // 获取标签相关样式
-  //   const res = await getPrintRecord({
-  //     labelType: 'SORTING_BOX',
-  //     bissNo: '34234',
-  //     param: {
-  //       batchNo: '2334N344003 2334N344001',
-  //       plasmaType: '暂写普浆',
-  //       creater: userInfo.getUserInfo.username,
-  //       packageDate: dayjs().format('YYYY-MM-DD'),
-  //       bagCount: '12',
-  //       boxNo: '34234',
-  //     },
-  //   });
-  //   console.log(res, '1212312');
-  //   const params = {
-  //     ...res,
-  //     dpi: res.resolution,
-  //   };
-  //   delete params.resolution;
-  //   await printRecord(params);
-  // }
+  async function printBox(bagNo) {
+    // 获取标签相关样式
+    const res = await getPrintRecord({
+      labelType: 'SORTING_BOX',
+      bissNo: bagNo,
+    });
+    const params = {
+      ...res,
+      dpi: res.resolution,
+    };
+    delete params.resolution;
+    await printRecord(params);
+  }
 </script>
 <style lang="less" scoped>
   .card-bar-header {
