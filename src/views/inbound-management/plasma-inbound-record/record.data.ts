@@ -35,14 +35,17 @@ export const columns: BasicColumn[] = [
   {
     title: '合格血浆数量',
     dataIndex: 'passBagNum',
+    slots: { customRender: 'passBagNum' },
   },
   {
     title: '不合格血浆数量',
     dataIndex: 'noPassBagNum',
+    slots: { customRender: 'noPassBagNum' },
   },
   {
     title: '缺号数量',
     dataIndex: 'lackNoNum',
+    slots: { customRender: 'lackNoNum' },
   },
   {
     title: '浆站重量(kg)',

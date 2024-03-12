@@ -14,10 +14,7 @@ export const columns: BasicColumn[] = [
     title: '采集日期',
     dataIndex: 'collectAt',
     customRender: ({ text }) => {
-      if (text) {
-        return dayjs(text).format('YYYY-MM-DD');
-      }
-      return '';
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
@@ -64,10 +61,7 @@ export const columns: BasicColumn[] = [
     title: '验收时间',
     dataIndex: 'verifyAt',
     customRender: ({ text }) => {
-      if (text) {
-        return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
-      }
-      return '';
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
@@ -134,6 +128,10 @@ export const searchFormSchema: FormSchema[] = [
         {
           value: 1,
           label: '合格',
+        },
+        {
+          value: 2,
+          label: '缺浆',
         },
       ],
     },

@@ -107,8 +107,8 @@
           const time = new Date();
           pushLog({
             usrName: useInfo.username,
-            usrId: useInfo.userId,
-            moduleType: 0,
+            usrId: useInfo.userAccount,
+            moduleType: 1,
             optName: '用户登录',
             optContent: `用户【${useInfo.username}】在【${formatDate(time)}】登录成功`,
             path: 'POST /api/sys/user/login',

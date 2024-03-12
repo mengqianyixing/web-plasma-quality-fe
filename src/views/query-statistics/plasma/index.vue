@@ -1,9 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
-      <template #plasmaUnqualifiedReason="{ record }">
-        {{ formatReason(record?.plasmaUnqualifiedReason) }}
-      </template>
       <template #toolbar>
         <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
       </template>
@@ -81,12 +78,6 @@
     showIndexColumn: false,
     canResize: true,
   });
-
-  function formatReason(dictItemId: string) {
-    return (
-      plasmaUnqualifiedDictionary.value!.find((item) => item.dictItemId === dictItemId)?.label ?? ''
-    );
-  }
 
   const loading = ref(false);
   async function handleExport() {

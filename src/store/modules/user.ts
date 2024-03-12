@@ -16,6 +16,8 @@ import { PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic';
 import { h } from 'vue';
 import { PostApiSysUserLoginRequest, PostApiSysUserLoginResponse } from '@/api/type/login';
 import { getRoutes } from '@/router/routes';
+import { pushLog } from '@/api/oauth/logger';
+import { formatDate, getRandNum } from 'js-xxx';
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
@@ -105,6 +107,7 @@ export const useUserStore = defineStore({
         this.userInfo = {
           userId: 'userid',
           username: data.username,
+          userAccount: '',
           homePath: '/404',
         };
         this.setUserInfo(this.userInfo);
@@ -120,10 +123,11 @@ export const useUserStore = defineStore({
      */
     async oathLogin(data: any): Promise<PostApiSysUserLoginResponse | null> {
       try {
-        const { accessToken, userId, username, refreshToken, menuIds } = data;
+        const { accessToken, userId, username, refreshToken, menuIds, userAccount } = data;
         this.userInfo = {
           userId: userId,
           username: username,
+          userAccount: userAccount,
           menuIds: (menuIds ?? []).map((i) => {
             const _tempId = Number(i);
             return isNaN(_tempId) ? i : _tempId;
@@ -188,6 +192,19 @@ export const useUserStore = defineStore({
         title: () => h('span', t('sys.app.logoutTip')),
         content: () => h('span', t('sys.app.logoutMessage')),
         onOk: async () => {
+          // 模拟登出日志-审计使用
+          const useInfo = this.getUserInfo;
+          pushLog({
+            usrName: useInfo.username,
+            usrId: useInfo.userAccount,
+            moduleType: 1,
+            optName: '用户登出',
+            optContent: `用户【${useInfo.username}】在【${formatDate(new Date())}】 注销登录`,
+            path: 'POST /api/sys/user/logout',
+            time: getRandNum(10, 50),
+            reqData: JSON.stringify(useInfo),
+            respData: JSON.stringify({ code: 0, msg: 'ok', data: null }),
+          });
           await this.logout(true);
         },
       });

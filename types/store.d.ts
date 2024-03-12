@@ -40,6 +40,7 @@ export interface UserInfo {
   menuIds?: number[];
   desc?: string;
   homePath?: string;
+  userAccount: string;
 }
 
 export interface BeforeMiniState {

@@ -56,7 +56,6 @@
 
 <script lang="tsx" setup>
   import { ref, createVNode, nextTick } from 'vue';
-  // import { useUserStore } from '@/store/modules/user';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
@@ -66,7 +65,6 @@
   import { debounce } from 'lodash-es';
   import { useMessage } from '@/hooks/web/useMessage';
   import { useLoading } from '@/components/Loading';
-  // import dayjs from 'dayjs';
 
   import PrepareModal from '@/views/stockout/production-sorting/components/prepare-modal.vue';
   import PackingInfoModal from '@/views/stockout/production-sorting/components/packing-info-modal.vue';
@@ -91,7 +89,6 @@
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
-  // const userInfo = useUserStore();
   defineOptions({ name: 'ProductionSorting' });
 
   const serverEnumStore = useServerEnumStoreWithOut();
@@ -411,10 +408,10 @@
         if (res.data.ok === true) {
           const data = res.data.data;
           // 血浆不合格
-          if (data.unqReason) {
+          if (data.track) {
             openUnqualifiedModal(true, {
               bagNo: bagNo.value,
-              unqReason: data.unqReason,
+              track: data.track,
             });
             return;
           }
@@ -1063,7 +1060,7 @@
     });
   }
 
-  // // 打印箱签
+  // 打印箱签
   async function printBox(bagNo) {
     // 获取标签相关样式
     const res = await getPrintRecord({

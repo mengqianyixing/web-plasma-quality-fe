@@ -47,4 +47,6 @@ export enum SERVER_ENUM {
   BankDeliverstateType = 'BankDeliverstateType',
   BlockSource = 'BlockSource',
   CallbackPlanState = 'CallbackPlanState',
+  BizModule = 'BizModule',
+  BagCalculateReleaseState = 'BagCalculateReleaseState',
 }

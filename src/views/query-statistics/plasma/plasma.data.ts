@@ -100,7 +100,6 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆不合格原因',
     dataIndex: 'plasmaUnqualifiedReason',
-    slots: { customRender: 'plasmaUnqualifiedReason' },
     width: 150,
   },
   {
@@ -381,7 +380,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '检疫期类型',
     component: 'Select',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.BagTrackedType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BagCalculateReleaseState),
     },
   },
   {

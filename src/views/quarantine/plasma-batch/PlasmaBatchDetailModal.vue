@@ -25,39 +25,26 @@
   import { useStation } from '@/hooks/common/useStation';
   import { useTable, BasicTable } from '@/components/Table';
   import { modalFailDetailColumns, modalUnProductionDetailColumns } from './plasma-batch.data';
-  // import { useMessage } from '@/hooks/web/useMessage';
-  import {
-    DictionaryEnum,
-    DictionaryReasonEnum,
-    DictionaryItemKeyEnum,
-    getSysDictionary,
-    getSysSecondaryDictionary,
-  } from '@/api/_dictionary';
+  import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
 
   const emit = defineEmits(['success', 'register']);
   const { isLoading, stationOptions, getStationNameById } = useStation();
   const bagNos = ref<any>([]);
   const modalTitle = ref<string>('');
   const modalColumns = ref<any[]>([]);
-  // const { createMessage } = useMessage();
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
   const unProdReasonDictionary = ref<Recordable[] | undefined>([]);
 
   async function getUnqualifiedDictionary() {
-    const dictionaryArr = await getSysDictionary([DictionaryEnum.unProdReason]);
-
+    const dictionaryArr = await getSysDictionary([
+      DictionaryEnum.PlasmaFailedReason,
+      DictionaryEnum.unProdReason,
+    ]);
     if (!dictionaryArr.length) return;
 
-    plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
-      dataKey: DictionaryReasonEnum.PlasmaFailedReason,
-      dictItemTypes: [
-        DictionaryItemKeyEnum.PlasmaFailed,
-        DictionaryItemKeyEnum.Track,
-        DictionaryItemKeyEnum.Test,
-        DictionaryItemKeyEnum.Quarantine,
-        DictionaryItemKeyEnum.Other,
-      ],
-    });
+    plasmaUnqualifiedDictionary.value = dictionaryArr.find(
+      (it) => it.dictNo === DictionaryEnum.PlasmaFailedReason,
+    )?.dictImtes;
 
     unProdReasonDictionary.value = dictionaryArr.find(
       (it) => it.dictNo === DictionaryEnum.unProdReason,
@@ -80,13 +67,11 @@
   });
 
   function formatUnReason(unqReason: string) {
-    return (
-      plasmaUnqualifiedDictionary.value?.find((it) => it.value === unqReason)?.label ?? unqReason
-    );
+    return plasmaUnqualifiedDictionary.value?.find((it) => it.id === unqReason)?.label ?? unqReason;
   }
 
   function formatProdReason(unqReason: string) {
-    return unProdReasonDictionary.value?.find((it) => it.value === unqReason)?.label ?? unqReason;
+    return unProdReasonDictionary.value?.find((it) => it.id === unqReason)?.label ?? unqReason;
   }
   const [registerTable, { reload, getForm }] = useTable({
     dataSource: bagNos,
@@ -117,7 +102,7 @@
         modalColumns.value = modalFailDetailColumns;
         break;
     }
-    reload();
+    await reload();
   });
 
   async function handleSubmit() {

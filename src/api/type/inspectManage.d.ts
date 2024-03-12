@@ -1811,6 +1811,33 @@ export interface DeleteApiCoreLabRegistrationLabItemUnqualifiedRequest {
 export type DeleteApiCoreLabRegistrationLabItemUnqualifiedResponse = string;
 
 /**
+ * 接口 [读取思桥效价↗](https://yapi.sharing8.cn/project/529/interface/api/33846) 的 **请求类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `POST /api/core/lab/mbBanin`
+ * @更新时间 `2024-03-11 11:25:07`
+ */
+export interface PostApiCoreLabMbBaninRequest {
+  /**
+   * 批号
+   */
+  bsNo: string;
+  /**
+   * 项目
+   */
+  project: string;
+}
+
+/**
+ * 接口 [读取思桥效价↗](https://yapi.sharing8.cn/project/529/interface/api/33846) 的 **返回类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `POST /api/core/lab/mbBanin`
+ * @更新时间 `2024-03-11 11:25:07`
+ */
+export type PostApiCoreLabMbBaninResponse = string;
+
+/**
  * 接口 [检验报告审核↗](https://yapi.sharing8.cn/project/529/interface/api/32022) 的 **请求类型**
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)

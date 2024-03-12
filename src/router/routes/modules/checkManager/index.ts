@@ -109,6 +109,10 @@ const checkManager: AppRouteModule = {
           title: '检测不合格未登记',
         },
         {
+          id: InspectButtonEnum.ResultRegistrationSqImport,
+          title: '思桥效价导入',
+        },
+        {
           id: InspectButtonEnum.ResultRegistrationTiterImport,
           title: '效价导入',
         },

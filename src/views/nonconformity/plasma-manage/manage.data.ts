@@ -7,18 +7,18 @@ import {
 } from '@/enums/nonconforityEnum';
 import { DescItem } from '@/components/Description';
 import dayjs from 'dayjs';
-import { PlasmaUnqualifiedTypeMap, PlasmaUnqualifiedTypeValueEnum } from '@/enums/plasmaEnum';
 import {
+  DictionaryEnum,
   DictionaryItemKeyEnum,
   DictionaryReasonEnum,
+  getSysDictionary,
   getSysSecondaryDictionary,
 } from '@/api/_dictionary';
 
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: 'stationNo',
-    slots: { customRender: 'stationNo' },
+    dataIndex: 'stationName',
   },
   {
     title: '血浆批号',
@@ -47,12 +47,13 @@ export const columns: BasicColumn[] = [
   {
     title: '不合格类型',
     dataIndex: 'flow',
-    format(text) {
-      return PlasmaUnqualifiedTypeMap.get(text as PlasmaUnqualifiedTypeValueEnum) as string;
-    },
   },
   {
-    title: '状态',
+    title: '审核状态',
+    dataIndex: '',
+  },
+  {
+    title: '不合格状态',
     dataIndex: 'state',
     format(text) {
       return nonconformityPlasmaMap.get(<NonconformityPlasmaStatusValueEnum>text) as string;
@@ -121,12 +122,12 @@ export const searchSchema: FormSchema[] = [
   {
     field: 'flow',
     label: '不合格类型',
-    component: 'Select',
+    component: 'ApiSelect',
     componentProps: {
-      options: [...PlasmaUnqualifiedTypeMap.entries()].map(([value, label]) => ({
-        label,
-        value,
-      })),
+      api: getSysDictionary,
+      params: [DictionaryEnum.PlasmaFailedItem],
+      resultField: '[0].dictImtes',
+      valueField: 'id',
     },
   },
   {

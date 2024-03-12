@@ -77,6 +77,15 @@ const system: AppRouteModule = {
       ],
       component: () => import('@/views/system/policies/index.vue'),
     },
+    {
+      path: 'logs',
+      name: 'Logs',
+      id: 101040,
+      meta: {
+        title: '操作日志',
+      },
+      component: () => import('@/views/system/logs/index.vue'),
+    },
   ],
 };
 

@@ -12,6 +12,15 @@
       <template #toolbar>
         <a-button
           type="primary"
+          @click="handleSqImport"
+          :disabled="!props.bsNo"
+          :loading="sqLoading"
+          v-auth="InspectButtonEnum.ResultRegistrationSqImport"
+        >
+          思桥效价导入
+        </a-button>
+        <a-button
+          type="primary"
           @click="handleImport"
           :disabled="!props.bsNo"
           v-auth="InspectButtonEnum.ResultRegistrationTiterImport"
@@ -72,7 +81,7 @@
   import EnterRusult from './enterRusult.vue';
   import ImportModal from './importDrawer.vue';
   import { useModal } from '@/components/Modal';
-  import { getTiterListApi } from '@/api/inspect/resultRegistration';
+  import { getTiterListApi, submitSqImportApi } from '@/api/inspect/resultRegistration';
   import { watch, nextTick, onMounted, ref } from 'vue';
   import { message } from 'ant-design-vue';
   import { getInspectMethodListApi } from '@/api/inspect/inspectMethod';
@@ -84,6 +93,7 @@
   });
   const options = ref<any[]>([]);
   const methodMap = ref(new Map());
+  const sqLoading = ref(false);
 
   watch(
     () => props.bsNo,
@@ -124,6 +134,17 @@
   });
   function handleDt(record: Recordable) {
     openDtModal(true, { ...record, bsNo: props.bsNo });
+  }
+  async function handleSqImport() {
+    const rows = getSelectRows();
+    if (rows.length === 0) return message.warning('请选择一条数据');
+    if (rows.length > 1) return message.warning('只能选择一条数据');
+    try {
+      sqLoading.value = true;
+      await submitSqImportApi({ bsNo: props.bsNo, project: rows[0].projectId });
+    } finally {
+      sqLoading.value = false;
+    }
   }
   function handleImport() {
     const rows = getSelectRows();
