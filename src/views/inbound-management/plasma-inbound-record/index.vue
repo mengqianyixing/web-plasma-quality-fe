@@ -17,6 +17,30 @@
           {{ record?.boxNum }}
         </span>
       </template>
+      <template #passBagNum="{ record }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleOpenBatchDetail(record, 1)"
+        >
+          {{ record?.passBagNum }}
+        </span>
+      </template>
+      <template #noPassBagNum="{ record }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleOpenBatchDetail(record, 0)"
+        >
+          {{ record?.noPassBagNum }}
+        </span>
+      </template>
+      <template #lackNoNum="{ record }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleOpenBatchDetail(record, 2)"
+        >
+          {{ record?.lackNoNum }}
+        </span>
+      </template>
       <template #toolbar>
         <a-button
           type="primary"
@@ -197,11 +221,12 @@
     reload();
   }
 
-  function handleOpenBatchDetail(record) {
+  function handleOpenBatchDetail(record, field: Nullable<number> = null) {
     openBatchModal(true, {
       record: {
         ...record,
         stationName: getStationNameById(record.stationNo),
+        field,
       },
     });
   }

@@ -1815,7 +1815,7 @@ export type DeleteApiCoreLabRegistrationLabItemUnqualifiedResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/mbBanin`
- * @更新时间 `2024-03-11 10:31:12`
+ * @更新时间 `2024-03-11 11:25:07`
  */
 export interface PostApiCoreLabMbBaninRequest {
   /**
@@ -1833,7 +1833,7 @@ export interface PostApiCoreLabMbBaninRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/mbBanin`
- * @更新时间 `2024-03-11 10:31:12`
+ * @更新时间 `2024-03-11 11:25:07`
  */
 export type PostApiCoreLabMbBaninResponse = string;
 

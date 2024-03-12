@@ -380,7 +380,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '检疫期类型',
     component: 'Select',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.BagTrackedType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BagCalculateReleaseState),
     },
   },
   {

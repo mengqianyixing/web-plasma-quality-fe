@@ -1,23 +1,18 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight class="p-16px">
-    <BasicForm @register="register" class="bg-white shadow pt-10" @submit="handleSubmit" />
-    <div class="p-4" style="background-color: white !important">
-      <div class="title">浆员明细</div>
-      <Description @register="donorTable" class="mt-4" :data="mockData" />
+  <PageWrapper dense contentFullHeight fixedHeight class="p-5px">
+    <BasicForm @register="register" class="bg-white h-12 pt-2" @submit="handleSubmit" />
+    <div class="m-2 bg-white p-3">
+      <div class="title">浆员基本信息</div>
+      <Description @register="donorTable" :data="mockData" />
     </div>
-    <Tabs
-      class="flex-1 bg-white pb-16px m-16px"
-      type="card"
-      size="small"
-      v-model:activeKey="activeKey"
-    >
+    <Tabs class="flex-1 bg-white p-4 m-2" type="card" size="small" v-model:activeKey="activeKey">
       <TabPane key="batch" tab="血浆明细">
-        <BasicTable @register="batchTable" :key="donorNo" />
+        <BasicTable @register="batchTable" :key="donorNo" class="donor-tab mt--2" />
       </TabPane>
       <TabPane key="callBack" tab="回访明细">
-        <BasicTable @register="callBackTable" :key="donorNo" />
+        <BasicTable @register="callBackTable" :key="donorNo" class="donor-tab mt--2" />
       </TabPane>
-      <TabPane key="titer" tab="效价趋势">
+      <TabPane key="titer" tab="效价趋势" class="mt--2">
         <Chart />
       </TabPane>
     </Tabs>
@@ -116,7 +111,6 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    //
     rowKey: 'fkBatchNo',
     columns: batchColumns,
     bordered: true,
@@ -142,7 +136,6 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    //
     rowKey: 'bsNo',
     columns: callbackColumns,
     bordered: true,
@@ -166,7 +159,7 @@
     position: relative;
     align-items: center;
     justify-content: space-between;
-    margin: 14px 0;
+    margin: 5px 8px;
     margin-left: 10px;
     color: #333;
     font-size: 16px;
@@ -183,5 +176,9 @@
       margin-top: -8px;
       background: @primary-color;
     }
+  }
+
+  .donor-tab :deep(thead tr th) {
+    padding: 5px !important;
   }
 </style>

@@ -23,6 +23,7 @@ export enum DictionaryEnum {
   SampleType = 'sampleType',
   unProdReason = 'unProdReason',
   PlasmaFailedItem = 'plasmaFailedItem',
+  PlasmaFailedReason = 'plasmaFailedReason',
   StockPlasmaProcessStatus = 'stockPlasmaProcessStatus',
   ProvinceCode = 'provinceCode',
 }
