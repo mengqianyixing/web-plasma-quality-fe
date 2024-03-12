@@ -25,7 +25,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'orderType',
     width: 100,
     format(text) {
-      return `${PlasmaType(text)}}`;
+      return `${PlasmaType(text)}`;
     },
   },
   {
