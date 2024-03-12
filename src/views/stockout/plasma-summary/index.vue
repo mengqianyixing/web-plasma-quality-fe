@@ -12,8 +12,9 @@
 <script lang="ts" setup>
   import { PageWrapper } from '@/components/Page';
   import { BasicTable, useTable, BasicColumn, FormSchema } from '@/components/Table';
-
+  import dayjs from 'dayjs';
   import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
+  import { getPlasmaSummary } from '@/api/stockout/plasma-summary';
 
   defineOptions({ name: 'PlasmaSummary' });
 
@@ -28,40 +29,41 @@
     },
     {
       title: '血浆总数',
-      dataIndex: 'boxCount',
-      slots: { customRender: 'boxCount' },
+      dataIndex: 'bagCount',
+      // slots: { customRender: 'boxCount' },
     },
     {
       title: '投产出库数量袋',
-      dataIndex: 'bagCount',
+      dataIndex: 'ProOutCount',
     },
     {
       title: '非投产出库数量袋',
-      dataIndex: 'bagCount',
+      dataIndex: 'unProOutCount',
     },
     {
       title: '不合格数量',
-      dataIndex: 'remark',
+      dataIndex: 'unqualifiedCount',
     },
     {
-      title: '不满足检疫期',
-      dataIndex: 'creator',
-    },
-    {
-      title: '记录人',
-      dataIndex: 'reviewer',
-    },
-    {
-      title: '记录日期',
-      dataIndex: 'createAt',
+      title: '状态',
+      dataIndex: 'printState',
+      customRender: ({ text }) => {
+        if (text === true) {
+          return '已打印';
+        } else if (text === false) {
+          return '未打印';
+        }
+        return '';
+      },
     },
     {
       title: '打印人',
-      dataIndex: 'reviewer',
+      dataIndex: 'printor',
     },
     {
-      title: '打印日期信息',
-      dataIndex: 'reviewAt',
+      title: '打印时间',
+      dataIndex: 'printAt',
+      format: (text) => (text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-'),
     },
   ];
 
@@ -82,27 +84,23 @@
       label: '血浆批号',
     },
     {
-      field: '[beginTime,endTime]',
+      field: '[printAtBegin,printAtEnd]',
       component: 'RangePicker',
       label: '打印日期',
     },
     {
-      field: 'prepareStates',
+      field: 'printState',
       label: '状态',
       component: 'Select',
       componentProps: {
         options: [
           {
-            value: '0',
-            name: '待打印',
-          },
-          {
-            value: '1',
+            value: true,
             name: '已打印',
           },
           {
-            value: '2',
-            name: '全部',
+            value: false,
+            name: '未打印',
           },
         ],
       },
@@ -110,7 +108,7 @@
   ];
 
   const [registerTable] = useTable({
-    // api: getListApi,
+    api: getPlasmaSummary,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',

@@ -622,4 +622,22 @@ export type GetApiProductReleaseDetailResponse = {
   appResult: string;
 }[];
 
+/**
+ * 接口 [查询批检疫期报告中的不合格血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33853) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/core/batch/plasma/release/failed-bag`
+ * @更新时间 `2024-03-11 20:23:39`
+ */
+export interface GetApiCoreBatchPlasmaReleaseFailedBagRequest {}
+
+/**
+ * 接口 [查询批检疫期报告中的不合格血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33853) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/core/batch/plasma/release/failed-bag`
+ * @更新时间 `2024-03-11 20:23:39`
+ */
+export interface GetApiCoreBatchPlasmaReleaseFailedBagResponse {}
+
 /* prettier-ignore-end */
