@@ -100,6 +100,9 @@
           field: 'plasmaType',
           label: '血浆状态',
           component: 'Select',
+          componentProps: {
+            options: serverEnumStore.getServerEnum(SERVER_ENUM.BagTrack),
+          },
         },
         {
           field: 'batchNo',
