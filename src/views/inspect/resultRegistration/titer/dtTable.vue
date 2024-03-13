@@ -162,6 +162,7 @@
       bsNo: props.bsNo,
       sampleNo: row.sampleNo,
       titerValue,
+      id: row.id,
     });
     reload();
     openModal(false);
