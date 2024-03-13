@@ -17,7 +17,11 @@ export const bagNumKey = 'bagNum';
 export const collectKey = '[collectStartDate, collectEndDate]';
 export const verifyPubKey = '[verifyPubStartDate, verifyPubEndDate]';
 export const blockKey = '[blockStartDate, blockEndDate]';
-
+export enum Type {
+  CHECK_FAIL = 'CHECK_FAIL',
+  QUA_FAIL = 'QUA_FAIL',
+  FTRK_FAIL = 'FTRK_FAIL',
+}
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
@@ -129,5 +133,28 @@ export const searchFormSchema: FormSchema[] = [
       valueFormat: 'YYYY-MM-DD',
       class: 'w-full',
     },
+  },
+];
+
+export const dtColumns: BasicColumn[] = [
+  {
+    dataIndex: 'donorNo',
+    title: '浆员编号',
+  },
+  {
+    dataIndex: 'name',
+    title: '浆员姓名',
+  },
+  {
+    dataIndex: 'batchNo',
+    title: '血浆批号',
+  },
+  {
+    dataIndex: 'bagNo',
+    title: '血浆编号',
+  },
+  {
+    dataIndex: 'collectAt',
+    title: '血浆采集日期',
   },
 ];

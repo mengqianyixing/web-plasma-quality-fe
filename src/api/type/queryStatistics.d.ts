@@ -3608,7 +3608,7 @@ export type GetApiCoreBagUnqualifiedStatisticQuarantineResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal/detail`
- * @更新时间 `2024-03-13 10:55:19`
+ * @更新时间 `2024-03-13 15:00:49`
  */
 export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailRequest {
   currPage: string;
@@ -3645,9 +3645,64 @@ export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal/detail`
- * @更新时间 `2024-03-13 10:55:19`
+ * @更新时间 `2024-03-13 15:00:49`
  */
 export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    bagNo?: string;
+    batchNo?: string;
+    donorNo?: string;
+    name?: string;
+    collectAt?: string;
+  }[];
+}
+
+/**
+ * 接口 [检疫期不合格统计血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33881) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-quarantine/detail`
+ * @更新时间 `2024-03-13 15:13:41`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * 不合格原因 字段项id
+   */
+  failedCode: string;
+  /**
+   * 弹窗类别
+   * 检测不和格 CHECK_FAIL
+   * 检疫期不合格 QUA_FAIL
+   * 续追踪不合格 FTRK_FAIL
+   */
+  unqBagQuaType: string;
+  /**
+   * 浆站编码
+   */
+  stationNo: string;
+  collectStartDate: string;
+  collectEndDate: string;
+  verifyPubStartDate: string;
+  verifyPubEndDate: string;
+  blockBy: string;
+  blockStartDate: string;
+  blockEndDate: string;
+}
+
+/**
+ * 接口 [检疫期不合格统计血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33881) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-quarantine/detail`
+ * @更新时间 `2024-03-13 15:13:41`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailResponse {
   totalCount?: number;
   pageSize?: number;
   totalPage?: number;

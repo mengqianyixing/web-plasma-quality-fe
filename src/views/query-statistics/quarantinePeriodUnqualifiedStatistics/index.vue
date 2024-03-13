@@ -1,6 +1,7 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable" />
+    <TabelModal @register="registerModal" />
   </PageWrapper>
 </template>
 <script lang="tsx" setup>
@@ -15,6 +16,7 @@
     projectsKey,
     trackUnqKey,
     quarantineUnqKey,
+    Type,
   } from './data';
   import { PageWrapper } from '@/components/Page';
   import { isArray, isObject } from '@/utils/is';
@@ -24,12 +26,16 @@
     DictionaryReasonEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
+  import { useModal } from '@/components/Modal';
+  import TabelModal from './tabelModal.vue';
+
   import { getListApi } from '@/api/query-statistics/quarantinePeriodUnqualifiedStatistics';
   import { nextTick } from 'vue';
 
   defineOptions({ name: 'QuarantinePeriodUnqualifiedStatistics' });
 
   const cloneColumns = cloneDeep(columns);
+  const [registerModal, { openModal }] = useModal();
 
   const [registerTable, { setColumns, reload, getForm }] = useTable({
     api: getListApi,
@@ -52,6 +58,7 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
+    pagination: false,
     bordered: true,
     showIndexColumn: false,
     afterFetch: (res: Recordable[]) => {
@@ -138,6 +145,17 @@
         dataIndex: [checkUnqKey, it.dictItemId],
         title: it.label,
         width: it.label.length * 18,
+        customRender: ({ record }) => {
+          if (record.isCount) return record[checkUnqKey]?.[it.dictItemId];
+          return (
+            <span
+              class="text-blue-500 underline cursor-pointer"
+              onClick={() => cellClick(Type.CHECK_FAIL, it.dictItemId, it.label, record)}
+            >
+              {record[checkUnqKey]?.[it.dictItemId]}
+            </span>
+          );
+        },
       })),
     );
     cloneColumns[3].children?.unshift(
@@ -145,6 +163,17 @@
         dataIndex: [quarantineUnqKey, it.dictItemId],
         title: it.label,
         width: it.label.length * 18,
+        customRender: ({ record }) => {
+          if (record.isCount) return record[quarantineUnqKey]?.[it.dictItemId];
+          return (
+            <span
+              class="text-blue-500 underline cursor-pointer"
+              onClick={() => cellClick(Type.QUA_FAIL, it.dictItemId, it.label, record)}
+            >
+              {record[quarantineUnqKey]?.[it.dictItemId]}
+            </span>
+          );
+        },
       })),
     );
     cloneColumns[4].children?.unshift(
@@ -152,9 +181,35 @@
         dataIndex: [trackUnqKey, it.dictItemId],
         title: it.label,
         width: it.label.length * 18,
+        customRender: ({ record }) => {
+          if (record.isCount) return record[trackUnqKey]?.[it.dictItemId];
+          return (
+            <span
+              class="text-blue-500 underline cursor-pointer"
+              onClick={() => cellClick(Type.FTRK_FAIL, it.dictItemId, it.label, record)}
+            >
+              {record[trackUnqKey]?.[it.dictItemId]}
+            </span>
+          );
+        },
       })),
     );
     setColumns(cloneColumns);
     reload();
   });
+  function cellClick(
+    unqBagQuaType: string,
+    failedCode: string | undefined,
+    title: string,
+    record: Recordable,
+  ) {
+    const values = getForm().getFieldsValue();
+    openModal(true, {
+      failedCode,
+      title,
+      ...values,
+      stationNo: record.stationNo,
+      unqBagQuaType,
+    });
+  }
 </script>
