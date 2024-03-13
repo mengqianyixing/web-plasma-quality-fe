@@ -467,7 +467,7 @@ export interface GetApiCoreBagUnqualifiedBagNoResponse {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-03-12 18:26:26`
+ * @更新时间 `2024-03-13 09:46:27`
  */
 export interface GetApiCoreBagUnqualifiedRequest {
   pageSize: string;
@@ -539,7 +539,7 @@ export interface GetApiCoreBagUnqualifiedRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-03-12 18:26:26`
+ * @更新时间 `2024-03-13 09:46:27`
  */
 export interface GetApiCoreBagUnqualifiedResponse {
   totalCount?: number;
@@ -559,6 +559,10 @@ export interface GetApiCoreBagUnqualifiedResponse {
      * 浆袋号
      */
     bagNo: string;
+    /**
+     * 箱号
+     */
+    boxNo: string;
     /**
      * 浆员编号
      */
