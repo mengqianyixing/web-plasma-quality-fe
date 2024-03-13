@@ -46,6 +46,7 @@ export enum SERVER_ENUM {
   BatchOperationSumState = 'BatchOperationSumState',
   BankDeliverstateType = 'BankDeliverstateType',
   BlockSource = 'BlockSource',
+  BagBlockSource = 'BagBlockSource',
   CallbackPlanState = 'CallbackPlanState',
   BizModule = 'BizModule',
   BagCalculateReleaseState = 'BagCalculateReleaseState',

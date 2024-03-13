@@ -1227,7 +1227,7 @@ export interface GetApiCoreLabErpTestReportQueryResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/product/inquiry`
- * @更新时间 `2024-03-13 10:19:32`
+ * @更新时间 `2024-03-13 10:50:20`
  */
 export interface PostApiProductInquiryRequest {
   /**
@@ -1283,7 +1283,7 @@ export interface PostApiProductInquiryRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/product/inquiry`
- * @更新时间 `2024-03-13 10:19:32`
+ * @更新时间 `2024-03-13 10:50:20`
  */
 export interface PostApiProductInquiryResponse {
   totalCount: number;
@@ -3608,7 +3608,7 @@ export type GetApiCoreBagUnqualifiedStatisticQuarantineResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal/detail`
- * @更新时间 `2024-03-13 10:25:34`
+ * @更新时间 `2024-03-13 10:55:19`
  */
 export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailRequest {
   currPage: string;
@@ -3629,11 +3629,15 @@ export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailRequest {
    * 其他：OTHER  （failedCode 传 ：110001407）
    */
   trackType: string;
-  stationNo: string;
-  collectStartDate: string;
-  collectEndDate: string;
-  verifyPubStartDate: string;
-  verifyPubEndDate: string;
+  stationNo?: string;
+  collectStartDate?: string;
+  collectEndDate?: string;
+  verifyPubStartDate?: string;
+  verifyPubEndDate?: string;
+  /**
+   * 年份
+   */
+  year: string;
 }
 
 /**
@@ -3641,7 +3645,7 @@ export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal/detail`
- * @更新时间 `2024-03-13 10:25:34`
+ * @更新时间 `2024-03-13 10:55:19`
  */
 export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailResponse {
   totalCount?: number;
