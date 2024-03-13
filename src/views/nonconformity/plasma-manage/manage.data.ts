@@ -66,10 +66,6 @@ export const columns: BasicColumn[] = [
     dataIndex: 'unqDate',
   },
   {
-    title: '不合格类型',
-    dataIndex: 'flow',
-  },
-  {
     title: '不合格入库日期',
     dataIndex: 'inStoreDate',
     format(text) {

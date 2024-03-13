@@ -62,6 +62,7 @@
     PostApiCoreBankDeliverNonproductiveRequest,
     PutApiCoreBankDeliverNonproductiveRequest,
   } from '@/api/type/stockoutManage';
+  import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
 
   const ATabs = Tabs;
   const ATabPane = TabPane;
@@ -112,7 +113,15 @@
         {
           field: 'reason',
           label: '转移原因',
-          component: 'Input',
+          component: 'ApiSelect',
+          componentProps: {
+            api: getSysDictionary,
+            params: [DictionaryEnum.unProdReason],
+            resultField: '[0].dictImtes',
+          },
+          colProps: {
+            span: 7,
+          },
           required: true,
         },
       ],
