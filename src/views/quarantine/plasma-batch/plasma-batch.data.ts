@@ -7,11 +7,14 @@
  * @FilePath: \psms-fe\src\views\quarantine\plasma-batch\plasma-batch.data.ts
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { h } from 'vue';
-import { Tag } from 'ant-design-vue';
-import { calculate, BS_COLORS } from 'js-xxx';
+import { calculate } from 'js-xxx';
 import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
-import { customRenderDate } from '@/utils/tableHelpRender';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 export const STATE = {
   W: {
@@ -22,12 +25,10 @@ export const STATE = {
   R: {
     value: 'R',
     label: '已复核',
-    color: BS_COLORS.green,
   },
   C: {
     value: 'C',
     label: '取消',
-    color: BS_COLORS.yellow,
   },
   ALL: {
     value: '',
@@ -39,37 +40,22 @@ export const STATE = {
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: 'stationNo',
-    className: 'empty-value',
-    slots: { customRender: 'stationNo' },
+    dataIndex: 'stationName',
   },
-  {
-    title: '报告单号',
-    dataIndex: 'brNo',
-  },
+
   {
     title: '血浆批号',
     dataIndex: 'fkBpNo',
-    className: 'primary-text font-bold',
   },
-  // {
-  //   title: '血浆总数量',
-  //   dataIndex: 'summary.totalCount',
-  //   className: 'empty-value',
-  //   customRender: ({ record }) => record?.summary?.totalCount,
-  // },
+
   {
     title: '状态',
     dataIndex: 'state',
-    customRender: ({ record }) =>
-      h(Tag, { color: STATE[record.state]?.color }, () => {
-        return STATE[record.state]?.label ?? '-';
-      }),
+    format: (t) => STATE[t]?.label,
   },
   {
     title: '检测合格血浆',
     dataIndex: 'summary.checkOK',
-    className: 'empty-value',
     customRender: ({ record }) =>
       calculate(
         '+',
@@ -82,138 +68,155 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '不合格血浆',
-    dataIndex: 'summary.failedCount',
-    slots: { customRender: 'failedCount' },
+    dataIndex: ['summary', 'failedCount'],
+    slots: { customRender: 'failedBag' },
   },
   {
-    title: '检疫期合格血浆',
-    dataIndex: 'summary.trackedCount',
-    className: 'empty-value',
-    customRender: ({ record }) => record?.summary?.trackedCount,
+    title: '检疫期合格血浆(正常)',
+    dataIndex: ['summary', 'trackedNormalCount'],
+    slots: { customRender: 'trackedNormalBag' },
+    width: 180,
+  },
+  {
+    title: '检疫期合格血浆(特免)',
+    dataIndex: ['summary', 'trackedSpecialCount'],
+    slots: { customRender: 'trackedSpecialBag' },
+    width: 180,
   },
   {
     title: '首次续追踪血浆',
-    dataIndex: 'summary.firstUnTrackedCount',
-    className: 'empty-value',
-    customRender: ({ record }) => record?.summary?.firstUnTrackedCount,
+    dataIndex: ['summary', 'firstUnTrackedCount'],
+    slots: { customRender: 'firstUnTrackedBag' },
   },
   {
     title: '反复续追踪血浆',
-    dataIndex: 'summary.reUnTrackedCount',
-    className: 'empty-value',
-    customRender: ({ record }) => record?.summary?.reUnTrackedCount,
+    dataIndex: ['summary', 'reUnTrackedCount'],
+    slots: { customRender: 'reUnTrackedBag' },
   },
   {
     title: '非生产出库转移血浆',
-    dataIndex: 'summary.unProductionCount',
-    slots: { customRender: 'unProductionCount' },
+    dataIndex: ['summary', 'unProductionCount'],
+    slots: { customRender: 'unProductionBag' },
   },
   {
     title: '报告生成人',
     dataIndex: 'creator',
-    className: 'empty-value',
   },
   {
     title: '报告生成日期',
     dataIndex: 'createAt',
-    customRender: ({ record }) => customRenderDate(record.createAt),
+    format: (t) => t?.slice(0, 10),
   },
   {
     title: '复核人',
     dataIndex: 'reviewer',
-    className: 'empty-value',
   },
   {
     title: '复核日期',
     dataIndex: 'reviewAt',
-    customRender: ({ record }) => customRenderDate(record.reviewAt),
+    format: (t) => t?.slice(0, 10),
   },
 ];
 
 export const modalColumns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: 'stationNo',
-    className: 'empty-value',
-    slots: { customRender: 'stationNo' },
+    dataIndex: 'stationName',
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
-    className: 'primary-text font-bold',
   },
   {
     title: '血浆数量',
     dataIndex: 'plasmaCount',
-    className: 'empty-value',
   },
   {
     title: '最早采浆日期',
     dataIndex: 'firstCollectAt',
-    customRender: ({ record }) => customRenderDate(record.firstCollectAt),
+    format: (t) => t?.slice(0, 10),
   },
   {
     title: '最晚采浆日期',
     dataIndex: 'followSeeCount',
-    customRender: ({ record }) => customRenderDate(record.latestCollectAt),
+    format: (t) => t?.slice(0, 10),
   },
   {
     title: '后续可参考血浆数量',
     dataIndex: 'followSeeCount',
-    className: 'empty-value',
   },
   {
     title: '后续可参考血浆比例',
     dataIndex: 'followSeeRatio',
-    className: 'empty-value',
   },
   {
     title: '可放行血浆数量',
     dataIndex: 'canReleaseCount',
-    className: 'empty-value',
   },
   {
     title: '可放行血浆比例',
     dataIndex: 'canReleaseRatio',
-    className: 'empty-value',
   },
   {
     title: '待放行血浆数量',
     dataIndex: 'waitReleaseCount',
-    className: 'empty-value',
   },
   {
     title: '待放行血浆比例',
     dataIndex: 'waitReleaseRatio',
-    className: 'empty-value',
   },
 ];
 
-export const modalFailDetailColumns: BasicColumn[] = [
-  {
-    title: '血浆编号',
-    dataIndex: 'bagNo',
-    className: 'font-bold empty-value',
-  },
-  {
-    title: '不合格原因',
-    dataIndex: 'fkFailedCode',
-    className: 'empty-value',
-    slots: { customRender: 'unqReason' },
-  },
-];
+export const colMap: Record<string, BasicColumn[]> = {
+  failedBag: [
+    {
+      title: '不合格原因',
+      dataIndex: 'fkFailedCode',
+      slots: { customRender: 'unqReason' },
+    },
+  ],
+  firstUnTrackedBag: [
+    {
+      title: '采集日期',
+      dataIndex: 'collectAt',
+    },
+  ],
+  reUnTrackedBag: [
+    {
+      title: '采集日期',
+      dataIndex: 'collectAt',
+    },
+  ],
+  trackedNormalBag: [
+    {
+      title: '采集日期',
+      dataIndex: 'collectAt',
+    },
+  ],
+  trackedSpecialBag: [
+    {
+      title: '免疫类型',
+      dataIndex: 'immunity',
+      format: PlasmaType,
+    },
+    {
+      title: '采集日期',
+      dataIndex: 'collectAt',
+    },
+  ],
+  unProductionBag: [
+    {
+      title: '出库原因',
+      dataIndex: 'fkUnProdCode',
 
-export const modalUnProductionDetailColumns: BasicColumn[] = [
+      slots: { customRender: 'prodReason' },
+    },
+  ],
+};
+export const modalCommonColumns: BasicColumn[] = [
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
-    className: 'font-bold empty-value',
-  },
-  {
-    title: '出库原因',
-    dataIndex: 'fkUnProdCode',
-    className: 'empty-value',
-    slots: { customRender: 'prodReason' },
   },
 ];
 
