@@ -7,6 +7,7 @@
     width="100%"
     :draggable="false"
     :closeFunc="handleCloseFunc"
+    :destroyOnClose="true"
     defaultFullscreen
     :canFullscreen="false"
   >
@@ -388,7 +389,7 @@
     {
       title: '满足率',
       dataIndex: 'passRatio',
-      // sorter: true,
+      sorter: true,
       width: 100,
       format(text) {
         return text ? text + '%' : '-';
@@ -402,6 +403,7 @@
     {
       title: '最早采集日期',
       dataIndex: 'minCollectAt',
+      sorter: true,
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD') : '-';
       },

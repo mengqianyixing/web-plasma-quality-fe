@@ -58,7 +58,7 @@
       componentProps: {
         options: [...bagFlagMap.entries()].map(([key, value]) => ({
           value: key,
-          label: `${key}，${value}`,
+          label: value,
         })),
       },
     },
