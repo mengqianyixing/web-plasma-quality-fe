@@ -54,14 +54,6 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '[inStoreStartDate, inStoreEndDate]',
-    component: 'RangePicker',
-    label: '入库日期',
-    componentProps: {
-      valueFormat: 'YYYY-MM-DD',
-    },
-  },
-  {
     field: '[verifyPubStartDate, verifyPubEndDate]',
     component: 'RangePicker',
     label: '验收发布日期',
@@ -70,9 +62,17 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
+    field: '[inStoreStartDate, inStoreEndDate]',
+    component: 'RangePicker',
+    label: '入库日期',
+    componentProps: {
+      valueFormat: 'YYYY-MM-DD',
+    },
+  },
+  {
     field: '[issueStartDate, issueEndDate]',
     component: 'RangePicker',
-    label: '验收发布日期',
+    label: '检测发布日期',
     componentProps: {
       valueFormat: 'YYYY-MM-DD',
     },
@@ -80,7 +80,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: '[unqInStoreStartDate, unqInStoreEndDate]',
     component: 'RangePicker',
-    label: '入库日期',
+    label: '不合格入库日期',
     componentProps: {
       valueFormat: 'YYYY-MM-DD',
     },

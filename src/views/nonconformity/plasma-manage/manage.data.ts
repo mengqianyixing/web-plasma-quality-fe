@@ -116,6 +116,7 @@ export const searchSchema: FormSchema[] = [
     field: 'state',
     label: '状态',
     component: 'Select',
+    defaultValue: 'REG',
     componentProps: {
       options: serverEnumStore
         .getServerEnum(SERVER_ENUM.UnquaState)
