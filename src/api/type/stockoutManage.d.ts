@@ -1410,7 +1410,7 @@ export interface PutApiCoreBankDeliverNonproductiveResponse {}
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive/pick-plasma`
- * @更新时间 `2024-02-23 15:39:33`
+ * @更新时间 `2024-03-12 13:47:45`
  */
 export interface GetApiCoreBankDeliverNonproductivePickPlasmaRequest {
   pageSize: string;
@@ -1443,6 +1443,10 @@ export interface GetApiCoreBankDeliverNonproductivePickPlasmaRequest {
    * 效价类型
    */
   titerType?: string;
+  /**
+   * 血浆类型
+   */
+  plasmaStatus?: string;
 }
 
 /**
@@ -1450,7 +1454,7 @@ export interface GetApiCoreBankDeliverNonproductivePickPlasmaRequest {
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive/pick-plasma`
- * @更新时间 `2024-02-23 15:39:33`
+ * @更新时间 `2024-03-12 13:47:45`
  */
 export interface GetApiCoreBankDeliverNonproductivePickPlasmaResponse {
   totalCount?: number;

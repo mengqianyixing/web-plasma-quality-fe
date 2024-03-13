@@ -1107,7 +1107,7 @@ export type PostApiCoreLabRegistrationLabItemTiterResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/labItems`
- * @更新时间 `2024-03-08 17:40:44`
+ * @更新时间 `2024-03-13 16:19:53`
  */
 export interface PostApiCoreLabRegistrationLabItemsRequest {
   pageSize: number;
@@ -1143,7 +1143,7 @@ export interface PostApiCoreLabRegistrationLabItemsRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/labItems`
- * @更新时间 `2024-03-08 17:40:44`
+ * @更新时间 `2024-03-13 16:19:53`
  */
 export interface PostApiCoreLabRegistrationLabItemsResponse {
   totalCount: number;
@@ -1203,6 +1203,10 @@ export interface PostApiCoreLabRegistrationLabItemsResponse {
      * 有效位数
      */
     priceValidBit?: string;
+    /**
+     * 主键id
+     */
+    id: string;
   }[];
 }
 
@@ -1248,7 +1252,7 @@ export interface GetApiCoreLabRegistrationDonorSampleNoResponse {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem/titer`
- * @更新时间 `2024-03-07 20:37:12`
+ * @更新时间 `2024-03-13 16:20:57`
  */
 export interface PutApiCoreLabRegistrationLabItemTiterRequest {
   reason?: string;
@@ -1261,6 +1265,10 @@ export interface PutApiCoreLabRegistrationLabItemTiterRequest {
    * 效价结果
    */
   titerValue?: string;
+  /**
+   * 主键id
+   */
+  id: string;
 }
 
 /**
@@ -1268,7 +1276,7 @@ export interface PutApiCoreLabRegistrationLabItemTiterRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem/titer`
- * @更新时间 `2024-03-07 20:37:12`
+ * @更新时间 `2024-03-13 16:20:57`
  */
 export interface PutApiCoreLabRegistrationLabItemTiterResponse {}
 

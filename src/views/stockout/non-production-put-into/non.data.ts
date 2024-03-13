@@ -131,6 +131,10 @@ export const plasmaDetailColumns: BasicColumn[] = [
     dataIndex: 'donorNo',
   },
   {
+    title: '检疫期类型',
+    dataIndex: 'trackType',
+  },
+  {
     title: '血型',
     dataIndex: 'bloodType',
   },

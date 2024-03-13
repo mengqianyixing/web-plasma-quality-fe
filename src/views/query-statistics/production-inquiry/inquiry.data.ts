@@ -2,6 +2,7 @@ import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import dayjs from 'dayjs';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 
@@ -14,7 +15,6 @@ export const columns: BasicColumn[] = [
     title: '投产类型',
     dataIndex: 'orderType',
   },
-
   {
     title: '计划出库日期',
     dataIndex: 'planOut',
@@ -26,6 +26,17 @@ export const columns: BasicColumn[] = [
   {
     title: '投产重量（kg）',
     dataIndex: 'prodWeight',
+    format(text) {
+      return text ? Number(text) / 1000 : text;
+    },
+  },
+  {
+    title: '人数',
+    dataIndex: 'count',
+  },
+  {
+    title: '袋数',
+    dataIndex: 'bagCount',
   },
   {
     title: '记录人',
@@ -34,6 +45,9 @@ export const columns: BasicColumn[] = [
   {
     title: '记录日期',
     dataIndex: 'createAt',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
+    },
   },
   {
     title: '复核人',
@@ -42,10 +56,6 @@ export const columns: BasicColumn[] = [
   {
     title: '审核人',
     dataIndex: 'checker',
-  },
-  {
-    title: '人数',
-    dataIndex: 'count',
   },
 ];
 

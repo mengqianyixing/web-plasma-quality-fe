@@ -17,16 +17,7 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm, FormSchema } from '@/components/Form';
   import { getPrintRecord } from '@/api/tag/printRecord';
-  import { useUserStore } from '@/store/modules/user';
-  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-  import { SERVER_ENUM } from '@/enums/serverEnum';
 
-  import dayjs from 'dayjs';
-
-  const serverEnumStore = useServerEnumStoreWithOut();
-  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
-
-  const userInfo = useUserStore();
   defineOptions({ name: 'ReprintModal' });
 
   const emit = defineEmits(['success', 'register']);
@@ -77,48 +68,22 @@
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: true });
-    const acceptList = data.acceptList;
-    const maxBagNo =
-      acceptList
-        .map((item) => item.bagNo)
-        .sort((a, b) => {
-          let numA = Number(a.match(/\d+$/)[0]);
-          let numB = Number(b.match(/\d+$/)[0]);
-          return numB - numA;
-        })?.[0] || '';
-    const minBagNo =
-      acceptList
-        .map((item) => item.bagNo)
-        .sort((a, b) => {
-          let numA = Number(a.match(/\d+$/)[0]);
-          let numB = Number(b.match(/\d+$/)[0]);
-          return numA - numB;
-        })?.[0] || '';
+
     // 获取标签相关样式
     const res = await getPrintRecord({
       labelType: 'PLAIN_BOX',
-      bissNo: data.boxNo, // 业务主键号
-      param: {
-        stationName: data.stationName,
-        batchNo: data.batchNo,
-        bagNo: `${minBagNo}-${maxBagNo}`,
-        plasmaType: PlasmaType(data.plasmaType),
-        bagCount: acceptList?.length,
-        operator: userInfo.getUserInfo.username,
-        packageDate: dayjs().format('YYYY-MM-DD'),
-        boxNo: data.boxNo,
-        barCode: data.boxNo,
-      },
+      bissNo: data.bagNo, // 业务主键号
     });
     labelObj = res;
+    const { times, directLabel } = res;
     updateSchema([
       {
         field: 'boxNo',
-        defaultValue: data.boxNo,
+        defaultValue: directLabel.dataMap.boxNo[0].Data,
       },
       {
         field: 'times',
-        defaultValue: res.times,
+        defaultValue: times,
       },
     ]);
     setModalProps({ confirmLoading: false });
@@ -132,7 +97,7 @@
         return;
       }
       setModalProps({ confirmLoading: true });
-      emit('success', { boxNo: values.boxNo, labelObj });
+      emit('success', { labelObj });
     } finally {
       setModalProps({ confirmLoading: false });
       closeModal();

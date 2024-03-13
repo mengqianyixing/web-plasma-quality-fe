@@ -8,14 +8,22 @@
  */
 // @TODO: [API TYPE] 稳定版后再使用 ytt 统一生成类型声明
 import { defHttp } from '@/utils/http/axios';
+import {
+  GetApiCoreBatchPlasmaReleaseRequest,
+  GetApiCoreBatchPlasmaReleaseResponse,
+  GetApiCoreBatchPlasmaReleasesRequest,
+  GetApiCoreBatchPlasmaReleasesResponse,
+  GetApiCoreBatchPlasmaUnReleasesRequest,
+  GetApiCoreBatchPlasmaUnReleasesResponse,
+} from '@/api/type/batchManage';
 
 /**
  * 查询未放行列表
  * @param params
  * @returns
  */
-export const getPlasmaBatchUnReleases = (params?: any) =>
-  defHttp.get(
+export const getPlasmaBatchUnReleases = (params?: GetApiCoreBatchPlasmaUnReleasesRequest) =>
+  defHttp.get<GetApiCoreBatchPlasmaUnReleasesResponse>(
     { url: '/api/core/batch/plasma/un-releases', params },
     {
       joinParamsToUrl: true,
@@ -27,8 +35,8 @@ export const getPlasmaBatchUnReleases = (params?: any) =>
  * @param params
  * @returns
  */
-export const getPlasmaBatchReleases = (params?: any) =>
-  defHttp.get(
+export const getPlasmaBatchReleases = (params?: GetApiCoreBatchPlasmaReleasesRequest) =>
+  defHttp.get<GetApiCoreBatchPlasmaReleasesResponse>(
     { url: '/api/core/batch/plasma/releases', params },
     {
       joinParamsToUrl: true,
@@ -40,8 +48,8 @@ export const getPlasmaBatchReleases = (params?: any) =>
  * @param params
  * @returns
  */
-export const getPlasmaBatchRelease = (params?: any) =>
-  defHttp.get(
+export const getPlasmaBatchRelease = (params?: GetApiCoreBatchPlasmaReleaseRequest) =>
+  defHttp.get<GetApiCoreBatchPlasmaReleaseResponse>(
     { url: '/api/core/batch/plasma/release', params },
     {
       joinParamsToUrl: true,

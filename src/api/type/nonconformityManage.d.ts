@@ -467,7 +467,7 @@ export interface GetApiCoreBagUnqualifiedBagNoResponse {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-03-07 10:45:20`
+ * @更新时间 `2024-03-13 09:46:27`
  */
 export interface GetApiCoreBagUnqualifiedRequest {
   pageSize: string;
@@ -520,6 +520,18 @@ export interface GetApiCoreBagUnqualifiedRequest {
    * 不合格类型  不合格暂存页面默认传flow = PCP   （验收血浆不合格）
    */
   flow?: string;
+  /**
+   * 审计状态
+   */
+  checked?: string;
+  /**
+   * 不合格日期起
+   */
+  unqStartDate?: string;
+  /**
+   * 不合格日期止
+   */
+  unqEndDate?: string;
 }
 
 /**
@@ -527,7 +539,7 @@ export interface GetApiCoreBagUnqualifiedRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-03-07 10:45:20`
+ * @更新时间 `2024-03-13 09:46:27`
  */
 export interface GetApiCoreBagUnqualifiedResponse {
   totalCount?: number;
@@ -548,9 +560,17 @@ export interface GetApiCoreBagUnqualifiedResponse {
      */
     bagNo: string;
     /**
+     * 箱号
+     */
+    boxNo: string;
+    /**
      * 浆员编号
      */
     donorNo: string;
+    /**
+     * 采集日期
+     */
+    collDate: string;
     /**
      * 浆员姓名
      */
@@ -564,9 +584,21 @@ export interface GetApiCoreBagUnqualifiedResponse {
      */
     state: string;
     /**
+     * 审计状态
+     */
+    checked: string;
+    /**
      * 不合格类别
      */
     flow: string;
+    /**
+     * 不合格日期
+     */
+    unqDate: string;
+    /**
+     * 存放位置
+     */
+    stockLocation?: string;
     /**
      * 入库日期
      */

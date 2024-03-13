@@ -1227,7 +1227,7 @@ export interface GetApiCoreLabErpTestReportQueryResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/product/inquiry`
- * @更新时间 `2024-02-27 19:44:07`
+ * @更新时间 `2024-03-13 10:50:20`
  */
 export interface PostApiProductInquiryRequest {
   /**
@@ -1283,7 +1283,7 @@ export interface PostApiProductInquiryRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/product/inquiry`
- * @更新时间 `2024-02-27 19:44:07`
+ * @更新时间 `2024-03-13 10:50:20`
  */
 export interface PostApiProductInquiryResponse {
   totalCount: number;
@@ -1330,6 +1330,10 @@ export interface PostApiProductInquiryResponse {
      * 人数
      */
     count: string;
+    /**
+     * 代数
+     */
+    bagCount: string;
   }[];
   currPage: null;
 }
@@ -3432,6 +3436,283 @@ export interface PostApiCoreBagTiterDetailsResponse {
     bagNo: string;
     titerValue: string;
     collectionAt: string;
+  }[];
+}
+
+/**
+ * 接口 [续追踪不和格统计↗](https://yapi.sharing8.cn/project/529/interface/api/33860) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal`
+ * @更新时间 `2024-03-12 14:07:34`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalRequest {
+  /**
+   * 浆站编码
+   */
+  stationNo: string;
+  /**
+   * 采浆开始日期
+   */
+  collectStartDate: string;
+  /**
+   * 采浆结束日期
+   */
+  collectEndDate: string;
+  /**
+   * 检测发布时间
+   */
+  verifyPubStartDate: string;
+  /**
+   * 检测发表结束时间
+   */
+  verifyPubEndDate: string;
+}
+
+/**
+ * 接口 [续追踪不和格统计↗](https://yapi.sharing8.cn/project/529/interface/api/33860) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal`
+ * @更新时间 `2024-03-12 14:07:34`
+ */
+export type GetApiCoreBagUnqualifiedStatisticTrackRenewalResponse = {
+  /**
+   * 年份
+   */
+  year?: string;
+  trackNum?: number;
+  backTrackUnq?: {
+    num?: number;
+    ratio?: number;
+    projects?: {
+      '110001401'?: number;
+      '110001402'?: number;
+      '110001403'?: number;
+      '110001404'?: number;
+      '110001405'?: number;
+      '110001406'?: number;
+    };
+  };
+  followTrackNumUnq?: {
+    num?: number;
+    ratio?: number;
+    projects?: {
+      '110001401'?: number;
+      '110001402'?: number;
+      '110001403'?: number;
+      '110001404'?: number;
+      '110001405'?: number;
+      '110001406'?: number;
+    };
+  };
+  otherNumUnq?: {
+    num?: number;
+    ratio?: number;
+  };
+}[];
+
+/**
+ * 接口 [检疫期不合格统计↗](https://yapi.sharing8.cn/project/529/interface/api/33867) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-quarantine`
+ * @更新时间 `2024-03-12 14:57:32`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticQuarantineRequest {
+  stationNo: string;
+  /**
+   * 采集起止日期
+   */
+  collectStartDate: string;
+  /**
+   * 采集起止日期
+   */
+  collectEndDate: string;
+  /**
+   * 检测发布起止日期
+   */
+  verifyPubStartDate: string;
+  /**
+   * 检测发布起止日期
+   */
+  verifyPubEndDate: string;
+  /**
+   * 不合格来源
+   */
+  blockBy: string;
+  /**
+   * 不合格日期起
+   */
+  blockStartDate: string;
+  /**
+   * 不合格日期止
+   */
+  blockEndDate: string;
+}
+
+/**
+ * 接口 [检疫期不合格统计↗](https://yapi.sharing8.cn/project/529/interface/api/33867) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-quarantine`
+ * @更新时间 `2024-03-12 14:57:32`
+ */
+export type GetApiCoreBagUnqualifiedStatisticQuarantineResponse = {
+  stationNo?: string;
+  stationName?: string;
+  bagNum?: number;
+  /**
+   * 检测不合格
+   */
+  checkUnq?: {
+    num?: number;
+    ratio?: number;
+    projects?: {
+      '110001201'?: number;
+      '110001202'?: number;
+      '110001203'?: number;
+      '110001204'?: number;
+      '110001205'?: number;
+      '110001206'?: number;
+      '110001207'?: number;
+    };
+  };
+  /**
+   * 检疫期不合格
+   */
+  quarantineUnq?: {
+    num?: number;
+    ratio?: number;
+    projects?: {
+      '110001301'?: number;
+      '110001302'?: number;
+      '110001303'?: number;
+      '110001304'?: number;
+      '110001305'?: number;
+      '110001306'?: number;
+      '110001307'?: number;
+    };
+  };
+  /**
+   * 、续追踪不合格
+   */
+  trackUnq?: {
+    num?: number;
+    ratio?: number;
+  };
+}[];
+
+/**
+ * 接口 [续追踪不合格统计血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33874) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal/detail`
+ * @更新时间 `2024-03-13 15:00:49`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * '110001401', '110001', '续追踪不合格HBV-DNA'
+   * '110001402', '110001', '续追踪不合格HBsAg'
+   * '110001403', '110001', '续追踪不合格HCV-RNA'
+   * '110001404', '110001', '续追踪不合格HCV抗体'
+   * '110001405', '110001', '续追踪不合格HIV-1/HIV-2抗体'
+   * '110001406', '110001', '续追踪不合格HIV-RNA'
+   * '110001407', '续追踪不合格超一年'
+   */
+  failedCode: string;
+  /**
+   * 查询明细类型：回访不合格追踪 ：BACK
+   * 后续供浆检测不合格 ：FOLLOW
+   * 其他：OTHER  （failedCode 传 ：110001407）
+   */
+  trackType: string;
+  stationNo?: string;
+  collectStartDate?: string;
+  collectEndDate?: string;
+  verifyPubStartDate?: string;
+  verifyPubEndDate?: string;
+  /**
+   * 年份
+   */
+  year: string;
+}
+
+/**
+ * 接口 [续追踪不合格统计血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33874) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal/detail`
+ * @更新时间 `2024-03-13 15:00:49`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    bagNo?: string;
+    batchNo?: string;
+    donorNo?: string;
+    name?: string;
+    collectAt?: string;
+  }[];
+}
+
+/**
+ * 接口 [检疫期不合格统计血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33881) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-quarantine/detail`
+ * @更新时间 `2024-03-13 15:13:41`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * 不合格原因 字段项id
+   */
+  failedCode: string;
+  /**
+   * 弹窗类别
+   * 检测不和格 CHECK_FAIL
+   * 检疫期不合格 QUA_FAIL
+   * 续追踪不合格 FTRK_FAIL
+   */
+  unqBagQuaType: string;
+  /**
+   * 浆站编码
+   */
+  stationNo: string;
+  collectStartDate: string;
+  collectEndDate: string;
+  verifyPubStartDate: string;
+  verifyPubEndDate: string;
+  blockBy: string;
+  blockStartDate: string;
+  blockEndDate: string;
+}
+
+/**
+ * 接口 [检疫期不合格统计血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33881) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-quarantine/detail`
+ * @更新时间 `2024-03-13 15:13:41`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    bagNo?: string;
+    batchNo?: string;
+    donorNo?: string;
+    name?: string;
+    collectAt?: string;
   }[];
 }
 

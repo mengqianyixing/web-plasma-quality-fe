@@ -20,7 +20,7 @@
       <template #passBagNum="{ record }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleOpenBatchDetail(record, 0)"
+          @click.stop.self="handleOpenBatchDetail(record, 1)"
         >
           {{ record?.passBagNum }}
         </span>
@@ -28,7 +28,7 @@
       <template #noPassBagNum="{ record }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleOpenBatchDetail(record, 1)"
+          @click.stop.self="handleOpenBatchDetail(record, 0)"
         >
           {{ record?.noPassBagNum }}
         </span>
