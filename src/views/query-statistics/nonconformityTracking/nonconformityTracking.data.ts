@@ -1,13 +1,14 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
-import { stationNameList } from '@/api/callback/list-generation';
 import {
   getSysSecondaryDictionary,
   DictionaryReasonEnum,
   DictionaryItemKeyEnum,
 } from '@/api/_dictionary';
 import { getBlockSource } from '@/api/query-statistics/nonconformityTracking';
+import { useStation } from '@/hooks/common/useStation';
 
+const { stationOptions } = useStation();
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
@@ -55,12 +56,10 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'stationNo',
-    component: 'ApiSelect',
+    component: 'Select',
     label: '采浆公司',
     componentProps: {
-      api: stationNameList,
-      labelField: 'stationName',
-      valueField: 'stationNo',
+      options: stationOptions,
     },
   },
   {

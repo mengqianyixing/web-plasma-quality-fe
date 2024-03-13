@@ -19,7 +19,7 @@
         </span>
       </template>
       <template #stationName="{ record }: { record: Recordable }">
-        {{ stationMap.get(record.stationNo) }}
+        {{ getStationNameById(record.stationNo) }}
       </template>
     </BasicTable>
     <DtModal @register="registerDtModal" />
@@ -35,10 +35,9 @@
   import DtModal from './dtDrawer.vue';
   import ImportModal from './importDrawer.vue';
   import { getListApi, deleteTiterApi } from '@/api/inspect/titerImport';
-  import { onMounted, ref } from 'vue';
-  import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
+  import { useStation } from '@/hooks/common/useStation';
 
-  const stationMap = ref(new Map());
+  const { getStationNameById } = useStation();
 
   const [registerDtModal, { openModal: openDtModal }] = useModal();
   const [registerImportModal, { openModal: openImportModal }] = useModal();
@@ -104,10 +103,4 @@
       onCancel: () => Modal.destroyAll(),
     });
   }
-  onMounted(async () => {
-    const res = await stationNameSearchApi();
-    res.forEach((_) => {
-      stationMap.value.set(_.stationNo, _.stationName);
-    });
-  });
 </script>

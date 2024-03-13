@@ -1,7 +1,10 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+import { useStation } from '@/hooks/common/useStation';
+
+const { stationOptions } = useStation();
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
@@ -80,12 +83,10 @@ export const columns: BasicColumn[] = [
 export const searchFormschema: FormSchema[] = [
   {
     field: 'stationNo',
-    component: 'ApiSelect',
+    component: 'Select',
     label: '采浆公司',
     componentProps: {
-      api: stationNameSearchApi,
-      labelField: 'stationName',
-      valueField: 'stationNo',
+      options: stationOptions,
     },
   },
   {

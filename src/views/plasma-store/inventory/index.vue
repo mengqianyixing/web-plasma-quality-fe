@@ -40,18 +40,16 @@
 
   const { createMessage } = useMessage();
 
-  const { isLoading, stationOptions, getStationNameById } = useStation();
+  const { stationOptions, getStationNameById } = useStation();
   onMounted(async () => {
     await initTableData();
     watchEffect(() => {
-      if (!isLoading) {
-        updateSchema({
-          field: 'stationNo',
-          componentProps: {
-            options: stationOptions.value,
-          },
-        });
-      }
+      updateSchema({
+        field: 'stationNo',
+        componentProps: {
+          options: stationOptions.value,
+        },
+      });
     });
   });
 

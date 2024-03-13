@@ -7,10 +7,11 @@
  * @FilePath: \psms-fe\src\views\quarantine\plasma-batch\plasma-batch.data.ts
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { useStation } from '@/hooks/common/useStation';
 
+const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
 
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -213,13 +214,10 @@ export const modalCommonColumns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     label: '采浆公司',
-    component: 'ApiSelect',
+    component: 'Select',
     field: 'stationNo',
     componentProps: {
-      api: stationNameSearchApi,
-      resultField: 'result',
-      labelField: 'stationName',
-      valueField: 'stationNo',
+      options: stationOptions,
     },
   },
   {
@@ -251,13 +249,10 @@ export const searchFormSchema: FormSchema[] = [
 export const modalSearchFormSchema: FormSchema[] = [
   {
     label: '采浆公司',
-    component: 'ApiSelect',
+    component: 'Select',
     field: 'stationNo',
     componentProps: {
-      api: stationNameSearchApi,
-      resultField: 'result',
-      labelField: 'stationName',
-      valueField: 'stationNo',
+      options: stationOptions,
     },
   },
   {

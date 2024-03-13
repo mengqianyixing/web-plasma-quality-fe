@@ -1,7 +1,8 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
-import { stationNameList } from '@/api/callback/list-generation';
+import { useStation } from '@/hooks/common/useStation';
 
+const { stationOptions } = useStation();
 export const backTrackUnqKey = 'backTrackUnq';
 export const followTrackNumUnqKey = 'followTrackNumUnq';
 export const otherNumUnqKey = 'otherNumUnq';
@@ -79,12 +80,10 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'stationNo',
-    component: 'ApiSelect',
+    component: 'Select',
     label: '采浆公司',
     componentProps: {
-      api: stationNameList,
-      labelField: 'stationName',
-      valueField: 'stationNo',
+      options: stationOptions,
     },
   },
   {

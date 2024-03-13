@@ -1,9 +1,10 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
-import { stationNameList } from '@/api/callback/list-generation';
+import { useStation } from '@/hooks/common/useStation';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
 
 export const checkUnqKey = 'checkUnq';
@@ -91,12 +92,10 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'stationNo',
-    component: 'ApiSelect',
+    component: 'Select',
     label: '采浆公司',
     componentProps: {
-      api: stationNameList,
-      labelField: 'stationName',
-      valueField: 'stationNo',
+      options: stationOptions,
     },
   },
   {
