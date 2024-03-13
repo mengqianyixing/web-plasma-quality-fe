@@ -347,7 +347,7 @@
       title: '采集日期',
       dataIndex: 'collectAt',
       format(text) {
-        return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+        return text ? dayjs(text).format('YYYY-MM-DD') : '-';
       },
     },
     {
@@ -369,6 +369,13 @@
     {
       title: '效价值',
       dataIndex: 'titer',
+    },
+    {
+      title: '检疫期满足日期',
+      dataIndex: 'calculateAt',
+      format(text) {
+        return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+      },
     },
     {
       title: '血浆流程状态',

@@ -484,10 +484,17 @@
     }
     const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
     const prepareNo = (selectedRow.value[0] as { prepareNo?: string })?.prepareNo;
+    const reviewer = (selectedRow.value[0] as { reviewer?: string })?.reviewer;
     if (prepareState !== 'REV') {
       warning('该准备号不可复核!');
       return;
     }
+    // 复核人不能和准备人相同
+    if (reviewer === userInfo.getUserInfo.username) {
+      warning('当前账号无此权限!');
+      return;
+    }
+
     Modal.confirm({
       title: '确定要通过复核吗?',
       icon: createVNode(ExclamationCircleOutlined),
