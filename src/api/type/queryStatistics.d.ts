@@ -1227,7 +1227,7 @@ export interface GetApiCoreLabErpTestReportQueryResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/product/inquiry`
- * @更新时间 `2024-02-27 19:44:07`
+ * @更新时间 `2024-03-13 10:19:32`
  */
 export interface PostApiProductInquiryRequest {
   /**
@@ -1283,7 +1283,7 @@ export interface PostApiProductInquiryRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/product/inquiry`
- * @更新时间 `2024-02-27 19:44:07`
+ * @更新时间 `2024-03-13 10:19:32`
  */
 export interface PostApiProductInquiryResponse {
   totalCount: number;
@@ -1330,6 +1330,10 @@ export interface PostApiProductInquiryResponse {
      * 人数
      */
     count: string;
+    /**
+     * 代数
+     */
+    bagCount: string;
   }[];
   currPage: null;
 }
@@ -3598,5 +3602,59 @@ export type GetApiCoreBagUnqualifiedStatisticQuarantineResponse = {
     ratio?: number;
   };
 }[];
+
+/**
+ * 接口 [续追踪不合格统计血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33874) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal/detail`
+ * @更新时间 `2024-03-13 10:25:34`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * '110001401', '110001', '续追踪不合格HBV-DNA'
+   * '110001402', '110001', '续追踪不合格HBsAg'
+   * '110001403', '110001', '续追踪不合格HCV-RNA'
+   * '110001404', '110001', '续追踪不合格HCV抗体'
+   * '110001405', '110001', '续追踪不合格HIV-1/HIV-2抗体'
+   * '110001406', '110001', '续追踪不合格HIV-RNA'
+   * '110001407', '续追踪不合格超一年'
+   */
+  failedCode: string;
+  /**
+   * 查询明细类型：回访不合格追踪 ：BACK
+   * 后续供浆检测不合格 ：FOLLOW
+   * 其他：OTHER  （failedCode 传 ：110001407）
+   */
+  trackType: string;
+  stationNo: string;
+  collectStartDate: string;
+  collectEndDate: string;
+  verifyPubStartDate: string;
+  verifyPubEndDate: string;
+}
+
+/**
+ * 接口 [续追踪不合格统计血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33874) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal/detail`
+ * @更新时间 `2024-03-13 10:25:34`
+ */
+export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    bagNo?: string;
+    batchNo?: string;
+    donorNo?: string;
+    name?: string;
+    collectAt?: string;
+  }[];
+}
 
 /* prettier-ignore-end */

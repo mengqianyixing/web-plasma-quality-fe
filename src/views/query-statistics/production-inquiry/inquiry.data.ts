@@ -14,7 +14,6 @@ export const columns: BasicColumn[] = [
     title: '投产类型',
     dataIndex: 'orderType',
   },
-
   {
     title: '计划出库日期',
     dataIndex: 'planOut',
@@ -26,6 +25,14 @@ export const columns: BasicColumn[] = [
   {
     title: '投产重量（kg）',
     dataIndex: 'prodWeight',
+  },
+  {
+    title: '人数',
+    dataIndex: 'count',
+  },
+  {
+    title: '袋数',
+    dataIndex: 'bagCount',
   },
   {
     title: '记录人',
@@ -42,10 +49,6 @@ export const columns: BasicColumn[] = [
   {
     title: '审核人',
     dataIndex: 'checker',
-  },
-  {
-    title: '人数',
-    dataIndex: 'count',
   },
 ];
 
