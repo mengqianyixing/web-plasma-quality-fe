@@ -7,11 +7,7 @@
     :title="getTitle"
     @ok="handleSubmit"
   >
-    <BasicTable @register="registerTable">
-      <template #stationNo="{ record }">
-        {{ getStationNameById(record?.stationNo) }}
-      </template>
-    </BasicTable>
+    <BasicTable @register="registerTable" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -25,7 +21,7 @@
 
   const emit = defineEmits(['success', 'register']);
   const isUpdate = ref(true);
-  const { isLoading, stationOptions, getStationNameById } = useStation();
+  const { isLoading, stationOptions } = useStation();
   const selectedRow = ref<Recordable>([]);
   const { createMessage } = useMessage();
 

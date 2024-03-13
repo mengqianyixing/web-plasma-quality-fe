@@ -7,6 +7,7 @@
  * @LastEditTime: 2024-01-16 15:04:35
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
+import { TRAY_IN_STATE_TEXT } from '@/enums/stockoutEnum';
 
 export const columns: BasicColumn[] = [
   {
@@ -23,8 +24,8 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '状态',
-    dataIndex: 'closed',
-    customRender: ({ record }) => (record.wareHouseName ? '已入库' : '未入库'),
+    dataIndex: 'trayStatus',
+    format: (t) => TRAY_IN_STATE_TEXT.get(t) as string,
   },
   {
     title: '所在库房',

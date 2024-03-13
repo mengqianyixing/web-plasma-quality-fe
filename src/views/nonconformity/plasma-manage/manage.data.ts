@@ -15,6 +15,11 @@ import {
   getSysSecondaryDictionary,
 } from '@/api/_dictionary';
 
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
@@ -39,25 +44,26 @@ export const columns: BasicColumn[] = [
     dataIndex: 'donorName',
   },
   {
+    title: '采集日期',
+    dataIndex: 'collDate',
+  },
+  {
+    title: '存放位置',
+    dataIndex: 'stockLocation',
+  },
+  {
+    title: '箱号',
+    dataIndex: 'boxNo',
+  },
+  {
     title: '不合格原因',
     dataIndex: 'unqReason',
     slots: { customRender: 'unqReason' },
     width: 200,
   },
   {
-    title: '不合格类型',
-    dataIndex: 'flow',
-  },
-  {
-    title: '审核状态',
-    dataIndex: '',
-  },
-  {
-    title: '不合格状态',
-    dataIndex: 'state',
-    format(text) {
-      return nonconformityPlasmaMap.get(<NonconformityPlasmaStatusValueEnum>text) as string;
-    },
+    title: '不合格日期',
+    dataIndex: 'unqDate',
   },
   {
     title: '不合格入库日期',
@@ -73,6 +79,17 @@ export const columns: BasicColumn[] = [
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
+  {
+    title: '状态',
+    dataIndex: 'state',
+    format(text) {
+      return nonconformityPlasmaMap.get(<NonconformityPlasmaStatusValueEnum>text) as string;
+    },
+  },
+  {
+    title: '审核状态',
+    dataIndex: 'checked',
+  },
 ];
 
 export const searchSchema: FormSchema[] = [
@@ -87,6 +104,22 @@ export const searchSchema: FormSchema[] = [
     component: 'Input',
   },
   {
+    field: '[unqStartDate, unqEndDate]',
+    label: '不合格日期',
+    component: 'RangePicker',
+  },
+  {
+    field: 'state',
+    label: '状态',
+    component: 'Select',
+    defaultValue: 'REG',
+    componentProps: {
+      options: serverEnumStore
+        .getServerEnum(SERVER_ENUM.UnquaState)
+        .filter((it) => it.value !== 'EXA'),
+    },
+  },
+  {
     field: 'bagNo',
     label: '血浆编号',
     component: 'Input',
@@ -95,6 +128,39 @@ export const searchSchema: FormSchema[] = [
     field: 'fkDonorNo',
     label: '浆员编号',
     component: 'Input',
+  },
+  {
+    field: '[inStoreStartDate, inStoreEndDate]',
+    label: '不合格入库日期',
+    component: 'RangePicker',
+  },
+  {
+    field: 'checked',
+    label: '审核状态',
+    component: 'Select',
+    componentProps: {
+      options: [
+        {
+          label: '未审核',
+          value: 0,
+        },
+        {
+          label: '已审核',
+          value: 1,
+        },
+      ],
+    },
+  },
+  {
+    field: 'flow',
+    label: '不合格类型',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getSysDictionary,
+      params: [DictionaryEnum.PlasmaFailedItem],
+      resultField: '[0].dictImtes',
+      valueField: 'id',
+    },
   },
   {
     field: 'unqReason',
@@ -118,33 +184,6 @@ export const searchSchema: FormSchema[] = [
       },
       valueField: 'dictItemId',
     },
-  },
-  {
-    field: 'flow',
-    label: '不合格类型',
-    component: 'ApiSelect',
-    componentProps: {
-      api: getSysDictionary,
-      params: [DictionaryEnum.PlasmaFailedItem],
-      resultField: '[0].dictImtes',
-      valueField: 'id',
-    },
-  },
-  {
-    field: 'state',
-    label: '状态',
-    component: 'Select',
-    componentProps: {
-      options: [...nonconformityPlasmaMap.entries()].map(([value, label]) => ({
-        label,
-        value,
-      })),
-    },
-  },
-  {
-    field: '[inStoreStartDate, inStoreEndDate]',
-    label: '不合格入库日期',
-    component: 'RangePicker',
   },
   {
     field: '[outStoreStartDate, outStoreEndDate]',

@@ -4,22 +4,19 @@
       <template #stationNo="{ record }">
         {{ getStationNameById(record?.stationNo) }}
       </template>
-      <template #unProductionCount="{ record }">
+      <template
+        v-for="col in slots"
+        #[col.slots?.customRender]="data"
+        :key="col.slots?.customRender"
+      >
         <span
           class="empty-value text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetailClick(record, 'unProductionCount')"
+          @click.stop.self="handleDetailClick(data.record, col.slots?.customRender, col.title)"
         >
-          {{ record?.summary?.unProductionCount }}
+          {{ get(data.record, ((col.dataIndex as any) || []).join('.')) }}
         </span>
       </template>
-      <template #failedCount="{ record }">
-        <span
-          class="empty-value text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetailClick(record, 'failedCount')"
-        >
-          {{ record?.summary?.failedCount }}
-        </span>
-      </template>
+
       <template #toolbar>
         <a-button
           type="primary"
@@ -30,7 +27,7 @@
         <a-button
           :disabled="!selectedRow.length"
           type="primary"
-          @click="handleOption('C')"
+          @click="handleOption('C', '撤销')"
           v-auth="QuarantineButtonEnum.ResetQuarantine"
         >
           撤销
@@ -38,7 +35,7 @@
         <a-button
           :disabled="!selectedRow.length"
           type="primary"
-          @click="handleOption('R')"
+          @click="handleOption('R', '复核')"
           v-auth="QuarantineButtonEnum.ReCheckQuarantine"
         >
           复核
@@ -59,6 +56,7 @@
     setPlasmaBatchRelease,
     getPlasmaBatchRelease,
   } from '@/api/quarantine/plasma-batch';
+  import { Modal } from 'ant-design-vue';
 
   import { useModal } from '@/components/Modal';
   import PlasmaBatchModal from './PlasmaBatchModal.vue';
@@ -68,11 +66,13 @@
   import { useStation } from '@/hooks/common/useStation';
   import { onMounted, ref, watchEffect } from 'vue';
   import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
+  import { get } from 'lodash-es';
 
   defineOptions({ name: 'PlasmaBatchReport' });
 
   const selectedRow = ref<Recordable>([]);
   const { isLoading, stationOptions, getStationNameById } = useStation();
+  const slots = columns.filter((col) => col.slots);
 
   onMounted(() => {
     watchEffect(() => {
@@ -102,16 +102,12 @@
       labelWidth: 120,
       schemas: searchFormSchema,
     },
-    clickToRowSelect: false,
     rowSelection: {
       fixed: true,
       type: 'radio',
       onChange: (_, selectedRows: any) => {
         selectedRow.value = selectedRows;
       },
-      // getCheckboxProps: (record: any) => ({
-      //   disabled: record.state != 'W', // 仅未复核状态可以操作
-      // }),
     },
     useSearchForm: true,
 
@@ -121,12 +117,13 @@
     canResize: true,
   });
 
-  function handleDetailClick(record, type) {
+  function handleDetailClick(record: Recordable, type: string, title: any) {
     getPlasmaBatchRelease({ batchNo: record?.fkBpNo }).then((res) => {
       openDetailModal(true, {
         record,
         ...res,
         type,
+        title,
       });
     });
   }
@@ -137,18 +134,24 @@
     });
   }
 
-  function handleOption(state) {
-    setPlasmaBatchRelease({
-      brNo: selectedRow.value[0].brNo,
-      state,
-    })
-      .then(() => {
-        clearSelectedRowKeys();
-        reload();
-      })
-      .catch(() => {
-        reload();
-      });
+  function handleOption(state: string, title: string) {
+    Modal.confirm({
+      content: '确认' + title + '?',
+      onOk: async () => {
+        setPlasmaBatchRelease({
+          brNo: selectedRow.value[0].brNo,
+          state,
+        })
+          .then(() => {
+            clearSelectedRowKeys();
+            reload();
+          })
+          .catch(() => {
+            reload();
+          });
+      },
+      onCancel: () => Modal.destroyAll(),
+    });
   }
 
   function handlePrint() {
