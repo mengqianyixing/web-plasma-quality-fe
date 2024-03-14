@@ -1,5 +1,5 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="register" title="本批详情" width="80%">
+  <BasicModal v-bind="$attrs" @register="register" title="本批详情" width="1400px" :minHeight="600">
     <template #footer>
       <a-button @click="closeModal">关闭</a-button>
     </template>

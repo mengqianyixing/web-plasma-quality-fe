@@ -1,5 +1,13 @@
+<!--
+ * @Author: chiyifan chiyf@stpass.com
+ * @Date: 2024-03-12 19:54:21
+ * @LastEditors: chiyifan chiyf@stpass.com
+ * @LastEditTime: 2024-03-14 16:22:45
+ * @FilePath: \psms-fe\src\views\inbound-management\components\PlasmaBatchDetailModal\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
-  <BasicModal v-bind="$attrs" @register="register" title="验收详情" width="80%">
+  <BasicModal v-bind="$attrs" @register="register" title="验收详情" width="1400px" :minHeight="600">
     <template #footer>
       <a-button @click="handleClose">关闭</a-button>
     </template>
