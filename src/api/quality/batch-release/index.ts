@@ -17,11 +17,15 @@ import {
   PutApiProductReleaseRequest,
   PutApiProductReleaseResponse,
   GetApiProductReleaseDetailResponse,
+  PutApiProductReleaseReviewCancelRequest,
+  PutApiProductReleaseCheckCancelRequest,
 } from '@/api/type/qualityMange';
 
 enum Api {
   LIST = '/api/product/releases',
   FORM = '/api/product/release',
+  CANCEL_FORM = '/api/product/release/check/cancel',
+  CANCEL_REVIEW = '/api/product/release/review/cancel',
   REVIEW = '/api/product/release/review/',
   RELEASE = '/api/product/release/',
   CANCEL_RELEASE = '/api/product/release/cancel',
@@ -38,6 +42,9 @@ export const submitCreateFormApi = (params: PostApiProductReleaseRequest) =>
 export const submitUpdateFormApi = (params: PutApiProductReleaseRequest) =>
   defHttp.put<PutApiProductReleaseResponse>({ url: Api.FORM, params });
 
+export const submitCancelCreateApi = (params: PutApiProductReleaseCheckCancelRequest) =>
+  defHttp.put({ url: Api.CANCEL_FORM, params });
+
 export const getFormApi = (params: GetApiProductReleasePrNoRequest) =>
   defHttp.get<GetApiProductReleasePrNoResponse>({ url: '/api/product/release/' + params.prNo });
 
@@ -49,6 +56,9 @@ export const submitCancelReleaseApi = (params: PutApiProductReleaseCancelRequest
 
 export const submitReviewApi = (params: PutApiProductReleaseReviewPrNoRequest) =>
   defHttp.put<PutApiProductReleaseReviewPrNoResponse>({ url: Api.REVIEW + params.prNo });
+
+export const submitCancelReviewApi = (params: PutApiProductReleaseReviewCancelRequest) =>
+  defHttp.put({ url: Api.CANCEL_REVIEW, params });
 
 export const getNonconformityListApi = (params: GetApiProductReleaseUnqualifiedOrderNoRequest) =>
   defHttp.get<GetApiProductReleaseUnqualifiedOrderNoResponse>({
