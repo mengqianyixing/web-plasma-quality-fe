@@ -21,17 +21,25 @@ export const columns: BasicColumn[] = [
     slots: { customRender: 'mesId' },
   },
   {
-    title: '投浆重量(t)',
-    dataIndex: 'orderWeight',
-    width: 100,
-  },
-  {
     title: '投产类型',
     dataIndex: 'orderType',
     width: 100,
     format(text) {
       return `${PlasmaType(text)}`;
     },
+  },
+  {
+    title: '血浆效期',
+    dataIndex: 'expiration',
+    width: 100,
+    format(text) {
+      return expirationMap.get(<expirationValueEnum>text) as string;
+    },
+  },
+  {
+    title: '计划投浆重量(t)',
+    dataIndex: 'orderWeight',
+    width: 120,
   },
   {
     title: '计划出库日期',
@@ -50,22 +58,19 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '血浆数量',
+    title: '投浆箱数',
+    dataIndex: 'boxNum',
+    slots: { customRender: 'boxNum' },
+  },
+  {
+    title: '投浆数量',
     dataIndex: 'totalNum',
   },
   {
-    title: '血浆净重(kg)',
+    title: '投浆净重(kg)',
     dataIndex: 'totalWeight',
     format(text) {
       return Number(text) / 1000;
-    },
-  },
-  {
-    title: '血浆效期',
-    dataIndex: 'expiration',
-    width: 100,
-    format(text) {
-      return expirationMap.get(<expirationValueEnum>text) as string;
     },
   },
   {

@@ -1,6 +1,8 @@
 import { defHttp } from '@/utils/http/axios';
 import {
   DeleteApiProductOutStoreBatchOrderNoRequest,
+  GetApiProductOrderBoxRequest,
+  GetApiProductOrderBoxResponse,
   GetApiProductOutStoreBoxesOrderNoRequest,
   GetApiProductOutStoreBoxesOrderNoResponse,
   GetApiProductPrepareTrayOutRequest,
@@ -29,6 +31,7 @@ enum Api {
   PRODUCTION_OUT_STORE_LIST = '/api/product/out-store/boxes',
   PRODUCTION_OUT_STORE = '/api/product/out-store/box',
   PRODUCTION_TRAY_OUT_STORE = '/api/product/prepare/tray/out',
+  PRODUCTION_BOX_NUM_DETAIL = '/api/product/order/box',
 }
 
 export const productionStockOutByBatch = (params: PostApiProductOutStoreBatchRequest) =>
@@ -76,4 +79,10 @@ export const getTrayOutStoreList = (params: GetApiProductPrepareTrayOutRequest) 
     {
       joinParamsToUrl: true,
     },
+  );
+
+export const getBoxNumDetailList = (params: GetApiProductOrderBoxRequest) =>
+  defHttp.get<GetApiProductOrderBoxResponse>(
+    { url: Api.PRODUCTION_BOX_NUM_DETAIL, params },
+    { joinParamsToUrl: true },
   );

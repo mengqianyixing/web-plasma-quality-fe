@@ -9,6 +9,14 @@
           {{ record?.mesId }}
         </span>
       </template>
+      <template #boxNum="{ record }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleBoxNumClick(record)"
+        >
+          {{ record?.boxNum }}
+        </span>
+      </template>
       <template #toolbar>
         <div class="flex gap-2">
           <a-button
@@ -72,9 +80,10 @@
     </BasicTable>
 
     <TrayOutStoreModal @register="registerTrayOutStoreModal" @success="handleSuccess" />
-    <DetailModal @register="registerDetailModal" />
     <BoxReceiveModal @register="registerReceiveModal" @success="handleSuccess" />
     <BoxOutStoreModal @register="registerBoxOutStoreModal" @success="handleSuccess" />
+    <MesModal @register="registerMesModal" />
+    <BoxNumModal @register="registerBoxNumModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -88,10 +97,11 @@
 
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
 
-  import DetailModal from './DetailModal.vue';
+  import MesModal from '@/views/stockout/production-put-into/MesModal.vue';
   import BoxReceiveModal from '@/views/stockout/production-put-into/BoxReceiveModal.vue';
   import BoxOutStoreModal from '@/views/stockout/production-put-into/BoxOutStoreModal.vue';
   import TrayOutStoreModal from '@/views/stockout/production-put-into/TrayOutStoreModal.vue';
+  import BoxNumModal from '@/views/stockout/production-put-into/BoxNumModal.vue';
 
   import { useMessage } from '@/hooks/web/useMessage';
   import { PageWrapper } from '@/components/Page';
@@ -107,9 +117,10 @@
   defineOptions({ name: 'ProductionPutInto' });
 
   const [registerBoxOutStoreModal, { openModal: openBoxOutStoreModal }] = useModal();
-  const [registerDetailModal, { openModal: openDetailModal }] = useModal();
   const [registerReceiveModal, { openModal: openBoxReceiveModal }] = useModal();
   const [registerTrayOutStoreModal, { openModal: openTrayOutStoreModal }] = useModal();
+  const [registerMesModal, { openModal: openMesModal }] = useModal();
+  const [registerBoxNumModal, { openModal: openBoxNumModal }] = useModal();
 
   const selectedRow = ref<Recordable>([]);
 
@@ -138,6 +149,9 @@
         selectedRow.value = selectedRows;
       },
     },
+    scroll: {
+      x: 0,
+    },
     size: 'small',
     striped: false,
     useSearchForm: true,
@@ -160,7 +174,7 @@
   }
 
   function handleMesClick(record: Recordable) {
-    openDetailModal(true, {
+    openMesModal(true, {
       record: { orderNo: record?.orderNo },
     });
   }
@@ -328,5 +342,11 @@
   function handleSuccess() {
     reload();
     selectedRow.value = [];
+  }
+
+  function handleBoxNumClick(record) {
+    openBoxNumModal(true, {
+      record: { orderNo: record?.orderNo },
+    });
   }
 </script>
