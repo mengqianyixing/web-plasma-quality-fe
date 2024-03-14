@@ -24,7 +24,7 @@
   defineOptions({ name: 'PickPlasmaModal' });
   const emit = defineEmits(['success', 'register']);
 
-  const { isLoading, stationOptions } = useStation();
+  const { stationOptions } = useStation();
   const { createMessage } = useMessage();
   const { warning } = createMessage;
 
@@ -33,14 +33,12 @@
   const selectedRow = ref<Recordable>([]);
   onMounted(async () => {
     watchEffect(async () => {
-      if (!isLoading) {
-        await getForm()?.updateSchema({
-          field: 'stationNo',
-          componentProps: {
-            options: stationOptions.value,
-          },
-        });
-      }
+      await getForm()?.updateSchema({
+        field: 'stationNo',
+        componentProps: {
+          options: stationOptions.value,
+        },
+      });
     });
   });
 

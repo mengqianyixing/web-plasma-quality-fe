@@ -77,19 +77,17 @@
 
   import { QualityButtonEnum } from '@/enums/authCodeEnum';
 
-  const { isLoading, stationOptions } = useStation();
+  const { stationOptions } = useStation();
   const { createMessage, createConfirm } = useMessage();
 
   onMounted(() => {
     watchEffect(() => {
-      if (!isLoading) {
-        getForm().updateSchema({
-          field: 'stationNo',
-          componentProps: {
-            options: stationOptions.value,
-          },
-        });
-      }
+      getForm().updateSchema({
+        field: 'stationNo',
+        componentProps: {
+          options: stationOptions.value,
+        },
+      });
     });
   });
 

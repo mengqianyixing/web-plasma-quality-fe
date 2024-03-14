@@ -640,4 +640,46 @@ export interface GetApiCoreBatchPlasmaReleaseFailedBagRequest {}
  */
 export interface GetApiCoreBatchPlasmaReleaseFailedBagResponse {}
 
+/**
+ * 接口 [取消审核↗](https://yapi.sharing8.cn/project/529/interface/api/33909) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `PUT /api/product/release/check/cancel`
+ * @更新时间 `2024-03-14 16:29:33`
+ */
+export interface PutApiProductReleaseCheckCancelRequest {
+  prNo: string;
+  reason: string;
+}
+
+/**
+ * 接口 [取消审核↗](https://yapi.sharing8.cn/project/529/interface/api/33909) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `PUT /api/product/release/check/cancel`
+ * @更新时间 `2024-03-14 16:29:33`
+ */
+export interface PutApiProductReleaseCheckCancelResponse {}
+
+/**
+ * 接口 [取消复核↗](https://yapi.sharing8.cn/project/529/interface/api/33916) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `PUT /api/product/release/review/cancel`
+ * @更新时间 `2024-03-14 16:29:26`
+ */
+export interface PutApiProductReleaseReviewCancelRequest {
+  prNo: string;
+  reason: string;
+}
+
+/**
+ * 接口 [取消复核↗](https://yapi.sharing8.cn/project/529/interface/api/33916) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `PUT /api/product/release/review/cancel`
+ * @更新时间 `2024-03-14 16:29:26`
+ */
+export interface PutApiProductReleaseReviewCancelResponse {}
+
 /* prettier-ignore-end */

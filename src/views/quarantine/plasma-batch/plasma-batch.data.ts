@@ -125,12 +125,10 @@ export const modalColumns: BasicColumn[] = [
   {
     title: '最早采浆日期',
     dataIndex: 'firstCollectAt',
-    format: (t) => t?.slice(0, 10),
   },
   {
     title: '最晚采浆日期',
-    dataIndex: 'followSeeCount',
-    format: (t) => t?.slice(0, 10),
+    dataIndex: 'latestCollectAt',
   },
   {
     title: '后续可参考血浆数量',
