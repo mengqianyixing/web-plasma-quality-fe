@@ -5,6 +5,7 @@ export const columns: BasicColumn[] = [
   {
     title: '箱号',
     dataIndex: 'boxNo',
+    width: 120,
   },
   {
     title: '血浆编号',
@@ -28,6 +29,7 @@ export const columns: BasicColumn[] = [
   {
     title: '性别',
     dataIndex: 'gender',
+    width: 80,
     customRender: ({ text }) => {
       if (text === 'M') {
         return '男';
@@ -40,14 +42,17 @@ export const columns: BasicColumn[] = [
   {
     title: '血型',
     dataIndex: 'bloodType',
+    width: 80,
   },
   {
     title: '浆站重量(g)',
     dataIndex: 'rawWeight',
+    width: 120,
   },
   {
     title: '验收净重(g)',
     dataIndex: 'netWeight',
+    width: 120,
   },
   {
     title: '验收人',
@@ -60,6 +65,7 @@ export const columns: BasicColumn[] = [
   {
     title: '验收时间',
     dataIndex: 'verifyAt',
+    width: 120,
     customRender: ({ text }) => {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },

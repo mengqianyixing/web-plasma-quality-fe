@@ -10,12 +10,12 @@
       </template>
       <template #batchCount="{ record }">
         <div class="z-999">
-          <!-- <a-button type="link" @click="goPickBatchDetail(record)">
+          <a-button type="link" @click="goPickBatchDetail(record)">
             {{ record.summary?.batchCount }}
-          </a-button> -->
-          <span>
+          </a-button>
+          <!-- <span @click="goPickBatchDetail(record)">
             {{ record.summary?.batchCount }}
-          </span>
+          </span> -->
         </div>
       </template>
       <template #pickBagCount="{ record }">
@@ -30,12 +30,12 @@
       </template>
       <template #prodBagCount="{ record }">
         <div class="z-999">
-          <!-- <a-button type="link" @click="goPlasmaDetail(record, 'prepareProduce')">
+          <a-button type="link" @click="goPlasmaDetail(record, 'prepareProduce')">
             {{ record.summary?.prodBagCount }}
-          </a-button> -->
-          <span>
+          </a-button>
+          <!-- <span>
             {{ record.summary?.prodBagCount }}
-          </span>
+          </span> -->
         </div>
       </template>
       <template #toolbar>
@@ -103,8 +103,8 @@
     <RevokeModal @register="registerRevokeModal" @success="handleSuccessRevoke" />
     <RevokeCheckModal @register="registerRevokeCheckModal" @success="handleSuccessRevokeCheck" />
     <SummaryModal @register="registerSummaryModal" @success="handleSuccessSummary" />
-    <!-- <PickBatchDetail @register="registerPickBatchDetailModal" /> -->
-    <!-- <PlasmaDetail @register="registerPlasmaDetailModal" /> -->
+    <PickBatchDetail @register="registerPickBatchDetailModal" />
+    <PlasmaDetail @register="registerPlasmaDetailModal" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -121,8 +121,8 @@
   import RevokeModal from './components/RevokeModal.vue';
   import RevokeCheckModal from './components/RevokeCheckModal.vue';
   import CreateModal from './components/CreateModal.vue';
-  // import PickBatchDetail from '../components/PickBatchDetail.vue';
-  // import PlasmaDetail from '../components/PlasmaDetail.vue';
+  import PickBatchDetail from '../components/PickBatchDetail.vue';
+  import PlasmaDetail from '../components/PlasmaDetail.vue';
   import {
     getPrepareList,
     completePrepare,
@@ -177,6 +177,7 @@
     {
       title: '是否限制血浆',
       dataIndex: 'bagFlag',
+      width: 120,
       format(text) {
         return `${bagFlagMap.get(text as bagFlagValueEnum)}`;
       },
@@ -184,16 +185,19 @@
     {
       title: '批次数量',
       dataIndex: 'batchCount',
+      width: 80,
       slots: { customRender: 'batchCount' },
     },
     {
       title: '分拣血浆数量',
       dataIndex: 'pickBagCount',
+      width: 110,
       slots: { customRender: 'pickBagCount' },
     },
     {
       title: '投产血浆数量',
       dataIndex: 'prodBagCount',
+      width: 110,
       slots: { customRender: 'prodBagCount' },
     },
     {
@@ -209,6 +213,7 @@
     {
       title: '浆员数量',
       dataIndex: 'donorCount',
+      width: 80,
       customRender: ({ record }) => {
         if (record.summary && record.summary.donorCount !== null) {
           return record.summary.donorCount;
@@ -484,13 +489,13 @@
     }
     const prepareState = (selectedRow.value[0] as { prepareState?: string })?.prepareState;
     const prepareNo = (selectedRow.value[0] as { prepareNo?: string })?.prepareNo;
-    const reviewer = (selectedRow.value[0] as { reviewer?: string })?.reviewer;
+    const creator = (selectedRow.value[0] as { creator?: string })?.creator;
     if (prepareState !== 'REV') {
       warning('该准备号不可复核!');
       return;
     }
     // 复核人不能和准备人相同
-    if (reviewer === userInfo.getUserInfo.username) {
+    if (creator === userInfo.getUserInfo.username) {
       warning('当前账号无此权限!');
       return;
     }
@@ -546,20 +551,20 @@
     });
   }
 
-  // // 分拣批次信息
-  // const [registerPickBatchDetailModal, { openModal: openPickBatchDetailModal }] = useModal();
-  // function goPickBatchDetail(record) {
-  //   openPickBatchDetailModal(true, {
-  //     record,
-  //   });
-  // }
+  // 分拣批次信息
+  const [registerPickBatchDetailModal, { openModal: openPickBatchDetailModal }] = useModal();
+  function goPickBatchDetail(record) {
+    openPickBatchDetailModal(true, {
+      record,
+    });
+  }
 
-  // // 血浆明细
-  // const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
-  // function goPlasmaDetail(record, prepareProduce?) {
-  //   openPlasmaDetailModal(true, {
-  //     record,
-  //     prepareProduce,
-  //   });
-  // }
+  // 血浆明细
+  const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
+  function goPlasmaDetail(record, prepareProduce?) {
+    openPlasmaDetailModal(true, {
+      record,
+      prepareProduce,
+    });
+  }
 </script>

@@ -7,20 +7,27 @@
     @cancel="resetField"
     :destroyOnClose="true"
     :maskClosable="false"
-    width="85%"
+    :minHeight="600"
+    width="1400px"
   >
-    <BasicTable @register="registerTable" :searchInfo="searchInfo">
-      <template #bodyCell="{ column, text }">
-        <template v-if="column.dataIndex === 'acceptState'">
-          {{ optsTransMap(receiveOpts, 'value', 'label')[text] }}
-        </template>
-        <template v-else-if="column.dataIndex === 'verifyState'">
-          {{
-            optsTransMap([...checkOpts, { value: 'H', label: '已验收' }], 'value', 'label')[text]
-          }}
-        </template>
-      </template>
-    </BasicTable>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <BasicTable @register="registerTable" :searchInfo="searchInfo" :scroll="{ y: 420 }">
+          <template #bodyCell="{ column, text }">
+            <template v-if="column.dataIndex === 'acceptState'">
+              {{ optsTransMap(receiveOpts, 'value', 'label')[text] }}
+            </template>
+            <template v-else-if="column.dataIndex === 'verifyState'">
+              {{
+                optsTransMap([...checkOpts, { value: 'H', label: '已验收' }], 'value', 'label')[
+                  text
+                ]
+              }}
+            </template>
+          </template>
+        </BasicTable>
+      </div>
+    </div>
   </BasicModal>
 </template>
 
@@ -231,7 +238,6 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-
     handleSearchInfoFn(info) {
       console.log('handleSearchInfoFn', info);
       return info;
