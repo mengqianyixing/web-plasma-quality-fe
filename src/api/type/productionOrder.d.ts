@@ -43,7 +43,7 @@ export interface PostApiProductOrderResponse {}
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `POST /api/product/orders`
- * @更新时间 `2024-01-31 15:46:29`
+ * @更新时间 `2024-03-13 17:50:02`
  */
 export interface PostApiProductOrdersRequest {
   /**
@@ -97,7 +97,7 @@ export interface PostApiProductOrdersRequest {
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `POST /api/product/orders`
- * @更新时间 `2024-01-31 15:46:29`
+ * @更新时间 `2024-03-13 17:50:02`
  */
 export interface PostApiProductOrdersResponse {
   /**
@@ -145,6 +145,14 @@ export interface PostApiProductOrdersResponse {
      * 计划投产日期
      */
     planTask: string;
+    /**
+     * 投产箱数
+     */
+    boxNum: number;
+    /**
+     * 投浆数量
+     */
+    totalNum: number;
     /**
      * 状态
      */

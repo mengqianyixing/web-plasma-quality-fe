@@ -1,5 +1,12 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="register" title="不合格暂存" width="80%" @ok="handleOk">
+  <BasicModal
+    v-bind="$attrs"
+    @register="register"
+    title="不合格暂存"
+    width="80%"
+    @ok="handleOk"
+    @cancel="handleCancel"
+  >
     <BasicTable @register="registerTable">
       <template #unqReason="{ record }">
         {{ formatUnReason(record?.unqReason) }}
@@ -52,7 +59,7 @@
     });
   });
 
-  const [registerTable, { reload, getForm }] = useTable({
+  const [registerTable, { reload, getForm, clearSelectedRowKeys }] = useTable({
     api: nonconformityPlasmaList,
     columns: unqualifiedColumns,
     beforeFetch: (params) => {
@@ -150,5 +157,11 @@
         ...getForm().getFieldsValue(),
       },
     });
+
+    clearSelectedRowKeys();
+  }
+
+  function handleCancel() {
+    clearSelectedRowKeys();
   }
 </script>
