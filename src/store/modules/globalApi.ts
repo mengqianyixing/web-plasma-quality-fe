@@ -45,7 +45,7 @@ export const useGlobalApiStore = defineStore({
             .then((res) => {
               const formatData = res.map((it) => ({
                 value: it.stationNo,
-                label: it.stationName,
+                label: it.shortName,
               })) as ITEM[];
               this.stations.push(...formatData);
               rs(formatData);

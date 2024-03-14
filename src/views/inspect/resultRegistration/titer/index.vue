@@ -142,6 +142,7 @@
     try {
       sqLoading.value = true;
       await submitSqImportApi({ bsNo: props.bsNo, project: rows[0].projectId });
+      reload();
     } finally {
       sqLoading.value = false;
     }

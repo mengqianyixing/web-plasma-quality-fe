@@ -12,7 +12,7 @@ import {
   PostApiCoreDonorCallbackBatchResponse,
   PostApiCoreDonorCallbackNeedRequest,
 } from '@/api/type/callbackManage';
-import { GetApiCoreStationResponse } from '@/api/type/stationManage';
+import { GetApiSysStationFormResponse } from '@/api/type/stationManage';
 
 enum Api {
   CALLBACK_LIST = '/api/core/donor/callback',
@@ -45,7 +45,7 @@ export const deleteCallback = (params: DeleteApiCoreDonorCallbackRequest) =>
   defHttp.delete({ url: Api.CALLBACK_LIST, params });
 
 export const stationNameList = () =>
-  defHttp.get<GetApiCoreStationResponse>({ url: Api.STATION_NAME });
+  defHttp.get<GetApiSysStationFormResponse>({ url: Api.STATION_NAME });
 
 export const getNeedCallbackList = (params: GetApiCoreDonorCallbackNeedRequest) =>
   defHttp.get<GetApiCoreDonorCallbackNeedResponse>(

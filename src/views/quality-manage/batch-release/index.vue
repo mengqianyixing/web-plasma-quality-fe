@@ -17,10 +17,22 @@
         >
         <a-button
           type="primary"
+          @click="handleCancelCreate"
+          v-auth="QualityButtonEnum.BatchReleaseUpdate"
+          >取消审核</a-button
+        >
+        <a-button
+          type="primary"
           @click="handleReview"
           :loading="loading.review"
           v-auth="QualityButtonEnum.BatchReleaseUpdate"
           >复核</a-button
+        >
+        <a-button
+          type="primary"
+          @click="handleCancelReview"
+          v-auth="QualityButtonEnum.BatchReleaseUpdate"
+          >取消复核</a-button
         >
         <a-button
           type="primary"
@@ -83,6 +95,8 @@
     submitCancelReleaseApi,
     submitReleaseApi,
     getNonconformityListApi,
+    submitCancelCreateApi,
+    submitCancelReviewApi,
   } from '@/api/quality/batch-release';
   import { getSysParamsList } from '@/api/systemServer/params';
   import { STATUS, STATUS_TEXT } from '@/enums/batchReleaseEnum';
@@ -180,6 +194,7 @@
       }
     });
   }
+
   async function handleUpdate() {
     getSelections(true, ([row]) => {
       if (row.state !== STATUS.ROD) {
@@ -251,14 +266,37 @@
       iterator.next();
     });
   }
+  let dialogCallBackFn;
+  function openDialog() {
+    clearValidate();
+    resetFields();
+    open.value = true;
+  }
+  function handleCancelCreate() {
+    getSelections(true, ([row]) => {
+      if (row.state !== STATUS.ROD) {
+        return message.warning(`请选择【${STATUS_TEXT.get(STATUS.ROD)}】的数据`);
+      }
+      dialogCallBackFn = submitCancelCreateApi;
+      openDialog();
+    });
+  }
+  function handleCancelReview() {
+    getSelections(true, ([row]) => {
+      if (row.state !== STATUS.WAT) {
+        return message.warning(`请选择【${STATUS_TEXT.get(STATUS.WAT)}】的数据`);
+      }
+      dialogCallBackFn = submitCancelReviewApi;
+      openDialog();
+    });
+  }
   function handleCancelRelease() {
     getSelections(true, ([row]) => {
       if (row.state !== STATUS.DON) {
         return message.warning(`请选择【${STATUS_TEXT.get(STATUS.DON)}】的数据`);
       }
-      clearValidate();
-      resetFields();
-      open.value = true;
+      dialogCallBackFn = submitCancelReleaseApi;
+      openDialog();
     });
   }
   async function confirmCancel() {
@@ -266,7 +304,7 @@
     getSelections(true, async ([row]) => {
       confirmLoading.value = true;
       try {
-        await submitCancelReleaseApi({ prNo: row.prNo, reason: values.reason });
+        await dialogCallBackFn({ prNo: row.prNo, reason: values.reason });
         success();
         message.success('取消成功');
         open.value = false;

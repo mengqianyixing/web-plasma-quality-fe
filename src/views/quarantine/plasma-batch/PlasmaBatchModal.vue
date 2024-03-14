@@ -21,20 +21,18 @@
 
   const emit = defineEmits(['success', 'register']);
   const isUpdate = ref(true);
-  const { isLoading, stationOptions } = useStation();
+  const { stationOptions } = useStation();
   const selectedRow = ref<Recordable>([]);
   const { createMessage } = useMessage();
 
   onMounted(() => {
     watchEffect(() => {
-      if (!isLoading) {
-        getForm()?.updateSchema({
-          field: 'stationNo',
-          componentProps: {
-            options: stationOptions.value,
-          },
-        });
-      }
+      getForm()?.updateSchema({
+        field: 'stationNo',
+        componentProps: {
+          options: stationOptions.value,
+        },
+      });
     });
   });
 
@@ -50,20 +48,14 @@
     maxHeight: 300,
     columns: modalColumns,
     formConfig: {
-      labelWidth: 120,
       schemas: modalSearchFormSchema,
     },
-    clickToRowSelect: false,
     rowKey: 'batchNo',
     rowSelection: {
-      fixed: true,
       type: 'radio',
       onChange: (_, selectedRows: any) => {
         selectedRow.value = selectedRows;
       },
-      // getCheckboxProps: (record: any) => ({
-      //   disabled: record.state != 'W', // 仅未复核状态可以操作
-      // }),
     },
     useSearchForm: true,
 
@@ -76,10 +68,6 @@
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: false });
     isUpdate.value = !!data?.isUpdate;
-
-    if (unref(isUpdate)) {
-      //
-    }
   });
 
   const getTitle = computed(() => (!unref(isUpdate) ? '新增' : '修改'));

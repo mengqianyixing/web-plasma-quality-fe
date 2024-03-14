@@ -45,18 +45,16 @@
 
   const selectedRow = ref<Recordable>([]);
 
-  const { isLoading, stationOptions } = useStation();
+  const { stationOptions } = useStation();
 
   onMounted(async () => {
     watchEffect(async () => {
-      if (!isLoading) {
-        await getForm().updateSchema({
-          field: 'stationNo',
-          componentProps: {
-            options: stationOptions.value,
-          },
-        });
-      }
+      await getForm().updateSchema({
+        field: 'stationNo',
+        componentProps: {
+          options: stationOptions.value,
+        },
+      });
     });
   });
 

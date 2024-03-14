@@ -64,8 +64,7 @@
     getPlasmaBatchList,
     getPlasmaBatchListByQuarantine,
   } from '@/api/query-statistics/plasma-batch';
-  import { useStation } from '@/hooks/common/useStation';
-  import { watchEffect, reactive, ref, onMounted, watch } from 'vue';
+  import { reactive, ref, watch } from 'vue';
   import { getHeader, formatData, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
 
@@ -73,26 +72,11 @@
 
   const { currentRoute } = useRouter();
 
-  const { isLoading, stationOptions } = useStation();
-
   const ATabs = Tabs;
   const ATabPane = Tabs.TabPane;
   const APagination = Pagination;
 
   const currentKey = ref('come');
-
-  onMounted(() => {
-    watchEffect(() => {
-      if (!isLoading) {
-        getFormLeft().updateSchema({
-          field: 'stationNo',
-          componentProps: {
-            options: stationOptions.value,
-          },
-        });
-      }
-    });
-  });
 
   watch(
     () => currentKey.value,
@@ -104,17 +88,6 @@
       } else {
         setTimeout(() => {
           reloadRight();
-        }, 0);
-      }
-
-      if (!isLoading) {
-        setTimeout(() => {
-          getFormRight()?.updateSchema({
-            field: 'stationNo',
-            componentProps: {
-              options: stationOptions.value,
-            },
-          });
         }, 0);
       }
     },
