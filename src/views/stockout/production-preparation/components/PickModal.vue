@@ -50,11 +50,12 @@
     getPickedBox,
     getSummaryPreview,
   } from '@/api/stockout/production-preparation.js';
-  import { stationNameList } from '@/api/callback/list-generation';
+  import { useStation } from '@/hooks/common/useStation';
   import { prepareStateMap, bagFlagMap, pickModeMap } from '@/enums/stockoutEnum';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+  const { stationOptions } = useStation();
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
   const { createMessage } = useMessage();
@@ -243,15 +244,12 @@
 
   const FormSchemas: FormSchema[] = [
     {
-      component: 'ApiSelect',
+      component: 'Select',
       label: '采浆公司',
       field: 'stationNo',
       colProps: { span: 5 },
       componentProps: {
-        api: stationNameList,
-        labelField: 'stationName',
-        valueField: 'stationNo',
-        immediate: true,
+        options: stationOptions,
       },
     },
     {

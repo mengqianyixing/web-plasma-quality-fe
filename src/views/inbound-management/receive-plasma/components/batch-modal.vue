@@ -38,10 +38,11 @@
   import { ref } from 'vue';
   import BasicModal from '@/components/Modal/src/BasicModal.vue';
   import { getBatchSummary } from '@/api/inbound-management/receive-plasma';
-  import { stationNameList } from '@/api/callback/list-generation';
   import dayjs from 'dayjs';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { useStation } from '@/hooks/common/useStation';
 
+  const { stationOptions } = useStation();
   const { createMessage } = useMessage();
   const { warning } = createMessage;
 
@@ -167,13 +168,10 @@
     {
       field: 'stationNo',
       label: '采浆公司',
-      component: 'ApiSelect',
+      component: 'Select',
       colProps: { span: 4 },
       componentProps: {
-        api: stationNameList,
-        labelField: 'stationName',
-        valueField: 'stationNo',
-        immediate: true,
+        options: stationOptions,
       },
     },
     {

@@ -1,6 +1,9 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
 import { FormItem, FormItemRest } from 'ant-design-vue';
+import { useStation } from '@/hooks/common/useStation';
+
+const { stationOptions } = useStation();
 
 export const columns: BasicColumn[] = [
   {
@@ -124,6 +127,9 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     colProps: {
       span: 5,
+    },
+    componentProps: {
+      options: stationOptions,
     },
   },
   {

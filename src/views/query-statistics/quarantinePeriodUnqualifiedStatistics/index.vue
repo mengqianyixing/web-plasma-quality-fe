@@ -38,6 +38,7 @@
   const [registerModal, { openModal }] = useModal();
 
   const [registerTable, { setColumns, reload, getForm }] = useTable({
+    immediate: false,
     api: getListApi,
     columns: cloneColumns,
     formConfig: {

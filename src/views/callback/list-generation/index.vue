@@ -60,7 +60,6 @@
     deleteCallback,
     getCallbackDetail,
     getCallbackListApi,
-    stationNameList,
   } from '@/api/callback/list-generation';
   import {
     CallbackStateMap,
@@ -71,7 +70,9 @@
   import dayjs from 'dayjs';
   import { callbackConfirm } from '@/api/callback/list-confirm';
   import { CallbackButtonEnum } from '@/enums/authCodeEnum';
+  import { useStation } from '@/hooks/common/useStation';
 
+  const { stationOptions } = useStation();
   defineOptions({ name: 'CallbackGeneration' });
 
   const selectedRow = ref<Recordable>([]);
@@ -80,14 +81,10 @@
   const { createConfirm, createMessage } = useMessage();
 
   onMounted(async () => {
-    stationNames.value = await stationNameList();
     await getForm().updateSchema({
       field: 'stationNo',
       componentProps: {
-        options: stationNames.value.map((it) => ({
-          label: it.stationName,
-          value: it.stationNo,
-        })),
+        options: stationOptions,
       },
     });
   });

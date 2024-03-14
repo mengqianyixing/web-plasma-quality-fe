@@ -71,19 +71,17 @@
   defineOptions({ name: 'PlasmaBatchReport' });
 
   const selectedRow = ref<Recordable>([]);
-  const { isLoading, stationOptions, getStationNameById } = useStation();
+  const { stationOptions, getStationNameById } = useStation();
   const slots = columns.filter((col) => col.slots);
 
   onMounted(() => {
     watchEffect(() => {
-      if (!isLoading) {
-        getForm().updateSchema({
-          field: 'stationNo',
-          componentProps: {
-            options: stationOptions.value,
-          },
-        });
-      }
+      getForm().updateSchema({
+        field: 'stationNo',
+        componentProps: {
+          options: stationOptions.value,
+        },
+      });
     });
   });
 

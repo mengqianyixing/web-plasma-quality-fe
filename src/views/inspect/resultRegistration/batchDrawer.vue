@@ -32,7 +32,13 @@
   import { defineEmits } from 'vue';
   import { getBatchListApi } from '@/api/inspect/resultRegistration';
   import { message } from 'ant-design-vue';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { useStation } from '@/hooks/common/useStation';
 
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
+  const { getStationNameById } = useStation();
   defineOptions({ name: 'LocationModel' });
   const emit = defineEmits(['confirm', 'register']);
 
@@ -76,8 +82,8 @@
     return new Promise((rs) => {
       const { pageSize, currPage, stationName, sampleCode, bsNo } = params;
       const fields = [
-        { key: 'stationName', value: stationName },
-        { key: 'sampleCode', value: sampleCode },
+        { key: 'stationName', value: getStationNameById(stationName) },
+        { key: 'sampleCode', value: SampleType(sampleCode) },
         { key: 'bsNo', value: bsNo },
       ].filter((_) => _.value);
       const filterData = fields.reduce(

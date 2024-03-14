@@ -216,7 +216,7 @@ export interface PostApiSysStationStationNoResponse {}
  *
  * @分类 [基础设置-采浆公司管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5703)
  * @请求头 `GET /api/sys/station/form`
- * @更新时间 `2024-02-21 16:50:34`
+ * @更新时间 `2024-03-14 16:43:15`
  */
 export interface GetApiSysStationFormRequest {}
 
@@ -225,7 +225,7 @@ export interface GetApiSysStationFormRequest {}
  *
  * @分类 [基础设置-采浆公司管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5703)
  * @请求头 `GET /api/sys/station/form`
- * @更新时间 `2024-02-21 16:50:34`
+ * @更新时间 `2024-03-14 16:43:15`
  */
 export type GetApiSysStationFormResponse = {
   /**
@@ -236,6 +236,10 @@ export type GetApiSysStationFormResponse = {
    * 浆站名称
    */
   stationName: string;
+  /**
+   * 简称
+   */
+  shortName: string;
 }[];
 
 /**

@@ -1029,4 +1029,57 @@ export interface PostApiProductPrepareCommitSortingBatchPrepareNoBatchNoRequest 
  */
 export interface PostApiProductPrepareCommitSortingBatchPrepareNoBatchNoResponse {}
 
+/**
+ * 接口 [投产出库箱号详情↗](https://yapi.sharing8.cn/project/529/interface/api/33895) 的 **请求类型**
+ *
+ * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
+ * @请求头 `GET /api/product/order/box`
+ * @更新时间 `2024-03-14 13:58:21`
+ */
+export interface GetApiProductOrderBoxRequest {
+  currPage: string;
+  pageSize: string;
+  orderNo: string;
+}
+
+/**
+ * 接口 [投产出库箱号详情↗](https://yapi.sharing8.cn/project/529/interface/api/33895) 的 **返回类型**
+ *
+ * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
+ * @请求头 `GET /api/product/order/box`
+ * @更新时间 `2024-03-14 13:58:21`
+ */
+export interface GetApiProductOrderBoxResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 投产准备号
+     */
+    prepareNo: string;
+    /**
+     * 箱号
+     */
+    boxNo: string;
+    /**
+     * 血浆数
+     */
+    bagNum: number;
+    /**
+     * 血浆类型
+     */
+    plasmaType: string;
+    /**
+     * 包装人
+     */
+    packBy: string;
+    /**
+     * 包装日期
+     */
+    packAt: string;
+  }[];
+}
+
 /* prettier-ignore-end */

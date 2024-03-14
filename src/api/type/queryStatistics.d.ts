@@ -3716,4 +3716,41 @@ export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailResponse {
   }[];
 }
 
+/**
+ * 接口 [库存合格血浆查询↗](https://yapi.sharing8.cn/project/529/interface/api/33888) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/qualified-inventory/statistic/{queryDate}`
+ * @更新时间 `2024-03-14 16:00:06`
+ */
+export interface GetApiCoreBagQualifiedInventoryStatisticQueryDateRequest {
+  queryDate: string;
+}
+
+/**
+ * 接口 [库存合格血浆查询↗](https://yapi.sharing8.cn/project/529/interface/api/33888) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/qualified-inventory/statistic/{queryDate}`
+ * @更新时间 `2024-03-14 16:00:06`
+ */
+export type GetApiCoreBagQualifiedInventoryStatisticQueryDateResponse = {
+  /**
+   * 效价类型
+   */
+  immType?: string;
+  /**
+   * 库存数量（袋）
+   */
+  immTypeCount?: number;
+  /**
+   * 重量（吨）
+   */
+  immTypeWeight?: number;
+  /**
+   * 最早采集日期
+   */
+  minCollectAt?: string;
+}[];
+
 /* prettier-ignore-end */

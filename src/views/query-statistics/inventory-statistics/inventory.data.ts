@@ -1,7 +1,9 @@
 import { FormSchema } from '@/components/Form';
-import { stationNameList } from '@/api/callback/list-generation';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { useStation } from '@/hooks/common/useStation';
+
+const { stationOptions } = useStation();
 
 const serverEnumStore = useServerEnumStoreWithOut();
 
@@ -9,11 +11,9 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'stationNo',
     label: '采浆公司',
-    component: 'ApiSelect',
+    component: 'Select',
     componentProps: {
-      api: stationNameList,
-      labelField: 'stationName',
-      valueField: 'stationNo',
+      options: stationOptions,
     },
   },
   {

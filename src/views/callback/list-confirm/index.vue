@@ -35,9 +35,12 @@
   import { columns, searchFormSchema } from './confirm.data';
 
   import { PageWrapper } from '@/components/Page';
-  import { getCallbackListApi, stationNameList } from '@/api/callback/list-generation';
+  import { getCallbackListApi } from '@/api/callback/list-generation';
   import { CallbackStateMap } from '@/enums/callbackEnum';
   import { callbackConfirm } from '@/api/callback/list-confirm';
+  import { useStation } from '@/hooks/common/useStation';
+
+  const { stationOptions } = useStation();
 
   defineOptions({ name: 'CallbackListGeneration' });
 
@@ -47,14 +50,10 @@
   const { createConfirm, createMessage } = useMessage();
 
   onMounted(async () => {
-    stationNames.value = await stationNameList();
     await getForm().updateSchema({
       field: 'stationNo',
       componentProps: {
-        options: stationNames.value.map((it) => ({
-          label: it.stationName,
-          value: it.stationNo,
-        })),
+        options: stationOptions,
       },
     });
   });

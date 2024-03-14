@@ -102,19 +102,17 @@
   import { omit } from 'lodash-es';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
-  const { isLoading, stationOptions, getStationNameById } = useStation();
+  const { stationOptions, getStationNameById } = useStation();
   const { createMessage, createConfirm } = useMessage();
 
   onMounted(() => {
     watchEffect(() => {
-      if (!isLoading) {
-        getForm().updateSchema({
-          field: 'stationNo',
-          componentProps: {
-            options: stationOptions.value,
-          },
-        });
-      }
+      getForm().updateSchema({
+        field: 'stationNo',
+        componentProps: {
+          options: stationOptions.value,
+        },
+      });
     });
   });
 

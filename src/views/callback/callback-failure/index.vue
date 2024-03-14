@@ -20,17 +20,15 @@
 
   defineOptions({ name: 'CallbackFailure' });
 
-  const { isLoading, stationOptions, getStationNameById } = useStation();
+  const { stationOptions, getStationNameById } = useStation();
   onMounted(() => {
     watchEffect(() => {
-      if (!isLoading) {
-        getForm().updateSchema({
-          field: 'stationNo',
-          componentProps: {
-            options: stationOptions.value,
-          },
-        });
-      }
+      getForm().updateSchema({
+        field: 'stationNo',
+        componentProps: {
+          options: stationOptions.value,
+        },
+      });
     });
   });
 

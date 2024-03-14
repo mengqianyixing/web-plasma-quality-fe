@@ -1,6 +1,7 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
+import { useStation } from '@/hooks/common/useStation';
 
+const { stationOptions } = useStation();
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
@@ -45,12 +46,10 @@ export const columns: BasicColumn[] = [
 export const searchFormschema: FormSchema[] = [
   {
     label: '采浆公司',
-    component: 'ApiSelect',
+    component: 'Select',
     field: 'stationNo',
     componentProps: {
-      api: stationNameSearchApi,
-      labelField: 'stationName',
-      valueField: 'stationNo',
+      options: stationOptions,
     },
   },
   {

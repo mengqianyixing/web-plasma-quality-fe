@@ -13,9 +13,10 @@
   import { PageWrapper } from '@/components/Page';
   import { BasicTable, useTable, BasicColumn, FormSchema } from '@/components/Table';
   import dayjs from 'dayjs';
-  import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
   import { getPlasmaSummary } from '@/api/stockout/plasma-summary';
+  import { useStation } from '@/hooks/common/useStation';
 
+  const { stationOptions } = useStation();
   defineOptions({ name: 'PlasmaSummary' });
 
   const columns: BasicColumn[] = [
@@ -70,12 +71,10 @@
   const searchFormschema: FormSchema[] = [
     {
       label: '采浆公司',
-      component: 'ApiSelect',
+      component: 'Select',
       field: 'stationNo',
       componentProps: {
-        api: stationNameSearchApi,
-        labelField: 'stationName',
-        valueField: 'stationNo',
+        options: stationOptions,
       },
     },
     {

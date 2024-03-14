@@ -21,20 +21,18 @@
 
   const emit = defineEmits(['success', 'register']);
   const isUpdate = ref(true);
-  const { isLoading, stationOptions } = useStation();
+  const { stationOptions } = useStation();
   const selectedRow = ref<Recordable>([]);
   const { createMessage } = useMessage();
 
   onMounted(() => {
     watchEffect(() => {
-      if (!isLoading) {
-        getForm()?.updateSchema({
-          field: 'stationNo',
-          componentProps: {
-            options: stationOptions.value,
-          },
-        });
-      }
+      getForm()?.updateSchema({
+        field: 'stationNo',
+        componentProps: {
+          options: stationOptions.value,
+        },
+      });
     });
   });
 
@@ -50,7 +48,6 @@
     maxHeight: 300,
     columns: modalColumns,
     formConfig: {
-      labelWidth: 120,
       schemas: modalSearchFormSchema,
     },
     clickToRowSelect: false,

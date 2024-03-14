@@ -2,16 +2,16 @@
  * @Author: HxB
  * @Date: 2024-01-16 17:21:07
  * @LastEditors: Ding 1326587277@qq.com
- * @LastEditTime: 2024-03-01 10:21:20
+ * @LastEditTime: 2024-03-05 11:01:35
  * @Description: 血浆批检疫期报告 data
  * @FilePath: \psms-fe\src\views\quarantine\plasma-batch\plasma-batch.data.ts
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { calculate } from 'js-xxx';
-import { stationNameSearchApi } from '@/api/plasmaStore/entryPlasma';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { useStation } from '@/hooks/common/useStation';
 
+const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
 
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -55,16 +55,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '检测合格血浆',
-    dataIndex: 'summary.checkOK',
-    customRender: ({ record }) =>
-      calculate(
-        '+',
-        record?.summary?.failedCount,
-        record?.summary?.unProductionCount,
-        record?.summary?.trackedCount,
-        record?.summary.firstUnTrackedCount,
-        record?.summary?.reUnTrackedCount,
-      ),
+    dataIndex: ['summary', 'checkedCount'],
   },
   {
     title: '不合格血浆',
@@ -134,12 +125,10 @@ export const modalColumns: BasicColumn[] = [
   {
     title: '最早采浆日期',
     dataIndex: 'firstCollectAt',
-    format: (t) => t?.slice(0, 10),
   },
   {
     title: '最晚采浆日期',
-    dataIndex: 'followSeeCount',
-    format: (t) => t?.slice(0, 10),
+    dataIndex: 'latestCollectAt',
   },
   {
     title: '后续可参考血浆数量',
@@ -223,13 +212,10 @@ export const modalCommonColumns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     label: '采浆公司',
-    component: 'ApiSelect',
+    component: 'Select',
     field: 'stationNo',
     componentProps: {
-      api: stationNameSearchApi,
-      resultField: 'result',
-      labelField: 'stationName',
-      valueField: 'stationNo',
+      options: stationOptions,
     },
   },
   {
@@ -261,13 +247,10 @@ export const searchFormSchema: FormSchema[] = [
 export const modalSearchFormSchema: FormSchema[] = [
   {
     label: '采浆公司',
-    component: 'ApiSelect',
+    component: 'Select',
     field: 'stationNo',
     componentProps: {
-      api: stationNameSearchApi,
-      resultField: 'result',
-      labelField: 'stationName',
-      valueField: 'stationNo',
+      options: stationOptions,
     },
   },
   {
