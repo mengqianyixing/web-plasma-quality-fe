@@ -1,3 +1,11 @@
+/*
+ * @Author: chiyifan chiyf@stpass.com
+ * @Date: 2024-03-09 15:56:23
+ * @LastEditors: chiyifan chiyf@stpass.com
+ * @LastEditTime: 2024-03-14 16:34:08
+ * @FilePath: \psms-fe\src\views\inbound-management\components\PlasmaBoxDetailModal\box.data.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { PlasmaStateMap } from '@/enums/plasmaEnum';
 
@@ -14,10 +22,12 @@ export const columns: BasicColumn[] = [
   {
     title: '未验收数量',
     dataIndex: 'unVerifyCount',
+    width: 100,
   },
   {
     title: '已验收数量',
     dataIndex: 'verifyCount',
+    width: 100,
   },
   {
     title: '验收合格数量',
@@ -34,11 +44,13 @@ export const columns: BasicColumn[] = [
   {
     title: '托盘编号',
     dataIndex: 'trayNo',
+    width: 80,
   },
   {
     title: '状态',
     dataIndex: 'verifyState',
     slots: { customRender: 'verifyState' },
+    width: 80,
   },
 ];
 

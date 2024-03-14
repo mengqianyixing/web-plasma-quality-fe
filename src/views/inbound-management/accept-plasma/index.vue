@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper contentFullHeight fixedHeight>
+  <PageWrapper>
     <Description @register="register" :data="filterForm" />
     <div class="flex gap-1 mt-1">
       <vxe-grid
@@ -301,7 +301,7 @@
   const acceptList = computed(() => filterForm.value?.verifyBag ?? []);
   const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
     border: true,
-    height: '760px',
+    height: '670px',
     showOverflow: true,
     exportConfig: {},
     columnConfig: {
@@ -338,7 +338,7 @@
   });
   const gridOptionsAccept = reactive<VxeGridProps<any>>({
     border: true,
-    height: '760px',
+    height: '670px',
     showOverflow: true,
     columnConfig: {
       resizable: true,
