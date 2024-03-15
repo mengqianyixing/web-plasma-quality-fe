@@ -6,9 +6,13 @@
     showFooter
     width="85%"
     :showOkBtn="false"
-    @cancel="handelCancel"
+    :min-height="600"
   >
-    <BasicTable @register="registerTable" ref="table" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <BasicTable @register="registerTable" ref="table" />
+      </div>
+    </div>
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -23,7 +27,7 @@
 
   defineEmits(['success', 'register']);
 
-  const [registerTable, { reload, getForm }] = useTable({
+  const [registerTable, { getForm }] = useTable({
     api: getForPlasmaListApi,
     columns: detailColumns,
     formConfig: {
@@ -62,24 +66,28 @@
     useSearchForm: true,
     showTableSetting: false,
     bordered: true,
+    isCanResizeParent: true,
+    inset: false,
+    scroll: {
+      x: 0,
+    },
     showIndexColumn: true,
     indexColumnProps: {
       width: 80,
     },
     immediate: false,
-    canResize: false,
   });
-  const [register, { setModalProps }] = useModalInner((data) => {
+  const [register, { setModalProps }] = useModalInner(async (data) => {
+    await getForm().resetFields();
+
     setModalProps({
       maskClosable: false,
     });
 
     orderNo.value = data.record.orderNo;
 
-    reload();
+    await getForm().setFieldsValue({
+      boxNo: data.record.boxNo,
+    });
   });
-
-  function handelCancel() {
-    getForm().resetFields();
-  }
 </script>

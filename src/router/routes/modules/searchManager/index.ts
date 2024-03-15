@@ -334,6 +334,24 @@ const trayManager: AppRouteModule = {
       id: 9000320,
       component: () => import('@/views/query-statistics/nonconformityTracking/index.vue'),
     },
+    {
+      path: 'plasmaQualifiedInventory',
+      name: 'PlasmaQualifiedInventory',
+      meta: {
+        title: '库存合格血浆查询',
+      },
+      id: 9000330,
+      component: () => import('@/views/query-statistics/plasma-qualified-inventory/index.vue'),
+    },
+    {
+      path: 'plasmaBagCollect',
+      name: 'PlasmaBagCollect',
+      meta: {
+        title: '原料血浆采集情况统计',
+      },
+      id: 9000340,
+      component: () => import('@/views/query-statistics/plasma-bag-collect/index.vue'),
+    },
   ],
 };
 export default trayManager;
