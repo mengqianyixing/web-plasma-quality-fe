@@ -64,7 +64,10 @@
   const [registerModal, { setModalProps }] = useModalInner(() => {
     const { removeEvent } = startEvent();
     _removeEvent = removeEvent;
-    updateSchema({ field: 'reviewer', componentProps: { onSearch: handleLogin } });
+    updateSchema([
+      { field: 'reviewer', componentProps: { onSearch: handleLogin } },
+      { field: 'bagNo', componentProps: { onPressEnter: handleSubmit } },
+    ]);
     resetFields();
     setModalProps({ confirmLoading: false });
   });
