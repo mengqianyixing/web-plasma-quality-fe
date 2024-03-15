@@ -32,7 +32,7 @@
   import { PageWrapper } from '@/components/Page';
   import { columns, searchSchema } from './manage.data';
 
-  import { onMounted, ref, watchEffect } from 'vue';
+  import { onMounted, ref } from 'vue';
   import {
     DictionaryItemKeyEnum,
     DictionaryReasonEnum,
@@ -58,13 +58,11 @@
   const { stationOptions } = useStation();
 
   onMounted(async () => {
-    watchEffect(async () => {
-      await getForm().updateSchema({
-        field: 'stationNo',
-        componentProps: {
-          options: stationOptions.value,
-        },
-      });
+    await getForm().updateSchema({
+      field: 'stationNo',
+      componentProps: {
+        options: stationOptions,
+      },
     });
 
     plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({

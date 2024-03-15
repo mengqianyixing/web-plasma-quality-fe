@@ -79,8 +79,8 @@
 
   const { createConfirm, createMessage } = useMessage();
 
-  onMounted(async () => {
-    await getForm().updateSchema({
+  onMounted(() => {
+    getForm().updateSchema({
       field: 'stationNo',
       componentProps: {
         options: stationOptions,
