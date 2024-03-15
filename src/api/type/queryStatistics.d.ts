@@ -3800,4 +3800,93 @@ export type GetApiCoreBagCollectStatisticResponse = {
   bagAcceptCount?: number;
 }[];
 
+/**
+ * 接口 [原料血浆入库查询↗](https://yapi.sharing8.cn/project/529/interface/api/33937) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/out-in-storage/statistic`
+ * @更新时间 `2024-03-15 15:26:08`
+ */
+export interface GetApiCoreBagOutInStorageStatisticRequest {
+  /**
+   * 开始日期
+   */
+  beginAt: string;
+  /**
+   * 结束日期
+   */
+  endAt: string;
+  /**
+   * 入库日期类型，ACP=接收日期，VRF=验收日期
+   */
+  inDateType: string;
+  /**
+   * 血浆计量单位，BAG=袋，TON=吨
+   */
+  quantityUnit: string;
+  /**
+   * 出库日期类型，DLV=血浆出库，PRO=血浆投产
+   */
+  outDateType: string;
+}
+
+/**
+ * 接口 [原料血浆入库查询↗](https://yapi.sharing8.cn/project/529/interface/api/33937) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/out-in-storage/statistic`
+ * @更新时间 `2024-03-15 15:26:08`
+ */
+export interface GetApiCoreBagOutInStorageStatisticResponse {
+  /**
+   * 采浆公司入库血浆详情
+   */
+  stationDeatailList?: {
+    /**
+     * 采浆公司编号
+     */
+    stationNo?: string;
+    /**
+     * 采浆公司
+     */
+    stationName?: string;
+    /**
+     * 本月入库数量
+     */
+    inOfMonth?: number;
+    /**
+     * 本年入库数量
+     */
+    inOfYear?: number;
+  }[];
+  /**
+   * 所有浆站本月入库数量之和
+   */
+  allInOfMonth?: number;
+  /**
+   * 所有浆站本年入库数量之和
+   */
+  allInOfYear?: number;
+  /**
+   * 所有浆站本月出库数量之和
+   */
+  allOutOfMonth?: number;
+  /**
+   * 所有浆站本年出库数量之和
+   */
+  allOutOfYear?: number;
+  /**
+   * 上月血浆存量
+   */
+  allStockOfLastMonth?: number;
+  /**
+   * 本月血浆存量
+   */
+  allStockOfCurrMonth?: number;
+  /**
+   * 备注
+   */
+  remark?: string;
+}
+
 /* prettier-ignore-end */

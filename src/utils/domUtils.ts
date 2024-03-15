@@ -178,3 +178,8 @@ export function useRafThrottle<T extends FunctionArgs>(fn: T): T {
     });
   };
 }
+
+export const closeGlobalLoading = () => {
+  const appLoadingNode = document.querySelector('#app-loading');
+  appLoadingNode && document.body.removeChild(appLoadingNode);
+};

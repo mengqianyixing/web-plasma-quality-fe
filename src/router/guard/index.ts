@@ -14,6 +14,7 @@ import nProgress from 'nprogress';
 import projectSetting from '@/settings/projectSetting';
 import { createParamMenuGuard } from './paramMenuGuard';
 import { PAGE_NOT_FOUND_NAME } from '@/router/constant';
+import { closeGlobalLoading } from '@/utils/domUtils';
 
 // Don't change the order of creation
 export function setupRouterGuard(router: Router) {
@@ -111,9 +112,11 @@ async function createServerEnumsGuard(router: Router) {
     await serverEnumStore.setServerEnum();
     return true;
   });
-  router.afterEach(() => {
-    const appLoadingNode = document.querySelector('#app-loading');
-    appLoadingNode && document.body.removeChild(appLoadingNode);
+  router.afterEach((to) => {
+    // if()
+    const hasCode = window.location.search.includes('code') || to.query.code;
+    if (hasCode && to.name === 'Login') return true;
+    closeGlobalLoading();
   });
 }
 

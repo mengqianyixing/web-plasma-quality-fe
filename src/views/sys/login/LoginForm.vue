@@ -77,6 +77,7 @@
   import oauth from '@/api/oauth/oauth';
   import { pushLog } from '@/api/oauth/logger';
   import { formatDate, qsParse } from 'js-xxx';
+  import { closeGlobalLoading } from '@/utils/domUtils';
 
   const ACol = Col;
   const ARow = Row;
@@ -93,6 +94,9 @@
 
   onMounted(() => {
     getVerifyCode();
+    setTimeout(() => {
+      closeGlobalLoading();
+    }, 10 * 1000);
 
     let url = window.location.href;
     const [path, queryString] = url.split('?');
