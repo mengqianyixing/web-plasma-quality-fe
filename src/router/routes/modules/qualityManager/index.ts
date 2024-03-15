@@ -106,8 +106,16 @@ const checkManager: AppRouteModule = {
           title: '编辑',
         },
         {
+          id: QualityButtonEnum.BatchReleaseCancelAdd,
+          title: '取消审核',
+        },
+        {
           id: QualityButtonEnum.BatchReleaseReview,
           title: '复核',
+        },
+        {
+          id: QualityButtonEnum.BatchReleaseCancelReview,
+          title: '取消复核',
         },
         {
           id: QualityButtonEnum.BatchReleaseRelease,
