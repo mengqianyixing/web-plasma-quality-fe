@@ -100,6 +100,7 @@
     columns: importSuccessColumns,
     size: 'small',
     useSearchForm: false,
+    showIndexColumn: false,
     showTableSetting: false,
     bordered: true,
     isCanResizeParent: true,

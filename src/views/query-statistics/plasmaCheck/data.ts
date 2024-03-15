@@ -19,37 +19,37 @@ export const ratioKey = 'ratio';
 
 export const checkColumns: BasicColumn[] = [
   {
-    width: 150,
+    width: 70,
     title: '采浆公司',
     dataIndex: 'stationName',
   },
   {
-    width: 250,
+    width: 220,
     title: '血浆批号',
     dataIndex: 'batch',
   },
 
   {
-    width: 150,
+    width: 120,
     title: '批次数量(批)',
     dataIndex: 'batchCount',
   },
   {
-    width: 150,
+    width: 120,
     title: '血浆数量(袋)',
+
     dataIndex: bagCountKey,
   },
   {
-    width: 150,
     title: '检测合格',
     children: [
       {
-        width: 150,
+        width: 70,
         title: '合格数量',
         dataIndex: [checkKey, numKey],
       },
       {
-        width: 150,
+        width: 70,
         title: '比率(%)',
         dataIndex: [checkKey, ratioKey],
         format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
@@ -57,16 +57,15 @@ export const checkColumns: BasicColumn[] = [
     ],
   },
   {
-    width: 150,
     title: '外观验收不合格',
     children: [
       {
-        width: 150,
+        width: 70,
         title: '合计',
         dataIndex: [exteriorKey, numKey],
       },
       {
-        width: 150,
+        width: 70,
         title: '比率(%)',
         dataIndex: [exteriorKey, ratioKey],
         format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
@@ -78,12 +77,12 @@ export const checkColumns: BasicColumn[] = [
     title: '检测不合格',
     children: [
       {
-        width: 150,
+        width: 70,
         title: '合计',
         dataIndex: [checkUnKey, numKey],
       },
       {
-        width: 150,
+        width: 70,
         title: '比率(%)',
         dataIndex: [checkUnKey, ratioKey],
         format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
@@ -91,7 +90,7 @@ export const checkColumns: BasicColumn[] = [
     ],
   },
   {
-    width: 150,
+    width: 140,
     title: '其他血浆不合格',
     dataIndex: '',
   },
@@ -101,20 +100,24 @@ export const titerColumns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 70,
   },
   {
     title: '来浆类型',
     dataIndex: 'rawImm',
     format: (text) => PlasmaType(text),
+    width: 70,
   },
   {
     title: '来浆总数量',
     dataIndex: 'bagCount',
+    width: 100,
   },
   {
     title: '效价类型',
     dataIndex: 'titerTypes',
     ellipsis: false,
+    width: 200,
     format: (text) =>
       (text || '')
         .split(',')
@@ -124,8 +127,10 @@ export const titerColumns: BasicColumn[] = [
   {
     title: '效价数量',
     dataIndex: 'titerCount',
+    width: 70,
   },
   {
+    width: 70,
     title: '比率(%)',
     dataIndex: 'ratio',
     format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
@@ -135,17 +140,17 @@ export const followUpColumns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    width: 150,
+    width: 70,
   },
   {
     title: '血浆批号',
     dataIndex: 'batch',
-    width: 250,
+    width: 220,
   },
   {
     title: '血浆数量(袋)',
     dataIndex: 'bagCount',
-    width: 150,
+    width: 100,
   },
   {
     title: '首次续追踪',
@@ -153,12 +158,12 @@ export const followUpColumns: BasicColumn[] = [
       {
         title: '数量',
         dataIndex: 'sTrack',
-        width: 150,
+        width: 70,
       },
       {
         title: '比率(%)',
         dataIndex: 'sRatio',
-        width: 150,
+        width: 70,
         format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
       },
     ],
@@ -168,26 +173,26 @@ export const followUpColumns: BasicColumn[] = [
     children: [
       {
         title: '数量',
-        width: 150,
+        width: 70,
         dataIndex: 'fTrack',
       },
       {
         title: '比率(%)',
         dataIndex: 'fRatio',
-        width: 150,
+        width: 70,
         format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
       },
     ],
   },
   {
     title: '合计',
-    width: 150,
+    width: 70,
     dataIndex: 'count',
   },
   {
     title: '比率(%)',
     dataIndex: 'ratio',
-    width: 150,
+    width: 70,
     format: (t: any) => (t ? (t * 100).toFixed(2) : '0'),
   },
 ];

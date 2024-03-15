@@ -75,6 +75,7 @@
     columns: columns,
     size: 'small',
     useSearchForm: false,
+    scroll: { x: 0 },
     showTableSetting: false,
     bordered: true,
     rowSelection: { type: 'radio' },

@@ -132,6 +132,7 @@
     rowKey: 'sampleNo',
     columns: dtColumns(props.checkResult),
     size: 'small',
+    showIndexColumn: false,
     useSearchForm: !!props.checkResult,
     showTableSetting: false,
     bordered: true,

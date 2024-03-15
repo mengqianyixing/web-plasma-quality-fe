@@ -14,69 +14,87 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 80,
   },
   {
     title: '样本批号',
     dataIndex: 'bsNo',
+    width: 120,
   },
   {
     title: '样本类型',
     dataIndex: 'sampleCode',
     format: (text) => SampleType(text),
+    width: 80,
   },
   {
     title: '检测合格样本总数',
     dataIndex: 'totalQualified',
     slots: { customRender: 'totalQualified' },
+    width: 140,
   },
   {
     title: '检测不合格样本总数',
     dataIndex: 'totalUnqualified',
     slots: { customRender: 'totalUnqualified' },
+    width: 160,
   },
   {
     title: '高效价总数',
     dataIndex: 'totalHighTiter',
     slots: { customRender: 'totalHighTiter' },
+    width: 100,
   },
   {
     title: '低效价总数',
     dataIndex: 'totalLowTiter',
     slots: { customRender: 'totalLowTiter' },
+    width: 100,
   },
   {
     title: '无效价总数',
     dataIndex: 'totalNormal',
     slots: { customRender: 'totalNormal' },
+    width: 100,
   },
   {
     title: '当前状态',
+    width: 80,
     dataIndex: 'state',
     format: (text) => ReportStateType(text),
   },
   {
     title: '报告人',
     dataIndex: 'producer',
+    width: 120,
   },
   {
     title: '报告日期',
     dataIndex: 'productionAt',
+    width: 100,
+    format: (t) => t?.slice(0, 10),
   },
   {
     title: '复核人',
     dataIndex: 'reviewer',
+    width: 120,
   },
   {
     title: '复核日期',
     dataIndex: 'reviewAt',
+    width: 100,
+    format: (t) => t?.slice(0, 10),
   },
   {
     title: '发布人',
     dataIndex: 'issuer',
+    width: 120,
   },
   {
     title: '发布日期',
     dataIndex: 'issueAt',
+    width: 100,
+    format: (t) => t?.slice(0, 10),
   },
 ];
 

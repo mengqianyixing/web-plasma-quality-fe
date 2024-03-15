@@ -12,7 +12,7 @@
     @register="registerModal"
     showFooter
     title="选择批次"
-    width="1000px"
+    width="1140px"
     cancelText="关闭"
     @ok="handleSubmit"
     :minHeight="520"
@@ -63,6 +63,7 @@
     rowKey: 'bsNo',
     columns: batchColumns,
     useSearchForm: true,
+    showIndexColumn: false,
     bordered: true,
     isCanResizeParent: true,
     rowSelection: { type: 'radio' },

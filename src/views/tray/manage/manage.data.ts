@@ -39,6 +39,7 @@ export const columns: BasicColumn[] = [
   {
     title: '打印时间',
     dataIndex: 'createAt',
+    width: 150,
   },
   {
     title: '入库状态',

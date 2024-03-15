@@ -81,6 +81,7 @@
     showTableSetting: false,
     bordered: true,
     rowSelection: { type: 'radio' },
+    scroll: { x: 0 },
     afterFetch: (res) => {
       clearSelectedRowKeys();
       return res;

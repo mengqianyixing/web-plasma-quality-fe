@@ -13,15 +13,19 @@
     title="挑浆"
     width="1200px"
     @cancel="emit('close')"
+    :minHeight="520"
+    @fullscreen="fullscreen"
   >
-    <div class="flex flex-col">
-      <BasicForm @register="registerForm" @submit="handleSubmit" />
-      <div class="flex flex-1">
-        <div class="w-600px">
-          <BasicTable @register="registerLeftTable" />
-        </div>
-        <div class="w-600px">
-          <BasicTable @register="registerRightTable" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <BasicForm @register="registerForm" @submit="handleSubmit" />
+        <div class="flex flex-1" style="height: calc(100% - 60px)">
+          <div class="h-full w-600px">
+            <BasicTable @register="registerLeftTable" />
+          </div>
+          <div class="h-full w-600px">
+            <BasicTable @register="registerRightTable" />
+          </div>
         </div>
       </div>
     </div>
@@ -46,7 +50,10 @@
     showActionButtonGroup: false,
     autoSubmitOnEnter: true,
   });
-  const [registerLeftTable, { reload: reloadLeft, setPagination: setPaginationLeft }] = useTable({
+  const [
+    registerLeftTable,
+    { reload: reloadLeft, setPagination: setPaginationLeft, redoHeight: lRedoHeight },
+  ] = useTable({
     api: notScanApi,
     fetchSetting: {
       pageField: 'currPage',
@@ -55,6 +62,8 @@
       listField: 'result',
     },
     columns: outLeftColumns,
+    isCanResizeParent: true,
+    inset: false,
     size: 'small',
     useSearchForm: false,
     bordered: true,
@@ -64,25 +73,33 @@
       dlvNo: state.no,
     }),
   });
-  const [registerRightTable, { reload: reloadRight, setPagination: setPaginationRight }] = useTable(
-    {
-      api: scanedApi,
-      fetchSetting: {
-        pageField: 'currPage',
-        sizeField: 'pageSize',
-        totalField: 'totalCount',
-        listField: 'result',
-      },
-      columns: outRightColumns,
-      size: 'small',
-      useSearchForm: false,
-      bordered: true,
-      beforeFetch: (p) => ({
-        ...p,
-        dlvNo: state.no,
-      }),
+  const [
+    registerRightTable,
+    { reload: reloadRight, setPagination: setPaginationRight, redoHeight: rRedoHeight },
+  ] = useTable({
+    api: scanedApi,
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
     },
-  );
+    columns: outRightColumns,
+    size: 'small',
+    isCanResizeParent: true,
+    inset: false,
+
+    useSearchForm: false,
+    bordered: true,
+    beforeFetch: (p) => ({
+      ...p,
+      dlvNo: state.no,
+    }),
+  });
+  function fullscreen() {
+    lRedoHeight();
+    rRedoHeight();
+  }
   async function handleSubmit() {
     const { bagNo } = getFieldsValue();
     await scanApi({ bagNo, no: state.no });

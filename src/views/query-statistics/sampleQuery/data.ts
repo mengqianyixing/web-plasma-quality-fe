@@ -13,64 +13,80 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 80,
   },
   {
     title: '样本批号',
     dataIndex: 'sampleBatchNo',
+    width: 120,
   },
 
   {
     title: '样本类型',
     dataIndex: 'sampleType',
     format: (text) => SampleType(text),
+    width: 80,
   },
   {
     title: '样本编号',
     dataIndex: 'sampleNo',
+    width: 120,
   },
   {
     title: '采集日期',
     dataIndex: 'collectAt',
+    width: 100,
   },
   {
     title: '来浆类型',
     dataIndex: 'plasmaTypeFromStation',
+    width: 80,
   },
   {
     title: '血浆类型',
     dataIndex: 'plasmaType',
+    width: 80,
   },
   {
     title: '浆员编号',
     dataIndex: 'donorNo',
+    width: 120,
   },
   {
     title: '浆员姓名',
     dataIndex: 'donorName',
+    width: 100,
   },
   {
     title: '接收人',
     dataIndex: 'acceptor',
+    width: 100,
   },
   {
     title: '接收日期',
     dataIndex: 'acceptAt',
+    width: 100,
   },
   {
     title: '样本状态',
     dataIndex: 'sampleStatus',
+    width: 80,
   },
   {
     title: '检测结果',
     dataIndex: 'testResult',
+    width: 100,
   },
   {
     title: '不合格原因',
     dataIndex: 'unqualifiedReason',
+    width: 140,
+    ellipsis: false,
   },
   {
     title: '效价',
     dataIndex: 'titer',
+    width: 80,
   },
 ];
 

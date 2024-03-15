@@ -7,52 +7,64 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 70,
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
+    width: 120,
   },
 
   {
     title: '报告发布日期',
     dataIndex: 'issueAt',
     format: (t) => t?.slice(0, 10),
+    width: 100,
   },
   {
     title: '样本编号',
     dataIndex: 'sampleNo',
+    width: 120,
   },
   {
     title: '浆员编号',
     dataIndex: 'donorNo',
+    width: 120,
   },
   {
     title: '浆员姓名',
     dataIndex: 'name',
+    width: 100,
   },
   {
     title: '采集日期',
     dataIndex: 'collectionAt',
     format: (t) => t?.slice(0, 10),
+    width: 100,
   },
   {
     title: '不合格原因',
     dataIndex: 'cause',
+    width: 160,
+    ellipsis: false,
   },
   {
     title: '已销毁血浆批号',
     dataIndex: 'destroyedBatchNo',
+    width: 120,
     ellipsis: false,
   },
   {
     title: '已销毁血浆编号',
     dataIndex: 'destroyedBagNo',
+    width: 120,
     ellipsis: false,
   },
   {
     title: '永拒日期',
     dataIndex: 'rejectAt',
     format: (t) => t?.slice(0, 10),
+    width: 100,
   },
 ];
 

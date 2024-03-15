@@ -27,12 +27,12 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    width: 150,
+    width: 70,
   },
   {
     title: '血浆数量（袋）',
     dataIndex: bagNumKey,
-    width: 150,
+    width: 100,
   },
 
   {
@@ -42,12 +42,12 @@ export const columns: BasicColumn[] = [
       {
         title: '合计',
         dataIndex: [checkUnqKey, numKey],
-        width: 150,
+        width: 70,
       },
       {
         title: '比率(%)',
         dataIndex: [checkUnqKey, ratioKey],
-        width: 150,
+        width: 70,
         format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
     ],
@@ -60,12 +60,12 @@ export const columns: BasicColumn[] = [
       {
         title: '合计',
         dataIndex: [quarantineUnqKey, numKey],
-        width: 150,
+        width: 70,
       },
       {
         title: '比率(%)',
         dataIndex: [quarantineUnqKey, ratioKey],
-        width: 150,
+        width: 70,
         format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
     ],
@@ -78,12 +78,12 @@ export const columns: BasicColumn[] = [
       {
         title: '合计',
         dataIndex: [trackUnqKey, numKey],
-        width: 150,
+        width: 70,
       },
       {
         title: '比率(%)',
         dataIndex: [trackUnqKey, ratioKey],
-        width: 150,
+        width: 70,
         format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
     ],

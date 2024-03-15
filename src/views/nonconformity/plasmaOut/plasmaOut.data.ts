@@ -36,6 +36,7 @@ export const columns: BasicColumn[] = [
     title: '申请单号',
     dataIndex: 'dlvNo',
     slots: { customRender: 'dlvNo' },
+    width: 120,
   },
   {
     title: '用途',
@@ -43,42 +44,54 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return USE_TO_TEXT[record.useTo];
     },
+    width: 50,
   },
   {
     title: '血浆总数',
     dataIndex: 'count',
+    width: 70,
   },
   {
     title: '申请原因',
     dataIndex: 'applicationCause',
+    width: 200,
+    ellipsis: false,
   },
   {
     title: '申请单位',
     dataIndex: 'applicationUnit',
+    width: 120,
   },
   {
     title: '申请人',
     dataIndex: 'applicant',
+    width: 100,
   },
   {
     title: '申请日期',
     dataIndex: 'applicationAt',
+    width: 100,
   },
   {
     title: '记录人',
     dataIndex: 'creator',
+    width: 100,
   },
   {
     title: '记录日期',
     dataIndex: 'createAt',
+    width: 100,
   },
   {
     title: '审核人',
     dataIndex: 'reviewer',
+    width: 100,
   },
   {
     title: '审核日期',
     dataIndex: 'reviewAt',
+    width: 100,
+    format: (t) => t?.slice(0, 10),
   },
   // {
   //   title: '审核状态',
@@ -87,10 +100,13 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'state',
+    width: 100,
   },
   {
     title: '出库扫描日期',
     dataIndex: 'finishAt',
+    width: 100,
+    format: (t) => t?.slice(0, 10),
   },
 ];
 

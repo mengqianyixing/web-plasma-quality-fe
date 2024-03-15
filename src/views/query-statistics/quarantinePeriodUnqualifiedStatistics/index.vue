@@ -145,7 +145,7 @@
       ...(res1 || []).map((it) => ({
         dataIndex: [checkUnqKey, it.dictItemId],
         title: it.label,
-        width: it.label.length * 18,
+        width: it.label.length * 16,
         customRender: ({ record }) => {
           if (record.isCount) return record[checkUnqKey]?.[it.dictItemId];
           return (
@@ -163,7 +163,7 @@
       ...(res2 || []).map((it) => ({
         dataIndex: [quarantineUnqKey, it.dictItemId],
         title: it.label,
-        width: it.label.length * 18,
+        width: it.label.length * 16,
         customRender: ({ record }) => {
           if (record.isCount) return record[quarantineUnqKey]?.[it.dictItemId];
           return (
@@ -181,7 +181,7 @@
       ...(res3 || []).map((it) => ({
         dataIndex: [trackUnqKey, it.dictItemId],
         title: it.label,
-        width: it.label.length * 18,
+        width: it.label.length * 16,
         customRender: ({ record }) => {
           if (record.isCount) return record[trackUnqKey]?.[it.dictItemId];
           return (
