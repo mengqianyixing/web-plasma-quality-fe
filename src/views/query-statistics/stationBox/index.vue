@@ -38,7 +38,7 @@
       await getForm().updateSchema({
         field: 'stationNo',
         componentProps: {
-          options: stationOptions.value,
+          options: stationOptions,
         },
       });
     });
