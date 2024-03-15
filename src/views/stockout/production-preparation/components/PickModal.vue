@@ -7,7 +7,6 @@
     width="100%"
     :draggable="false"
     :closeFunc="handleCloseFunc"
-    :destroyOnClose="true"
     defaultFullscreen
     :canFullscreen="false"
   >
