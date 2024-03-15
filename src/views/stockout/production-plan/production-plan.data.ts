@@ -31,6 +31,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'mesId',
     align: 'left',
     slots: { customRender: 'mesId' },
+    width: 120,
   },
   {
     title: '投产类型',
@@ -38,41 +39,51 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return PlasmaType(record.orderType);
     },
+    width: 80,
   },
   {
     title: '血浆效期',
     dataIndex: 'expiration',
+    width: 80,
   },
   {
     title: '计划投浆重量(吨)',
     dataIndex: 'orderWeight',
+    width: 120,
   },
   {
     title: '计划出库日期',
     format: (text) => text?.slice(0, 10),
     dataIndex: 'planOut',
+    width: 100,
   },
   {
     title: '计划投产日期',
     format: (text) => text?.slice(0, 10),
     dataIndex: 'planTask',
+    width: 100,
   },
   {
     title: '血浆数量',
     dataIndex: 'totalNum',
+    width: 80,
   },
   {
     title: '血浆净重(kg)',
     format: formatKg,
     dataIndex: 'totalWeight',
+    width: 100,
   },
   {
     title: '浆员数量',
     dataIndex: 'totalDonor',
+    width: 80,
   },
   {
     title: '效价类型',
     dataIndex: 'immuneTypes',
+    width: 160,
+    ellipsis: false,
   },
   {
     title: '状态',
@@ -80,33 +91,40 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return STATUS_TEXT.get(record.state);
     },
+    width: 80,
   },
   {
     title: '计划人',
     dataIndex: 'planner',
+    width: 100,
   },
   {
     title: '计划日期',
     format: (text) => text?.slice(0, 10),
     dataIndex: 'planAt',
+    width: 100,
   },
   {
     title: '复核人',
     dataIndex: 'planReviewer',
+    width: 100,
   },
   {
     title: '复核日期',
     format: (text) => text?.slice(0, 10),
     dataIndex: 'planRevieAt',
+    width: 100,
   },
   {
     title: '审核人',
     dataIndex: 'planChecker',
+    width: 100,
   },
   {
     title: '审核日期',
     format: (text) => text?.slice(0, 10),
     dataIndex: 'planCheckAt',
+    width: 100,
   },
 ];
 
@@ -200,6 +218,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
     {
       title: '投产准备号',
       dataIndex: 'ppNo',
+      width: 120,
     },
     {
       title: '投产类型',
@@ -207,168 +226,208 @@ export const tableColumns: Record<string, BasicColumn[]> = {
       customRender: ({ record }) => {
         return PlasmaType(record.prodType);
       },
+      width: 100,
     },
     {
       title: '血浆数量',
       dataIndex: 'prodBagCount',
+      width: 80,
     },
     {
       title: '血浆净重(kg)',
       dataIndex: 'netWeight',
       format: formatKg,
+      width: 100,
     },
     {
       title: '最早采集日期',
       format: (text) => text?.slice(0, 10),
       dataIndex: 'minCollectAt',
+      width: 100,
     },
     {
       title: '最晚采集日期',
       format: (text) => text?.slice(0, 10),
       dataIndex: 'maxCollectAt',
+      width: 100,
     },
     {
       title: '效价类型',
       dataIndex: 'immuneTypes',
+      width: 240,
+      ellipsis: false,
     },
   ],
   [TAB.BOX]: [
     {
       title: '采浆公司',
       dataIndex: 'stationName',
+      width: 80,
     },
     {
       title: '血浆批号',
       dataIndex: 'batchNos',
+      width: 120,
     },
     {
       title: '血浆箱号',
       dataIndex: 'boxNo',
+      width: 120,
     },
     {
       title: '血浆数量',
       dataIndex: 'prodBagCount',
+      width: 80,
     },
     {
       title: '血浆净重(kg)',
       dataIndex: 'netWeight',
       format: formatKg,
+      width: 100,
     },
     {
       title: '效价类型',
       dataIndex: 'immuneTypes',
+      width: 240,
+      ellipsis: false,
     },
   ],
   [TAB.TITER]: [
     {
       title: '效价类型',
       dataIndex: 'immuneType',
+      width: 100,
     },
     {
       title: '血浆数量',
       dataIndex: 'prodBagCount',
+      width: 80,
     },
     {
       title: '数量比例(%)',
       dataIndex: 'quantityRatio',
+      width: 100,
     },
     {
       title: '血浆净重(kg)',
       dataIndex: 'netWeight',
       format: formatKg,
+      width: 100,
     },
     {
       title: '净重比例(%)',
       dataIndex: 'weightRatio',
+      width: 100,
     },
   ],
   [TAB.STATION]: [
     {
       title: '采浆公司',
       dataIndex: 'stationName',
+      width: 80,
     },
     {
       title: '血浆数量',
       dataIndex: 'prodBagCount',
+      width: 80,
     },
     {
       title: '数量比例(%)',
       dataIndex: 'quantityRatio',
+      width: 100,
     },
     {
       title: '血浆净重(kg)',
       dataIndex: 'netWeight',
       format: formatKg,
+      width: 100,
     },
     {
       title: '净重比例(%)',
       dataIndex: 'weightRatio',
+      width: 100,
     },
   ],
   [TAB.BATCH]: [
     {
       title: '采浆公司',
       dataIndex: 'stationName',
+      width: 80,
     },
     {
       title: '血浆批号',
       dataIndex: 'batchNo',
+      width: 120,
     },
     {
       title: '血浆数量',
       dataIndex: 'prodBagCount',
+      width: 80,
     },
     {
       title: '血浆净重(kg)',
       dataIndex: 'netWeight',
       format: formatKg,
+      width: 100,
     },
     {
       title: '效价类型',
       dataIndex: 'immuneTypes',
+      width: 240,
+      ellipsis: false,
     },
   ],
   [TAB.PLASMA]: [
     {
       title: '采浆公司',
       dataIndex: 'stationName',
+      width: 80,
     },
     {
       title: '血浆批号',
       dataIndex: 'batchNo',
+      width: 120,
     },
     {
       title: '血浆箱号',
       dataIndex: 'boxNo',
+      width: 120,
     },
     {
       title: '血浆编号',
       dataIndex: 'bagNo',
+      width: 140,
     },
     {
       title: '采集日期',
       format: (text) => text?.slice(0, 10),
       dataIndex: 'collectAt',
+      width: 100,
     },
     {
       title: '浆员编号',
       dataIndex: 'fkDonorNo',
+      width: 120,
     },
     {
       title: '浆员姓名',
       dataIndex: 'donorName',
+      width: 100,
     },
     {
       title: '血型',
       dataIndex: 'bloodType',
+      width: 60,
     },
     {
       title: '效价类型',
       dataIndex: 'immunity',
+      width: 100,
     },
     {
       title: '效价值',
       dataIndex: 'titer',
+      width: 80,
     },
     {
       title: '血浆状态',
@@ -376,6 +435,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
       customRender: ({ record }) => {
         return PLASMA_STATUS_TEXT.get(record.verified);
       },
+      width: 120,
     },
   ],
 };
@@ -395,6 +455,7 @@ export const pickingColumns: Record<string, BasicColumn[]> = {
     {
       title: '投产准备号',
       dataIndex: 'ppNo',
+      width: 120,
     },
     {
       title: '投产类型',
@@ -402,62 +463,76 @@ export const pickingColumns: Record<string, BasicColumn[]> = {
       customRender: ({ record }) => {
         return PlasmaType(record.prodType);
       },
+      width: 100,
     },
     {
       title: '血浆箱数',
       dataIndex: 'boxCount',
+      width: 100,
     },
     {
       title: '血浆数量',
       dataIndex: 'prodBagCount',
+      width: 100,
     },
     {
       title: '血浆净重(kg)',
       dataIndex: 'netWeight',
       format: formatKg,
+      width: 100,
     },
     {
       title: '最早采集日期',
       format: (text) => text?.slice(0, 10),
       dataIndex: 'minCollectAt',
+      width: 100,
     },
     {
       title: '最晚采集日期',
       format: (text) => text?.slice(0, 10),
       dataIndex: 'maxCollectAt',
+      width: 100,
     },
   ],
   [TAB.BOX]: [
     {
       title: '投产准备号',
       dataIndex: 'ppNo',
+      width: 120,
     },
     {
       title: '血浆箱号',
       dataIndex: 'boxNo',
+      width: 120,
     },
     {
       title: '血浆数量',
       dataIndex: 'prodBagCount',
+      width: 100,
     },
     {
       title: '血浆净重(kg)',
       dataIndex: 'netWeight',
       format: formatKg,
+      width: 120,
     },
     {
       title: '最早采集日期',
       format: (text) => text?.slice(0, 10),
       dataIndex: 'minCollectAt',
+      width: 100,
     },
     {
       title: '最晚采集日期',
       format: (text) => text?.slice(0, 10),
       dataIndex: 'maxCollectAt',
+      width: 100,
     },
     {
       title: '效价类型',
       dataIndex: 'immuneTypes',
+      width: 200,
+      ellipsis: false,
     },
   ],
 };
