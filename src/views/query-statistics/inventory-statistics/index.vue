@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div class="root">
+    <PageWrapper dense class="bg-white p-2 mt-2">
+      <BasicForm @register="registerBasicForm" />
+    </PageWrapper>
     <a-tabs
       class="mt-2"
       default-active-key="inStockSummary"
@@ -19,6 +22,7 @@
 </template>
 <script lang="ts" setup>
   import { BasicColumn, BasicTable, useTable } from '@/components/Table';
+  import { BasicForm, useForm } from '@/components/Form';
   import { searchFormSchema } from './inventory.data';
   import { Tabs } from 'ant-design-vue';
 
@@ -161,17 +165,20 @@
     },
   ];
 
+  const [registerBasicForm] = useForm({
+    schemas: searchFormSchema,
+    baseColProps: { flex: '0 0 373px' },
+    actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
+    submitFunc: reloadTable,
+    resetFunc: reloadTable,
+  });
+
   const [registerTable, { getForm, setLoading }] = useTable({
     pagination: false,
-    formConfig: {
-      schemas: searchFormSchema,
-      submitFunc: reloadTable,
-      resetFunc: reloadTable,
-    },
     clickToRowSelect: false,
     size: 'small',
     striped: false,
-    useSearchForm: true,
+    useSearchForm: false,
     bordered: true,
     showIndexColumn: false,
     immediate: false,
@@ -192,5 +199,9 @@
 <style scoped>
   :deep(.vben-basic-table-form-container) {
     padding: 0;
+  }
+
+  .root :deep(.ant-form-item-control-input-content) {
+    margin-left: 20px;
   }
 </style>
