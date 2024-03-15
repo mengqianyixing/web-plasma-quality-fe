@@ -110,7 +110,7 @@
   const [registerEnterModal, { openModal: openEnterModal }] = useModal();
   const [registerImportModal, { openModal: openImportModal }] = useModal();
 
-  const [registerTable, { reload, getSelectRows }] = useTable({
+  const [registerTable, { reload, getSelectRows, clearSelectedRowKeys }] = useTable({
     immediate: false,
     api: getTiterListApi,
     fetchSetting: {
@@ -119,7 +119,6 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    rowKey: 'projectId',
     columns: columns,
     useSearchForm: false,
     bordered: true,
@@ -127,6 +126,7 @@
     rowSelection: { type: 'checkbox' },
     beforeFetch: (p) => ({ ...p, bsNo: props.bsNo }),
     afterFetch: (data) => {
+      clearSelectedRowKeys();
       options.value.splice(0, options.value.length);
       options.value.push(...data.map((_) => ({ label: _.projectAbbr, value: _.projectId })));
       return data;

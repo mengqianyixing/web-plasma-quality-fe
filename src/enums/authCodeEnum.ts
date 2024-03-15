@@ -143,6 +143,8 @@ export enum QualityButtonEnum {
   BatchReleaseRelease = 'E_94003004',
   BatchReleaseUnRelease = 'E_94003005',
   BatchReleasePrint = 'E_94003006',
+  BatchReleaseCancelAdd = 'E_94003007',
+  BatchReleaseCancelReview = 'E_94003008',
 }
 
 export enum NonconformityButtonEnum {

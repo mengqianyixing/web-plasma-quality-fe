@@ -18,14 +18,14 @@
         <a-button
           type="primary"
           @click="handleCancelCreate"
-          v-auth="QualityButtonEnum.BatchReleaseUpdate"
+          v-auth="QualityButtonEnum.BatchReleaseCancelAdd"
           >取消审核</a-button
         >
         <a-button
           type="primary"
           @click="handleReview"
           :loading="loading.review"
-          v-auth="QualityButtonEnum.BatchReleaseUpdate"
+          v-auth="QualityButtonEnum.BatchReleaseCancelReview"
           >复核</a-button
         >
         <a-button
