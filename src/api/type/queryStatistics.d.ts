@@ -3721,9 +3721,12 @@ export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/qualified-inventory/statistic/{queryDate}`
- * @更新时间 `2024-03-14 16:00:06`
+ * @更新时间 `2024-03-14 17:03:30`
  */
 export interface GetApiCoreBagQualifiedInventoryStatisticQueryDateRequest {
+  /**
+   * 库存汇总日期
+   */
   queryDate: string;
 }
 
@@ -3732,7 +3735,7 @@ export interface GetApiCoreBagQualifiedInventoryStatisticQueryDateRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/qualified-inventory/statistic/{queryDate}`
- * @更新时间 `2024-03-14 16:00:06`
+ * @更新时间 `2024-03-14 17:03:30`
  */
 export type GetApiCoreBagQualifiedInventoryStatisticQueryDateResponse = {
   /**
@@ -3751,6 +3754,50 @@ export type GetApiCoreBagQualifiedInventoryStatisticQueryDateResponse = {
    * 最早采集日期
    */
   minCollectAt?: string;
+}[];
+
+/**
+ * 接口 [原料血浆采集情况统计↗](https://yapi.sharing8.cn/project/529/interface/api/33923) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/collect/statistic`
+ * @更新时间 `2024-03-14 17:07:17`
+ */
+export interface GetApiCoreBagCollectStatisticRequest {
+  /**
+   * 采浆公司编号
+   */
+  stationNo?: string;
+  /**
+   * 采集开始日期
+   */
+  collectBeginAt?: string;
+  /**
+   * 采集结束日期
+   */
+  collectEndAt?: string;
+}
+
+/**
+ * 接口 [原料血浆采集情况统计↗](https://yapi.sharing8.cn/project/529/interface/api/33923) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bag/collect/statistic`
+ * @更新时间 `2024-03-14 17:07:17`
+ */
+export type GetApiCoreBagCollectStatisticResponse = {
+  /**
+   * 采浆公司
+   */
+  stationName?: string;
+  /**
+   * 采集数量（袋）
+   */
+  bagCollectCount?: number;
+  /**
+   * 已接收血浆数量（袋）
+   */
+  bagAcceptCount?: number;
 }[];
 
 /* prettier-ignore-end */

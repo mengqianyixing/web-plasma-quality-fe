@@ -1,6 +1,8 @@
 import { defHttp } from '@/utils/http/axios';
 
 import {
+  GetApiCoreBagCollectStatisticRequest,
+  GetApiCoreBagCollectStatisticResponse,
   GetApiCoreBagQualifiedInventoryStatisticQueryDateRequest,
   GetApiCoreBagQualifiedInventoryStatisticQueryDateResponse,
   GetApiCoreBagStatisticsRequest,
@@ -10,6 +12,7 @@ import {
 enum Api {
   Plasma_Statistics = '/api/core/bag/statistics',
   Plasma_Qualified_Inventory = '/api/core/bag/qualified-inventory/statistic',
+  Plasma_BagCollect = '/api/core/bag/collect/statistic',
 }
 
 export const getPlasmaQueryList = (params: GetApiCoreBagStatisticsRequest) =>
@@ -24,3 +27,9 @@ export const getPlasmaQualifiedInventory = (
   defHttp.get<GetApiCoreBagQualifiedInventoryStatisticQueryDateResponse>({
     url: Api.Plasma_Qualified_Inventory + '/' + params.queryDate,
   });
+
+export const getPlasmaBagCollect = (params: GetApiCoreBagCollectStatisticRequest) =>
+  defHttp.get<GetApiCoreBagCollectStatisticResponse>(
+    { url: Api.Plasma_BagCollect, params },
+    { joinParamsToUrl: true },
+  );
