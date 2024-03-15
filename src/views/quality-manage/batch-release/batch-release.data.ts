@@ -16,85 +16,103 @@ export const columns: BasicColumn[] = [
     title: '制造批号',
     dataIndex: 'mesId',
     slots: { customRender: 'mesId' },
+    width: 120,
   },
   {
     title: '投产类型',
     dataIndex: 'orderType',
     format: (text) => PlasmaType(text),
+    width: 70,
   },
   {
     title: '计划投产日期',
     format: (text) => text?.slice(0, 10),
     dataIndex: 'planTask',
+    width: 100,
   },
   {
     title: '投产净重(kg)',
     dataIndex: 'netWeight',
     format: formatKg,
+    width: 100,
   },
   {
     title: '投产数量',
     dataIndex: 'prodBagCount',
+    width: 70,
   },
   {
     title: '最早采集日期',
     format: (text) => text?.slice(0, 10),
     dataIndex: 'minCollectAt',
+    width: 100,
   },
   {
     title: '最晚采集日期',
     format: (text) => text?.slice(0, 10),
     dataIndex: 'maxCollectAt',
+    width: 100,
   },
   {
     title: '最早采集血浆有效期至',
     dataIndex: 'earliestValid',
     format: (text) => text?.slice(0, 10),
+    width: 180,
   },
   {
     title: '最晚满检疫期日期',
     format: (text) => text?.slice(0, 10),
     dataIndex: 'latestExpiration',
+    width: 130,
   },
   {
     title: '献血浆者人数',
     dataIndex: 'donorCount',
+    width: 100,
   },
   {
     title: '放行状态',
     dataIndex: 'state',
     format: (text) => STATUS_TEXT.get(text) as string,
+    width: 70,
   },
   {
     title: '放行单号',
     dataIndex: 'prNo',
+    width: 100,
   },
   {
     title: '审核人',
     dataIndex: 'checker',
+    width: 100,
   },
   {
     title: '审核日期',
     format: (text) => text?.slice(0, 10),
     dataIndex: 'checkAt',
+    width: 100,
   },
   {
     title: '复核人',
     dataIndex: 'reviewer',
+    width: 100,
   },
   {
     title: '复核日期',
     format: (text) => text?.slice(0, 10),
     dataIndex: 'reviewAt',
+    width: 100,
   },
   {
     title: '放行人',
     dataIndex: 'releaseBy',
+    width: 100,
   },
   {
     title: '放行日期',
     format: (text) => text?.slice(0, 10),
     dataIndex: 'releaseAt',
+    width: 100,
   },
 ];
 

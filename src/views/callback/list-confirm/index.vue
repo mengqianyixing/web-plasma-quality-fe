@@ -7,7 +7,7 @@
         </a-button>
       </template>
       <template #stationNo="{ record }">
-        {{ formatStationNo(record) }}
+        {{ getStationNameById(record?.stationNo) }}
       </template>
       <template #toolbar>
         <div class="flex gap-2">
@@ -40,17 +40,16 @@
   import { callbackConfirm } from '@/api/callback/list-confirm';
   import { useStation } from '@/hooks/common/useStation';
 
-  const { stationOptions } = useStation();
+  const { stationOptions, getStationNameById } = useStation();
 
   defineOptions({ name: 'CallbackListGeneration' });
 
   const selectedRow = ref<Recordable>([]);
-  const stationNames = ref<Recordable>({});
 
   const { createConfirm, createMessage } = useMessage();
 
-  onMounted(async () => {
-    await getForm().updateSchema({
+  onMounted(() => {
+    getForm().updateSchema({
       field: 'stationNo',
       componentProps: {
         options: stationOptions,
@@ -116,19 +115,12 @@
     reload();
   }
 
-  function formatStationNo(record: Recordable) {
-    return stationNames.value.find((it) => it.stationNo === record.stationNo)?.stationName;
-  }
-
   function handleSelectSuccess(id: string) {
     openGenerationModal(true, {
       isUpdate: false,
       reload: true,
       record: {
-        options: stationNames.value.map((it) => ({
-          label: it.stationName,
-          value: it.stationNo,
-        })),
+        options: stationOptions,
         stationNo: id,
       },
     });
@@ -137,7 +129,7 @@
   function handlePlanNoClick(record: Recordable) {
     openCallbackDetailModal(true, {
       ...record,
-      stationName: formatStationNo(record),
+      stationName: getStationNameById(record.stationNo),
       state: CallbackStateMap.get(record.state),
     });
   }

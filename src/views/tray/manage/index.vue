@@ -94,6 +94,7 @@
     size: 'small',
     useSearchForm: true,
     bordered: true,
+    scroll: { x: 0 },
     rowSelection: { type: 'checkbox' },
     afterFetch: (res) => {
       clearSelectedRowKeys();

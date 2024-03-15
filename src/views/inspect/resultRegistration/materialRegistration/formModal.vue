@@ -5,7 +5,7 @@
     showFooter
     title="新增"
     :minHeight="520"
-    width="1000px"
+    width="1200px"
     @fullscreen="redoHeight"
     @ok="handleSubmit"
   >
@@ -40,6 +40,7 @@
       pagination: false,
       useSearchForm: true,
       bordered: true,
+      showIndexColumn: false,
       isCanResizeParent: true,
       inset: false,
       rowSelection: { type: 'radio' },

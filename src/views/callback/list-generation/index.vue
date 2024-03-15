@@ -72,16 +72,15 @@
   import { CallbackButtonEnum } from '@/enums/authCodeEnum';
   import { useStation } from '@/hooks/common/useStation';
 
-  const { stationOptions } = useStation();
+  const { stationOptions, getStationNameById } = useStation();
   defineOptions({ name: 'CallbackGeneration' });
 
   const selectedRow = ref<Recordable>([]);
-  const stationNames = ref<Recordable>({});
 
   const { createConfirm, createMessage } = useMessage();
 
-  onMounted(async () => {
-    await getForm().updateSchema({
+  onMounted(() => {
+    getForm().updateSchema({
       field: 'stationNo',
       componentProps: {
         options: stationOptions,
@@ -119,7 +118,9 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-
+    scroll: {
+      x: 0,
+    },
     bordered: true,
     showIndexColumn: false,
     canResize: true,
@@ -128,10 +129,7 @@
   function handleAdd() {
     openModal(true, {
       record: {
-        options: stationNames.value.map((it) => ({
-          label: it.stationName,
-          value: it.stationNo,
-        })),
+        options: stationOptions,
       },
     });
   }
@@ -244,10 +242,6 @@
     reload();
   }
 
-  function formatStationNo(record: Recordable) {
-    return stationNames.value.find((it) => it.stationNo === record.stationNo)?.stationName;
-  }
-
   const batchNo = ref('');
   async function handleSelectSuccess(id: string) {
     batchNo.value = await createCallbackBatch({
@@ -258,10 +252,7 @@
       isUpdate: false,
       reload: true,
       record: {
-        options: stationNames.value.map((it) => ({
-          label: it.stationName,
-          value: it.stationNo,
-        })),
+        options: stationOptions,
         stationNo: id,
         batchNo: batchNo.value,
       },
@@ -271,7 +262,7 @@
   function handlePlanNoClick(record: Recordable) {
     openCallbackDetailModal(true, {
       ...record,
-      stationName: formatStationNo(record),
+      stationName: getStationNameById(record.stationNo),
       state: CallbackStateMap.get(record.state),
     });
   }

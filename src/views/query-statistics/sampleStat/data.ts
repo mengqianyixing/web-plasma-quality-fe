@@ -12,60 +12,75 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 80,
   },
   {
     title: '样本批号',
     dataIndex: 'sampleBatchNo',
+    width: 120,
   },
 
   {
     title: '样本类型',
     dataIndex: 'sampleType',
     format: (text) => SampleType(text),
+    width: 80,
   },
   {
     title: '样本总数',
     dataIndex: 'sampleCount',
+    width: 80,
   },
   {
     title: '接收人',
     dataIndex: 'acceptor',
+    width: 100,
   },
   {
     title: '接收日期',
     dataIndex: 'acceptAt',
+    width: 100,
   },
   {
     title: '检测结果发布人',
     dataIndex: 'issuer',
+    width: 120,
   },
   {
     title: '发布日期',
     dataIndex: 'issueAt',
+    width: 100,
   },
   {
     title: '合格总数',
     dataIndex: 'qualifiedCount',
+    width: 100,
   },
   {
     title: '不合格总数',
     dataIndex: 'unqualifiedCount',
+    width: 100,
   },
   {
     title: '高效价总数',
     dataIndex: 'totalHighTiter',
+    width: 100,
   },
   {
     title: '低效价总数',
     dataIndex: 'totalLowTiter',
+    width: 100,
   },
   {
     title: '无效价总数',
     dataIndex: 'totalNoTiter',
+    width: 100,
   },
   {
     title: '试剂批号',
     dataIndex: 'reagentBatchNo',
+    width: 300,
+    ellipsis: false,
   },
 ];
 

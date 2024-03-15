@@ -37,7 +37,7 @@
   import { columns } from './data';
   import { message } from 'ant-design-vue';
   import FormModal from './formModal.vue';
-  import { onMounted } from 'vue';
+  import { onMounted, watch, nextTick } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { getMaterialListApi, deleteMaterialApi } from '@/api/inspect/resultRegistration';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
@@ -75,6 +75,7 @@
     columns: columns,
     size: 'small',
     useSearchForm: false,
+    scroll: { x: 0 },
     showTableSetting: false,
     bordered: true,
     rowSelection: { type: 'radio' },
@@ -84,6 +85,16 @@
       return res;
     },
   });
+  watch(
+    () => props.bsNo,
+    async (value) => {
+      await nextTick();
+      value && reload();
+    },
+    {
+      immediate: true,
+    },
+  );
   function getSelections(onlyOne: boolean, callBack?: Function) {
     const rows = getSelectRows();
     if (rows.length === 0) {

@@ -67,7 +67,7 @@ export const getProductionOutStoreList = (
   });
 
 export const productionOutStore = (params: PostApiProductOutStoreBoxRequest) =>
-  defHttp.post({ url: Api.PRODUCTION_OUT_STORE, params });
+  defHttp.post({ url: Api.PRODUCTION_OUT_STORE, params }, { errorMessageMode: 'message' });
 
 export const revokeProductionOutStore = (
   params: DeleteApiProductOutStoreBatchOrderNoRequest['orderNo'],

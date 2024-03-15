@@ -72,6 +72,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
+    showIndexColumn: false,
     columns: dtColumns(props.checkResult, props.checkType),
     size: 'small',
     useSearchForm: false,

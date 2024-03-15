@@ -10,22 +10,27 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 70,
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
+    width: 120,
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
+    width: 120,
   },
   {
     title: '浆员编号',
     dataIndex: 'donorNo',
+    width: 120,
   },
   {
     title: '浆员姓名',
     dataIndex: 'donorName',
+    width: 100,
   },
   {
     title: '浆员状态',
@@ -33,31 +38,38 @@ export const columns: BasicColumn[] = [
     format: (text) => {
       return donorStatusMap.get(text as donorStatusValueEnum) as string;
     },
+    width: 80,
   },
   {
     title: '血浆类型',
     dataIndex: 'plasmaImmType',
     format: (text) => PlasmaType(text),
+    width: 80,
   },
   {
     title: '采浆日期',
     dataIndex: 'collectAt',
+    width: 100,
   },
   {
     title: '最后采浆日期',
     dataIndex: 'lastCollectAt',
+    width: 100,
   },
   {
     title: '最后回访日期',
     dataIndex: 'lastCallBackAt',
+    width: 100,
   },
   {
     title: '确认人',
     dataIndex: 'creator',
+    width: 100,
   },
   {
     title: '确认日期',
     dataIndex: 'createAt',
+    width: 100,
   },
 ];
 

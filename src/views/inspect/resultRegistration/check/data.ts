@@ -22,22 +22,26 @@ export const dtColumnsMap = {
     {
       title: '不合格',
       dataIndex: 'unqualified',
+      width: 60,
     },
   ],
   '2': [
     {
       title: 'OD值',
       dataIndex: 'od',
+      width: 60,
     },
     {
       title: 'Cutoff值',
       dataIndex: 'cutoff',
+      width: 60,
     },
   ],
   3: [
     {
       title: 'CT值',
       dataIndex: 'ct',
+      width: 60,
     },
   ],
 };
@@ -46,18 +50,22 @@ export const dtColumns: getColumns = (checkResult, checkType) => [
   {
     title: '样本编号',
     dataIndex: 'sampleNo',
+    width: 120,
   },
   {
     title: '浆员编号',
     dataIndex: 'donorNo',
+    width: 120,
   },
   {
     title: '浆员姓名',
     dataIndex: 'name',
+    width: 100,
   },
   {
     title: '血型',
     dataIndex: 'bloodType',
+    width: 60,
   },
   ...(checkResult === '不合格' ? dtColumnsMap[checkType] : []),
 ];

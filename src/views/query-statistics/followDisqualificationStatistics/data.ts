@@ -19,12 +19,12 @@ export const columns: BasicColumn[] = [
   {
     title: '年份',
     dataIndex: 'year',
-    width: 150,
+    width: 70,
   },
   {
     title: '续追踪血浆数量(袋)',
     dataIndex: trackNumKey,
-    width: 150,
+    width: 140,
   },
   {
     title: '回访不合格追踪',
@@ -32,13 +32,13 @@ export const columns: BasicColumn[] = [
       {
         dataIndex: [backTrackUnqKey, numKey],
         title: '合计',
-        width: 150,
+        width: 80,
       },
       {
         dataIndex: [backTrackUnqKey, ratioKey],
         title: '比率(%)',
         format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
-        width: 150,
+        width: 80,
       },
     ],
   },
@@ -48,13 +48,13 @@ export const columns: BasicColumn[] = [
       {
         dataIndex: [followTrackNumUnqKey, numKey],
         title: '合计',
-        width: 150,
+        width: 80,
       },
       {
         dataIndex: [followTrackNumUnqKey, ratioKey],
         title: '比率(%)',
         format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
-        width: 150,
+        width: 80,
       },
     ],
   },
@@ -64,14 +64,14 @@ export const columns: BasicColumn[] = [
       {
         dataIndex: [otherNumUnqKey, numKey],
         title: '数量(袋)',
-        width: 150,
+        width: 80,
         slots: { customRender: 'otherNum' },
       },
       {
         dataIndex: [otherNumUnqKey, ratioKey],
         title: '比率(%)',
         format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
-        width: 150,
+        width: 80,
       },
     ],
   },

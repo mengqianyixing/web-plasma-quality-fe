@@ -5,7 +5,8 @@
     title="逐箱出库列表"
     showFooter
     width="85%"
-    :showOkBtn="false"
+    :showCancelBtn="false"
+    @ok="handleOk"
   >
     <div class="flex items-center gap-2 w-[300px]">
       <span class="w-[80px]">箱号：</span>
@@ -34,31 +35,24 @@
 </template>
 <script lang="ts" setup>
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { ref, computed, watchEffect, nextTick } from 'vue';
+  import { ref, computed, nextTick } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
   import { useMessage } from '@/hooks/web/useMessage';
-  import { useFocus } from '@vueuse/core';
 
   import {
     getProductionOutStoreList,
     productionOutStore,
   } from '@/api/stockout/production-put-into';
-  import { GetApiProductOutStoreBoxesOrderNoResponse } from '@/api/type/stockoutManage';
+  import { GetApiProductOutStoreBoxesOrderNoResponse } from '@/api/type/productionSortingMangeMain';
 
   const orderNo = ref('');
   const inputDisabled = ref(false);
   const inputValue = ref('');
   const originTableData = ref<GetApiProductOutStoreBoxesOrderNoResponse>({});
 
-  defineEmits(['success', 'register']);
+  const emit = defineEmits(['success', 'register']);
   const { createMessage } = useMessage();
   const inputRef = ref<HTMLElement | null>(null);
-  const { focused } = useFocus(inputRef);
-  watchEffect(() => {
-    if (!focused.value) {
-      focused.value = true;
-    }
-  });
 
   const [registerNoOutTable] = useTable({
     columns: [
@@ -119,7 +113,7 @@
     immediate: false,
     canResize: false,
   });
-  const [register, { setModalProps }] = useModalInner(async (data) => {
+  const [register, { setModalProps, closeModal }] = useModalInner(async (data) => {
     inputRef.value?.focus();
 
     setModalProps({
@@ -149,6 +143,10 @@
       createMessage.success('出库成功');
 
       await reloadTable();
+
+      if (noOutTableData.value?.length === 0) {
+        createMessage.success('全部出库成功');
+      }
     } finally {
       inputValue.value = '';
       inputDisabled.value = false;
@@ -156,5 +154,10 @@
         inputRef.value?.focus();
       });
     }
+  }
+
+  function handleOk() {
+    closeModal();
+    emit('success');
   }
 </script>

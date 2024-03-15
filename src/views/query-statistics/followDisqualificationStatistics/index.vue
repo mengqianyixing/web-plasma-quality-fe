@@ -115,7 +115,7 @@
       ...(res || []).map((it) => ({
         dataIndex: [backTrackUnqKey, it.dictItemId],
         title: it.label,
-        width: it.label.length * 18,
+        width: it.label.length * 16,
         customRender: ({ record }) => {
           if (record.isCount) return record[backTrackUnqKey]?.[it.dictItemId];
           return (
@@ -135,7 +135,7 @@
       ...(res || []).map((it) => ({
         dataIndex: [followTrackNumUnqKey, it.dictItemId],
         title: it.label,
-        width: it.label.length * 18,
+        width: it.label.length * 16,
         customRender: ({ record }) => {
           if (record.isCount) return record[followTrackNumUnqKey]?.[it.dictItemId];
           return (

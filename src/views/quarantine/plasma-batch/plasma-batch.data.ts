@@ -41,71 +41,83 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 80,
   },
 
   {
     title: '血浆批号',
     dataIndex: 'fkBpNo',
+    width: 120,
   },
 
   {
     title: '状态',
     dataIndex: 'state',
     format: (t) => STATE[t]?.label,
+    width: 60,
   },
   {
     title: '检测合格血浆',
     dataIndex: ['summary', 'checkedCount'],
+    width: 100,
   },
   {
     title: '不合格血浆',
     dataIndex: ['summary', 'failedCount'],
     slots: { customRender: 'failedBag' },
+    width: 100,
   },
   {
     title: '检疫期合格血浆(正常)',
     dataIndex: ['summary', 'trackedNormalCount'],
     slots: { customRender: 'trackedNormalBag' },
-    width: 180,
+    width: 160,
   },
   {
     title: '检疫期合格血浆(特免)',
     dataIndex: ['summary', 'trackedSpecialCount'],
     slots: { customRender: 'trackedSpecialBag' },
-    width: 180,
+    width: 160,
   },
   {
     title: '首次续追踪血浆',
     dataIndex: ['summary', 'firstUnTrackedCount'],
     slots: { customRender: 'firstUnTrackedBag' },
+    width: 120,
   },
   {
     title: '反复续追踪血浆',
     dataIndex: ['summary', 'reUnTrackedCount'],
     slots: { customRender: 'reUnTrackedBag' },
+    width: 120,
   },
   {
     title: '非生产出库转移血浆',
     dataIndex: ['summary', 'unProductionCount'],
     slots: { customRender: 'unProductionBag' },
+    width: 160,
   },
   {
     title: '报告生成人',
     dataIndex: 'creator',
+    width: 100,
   },
   {
     title: '报告生成日期',
     dataIndex: 'createAt',
     format: (t) => t?.slice(0, 10),
+    width: 100,
   },
   {
     title: '复核人',
     dataIndex: 'reviewer',
+    width: 100,
   },
   {
     title: '复核日期',
     dataIndex: 'reviewAt',
     format: (t) => t?.slice(0, 10),
+    width: 100,
   },
 ];
 
@@ -113,46 +125,57 @@ export const modalColumns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 80,
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
+    width: 120,
   },
   {
     title: '血浆数量',
     dataIndex: 'plasmaCount',
+    width: 80,
   },
   {
     title: '最早采浆日期',
     dataIndex: 'firstCollectAt',
+    width: 100,
   },
   {
     title: '最晚采浆日期',
     dataIndex: 'latestCollectAt',
+    width: 100,
   },
   {
     title: '后续可参考血浆数量',
     dataIndex: 'followSeeCount',
+    width: 135,
   },
   {
     title: '后续可参考血浆比例',
     dataIndex: 'followSeeRatio',
+    width: 135,
   },
   {
     title: '可放行血浆数量',
     dataIndex: 'canReleaseCount',
+    width: 120,
   },
   {
     title: '可放行血浆比例',
     dataIndex: 'canReleaseRatio',
+    width: 120,
   },
   {
     title: '待放行血浆数量',
     dataIndex: 'waitReleaseCount',
+    width: 120,
   },
   {
     title: '待放行血浆比例',
     dataIndex: 'waitReleaseRatio',
+    width: 120,
   },
 ];
 

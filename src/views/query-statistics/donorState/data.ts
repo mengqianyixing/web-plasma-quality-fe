@@ -12,19 +12,23 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 80,
   },
   {
     title: '浆员编号',
     dataIndex: 'donorNo',
+    width: 120,
   },
 
   {
     title: '浆员姓名',
     dataIndex: 'name',
+    width: 100,
   },
   {
     title: '血型',
     dataIndex: 'bloodType',
+    width: 60,
   },
   {
     title: '无检疫期后续的血浆数量',
@@ -35,11 +39,13 @@ export const columns: BasicColumn[] = [
     title: '血浆验收净重(g)',
     dataIndex: 'netWeight',
     format: formatKg,
+    width: 120,
   },
   {
     title: '最早采集日期',
     dataIndex: 'earlier',
     format: (t) => t?.slice(0, 10),
+    width: 100,
   },
   {
     title: '地址',
@@ -50,24 +56,30 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆总袋数',
     dataIndex: 'bagCount',
+    width: 100,
   },
   {
     title: '最晚采集日期',
     dataIndex: 'late',
     format: (t) => t?.slice(0, 10),
+    width: 100,
   },
   {
     title: '淘汰原因',
     dataIndex: 'cause',
+    width: 200,
+    ellipsis: false,
   },
   {
     title: '淘汰系统',
     dataIndex: 'blockBy',
+    width: 80,
   },
   {
     title: '不合格依据日期',
     dataIndex: 'listen',
     format: (t) => t?.slice(0, 10),
+    width: 120,
   },
 ];
 

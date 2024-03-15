@@ -6,46 +6,60 @@ export const columns: BasicColumn[] = [
   {
     title: '检测项目',
     dataIndex: 'projectName',
+    width: 100,
   },
   {
     title: '状态',
     dataIndex: 'state',
+    width: 60,
   },
   {
     title: '检测类型',
     dataIndex: 'testType',
+    width: 80,
   },
   {
     title: '物料名称',
     dataIndex: 'materialName',
+    width: 160,
+    ellipsis: false,
   },
   {
     title: '试剂厂家',
     dataIndex: 'factory',
+    width: 160,
+    ellipsis: false,
   },
   {
     title: '试剂批号',
     dataIndex: 'reagentBatch',
+    width: 120,
   },
   {
     title: '试剂放行单号',
     dataIndex: 'releaseNo',
+    width: 100,
   },
   {
     title: '试剂有效期',
     dataIndex: 'expireDate',
+    width: 100,
   },
   {
     title: '使用截至日期',
     dataIndex: 'deadline',
+    width: 100,
   },
   {
     title: '复核人',
     dataIndex: 'reviewer',
+    width: 100,
   },
   {
     title: '复核日期',
     dataIndex: 'reviewAt',
+    width: 100,
+
     format: (text) => text?.slice(0, 10),
   },
 ];

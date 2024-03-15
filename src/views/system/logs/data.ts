@@ -9,27 +9,33 @@ export const columns: BasicColumn[] = [
   {
     title: '操作时间',
     dataIndex: 'optTime',
+    width: 150,
   },
   {
     title: 'IP地址',
     dataIndex: 'ip',
+    width: 100,
   },
 
   {
     title: '操作用户',
     dataIndex: 'operator',
+    width: 120,
   },
   {
     title: '功能',
     dataIndex: 'moduleName',
+    width: 120,
   },
   {
     title: '操作类型',
     dataIndex: 'optName',
+    width: 220,
   },
   {
     title: '操作内容',
     dataIndex: 'optContent',
+    ellipsis: false,
   },
 ];
 
@@ -51,6 +57,8 @@ export const searchFormSchema: FormSchema[] = [
       api: getCasDoorAllUsers,
       labelField: 'displayName',
       valueField: 'name',
+      optionFilterProp: 'label',
+      showSearch: true,
     },
   },
   {
@@ -62,13 +70,16 @@ export const searchFormSchema: FormSchema[] = [
         value: it.label,
         label: it.label,
       })),
+      showSearch: true,
     },
   },
   {
     field: 'optName',
     component: 'Select',
     label: '操作类型',
-    componentProps: {},
+    componentProps: {
+      showSearch: true,
+    },
   },
   {
     field: 'optContent',

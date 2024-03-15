@@ -119,6 +119,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
+    scroll: { x: 0 },
     columns: columns,
     size: 'small',
     useSearchForm: false,

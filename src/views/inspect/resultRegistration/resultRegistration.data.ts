@@ -50,40 +50,49 @@ export const batchColumns: BasicColumn[] = [
   {
     title: '样本批号',
     dataIndex: 'bsNo',
+    width: 120,
   },
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 80,
   },
   {
     title: '样本类型',
     dataIndex: 'sampleCode',
     format: (text) => SampleType(text),
+    width: 80,
   },
   {
     title: '浆站来样数量',
     dataIndex: 'totalCount',
+    width: 120,
   },
   {
     title: '验收合格样本总数',
     dataIndex: 'totalQualified',
+    width: 140,
   },
   {
     title: '验收不合格样本总数',
     dataIndex: 'totalUnqualified',
+    width: 160,
   },
 
   {
     title: '浆站出库日期',
     dataIndex: 'outDate',
+    width: 100,
   },
   {
     title: '接收日期',
     dataIndex: 'accepted',
+    width: 100,
   },
   {
     title: '登记情况',
     dataIndex: 'status',
+    width: 80,
   },
 ];
 export const batchSearchScheam: FormSchema[] = [

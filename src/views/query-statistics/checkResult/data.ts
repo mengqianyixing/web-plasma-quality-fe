@@ -12,24 +12,24 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    width: 150,
+    width: 80,
   },
   {
     title: '样本批号',
     dataIndex: 'bsNo',
-    width: 150,
+    width: 120,
   },
 
   {
     title: '样本类型',
     dataIndex: 'sampleType',
-    width: 150,
+    width: 80,
     format: (text) => SampleType(text),
   },
   {
     title: '样本数量',
     dataIndex: 'sampleCount',
-    width: 150,
+    width: 80,
   },
   {
     title: '样本验收',
@@ -37,17 +37,17 @@ export const columns: BasicColumn[] = [
       {
         title: '合格数',
         dataIndex: ['verification', 'passCount'],
-        width: 150,
+        width: 80,
       },
       {
         title: '不合格数',
         dataIndex: ['verification', 'failedCount'],
-        width: 150,
+        width: 80,
       },
       {
         title: '不合格比率(%)',
         dataIndex: ['verification', 'ratio'],
-        width: 150,
+        width: 100,
         format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
     ],
@@ -64,12 +64,12 @@ export const columns: BasicColumn[] = [
       {
         title: '合格数',
         dataIndex: ['qualified', 'passCount'],
-        width: 150,
+        width: 80,
       },
       {
         title: '合格比率(%)',
         dataIndex: ['qualified', 'ratio'],
-        width: 150,
+        width: 100,
         format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
     ],
@@ -80,57 +80,57 @@ export const columns: BasicColumn[] = [
       {
         title: 'HBV-DNA',
         dataIndex: ['unqualified', 'hbvdna'],
-        width: 150,
+        width: 80,
       },
       {
         title: 'HCV-RNA',
         dataIndex: ['unqualified', 'hcvrna'],
-        width: 150,
+        width: 80,
       },
       {
         title: 'HIV-RNA',
         dataIndex: ['unqualified', 'hivrna'],
-        width: 150,
+        width: 80,
       },
       {
         title: 'HBsAg',
         dataIndex: ['unqualified', 'hbsag'],
-        width: 150,
+        width: 80,
       },
       {
         title: 'HCV抗体',
         dataIndex: ['unqualified', 'hcv'],
-        width: 150,
+        width: 80,
       },
       {
         title: 'HIV-1/HIV-2抗体',
         dataIndex: ['unqualified', 'hiv'],
-        width: 150,
+        width: 140,
       },
       {
         title: 'TP抗体',
         dataIndex: ['unqualified', 'tpAntibody'],
-        width: 150,
+        width: 80,
       },
       {
         title: 'ALT',
         dataIndex: ['unqualified', 'alt'],
-        width: 150,
+        width: 80,
       },
       {
         title: 'TP',
         dataIndex: ['unqualified', 'tp'],
-        width: 150,
+        width: 80,
       },
       {
         title: '合计',
         dataIndex: ['unqualified', 'count'],
-        width: 150,
+        width: 80,
       },
       {
         title: '不合格比率(%)',
         dataIndex: ['unqualified', 'ratio'],
-        width: 150,
+        width: 120,
         format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
     ],

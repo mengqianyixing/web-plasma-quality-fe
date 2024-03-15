@@ -62,6 +62,11 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'boxNo',
     component: 'Input',
+    label: '血浆(样本)箱号',
+  },
+  {
+    field: 'bagNo',
+    component: 'Input',
     label: '血浆(样本)编号',
   },
 

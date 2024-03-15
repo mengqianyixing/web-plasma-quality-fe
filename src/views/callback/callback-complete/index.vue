@@ -11,7 +11,7 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { useStation } from '@/hooks/common/useStation';
 
-  import { onMounted, watchEffect } from 'vue';
+  import { onMounted } from 'vue';
 
   import { columns, searchFormSchema } from './complete.data';
 
@@ -22,13 +22,11 @@
 
   const { stationOptions, getStationNameById } = useStation();
   onMounted(() => {
-    watchEffect(() => {
-      getForm().updateSchema({
-        field: 'stationNo',
-        componentProps: {
-          options: stationOptions.value,
-        },
-      });
+    getForm().updateSchema({
+      field: 'stationNo',
+      componentProps: {
+        options: stationOptions,
+      },
     });
   });
 

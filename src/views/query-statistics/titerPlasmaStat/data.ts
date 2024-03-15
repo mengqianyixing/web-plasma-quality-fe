@@ -10,55 +10,55 @@ const serverEnumStore = useServerEnumStoreWithOut();
 const ImmType = serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType);
 export const columns: BasicColumn[] = [
   {
-    width: 150,
+    width: 80,
     title: '采浆公司',
     dataIndex: 'stationName',
   },
   {
-    width: 150,
+    width: 80,
     title: '来浆类型',
     dataIndex: 'rawImm',
     format: (t) => ImmType(t),
   },
 
   {
-    width: 150,
+    width: 100,
     title: '血浆数量(袋)',
     dataIndex: 'bagCount',
   },
   {
-    width: 150,
+    width: 80,
     title: '高效价',
     children: [
       {
-        width: 150,
+        width: 80,
         title: '数量',
         dataIndex: ['H', 'bagCount'],
       },
       {
-        width: 150,
+        width: 80,
         title: '比率(%)',
         dataIndex: ['H', 'ratio'],
         format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
-        width: 180,
+        width: 120,
         title: '检测合格数量(袋)',
         dataIndex: ['H', 'checkPassCount'],
       },
       {
-        width: 180,
+        width: 160,
         title: '检测合格验收净重(kg)',
         dataIndex: ['H', 'checkPassWeight'],
         format: formatKg,
       },
       {
-        width: 180,
+        width: 160,
         title: '检疫期合格数量(袋)',
         dataIndex: ['H', 'passCount'],
       },
       {
-        width: 180,
+        width: 160,
         title: '检疫期合格验收净重(kg)',
         dataIndex: ['H', 'passWeight'],
         format: formatKg,
@@ -70,34 +70,34 @@ export const columns: BasicColumn[] = [
     title: '低效价',
     children: [
       {
-        width: 150,
+        width: 80,
         title: '数量',
         dataIndex: ['L', 'bagCount'],
       },
       {
-        width: 150,
+        width: 80,
         title: '比率(%)',
         dataIndex: ['L', 'ratio'],
         format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
-        width: 180,
+        width: 120,
         title: '检测合格数量(袋)',
         dataIndex: ['L', 'checkPassCount'],
       },
       {
-        width: 180,
+        width: 160,
         title: '检测合格验收净重(kg)',
         dataIndex: ['L', 'checkPassWeight'],
         format: formatKg,
       },
       {
-        width: 180,
+        width: 160,
         title: '检疫期合格数量(袋)',
         dataIndex: ['L', 'passCount'],
       },
       {
-        width: 180,
+        width: 160,
         title: '检疫期合格验收净重(kg)',
         dataIndex: ['L', 'passWeight'],
         format: formatKg,
@@ -110,34 +110,34 @@ export const columns: BasicColumn[] = [
     dataIndex: 'currBoxNo',
     children: [
       {
-        width: 150,
+        width: 80,
         title: '数量',
         dataIndex: ['N', 'bagCount'],
       },
       {
-        width: 150,
+        width: 80,
         title: '比率(%)',
         dataIndex: ['N', 'ratio'],
         format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
       },
       {
-        width: 180,
+        width: 120,
         title: '检测合格数量(袋)',
         dataIndex: ['N', 'checkPassCount'],
       },
       {
-        width: 180,
+        width: 160,
         title: '检测合格验收净重(kg)',
         dataIndex: ['N', 'checkPassWeight'],
         format: formatKg,
       },
       {
-        width: 180,
+        width: 160,
         title: '检疫期合格数量(袋)',
         dataIndex: ['N', 'passCount'],
       },
       {
-        width: 180,
+        width: 160,
         title: '检疫期合格验收净重(kg)',
         dataIndex: ['N', 'passWeight'],
         format: formatKg,

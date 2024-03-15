@@ -114,7 +114,7 @@
     showActionButtonGroup: false,
   });
 
-  const [registerTable, { getSelectRows, reload }] = useTable({
+  const [registerTable, { getSelectRows, reload, clearSelectedRowKeys }] = useTable({
     immediate: false,
     api: getCheckListApi,
     fetchSetting: {
@@ -124,13 +124,13 @@
       listField: 'result',
     },
     beforeFetch: (p) => ({ ...p, bsNo: props.bsNo }),
-    rowKey: 'projectId',
     columns: columns,
     useSearchForm: false,
     bordered: true,
     size: 'small',
     rowSelection: { type: 'checkbox' },
     afterFetch: (data) => {
+      clearSelectedRowKeys();
       options.value.splice(0, options.value.length);
       options.value.push(...data.map((_) => ({ label: _.projectAbbr, value: _.projectId })));
       return data;

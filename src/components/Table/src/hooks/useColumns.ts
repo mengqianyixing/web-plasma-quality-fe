@@ -120,7 +120,7 @@ export function useColumns(
 
     columns.forEach((item) => {
       const { customRender, slots } = item;
-
+      item.className = (item.className || '') + ' empty-value';
       handleItem(
         item,
         Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && !customRender && !slots,
