@@ -1,7 +1,11 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="register" :title="getTitle" width="85%">
-    <Description @register="registerDescription" :data="descriptionData" />
-    <BasicTable @register="registerTable" />
+  <BasicModal v-bind="$attrs" @register="register" :title="getTitle" width="85%" :min-height="700">
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute flex flex-col w-full h-full">
+        <Description @register="registerDescription" :data="descriptionData" />
+        <BasicTable @register="registerTable" />
+      </div>
+    </div>
   </BasicModal>
 </template>
 <script lang="tsx" setup>
@@ -89,7 +93,11 @@
     useSearchForm: true,
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    scroll: {
+      x: 0,
+    },
+    isCanResizeParent: true,
+    inset: true,
     immediate: true,
   });
 

@@ -11,7 +11,7 @@ export const columns: BasicColumn[] = [
     title: '名单编号',
     dataIndex: 'planNo',
     slots: { customRender: 'planNo' },
-    width: 200,
+    width: 150,
   },
   {
     title: '采浆公司',
@@ -28,6 +28,7 @@ export const columns: BasicColumn[] = [
   {
     title: '生成日期',
     dataIndex: 'createAt',
+    width: 150,
   },
   {
     title: '自主回访',
@@ -61,6 +62,7 @@ export const columns: BasicColumn[] = [
   {
     title: '样本接收日期',
     dataIndex: 'sampleAcceptAt',
+    width: 100,
   },
   {
     title: '样本发布人',
@@ -69,6 +71,7 @@ export const columns: BasicColumn[] = [
   {
     title: '样本发布日期',
     dataIndex: 'samplePublishAt',
+    width: 100,
   },
   {
     title: '确认人',
@@ -77,6 +80,7 @@ export const columns: BasicColumn[] = [
   {
     title: '确认日期',
     dataIndex: 'checkAt',
+    width: 100,
   },
   {
     title: '状态',
@@ -177,20 +181,22 @@ export const callbackDetailModalColumns: BasicColumn[] = [
   {
     title: '浆员编号',
     dataIndex: 'donorNo',
-    width: 200,
+    width: 110,
   },
   {
     title: '浆员姓名',
     dataIndex: 'donorName',
+    width: 70,
   },
   {
     title: '性别',
     dataIndex: 'gender',
+    width: 40,
   },
   {
     title: '身份证号',
     dataIndex: 'idcardId',
-    width: 200,
+    width: 160,
   },
   {
     title: '浆员状态',
@@ -198,6 +204,7 @@ export const callbackDetailModalColumns: BasicColumn[] = [
     format: (text) => {
       return donorStatusMap.get(text as donorStatusValueEnum) as string;
     },
+    width: 65,
   },
   {
     title: '拒绝日期',
@@ -213,6 +220,7 @@ export const callbackDetailModalColumns: BasicColumn[] = [
   {
     title: '最早采浆血浆编号',
     dataIndex: 'minPlasmaNo',
+    width: 150,
   },
   {
     title: '最早待回访采浆日期',
@@ -220,10 +228,12 @@ export const callbackDetailModalColumns: BasicColumn[] = [
     format: (text) => {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
+    width: 140,
   },
   {
     title: '待追踪袋数',
     dataIndex: 'plasmaCount',
+    width: 80,
   },
   {
     title: '最后采浆日期',
@@ -238,14 +248,17 @@ export const callbackDetailModalColumns: BasicColumn[] = [
     format: (text) => {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
+    width: 100,
   },
   {
     title: '回访结果',
     dataIndex: 'callbackResult',
+    width: 120,
   },
   {
     title: '样本编号',
     dataIndex: 'sampleNo',
+    width: 120,
   },
   {
     title: '采集日期',
@@ -253,6 +266,7 @@ export const callbackDetailModalColumns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
+    width: 100,
   },
 ];
 
