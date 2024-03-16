@@ -24,11 +24,12 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    width: 80,
+    width: 65,
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
+    ellipsis: false,
   },
   {
     title: '血浆编号',
@@ -39,10 +40,12 @@ export const columns: BasicColumn[] = [
   {
     title: '浆员编号',
     dataIndex: 'donorNo',
+    width: 100,
   },
   {
     title: '浆员姓名',
     dataIndex: 'donorName',
+    width: 65,
   },
   {
     title: '采集日期',
@@ -55,6 +58,7 @@ export const columns: BasicColumn[] = [
   {
     title: '箱号',
     dataIndex: 'boxNo',
+    ellipsis: false,
   },
   {
     title: '不合格原因',
@@ -92,6 +96,7 @@ export const columns: BasicColumn[] = [
   {
     title: '审核状态',
     dataIndex: 'checked',
+    width: 80,
   },
 ];
 
