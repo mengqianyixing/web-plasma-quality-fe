@@ -94,6 +94,9 @@
       listField: 'result',
     },
     columns,
+    scroll: {
+      x: 0,
+    },
     size: 'small',
     useSearchForm: true,
     showTableSetting: false,

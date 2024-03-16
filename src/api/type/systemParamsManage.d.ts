@@ -234,4 +234,24 @@ export type GetApiSysEnumsResponse = {
   }[];
 }[];
 
+/**
+ * 接口 [根据参数key查询参数value↗](https://yapi.sharing8.cn/project/521/interface/api/33972) 的 **请求类型**
+ *
+ * @分类 [系统参数↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5397)
+ * @请求头 `GET /api/sys/param/{paramKey}`
+ * @更新时间 `2024-03-16 11:09:25`
+ */
+export interface GetApiSysParamParamKeyRequest {
+  paramKey: string;
+}
+
+/**
+ * 接口 [根据参数key查询参数value↗](https://yapi.sharing8.cn/project/521/interface/api/33972) 的 **返回类型**
+ *
+ * @分类 [系统参数↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5397)
+ * @请求头 `GET /api/sys/param/{paramKey}`
+ * @更新时间 `2024-03-16 11:09:25`
+ */
+export interface GetApiSysParamParamKeyResponse {}
+
 /* prettier-ignore-end */
