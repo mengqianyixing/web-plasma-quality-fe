@@ -1,6 +1,6 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
@@ -296,21 +296,9 @@ export const addCallbackModalSearchFromSchema: FormSchema[] = [
     field: '[minCollectTime, maxCollectTime]',
     label: '最早待回访日期',
     component: 'RangePicker',
-    defaultValue: [
-      dayjs().subtract(1, 'year').add(1, 'day').format('YYYY-MM-DD'),
-      dayjs().subtract(180, 'day').format('YYYY-MM-DD'),
-    ],
     colProps: { span: 7 },
     helpMessage() {
       return '采集日期在区间：大于（当前日期 - 1年），小于等于（当前日期 - “回访间隔天数”)，默认间隔天数180天';
-    },
-    componentProps: {
-      disabledDate: (current: Dayjs) => {
-        return (
-          !current.isAfter(dayjs().subtract(1, 'year').add(1, 'day')) ||
-          current.isAfter(dayjs().subtract(180, 'day'))
-        );
-      },
     },
   },
 ];

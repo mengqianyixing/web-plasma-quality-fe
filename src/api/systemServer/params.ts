@@ -23,3 +23,6 @@ export const editSysParams = (params: PutApiSysParamRequest) =>
 
 export const deleteSysParams = (params: DeleteApiSysParamIdRequest['id']) =>
   defHttp.delete({ url: Api.SYS_PARAMS_RESTFUL + '/' + params });
+
+export const getSysParamsByParamKey = (params: string) =>
+  defHttp.get({ url: Api.SYS_PARAMS_RESTFUL + '/' + params });

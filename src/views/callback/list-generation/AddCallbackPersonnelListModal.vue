@@ -22,7 +22,8 @@
     addCallbackModalSearchFromSchema,
   } from '@/views/callback/list-generation/generation.data';
   import { generateCallback, getNeedCallbackList } from '@/api/callback/list-generation';
-  import dayjs from 'dayjs';
+  import dayjs, { Dayjs } from 'dayjs';
+  import { getSysParamsByParamKey } from '@/api/systemServer/params';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -30,7 +31,7 @@
   const isUpdate = ref(false);
   const stationNo = ref('');
 
-  const [registerTable, { setSelectedRowKeys, reload, clearSelectedRowKeys }] = useTable({
+  const [registerTable, { setSelectedRowKeys, reload, clearSelectedRowKeys, getForm }] = useTable({
     api: getNeedCallbackList,
     columns: callbackModalColumns,
     beforeFetch: (params) => {
@@ -78,7 +79,7 @@
 
   const table = ref(null);
   const batchNo = ref('');
-  const [register, { closeModal, setModalProps }] = useModalInner((data) => {
+  const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
     setModalProps({
       maskClosable: false,
     });
@@ -87,7 +88,25 @@
     stationNo.value = data.record.stationNo;
     batchNo.value = data.record.batchNo;
 
-    reload();
+    const gapDays = await getSysParamsByParamKey('callbackGapDays');
+
+    await getForm().updateSchema({
+      field: '[minCollectTime, maxCollectTime]',
+      defaultValue: [
+        dayjs().subtract(1, 'year').add(1, 'day').format('YYYY-MM-DD'),
+        dayjs().subtract(gapDays, 'day').format('YYYY-MM-DD'),
+      ],
+      componentProps: {
+        disabledDate: (current: Dayjs) => {
+          return (
+            !current.isAfter(dayjs().subtract(1, 'year').add(1, 'day')) ||
+            current.isAfter(dayjs().subtract(gapDays, 'day'))
+          );
+        },
+      },
+    });
+
+    await reload();
   });
 
   const { createConfirm } = useMessage();
