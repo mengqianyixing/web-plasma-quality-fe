@@ -14,7 +14,7 @@ export const columns: BasicColumn[] = [
   {
     title: 'IP地址',
     dataIndex: 'ip',
-    width: 100,
+    width: 130,
   },
 
   {

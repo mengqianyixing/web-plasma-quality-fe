@@ -122,7 +122,12 @@
             <span
               class="text-blue-500 underline cursor-pointer"
               onClick={() =>
-                cellClick(Type.BACK, it.dictItemId, cloneColumns[2].title + it.label, record)
+                cellClick(
+                  Type.BACK,
+                  it.dictItemId,
+                  cloneColumns[2].title + '【' + it.label + '】',
+                  record,
+                )
               }
             >
               {record[backTrackUnqKey]?.[it.dictItemId]}
@@ -142,7 +147,12 @@
             <span
               class="text-blue-500 underline cursor-pointer"
               onClick={() =>
-                cellClick(Type.FOLLOW, it.dictItemId, cloneColumns[3].title + it.label, record)
+                cellClick(
+                  Type.FOLLOW,
+                  it.dictItemId,
+                  cloneColumns[3].title + '【' + it.label + '】',
+                  record,
+                )
               }
             >
               {record[followTrackNumUnqKey]?.[it.dictItemId]}

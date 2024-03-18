@@ -6,7 +6,7 @@
     :title="modalTitle"
     :showOkBtn="false"
     cancelText="关闭"
-    width="600px"
+    width="1000px"
   >
     <BasicTable @register="registerTable">
       <template #unqReason="{ record }">

@@ -14,7 +14,7 @@ import { useStation } from '@/hooks/common/useStation';
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
 
-const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
+const ConclusionType = serverEnumStore.getServerEnumText(SERVER_ENUM.ConclusionType);
 
 export const STATE = {
   W: {
@@ -179,56 +179,108 @@ export const modalColumns: BasicColumn[] = [
   },
 ];
 
+const trackedColumns: BasicColumn[] = [
+  {
+    title: '浆员编号',
+    dataIndex: 'donorNo',
+    width: 100,
+  },
+  {
+    title: '浆员姓名',
+    dataIndex: 'donorName',
+    width: 100,
+  },
+  {
+    title: '采集日期',
+    dataIndex: 'collectAt',
+    width: 100,
+  },
+  {
+    title: '验收净重(g)',
+    dataIndex: 'netWeight',
+    width: 100,
+  },
+  {
+    title: '效价类型',
+    dataIndex: 'titerJudge',
+    width: 100,
+    format: ConclusionType,
+  },
+];
+const otherColumns: BasicColumn[] = [
+  {
+    title: '浆员编号',
+    dataIndex: 'donorNo',
+    width: 100,
+  },
+  {
+    title: '浆员姓名',
+    dataIndex: 'donorName',
+    width: 100,
+  },
+  {
+    title: '采集日期',
+    dataIndex: 'collectAt',
+    width: 90,
+  },
+  {
+    title: '验收净重(g)',
+    dataIndex: 'netWeight',
+    width: 100,
+  },
+];
 export const colMap: Record<string, BasicColumn[]> = {
   failedBag: [
+    {
+      title: '不合格日期',
+      dataIndex: 'failedAt',
+      width: 90,
+    },
     {
       title: '不合格原因',
       dataIndex: 'fkFailedCode',
       slots: { customRender: 'unqReason' },
+      width: 200,
+      ellipsis: false,
     },
-  ],
-  firstUnTrackedBag: [
     {
-      title: '采集日期',
-      dataIndex: 'collectAt',
+      title: '浆员编号',
+      dataIndex: 'donorNo',
+      width: 100,
     },
-  ],
-  reUnTrackedBag: [
     {
-      title: '采集日期',
-      dataIndex: 'collectAt',
-    },
-  ],
-  trackedNormalBag: [
-    {
-      title: '采集日期',
-      dataIndex: 'collectAt',
-    },
-  ],
-  trackedSpecialBag: [
-    {
-      title: '免疫类型',
-      dataIndex: 'immunity',
-      format: PlasmaType,
+      title: '浆员姓名',
+      dataIndex: 'donorName',
+      width: 100,
     },
     {
       title: '采集日期',
       dataIndex: 'collectAt',
+      width: 90,
     },
-  ],
-  unProductionBag: [
     {
-      title: '出库原因',
-      dataIndex: 'fkUnProdCode',
-
-      slots: { customRender: 'prodReason' },
+      title: '验收净重(g)',
+      dataIndex: 'netWeight',
+      width: 100,
+    },
+    {
+      title: '效价类型',
+      dataIndex: 'titerJudge',
+      width: 100,
+      format: ConclusionType,
     },
   ],
+  firstUnTrackedBag: otherColumns,
+  reUnTrackedBag: otherColumns,
+  trackedNormalBag: trackedColumns,
+  trackedSpecialBag: trackedColumns,
+  unProductionBag: otherColumns,
 };
 export const modalCommonColumns: BasicColumn[] = [
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
+    width: 110,
   },
 ];
 
