@@ -7,6 +7,12 @@ import {
 } from '@/api/_dictionary';
 import { getBlockSource } from '@/api/query-statistics/nonconformityTracking';
 import { useStation } from '@/hooks/common/useStation';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
+const serverEnumStore = useServerEnumStoreWithOut();
+const BlockSource = serverEnumStore.getServerEnumText(SERVER_ENUM.BlockSource);
 
 const { stationOptions } = useStation();
 export const columns: BasicColumn[] = [
@@ -26,6 +32,7 @@ export const columns: BasicColumn[] = [
   {
     title: '采集日期',
     dataIndex: 'collectAt',
+    format: (t) => t?.slice(0, 10),
   },
   {
     title: '浆员编号',
@@ -42,10 +49,12 @@ export const columns: BasicColumn[] = [
   {
     title: '不合格日期',
     dataIndex: 'blockAt',
+    format: (t) => t?.slice(0, 10),
   },
   {
     title: '不合格来源',
     dataIndex: 'blockBy',
+    format: BlockSource,
   },
   // {
   //   title: '追踪记录/报告',

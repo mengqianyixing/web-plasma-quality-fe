@@ -2,7 +2,9 @@
 import { defHttp } from '@/utils/http/axios';
 import { UploadFileParams } from '#/axios';
 import { AxiosProgressEvent } from 'axios';
+import { useMessage } from '@/hooks/web/useMessage';
 
+const { createErrorModal } = useMessage();
 /**
  * 获取报表列表
  * @param params
@@ -39,7 +41,25 @@ export function uploadReportApi(
  * @returns
  */
 export const getReportApi = (params?) =>
-  defHttp.get(
-    { url: '/api/report/pdf', params, responseType: 'blob' },
-    { errorMessageMode: 'none', isTransformResponse: false },
-  );
+  defHttp
+    .get({ url: '/api/report/pdf', params, responseType: 'blob' }, { isTransformResponse: false })
+    .then((res) => {
+      if (res.type !== 'application/json') {
+        return res;
+      } else {
+        const reader = new FileReader();
+        reader.onloadend = function () {
+          const jsonDataAsText = reader.result as string;
+          try {
+            const jsonObject = JSON.parse(jsonDataAsText);
+            jsonObject.msg && createErrorModal({ title: '错误提示', content: jsonObject.msg });
+          } catch (error) {
+            console.error('Error parsing JSON string:', error);
+          }
+        };
+        // 第四步：开始读取Blob为文本
+        reader.readAsText(res);
+        console.log(window.URL.createObjectURL(res));
+        return Promise.reject();
+      }
+    });

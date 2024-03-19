@@ -332,6 +332,12 @@ const trayManager: AppRouteModule = {
         title: '不合格追踪',
       },
       id: 9000320,
+      authElements: [
+        {
+          id: SearchManager.NonconformityTrackingReport,
+          title: '追踪记录/报告',
+        },
+      ],
       component: () => import('@/views/query-statistics/nonconformityTracking/index.vue'),
     },
     {

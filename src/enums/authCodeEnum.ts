@@ -232,4 +232,6 @@ export enum SearchManager {
   CallbackExport = 'E_90002501',
 
   CallbackBatchExport = 'E_90002601',
+
+  NonconformityTrackingReport = 'E_900032001',
 }

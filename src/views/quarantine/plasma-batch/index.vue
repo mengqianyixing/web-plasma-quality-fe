@@ -10,7 +10,7 @@
         :key="col.slots?.customRender"
       >
         <span
-          class="empty-value text-blue-500 underline cursor-pointer"
+          class="text-blue-500 underline cursor-pointer empty-value"
           @click.stop.self="handleDetailClick(data.record, col.slots?.customRender, col.title)"
         >
           {{ get(data.record, ((col.dataIndex as any) || []).join('.')) }}
@@ -25,7 +25,6 @@
           >新增
         </a-button>
         <a-button
-          :disabled="!selectedRow.length"
           type="primary"
           @click="handleOption('C', '撤销')"
           v-auth="QuarantineButtonEnum.ResetQuarantine"
@@ -33,20 +32,25 @@
           撤销
         </a-button>
         <a-button
-          :disabled="!selectedRow.length"
           type="primary"
           @click="handleOption('R', '复核')"
           v-auth="QuarantineButtonEnum.ReCheckQuarantine"
         >
           复核
         </a-button>
-        <a-button type="primary" @click="handlePrint" v-auth="QuarantineButtonEnum.PrintQuarantine">
+        <a-button
+          type="primary"
+          @click="handlePrint"
+          :loading="reportLoading"
+          v-auth="QuarantineButtonEnum.PrintQuarantine"
+        >
           打印
         </a-button>
       </template>
     </BasicTable>
     <PlasmaBatchDetailModal @register="registerDetailModal" />
     <PlasmaBatchModal @register="registerModal" @success="handleSuccess" />
+    <ReportModal @register="registerReportModal" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -56,7 +60,7 @@
     setPlasmaBatchRelease,
     getPlasmaBatchRelease,
   } from '@/api/quarantine/plasma-batch';
-  import { Modal } from 'ant-design-vue';
+  import { Modal, message } from 'ant-design-vue';
 
   import { useModal } from '@/components/Modal';
   import PlasmaBatchModal from './PlasmaBatchModal.vue';
@@ -67,10 +71,12 @@
   import { onMounted, ref, watchEffect } from 'vue';
   import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
   import { get } from 'lodash-es';
+  import ReportModal from '@/components/ReportModal/index.vue';
+  import { getReportApi } from '@/api/report';
 
   defineOptions({ name: 'PlasmaBatchReport' });
 
-  const selectedRow = ref<Recordable>([]);
+  const reportLoading = ref(false);
   const { stationOptions, getStationNameById } = useStation();
   const slots = columns.filter((col) => col.slots);
 
@@ -87,7 +93,8 @@
 
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
   const [registerModal, { openModal }] = useModal();
-  const [registerTable, { reload, getForm, clearSelectedRowKeys }] = useTable({
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
+  const [registerTable, { reload, getForm, clearSelectedRowKeys, getSelectRows }] = useTable({
     api: getPlasmaBatchReleases,
     fetchSetting: {
       pageField: 'currPage',
@@ -103,9 +110,10 @@
     rowSelection: {
       fixed: true,
       type: 'radio',
-      onChange: (_, selectedRows: any) => {
-        selectedRow.value = selectedRows;
-      },
+    },
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
     },
     useSearchForm: true,
 
@@ -115,6 +123,18 @@
     canResize: true,
   });
 
+  function getSelections(onlyOne: boolean, fn?: (rows: Recordable[]) => void) {
+    const rows = getSelectRows();
+    if (rows.length === 0) {
+      message.warning('请选择一条数据');
+      return [];
+    } else if (rows.length > 1 && onlyOne) {
+      message.warning('只能选择一条数据');
+      return [];
+    }
+    fn?.(rows);
+    return rows;
+  }
   function handleDetailClick(record: Recordable, type: string, title: any) {
     getPlasmaBatchRelease({ batchNo: record?.fkBpNo }).then((res) => {
       openDetailModal(true, {
@@ -133,27 +153,41 @@
   }
 
   function handleOption(state: string, title: string) {
-    Modal.confirm({
-      content: '确认' + title + '?',
-      onOk: async () => {
-        setPlasmaBatchRelease({
-          brNo: selectedRow.value[0].brNo,
-          state,
-        })
-          .then(() => {
-            clearSelectedRowKeys();
-            reload();
+    getSelections(true, ([row]) => {
+      Modal.confirm({
+        content: '确认' + title + '?',
+        onOk: async () => {
+          setPlasmaBatchRelease({
+            brNo: row.brNo,
+            state,
           })
-          .catch(() => {
-            reload();
-          });
-      },
-      onCancel: () => Modal.destroyAll(),
+            .then(() => {
+              clearSelectedRowKeys();
+              reload();
+            })
+            .catch(() => {
+              reload();
+            });
+        },
+        onCancel: () => Modal.destroyAll(),
+      });
     });
   }
 
   function handlePrint() {
-    clearSelectedRowKeys();
+    getSelections(true, async ([row]) => {
+      try {
+        reportLoading.value = true;
+        const res = await getReportApi({
+          reportKey: 'BATCH_RELEASE',
+          contentKey: row.brNo,
+        });
+        openReportModal(true, window.URL.createObjectURL(res));
+        clearSelectedRowKeys();
+      } finally {
+        reportLoading.value = false;
+      }
+    });
   }
 
   function handleSuccess() {
