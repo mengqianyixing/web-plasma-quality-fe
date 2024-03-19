@@ -1,11 +1,22 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight class="p-5px">
-    <BasicForm @register="register" class="bg-white h-12 pt-2" @submit="handleSubmit" />
-    <div class="m-2 bg-white p-3">
+  <PageWrapper
+    dense
+    contentFullHeight
+    fixedHeight
+    class="flex p-5px"
+    content-class="flex flex-col w-full"
+  >
+    <BasicForm @register="register" class="h-12 pt-2 bg-white" @submit="handleSubmit" />
+    <div class="p-3 m-2 bg-white">
       <div class="title">浆员基本信息</div>
       <Description @register="donorTable" :data="mockData" />
     </div>
-    <Tabs class="flex-1 bg-white p-4 m-2" type="card" size="small" v-model:activeKey="activeKey">
+    <Tabs
+      class="flex-1 p-4 m-2 bg-white tabs"
+      type="card"
+      size="small"
+      v-model:activeKey="activeKey"
+    >
       <TabPane key="batch" tab="血浆明细">
         <BasicTable @register="batchTable" :key="donorNo" class="donor-tab mt--2" />
       </TabPane>
@@ -13,7 +24,7 @@
         <BasicTable @register="callBackTable" :key="donorNo" class="donor-tab mt--2" />
       </TabPane>
       <TabPane key="titer" tab="效价趋势" class="mt--2">
-        <Chart />
+        <Chart :donorNo="donorNo" />
       </TabPane>
     </Tabs>
   </PageWrapper>
@@ -99,6 +110,7 @@
     api: batchInfoListApi,
     beforeFetch: (params) => {
       const data = getFieldsValue();
+      donorNo.value = data.donorNo;
       return {
         ...params,
         donorNo: data.donorNo,
@@ -154,6 +166,10 @@
   });
 </script>
 <style scoped lang="less">
+  .tabs :deep(.ant-tabs-content) {
+    height: 100%;
+  }
+
   .title {
     display: flex;
     position: relative;

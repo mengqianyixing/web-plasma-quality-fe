@@ -13,4 +13,7 @@ export const basicProps = {
     type: String as PropType<string>,
     default: '280px',
   },
+  donorNo: {
+    type: String as PropType<string>,
+  },
 };
