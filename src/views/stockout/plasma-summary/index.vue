@@ -2,9 +2,7 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <!-- <a-button type="primary" @click="handleCreate">新增</a-button>
-        <a-button type="primary" @click="handleCancel">撤销</a-button>
-        <a-button type="primary" @click="handleReview">复核</a-button> -->
+        <a-button type="primary" @click="handlePrint"> 打印 </a-button>
       </template>
     </BasicTable>
   </PageWrapper>
@@ -13,11 +11,17 @@
   import { PageWrapper } from '@/components/Page';
   import { BasicTable, useTable, BasicColumn, FormSchema } from '@/components/Table';
   import dayjs from 'dayjs';
-  import { getPlasmaSummary } from '@/api/stockout/plasma-summary';
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { getPlasmaSummary, getPreviewPdf } from '@/api/stockout/plasma-summary';
   import { useStation } from '@/hooks/common/useStation';
+  import { ref } from 'vue';
 
   const { stationOptions } = useStation();
   defineOptions({ name: 'PlasmaSummary' });
+  const { createMessage } = useMessage();
+  const { warning } = createMessage;
+
+  const selectedRow = ref<Recordable>([]);
 
   const columns: BasicColumn[] = [
     {
@@ -106,7 +110,7 @@
     },
   ];
 
-  const [registerTable] = useTable({
+  const [registerTable, { clearSelectedRowKeys }] = useTable({
     api: getPlasmaSummary,
     fetchSetting: {
       pageField: 'currPage',
@@ -119,7 +123,13 @@
     useSearchForm: true,
     showTableSetting: false,
     bordered: true,
-    rowSelection: { type: 'radio' },
+    rowSelection: {
+      fixed: true,
+      type: 'radio',
+      onChange: (_, selectedRows: any) => {
+        selectedRow.value = selectedRows;
+      },
+    },
     beforeFetch: (p) => ({
       ...p,
       beginTime: p.beginTime?.slice(0, 10),
@@ -129,4 +139,20 @@
       schemas: searchFormschema,
     },
   });
+
+  async function handlePrint() {
+    if (!selectedRow.value.length) {
+      warning('请选择数据!');
+      return;
+    }
+    const batchNo = selectedRow.value[0].batchNo;
+    const res = await getPreviewPdf({ reportKey: 'PLASMA_SUMMARY', contentKey: batchNo });
+    const blob = new Blob([res.data], {
+      type: 'application/pdf;charset=utf-8',
+    });
+    const pdfurl = window.webkitURL.createObjectURL(blob);
+    window.open(pdfurl, '_blank');
+
+    clearSelectedRowKeys();
+  }
 </script>

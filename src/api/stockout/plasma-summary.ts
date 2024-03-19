@@ -15,6 +15,7 @@ import {
 
 enum Api {
   PLASMA_SUMMARY = `/api/report/plasma/summary`,
+  PREVIEW_PDF = `/api/report/preview-pdf`,
 }
 
 export const getPlasmaSummary = (params: GetApiReportPlasmaSummaryRequest) =>
@@ -22,3 +23,13 @@ export const getPlasmaSummary = (params: GetApiReportPlasmaSummaryRequest) =>
     url: Api.PLASMA_SUMMARY,
     params: params,
   });
+
+export const getPreviewPdf = (params: any) =>
+  defHttp.get<any>(
+    {
+      url: Api.PREVIEW_PDF,
+      params: params,
+      responseType: 'blob',
+    },
+    { isReturnNativeResponse: true },
+  );
