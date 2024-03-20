@@ -184,6 +184,9 @@ export enum StockOutButtonEnum {
   ProductionPlanReReview = 'E_91004005',
   ProductionPlanCheck = 'E_91004006',
   ProductionPlanReCheck = 'E_91004007',
+  ProductionPlanCheckListReport = 'E_91004008',
+  ProductionPlanTransferReport = 'E_91004009',
+  ProductionPlanMaterialReport = 'E_910040010',
 
   PutIntoTrayStockOut = 'E_91005001',
   PutIntoBoxStockOut = 'E_91005002',
@@ -204,6 +207,9 @@ export enum StockOutButtonEnum {
   NonPutIntoCheck = 'E_91006008',
   NonPutIntoCancelCheck = 'E_91006009',
   NonPutIntoScan = 'E_91006010',
+
+  PlasmaSummaryPlasmaSummaryReport = 'E_91007001',
+  PlasmaSummaryPlasmaTrackUnqReport = 'E_91007002',
 }
 
 export enum SampleManageButtonEnum {

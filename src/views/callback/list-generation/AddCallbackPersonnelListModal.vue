@@ -23,8 +23,8 @@
   } from '@/views/callback/list-generation/generation.data';
   import { generateCallback, getNeedCallbackList } from '@/api/callback/list-generation';
   import dayjs, { Dayjs } from 'dayjs';
-  import { getSysParamsByParamKey } from '@/api/systemServer/params';
-
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  const globalApiStore = useGlobalApiStoreWithOut();
   const emit = defineEmits(['success', 'register']);
 
   const selectedRow = ref<string[]>([]);
@@ -88,7 +88,7 @@
     stationNo.value = data.record.stationNo;
     batchNo.value = data.record.batchNo;
 
-    const gapDays = await getSysParamsByParamKey('callbackGapDays');
+    const gapDays = (await globalApiStore.getSysParamsValue('callbackGapDays')) as number;
 
     await getForm().updateSchema({
       field: '[minCollectTime, maxCollectTime]',

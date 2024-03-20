@@ -21,7 +21,8 @@
   } from '@/api/_dictionary';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
-
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'PlasmaQuery' });
 
   const { currentRoute } = useRouter();
@@ -83,10 +84,11 @@
   async function handleExport() {
     try {
       loading.value = true;
+      const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
       const data = await getPlasmaQueryList({
         ...getForm().getFieldsValue(),
         currPage: 1,
-        pageSize: 50000,
+        pageSize,
       } as any);
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(

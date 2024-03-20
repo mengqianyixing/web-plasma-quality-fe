@@ -2,26 +2,63 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handlePrint"> 打印 </a-button>
+        <a-dropdown
+          v-auth="[
+            StockOutButtonEnum.PlasmaSummaryPlasmaSummaryReport,
+            StockOutButtonEnum.PlasmaSummaryPlasmaTrackUnqReport,
+          ]"
+        >
+          <a-button type="primary" :loading="reportLoading">
+            打印
+            <DownOutlined />
+          </a-button>
+          <template #overlay>
+            <Menu>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint('PLASMA_SUMMARY')"
+                  v-auth="StockOutButtonEnum.PlasmaSummaryPlasmaSummaryReport"
+                >
+                  血浆汇总表
+                </a-button>
+              </MenuItem>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint('PLASMA_TRACK_UNQ_RECORD')"
+                  v-auth="StockOutButtonEnum.PlasmaSummaryPlasmaTrackUnqReport"
+                >
+                  续追踪不合格记录
+                </a-button>
+              </MenuItem>
+            </Menu>
+          </template>
+        </a-dropdown>
       </template>
     </BasicTable>
+    <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { PageWrapper } from '@/components/Page';
   import { BasicTable, useTable, BasicColumn, FormSchema } from '@/components/Table';
   import dayjs from 'dayjs';
-  import { useMessage } from '@/hooks/web/useMessage';
-  import { getPlasmaSummary, getPreviewPdf } from '@/api/stockout/plasma-summary';
+  import { getPlasmaSummary } from '@/api/stockout/plasma-summary';
   import { useStation } from '@/hooks/common/useStation';
+  import { Dropdown as ADropdown, MenuItem, Menu, message } from 'ant-design-vue';
+  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
+
   import { ref } from 'vue';
+  import ReportModal from '@/components/ReportModal/index.vue';
+  import { getReportApi } from '@/api/report';
+  import { useModal } from '@/components/Modal';
+
+  const reportLoading = ref(false);
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
 
   const { stationOptions } = useStation();
   defineOptions({ name: 'PlasmaSummary' });
-  const { createMessage } = useMessage();
-  const { warning } = createMessage;
-
-  const selectedRow = ref<Recordable>([]);
 
   const columns: BasicColumn[] = [
     {
@@ -99,18 +136,18 @@
         options: [
           {
             value: true,
-            name: '已打印',
+            label: '已打印',
           },
           {
             value: false,
-            name: '未打印',
+            label: '未打印',
           },
         ],
       },
     },
   ];
 
-  const [registerTable, { clearSelectedRowKeys }] = useTable({
+  const [registerTable, { clearSelectedRowKeys, getSelectRows }] = useTable({
     api: getPlasmaSummary,
     fetchSetting: {
       pageField: 'currPage',
@@ -126,9 +163,6 @@
     rowSelection: {
       fixed: true,
       type: 'radio',
-      onChange: (_, selectedRows: any) => {
-        selectedRow.value = selectedRows;
-      },
     },
     beforeFetch: (p) => ({
       ...p,
@@ -139,20 +173,29 @@
       schemas: searchFormschema,
     },
   });
-
-  async function handlePrint() {
-    if (!selectedRow.value.length) {
-      warning('请选择数据!');
-      return;
+  function getSelections(onlyOne: boolean, fn?: (rows: Recordable[]) => void) {
+    const rows = getSelectRows();
+    if (rows.length === 0) {
+      message.warning('请选择一条数据');
+      return [];
+    } else if (rows.length > 1 && onlyOne) {
+      message.warning('只能选择一条数据');
+      return [];
     }
-    const batchNo = selectedRow.value[0].batchNo;
-    const res = await getPreviewPdf({ reportKey: 'PLASMA_SUMMARY', contentKey: batchNo });
-    const blob = new Blob([res.data], {
-      type: 'application/pdf;charset=utf-8',
-    });
-    const pdfurl = window.webkitURL.createObjectURL(blob);
-    window.open(pdfurl, '_blank');
+    fn?.(rows);
+    return rows;
+  }
 
-    clearSelectedRowKeys();
+  async function handlePrint(reportType: string) {
+    getSelections(true, async ([row]) => {
+      try {
+        reportLoading.value = true;
+        const res = await getReportApi({ reportKey: reportType, contentKey: row.batchNo });
+        openReportModal(true, window.URL.createObjectURL(res));
+        clearSelectedRowKeys();
+      } finally {
+        reportLoading.value = false;
+      }
+    });
   }
 </script>

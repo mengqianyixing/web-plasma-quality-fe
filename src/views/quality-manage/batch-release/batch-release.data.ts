@@ -80,6 +80,7 @@ export const columns: BasicColumn[] = [
     title: '放行单号',
     dataIndex: 'prNo',
     width: 100,
+    ellipsis: false,
   },
   {
     title: '审核人',

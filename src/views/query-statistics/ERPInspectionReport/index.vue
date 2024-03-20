@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight>
-    <div class="overflow-auto flex-grow h-87vh">
+    <div class="flex-grow overflow-auto h-87vh">
       <BasicTable @register="registerTable">
         <template #toolbar>
           <a-button
@@ -38,7 +38,8 @@
   import { Pagination } from 'ant-design-vue';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
-
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'ERPInspectionReport' });
 
   const { currentRoute } = useRouter();
@@ -116,27 +117,32 @@
   let buttonLoading = ref(false);
   async function handleExport() {
     buttonLoading.value = true;
-    const data = (
-      await getERPInspectionReportList({
-        ...getForm().getFieldsValue(),
-        currPage: '1',
-        pageSize: '999',
-      })
-    ).result!;
+    try {
+      const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
+      const data = (
+        await getERPInspectionReportList({
+          ...getForm().getFieldsValue(),
+          currPage: '1',
+          pageSize: pageSize,
+        })
+      ).result!;
 
-    buttonLoading.value = false;
+      buttonLoading.value = false;
 
-    const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
-    const { result, merge: bodyMerge } = formatData(
-      lastLevelCols,
-      afterFetchDataFormat(data),
-      rows.length,
-    );
-    jsonToSheetXlsx({
-      data: [...rows, ...result],
-      json2sheetOpts: { skipHeader: true },
-      merges: [...headerMerge, ...bodyMerge],
-      filename: currentRoute.value.meta.title + '.xlsx',
-    });
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+      const { result, merge: bodyMerge } = formatData(
+        lastLevelCols,
+        afterFetchDataFormat(data),
+        rows.length,
+      );
+      jsonToSheetXlsx({
+        data: [...rows, ...result],
+        json2sheetOpts: { skipHeader: true },
+        merges: [...headerMerge, ...bodyMerge],
+        filename: currentRoute.value.meta.title + '.xlsx',
+      });
+    } finally {
+      buttonLoading.value = false;
+    }
   }
 </script>

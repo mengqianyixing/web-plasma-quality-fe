@@ -16,7 +16,8 @@
 
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'UnqualifiedPlasmaByBatch' });
 
   const { currentRoute } = useRouter();
@@ -42,10 +43,12 @@
   const loading = ref(false);
   async function handleExport() {
     loading.value = true;
+    const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
+
     const OriginData = await getUnqualifiedPlasmaBatch({
       ...getForm().getFieldsValue(),
       currPage: '1',
-      pageSize: '99999',
+      pageSize: pageSize,
     });
     loading.value = false;
     const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
