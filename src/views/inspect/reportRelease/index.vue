@@ -40,39 +40,13 @@
           v-auth="InspectButtonEnum.ReportReleaseRelease"
           >发布</a-button
         >
-        <a-dropdown
-          v-auth="[
-            InspectButtonEnum.ReportReleasePrintBack,
-            InspectButtonEnum.ReportReleasePrintCheck,
-          ]"
+        <a-button
+          type="primary"
+          @click="handlePrint"
+          :loading="reportLoading"
+          v-auth="InspectButtonEnum.ReportReleasePrint"
+          >打印</a-button
         >
-          <a-button type="primary">
-            打印
-            <DownOutlined />
-          </a-button>
-          <template #overlay>
-            <Menu>
-              <MenuItem>
-                <a-button
-                  type="link"
-                  @click="handlePrint"
-                  v-auth="InspectButtonEnum.ReportReleasePrintBack"
-                >
-                  回访样本检检验报告
-                </a-button>
-              </MenuItem>
-              <MenuItem>
-                <a-button
-                  type="link"
-                  @click="handlePrint"
-                  v-auth="InspectButtonEnum.ReportReleasePrintCheck"
-                >
-                  原料血浆检验报告
-                </a-button>
-              </MenuItem>
-            </Menu>
-          </template>
-        </a-dropdown>
       </template>
       <template #totalUnqualified="{ record }: { record: Recordable }">
         <span
@@ -129,6 +103,7 @@
       </div>
     </Modal>
     <TabelModal @register="registerModal" />
+    <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
@@ -146,13 +121,17 @@
     releaseReportApi,
   } from '@/api/inspect/reportRelease';
   import { ref } from 'vue';
-  import { message, Modal, Dropdown as ADropdown, MenuItem, Menu } from 'ant-design-vue';
+  import { message, Modal } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
   import TabelModal from './tabelModal.vue';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
+  import ReportModal from '@/components/ReportModal/index.vue';
+  import { getReportApi } from '@/api/report';
 
   defineOptions({ name: 'ReportRelease' });
 
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
+  const reportLoading = ref(false);
   const open = ref(false);
   const confirmLoading = ref(false);
   let revokeApi = revokeReportApi;
@@ -259,9 +238,19 @@
     reload();
     message.success('发布成功');
   }
-  function handlePrint() {
+  async function handlePrint() {
     const [row] = getSelections(true);
     if (!row) return;
+    let reportType = 'CALLBACK_CHECK_REPORT';
+    if (row.sampleCode === 'NOR') reportType = 'PLASMA_CHECK_REPORT';
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({ reportKey: reportType, contentKey: row.reportNo });
+      openReportModal(true, window.URL.createObjectURL(res));
+      clearSelectedRowKeys();
+    } finally {
+      reportLoading.value = false;
+    }
   }
   function handleDetails(row: Recordable, type: number, title: string) {
     openModal(true, { ...row, type, title });

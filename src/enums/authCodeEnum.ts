@@ -104,8 +104,7 @@ export enum InspectButtonEnum {
   ReportReleaseProcess = 'E_96002003',
   ReportReleaseUnProcess = 'E_96002004',
   ReportReleaseRelease = 'E_96002005',
-  ReportReleasePrintBack = 'E_96002006',
-  ReportReleasePrintCheck = 'E_96002007',
+  ReportReleasePrint = 'E_96002006',
 
   MaterialPreRegistrationAdd = 'E_96003001',
   MaterialPreRegistrationUpdate = 'E_96003002',

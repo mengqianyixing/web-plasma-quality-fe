@@ -33,7 +33,12 @@
         >
           撤销复核
         </a-button>
-        <a-button type="primary" @click="handlePrint" v-auth="QualityButtonEnum.PlasmaCheckPrint">
+        <a-button
+          type="primary"
+          @click="handlePrint"
+          :loading="reportLoading"
+          v-auth="QualityButtonEnum.PlasmaCheckPrint"
+        >
           打印
         </a-button>
         <a-button
@@ -52,6 +57,7 @@
       @success="handleLimitModalSuccess"
     />
     <RevokeCheckModal @register="registerRevokeCheckModal" @success="handleSuccess" />
+    <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -74,8 +80,10 @@
   import { getBindBoxListApi } from '@/api/quality/plasma-restriction';
   import { useStation } from '@/hooks/common/useStation';
   import { PlasmaCheckStateValueEnum } from '@/enums/plasmaEnum';
-
+  import ReportModal from '@/components/ReportModal/index.vue';
+  import { getReportApi } from '@/api/report';
   import { QualityButtonEnum } from '@/enums/authCodeEnum';
+  const reportLoading = ref(false);
 
   const { stationOptions } = useStation();
   const { createMessage, createConfirm } = useMessage();
@@ -93,6 +101,7 @@
 
   defineOptions({ name: 'PlasmaCheck' });
 
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
   const [registerPlasmaCheckModal, { openModal: openPlasmaCheckModal }] = useModal();
   const [registerPlasmaLimitModal, { openModal: openPlasmaLimitModal }] = useModal();
   const [registerRevokeCheckModal, { openModal: openPlasmaRevokeModal }] = useModal();
@@ -304,7 +313,21 @@
     });
   }
 
-  function handlePrint() {}
+  async function handlePrint() {
+    if (selectedRowsRef.value.length === 0) createMessage.warn('请选择数据');
+    const row = selectedRowsRef.value[0];
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({
+        reportKey: 'PLASMA_INSPECTION_RECORDS',
+        contentKey: row.batchNo,
+      });
+      openReportModal(true, window.URL.createObjectURL(res));
+      clearSelectedRowKeys();
+    } finally {
+      reportLoading.value = false;
+    }
+  }
 
   async function handleApproval() {
     if (!checkSelectedRows()) return;
