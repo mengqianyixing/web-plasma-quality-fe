@@ -56,7 +56,7 @@
       const [record] = rows;
       reportLoading.value = true;
       const res = await getReportApi({
-        reportKey: record.blockBy === 'S' ? 'PLASMA_TRACK' : 'FACTORY_TRACK',
+        reportKey: record.blockBy === 'S' ? 'FACTORY_TRACK' : 'PLASMA_TRACK',
         contentKey: record.dbId,
       });
       openReportModal(true, window.URL.createObjectURL(res));
