@@ -344,6 +344,15 @@ const trayManager: AppRouteModule = {
       id: 9000340,
       component: () => import('@/views/query-statistics/plasma-bag-collect/index.vue'),
     },
+    {
+      path: 'plasmaRawInStorage',
+      name: 'PlasmaRawInStorage',
+      meta: {
+        title: '原料血浆入库查询',
+      },
+      id: 9000350,
+      component: () => import('@/views/query-statistics/plasma-raw-in-storage/index.vue'),
+    },
   ],
 };
 export default trayManager;
