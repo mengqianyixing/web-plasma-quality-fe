@@ -57,6 +57,13 @@
           v-auth="StockOutButtonEnum.ProductionPlanReCheck"
           >撤销审核</a-button
         >
+        <a-button
+          type="primary"
+          @click="handlePrint"
+          :loading="reportLoading"
+          v-auth="StockOutButtonEnum.ProductionPlanPrint"
+          >打印</a-button
+        >
       </template>
       <template #mesId="{ record }: { record: Recordable }">
         <span
@@ -81,6 +88,7 @@
         <BasicForm @register="registerForm" />
       </div>
     </Modal>
+    <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
@@ -91,6 +99,7 @@
   import { message, Modal } from 'ant-design-vue';
   import PickedModal from './picked-modal.vue';
   import { STATUS, STATUS_TEXT } from '@/enums/productionPlanEnum';
+  import ReportModal from '@/components/ReportModal/index.vue';
   import {
     getListApi,
     submitComplateApi,
@@ -100,6 +109,7 @@
     submitCheckCancelApi,
     submitChecklApi,
   } from '@/api/stockout/production-plan';
+  import { getReportApi } from '@/api/report';
   import { nextTick, ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
@@ -109,6 +119,7 @@
   const [registerModal, { openModal }] = useModal();
   const confirmLoading = ref(false);
   const open = ref(false);
+  const reportLoading = ref(false);
   const cancelText = ref('');
   let iterator: AsyncIterator<any>;
 
@@ -147,6 +158,7 @@
       schemas: searchFormSchema,
     },
   });
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
 
   function getSelections(onlyOne: boolean) {
     const rows = getSelectRows();
@@ -272,5 +284,21 @@
 
   function handleDetails(record: Recordable) {
     openModal(true, { ...record, disabled: true });
+  }
+
+  async function handlePrint() {
+    const [row] = getSelections(true);
+    if (!row) return;
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({
+        reportKey: 'PLASMA_PRODUCTION_PLAN',
+        contentKey: row.mesId,
+      });
+      openReportModal(true, window.URL.createObjectURL(res));
+      clearSelectedRowKeys();
+    } finally {
+      reportLoading.value = false;
+    }
   }
 </script>

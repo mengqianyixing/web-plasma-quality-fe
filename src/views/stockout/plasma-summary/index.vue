@@ -2,9 +2,17 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handlePrint"> 打印 </a-button>
+        <a-button
+          type="primary"
+          @click="handlePrint"
+          :loading="reportLoading"
+          v-auth="StockOutButtonEnum.PlasmaSummaryPrint"
+        >
+          打印
+        </a-button>
       </template>
     </BasicTable>
+    <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -12,14 +20,19 @@
   import { BasicTable, useTable, BasicColumn, FormSchema } from '@/components/Table';
   import dayjs from 'dayjs';
   import { useMessage } from '@/hooks/web/useMessage';
-  import { getPlasmaSummary, getPreviewPdf } from '@/api/stockout/plasma-summary';
+  import { getPlasmaSummary } from '@/api/stockout/plasma-summary';
+  import { useModal } from '@/components/Modal';
+  import { getReportApi } from '@/api/report';
   import { useStation } from '@/hooks/common/useStation';
   import { ref } from 'vue';
+  import ReportModal from '@/components/ReportModal/index.vue';
+  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
 
   const { stationOptions } = useStation();
   defineOptions({ name: 'PlasmaSummary' });
   const { createMessage } = useMessage();
   const { warning } = createMessage;
+  const reportLoading = ref(false);
 
   const selectedRow = ref<Recordable>([]);
 
@@ -140,18 +153,25 @@
     },
   });
 
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
+
   async function handlePrint() {
     if (!selectedRow.value.length) {
       warning('请选择数据!');
       return;
     }
     const batchNo = selectedRow.value[0].batchNo;
-    const res = await getPreviewPdf({ reportKey: 'PLASMA_SUMMARY', contentKey: batchNo });
-    const blob = new Blob([res.data], {
-      type: 'application/pdf;charset=utf-8',
-    });
-    const pdfurl = window.webkitURL.createObjectURL(blob);
-    window.open(pdfurl, '_blank');
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({
+        reportKey: 'PLASMA_SUMMARY',
+        contentKey: batchNo,
+      });
+      openReportModal(true, window.URL.createObjectURL(res));
+      clearSelectedRowKeys();
+    } finally {
+      reportLoading.value = false;
+    }
 
     clearSelectedRowKeys();
   }

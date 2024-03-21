@@ -172,6 +172,10 @@ const nonconformity: AppRouteModule = {
           id: StockOutButtonEnum.ProductionPlanReCheck,
           title: '撤销审核',
         },
+        {
+          id: StockOutButtonEnum.ProductionPlanPrint,
+          title: '打印',
+        },
       ],
       component: () => import('@/views/stockout/production-plan/index.vue'),
     },
@@ -295,7 +299,12 @@ const nonconformity: AppRouteModule = {
         title: '血浆汇总',
       },
       component: () => import('@/views/stockout/plasma-summary/index.vue'),
-      authElements: [],
+      authElements: [
+        {
+          id: StockOutButtonEnum.PlasmaSummaryPrint,
+          title: '打印',
+        },
+      ],
     },
   ],
 };
