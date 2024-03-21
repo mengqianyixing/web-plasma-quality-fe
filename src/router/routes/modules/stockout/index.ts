@@ -134,6 +134,11 @@ const nonconformity: AppRouteModule = {
           name: 'cancelExam',
           title: '取消审核',
         },
+        {
+          id: StockOutButtonEnum.ProductionOrderPrint,
+          name: 'print',
+          title: '打印',
+        },
       ],
     },
     {

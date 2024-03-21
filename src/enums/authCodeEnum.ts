@@ -178,6 +178,7 @@ export enum StockOutButtonEnum {
   ProductionOrderCancelRecheck = 'E_91003005',
   ProductionOrderExamine = 'E_91003006',
   ProductionOrderCancelExamine = 'E_91003007',
+  ProductionOrderPrint = 'E_91003008',
 
   ProductionPlanPick = 'E_91004001',
   ProductionPlanComplate = 'E_91004002',
