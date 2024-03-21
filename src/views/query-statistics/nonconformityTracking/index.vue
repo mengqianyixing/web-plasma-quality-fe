@@ -6,7 +6,7 @@
           type="primary"
           @click="handleEdit"
           :loading="reportLoading"
-          v-auth="SearchManager.NonconformityTrackingReport"
+          v-auth="QuarantineButtonEnum.NonconformityTrackingReport"
         >
           追踪记录/报告
         </a-button>
@@ -24,7 +24,7 @@
   import ReportModal from '@/components/ReportModal/index.vue';
   import { ref } from 'vue';
   import { useModal } from '@/components/Modal';
-  import { SearchManager } from '@/enums/authCodeEnum';
+  import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
   import { message } from 'ant-design-vue';
 
   defineOptions({ name: 'NonconformityTracking' });

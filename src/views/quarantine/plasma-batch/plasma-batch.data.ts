@@ -57,7 +57,7 @@ export const columns: BasicColumn[] = [
     width: 60,
   },
   {
-    title: '检测合格血浆',
+    title: '检验合格血浆',
     dataIndex: ['summary', 'checkedCount'],
     width: 100,
   },
@@ -133,7 +133,7 @@ export const modalColumns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: '血浆数量',
+    title: '检验合格血浆数量',
     dataIndex: 'plasmaCount',
     width: 80,
   },

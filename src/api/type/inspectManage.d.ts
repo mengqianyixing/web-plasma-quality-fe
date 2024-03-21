@@ -462,6 +462,42 @@ export type GetApiSysDictItemMethodsResponse = {
 }[];
 
 /**
+ * 接口 [查询追溯检疫期项目的不合格血浆原因↗](https://yapi.sharing8.cn/project/529/interface/api/34019) 的 **请求类型**
+ *
+ * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
+ * @请求头 `GET /api/core/lab/project/traceBack/dictItems`
+ * @更新时间 `2024-03-21 14:03:15`
+ */
+export interface GetApiCoreLabProjectTraceBackDictItemsRequest {}
+
+/**
+ * 接口 [查询追溯检疫期项目的不合格血浆原因↗](https://yapi.sharing8.cn/project/529/interface/api/34019) 的 **返回类型**
+ *
+ * @分类 [检验管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5306)
+ * @请求头 `GET /api/core/lab/project/traceBack/dictItems`
+ * @更新时间 `2024-03-21 14:03:15`
+ */
+export type GetApiCoreLabProjectTraceBackDictItemsResponse = {
+  /**
+   * 字典项主键
+   */
+  dictItemId: string;
+  dataDictId: string;
+  /**
+   * 中文： 检测不合格HBV-DNA
+   */
+  itemKey: string;
+  itemValue: string;
+  itemDesc: string;
+  sort: number;
+  enable: boolean;
+  createAt: null;
+  creater: null;
+  updateAt: null;
+  updater: null;
+}[];
+
+/**
  * 接口 [新增效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/31851) 的 **请求类型**
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)

@@ -122,6 +122,8 @@ export enum QuarantineButtonEnum {
   ResetQuarantine = 'E_95003002',
   ReCheckQuarantine = 'E_95003003',
   PrintQuarantine = 'E_95003004',
+
+  NonconformityTrackingReport = 'E_95004001',
 }
 
 export enum QualityButtonEnum {
@@ -239,6 +241,4 @@ export enum SearchManager {
   CallbackExport = 'E_90002501',
 
   CallbackBatchExport = 'E_90002601',
-
-  NonconformityTrackingReport = 'E_900032001',
 }

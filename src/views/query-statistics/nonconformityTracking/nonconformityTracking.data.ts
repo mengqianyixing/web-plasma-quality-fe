@@ -1,14 +1,8 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
-import {
-  getSysSecondaryDictionary,
-  DictionaryReasonEnum,
-  DictionaryItemKeyEnum,
-} from '@/api/_dictionary';
-import { getBlockSource } from '@/api/query-statistics/nonconformityTracking';
 import { useStation } from '@/hooks/common/useStation';
 import { SERVER_ENUM } from '@/enums/serverEnum';
-
+import { getNonReasonListApi } from '@/api/query-statistics/nonconformityTracking';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
 const serverEnumStore = useServerEnumStoreWithOut();
@@ -56,10 +50,6 @@ export const columns: BasicColumn[] = [
     dataIndex: 'blockBy',
     format: BlockSource,
   },
-  // {
-  //   title: '追踪记录/报告',
-  //   dataIndex: '',
-  // },
 ];
 
 export const searchFormSchema: FormSchema[] = [
@@ -84,7 +74,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: '[collectStartDate, collectEndDate]',
     component: 'RangePicker',
-    label: '采集日期起止',
+    label: '采集日期',
     componentProps: {
       valueFormat: 'YYYY-MM-DD',
     },
@@ -96,13 +86,10 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: 'blockBy',
-    component: 'ApiSelect',
+    component: 'Select',
     label: '不合格来源',
     componentProps: {
-      api: getBlockSource,
-      resultField: '[0].enumObjList',
-      labelField: 'show',
-      valueField: 'key',
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BlockSource),
     },
   },
   {
@@ -110,12 +97,8 @@ export const searchFormSchema: FormSchema[] = [
     component: 'ApiSelect',
     label: '不合格原因',
     componentProps: {
-      api: getSysSecondaryDictionary,
-      params: {
-        dataKey: DictionaryReasonEnum.PlasmaFailedReason,
-        dictItemTypes: [DictionaryItemKeyEnum.Quarantine],
-      },
-      labelField: 'label',
+      api: getNonReasonListApi,
+      labelField: 'itemKey',
       valueField: 'dictItemId',
     },
   },

@@ -239,7 +239,7 @@ export type GetApiSysEnumsResponse = {
  *
  * @分类 [系统参数↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5397)
  * @请求头 `GET /api/sys/param/{paramKey}`
- * @更新时间 `2024-03-16 11:09:25`
+ * @更新时间 `2024-03-16 11:15:30`
  */
 export interface GetApiSysParamParamKeyRequest {
   paramKey: string;
@@ -250,8 +250,8 @@ export interface GetApiSysParamParamKeyRequest {
  *
  * @分类 [系统参数↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5397)
  * @请求头 `GET /api/sys/param/{paramKey}`
- * @更新时间 `2024-03-16 11:09:25`
+ * @更新时间 `2024-03-16 11:15:30`
  */
-export interface GetApiSysParamParamKeyResponse {}
+export type GetApiSysParamParamKeyResponse = string;
 
 /* prettier-ignore-end */
