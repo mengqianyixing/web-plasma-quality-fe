@@ -111,6 +111,7 @@
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
   const globalApiStore = useGlobalApiStoreWithOut();
 
   defineOptions({ name: 'BatchRelease' });

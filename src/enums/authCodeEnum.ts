@@ -189,6 +189,7 @@ export enum StockOutButtonEnum {
   ProductionPlanCheckListReport = 'E_91004008',
   ProductionPlanTransferReport = 'E_91004009',
   ProductionPlanMaterialReport = 'E_910040010',
+  ProductionPlanPlasmaReport = 'E_910040011',
 
   PutIntoTrayStockOut = 'E_91005001',
   PutIntoBoxStockOut = 'E_91005002',

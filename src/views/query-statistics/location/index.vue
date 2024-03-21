@@ -24,6 +24,7 @@
   import { SearchManager } from '@/enums/authCodeEnum';
   import { ref } from 'vue';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'Location' });
   const loading = ref(false);

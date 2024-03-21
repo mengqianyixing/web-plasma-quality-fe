@@ -17,6 +17,7 @@
   import { useRouter } from 'vue-router';
   import { PageWrapper } from '@/components/Page';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'PlasmaQuery' });
 

@@ -25,6 +25,7 @@
   import { getCallbackBatchStatistics } from '@/api/query-statistics/callback';
   import { SearchManager } from '@/enums/authCodeEnum';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
   const globalApiStore = useGlobalApiStoreWithOut();
 
   defineOptions({ name: 'CallbackBatchStatistics' });

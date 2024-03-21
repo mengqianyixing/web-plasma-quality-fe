@@ -16,6 +16,7 @@
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { ref } from 'vue';
+
   const globalApiStore = useGlobalApiStoreWithOut();
   const { currentRoute } = useRouter();
   defineOptions({ name: 'StereoWarehouse' });

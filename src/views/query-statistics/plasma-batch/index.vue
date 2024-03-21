@@ -68,6 +68,7 @@
   import { getHeader, formatData, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'PlasmaBatchQueryStatistics' });
 

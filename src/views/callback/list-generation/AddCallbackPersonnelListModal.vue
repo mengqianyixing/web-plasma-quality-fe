@@ -24,6 +24,7 @@
   import { generateCallback, getNeedCallbackList } from '@/api/callback/list-generation';
   import dayjs, { Dayjs } from 'dayjs';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
   const globalApiStore = useGlobalApiStoreWithOut();
   const emit = defineEmits(['success', 'register']);
 

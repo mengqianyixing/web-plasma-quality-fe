@@ -81,6 +81,15 @@
                   试剂统计表
                 </a-button>
               </MenuItem>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint('PLASMA_PRODUCTION_PLAN')"
+                  v-auth="StockOutButtonEnum.ProductionPlanPlasmaReport"
+                >
+                  投产计划
+                </a-button>
+              </MenuItem>
             </Menu>
           </template>
         </a-dropdown>
@@ -115,7 +124,7 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { columns, searchFormSchema } from './production-plan.data';
-  import { message, Modal } from 'ant-design-vue';
+  import { message, Modal, Dropdown as ADropdown, MenuItem, Menu } from 'ant-design-vue';
   import PickedModal from './picked-modal.vue';
   import { STATUS, STATUS_TEXT } from '@/enums/productionPlanEnum';
   import {
@@ -130,7 +139,6 @@
   import { nextTick, ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
-  import { Dropdown as ADropdown, MenuItem, Menu } from 'ant-design-vue';
 
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
@@ -143,8 +151,8 @@
   const [registerModal, { openModal }] = useModal();
   const confirmLoading = ref(false);
   const open = ref(false);
-  const cancelText = ref('');
   const reportLoading = ref(false);
+  const cancelText = ref('');
 
   let iterator: AsyncIterator<any>;
 

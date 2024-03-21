@@ -16,6 +16,7 @@
   import { useRouter } from 'vue-router';
   import { ref } from 'vue';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
   const globalApiStore = useGlobalApiStoreWithOut();
   const { currentRoute } = useRouter();
 

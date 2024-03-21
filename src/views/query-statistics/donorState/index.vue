@@ -24,6 +24,7 @@
   import { SearchManager } from '@/enums/authCodeEnum';
   import { ref } from 'vue';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
   const globalApiStore = useGlobalApiStoreWithOut();
 
   const { currentRoute } = useRouter();

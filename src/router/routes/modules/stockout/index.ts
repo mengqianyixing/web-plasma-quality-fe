@@ -184,6 +184,10 @@ const nonconformity: AppRouteModule = {
           id: StockOutButtonEnum.ProductionPlanMaterialReport,
           title: '试剂统计表',
         },
+        {
+          id: StockOutButtonEnum.ProductionPlanPlasmaReport,
+          title: '投产计划',
+        },
       ],
       component: () => import('@/views/stockout/production-plan/index.vue'),
     },
