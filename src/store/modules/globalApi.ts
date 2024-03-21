@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { store } from '@/store';
 import { stationNameList } from '@/api/callback/list-generation';
+import { getSysParamsByParamKey } from '@/api/systemServer/params';
 
 interface ITEM {
   value: string;
@@ -12,7 +13,11 @@ interface EnumState {
   stationRequestSuccess: boolean;
   stationLoading: boolean;
   stationRequestCache: ResolveHandler<ITEM[]>[];
+  sysParamsMap: Map<string, any>;
 }
+const sysParamsDefaultValue = {
+  maxPageSize: 50000,
+};
 export const useGlobalApiStore = defineStore({
   id: 'GlobalApi',
   state: (): EnumState => ({
@@ -20,6 +25,7 @@ export const useGlobalApiStore = defineStore({
     stationRequestSuccess: false,
     stationLoading: false,
     stationRequestCache: [],
+    sysParamsMap: new Map(),
   }),
   getters: {
     getStationList(state) {
@@ -58,6 +64,25 @@ export const useGlobalApiStore = defineStore({
               this.stationLoading = false;
             });
         }
+      });
+    },
+    setSysParamsValue(key: string, value: any) {
+      this.sysParamsMap.set(key, value);
+    },
+    getSysParamsValue(key: string) {
+      return new Promise((rs) => {
+        const value = this.sysParamsMap.get(key);
+        if (value !== void 0) {
+          return rs(value);
+        }
+        getSysParamsByParamKey(key)
+          .then((res) => {
+            this.setSysParamsValue(key, res ?? sysParamsDefaultValue[key]);
+            rs(res ?? sysParamsDefaultValue[key]);
+          })
+          .catch(() => {
+            rs(sysParamsDefaultValue[key]);
+          });
       });
     },
   },

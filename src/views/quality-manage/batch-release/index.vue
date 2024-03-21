@@ -47,7 +47,13 @@
           v-auth="QualityButtonEnum.BatchReleaseUnRelease"
           >取消放行</a-button
         >
-        <a-button type="primary" v-auth="QualityButtonEnum.BatchReleasePrint">打印</a-button>
+        <a-button
+          type="primary"
+          @click="handlePrint"
+          :loading="reportLoading"
+          v-auth="QualityButtonEnum.BatchReleasePrint"
+          >打印</a-button
+        >
       </template>
       <template #mesId="{ record }: { record: Recordable }">
         <span
@@ -76,6 +82,7 @@
         <BasicForm @register="registerForm" />
       </div>
     </Modal>
+    <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
@@ -98,13 +105,19 @@
     submitCancelCreateApi,
     submitCancelReviewApi,
   } from '@/api/quality/batch-release';
-  import { getSysParamsList } from '@/api/systemServer/params';
   import { STATUS, STATUS_TEXT } from '@/enums/batchReleaseEnum';
   import { getBindBoxsListApi } from '@/api/quality/plasma-restriction';
   import { QualityButtonEnum } from '@/enums/authCodeEnum';
+  import ReportModal from '@/components/ReportModal/index.vue';
+  import { getReportApi } from '@/api/report';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
+  const globalApiStore = useGlobalApiStoreWithOut();
 
   defineOptions({ name: 'BatchRelease' });
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
 
+  const reportLoading = ref(false);
   const open = ref(false);
   const confirmLoading = ref(false);
   const releaseUnqualifiedStorage = ref(false);
@@ -313,10 +326,24 @@
       }
     });
   }
-  getSysParamsList({ currPage: '1', pageSize: '1', paramKey: 'releaseUnqualifiedStorage' }).then(
-    (res) => {
-      const data = res.result || [];
-      releaseUnqualifiedStorage.value = data[0]?.paramValue === '1';
-    },
-  );
+  globalApiStore.getSysParamsValue('releaseUnqualifiedStorage').then((res) => {
+    releaseUnqualifiedStorage.value = res === '1';
+  });
+  async function handlePrint() {
+    const [row] = getSelections(true);
+    if (!row) return;
+    if (row.state !== STATUS.DON)
+      return message.warning('请选择【' + STATUS_TEXT.get(STATUS.DON) + '】的数据');
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({
+        reportKey: 'PLASMA_PRODUCTION_RELEASE',
+        contentKey: row.prNo,
+      });
+      openReportModal(true, window.URL.createObjectURL(res));
+      clearSelectedRowKeys();
+    } finally {
+      reportLoading.value = false;
+    }
+  }
 </script>

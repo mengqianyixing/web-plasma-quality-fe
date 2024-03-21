@@ -23,7 +23,9 @@
   import { useRouter } from 'vue-router';
   import { SearchManager } from '@/enums/authCodeEnum';
   import { ref } from 'vue';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'Location' });
   const loading = ref(false);
 
@@ -49,7 +51,9 @@
     try {
       loading.value = true;
       const { getFieldsValue } = getForm();
-      const data = await getListApi({ ...getFieldsValue(), currPage: 1, pageSize: 50000 } as any);
+      const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
+
+      const data = await getListApi({ ...getFieldsValue(), currPage: 1, pageSize } as any);
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(
         lastLevelCols,

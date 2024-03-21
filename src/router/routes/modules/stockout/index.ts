@@ -173,8 +173,16 @@ const nonconformity: AppRouteModule = {
           title: '撤销审核',
         },
         {
-          id: StockOutButtonEnum.ProductionPlanPrint,
-          title: '打印',
+          id: StockOutButtonEnum.ProductionPlanCheckListReport,
+          title: '投产清单',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPlanTransferReport,
+          title: '转移记录',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPlanMaterialReport,
+          title: '试剂统计表',
         },
       ],
       component: () => import('@/views/stockout/production-plan/index.vue'),
@@ -301,8 +309,12 @@ const nonconformity: AppRouteModule = {
       component: () => import('@/views/stockout/plasma-summary/index.vue'),
       authElements: [
         {
-          id: StockOutButtonEnum.PlasmaSummaryPrint,
-          title: '打印',
+          id: StockOutButtonEnum.PlasmaSummaryPlasmaSummaryReport,
+          title: '血浆汇总表',
+        },
+        {
+          id: StockOutButtonEnum.PlasmaSummaryPlasmaTrackUnqReport,
+          title: '续追踪不合格记录',
         },
       ],
     },

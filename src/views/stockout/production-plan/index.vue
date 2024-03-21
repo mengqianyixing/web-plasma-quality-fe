@@ -1,19 +1,3 @@
-<!--
- * @Descripttion:
- * @version:
- * @Author: zcc
- * @Date: 2024-01-17 10:27:50
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-25 14:44:59
--->
-<!--
- * @Descripttion:
- * @version:
- * @Author: zcc
- * @Date: 2023-12-25 14:30:13
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-25 14:41:51
--->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
@@ -57,13 +41,58 @@
           v-auth="StockOutButtonEnum.ProductionPlanReCheck"
           >撤销审核</a-button
         >
-        <a-button
-          type="primary"
-          @click="handlePrint"
-          :loading="reportLoading"
-          v-auth="StockOutButtonEnum.ProductionPlanPrint"
-          >打印</a-button
+        <a-dropdown
+          v-auth="[
+            StockOutButtonEnum.ProductionPlanCheckListReport,
+            StockOutButtonEnum.ProductionPlanTransferReport,
+            StockOutButtonEnum.ProductionPlanMaterialReport,
+          ]"
         >
+          <a-button type="primary" :loading="reportLoading">
+            打印
+            <DownOutlined />
+          </a-button>
+          <template #overlay>
+            <Menu>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint('PLASMA_PRODUCTION_CHECKLIST')"
+                  v-auth="StockOutButtonEnum.ProductionPlanCheckListReport"
+                >
+                  投产清单
+                </a-button>
+              </MenuItem>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint('PLASMA_TRANSFER_RECORD')"
+                  v-auth="StockOutButtonEnum.ProductionPlanTransferReport"
+                >
+                  转移记录
+                </a-button>
+              </MenuItem>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint('MATERIAL_PLASMA')"
+                  v-auth="StockOutButtonEnum.ProductionPlanMaterialReport"
+                >
+                  试剂统计表
+                </a-button>
+              </MenuItem>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint('PLASMA_PRODUCTION_PLAN')"
+                  v-auth="StockOutButtonEnum.ProductionPlanPlasmaReport"
+                >
+                  投产计划
+                </a-button>
+              </MenuItem>
+            </Menu>
+          </template>
+        </a-dropdown>
       </template>
       <template #mesId="{ record }: { record: Recordable }">
         <span
@@ -94,12 +123,10 @@
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { useModal } from '@/components/Modal';
   import { columns, searchFormSchema } from './production-plan.data';
-  import { message, Modal } from 'ant-design-vue';
+  import { message, Modal, Dropdown as ADropdown, MenuItem, Menu } from 'ant-design-vue';
   import PickedModal from './picked-modal.vue';
   import { STATUS, STATUS_TEXT } from '@/enums/productionPlanEnum';
-  import ReportModal from '@/components/ReportModal/index.vue';
   import {
     getListApi,
     submitComplateApi,
@@ -109,18 +136,24 @@
     submitCheckCancelApi,
     submitChecklApi,
   } from '@/api/stockout/production-plan';
-  import { getReportApi } from '@/api/report';
   import { nextTick, ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
 
+  import ReportModal from '@/components/ReportModal/index.vue';
+  import { getReportApi } from '@/api/report';
+  import { useModal } from '@/components/Modal';
+
   defineOptions({ name: 'ProductionPlan' });
+
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
 
   const [registerModal, { openModal }] = useModal();
   const confirmLoading = ref(false);
   const open = ref(false);
   const reportLoading = ref(false);
   const cancelText = ref('');
+
   let iterator: AsyncIterator<any>;
 
   const [registerForm, { resetFields, clearValidate, validate }] = useForm({
@@ -158,7 +191,6 @@
       schemas: searchFormSchema,
     },
   });
-  const [registerReportModal, { openModal: openReportModal }] = useModal();
 
   function getSelections(onlyOne: boolean) {
     const rows = getSelectRows();
@@ -285,16 +317,12 @@
   function handleDetails(record: Recordable) {
     openModal(true, { ...record, disabled: true });
   }
-
-  async function handlePrint() {
+  async function handlePrint(reportType: string) {
     const [row] = getSelections(true);
     if (!row) return;
     try {
       reportLoading.value = true;
-      const res = await getReportApi({
-        reportKey: 'PLASMA_PRODUCTION_PLAN',
-        contentKey: row.mesId,
-      });
+      const res = await getReportApi({ reportKey: reportType, contentKey: row.mesId });
       openReportModal(true, window.URL.createObjectURL(res));
       clearSelectedRowKeys();
     } finally {

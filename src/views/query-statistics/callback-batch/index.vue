@@ -24,6 +24,9 @@
   import { ref } from 'vue';
   import { getCallbackBatchStatistics } from '@/api/query-statistics/callback';
   import { SearchManager } from '@/enums/authCodeEnum';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
+  const globalApiStore = useGlobalApiStoreWithOut();
 
   defineOptions({ name: 'CallbackBatchStatistics' });
 
@@ -50,23 +53,28 @@
   const loading = ref(false);
   async function handleExport() {
     loading.value = true;
-    const OriginData = await getCallbackBatchStatistics({
-      ...getForm().getFieldsValue(),
-      currPage: '1',
-      pageSize: '9999',
-    });
-    loading.value = false;
-    const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
-    const { result, merge: bodyMerge } = formatData(
-      lastLevelCols,
-      OriginData.result || [],
-      rows.length,
-    );
-    jsonToSheetXlsx({
-      data: [...rows, ...result],
-      json2sheetOpts: { skipHeader: true },
-      merges: [...headerMerge, ...bodyMerge],
-      filename: currentRoute.value.meta.title + '.xlsx',
-    });
+    try {
+      const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
+      const OriginData = await getCallbackBatchStatistics({
+        ...getForm().getFieldsValue(),
+        currPage: '1',
+        pageSize,
+      });
+      loading.value = false;
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+      const { result, merge: bodyMerge } = formatData(
+        lastLevelCols,
+        OriginData.result || [],
+        rows.length,
+      );
+      jsonToSheetXlsx({
+        data: [...rows, ...result],
+        json2sheetOpts: { skipHeader: true },
+        merges: [...headerMerge, ...bodyMerge],
+        filename: currentRoute.value.meta.title + '.xlsx',
+      });
+    } finally {
+      loading.value = false;
+    }
   }
 </script>

@@ -67,7 +67,9 @@
   import { reactive, ref, watch } from 'vue';
   import { getHeader, formatData, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'PlasmaBatchQueryStatistics' });
 
   const { currentRoute } = useRouter();
@@ -238,11 +240,12 @@
   }
 
   async function handleExportComeData() {
+    const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
     const data = (
       await getPlasmaBatchList({
         ...getFormLeft().getFieldsValue(),
         currPage: '1',
-        pageSize: '1000',
+        pageSize,
       })
     ).result!;
     const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
@@ -256,11 +259,12 @@
   }
 
   async function handleExportQuarantineData() {
+    const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
     const data = (
       await getPlasmaBatchListByQuarantine({
         ...getFormRight().getFieldsValue(),
         currPage: '1',
-        pageSize: '1000',
+        pageSize,
       })
     ).result!;
     const { rows, merges: headerMerge, lastLevelCols } = getHeader(columnsByQuarantine);
