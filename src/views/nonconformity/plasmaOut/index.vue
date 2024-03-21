@@ -42,7 +42,7 @@
             NonconformityButtonEnum.PlasmaOutDestructionPrint,
           ]"
         >
-          <a-button type="primary">
+          <a-button type="primary" :reportLoading="reportLoading">
             打印
             <DownOutlined />
           </a-button>
@@ -51,7 +51,8 @@
               <MenuItem>
                 <a-button
                   type="link"
-                  @click="handlePrint"
+                  @click="handlePrint(PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER)"
+                  :disabled="!disabledTransfer"
                   v-auth="NonconformityButtonEnum.PlasmaOutTransferPrint"
                   >转移记录</a-button
                 >
@@ -59,7 +60,8 @@
               <MenuItem>
                 <a-button
                   type="link"
-                  @click="handlePrint"
+                  @click="handlePrint(PrintServerEnum.UNQUALIFIED_RAW_PLASMA)"
+                  :disabled="disabledTransfer"
                   v-auth="NonconformityButtonEnum.PlasmaOutPlasmaPrint"
                   >不合格原料血浆信息清单</a-button
                 >
@@ -67,7 +69,8 @@
               <MenuItem>
                 <a-button
                   type="link"
-                  @click="handlePrint"
+                  @click="handlePrint(PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA)"
+                  :disabled="disabledTransfer"
                   v-auth="NonconformityButtonEnum.PlasmaOutDestructionPrint"
                   >不合格原理血浆销毁处理申请审批表</a-button
                 >
@@ -97,14 +100,18 @@
     </Modal>
     <FormModal @register="registerModal" @close="reload" />
     <OutModal @register="registerOutModal" />
+    <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { useModal } from '@/components/Modal';
+
+  import ReportModal from '@/components/ReportModal/index.vue';
   import FormModal from './formDrawer.vue';
   import OutModal from './outDrawer.vue';
+
   import { columns, searchFormschema, PROCESS_STATE_TEXT } from './plasmaOut.data';
   import {
     getListApi,
@@ -116,17 +123,22 @@
   import { message, Modal, Dropdown as ADropdown, MenuItem, Menu } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { NonconformityButtonEnum } from '@/enums/authCodeEnum';
+  import { PrintServerEnum } from '@/enums/printServerEnum';
+  import { getReportApi } from '@/api/report';
 
   defineOptions({ name: 'PlasmaOut' });
 
   const open = ref(false);
   const confirmLoading = ref(false);
+  const disabledTransfer = ref(false);
+  const reportLoading = ref(false);
   const type = ref('');
 
   let api = removeFormApi;
 
   const [registerModal, { openModal }] = useModal();
   const [registerOutModal, { openModal: openOutModal }] = useModal();
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,
     fetchSetting: {
@@ -230,8 +242,8 @@
     type.value = '取消审核';
     open.value = true;
     api = unProcessApi;
-    resetFields();
-    clearValidate();
+    await resetFields();
+    await clearValidate();
   }
   async function handleScan() {
     const [row] = getSelections(true);
@@ -239,8 +251,19 @@
 
     openOutModal(true, row);
   }
-  function handlePrint() {
+  async function handlePrint(field: PrintServerEnum) {
     const [row] = getSelections(true);
     if (!row) return;
+
+    disabledTransfer.value = field === PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER;
+
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({ reportKey: field, contentKey: row.dlvNo });
+      openReportModal(true, window.URL.createObjectURL(res));
+      clearSelectedRowKeys();
+    } finally {
+      reportLoading.value = false;
+    }
   }
 </script>
