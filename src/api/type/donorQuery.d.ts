@@ -322,4 +322,22 @@ export type GetApiCoreDonorChartDonorNoResponse = {
   }[];
 }[];
 
+/**
+ * 接口 [接口模版样例↗](https://yapi.sharing8.cn/project/529/interface/api/33979) 的 **请求类型**
+ *
+ * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
+ * @请求头 `GET /a/b/c`
+ * @更新时间 `2024-03-18 10:38:07`
+ */
+export interface GetAbcRequest {}
+
+/**
+ * 接口 [接口模版样例↗](https://yapi.sharing8.cn/project/529/interface/api/33979) 的 **返回类型**
+ *
+ * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
+ * @请求头 `GET /a/b/c`
+ * @更新时间 `2024-03-18 10:38:07`
+ */
+export interface GetAbcResponse {}
+
 /* prettier-ignore-end */

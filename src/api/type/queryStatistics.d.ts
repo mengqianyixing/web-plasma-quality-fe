@@ -3805,7 +3805,7 @@ export type GetApiCoreBagCollectStatisticResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/out-in-storage/statistic`
- * @更新时间 `2024-03-15 15:26:08`
+ * @更新时间 `2024-03-16 16:04:35`
  */
 export interface GetApiCoreBagOutInStorageStatisticRequest {
   /**
@@ -3835,7 +3835,7 @@ export interface GetApiCoreBagOutInStorageStatisticRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/out-in-storage/statistic`
- * @更新时间 `2024-03-15 15:26:08`
+ * @更新时间 `2024-03-16 16:04:35`
  */
 export interface GetApiCoreBagOutInStorageStatisticResponse {
   /**
@@ -3887,6 +3887,18 @@ export interface GetApiCoreBagOutInStorageStatisticResponse {
    * 备注
    */
   remark?: string;
+  /**
+   * 表头
+   */
+  reportTitle?: string;
+  /**
+   * 袋或吨
+   */
+  quantityUnit?: string;
+  /**
+   * 制表日期
+   */
+  tabulatingDate?: string;
 }
 
 /* prettier-ignore-end */
