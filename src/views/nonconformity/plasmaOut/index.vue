@@ -54,7 +54,7 @@
                   @click="handlePrint(PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER)"
                   :disabled="!disabledTransfer"
                   v-auth="NonconformityButtonEnum.PlasmaOutTransferPrint"
-                  >转移记录</a-button
+                  >不合格原料血浆转移记录</a-button
                 >
               </MenuItem>
               <MenuItem>
@@ -119,7 +119,7 @@
     processApi,
     unProcessApi,
   } from '@/api/nonconformity/plasmaOut';
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
   import { message, Modal, Dropdown as ADropdown, MenuItem, Menu } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { NonconformityButtonEnum } from '@/enums/authCodeEnum';
@@ -130,11 +130,13 @@
 
   const open = ref(false);
   const confirmLoading = ref(false);
-  const disabledTransfer = ref(false);
   const reportLoading = ref(false);
   const type = ref('');
 
   let api = removeFormApi;
+  const selectedRows = ref<Recordable>([]);
+
+  const disabledTransfer = computed(() => selectedRows.value[0]?.useTo !== '销毁');
 
   const [registerModal, { openModal }] = useModal();
   const [registerOutModal, { openModal: openOutModal }] = useModal();
@@ -152,7 +154,12 @@
     useSearchForm: true,
     showTableSetting: false,
     bordered: true,
-    rowSelection: { type: 'radio' },
+    rowSelection: {
+      type: 'radio',
+      onChange: (_, selectedRows: any) => {
+        selectedRows.value = selectedRows;
+      },
+    },
     beforeFetch: (p) => ({
       ...p,
       endDate: p.endDate?.slice(0, 10),
@@ -254,8 +261,6 @@
   async function handlePrint(field: PrintServerEnum) {
     const [row] = getSelections(true);
     if (!row) return;
-
-    disabledTransfer.value = field === PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER;
 
     try {
       reportLoading.value = true;
