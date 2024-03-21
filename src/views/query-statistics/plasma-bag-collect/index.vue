@@ -19,7 +19,7 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
 
   const globalApiStore = useGlobalApiStoreWithOut();
-  defineOptions({ name: 'PlasmaQuery' });
+  defineOptions({ name: 'PlasmaBagCollect' });
 
   const { currentRoute } = useRouter();
 

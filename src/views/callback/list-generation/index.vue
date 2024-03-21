@@ -62,7 +62,6 @@
     getCallbackListApi,
   } from '@/api/callback/list-generation';
   import {
-    CallbackStateMap,
     CallbackStateValueEnum,
     donorStatusMap,
     donorStatusValueEnum,
@@ -71,11 +70,15 @@
   import { callbackConfirm } from '@/api/callback/list-confirm';
   import { CallbackButtonEnum } from '@/enums/authCodeEnum';
   import { useStation } from '@/hooks/common/useStation';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
 
   const { stationOptions, getStationNameById } = useStation();
   defineOptions({ name: 'CallbackGeneration' });
 
   const selectedRow = ref<Recordable>([]);
+
+  const serverEnumStore = useServerEnumStoreWithOut();
 
   const { createConfirm, createMessage } = useMessage();
 
@@ -262,8 +265,9 @@
   function handlePlanNoClick(record: Recordable) {
     openCallbackDetailModal(true, {
       ...record,
+      isPreview: true,
       stationName: getStationNameById(record.stationNo),
-      state: CallbackStateMap.get(record.state),
+      state: serverEnumStore.getServerEnumText(SERVER_ENUM.CallbackPlanState)(record.state),
     });
   }
 
