@@ -3,7 +3,7 @@ import { BasicColumn } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -52,9 +52,9 @@ export const columns: BasicColumn[] = [
         title: '出库日期',
         dataIndex: 'outAt',
         width: 150,
-        format(text) {
-          return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-        },
+        // format(text) {
+        //   return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+        // },
       },
     ],
   },

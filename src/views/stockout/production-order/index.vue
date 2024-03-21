@@ -60,6 +60,14 @@
           >
             取消审核
           </a-button>
+          <a-button
+            type="primary"
+            @click="handlePrint('PLASMA_PRODUCTION_ORDER')"
+            v-auth="StockOutButtonEnum.ProductionOrderPrint"
+            :loading="reportLoading"
+          >
+            打印
+          </a-button>
         </div>
       </template>
     </BasicTable>
@@ -67,27 +75,25 @@
     <DetailModal @register="registerDetailModal" />
     <CreateModal @register="registerModal" @success="handleSuccess" />
     <CheckModal @register="registerCheckModal" @success="handleSuccess" />
+    <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
   import { BasicTable, useTable } from '@/components/Table';
-
   import { useModal } from '@/components/Modal';
-
   import { columns, searchFormSchema } from './po.data';
-
   import CreateModal from './CreateModal.vue';
   import CheckModal from './CheckModal.vue';
-
+  import ReportModal from '@/components/ReportModal/index.vue';
   import {
     getProOrders,
     delProOrder,
     reCheckProOrder,
     checkProOrder,
   } from '@/api/stockout/production-order';
+  import { getReportApi } from '@/api/report';
   import { createVNode, ref } from 'vue';
-
   import DetailModal from './DetailModal.vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { statusValueEnum } from '@/enums/stockoutEnum';
@@ -98,8 +104,10 @@
   const [registerModal, { openModal }] = useModal();
   const [registerCheckModal, { openModal: openCheckModal }] = useModal();
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
 
   const selectedRow = ref<Recordable>([]);
+  const reportLoading = ref(false);
 
   const { createMessage, createConfirm } = useMessage();
   const { warning } = createMessage;
@@ -285,5 +293,17 @@
   function handleSuccess() {
     reload();
     selectedRow.value = [];
+  }
+
+  async function handlePrint(reportType: string) {
+    if (!selectRowsCheck()) return;
+    const mesId = selectedRow.value[0].mesId;
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({ reportKey: reportType, contentKey: mesId });
+      openReportModal(true, window.URL.createObjectURL(res));
+    } finally {
+      reportLoading.value = false;
+    }
   }
 </script>
