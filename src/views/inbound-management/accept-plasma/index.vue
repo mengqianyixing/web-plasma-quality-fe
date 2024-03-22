@@ -43,7 +43,7 @@
               <a-button @click="openOutModal(true, filterForm)" :disabled="!filterForm.batchNo">
                 托盘出库
               </a-button>
-              <!-- <a-button @click="openReprintModal(true)">打印</a-button> -->
+              <!-- <a-button @click="openPrint">打印</a-button> -->
             </div>
           </div>
         </template>
@@ -102,7 +102,7 @@
     plasmaVerifyBag,
     plasmaComplete,
   } from '@/api/inbound-management/accept-plasma';
-  import { printRecord } from '@/api/tag/printRecord';
+  import { getPrintRecord, printRecord } from '@/api/tag/printRecord';
   import { Modal } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import dayjs from 'dayjs';
@@ -465,14 +465,10 @@
               filterForm.value.verifyBagCount
             ) {
               success('当前批验收完成');
-              openReprintModal(true, {
-                bagNo: bagNo.value,
-              });
+              openPrint(bagNo.value);
             } else if (!filterForm.value.unVerifyBag.length) {
               success('当前箱验收完成');
-              openReprintModal(true, {
-                bagNo: bagNo.value,
-              });
+              openPrint(bagNo.value);
             }
           }
         }
@@ -715,5 +711,19 @@
     };
     delete params.resolution;
     await printRecord(params);
+  }
+
+  async function openPrint(bagNo) {
+    // 获取标签相关样式
+    const res = await getPrintRecord({
+      labelType: 'PLAIN_BOX',
+      bissNo: bagNo, // 业务主键号
+    });
+    const { times } = res;
+    if (times <= 0) return;
+
+    openReprintModal(true, {
+      res,
+    });
   }
 </script>

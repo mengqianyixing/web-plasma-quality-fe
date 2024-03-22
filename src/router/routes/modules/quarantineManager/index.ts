@@ -61,6 +61,21 @@ const quarantineManager: AppRouteModule = {
       ],
     },
     {
+      path: 'nonconformityTracking',
+      name: 'NonconformityTracking',
+      meta: {
+        title: '不合格追踪',
+      },
+      id: 950040,
+      authElements: [
+        {
+          id: QuarantineButtonEnum.NonconformityTrackingReport,
+          title: '追踪记录/报告',
+        },
+      ],
+      component: () => import('@/views/query-statistics/nonconformityTracking/index.vue'),
+    },
+    {
       path: 'stationRefuse',
       name: 'StationRefuse',
       meta: {
@@ -90,21 +105,6 @@ const quarantineManager: AppRouteModule = {
       ],
       meta: { title: '超一年期确认' },
       component: () => import('@/views/quarantine/overdue-confirmation/index.vue'),
-    },
-    {
-      path: 'nonconformityTracking',
-      name: 'NonconformityTracking',
-      meta: {
-        title: '不合格追踪',
-      },
-      id: 950040,
-      authElements: [
-        {
-          id: QuarantineButtonEnum.NonconformityTrackingReport,
-          title: '追踪记录/报告',
-        },
-      ],
-      component: () => import('@/views/query-statistics/nonconformityTracking/index.vue'),
     },
   ],
 };
