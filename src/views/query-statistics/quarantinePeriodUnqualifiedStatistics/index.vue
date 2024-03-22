@@ -62,6 +62,17 @@
     pagination: false,
     bordered: true,
     showIndexColumn: false,
+    beforeFetch: (params) => {
+      const formatParams = {};
+      for (const key in params) {
+        if (params[key]?.includes('00:00:00')) {
+          formatParams[key] = params[key].slice(0, 10);
+        } else {
+          formatParams[key] = params[key];
+        }
+      }
+      return formatParams;
+    },
     afterFetch: (res: Recordable[]) => {
       const formatData = res.map((row) => ({
         ...row,

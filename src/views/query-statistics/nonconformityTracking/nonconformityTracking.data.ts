@@ -89,7 +89,7 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '不合格来源',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.BlockSource),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BagBlockSource),
     },
   },
   {
