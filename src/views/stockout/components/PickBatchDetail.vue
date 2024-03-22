@@ -48,8 +48,27 @@
   const selectedRow = ref([]); // 表格已选中
 
   const [registerModal] = useModalInner(async (data) => {
-    console.log('看看批次', data);
     prepareNo.value = data.record.prepareNo;
+    if (data.record.prepareState !== 'RUN') {
+      const cols = [...columnsImmunity];
+      cols.splice(
+        2,
+        0,
+        {
+          title: '分拣血浆数量',
+          dataIndex: 'sortCount',
+          slots: { customRender: 'sortCount' },
+        },
+        {
+          title: '待分拣血浆数量',
+          dataIndex: 'waitSortCount',
+          slots: { customRender: 'waitSortCount' },
+        },
+      );
+      setProps({
+        columns: cols,
+      });
+    }
   });
 
   const columnsImmunity: BasicColumn[] = [
@@ -61,16 +80,6 @@
     {
       dataIndex: 'pickCount',
       title: '挑浆次数',
-    },
-    {
-      title: '分拣血浆数量',
-      dataIndex: 'sortCount',
-      slots: { customRender: 'sortCount' },
-    },
-    {
-      title: '待分拣血浆数量',
-      dataIndex: 'waitSortCount',
-      slots: { customRender: 'waitSortCount' },
     },
     {
       title: '分拣人',
@@ -104,7 +113,7 @@
     },
   ];
 
-  const [registerTable] = useTable({
+  const [registerTable, { setProps }] = useTable({
     api: getBatchInfo,
     columns: columnsImmunity,
     useSearchForm: false,
