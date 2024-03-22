@@ -203,7 +203,6 @@
           donorNo: it.donorNo,
           donorName: it.donorName,
           gender: it.gender,
-          idcardId: it.idcardId,
           donatorStatus: donorStatusMap.get(it.donatorStatus as donorStatusValueEnum),
           refuseDate: it.refuseDate ? dayjs(it.refuseDate).format('YYYY-MM-DD') : '',
           refuseReason: it.refuseReason,
@@ -211,6 +210,10 @@
           minCollTime: it.minCollTime ? dayjs(it.minCollTime).format('YYYY-MM-DD') : '',
           plasmaCount: it.plasmaCount,
           maxCollectTime: it.maxCollectTime ? dayjs(it.maxCollectTime).format('YYYY-MM-DD') : '',
+          sampleNo: it.sampleNo,
+          sampleCollectTime: it.sampleCollectTime
+            ? dayjs(it.sampleCollectTime).format('YYYY-MM-DD')
+            : '',
         };
       });
 
@@ -219,7 +222,6 @@
           donorNo: '浆员编号',
           donorName: '浆员姓名',
           gender: '性别',
-          idcardId: '身份证号',
           donatorStatus: '浆员状态',
           refuseDate: '拒绝日期',
           refuseReason: '拒绝原因',
@@ -227,6 +229,8 @@
           minCollTime: '最早待回访采浆日期',
           plasmaCount: '待追踪袋数',
           maxCollectTime: '最后采浆日期',
+          sampleNo: '样本编号',
+          sampleCollectTime: '样本采集日期',
         },
         filename: `${selectedRow.value[0].planNo}-回访名单.xlsx`,
         data: _exportData,

@@ -194,11 +194,6 @@ export const callbackDetailModalColumns: BasicColumn[] = [
     width: 40,
   },
   {
-    title: '身份证号',
-    dataIndex: 'idcardId',
-    width: 160,
-  },
-  {
     title: '浆员状态',
     dataIndex: 'donatorStatus',
     format: (text) => {
