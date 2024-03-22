@@ -16,7 +16,6 @@
   import { nextTick } from 'vue';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm, FormSchema } from '@/components/Form';
-  import { getPrintRecord } from '@/api/tag/printRecord';
 
   defineOptions({ name: 'ReprintModal' });
 
@@ -69,13 +68,8 @@
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: true });
 
-    // 获取标签相关样式
-    const res = await getPrintRecord({
-      labelType: 'PLAIN_BOX',
-      bissNo: data.bagNo, // 业务主键号
-    });
-    labelObj = res;
-    const { times, directLabel } = res;
+    labelObj = data.res;
+    const { times, directLabel } = data.res;
     updateSchema([
       {
         field: 'boxNo',
