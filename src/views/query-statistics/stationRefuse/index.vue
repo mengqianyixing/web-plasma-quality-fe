@@ -36,9 +36,10 @@
     columns,
     formConfig: {
       schemas: searchFormSchema,
-      transformDateFunc(date) {
-        return date ? date.format('YYYY-MM-DD') : ''; // 时间格式只要日期
-      },
+      fieldMapToTime: [
+        ['createAt', ['createAtBegin', 'createAtEnd'], 'YYYY-MM-DD'],
+        ['blockAt', ['blockAtBegin', 'blockAtEnd'], 'YYYY-MM-DD'],
+      ],
     },
     fetchSetting: {
       pageField: 'currPage',

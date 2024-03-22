@@ -46,9 +46,12 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '[createAtBegin, createAtEnd]',
+    field: 'createAt',
     component: 'RangePicker',
     label: '建档日期',
+    componentProps: {
+      allowEmpty: [true, true],
+    },
   },
   {
     field: 'blockReason',
@@ -56,8 +59,11 @@ export const searchFormSchema: FormSchema[] = [
     label: '永拒原因',
   },
   {
-    field: '[blockAtBegin, blockAtEnd]',
+    field: 'blockAt',
     component: 'RangePicker',
     label: '永拒日期',
+    componentProps: {
+      allowEmpty: [true, true],
+    },
   },
 ];
