@@ -22,6 +22,7 @@
   import { DescItem, useDescription } from '@/components/Description';
 
   const isUpdate = ref(false);
+  const isPreview = ref(false);
   const batchNo = ref('');
 
   const descriptionData = ref({});
@@ -101,10 +102,13 @@
     immediate: true,
   });
 
-  const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '生成名单'));
+  const getTitle = computed(() =>
+    unref(isPreview) ? '名单详情' : unref(isUpdate) ? '编辑名单' : '生成名单',
+  );
 
   const [register] = useModalInner((data) => {
     isUpdate.value = data.isUpdate;
+    isPreview.value = data.isPreview;
     batchNo.value = data.planNo;
     descriptionData.value = data;
     reload();

@@ -95,8 +95,11 @@ export const searchSchema: FormSchema[] = [
     label: '申请单号',
   },
   {
-    field: '[applicationStartDate, applicationEndDate]',
+    field: 'fieldTime',
     component: 'RangePicker',
+    componentProps: {
+      allowEmpty: [true, true],
+    },
     label: '申请日期',
   },
   {

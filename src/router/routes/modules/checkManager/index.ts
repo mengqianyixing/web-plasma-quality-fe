@@ -163,12 +163,8 @@ const checkManager: AppRouteModule = {
           title: '发布',
         },
         {
-          id: InspectButtonEnum.ReportReleasePrintBack,
-          title: '打印回访样本检检验报告',
-        },
-        {
-          id: InspectButtonEnum.ReportReleasePrintCheck,
-          title: '打印原料血浆检验报告',
+          id: InspectButtonEnum.ReportReleasePrint,
+          title: '打印',
         },
       ],
       component: () => import('@/views/inspect/reportRelease/index.vue'),

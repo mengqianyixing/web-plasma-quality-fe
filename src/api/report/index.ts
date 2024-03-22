@@ -42,7 +42,10 @@ export function uploadReportApi(
  */
 export const getReportApi = (params?) =>
   defHttp
-    .get({ url: '/api/report/pdf', params, responseType: 'blob' }, { isTransformResponse: false })
+    .get(
+      { url: '/api/report/preview-pdf', params, responseType: 'blob' },
+      { isTransformResponse: false },
+    )
     .then((res) => {
       if (res.type !== 'application/json') {
         return res;

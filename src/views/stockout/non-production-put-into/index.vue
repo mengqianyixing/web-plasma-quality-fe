@@ -66,6 +66,32 @@
           <a-button type="primary" @click="handleScan" v-auth="StockOutButtonEnum.NonPutIntoScan">
             扫描出库
           </a-button>
+          <a-dropdown
+            v-auth="[
+              NonconformityButtonEnum.PlasmaOutTransferPrint,
+              NonconformityButtonEnum.PlasmaOutPlasmaPrint,
+              NonconformityButtonEnum.PlasmaOutDestructionPrint,
+            ]"
+          >
+            <a-button type="primary" :reportLoading="reportLoading"> 打印 </a-button>
+            <template #overlay>
+              <Menu>
+                <MenuItem>
+                  <a-button
+                    type="link"
+                    @click="handlePrint(PrintServerEnum.NON_PLASMA_TRANSFER_RECORD)"
+                  >
+                    非生产用血浆转移记录
+                  </a-button>
+                </MenuItem>
+                <MenuItem>
+                  <a-button type="link" @click="handlePrint(PrintServerEnum.RAW_PLASMA_TRANSFER)">
+                    原料血浆转移记录
+                  </a-button>
+                </MenuItem>
+              </Menu>
+            </template>
+          </a-dropdown>
         </div>
       </template>
     </BasicTable>
@@ -73,6 +99,7 @@
     <OperateModal @register="registerOperateModal" @success="handleSuccess" />
     <RevokeDlvModal @register="registerRevokeDlvModal" @success="handleSuccess" />
     <PlasmaOutModal @register="registerPlasmaOutModal" @success="handleSuccess" />
+    <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -82,6 +109,7 @@
   import { useModal } from '@/components/Modal';
 
   import { columns, searchSchema } from './non.data';
+  import ReportModal from '@/components/ReportModal/index.vue';
   import OperateModal from '@/views/stockout/non-production-put-into/operateModal.vue';
   import RevokeDlvModal from '@/views/stockout/non-production-put-into/RevokeDlvModal.vue';
   import PlasmaOutModal from '@/views/stockout/non-production-put-into/PlasmaOutModal.vue';
@@ -96,25 +124,27 @@
     revokeDeliverNonProductive,
     revokeReviewDeliverNonProductive,
   } from '@/api/stockout/non-productin-put-into';
-  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
+  import { NonconformityButtonEnum, StockOutButtonEnum } from '@/enums/authCodeEnum';
+  import { PrintServerEnum } from '@/enums/printServerEnum';
+  import { Menu, MenuItem, Dropdown as ADropdown } from 'ant-design-vue';
+  import { getReportApi } from '@/api/report';
 
   defineOptions({ name: 'NonProductionPutInto' });
 
   const [registerOperateModal, { openModal: openOperateModal }] = useModal();
   const [registerRevokeDlvModal, { openModal: openRevokeDlvModal }] = useModal();
   const [registerPlasmaOutModal, { openModal: openPlasmaOutModal }] = useModal();
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
 
   const selectedRow = ref<Recordable>([]);
   const { createMessage, createConfirm } = useMessage();
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
     api: getCoreBankDelivers,
     columns,
     formConfig: {
       schemas: searchSchema,
-      transformDateFunc(date) {
-        return date ? date.format('YYYY-MM-DD') : '';
-      },
+      fieldMapToTime: [['fieldTime', ['applicationStartDate', 'applicationEndDate'], 'YYYY-MM-DD']],
     },
     fetchSetting: {
       pageField: 'currPage',
@@ -314,5 +344,19 @@
   function handleSuccess() {
     reload();
     selectedRow.value = [];
+  }
+
+  const reportLoading = ref(false);
+  async function handlePrint(field: PrintServerEnum) {
+    if (!selectRowsCheck()) return;
+
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({ reportKey: field, contentKey: selectedRow.value[0].dlvNo });
+      openReportModal(true, window.URL.createObjectURL(res));
+      clearSelectedRowKeys();
+    } finally {
+      reportLoading.value = false;
+    }
   }
 </script>
