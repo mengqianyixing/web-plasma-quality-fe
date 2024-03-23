@@ -16,6 +16,7 @@ import {
 enum Api {
   PLASMA_SUMMARY = `/api/report/plasma/summary`,
   PREVIEW_PDF = `/api/report/preview-pdf`,
+  DOWNLOAD_REPORT = '/api/report/word',
 }
 
 export const getPlasmaSummary = (params: GetApiReportPlasmaSummaryRequest) =>
@@ -32,4 +33,14 @@ export const getPreviewPdf = (params: any) =>
       responseType: 'blob',
     },
     { isReturnNativeResponse: true },
+  );
+
+export const downloadReport = (params: { ReportKey: string; contentKey: string }) =>
+  defHttp.get(
+    {
+      url: Api.DOWNLOAD_REPORT,
+      params,
+      responseType: 'blob',
+    },
+    { joinParamsToUrl: true, isReturnNativeResponse: true },
   );
