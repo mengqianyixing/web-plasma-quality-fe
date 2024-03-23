@@ -24,7 +24,7 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '血浆复核日期',
+    title: '血浆审核日期',
     dataIndex: 'recheckAt',
     customCell: (record) => {
       return {
@@ -102,7 +102,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: '[recheckBeginAt, recheckEndAt]',
     component: 'RangePicker',
-    label: '血浆复核日期',
+    label: '血浆审核日期',
     componentProps: {
       valueFormat: 'YYYY-MM-DD',
     },
