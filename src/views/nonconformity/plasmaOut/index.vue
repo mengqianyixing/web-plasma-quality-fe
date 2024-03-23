@@ -49,28 +49,25 @@
           </a-button>
           <template #overlay>
             <Menu>
-              <MenuItem>
+              <MenuItem @click="handlePrint(PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER)">
                 <a-button
                   type="link"
-                  @click="handlePrint(PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER)"
                   :disabled="!disabledTransfer"
                   v-auth="NonconformityButtonEnum.PlasmaOutTransferPrint"
                   >不合格原料血浆转移记录
                 </a-button>
               </MenuItem>
-              <MenuItem>
+              <MenuItem @click="handlePrint(PrintServerEnum.UNQUALIFIED_RAW_PLASMA)">
                 <a-button
                   type="link"
-                  @click="handlePrint(PrintServerEnum.UNQUALIFIED_RAW_PLASMA)"
                   :disabled="disabledTransfer"
                   v-auth="NonconformityButtonEnum.PlasmaOutPlasmaPrint"
                   >不合格原料血浆信息清单
                 </a-button>
               </MenuItem>
-              <MenuItem>
+              <MenuItem @click="handlePrint(PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA)">
                 <a-button
                   type="link"
-                  @click="handlePrint(PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA)"
                   :disabled="disabledTransfer"
                   v-auth="NonconformityButtonEnum.PlasmaOutDestructionPrint"
                   >不合格原理血浆销毁处理申请审批表
