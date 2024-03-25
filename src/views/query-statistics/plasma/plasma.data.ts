@@ -136,9 +136,6 @@ export const columns: BasicColumn[] = [
       {
         title: '血浆类型',
         dataIndex: ['reCheckInfo', 'immunityType'],
-        format: (text) => {
-          return `${text}`;
-        },
         width: 150,
       },
       {

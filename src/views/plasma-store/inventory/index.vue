@@ -6,10 +6,10 @@
 
     <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData">
       <template #toolbar>
-        <div class="h-32px">
+        <div class="h-40px bg-#ffffff mt-2 flex items-center">
           <a-button
             type="primary"
-            class="absolute right-10"
+            class="absolute right-8"
             @click="handleExport"
             v-auth="SearchManager.InventoryExport"
           >
@@ -75,7 +75,7 @@
   const gridOptions = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
     border: true,
     showOverflow: true,
-    height: 750,
+    height: 810,
     align: 'center',
     size: 'small',
     exportConfig: {},
@@ -216,5 +216,14 @@
     display: block;
     height: 16px;
     background: #f5f5f5;
+  }
+
+  :deep(.vxe-cell--title) {
+    color: #1e1e1e;
+    font-size: 14px;
+  }
+
+  :deep(.vxe-cell--label) {
+    color: #1e1e1e;
   }
 </style>
