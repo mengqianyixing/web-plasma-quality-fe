@@ -123,7 +123,7 @@
     },
     {
       key: 'unMeetQuarantineRepeateTrace',
-      label: '未满足—重复续追踪',
+      label: '未满足—反复续追踪',
       columns: [
         {
           title: '效价类型',
