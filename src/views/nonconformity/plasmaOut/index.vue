@@ -70,7 +70,7 @@
                   type="link"
                   :disabled="disabledTransfer"
                   v-auth="NonconformityButtonEnum.PlasmaOutDestructionPrint"
-                  >不合格原理血浆销毁处理申请审批表
+                  >不合格原料血浆销毁处理申请审批表
                 </a-button>
               </MenuItem>
             </Menu>

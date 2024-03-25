@@ -120,7 +120,7 @@ const nonconformity: AppRouteModule = {
         {
           id: NonconformityButtonEnum.PlasmaOutDestructionPrint,
 
-          title: '不合格原理血浆销毁处理申请审批表',
+          title: '不合格原料血浆销毁处理申请审批表',
         },
       ],
       id: 920030,
