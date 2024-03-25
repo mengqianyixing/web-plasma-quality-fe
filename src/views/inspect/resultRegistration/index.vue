@@ -24,7 +24,7 @@
             v-auth="InspectButtonEnum.ResultRegistrationRegist"
             class="mr-15px"
             type="primary"
-            @click="registration"
+            @click="registrationClick"
             :disabled="!bsNo"
             :loading="registrationLoading"
             >登记完成</a-button
@@ -62,6 +62,15 @@
       </Tabs>
       <BatchModal @register="registerModal" @confirm="confirm" />
       <CheckItemModal @register="registerCIModal" @confirm="confirm2" />
+      <BasicModal
+        @register="registerCancelModal"
+        title="登记"
+        okText="提交"
+        width="300px"
+        @ok="registration"
+      >
+        <BasicForm @register="registerForm" />
+      </BasicModal>
     </div>
   </PageWrapper>
 </template>
@@ -77,7 +86,7 @@
   import MaterialRegistration from './materialRegistration/index.vue';
   import BatchModal from './batchDrawer.vue';
   import CheckItemModal from './checkItemDrawer.vue';
-  import { useModal } from '@/components/Modal';
+  import { useModal, BasicModal } from '@/components/Modal';
   import {
     getPlasmaCountApi,
     submitRegistrationApi,
@@ -86,6 +95,8 @@
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
+  import { BasicForm, useForm } from '@/components/Form';
+  import dayjs, { Dayjs } from 'dayjs';
 
   defineOptions({ name: 'ResultRegistration' });
 
@@ -101,8 +112,26 @@
   const plasmaCellList = ref<Cell[]>([]);
   const reloadMap = ref<Map<string, Function>>(new Map());
 
+  const [registerForm, { resetFields, clearValidate, validate }] = useForm({
+    labelWidth: 120,
+    baseColProps: { span: 24 },
+    schemas: [
+      {
+        field: 'checkCompletionDate',
+        component: 'DatePicker',
+        label: '检测结束日期',
+        required: true,
+        componentProps: {
+          valueFormat: 'YYYY-MM-DD',
+          disabledDate: (date: Dayjs) => date && date > dayjs(),
+        },
+      },
+    ],
+    showActionButtonGroup: false,
+  });
   const [registerModal, { openModal: openModal }] = useModal();
   const [registerCIModal, { openModal: openCIModal }] = useModal();
+  const [registerCancelModal, { openModal: openCancelModal, setModalProps }] = useModal();
 
   function handleSelect() {
     openModal(true, {});
@@ -127,15 +156,21 @@
     countData.value = data;
     plasmaCellList.value = list;
   }
-  function registration() {
-    registrationLoading.value = true;
-    submitRegistrationApi({ bsNo: bsNo.value })
+  async function registration() {
+    setModalProps({ confirmLoading: true });
+    const values = await validate();
+    submitRegistrationApi({ bsNo: bsNo.value, checkCompletionDate: values.checkCompletionDate })
       .then(() => {
         message.success('登记成功');
       })
       .finally(() => {
-        registrationLoading.value = false;
+        setModalProps({ confirmLoading: false });
       });
+  }
+  function registrationClick() {
+    openCancelModal(true);
+    resetFields();
+    clearValidate();
   }
 
   function unRegistration() {

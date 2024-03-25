@@ -15,23 +15,16 @@ export const columns: BasicColumn[] = [
   {
     title: '账号',
     dataIndex: 'name',
-    width: 100,
   },
   {
     title: '姓名',
     dataIndex: 'displayName',
     className: 'empty-value',
-    width: 100,
   },
-  {
-    title: '归属',
-    dataIndex: 'owner',
-    width: 100,
-  },
+
   {
     title: '状态',
     dataIndex: 'isForbidden',
-    width: 120,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     customRender: ({ record }) => {
       return h(Tag, { color: record.isForbidden ? 'red' : 'green' }, () => {
@@ -42,7 +35,6 @@ export const columns: BasicColumn[] = [
   {
     title: '创建时间',
     dataIndex: 'createdTime',
-    width: 220,
     customRender: ({ record }) => customRenderDate(record.createdTime),
   },
 ];
