@@ -50,7 +50,7 @@
   import { reactive } from 'vue';
   import { message, Modal } from 'ant-design-vue';
 
-  const emit = defineEmits(['close']);
+  const emit = defineEmits(['close', 'register']);
 
   const state = reactive({ dlvNo: '', loading: false, title: '' });
   const [registerDtModal, { openModal }] = useModal();

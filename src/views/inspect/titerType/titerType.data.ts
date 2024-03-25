@@ -20,6 +20,10 @@ export const columns: BasicColumn[] = [
     slots: { customRender: 'itemValue' },
   },
   {
+    title: 'ERP物料编码',
+    dataIndex: 'materialCode',
+  },
+  {
     title: '名称',
     dataIndex: 'itemKey',
   },
@@ -100,11 +104,17 @@ export const formListSchema: FormSchema[] = [
       options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
+
   {
     field: 'itemKey',
     component: 'Input',
     label: '名称',
     required: true,
+  },
+  {
+    field: 'materialCode',
+    component: 'Input',
+    label: 'ERP物料编码',
   },
   {
     field: 'titerType',

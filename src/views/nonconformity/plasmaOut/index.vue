@@ -6,74 +6,72 @@
           type="primary"
           @click="openModal(true, {})"
           v-auth="NonconformityButtonEnum.PlasmaOutAdd"
-          >新增</a-button
-        >
+          >新增
+        </a-button>
         <a-button
           type="primary"
           @click="handleEdit"
           v-auth="NonconformityButtonEnum.PlasmaOutUpdate"
-          >编辑</a-button
-        >
+          >编辑
+        </a-button>
         <a-button
           type="primary"
           @click="handleRemove"
           v-auth="NonconformityButtonEnum.PlasmaOutRemove"
-          >撤销</a-button
-        >
+          >撤销
+        </a-button>
         <a-button
           type="primary"
           @click="handleProcess"
           v-auth="NonconformityButtonEnum.PlasmaOutProcess"
-          >审核</a-button
-        >
+          >审核
+        </a-button>
         <a-button
           type="primary"
           @click="handleUnProcess"
           v-auth="NonconformityButtonEnum.PlasmaOutUnProcess"
-          >取消审核</a-button
-        >
-        <a-button type="primary" @click="handleScan" v-auth="NonconformityButtonEnum.PlasmaOutScan"
-          >出库扫描</a-button
-        >
-        <a-dropdown
-          v-auth="[
-            NonconformityButtonEnum.PlasmaOutTransferPrint,
-            NonconformityButtonEnum.PlasmaOutPlasmaPrint,
-            NonconformityButtonEnum.PlasmaOutDestructionPrint,
-          ]"
-        >
-          <a-button type="primary" :reportLoading="reportLoading">
+          >取消审核
+        </a-button>
+        <a-button type="primary" @click="handleScan" v-auth="NonconformityButtonEnum.PlasmaOutScan">
+          出库扫描
+        </a-button>
+        <a-dropdown>
+          <a-button
+            type="primary"
+            :reportLoading="reportLoading"
+            v-auth="[
+              NonconformityButtonEnum.PlasmaOutTransferPrint,
+              NonconformityButtonEnum.PlasmaOutPlasmaPrint,
+              NonconformityButtonEnum.PlasmaOutDestructionPrint,
+            ]"
+          >
             打印
-            <DownOutlined />
           </a-button>
           <template #overlay>
             <Menu>
-              <MenuItem>
+              <MenuItem @click="handlePrint(PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER)">
                 <a-button
                   type="link"
-                  @click="handlePrint(PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER)"
                   :disabled="!disabledTransfer"
                   v-auth="NonconformityButtonEnum.PlasmaOutTransferPrint"
-                  >不合格原料血浆转移记录</a-button
-                >
+                  >不合格原料血浆转移记录
+                </a-button>
               </MenuItem>
-              <MenuItem>
+              <MenuItem @click="handlePrint(PrintServerEnum.UNQUALIFIED_RAW_PLASMA)">
                 <a-button
                   type="link"
-                  @click="handlePrint(PrintServerEnum.UNQUALIFIED_RAW_PLASMA)"
                   :disabled="disabledTransfer"
                   v-auth="NonconformityButtonEnum.PlasmaOutPlasmaPrint"
-                  >不合格原料血浆信息清单</a-button
-                >
+                  >不合格原料血浆信息清单
+                </a-button>
               </MenuItem>
-              <MenuItem>
+              <MenuItem @click="handlePrint(PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA)">
                 <a-button
                   type="link"
-                  @click="handlePrint(PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA)"
                   :disabled="disabledTransfer"
                   v-auth="NonconformityButtonEnum.PlasmaOutDestructionPrint"
-                  >不合格原理血浆销毁处理申请审批表</a-button
-                >
+                  >不合格原料血浆销毁处理申请审批表
+                </a-button>
               </MenuItem>
             </Menu>
           </template>
@@ -119,7 +117,7 @@
     processApi,
     unProcessApi,
   } from '@/api/nonconformity/plasmaOut';
-  import { ref, computed } from 'vue';
+  import { ref } from 'vue';
   import { message, Modal, Dropdown as ADropdown, MenuItem, Menu } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { NonconformityButtonEnum } from '@/enums/authCodeEnum';
@@ -134,9 +132,7 @@
   const type = ref('');
 
   let api = removeFormApi;
-  const selectedRows = ref<Recordable>([]);
-
-  const disabledTransfer = computed(() => selectedRows.value[0]?.useTo !== '销毁');
+  const disabledTransfer = ref(false);
 
   const [registerModal, { openModal }] = useModal();
   const [registerOutModal, { openModal: openOutModal }] = useModal();
@@ -157,7 +153,7 @@
     rowSelection: {
       type: 'radio',
       onChange: (_, selectedRows: any) => {
-        selectedRows.value = selectedRows;
+        disabledTransfer.value = selectedRows[0]?.useTo !== '销毁';
       },
     },
     beforeFetch: (p) => ({

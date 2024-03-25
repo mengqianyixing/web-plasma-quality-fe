@@ -34,7 +34,9 @@ export const searchFormSchema: FormSchema[] = [
     label: '血浆出库类型',
     component: 'Select',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.DlvType),
+      options: serverEnumStore
+        .getServerEnum(SERVER_ENUM.DlvType)
+        .filter((item) => !['SIC', 'NOR'].includes(item.value)),
     },
   },
   {

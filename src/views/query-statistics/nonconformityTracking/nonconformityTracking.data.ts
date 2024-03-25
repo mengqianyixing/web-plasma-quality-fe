@@ -6,7 +6,7 @@ import { getNonReasonListApi } from '@/api/query-statistics/nonconformityTrackin
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
 const serverEnumStore = useServerEnumStoreWithOut();
-const BlockSource = serverEnumStore.getServerEnumText(SERVER_ENUM.BlockSource);
+const BlockSource = serverEnumStore.getServerEnumText(SERVER_ENUM.BagBlockSource);
 
 const { stationOptions } = useStation();
 export const columns: BasicColumn[] = [

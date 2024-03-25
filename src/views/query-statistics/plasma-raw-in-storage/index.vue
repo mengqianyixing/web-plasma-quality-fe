@@ -63,7 +63,7 @@
 <style scoped>
   .root :deep(.ant-table-footer) {
     position: sticky;
-    bottom: 13%;
+    bottom: 3%;
     padding: 0 !important;
     border: 2px solid #f0f0f0 !important;
   }

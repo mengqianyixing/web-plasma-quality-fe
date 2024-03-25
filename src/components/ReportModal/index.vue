@@ -27,10 +27,11 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, defineEmits } from 'vue';
   import { BasicModal, useModalInner } from '@/components/Modal';
 
   defineOptions({ name: 'ReportModal' });
+  defineEmits(['register']);
 
   const iframeRef = ref<HTMLIFrameElement>();
   const link = ref('');

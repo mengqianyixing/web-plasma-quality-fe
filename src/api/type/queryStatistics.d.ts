@@ -3901,4 +3901,22 @@ export interface GetApiCoreBagOutInStorageStatisticResponse {
   tabulatingDate?: string;
 }
 
+/**
+ * 接口 [ERP出库查询-不合格血浆出库转移↗](https://yapi.sharing8.cn/project/529/interface/api/34043) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bank/out-erp/unq-trans`
+ * @更新时间 `2024-03-22 10:59:03`
+ */
+export interface GetApiCoreBankOutErpUnqTransRequest {}
+
+/**
+ * 接口 [ERP出库查询-不合格血浆出库转移↗](https://yapi.sharing8.cn/project/529/interface/api/34043) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bank/out-erp/unq-trans`
+ * @更新时间 `2024-03-22 10:59:03`
+ */
+export interface GetApiCoreBankOutErpUnqTransResponse {}
+
 /* prettier-ignore-end */
