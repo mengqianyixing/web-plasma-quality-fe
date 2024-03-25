@@ -8,10 +8,8 @@ import {
 import { DescItem } from '@/components/Description';
 import dayjs from 'dayjs';
 import {
-  DictionaryEnum,
   DictionaryItemKeyEnum,
   DictionaryReasonEnum,
-  getSysDictionary,
   getSysSecondaryDictionary,
 } from '@/api/_dictionary';
 
@@ -162,12 +160,9 @@ export const searchSchema: FormSchema[] = [
   {
     field: 'flow',
     label: '不合格类型',
-    component: 'ApiSelect',
+    component: 'Select',
     componentProps: {
-      api: getSysDictionary,
-      params: [DictionaryEnum.PlasmaFailedItem],
-      resultField: '[0].dictImtes',
-      valueField: 'id',
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BagUnqualifiedFlowEnum),
     },
   },
   {
