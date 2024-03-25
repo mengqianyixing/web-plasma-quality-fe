@@ -18,10 +18,10 @@
       v-model:activeKey="activeKey"
     >
       <TabPane key="batch" tab="血浆明细">
-        <BasicTable @register="batchTable" :key="donorNo" class="donor-tab mt--2" />
+        <BasicTable @register="batchTable" class="donor-tab mt--2" />
       </TabPane>
       <TabPane key="callBack" tab="回访明细">
-        <BasicTable @register="callBackTable" :key="donorNo" class="donor-tab mt--2" />
+        <BasicTable @register="callBackTable" class="donor-tab mt--2" />
       </TabPane>
       <TabPane key="titer" tab="效价趋势" class="mt--2">
         <Chart :donorNo="donorNo" />
@@ -34,7 +34,7 @@
   import { PageWrapper } from '@/components/Page';
   import { batchColumns, callbackColumns, donorSchema, searchFormSchema } from './donor.data';
   import { BasicForm, useForm } from '@/components/Form';
-  import { ref, watch, unref, onMounted } from 'vue';
+  import { ref, onMounted } from 'vue';
   import { TabPane, Tabs } from 'ant-design-vue';
   import Chart from './chart.vue';
   import { BasicTable, useTable } from '@/components/Table';
@@ -49,43 +49,24 @@
   defineOptions({ name: 'DonorQuery' });
   const router = useRoute();
 
-  const [register, { getFieldsValue, setFieldsValue }] = useForm({
+  const [register, { setFieldsValue, validate }] = useForm({
     schemas: searchFormSchema,
     submitOnReset: true,
     baseColProps: { flex: '0 0 370px' },
     autoSubmitOnEnter: true,
   });
-  const isUpdate = ref(false);
 
   const activeKey = ref('batch');
-  watch(
-    () => activeKey.value,
-    (key) => {
-      if (!unref(isUpdate)) return;
 
-      if (key === 'batch') {
-        setTimeout(() => {
-          reloadBatchTable();
-        }, 0);
-      } else if (key === 'callBack') {
-        setTimeout(() => {
-          reloadCallbackTable();
-        }, 0);
-      } else {
-        setTimeout(() => {
-          console.log('趋势图~');
-        }, 0);
-      }
-    },
-  );
   // 浆员查询
   const mockData = ref({});
   const donorNo = ref('');
   async function handleSubmit() {
-    const values = getFieldsValue();
-    mockData.value = await donorInfoListApi(values as PostApiCoreDonorListRequest);
-    await reloadBatchTable();
-    await reloadCallbackTable();
+    const values = await validate();
+    donorNo.value = values.donorNo;
+    mockData.value = donorInfoListApi(values as PostApiCoreDonorListRequest);
+    reloadBatchTable();
+    reloadCallbackTable();
   }
 
   // 浆员明细
@@ -109,12 +90,9 @@
   const [batchTable, { reload: reloadBatchTable }] = useTable({
     api: batchInfoListApi,
     beforeFetch: (params) => {
-      const data = getFieldsValue();
-      donorNo.value = data.donorNo;
       return {
         ...params,
-        donorNo: data.donorNo,
-        ...data,
+        donorNo: donorNo.value,
       };
     },
     fetchSetting: {
@@ -135,11 +113,9 @@
   const [callBackTable, { reload: reloadCallbackTable }] = useTable({
     api: callbacksInfoListApi,
     beforeFetch: (params) => {
-      const data = getFieldsValue();
       return {
         ...params,
-        donorNo: data.donorNo,
-        ...data,
+        donorNo: donorNo.value,
       };
     },
     fetchSetting: {

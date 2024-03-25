@@ -53,7 +53,7 @@
     }, <Recordable[]>[]);
     const legendData = res.map((it) => PlasmaType(it.immunity));
     const showDataZoomCount = 10;
-    const showDataZoom = xAxisData.length >= showDataZoomCount;
+    const showDataZoom = xAxisData.length > showDataZoomCount;
     const dataZoomEnd = showDataZoom
       ? Math.ceil((showDataZoomCount / xAxisData.length) * 100)
       : 100;
@@ -62,12 +62,12 @@
         xAxis: { data: xAxisData },
         series: seriesData,
         legend: { data: legendData },
-        grid: { bottom: showDataZoom ? 40 : 30 },
+        grid: { bottom: showDataZoom ? 60 : 30 },
         dataZoom: {
           show: showDataZoom,
           type: 'slider',
           showDetail: false,
-          bottom: 0,
+          bottom: 30,
           height: 20,
           start: 0,
           end: dataZoomEnd,
@@ -89,9 +89,8 @@
       toolbox: {
         show: true,
       },
-      grid: { left: '1%', right: 120, top: '10%', bottom: 0, containLabel: true },
+      grid: { left: '1%', right: 120, top: '10%', bottom: 30, containLabel: true },
       xAxis: {
-        type: 'category',
         data: [],
         name: '采集日期',
         nameTextStyle: { color: '#000', fontSize: 14 },
