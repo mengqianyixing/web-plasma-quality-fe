@@ -94,7 +94,7 @@
   getCasDoorAllUsers().then((res) => {
     userOptions.value = res.map((item) => {
       return {
-        label: item.owner + '/' + item.name + '(' + (item.displayName || item.name) + ')',
+        label: item.name + '(' + (item.displayName || item.name) + ')',
         value: item.owner + '/' + item.name,
       };
     });

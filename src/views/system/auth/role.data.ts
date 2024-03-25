@@ -1,3 +1,4 @@
+import { join } from 'node:path';
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
@@ -15,26 +16,12 @@ export const columns: BasicColumn[] = [
     className: 'empty-value',
     width: 200,
   },
-  {
-    title: '归属',
-    dataIndex: 'owner',
-    width: 100,
-  },
+
   {
     title: '用户',
     dataIndex: 'users',
     width: 280,
-    customRender: ({ record }) => {
-      return h(
-        'div',
-        {
-          class: 'truncate',
-          style: 'padding: 5px;',
-          title: record.users.join(','),
-        },
-        record?.users?.length ? record?.users?.join(',') : '-',
-      );
-    },
+    format: (arr: Array<string> & any) => arr.map((_) => _.split('/')[1]).join(','),
   },
   {
     title: '状态',
