@@ -165,15 +165,15 @@
     },
   ];
 
-  const [registerBasicForm] = useForm({
+  const [registerBasicForm, { getFieldsValue }] = useForm({
     schemas: searchFormSchema,
     baseColProps: { flex: '0 0 373px' },
     actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
     submitFunc: reloadTable,
-    resetFunc: reloadTable,
+    submitOnReset: true,
   });
 
-  const [registerTable, { getForm, setLoading }] = useTable({
+  const [registerTable, { setLoading }] = useTable({
     pagination: false,
     clickToRowSelect: false,
     size: 'small',
@@ -187,7 +187,7 @@
   async function reloadTable() {
     setLoading(true);
     originData.value = await getInventoryList({
-      ...getForm().getFieldsValue(),
+      ...getFieldsValue(),
     });
     setLoading(false);
   }
