@@ -53,11 +53,6 @@ export const columns: BasicColumn[] = [
   {
     title: '物料编码',
     dataIndex: 'materialNo',
-    customCell: (record) => {
-      return {
-        rowSpan: record.rowSpan,
-      };
-    },
   },
   {
     title: '血浆类型',
