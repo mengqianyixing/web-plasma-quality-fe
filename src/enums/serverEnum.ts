@@ -50,4 +50,5 @@ export enum SERVER_ENUM {
   CallbackPlanState = 'CallbackPlanState',
   BizModule = 'BizModule',
   BagCalculateReleaseState = 'BagCalculateReleaseState',
+  PrintState = 'PrintState',
 }

@@ -152,7 +152,7 @@ export type PostApiCoreBagPlasmaExpiredResponse = null;
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `GET /api/core/donor/unqualified/track`
- * @更新时间 `2024-03-26 15:26:35`
+ * @更新时间 `2024-03-26 15:51:00`
  */
 export interface GetApiCoreDonorUnqualifiedTrackRequest {
   currPage: string;
@@ -198,7 +198,7 @@ export interface GetApiCoreDonorUnqualifiedTrackRequest {
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `GET /api/core/donor/unqualified/track`
- * @更新时间 `2024-03-26 15:26:35`
+ * @更新时间 `2024-03-26 15:51:00`
  */
 export interface GetApiCoreDonorUnqualifiedTrackResponse {
   totalCount?: number;
