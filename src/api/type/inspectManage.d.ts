@@ -959,13 +959,14 @@ export type GetApiCoreLabRegistrationLabItemTiterBsNoResponse = {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/labItem/labReport`
- * @更新时间 `2023-12-29 11:30:00`
+ * @更新时间 `2024-03-26 15:47:38`
  */
 export interface PostApiCoreLabRegistrationLabItemLabReportRequest {
   /**
    * 样品批号
    */
   bsNo: string;
+  checkCompletionDate: string;
 }
 
 /**
@@ -973,7 +974,7 @@ export interface PostApiCoreLabRegistrationLabItemLabReportRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/labItem/labReport`
- * @更新时间 `2023-12-29 11:30:00`
+ * @更新时间 `2024-03-26 15:47:38`
  */
 export type PostApiCoreLabRegistrationLabItemLabReportResponse = string;
 

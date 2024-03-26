@@ -3058,102 +3058,6 @@ export interface PostApiCoreLabItemQueryResponse {
 }
 
 /**
- * 接口 [不合格追踪↗](https://yapi.sharing8.cn/project/529/interface/api/33783) 的 **请求类型**
- *
- * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/donor/unqualified/track`
- * @更新时间 `2024-03-07 10:31:36`
- */
-export interface GetApiCoreDonorUnqualifiedTrackRequest {
-  currPage: string;
-  pageSize: string;
-  /**
-   * 浆站编码
-   */
-  stationNo?: string;
-  /**
-   * 样本批次号
-   */
-  sampleBatchNo?: string;
-  /**
-   * 样本编码
-   */
-  sampleNo?: string;
-  /**
-   * 采集日期开始
-   */
-  collectStartDate?: string;
-  collectEndDate?: string;
-  /**
-   * 不合格来源(浆站报送/厂家检测)
-   */
-  blockBy: string;
-  /**
-   * 不合格原因(需追溯检疫期的项目相关)
-   */
-  failedCode: string;
-  /**
-   * 不合格日期查询
-   */
-  blockStartDate: string;
-  blockEndDate: string;
-}
-
-/**
- * 接口 [不合格追踪↗](https://yapi.sharing8.cn/project/529/interface/api/33783) 的 **返回类型**
- *
- * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/donor/unqualified/track`
- * @更新时间 `2024-03-07 10:31:36`
- */
-export interface GetApiCoreDonorUnqualifiedTrackResponse {
-  totalCount?: number;
-  pageSize?: number;
-  totalPage?: number;
-  currPage?: number;
-  result?: {
-    /**
-     * 采浆公司
-     */
-    stationName?: null;
-    stationNo?: string;
-    /**
-     * 样本批号
-     */
-    sampleBatchNo?: null;
-    /**
-     * 样本编号
-     */
-    sampleNo?: string;
-    /**
-     * 采集日期
-     */
-    collectAt?: string;
-    /**
-     * 浆员编号
-     */
-    donorNo?: string;
-    /**
-     * 姓名
-     */
-    donorName?: string;
-    failedCode?: string;
-    /**
-     * 不合格原因
-     */
-    failedReason?: null;
-    /**
-     * 不合格日期
-     */
-    blockAt?: string;
-    /**
-     * 不合格来源
-     */
-    blockBy?: string;
-  }[];
-}
-
-/**
  * 接口 [血浆汇总↗](https://yapi.sharing8.cn/project/529/interface/api/33804) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
@@ -3902,21 +3806,209 @@ export interface GetApiCoreBagOutInStorageStatisticResponse {
 }
 
 /**
- * 接口 [ERP出库查询-不合格血浆出库转移↗](https://yapi.sharing8.cn/project/529/interface/api/34043) 的 **请求类型**
+ * 接口 [erp出库查询-投产出库↗](https://yapi.sharing8.cn/project/529/interface/api/34078) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/bank/out-erp/unq-trans`
- * @更新时间 `2024-03-22 10:59:03`
+ * @请求头 `GET /api/product/prepare/erp-out/prod`
+ * @更新时间 `2024-03-26 11:07:38`
  */
-export interface GetApiCoreBankOutErpUnqTransRequest {}
+export interface GetApiProductPrepareErpOutProdRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 出库日期起
+   */
+  outStartDate?: string;
+  /**
+   * 出库日期止
+   */
+  outEndDate?: string;
+  /**
+   * 投产接收日期起
+   */
+  prodAcceptStartDate?: string;
+  /**
+   * 投产接受日期止
+   */
+  prodAcceptEndDate?: string;
+  /**
+   * 制造批号
+   */
+  mesId?: string;
+}
 
 /**
- * 接口 [ERP出库查询-不合格血浆出库转移↗](https://yapi.sharing8.cn/project/529/interface/api/34043) 的 **返回类型**
+ * 接口 [erp出库查询-投产出库↗](https://yapi.sharing8.cn/project/529/interface/api/34078) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/bank/out-erp/unq-trans`
- * @更新时间 `2024-03-22 10:59:03`
+ * @请求头 `GET /api/product/prepare/erp-out/prod`
+ * @更新时间 `2024-03-26 11:07:38`
  */
-export interface GetApiCoreBankOutErpUnqTransResponse {}
+export interface GetApiProductPrepareErpOutProdResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 血浆批号（erp）
+     */
+    erpBatchNo: string;
+    /**
+     * 血浆出库类型
+     */
+    outType: string;
+    /**
+     * 物料编码
+     */
+    materialNo?: string;
+    /**
+     * 血浆类型
+     */
+    plasmaType: string;
+    /**
+     * 效价类型
+     */
+    titerType: string;
+    /**
+     * 血浆总数
+     */
+    bagNum: number;
+    /**
+     * 验收净重
+     */
+    verifyWeight: number;
+    /**
+     * 出库日期
+     */
+    outDate: string;
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
+    /**
+     * 制造批号
+     */
+    mesIds: string;
+    /**
+     * 血浆去向
+     */
+    goWhere?: string;
+  }[];
+}
+
+/**
+ * 接口 [erp出库查询非投产出库↗](https://yapi.sharing8.cn/project/529/interface/api/34098) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bank/erp-out/non-prod`
+ * @更新时间 `2024-03-26 18:47:25`
+ */
+export interface GetApiCoreBankErpOutNonProdRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 申请单号
+   */
+  dlvNo?: string;
+  /**
+   * 出库日期起
+   */
+  outStartDate?: string;
+  /**
+   * 出库日期止
+   */
+  outEndDate?: string;
+  /**
+   * RMT("不合格出库转移"),
+   * DST("不合格出库销毁"),
+   * NPD("非生产出库"),
+   */
+  dlvType: string;
+}
+
+/**
+ * 接口 [erp出库查询非投产出库↗](https://yapi.sharing8.cn/project/529/interface/api/34098) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bank/erp-out/non-prod`
+ * @更新时间 `2024-03-26 18:47:25`
+ */
+export interface GetApiCoreBankErpOutNonProdResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 申请单号
+     */
+    dlvNo: string;
+    /**
+     * 出库类型
+     */
+    outType: string;
+    /**
+     * 血浆袋数
+     */
+    bagNum: number;
+    /**
+     * 验收净重
+     */
+    verifyWeight: number;
+    /**
+     * 申请原因
+     */
+    reason: string;
+  }[];
+}
+
+/**
+ * 接口 [erp出库查询详情↗](https://yapi.sharing8.cn/project/529/interface/api/34108) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bank/erp-out/detail`
+ * @更新时间 `2024-03-26 14:56:59`
+ */
+export interface GetApiCoreBankErpOutDetailRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+}
+
+/**
+ * 接口 [erp出库查询详情↗](https://yapi.sharing8.cn/project/529/interface/api/34108) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/bank/erp-out/detail`
+ * @更新时间 `2024-03-26 14:56:59`
+ */
+export interface GetApiCoreBankErpOutDetailResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 血浆编号
+     */
+    bagNo: string;
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
+    /**
+     * 验收净重
+     */
+    verifyWeight: number;
+    /**
+     * 物料编码
+     */
+    materialNo: string;
+  }[];
+}
 
 /* prettier-ignore-end */

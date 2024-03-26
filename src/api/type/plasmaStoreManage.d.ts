@@ -146,7 +146,7 @@ export type PutApiCoreBankWarehouseResponse = string;
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/warehouses`
- * @更新时间 `2024-01-09 17:07:30`
+ * @更新时间 `2024-03-26 15:56:51`
  */
 export interface GetApiCoreBankWarehousesRequest {
   /**
@@ -170,6 +170,7 @@ export interface GetApiCoreBankWarehousesRequest {
    */
   warehouseType?: string;
   closed?: string;
+  normal?: string;
 }
 
 /**
@@ -177,7 +178,7 @@ export interface GetApiCoreBankWarehousesRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/warehouses`
- * @更新时间 `2024-01-09 17:07:30`
+ * @更新时间 `2024-03-26 15:56:51`
  */
 export interface GetApiCoreBankWarehousesResponse {
   /**
