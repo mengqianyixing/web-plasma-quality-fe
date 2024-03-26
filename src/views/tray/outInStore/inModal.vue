@@ -140,7 +140,12 @@
   async function getHouseList() {
     try {
       if (state.houseList.length) return;
-      const res = await settingListApi({ pageSize: '9999', currPage: '1', closed: CLOSED.NORMAL });
+      const res = await settingListApi({
+        pageSize: '9999',
+        currPage: '1',
+        closed: CLOSED.NORMAL,
+        normal: true,
+      });
       const options = (res.result || []).map((_) => ({
         value: _.houseNo,
         label: _.houseName,
