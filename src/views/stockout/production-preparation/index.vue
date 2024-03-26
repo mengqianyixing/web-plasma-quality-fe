@@ -496,7 +496,7 @@
     }
     // 复核人不能和准备人相同
     if (creator === userInfo.getUserInfo.username) {
-      warning('当前账号无此权限!');
+      warning('复核人与准备人不能为同一人!');
       return;
     }
 
