@@ -161,6 +161,7 @@
     const values = await validate();
     submitRegistrationApi({ bsNo: bsNo.value, checkCompletionDate: values.checkCompletionDate })
       .then(() => {
+        openCancelModal(false);
         message.success('登记成功');
       })
       .finally(() => {

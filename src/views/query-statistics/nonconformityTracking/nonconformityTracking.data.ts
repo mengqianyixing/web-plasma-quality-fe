@@ -31,6 +31,7 @@ export const columns: BasicColumn[] = [
   {
     title: '浆员编号',
     dataIndex: 'donorNo',
+    slots: { customRender: 'donorNo' },
   },
   {
     title: '姓名',
@@ -49,6 +50,14 @@ export const columns: BasicColumn[] = [
     title: '不合格来源',
     dataIndex: 'blockBy',
     format: BlockSource,
+  },
+  {
+    title: '打印人',
+    dataIndex: 'printer',
+  },
+  {
+    title: '打印时间',
+    dataIndex: 'printAt',
   },
 ];
 
@@ -108,6 +117,14 @@ export const searchFormSchema: FormSchema[] = [
     label: '不合格日期',
     componentProps: {
       valueFormat: 'YYYY-MM-DD',
+    },
+  },
+  {
+    field: 'printState',
+    component: 'Select',
+    label: '打印状态',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PrintState),
     },
   },
 ];

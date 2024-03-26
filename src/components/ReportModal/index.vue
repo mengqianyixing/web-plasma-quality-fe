@@ -29,6 +29,7 @@
 <script setup lang="ts">
   import { ref, defineEmits } from 'vue';
   import { BasicModal, useModalInner } from '@/components/Modal';
+  import { updateReportPrintApi } from '@/api/report';
 
   defineOptions({ name: 'ReportModal' });
   defineEmits(['register']);
@@ -43,5 +44,6 @@
 
   function handlePrint() {
     iframeRef.value?.contentWindow?.print();
+    updateReportPrintApi();
   }
 </script>

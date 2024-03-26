@@ -160,7 +160,12 @@
 
   async function getHouseList() {
     try {
-      const res = await settingListApi({ pageSize: '9999', currPage: '1', closed: CLOSED.NORMAL });
+      const res = await settingListApi({
+        pageSize: '9999',
+        currPage: '1',
+        closed: CLOSED.NORMAL,
+        normal: true,
+      });
       const data = res.result || [];
       const options = data.map((_) => ({
         value: _.houseNo,

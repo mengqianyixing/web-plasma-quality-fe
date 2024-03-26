@@ -61,6 +61,12 @@ export const searchFormSchema: FormSchema[] = [
     field: 'batchNo',
   },
   {
+    component: 'Input',
+    field: 'boxNo',
+    label: '血浆箱号',
+  },
+
+  {
     label: '浆袋编号',
     component: 'Input',
     field: 'bagNo',

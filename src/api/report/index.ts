@@ -3,8 +3,13 @@ import { defHttp } from '@/utils/http/axios';
 import { UploadFileParams } from '#/axios';
 import { AxiosProgressEvent } from 'axios';
 import { useMessage } from '@/hooks/web/useMessage';
+import { PutApiReportContentRequest } from '@/api/type/report';
 
 const { createErrorModal } = useMessage();
+let reportPrintParams: PutApiReportContentRequest = {
+  reportKey: '',
+  contentKey: '',
+};
 /**
  * 获取报表列表
  * @param params
@@ -40,8 +45,9 @@ export function uploadReportApi(
  * @param params
  * @returns
  */
-export const getReportApi = (params?) =>
-  defHttp
+export const getReportApi = (params: PutApiReportContentRequest) => {
+  reportPrintParams = params;
+  return defHttp
     .get(
       { url: '/api/report/preview-pdf', params, responseType: 'blob' },
       { isTransformResponse: false },
@@ -62,7 +68,13 @@ export const getReportApi = (params?) =>
         };
         // 第四步：开始读取Blob为文本
         reader.readAsText(res);
-        console.log(window.URL.createObjectURL(res));
         return Promise.reject();
       }
     });
+};
+
+export const updateReportPrintApi = () =>
+  defHttp.put({
+    url: '/api/report/content',
+    params: <PutApiReportContentRequest>reportPrintParams,
+  });

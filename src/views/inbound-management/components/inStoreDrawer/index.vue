@@ -35,7 +35,7 @@
       @ok="okFunction"
       @cancel="emit('close')"
     >
-      <BasicForm @register="registerForm" />
+      <BasicForm @register="registerForm" @submit="okFunction" />
     </BasicModal>
   </BasicModal>
 </template>
@@ -64,6 +64,7 @@
         { label: '箱号', component: 'Input', field: 'boxId', required: true },
       ],
       showActionButtonGroup: false,
+      autoSubmitOnEnter: true,
     });
 
   const [registerInModal, { openModal: openInModal }] = useModal();

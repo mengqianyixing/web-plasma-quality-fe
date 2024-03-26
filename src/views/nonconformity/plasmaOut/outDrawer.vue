@@ -10,7 +10,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    title="挑浆"
+    title="出库扫描"
     width="1200px"
     @cancel="emit('close')"
     :minHeight="520"
