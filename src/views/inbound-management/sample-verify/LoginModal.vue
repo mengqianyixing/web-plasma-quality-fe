@@ -13,7 +13,7 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { reCheckLogin } from '@/api/sys/login';
-  import { PostApiSysReviewerLoginRequest } from '@/api/type/login';
+  import { PostApiSysReviewerCasdoorLoginRequest } from '@/api/type/login';
 
   defineOptions({ name: 'LoginModal' });
 
@@ -55,7 +55,7 @@
   async function handleSubmit() {
     try {
       const values = await validate();
-      const loginRes = await reCheckLogin(values as PostApiSysReviewerLoginRequest);
+      const loginRes = await reCheckLogin(values as PostApiSysReviewerCasdoorLoginRequest);
       setModalProps({ confirmLoading: true });
       closeModal();
       emit('success', loginRes.username);
