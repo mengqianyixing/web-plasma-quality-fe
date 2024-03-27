@@ -210,6 +210,8 @@
           minCollTime: it.minCollTime ? dayjs(it.minCollTime).format('YYYY-MM-DD') : '',
           plasmaCount: it.plasmaCount,
           maxCollectTime: it.maxCollectTime ? dayjs(it.maxCollectTime).format('YYYY-MM-DD') : '',
+          callbackDate: it.callbackDate,
+          callbackResult: it.callbackResult,
           sampleNo: it.sampleNo,
           sampleCollectTime: it.sampleCollectTime
             ? dayjs(it.sampleCollectTime).format('YYYY-MM-DD')
@@ -229,6 +231,8 @@
           minCollTime: '最早待回访采浆日期',
           plasmaCount: '待追踪袋数',
           maxCollectTime: '最后采浆日期',
+          callbackDate: '回访日期',
+          callbackResult: '回访结果',
           sampleNo: '样本编号',
           sampleCollectTime: '样本采集日期',
         },

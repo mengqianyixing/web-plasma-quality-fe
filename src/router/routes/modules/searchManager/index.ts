@@ -224,6 +224,15 @@ const trayManager: AppRouteModule = {
       component: () => import('@/views/query-statistics/ERPEntryStore/index.vue'),
     },
     {
+      path: 'ERPOutStore',
+      name: 'ERPOutStore',
+      meta: {
+        title: 'ERP-出库查询',
+      },
+      id: 9000231,
+      component: () => import('@/views/query-statistics/ERPOutStore/index.vue'),
+    },
+    {
       path: 'donor',
       name: 'DonorQuery',
       meta: {
