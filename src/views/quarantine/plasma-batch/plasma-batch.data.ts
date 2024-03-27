@@ -135,7 +135,7 @@ export const modalColumns: BasicColumn[] = [
   {
     title: '检验合格血浆数量',
     dataIndex: 'plasmaCount',
-    width: 80,
+    width: 140,
   },
   {
     title: '最早采浆日期',

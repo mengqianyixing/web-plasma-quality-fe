@@ -150,7 +150,7 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '样本状态',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleExperimentType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleStatusEnum),
     },
   },
   {

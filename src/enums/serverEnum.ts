@@ -51,4 +51,6 @@ export enum SERVER_ENUM {
   BizModule = 'BizModule',
   BagCalculateReleaseState = 'BagCalculateReleaseState',
   PrintState = 'PrintState',
+  ReportTemplateState = 'ReportTemplateState',
+  SampleStatusEnum = 'SampleStatusEnum',
 }
