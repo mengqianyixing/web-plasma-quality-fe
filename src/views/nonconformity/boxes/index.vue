@@ -22,7 +22,7 @@
   import { PageWrapper } from '@/components/Page';
   import BoxModal from '@/views/nonconformity/boxes/BoxModal.vue';
   import { deleteBox, nonconformityBoxList } from '@/api/nonconformity/box-manage';
-  import { getPrintRecord } from '@/api/tag/printRecord';
+  import { getPrintRecord, printRecord } from '@/api/tag/printRecord';
   import {
     DictionaryItemKeyEnum,
     DictionaryReasonEnum,
@@ -139,10 +139,16 @@
 
   async function handleLabelPrint() {
     const res = await getPrintRecord({
-      labelType: 'PLAIN_BOX',
+      labelType: 'UQF_BOX',
       bissNo: selectedRowsRef.value[0].boxNo,
     });
-    console.log(res);
+
+    const params = {
+      ...res,
+      dpi: res.resolution,
+    };
+    delete params.resolution;
+    await printRecord(params);
   }
 
   function handleSuccess() {
