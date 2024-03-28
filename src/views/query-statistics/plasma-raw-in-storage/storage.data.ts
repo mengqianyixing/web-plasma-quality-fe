@@ -17,6 +17,43 @@ export const columns: BasicColumn[] = [
   },
 ];
 
+export const footerColumns: BasicColumn[] = [
+  {
+    title: '上月血浆存量',
+    dataIndex: 'allStockOfLastMonth',
+  },
+  {
+    title: '血浆入库量',
+    children: [
+      {
+        title: '本月',
+        dataIndex: 'allInOfMonth',
+      },
+      {
+        title: '本年',
+        dataIndex: 'allInOfYear',
+      },
+    ],
+  },
+  {
+    title: '血浆出库量',
+    children: [
+      {
+        title: '本月',
+        dataIndex: 'allOutOfMonth',
+      },
+      {
+        title: '本年',
+        dataIndex: 'allOutOfYear',
+      },
+    ],
+  },
+  {
+    title: '本月结存量',
+    dataIndex: 'allStockOfCurrMonth',
+  },
+];
+
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'timeField',
