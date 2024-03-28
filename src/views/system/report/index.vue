@@ -77,10 +77,6 @@
       message.warning('只能选择一条数据');
       return [];
     }
-    if (rows.state === 0) {
-      message.warning('模板已失效');
-      return;
-    }
     fn?.(rows);
     return rows;
   }

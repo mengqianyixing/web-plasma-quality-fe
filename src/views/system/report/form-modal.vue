@@ -16,6 +16,7 @@
   import { formSchema } from './report.data';
   import { reactive } from 'vue';
   import { updateReportApi } from '@/api/report';
+  import dayjs from 'dayjs';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -23,36 +24,49 @@
     title: string;
     id: string;
   }>({ title: '', id: '' });
-  const [registerForm, { validate, clearValidate, resetFields, setFieldsValue }] = useForm({
+  const [
+    registerForm,
+    { validate, clearValidate, resetFields, setFieldsValue, updateSchema, getFieldsValue },
+  ] = useForm({
     labelWidth: 120,
     baseColProps: { span: 24 },
     schemas: formSchema,
     showActionButtonGroup: false,
   });
   const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
-    console.log('data--', data);
     if (data.isUpdate) {
       state.title = '编辑';
       state.id = data.id;
-      // formSchema.slice(0, 1).forEach((schema) => {
-      //   updateSchema({ ...schema, componentProps: { disabled: true } });
-      // });
       setFieldsValue(data);
     } else {
       state.title = '新增';
       resetFields();
     }
     clearValidate();
+    updateSchema({ field: 'expiredDate', rules: [{ validator: validator }] });
     setModalProps({ confirmLoading: false });
   });
+  function validator(rule, value) {
+    const { effectiveDate } = getFieldsValue();
+    if (!value || !effectiveDate) return Promise.resolve();
+    if (dayjs(value) <= dayjs(effectiveDate)) {
+      return Promise.reject('有效期需要大于生效日期');
+    }
+    return Promise.resolve();
+  }
 
   async function handleSubmit() {
-    const values = await validate();
-    await updateReportApi({
-      ...values,
-      id: state.id,
-    });
-    closeModal();
-    emit('success');
+    try {
+      const values = await validate();
+      setModalProps({ confirmLoading: true });
+      await updateReportApi({
+        ...values,
+        id: state.id,
+      });
+      closeModal();
+      emit('success');
+    } finally {
+      setModalProps({ confirmLoading: false });
+    }
   }
 </script>
