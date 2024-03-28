@@ -79,6 +79,7 @@
     bordered: true,
     showIndexColumn: false,
     canResize: true,
+    immediate: false,
   });
 
   const loading = ref(false);
