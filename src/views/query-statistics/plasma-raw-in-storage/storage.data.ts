@@ -30,7 +30,7 @@ export const footerColumns: BasicColumn[] = [
         dataIndex: 'allInOfMonth',
       },
       {
-        title: '本年',
+        title: '累计',
         dataIndex: 'allInOfYear',
       },
     ],
@@ -43,7 +43,7 @@ export const footerColumns: BasicColumn[] = [
         dataIndex: 'allOutOfMonth',
       },
       {
-        title: '本年',
+        title: '累计',
         dataIndex: 'allOutOfYear',
       },
     ],
