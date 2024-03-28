@@ -24,6 +24,12 @@ export const columns: BasicColumn[] = [
     ellipsis: false,
   },
   {
+    title: '报表英文名称',
+    dataIndex: 'ctrlEngTitle',
+    width: 200,
+    ellipsis: false,
+  },
+  {
     title: '版本号',
     dataIndex: 'ctrlVersion',
     width: 120,
@@ -62,6 +68,12 @@ export const formSchema: FormSchema[] = [
     field: 'ctrlTitle',
     component: 'Input',
     label: '报表名称',
+    required: true,
+  },
+  {
+    field: 'ctrlEngTitle',
+    component: 'Input',
+    label: '报表英文名称',
     required: true,
   },
   {
