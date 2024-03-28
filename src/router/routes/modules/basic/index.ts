@@ -37,10 +37,7 @@ const callManager: AppRouteModule = {
           id: BaseSettingButtonEnum.TiterTypeUpdate,
           title: '编辑',
         },
-        {
-          id: BaseSettingButtonEnum.TiterTypeDelete,
-          title: '删除',
-        },
+
         {
           id: BaseSettingButtonEnum.TiterTypeEnable,
           title: '启用',

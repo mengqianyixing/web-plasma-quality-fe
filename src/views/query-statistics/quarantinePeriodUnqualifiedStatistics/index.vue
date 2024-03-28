@@ -62,17 +62,7 @@
     pagination: false,
     bordered: true,
     showIndexColumn: false,
-    beforeFetch: (params) => {
-      const formatParams = {};
-      for (const key in params) {
-        if (params[key]?.includes('00:00:00')) {
-          formatParams[key] = params[key].slice(0, 10);
-        } else {
-          formatParams[key] = params[key];
-        }
-      }
-      return formatParams;
-    },
+    beforeFetch: getFormatParams,
     afterFetch: (res: Recordable[]) => {
       const formatData = res.map((row) => ({
         ...row,
@@ -83,6 +73,18 @@
       return [...formatData, getCountRow(formatData)];
     },
   });
+  function getFormatParams(params: Recordable) {
+    const formatParams = {};
+    for (const key in params) {
+      if (params[key]?.includes('00:00:00')) {
+        formatParams[key] = params[key].slice(0, 10);
+      } else {
+        formatParams[key] = params[key];
+      }
+    }
+    return formatParams;
+  }
+
   async function handlerChange(field: string) {
     const { setFieldsValue, getFieldsValue, resetFields } = getForm();
     await nextTick();
@@ -219,7 +221,7 @@
     openModal(true, {
       failedCode,
       title,
-      ...values,
+      ...getFormatParams(values),
       stationNo: record.stationNo,
       unqBagQuaType,
     });
