@@ -70,7 +70,7 @@
   const [registerModal, { openModal }] = useModal();
   const [registerForm, { setFieldsValue, validate, updateSchema, resetFields, clearValidate }] =
     useForm({
-      labelWidth: 80,
+      labelWidth: 100,
       baseColProps: { span: 24 },
       schemas: [
         {
@@ -84,7 +84,7 @@
           required: true,
           field: 'titerValue',
           component: 'InputNumber',
-          label: '效价结果',
+          label: '效价结果值',
           componentProps: {
             min: 0,
             formatter: (n: string) => {
