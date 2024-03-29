@@ -35,7 +35,9 @@
               <a-button @click="suspendModal('BCH')">暂停批记录</a-button>
               <a-button @click="completeAccept">完成验收</a-button>
               <a-button
-                @click="openInModal(true, { ...filterForm, isAccept: true })"
+                @click="
+                  openInModal(true, { ...filterForm, isAccept: true, bizScen: 'plasmaVerify' })
+                "
                 :disabled="!filterForm.batchNo"
               >
                 托盘入库
