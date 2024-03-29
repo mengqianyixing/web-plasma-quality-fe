@@ -10,6 +10,7 @@ export const columns: BasicColumn[] = [
     title: '申请单号',
     dataIndex: 'dlvNo',
     slots: { customRender: 'dlvNo' },
+    width: 150,
   },
   {
     title: '申请原因',
@@ -30,6 +31,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '记录人',
@@ -41,6 +43,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '准备人',
@@ -52,28 +55,32 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '复核人',
-    dataIndex: 'checker',
-  },
-  {
-    title: '复核日期',
-    dataIndex: 'reviewDate',
-    format(text) {
-      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-    },
-  },
-  {
-    title: '审核人',
     dataIndex: 'reviewer',
   },
   {
-    title: '审核日期',
+    title: '复核日期',
     dataIndex: 'checkDate',
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
+  },
+  {
+    title: '审核人',
+    dataIndex: 'checker',
+    width: 80,
+  },
+  {
+    title: '审核日期',
+    dataIndex: 'reviewDate',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
+    width: 100,
   },
   {
     title: '出库扫描日期',
@@ -81,6 +88,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '状态',
