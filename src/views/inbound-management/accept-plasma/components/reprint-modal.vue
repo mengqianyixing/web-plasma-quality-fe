@@ -33,16 +33,16 @@
         disabled: true,
       },
     },
-    {
-      field: 'ok',
-      label: '是否打印',
-      component: 'Switch',
-      defaultValue: true,
-      colProps: {
-        span: 18,
-      },
-      required: true,
-    },
+    // {
+    //   field: 'ok',
+    //   label: '是否打印',
+    //   component: 'Switch',
+    //   defaultValue: true,
+    //   colProps: {
+    //     span: 18,
+    //   },
+    //   required: true,
+    // },
     {
       field: 'times',
       label: '打印份数',
@@ -58,7 +58,7 @@
   ];
   let labelObj = {}; // 标签样式
 
-  const [registerForm, { updateSchema, validate }] = useForm({
+  const [registerForm, { updateSchema }] = useForm({
     labelWidth: 170,
     baseColProps: { span: 32 },
     schemas: ReprintRecordFormSchema,
@@ -85,11 +85,11 @@
 
   async function handleSubmit() {
     try {
-      const values = await validate();
-      if (!values.ok || values.times == 0) {
-        closeModal();
-        return;
-      }
+      // const values = await validate();
+      // if (!values.ok || values.times == 0) {
+      //   closeModal();
+      //   return;
+      // }
       setModalProps({ confirmLoading: true });
       emit('success', { labelObj });
     } finally {

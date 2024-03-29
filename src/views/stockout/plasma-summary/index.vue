@@ -171,6 +171,9 @@
     }),
     formConfig: {
       schemas: searchFormschema,
+      transformDateFunc(date) {
+        return date ? date.format('YYYY-MM-DD') : ''; // 时间格式只要日期
+      },
     },
   });
   function getSelections(onlyOne: boolean, fn?: (rows: Recordable[]) => void) {

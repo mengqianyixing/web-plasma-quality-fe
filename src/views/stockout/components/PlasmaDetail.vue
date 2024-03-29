@@ -190,6 +190,15 @@
         })),
       },
     },
+    {
+      field: 'immType',
+      label: '效价类型',
+      component: 'Select',
+      colProps: { span: 4 },
+      componentProps: {
+        options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+      },
+    },
   ];
   const [registerTable, { getForm, reload }] = useTable({
     api: getSortBags,

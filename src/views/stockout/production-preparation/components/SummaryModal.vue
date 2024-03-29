@@ -24,8 +24,35 @@
         <TabPane key="columnsBatch" tab="血浆批次" />
         <TabPane key="columnsBox" tab="血浆箱号" />
         <TabPane key="columnsBag" tab="血浆明细" />
+        <template #rightExtra v-if="activeKey === 'columnsBag'">
+          <a-button
+            type="primary"
+            @click="handleExport"
+            :loading="exportLoading"
+            v-auth="StockOutButtonEnum.ProductionPreparationDetailExport"
+            >导出</a-button
+          >
+        </template>
       </Tabs>
-      <BasicTable @register="registerTable" :scroll="{ y: 520 }" />
+      <BasicTable @register="registerTable" :scroll="{ y: 520 }">
+        <template #bodyCell="{ record, column }">
+          <template v-if="column.key === 'action'">
+            <TableAction
+              :actions="[
+                {
+                  label: '删除',
+                  color: 'error',
+                  popConfirm: {
+                    title: '是否确认删除',
+                    placement: 'left',
+                    confirm: handleDel.bind(null, record),
+                  },
+                },
+              ]"
+            />
+          </template>
+        </template>
+      </BasicTable>
     </PageWrapper>
   </BasicModal>
   <PickModal @register="registerPickModal" @close-pick-modal="closePickModal" />
@@ -37,7 +64,9 @@
   import { Row, Col, Tabs, TabPane } from 'ant-design-vue';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
-  import { BasicTable, useTable, BasicColumn } from '@/components/Table';
+  import { BasicTable, useTable, BasicColumn, TableAction } from '@/components/Table';
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { jsonToSheetXlsx } from '@/components/Excel';
   import { ref } from 'vue';
   import {
     prepareStateMap,
@@ -56,11 +85,14 @@
     getBatchList,
     getBoxList,
     getBagList,
+    revokePickBag,
   } from '@/api/stockout/production-preparation.js';
+  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
   import dayjs from 'dayjs';
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
+  const { createMessage } = useMessage();
 
   const emit = defineEmits(['success']);
   const activeKey = ref('columnsImmunity');
@@ -387,7 +419,7 @@
     },
   ];
 
-  const [registerTable, { setProps, reload }] = useTable({
+  const [registerTable, { setProps, reload, getRawDataSource, setLoading }] = useTable({
     api: getImmunityList,
     columns: columnsImmunity,
     useSearchForm: false,
@@ -406,7 +438,7 @@
   });
 
   function changeTabs(activeKey) {
-    let api, columns;
+    let api, columns, actionColumn;
     switch (activeKey) {
       case 'columnsImmunity':
         api = getImmunityList;
@@ -419,10 +451,20 @@
       case 'columnsBatch':
         api = getBatchList;
         columns = columnsBatch;
+        actionColumn = {
+          title: '操作',
+          dataIndex: 'action',
+          fixed: 'right',
+        };
         break;
       case 'columnsBox':
         api = getBoxList;
         columns = columnsBox;
+        actionColumn = {
+          title: '操作',
+          dataIndex: 'action',
+          fixed: 'right',
+        };
         break;
       case 'columnsBag':
         api = getBagList;
@@ -434,6 +476,7 @@
     setProps({
       api,
       columns,
+      actionColumn,
     });
     reload();
   }
@@ -462,5 +505,82 @@
   function handleCloseFunc() {
     emit('success');
     return true;
+  }
+
+  // 导出功能
+  const exportLoading = ref(false);
+  async function handleExport() {
+    const tableDate = getRawDataSource();
+    if (!tableDate.length) {
+      createMessage.warn('暂无可导出的数据!');
+      return;
+    }
+
+    exportLoading.value = true;
+    try {
+      const _exportData = tableDate!.map((it) => {
+        return {
+          stationName: it.stationName,
+          batchNo: it.batchNo,
+          boxNo: it.boxNo,
+          bagNo: it.bagNo,
+          collectAt: it.collectAt ? dayjs(it.collectAt).format('YYYY-MM-DD') : '',
+          donorNo: it.donorNo,
+          donorName: it.donorName,
+          bloodType: it.bloodType,
+          immunity: it.immunity,
+          titer: it.titer,
+          calculateAt: it.calculateAt ? dayjs(it.calculateAt).format('YYYY-MM-DD') : '',
+          tracked: it.tracked ? BagTrackMap.get(it.tracked as BagTrackValueEnum) : '',
+        };
+      });
+
+      jsonToSheetXlsx<any>({
+        header: {
+          stationName: '浆站名称',
+          batchNo: '血浆批号',
+          boxNo: '血浆箱号',
+          bagNo: '血浆编号',
+          collectAt: '采集日期',
+          donorNo: '浆员编号',
+          donorName: '浆员姓名',
+          bloodType: '血型',
+          immunity: '效价类型',
+          titer: '效价值',
+          calculateAt: '检疫期满足日期',
+          tracked: '血浆流程状态	',
+        },
+        filename: `投产准备号:${prepareDetail.value.prepareNo}-血浆明细.xlsx`,
+        data: _exportData,
+      });
+
+      createMessage.success('导出成功');
+    } catch (e) {
+      createMessage.error('导出失败，请重试 :(');
+    } finally {
+      exportLoading.value = false;
+    }
+  }
+
+  // 删除
+  async function handleDel(record) {
+    console.log('shanchu', record);
+    const params = {
+      prepareNo: prepareDetail.value.prepareNo,
+      immType: record.immType,
+      titerLevel: record.titerLevel,
+    };
+    // 箱
+    if (Object.prototype.hasOwnProperty.call(record, 'boxNo')) params['boxNos'] = [record.boxNo];
+    // 批
+    else params['batchNos'] = [record.batchNo];
+
+    try {
+      setLoading(true);
+      await revokePickBag(params);
+      closePickModal();
+    } finally {
+      setLoading(false);
+    }
   }
 </script>

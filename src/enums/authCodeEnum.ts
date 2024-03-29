@@ -169,6 +169,7 @@ export enum StockOutButtonEnum {
   ProductionPreparationReset = 'E_91001006',
   ProductionPreparationReCheck = 'E_91001007',
   ProductionPreparationResetReCheck = 'E_91001008',
+  ProductionPreparationDetailExport = 'E_91001009',
 
   ProductionOrderAdd = 'E_91003001',
   ProductionOrderEdit = 'E_91003002',
