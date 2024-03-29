@@ -32,7 +32,7 @@
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { BasicTable, useTable } from '@/components/Table';
-  import { reactive } from 'vue';
+  import { reactive, ref } from 'vue';
   import { inStoreFormSchema } from './outInStore.data';
   import LocationModal from '@/components/BusinessDrawer/locationDrawer/index.vue';
   import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
@@ -52,7 +52,9 @@
     houseList: [] as Select[],
     columnLabel: '',
     record: {} as Record,
+    bizScen: void 0,
   });
+  const otherParams = ref({});
   const [registerTable, { reload, redoHeight }] = useTable({
     api: getData,
     inset: true,
@@ -85,16 +87,19 @@
     schemas: schemas,
     showActionButtonGroup: false,
   });
-  const [registerModal, { setModalProps, closeModal }] = useModalInner(({ data }) => {
-    setModalProps({ confirmLoading: false });
-    resetFields();
-    getHouseList();
-    state.columnLabel = '';
-    const list = data.map((_: Recordable) => ({ trayNo: _.trayNo }));
-    clearRowsSelection(list);
-    state.data = list;
-    reload();
-  });
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(
+    ({ data, otherParams: params }) => {
+      otherParams.value = params;
+      setModalProps({ confirmLoading: false });
+      resetFields();
+      getHouseList();
+      state.columnLabel = '';
+      const list = data.map((_: Recordable) => ({ trayNo: _.trayNo }));
+      clearRowsSelection(list);
+      state.data = list;
+      reload();
+    },
+  );
   async function handleSubmit() {
     try {
       const { houseNo, subWareHouseNo } = await validate();
@@ -104,6 +109,7 @@
           wareHouseNo: (!_.location && (subWareHouseNo || houseNo)) || void 0,
           locationNo: _.location || void 0,
         })),
+        ...otherParams.value,
       };
       setModalProps({ confirmLoading: true });
       await submitInHouseApi(params);

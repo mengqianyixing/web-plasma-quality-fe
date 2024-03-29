@@ -101,6 +101,11 @@ export const columns: BasicColumn[] = [
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
   },
+  {
+    title: '备注',
+    dataIndex: 'remark',
+    ellipsis: false,
+  },
 ];
 
 export const searchFormSchema: FormSchema[] = [
@@ -249,6 +254,15 @@ export const formSchema: FormSchema[] = [
     colProps: { span: 12 },
     defaultValue: dayjs().add(1, 'day'),
     required: true,
+  },
+  {
+    field: 'remark',
+    label: '备注',
+    component: 'InputTextArea',
+    colProps: { span: 24 },
+    componentProps: {
+      rows: 5,
+    },
   },
 ];
 

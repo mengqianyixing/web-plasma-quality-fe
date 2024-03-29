@@ -84,7 +84,10 @@
       const notAlike = rows.some((_) => _.batchNo !== rows[0].batchNo);
       if (notAlike) return message.warning('只能选择同一批次的箱号');
       setModalProps({ confirmLoading: true });
-      await submitMarkApi({ remark: values.remark, boxNos: rows.map((_) => _.boxNo) });
+      await submitMarkApi({
+        remark: values.remark,
+        flagInfo: rows.map((_) => ({ boxNo: _.boxNo, batchNo: _.batchNo })),
+      });
       setModalProps({ confirmLoading: false });
       closeModal();
       emit('success');

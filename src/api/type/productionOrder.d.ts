@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `POST /api/product/order`
- * @更新时间 `2023-12-11 17:43:07`
+ * @更新时间 `2024-03-29 10:08:43`
  */
 export interface PostApiProductOrderRequest {
   mesId: string;
@@ -27,6 +27,7 @@ export interface PostApiProductOrderRequest {
    * yyyy-MM-dd
    */
   planTask: string;
+  remark?: string;
 }
 
 /**
@@ -34,7 +35,7 @@ export interface PostApiProductOrderRequest {
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `POST /api/product/order`
- * @更新时间 `2023-12-11 17:43:07`
+ * @更新时间 `2024-03-29 10:08:43`
  */
 export interface PostApiProductOrderResponse {}
 
@@ -189,7 +190,7 @@ export interface PostApiProductOrdersResponse {
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `PUT /api/product/order`
- * @更新时间 `2023-12-12 10:42:38`
+ * @更新时间 `2024-03-29 10:08:55`
  */
 export interface PutApiProductOrderRequest {
   /**
@@ -220,6 +221,7 @@ export interface PutApiProductOrderRequest {
    * 计划投产日期
    */
   planTask?: string;
+  remark?: string;
 }
 
 /**
@@ -227,7 +229,7 @@ export interface PutApiProductOrderRequest {
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `PUT /api/product/order`
- * @更新时间 `2023-12-12 10:42:38`
+ * @更新时间 `2024-03-29 10:08:55`
  */
 export type PutApiProductOrderResponse = string;
 
@@ -236,7 +238,7 @@ export type PutApiProductOrderResponse = string;
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `GET /api/product/order/{orderNo}`
- * @更新时间 `2023-12-12 15:24:23`
+ * @更新时间 `2024-03-29 10:14:23`
  */
 export interface GetApiProductOrderOrderNoRequest {
   orderNo: string;
@@ -247,7 +249,7 @@ export interface GetApiProductOrderOrderNoRequest {
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `GET /api/product/order/{orderNo}`
- * @更新时间 `2023-12-12 15:24:23`
+ * @更新时间 `2024-03-29 10:14:23`
  */
 export interface GetApiProductOrderOrderNoResponse {
   /**
@@ -274,6 +276,7 @@ export interface GetApiProductOrderOrderNoResponse {
    * 计划投产日期
    */
   planTask: string;
+  remark?: string;
 }
 
 /**

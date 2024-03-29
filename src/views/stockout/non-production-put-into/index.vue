@@ -73,7 +73,7 @@
               NonconformityButtonEnum.PlasmaOutDestructionPrint,
             ]"
           >
-            <a-button type="primary" :reportLoading="reportLoading"> 打印 </a-button>
+            <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
             <template #overlay>
               <Menu>
                 <MenuItem>
@@ -86,7 +86,7 @@
                 </MenuItem>
                 <MenuItem>
                   <a-button type="link" @click="handlePrint(PrintServerEnum.RAW_PLASMA_TRANSFER)">
-                    原料血浆转移记录
+                    原料血浆转移申请表
                   </a-button>
                 </MenuItem>
               </Menu>
@@ -158,6 +158,9 @@
       onChange: (_, selectedRows: any) => {
         selectedRow.value = selectedRows;
       },
+    },
+    scroll: {
+      x: 100,
     },
     size: 'small',
     striped: false,

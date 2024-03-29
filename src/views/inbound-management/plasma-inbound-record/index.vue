@@ -19,7 +19,9 @@
       </template>
       <template #passBagNum="{ record }">
         <span
-          class="text-blue-500 underline cursor-pointer"
+          :class="
+            !record?.passBagNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
           @click.stop.self="handleOpenBatchDetail(record, 1)"
         >
           {{ record?.passBagNum }}
@@ -27,7 +29,9 @@
       </template>
       <template #noPassBagNum="{ record }">
         <span
-          class="text-blue-500 underline cursor-pointer"
+          :class="
+            !record?.noPassBagNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
           @click.stop.self="handleOpenBatchDetail(record, 0)"
         >
           {{ record?.noPassBagNum }}
@@ -35,7 +39,9 @@
       </template>
       <template #lackNoNum="{ record }">
         <span
-          class="text-blue-500 underline cursor-pointer"
+          :class="
+            !record?.lackNoNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
           @click.stop.self="handleOpenBatchDetail(record, 2)"
         >
           {{ record?.lackNoNum }}
@@ -145,6 +151,9 @@
       onChange(_, selectedRows) {
         selectedRowsRef.value = selectedRows;
       },
+    },
+    scroll: {
+      x: 0,
     },
     size: 'small',
     striped: false,

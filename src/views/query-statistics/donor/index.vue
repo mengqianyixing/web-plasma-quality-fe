@@ -64,7 +64,9 @@
   async function handleSubmit() {
     const values = await validate();
     donorNo.value = values.donorNo;
-    mockData.value = donorInfoListApi(values as PostApiCoreDonorListRequest);
+    donorInfoListApi(values as PostApiCoreDonorListRequest).then((res) => {
+      mockData.value = res;
+    });
     reloadBatchTable();
     reloadCallbackTable();
   }

@@ -48,10 +48,7 @@
             StockOutButtonEnum.ProductionPlanMaterialReport,
           ]"
         >
-          <a-button type="primary" :loading="reportLoading">
-            打印
-            <DownOutlined />
-          </a-button>
+          <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
           <template #overlay>
             <Menu>
               <MenuItem>
@@ -60,7 +57,7 @@
                   @click="handlePrint('PLASMA_PRODUCTION_CHECKLIST')"
                   v-auth="StockOutButtonEnum.ProductionPlanCheckListReport"
                 >
-                  投产清单
+                  原料血浆投产清单
                 </a-button>
               </MenuItem>
               <MenuItem>
@@ -69,7 +66,7 @@
                   @click="handlePrint('PLASMA_TRANSFER_RECORD')"
                   v-auth="StockOutButtonEnum.ProductionPlanTransferReport"
                 >
-                  转移记录
+                  原料血浆转移记录
                 </a-button>
               </MenuItem>
               <MenuItem>
@@ -78,7 +75,7 @@
                   @click="handlePrint('MATERIAL_PLASMA')"
                   v-auth="StockOutButtonEnum.ProductionPlanMaterialReport"
                 >
-                  试剂统计表
+                  原料血浆复检试剂统计报表
                 </a-button>
               </MenuItem>
               <MenuItem>
@@ -87,12 +84,15 @@
                   @click="handlePrint('PLASMA_PRODUCTION_PLAN')"
                   v-auth="StockOutButtonEnum.ProductionPlanPlasmaReport"
                 >
-                  投产计划
+                  原料血浆投产计划
                 </a-button>
               </MenuItem>
             </Menu>
           </template>
         </a-dropdown>
+        <a-button @click="handleDownloadAbstract" type="primary" :loading="loading">
+          下载原料血浆摘要
+        </a-button>
       </template>
       <template #mesId="{ record }: { record: Recordable }">
         <span
@@ -143,6 +143,7 @@
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
   import { useModal } from '@/components/Modal';
+  import { downloadReport } from '@/api/stockout/plasma-summary';
 
   defineOptions({ name: 'ProductionPlan' });
 
@@ -328,5 +329,27 @@
     } finally {
       reportLoading.value = false;
     }
+  }
+
+  const loading = ref(false);
+  async function handleDownloadAbstract() {
+    const [row] = getSelections(true);
+    if (!row) return;
+
+    loading.value = true;
+    const res = await downloadReport({
+      ReportKey: 'PLASMA_ABSTRACT',
+      contentKey: row.mesId,
+    });
+    const blob = new Blob([res.data], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.download = '原料血浆摘要.docx';
+    a.href = url;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    loading.value = false;
   }
 </script>

@@ -17,9 +17,6 @@
           <a-button type="primary" @click="handleEdit" v-auth="CallbackButtonEnum.ListGeneEdit">
             编辑
           </a-button>
-          <a-button type="primary" @click="handleDelete" v-auth="CallbackButtonEnum.ListGeneDelete">
-            撤销
-          </a-button>
           <a-button type="primary" @click="handleEnter" v-auth="CallbackButtonEnum.ListGeneEnter">
             确认
           </a-button>
@@ -57,7 +54,6 @@
   import { PageWrapper } from '@/components/Page';
   import {
     createCallbackBatch,
-    deleteCallback,
     getCallbackDetail,
     getCallbackListApi,
   } from '@/api/callback/list-generation';
@@ -157,32 +153,6 @@
     });
 
     clearSelectedRowKeys();
-  }
-
-  async function handleDelete() {
-    if (selectedRow.value.length === 0) {
-      createMessage.warn('请选择要撤销的名单');
-      return;
-    }
-
-    if (selectedRow.value[0].state !== CallbackStateValueEnum.WIT) {
-      createMessage.warn('该状态不允许撤销');
-      return;
-    }
-
-    createConfirm({
-      title: '确认',
-      content: '确认撤消名单吗？',
-      iconType: 'warning',
-      onOk: async () => {
-        await deleteCallback({
-          callbackBatchNoes: selectedRow.value.map((it) => it.planNo),
-        });
-
-        clearSelectedRowKeys();
-        await reload();
-      },
-    });
   }
 
   const exportLoading = ref(false);

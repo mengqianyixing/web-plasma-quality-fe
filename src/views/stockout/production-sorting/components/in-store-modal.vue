@@ -194,7 +194,13 @@
   }
   async function submit() {
     const { boxId, trayNo } = getFieldsValue();
-    await bindBoxApi({ trayNo: trayNo, type: 'bind', boxes: [boxId] });
+    await bindBoxApi({
+      trayNo: trayNo,
+      type: 'bind',
+      boxes: [boxId],
+      bizScen: 'plasmaSort',
+      prepareNo: state.prepareNo,
+    });
     setFieldsValue({ boxId: '' });
     message.success('绑定成功');
     reloadBind();

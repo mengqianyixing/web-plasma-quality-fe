@@ -46,7 +46,7 @@
 
   const [
     registerTable,
-    { clearSelectedRowKeys, reload, setPagination, getSelectRows, redoHeight },
+    { clearSelectedRowKeys, reload, setPagination, getSelectRows, redoHeight, setLoading },
   ] = useTable({
     api: getData,
     immediate: false,
@@ -75,8 +75,13 @@
   const [registerModal] = useModalInner(async () => {
     setPagination({ current: 1 });
     clearSelectedRowKeys();
-    const res = await getBatchListApi({});
-    rawData = res;
+    try {
+      setLoading(true);
+      const res = await getBatchListApi({});
+      rawData = res;
+    } finally {
+      setLoading(false);
+    }
     reload();
   });
   function getData(params) {

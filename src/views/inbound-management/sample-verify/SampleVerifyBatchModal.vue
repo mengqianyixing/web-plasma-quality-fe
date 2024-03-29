@@ -4,14 +4,21 @@
     @register="register"
     title="样本批次列表"
     width="80%"
+    :minHeight="740"
     @ok="handleSelect"
   >
-    <div>
-      <BasicTable @register="registerTable">
-        <template #sampleType="{ record }">
-          {{ formatSampleType(record?.sampleType) }}
-        </template>
-      </BasicTable>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute flex flex-col w-full h-full">
+        <BasicTable @register="registerTable">
+          <template #sampleType="{ record }">
+            {{ formatSampleType(record?.sampleType) }}
+          </template>
+        </BasicTable>
+        <div class="flex gap-2 ml-4">
+          <div>未验收批次数: {{ waitVerifyBatchCount }}</div>
+          <div>未验收样本数: {{ waitVerifySampleCount }}</div>
+        </div>
+      </div>
     </div>
   </BasicModal>
 </template>
@@ -26,6 +33,7 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { getSampleVerifyList } from '@/api/inbound-management/sample-verify';
   import { sampleTypeEnum } from '@/enums/sampleEnum';
+  import { GetApiCoreBatchSampleVerifyResponse } from '@/api/type/batchManage';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -33,45 +41,55 @@
   const { createMessage } = useMessage();
   const { warning } = createMessage;
 
-  const [registerTable, { reload, setSelectedRowKeys, clearSelectedRowKeys }] = useTable({
-    api: getSampleVerifyList,
-    columns: sampleVerifyColumns,
-    formConfig: {
-      labelWidth: 120,
-      schemas: searchFormSchema,
-    },
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    clickToRowSelect: true,
-    rowSelection: {
-      type: 'radio',
-      onChange: (keys, selectedRows: any) => {
-        if (
-          keys.length === 1 &&
-          selectedRows[0].sampleType !== sampleTypeEnum.CallbackSample &&
-          selectedRows[0].sampleType !== sampleTypeEnum.PlasmaSample
-        ) {
-          warning('只能选择回访样本批次或血浆样本批次');
-
-          setSelectedRowKeys(selectedRow.value.map((it) => it.key));
-
-          return;
-        }
-        selectedRow.value = selectedRows;
+  const waitVerifyBatchCount = ref(0);
+  const waitVerifySampleCount = ref(0);
+  const [registerTable, { reload, getRawDataSource, setSelectedRowKeys, clearSelectedRowKeys }] =
+    useTable({
+      api: getSampleVerifyList,
+      columns: sampleVerifyColumns,
+      formConfig: {
+        labelWidth: 120,
+        schemas: searchFormSchema,
       },
-    },
-    size: 'small',
-    striped: false,
-    useSearchForm: true,
-    bordered: true,
-    showIndexColumn: false,
-    canResize: false,
-    immediate: false,
-  });
+      afterFetch(data) {
+        const originData: GetApiCoreBatchSampleVerifyResponse = getRawDataSource();
+        waitVerifySampleCount.value = originData.result![0].waitVerifySampleCount!;
+        waitVerifyBatchCount.value = originData.result![0].waitVerifyBatchCount!;
+        return data;
+      },
+      fetchSetting: {
+        pageField: 'currPage',
+        sizeField: 'pageSize',
+        totalField: 'totalCount',
+        listField: 'result',
+      },
+      clickToRowSelect: true,
+      rowSelection: {
+        type: 'radio',
+        onChange: (keys, selectedRows: any) => {
+          if (
+            keys.length === 1 &&
+            selectedRows[0].sampleType !== sampleTypeEnum.CallbackSample &&
+            selectedRows[0].sampleType !== sampleTypeEnum.PlasmaSample
+          ) {
+            warning('只能选择回访样本批次或血浆样本批次');
+
+            setSelectedRowKeys(selectedRow.value.map((it) => it.key));
+
+            return;
+          }
+          selectedRow.value = selectedRows;
+        },
+      },
+      size: 'small',
+      striped: false,
+      useSearchForm: true,
+      bordered: true,
+      showIndexColumn: false,
+      isCanResizeParent: true,
+      inset: true,
+      immediate: false,
+    });
 
   const sampleType = ref<Recordable[]>([]);
 

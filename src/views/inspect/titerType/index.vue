@@ -23,6 +23,7 @@
         <a-button
           type="primary"
           @click="handleRemove"
+          v-if="false"
           v-auth="BaseSettingButtonEnum.TiterTypeDelete"
         >
           删除

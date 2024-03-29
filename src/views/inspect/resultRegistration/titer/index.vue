@@ -53,7 +53,7 @@
         {{ methodMap.get(record.methodAbbr) }}
       </template>
     </BasicTable>
-    <DtModal @register="registerDtModal" />
+    <DtModal @register="registerDtModal" @close="reload" />
     <NotCheck
       @register="registerNotCheckModal"
       @close="reload"

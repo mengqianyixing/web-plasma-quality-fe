@@ -56,6 +56,7 @@
   import { ref, markRaw } from 'vue';
   import DtTable from './dtTable.vue';
 
+  const emit = defineEmits(['close']);
   const activeKey = ref('1');
   const pid = ref('');
   const bsno = ref('');
@@ -80,6 +81,7 @@
   }
   function handleSubmit() {}
   function close() {
+    emit('close');
     activeKey.value = '1';
     componentMap.value = {
       1: 'div',

@@ -75,9 +75,6 @@
           >
             撤销接收
           </a-button>
-          <a-button @click="handleDownloadAbstract" type="primary" :loading="loading">
-            下载原料血浆摘要
-          </a-button>
         </div>
       </template>
     </BasicTable>
@@ -116,7 +113,6 @@
   } from '@/api/stockout/production-put-into';
   import { getProOrders } from '@/api/stockout/production-order';
   import { statusValueEnum } from '@/enums/stockoutEnum';
-  import { downloadReport } from '@/api/stockout/plasma-summary';
 
   defineOptions({ name: 'ProductionPutInto' });
 
@@ -352,26 +348,5 @@
     openBoxNumModal(true, {
       record: { orderNo: record?.orderNo },
     });
-  }
-
-  const loading = ref(false);
-  async function handleDownloadAbstract() {
-    if (!selectRowsCheck()) return;
-
-    loading.value = true;
-    const res = await downloadReport({
-      ReportKey: 'PLASMA_ABSTRACT',
-      contentKey: selectedRow.value[0]?.mesId,
-    });
-    const blob = new Blob([res.data], {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.download = '原料血浆摘要.docx';
-    a.href = url;
-    a.click();
-    window.URL.revokeObjectURL(url);
-    loading.value = false;
   }
 </script>

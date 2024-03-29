@@ -54,6 +54,7 @@
   defineOptions({ name: 'InStoreModal' });
 
   const state = ref('');
+  const bizScen = ref('');
 
   const [registerForm, { validate, clearValidate, setFieldsValue, getFieldsValue, resetFields }] =
     useForm({
@@ -70,8 +71,9 @@
   const [registerInModal, { openModal: openInModal }] = useModal();
   const [registerBindModal, { openModal }] = useModal();
 
-  const [registerModal] = useModalInner(async ({ batchNo }) => {
-    state.value = batchNo;
+  const [registerModal] = useModalInner(async (data) => {
+    state.value = data.batchNo;
+    bizScen.value = data.bizScen;
     rePage();
   });
 
@@ -112,7 +114,12 @@
     const rows = getSelections(false);
     if (rows.length === 0) return;
     if (rows.some((_) => _.wareHouseName)) return message.warning('所选托盘存在已入库!');
-    openInModal(true, { data: rows });
+    openInModal(true, {
+      data: rows,
+      otherParams: {
+        bizScen: bizScen.value,
+      },
+    });
   }
 
   async function handleReBind() {
