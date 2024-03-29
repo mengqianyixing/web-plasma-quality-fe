@@ -38,7 +38,7 @@
         <a-dropdown>
           <a-button
             type="primary"
-            :reportLoading="reportLoading"
+            :loading="reportLoading"
             v-auth="[
               NonconformityButtonEnum.PlasmaOutTransferPrint,
               NonconformityButtonEnum.PlasmaOutPlasmaPrint,

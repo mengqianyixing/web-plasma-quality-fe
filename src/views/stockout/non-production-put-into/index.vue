@@ -73,7 +73,7 @@
               NonconformityButtonEnum.PlasmaOutDestructionPrint,
             ]"
           >
-            <a-button type="primary" :reportLoading="reportLoading"> 打印 </a-button>
+            <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
             <template #overlay>
               <Menu>
                 <MenuItem>
