@@ -57,10 +57,19 @@ export interface PostApiCoreBagFlagBoxResponse {
  *
  * @分类 [血浆限制↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5460)
  * @请求头 `POST /api/core/bag/flag`
- * @更新时间 `2024-01-19 14:52:21`
+ * @更新时间 `2024-03-29 10:29:32`
  */
 export interface PostApiCoreBagFlagRequest {
-  boxNos: string[];
+  flagInfo: {
+    /**
+     * 箱号
+     */
+    boxNo: string;
+    /**
+     * 批号
+     */
+    batchNo: string;
+  }[];
   remark?: string;
 }
 
@@ -69,7 +78,7 @@ export interface PostApiCoreBagFlagRequest {
  *
  * @分类 [血浆限制↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5460)
  * @请求头 `POST /api/core/bag/flag`
- * @更新时间 `2024-01-19 14:52:21`
+ * @更新时间 `2024-03-29 10:29:32`
  */
 export interface PostApiCoreBagFlagResponse {}
 
