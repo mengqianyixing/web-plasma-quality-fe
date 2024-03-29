@@ -86,7 +86,7 @@
                 </MenuItem>
                 <MenuItem>
                   <a-button type="link" @click="handlePrint(PrintServerEnum.RAW_PLASMA_TRANSFER)">
-                    原料血浆转移记录
+                    原料血浆转移申请表
                   </a-button>
                 </MenuItem>
               </Menu>
