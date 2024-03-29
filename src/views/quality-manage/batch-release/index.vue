@@ -332,8 +332,6 @@
   async function handlePrint() {
     const [row] = getSelections(true);
     if (!row) return;
-    if (row.state !== STATUS.DON)
-      return message.warning('请选择【' + STATUS_TEXT.get(STATUS.DON) + '】的数据');
     try {
       reportLoading.value = true;
       const res = await getReportApi({
