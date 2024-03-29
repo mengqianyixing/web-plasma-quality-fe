@@ -11,7 +11,7 @@ export const columns: BasicColumn[] = [
     title: '名单编号',
     dataIndex: 'planNo',
     slots: { customRender: 'planNo' },
-    width: 150,
+    width: 120,
   },
   {
     title: '采浆公司',
@@ -28,7 +28,12 @@ export const columns: BasicColumn[] = [
   {
     title: '生成日期',
     dataIndex: 'createAt',
-    width: 150,
+    width: 120,
+  },
+  {
+    title: '样本批号',
+    dataIndex: 'sampleBatchNo',
+    width: 130,
   },
   {
     title: '自主回访',
@@ -117,6 +122,14 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     componentProps: {
       options: serverEnumStore.getServerEnum(SERVER_ENUM.CallbackPlanState),
+    },
+  },
+  {
+    field: '[sampleAcceptStartDate, sampleAcceptEndDate]',
+    label: '样本接收日期',
+    component: 'RangePicker',
+    componentProps: {
+      format: 'YYYY-MM-DD',
     },
   },
 ];
