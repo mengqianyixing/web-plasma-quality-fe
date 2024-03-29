@@ -57,7 +57,7 @@ export interface PostApiCoreBagFlagBoxResponse {
  *
  * @分类 [血浆限制↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5460)
  * @请求头 `POST /api/core/bag/flag`
- * @更新时间 `2024-03-29 10:29:32`
+ * @更新时间 `2024-03-29 11:28:00`
  */
 export interface PostApiCoreBagFlagRequest {
   flagInfo: {
@@ -78,7 +78,7 @@ export interface PostApiCoreBagFlagRequest {
  *
  * @分类 [血浆限制↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5460)
  * @请求头 `POST /api/core/bag/flag`
- * @更新时间 `2024-03-29 10:29:32`
+ * @更新时间 `2024-03-29 11:28:00`
  */
 export interface PostApiCoreBagFlagResponse {}
 
