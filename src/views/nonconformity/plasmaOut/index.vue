@@ -49,7 +49,11 @@
           </a-button>
           <template #overlay>
             <Menu>
-              <MenuItem @click="handlePrint(PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER)">
+              <MenuItem
+                @click="
+                  handlePrint(PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER, '不合格原料血浆转移记录')
+                "
+              >
                 <a-button
                   type="link"
                   :disabled="!disabledTransfer"
@@ -57,7 +61,11 @@
                   >不合格原料血浆转移记录
                 </a-button>
               </MenuItem>
-              <MenuItem @click="handlePrint(PrintServerEnum.UNQUALIFIED_RAW_PLASMA)">
+              <MenuItem
+                @click="
+                  handlePrint(PrintServerEnum.UNQUALIFIED_RAW_PLASMA, '不合格原料血浆信息清单')
+                "
+              >
                 <a-button
                   type="link"
                   :disabled="disabledTransfer"
@@ -65,7 +73,14 @@
                   >不合格原料血浆信息清单
                 </a-button>
               </MenuItem>
-              <MenuItem @click="handlePrint(PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA)">
+              <MenuItem
+                @click="
+                  handlePrint(
+                    PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA,
+                    '不合格原料血浆销毁处理申请审批表',
+                  )
+                "
+              >
                 <a-button
                   type="link"
                   :disabled="disabledTransfer"
@@ -254,14 +269,17 @@
 
     openOutModal(true, row);
   }
-  async function handlePrint(field: PrintServerEnum) {
+  async function handlePrint(field: PrintServerEnum, name) {
     const [row] = getSelections(true);
     if (!row) return;
 
     try {
       reportLoading.value = true;
       const res = await getReportApi({ reportKey: field, contentKey: row.dlvNo });
-      openReportModal(true, window.URL.createObjectURL(res));
+      openReportModal(true, {
+        blob: window.URL.createObjectURL(res),
+        downloadFileName: `${name}.pdf`,
+      });
       clearSelectedRowKeys();
     } finally {
       reportLoading.value = false;
