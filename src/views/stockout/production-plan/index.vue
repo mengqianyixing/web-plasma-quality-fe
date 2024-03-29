@@ -57,7 +57,7 @@
                   @click="handlePrint('PLASMA_PRODUCTION_CHECKLIST')"
                   v-auth="StockOutButtonEnum.ProductionPlanCheckListReport"
                 >
-                  投产清单
+                  原料血浆投产清单
                 </a-button>
               </MenuItem>
               <MenuItem>
@@ -66,7 +66,7 @@
                   @click="handlePrint('PLASMA_TRANSFER_RECORD')"
                   v-auth="StockOutButtonEnum.ProductionPlanTransferReport"
                 >
-                  转移记录
+                  原料血浆转移记录
                 </a-button>
               </MenuItem>
               <MenuItem>
@@ -75,7 +75,7 @@
                   @click="handlePrint('MATERIAL_PLASMA')"
                   v-auth="StockOutButtonEnum.ProductionPlanMaterialReport"
                 >
-                  试剂统计表
+                  原料血浆复检试剂统计报表
                 </a-button>
               </MenuItem>
               <MenuItem>
@@ -84,7 +84,7 @@
                   @click="handlePrint('PLASMA_PRODUCTION_PLAN')"
                   v-auth="StockOutButtonEnum.ProductionPlanPlasmaReport"
                 >
-                  投产计划
+                  原料血浆投产计划
                 </a-button>
               </MenuItem>
             </Menu>

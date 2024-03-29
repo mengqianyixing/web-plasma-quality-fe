@@ -221,7 +221,7 @@ export interface GetApiCoreBankTrayTrayNoResponse {}
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/box`
- * @更新时间 `2023-12-18 15:33:26`
+ * @更新时间 `2024-03-29 17:36:56`
  */
 export interface PostApiCoreBankTrayBoxRequest {
   /**
@@ -236,6 +236,14 @@ export interface PostApiCoreBankTrayBoxRequest {
    * bind-绑定，unbind-解绑
    */
   type: string;
+  /**
+   * 具体业务场景，plasmaVerify-血浆验收，plasmaSort-血浆分拣
+   */
+  bizScen?: string;
+  /**
+   * 投产准备号
+   */
+  prepareNo?: string;
 }
 
 /**
@@ -243,7 +251,7 @@ export interface PostApiCoreBankTrayBoxRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/box`
- * @更新时间 `2023-12-18 15:33:26`
+ * @更新时间 `2024-03-29 17:36:56`
  */
 export interface PostApiCoreBankTrayBoxResponse {
   /**
@@ -261,7 +269,7 @@ export interface PostApiCoreBankTrayBoxResponse {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/warehouse/reception`
- * @更新时间 `2023-12-20 21:16:03`
+ * @更新时间 `2024-03-29 17:28:59`
  */
 export interface PostApiCoreBankTrayWarehouseReceptionRequest {
   /**
@@ -285,6 +293,10 @@ export interface PostApiCoreBankTrayWarehouseReceptionRequest {
      */
     locationNo?: string;
   }[];
+  /**
+   * 托盘入库的具体业务场景，plasmaVerify-血浆验收
+   */
+  bizScen?: string;
 }
 
 /**
@@ -292,7 +304,7 @@ export interface PostApiCoreBankTrayWarehouseReceptionRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/warehouse/reception`
- * @更新时间 `2023-12-20 21:16:03`
+ * @更新时间 `2024-03-29 17:28:59`
  */
 export interface PostApiCoreBankTrayWarehouseReceptionResponse {
   /**

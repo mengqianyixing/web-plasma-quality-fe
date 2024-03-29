@@ -179,19 +179,19 @@ const nonconformity: AppRouteModule = {
         },
         {
           id: StockOutButtonEnum.ProductionPlanCheckListReport,
-          title: '投产清单',
+          title: '原料血浆投产清单',
         },
         {
           id: StockOutButtonEnum.ProductionPlanTransferReport,
-          title: '转移记录',
+          title: '原料血浆转移记录',
         },
         {
           id: StockOutButtonEnum.ProductionPlanMaterialReport,
-          title: '试剂统计表',
+          title: '原料血浆复检试剂统计报表',
         },
         {
           id: StockOutButtonEnum.ProductionPlanPlasmaReport,
-          title: '投产计划',
+          title: '原料血浆投产计划',
         },
       ],
       component: () => import('@/views/stockout/production-plan/index.vue'),
