@@ -22,11 +22,16 @@
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  import { cloneDeep, isEmpty } from 'lodash-es';
 
   const globalApiStore = useGlobalApiStoreWithOut();
+
   defineOptions({ name: 'PlasmaQuery' });
 
   const { currentRoute } = useRouter();
+  const { createMessage } = useMessage();
 
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
   onMounted(async () => {
@@ -55,12 +60,14 @@
     });
   });
 
-  const [registerTable, { getForm }] = useTable({
+  const [registerTable, { getForm, reload }] = useTable({
     api: getPlasmaQueryList,
     columns,
     formConfig: {
       schemas: searchFormSchema,
+      submitFunc,
       alwaysShowLines: 7,
+      submitOnReset: true,
       showAdvancedButton: true,
       transformDateFunc(date) {
         return date ? date.format('YYYY-MM-DD') : '';
@@ -81,6 +88,34 @@
     canResize: true,
     immediate: false,
   });
+
+  function deleteInvalidProperties(obj, strict = true) {
+    if (!obj) return obj;
+    const copyObj = cloneDeep(obj);
+    Object.entries(obj).forEach(([key, value]) => {
+      if (value && typeof value === 'object') {
+        copyObj[key] = deleteInvalidProperties(value, strict);
+        value = copyObj[key];
+      }
+      if (isEmpty(value)) {
+        delete copyObj[key];
+      }
+    });
+    return copyObj;
+  }
+
+  async function submitFunc() {
+    const searchForm = getForm().getFieldsValue();
+
+    const _searchForm = deleteInvalidProperties(searchForm);
+    console.log(_searchForm, '_searchForm');
+
+    if (Object.keys(_searchForm).length === 0) {
+      createMessage.error('请至少输入一个查询条件');
+    } else {
+      await reload();
+    }
+  }
 
   const loading = ref(false);
   async function handleExport() {
