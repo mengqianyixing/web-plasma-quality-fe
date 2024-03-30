@@ -68,7 +68,16 @@
     Modal.confirm({
       content: '确认?',
       onOk: async () => {
-        reload();
+        const boxes = row.map((_) => _.boxNo);
+
+        await bindBoxApi({
+          //必填项
+          trayNo: 'demo',
+          type: props.isBinding ? 'bind' : 'unbind',
+          boxes: boxes,
+          bizScen: 'handwork',
+        });
+        await reload();
       },
       onCancel: () => Modal.destroyAll(),
     });
@@ -85,7 +94,12 @@
       const rows = getSelectRows();
       const boxes = rows.map((_) => _.boxNo);
       setModalProps({ confirmLoading: true });
-      await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: boxes });
+      await bindBoxApi({
+        trayNo: trayNo,
+        type: props.isBinding ? 'bind' : 'unbind',
+        boxes: boxes,
+        bizScen: 'handwork',
+      });
       setModalProps({ confirmLoading: false });
       openModal(false);
       clearSelectedRowKeys();
