@@ -442,6 +442,7 @@
           }
 
           success('分拣血浆成功!');
+          let chcheBagNo = bagNo.value; // 缓存箱号，打印用
           bagNo.value = '';
           nextTick(() => {
             bagNoRef.value.focus();
@@ -574,7 +575,7 @@
                   // 走封箱操作 不需要提示
                   // _sortingBoxSealing(targetBox, true);
                   // 走打印逻辑
-                  printBox(bagNo.value);
+                  printBox(chcheBagNo);
                   console.log('OK');
                   prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
                 },
@@ -584,6 +585,7 @@
                 class: 'test',
               });
             }
+            chcheBagNo = '';
           }
         } else {
           Modal.confirm({
