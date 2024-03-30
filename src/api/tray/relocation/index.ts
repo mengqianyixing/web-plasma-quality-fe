@@ -18,7 +18,12 @@ import {
   PostApiCoreBankTrayBoxResponse,
   GetApiCoreBankWarehouseTrayTrayNoRequest,
   GetApiCoreBankWarehouseTrayTrayNoResponse,
+  GetApiCoreBankTrayBoxesRequest,
 } from '@/api/type/trayManage';
+
+enum Api {
+  TRAY_BANK_BOXES_LIST = '/api/core/bank/tray/boxes',
+}
 
 export const submitOutHouseApi = (params: PostApiCoreBankTrayWarehouseDeliverRequest) =>
   defHttp.post<PostApiCoreBankTrayWarehouseDeliverResponse>({
@@ -48,3 +53,11 @@ export const taryHouseApi = ({ trayNo }: GetApiCoreBankWarehouseTrayTrayNoReques
   defHttp.get<GetApiCoreBankWarehouseTrayTrayNoResponse>({
     url: `/api/core/bank/warehouse/tray/${trayNo}`,
   });
+
+export const getBankBoxesList = (params: GetApiCoreBankTrayBoxesRequest) =>
+  defHttp.get(
+    { url: Api.TRAY_BANK_BOXES_LIST, params },
+    {
+      joinParamsToUrl: true,
+    },
+  );

@@ -108,7 +108,6 @@
     const searchForm = getForm().getFieldsValue();
 
     const _searchForm = deleteInvalidProperties(searchForm);
-    console.log(_searchForm, '_searchForm');
 
     if (Object.keys(_searchForm).length === 0) {
       createMessage.error('请至少输入一个查询条件');

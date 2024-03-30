@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
@@ -18,7 +18,7 @@
         </a-button>
       </template>
     </BasicTable>
-    <BasicModal @register="registerModal" width="600px" @ok="confim" :show-footer="true">
+    <BasicModal @register="registerModal" width="600px" @ok="confirm" :show-footer="true">
       <BasicForm @register="registerForm" />
     </BasicModal>
   </div>
@@ -30,7 +30,7 @@
   import { plasmaBoxHandSearchFormSchema, plasmaBoxHandColumns } from './relocation.data';
   import { BasicModal, useModal } from '@/components/Modal';
   import { message, Modal } from 'ant-design-vue';
-  import { bindBoxApi } from '@/api/tray/relocation';
+  import { bindBoxApi, getBankBoxesList } from '@/api/tray/relocation';
 
   const props = defineProps({
     isBinding: {
@@ -45,8 +45,8 @@
     showActionButtonGroup: false,
     showResetButton: false,
   });
-  const [registerTable, { getSelectRows, reload }] = useTable({
-    api: () => Promise.resolve({ result: [{}] }),
+  const [registerTable, { getSelectRows, reload, clearSelectedRowKeys }] = useTable({
+    api: getBankBoxesList,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -56,7 +56,6 @@
     formConfig: {
       schemas: plasmaBoxHandSearchFormSchema,
     },
-    rowKey: 'houseNo',
     columns: plasmaBoxHandColumns,
     useSearchForm: true,
     bordered: true,
@@ -69,7 +68,16 @@
     Modal.confirm({
       content: '确认?',
       onOk: async () => {
-        reload();
+        const boxes = row.map((_) => _.boxNo);
+
+        await bindBoxApi({
+          //必填项
+          trayNo: 'demo',
+          type: props.isBinding ? 'bind' : 'unbind',
+          boxes: boxes,
+          bizScen: 'handwork',
+        });
+        await reload();
       },
       onCancel: () => Modal.destroyAll(),
     });
@@ -80,16 +88,22 @@
     clearValidate();
     openModal(true);
   }
-  async function confim() {
+  async function confirm() {
     try {
       const { trayNo } = await validate();
       const rows = getSelectRows();
-      const boxes = rows.map((_) => _.boxId);
+      const boxes = rows.map((_) => _.boxNo);
       setModalProps({ confirmLoading: true });
-      await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: boxes });
+      await bindBoxApi({
+        trayNo: trayNo,
+        type: props.isBinding ? 'bind' : 'unbind',
+        boxes: boxes,
+        bizScen: 'handwork',
+      });
       setModalProps({ confirmLoading: false });
       openModal(false);
-      reload();
+      clearSelectedRowKeys();
+      await reload();
     } catch (e) {
       console.log(e);
     }

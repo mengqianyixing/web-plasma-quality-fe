@@ -658,4 +658,77 @@ export interface GetApiCoreBankTrayInstoreTrayNoRequest {
  */
 export type GetApiCoreBankTrayInstoreTrayNoResponse = boolean;
 
+/**
+ * 接口 [托盘移库，血浆箱列表↗](https://yapi.sharing8.cn/project/529/interface/api/34176) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/boxes`
+ * @更新时间 `2024-03-30 14:49:17`
+ */
+export interface GetApiCoreBankTrayBoxesRequest {
+  /**
+   * 当前页
+   */
+  currPage: string;
+  /**
+   * 页大小
+   */
+  pageSize: string;
+  /**
+   * 采浆公司编号
+   */
+  stationNo?: string;
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 投产准备号
+   */
+  prepareNo?: string;
+}
+
+/**
+ * 接口 [托盘移库，血浆箱列表↗](https://yapi.sharing8.cn/project/529/interface/api/34176) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/boxes`
+ * @更新时间 `2024-03-30 14:49:17`
+ */
+export interface GetApiCoreBankTrayBoxesResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 采浆公司编号
+     */
+    stationNo?: string;
+    /**
+     * 采浆公司名称
+     */
+    stationName?: string;
+    /**
+     * 箱号
+     */
+    boxNo?: string;
+    /**
+     * 血浆批号
+     */
+    batchNo?: string;
+    /**
+     * 投产准备号
+     */
+    prepareNo?: string;
+    /**
+     * 袋数
+     */
+    bagCount?: number;
+    /**
+     * 类型
+     */
+    type?: string;
+  }[];
+}
+
 /* prettier-ignore-end */
