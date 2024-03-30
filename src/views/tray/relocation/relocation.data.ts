@@ -1,5 +1,9 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 
+import { useStation } from '@/hooks/common/useStation';
+
+const { stationOptions } = useStation();
+
 export const plasmaTrayModelColumns: BasicColumn[] = [
   { title: '血浆批号', dataIndex: '' },
   { title: '血浆箱号', dataIndex: '' },
@@ -138,48 +142,48 @@ export const plasmaBoxScanColumns: (isBinding: boolean) => BasicColumn[] = (isBi
 
 export const plasmaBoxHandSearchFormSchema: FormSchema[] = [
   {
+    field: 'stationNo',
     component: 'Select',
     label: '采浆公司',
-    field: '',
     componentProps: {
-      options: [],
+      options: stationOptions,
     },
   },
   {
     component: 'Input',
     label: '批号',
-    field: '',
+    field: 'batchNo',
   },
   {
     component: 'Input',
     label: '投产准备号',
-    field: '',
+    field: 'prepareNo',
   },
 ];
 export const plasmaBoxHandColumns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: '',
+    dataIndex: 'stationName',
   },
   {
     title: '箱号',
-    dataIndex: '采浆公司',
+    dataIndex: 'boxNo',
   },
   {
     title: '血浆批号',
-    dataIndex: '采浆公司',
+    dataIndex: 'batchNo',
   },
   {
     title: '投产准备号',
-    dataIndex: '采浆公司',
+    dataIndex: 'prepareNo',
   },
   {
     title: '袋数',
-    dataIndex: '采浆公司',
+    dataIndex: 'bagCount',
   },
   {
     title: '类型',
-    dataIndex: '采浆公司',
+    dataIndex: 'type',
   },
 ];
 export const sampleBoxScanFormSchema: FormSchema[] = [

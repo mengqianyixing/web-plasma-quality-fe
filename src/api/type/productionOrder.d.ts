@@ -44,7 +44,7 @@ export interface PostApiProductOrderResponse {}
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `POST /api/product/orders`
- * @更新时间 `2024-03-13 17:50:02`
+ * @更新时间 `2024-03-29 17:50:20`
  */
 export interface PostApiProductOrdersRequest {
   /**
@@ -98,7 +98,7 @@ export interface PostApiProductOrdersRequest {
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `POST /api/product/orders`
- * @更新时间 `2024-03-13 17:50:02`
+ * @更新时间 `2024-03-29 17:50:20`
  */
 export interface PostApiProductOrdersResponse {
   /**
@@ -182,6 +182,7 @@ export interface PostApiProductOrdersResponse {
      * 审核日期
      */
     checkAt?: string;
+    remark?: string;
   }[];
 }
 

@@ -2188,7 +2188,7 @@ export interface GetApiCoreBatchSampleCallbackStatisticResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/statistic`
- * @更新时间 `2024-02-29 18:22:14`
+ * @更新时间 `2024-03-29 18:21:00`
  */
 export interface GetApiCoreBatchStatisticRequest {
   pageSize: string;
@@ -2220,7 +2220,7 @@ export interface GetApiCoreBatchStatisticRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/statistic`
- * @更新时间 `2024-02-29 18:22:14`
+ * @更新时间 `2024-03-29 18:21:00`
  */
 export interface GetApiCoreBatchStatisticResponse {
   totalCount?: number;
