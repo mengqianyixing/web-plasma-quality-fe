@@ -67,19 +67,14 @@
           ...row,
           [checkUnKey]: {
             ...row[checkUnKey],
-            ...row[checkUnKey].projects.reduce((t, c) => {
-              t[c.key] = c.value;
-              return t;
-            }, {}),
+            ...row[checkUnKey].projects,
           },
           [exteriorKey]: {
             ...row[exteriorKey],
-            ...row[exteriorKey].projects.reduce((t, c) => {
-              t[c.key] = c.value;
-              return t;
-            }, {}),
+            ...row[exteriorKey].projects,
           },
         }));
+
         const row = getCheckCountRow(formatData);
         return [...formatData, row];
       },

@@ -2,7 +2,6 @@ import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-import { formatKg } from '@/utils';
 import { useStation } from '@/hooks/common/useStation';
 
 const { stationOptions } = useStation();
@@ -38,7 +37,6 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆验收净重(g)',
     dataIndex: 'netWeight',
-    format: formatKg,
     width: 120,
   },
   {
