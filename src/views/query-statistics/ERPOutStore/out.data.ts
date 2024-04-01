@@ -54,16 +54,25 @@ export const searchFormSchemaByNotProd: FormSchema[] = [
 
 export const prodERPColumns: BasicColumn[] = [
   {
+    title: '制造批号',
+    dataIndex: 'mesIds',
+    ellipsis: false,
+  },
+  {
     title: '血浆批号',
+    dataIndex: 'batchNo',
+  },
+  {
+    title: '血浆批号(ERP)',
     dataIndex: 'erpBatchNo',
+  },
+  {
+    title: '出库日期',
+    dataIndex: 'outDate',
   },
   {
     title: '血浆出库类型',
     dataIndex: 'outType',
-  },
-  {
-    title: '物料编码',
-    dataIndex: 'materialNo',
   },
   {
     title: '血浆类型',
@@ -74,29 +83,16 @@ export const prodERPColumns: BasicColumn[] = [
     dataIndex: 'titerType',
   },
   {
+    title: '物料编码',
+    dataIndex: 'materialNo',
+  },
+  {
     title: '血浆总数',
     dataIndex: 'bagNum',
   },
   {
-    title: '验收净重',
+    title: '血浆验收净重（g）',
     dataIndex: 'verifyWeight',
-  },
-  {
-    title: '出库日期',
-    dataIndex: 'outDate',
-  },
-  {
-    title: '血浆批号',
-    dataIndex: 'batchNo',
-  },
-  {
-    title: '制造批号',
-    dataIndex: 'mesIds',
-    ellipsis: false,
-  },
-  {
-    title: '血浆去向',
-    dataIndex: 'goWhere',
   },
 ];
 
