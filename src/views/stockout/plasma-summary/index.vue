@@ -75,11 +75,11 @@
       // slots: { customRender: 'boxCount' },
     },
     {
-      title: '投产出库数量袋',
-      dataIndex: 'ProOutCount',
+      title: '投产出库数量（袋）',
+      dataIndex: 'proOutCount',
     },
     {
-      title: '非投产出库数量袋',
+      title: '非投产出库数量（袋）',
       dataIndex: 'unProOutCount',
     },
     {
