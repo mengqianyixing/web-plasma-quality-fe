@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight>
+  <div>
     <div class="flex p-2 pt-4 mx-5 my-2 bg-white">
       <BasicForm @register="registerBasicForm" :schemas="formSchema" />
     </div>
@@ -23,9 +23,9 @@
         </BasicTable>
       </a-tab-pane>
     </a-tabs>
-  </PageWrapper>
 
-  <DetailModal @register="registerModal" />
+    <DetailModal @register="registerModal" />
+  </div>
 </template>
 <script lang="ts" setup>
   import { BasicColumn, BasicTable, useTable } from '@/components/Table';
@@ -39,7 +39,6 @@
   import { Tabs } from 'ant-design-vue';
 
   import DetailModal from './DetailModal.vue';
-  import { PageWrapper } from '@/components/Page';
   import { computed, ref } from 'vue';
   import { getERPOutNotProdList, getERPOutProdList } from '@/api/query-statistics/ERP';
   import { PlasmaOutboundTypeValueEnum } from '@/enums/plasmaEnum';
@@ -79,8 +78,12 @@
   const [registerBasicForm, { getFieldsValue, setFieldsValue }] = useForm({
     submitFunc: formSubmit,
     submitOnReset: true,
+    transformDateFunc(date) {
+      return date ? date.format('YYYY-MM-DD') : '';
+    },
     actionColOptions: {
-      flex: '1 1 auto',
+      flex: '1 1 120px',
+      style: 'max-width:unset;',
       push: 6,
     },
     compact: true,
