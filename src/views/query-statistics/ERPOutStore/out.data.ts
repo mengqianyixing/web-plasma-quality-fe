@@ -94,10 +94,6 @@ export const prodERPColumns: BasicColumn[] = [
     dataIndex: 'mesIds',
     ellipsis: false,
   },
-  {
-    title: '血浆去向',
-    dataIndex: 'goWhere',
-  },
 ];
 
 export const notProdERPColumns: BasicColumn[] = [
