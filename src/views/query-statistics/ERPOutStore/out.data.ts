@@ -30,6 +30,7 @@ export const searchFormSchemaByNotProd: FormSchema[] = [
     field: 'dlvType',
     label: '出库类型',
     component: 'Select',
+    defaultValue: PlasmaOutboundTypeValueEnum.RMT,
     componentProps: {
       options: [...PlasmaOutboundTypeMap.entries()]
         .map(([value, label]) => ({
