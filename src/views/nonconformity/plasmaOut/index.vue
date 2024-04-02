@@ -50,6 +50,7 @@
           <template #overlay>
             <Menu>
               <MenuItem
+                :class="!disabledTransfer ? 'pointer-events-none' : ''"
                 @click="
                   handlePrint(PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER, '不合格原料血浆转移记录')
                 "
@@ -62,6 +63,7 @@
                 </a-button>
               </MenuItem>
               <MenuItem
+                :class="disabledTransfer ? 'pointer-events-none' : ''"
                 @click="
                   handlePrint(PrintServerEnum.UNQUALIFIED_RAW_PLASMA, '不合格原料血浆信息清单')
                 "
@@ -74,6 +76,7 @@
                 </a-button>
               </MenuItem>
               <MenuItem
+                :class="disabledTransfer ? 'pointer-events-none' : ''"
                 @click="
                   handlePrint(
                     PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA,
