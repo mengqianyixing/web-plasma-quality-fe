@@ -281,7 +281,7 @@
       const res = await getReportApi({ reportKey: field, contentKey: row.dlvNo });
       openReportModal(true, {
         blob: window.URL.createObjectURL(res),
-        downloadFileName: `${name}.pdf`,
+        downloadFileName: `${name}-${row.dlvNo}.pdf`,
       });
       clearSelectedRowKeys();
     } finally {
