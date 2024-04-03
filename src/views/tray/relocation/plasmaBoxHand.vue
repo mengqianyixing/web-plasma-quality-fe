@@ -31,12 +31,46 @@
   import { BasicModal, useModal } from '@/components/Modal';
   import { message, Modal } from 'ant-design-vue';
   import { bindBoxApi, getBankBoxesList } from '@/api/tray/relocation';
+  import { watch } from 'vue';
 
   const props = defineProps({
     isBinding: {
       type: Boolean,
     },
   });
+
+  watch(
+    () => props.isBinding,
+    (val) => {
+      setTimeout(() => {
+        reload();
+      }, 0);
+      if (!val) {
+        setTimeout(() => {
+          setColumns([
+            ...plasmaBoxHandColumns,
+            {
+              title: '托盘编号',
+              dataIndex: 'trayNo',
+              width: 100,
+            },
+          ]);
+          getForm().appendSchemaByField(
+            {
+              label: '托盘编号',
+              field: 'trayNo',
+              component: 'Input',
+            },
+            '',
+            false,
+          );
+        }, 0);
+      }
+    },
+    {
+      immediate: true,
+    },
+  );
   const [registerModal, { openModal, setModalProps }] = useModal();
   const [registerForm, { validate, clearValidate }] = useForm({
     labelWidth: 90,
@@ -45,23 +79,31 @@
     showActionButtonGroup: false,
     showResetButton: false,
   });
-  const [registerTable, { getSelectRows, reload, clearSelectedRowKeys }] = useTable({
-    api: getBankBoxesList,
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    formConfig: {
-      schemas: plasmaBoxHandSearchFormSchema,
-    },
-    columns: plasmaBoxHandColumns,
-    useSearchForm: true,
-    bordered: true,
-    size: 'small',
-    rowSelection: { type: 'checkbox' },
-  });
+  const [registerTable, { getSelectRows, reload, clearSelectedRowKeys, getForm, setColumns }] =
+    useTable({
+      immediate: false,
+      beforeFetch: (params) => {
+        return {
+          ...params,
+          type: props.isBinding ? 'bind' : 'unbind',
+        };
+      },
+      api: getBankBoxesList,
+      fetchSetting: {
+        pageField: 'currPage',
+        sizeField: 'pageSize',
+        totalField: 'totalCount',
+        listField: 'result',
+      },
+      formConfig: {
+        schemas: plasmaBoxHandSearchFormSchema,
+      },
+      columns: plasmaBoxHandColumns,
+      useSearchForm: true,
+      bordered: true,
+      size: 'small',
+      rowSelection: { type: 'checkbox' },
+    });
   function handleUnbinding() {
     const row = getSelectRows();
     if (row.length === 0) return message.warning('请选择数据');

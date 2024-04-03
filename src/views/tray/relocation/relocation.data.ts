@@ -183,7 +183,7 @@ export const plasmaBoxHandColumns: BasicColumn[] = [
   },
   {
     title: '类型',
-    dataIndex: 'type',
+    dataIndex: 'boxType',
   },
 ];
 export const sampleBoxScanFormSchema: FormSchema[] = [
