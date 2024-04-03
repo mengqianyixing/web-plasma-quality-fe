@@ -19,6 +19,7 @@ import {
   GetApiCoreBankWarehouseTrayTrayNoRequest,
   GetApiCoreBankWarehouseTrayTrayNoResponse,
   GetApiCoreBankTrayBoxesRequest,
+  GetApiCoreBankTrayBoxesResponse,
 } from '@/api/type/trayManage';
 
 enum Api {
@@ -55,7 +56,7 @@ export const taryHouseApi = ({ trayNo }: GetApiCoreBankWarehouseTrayTrayNoReques
   });
 
 export const getBankBoxesList = (params: GetApiCoreBankTrayBoxesRequest) =>
-  defHttp.get(
+  defHttp.get<GetApiCoreBankTrayBoxesResponse>(
     { url: Api.TRAY_BANK_BOXES_LIST, params },
     {
       joinParamsToUrl: true,
