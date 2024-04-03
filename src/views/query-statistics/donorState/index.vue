@@ -24,6 +24,7 @@
   import { SearchManager } from '@/enums/authCodeEnum';
   import { ref } from 'vue';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { message } from 'ant-design-vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -33,11 +34,25 @@
 
   const loading = ref(false);
 
-  const [registerTable, { getForm }] = useTable({
+  const [registerTable, { getForm, reload }] = useTable({
+    immediate: false,
     api: getListApi,
     columns,
     formConfig: {
       schemas: searchFormSchema,
+      showResetButton: false,
+      submitFunc: () => {
+        const values = getForm().getFieldsValue();
+        const isNotEmptyObject = Object.keys(values).some(
+          (key) => values[key] || values[key] === 0,
+        );
+        if (isNotEmptyObject) {
+          reload();
+          return Promise.resolve();
+        }
+        message.warning('请输入条件后进行查询');
+        return Promise.reject();
+      },
     },
     fetchSetting: {
       pageField: 'currPage',
@@ -45,6 +60,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
+    beforeFetch: () => false,
     size: 'small',
     striped: false,
     useSearchForm: true,
@@ -56,6 +72,8 @@
       const { getFieldsValue } = getForm();
       const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
       const data = await getListApi({ ...getFieldsValue(), currPage: 1, pageSize } as any);
+      if (data.totalCount || 0 > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(
         lastLevelCols,

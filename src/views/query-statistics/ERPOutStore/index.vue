@@ -60,6 +60,7 @@
     GetApiProductPrepareErpOutProdRequest,
     GetApiProductPrepareErpOutProdResponse,
   } from '@/api/type/queryStatistics';
+  import { message } from 'ant-design-vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -151,7 +152,8 @@
         pageSize,
       } as GetApiProductPrepareErpOutProdRequest & GetApiCoreBankErpOutNonProdRequest);
 
-      loading.value = false;
+      if (OriginData.totalCount || 0 > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(
         lastLevelCols,

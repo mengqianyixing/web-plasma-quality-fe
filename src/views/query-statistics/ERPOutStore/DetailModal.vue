@@ -26,6 +26,7 @@
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { useRouter } from 'vue-router';
+  import { message } from 'ant-design-vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -87,6 +88,9 @@
     try {
       const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
       const data = await getERPOutDetail({ currPage: 1, pageSize, dlvNo: dlvNo.value } as any);
+      if (data.totalCount || 0 > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
+
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(
         lastLevelCols,
