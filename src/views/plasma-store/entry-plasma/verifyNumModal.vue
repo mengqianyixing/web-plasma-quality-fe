@@ -5,7 +5,7 @@
     @register="registerVerifyNum"
     showFooter
     title="验收数量详情"
-    width="1000px"
+    width="1200px"
     :isDetail="true"
     :showDetailBack="false"
     @ok="closeModal"
@@ -37,6 +37,8 @@
     rowKey: 'verifyNum',
     columns: verifyDetailColumns,
     bordered: true,
+    inset: true,
+    isCanResizeParent: true,
   });
 
   const [sumTable, { setLoading: setSumTableLoading }] = useTable({
@@ -44,10 +46,14 @@
     rowKey: 'verifyNum',
     columns: verifySumColumns,
     bordered: true,
+    inset: true,
+    isCanResizeParent: true,
   });
   const [registerVerifyNum, { closeModal }] = useModalInner((data) => {
     batchNo.value = data.batchNo;
 
+    detailTableSource.value = [];
+    sumTableSource.value = [];
     reloadTable();
   });
 
@@ -66,16 +72,5 @@
   .modalTable {
     display: flex;
     justify-content: center;
-  }
-
-  #detail {
-    width: 500px;
-    height: 300px;
-    margin-right: 20px;
-  }
-
-  #sum {
-    width: 400px;
-    height: 300px;
   }
 </style>
