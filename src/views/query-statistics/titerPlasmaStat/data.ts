@@ -7,7 +7,7 @@ import { useStation } from '@/hooks/common/useStation';
 
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
-const ImmType = serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType);
+const ImmType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 export const columns: BasicColumn[] = [
   {
     width: 80,
@@ -160,7 +160,7 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '来浆类型',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {

@@ -67,7 +67,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'plasmaTypeFromStation',
     width: 100,
     format: (text) => {
-      return `${text}, ${serverEnumStore.getServerEnumText(SERVER_ENUM.ImmType)(text)}`;
+      return `${text}, ${serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType)(text)}`;
     },
   },
   {
@@ -285,7 +285,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '来浆类型',
     component: 'Select',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {
@@ -334,7 +334,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '血浆类型',
     component: 'Select',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {
