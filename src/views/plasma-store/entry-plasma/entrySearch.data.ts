@@ -308,7 +308,7 @@ export const entryDetailModalColumns: BasicColumn[] = [
 export const verifyDetailColumns: BasicColumn[] = [
   {
     title: '血浆类型',
-    dataIndex: 'immuType',
+    dataIndex: 'immType',
     format: (text) => {
       return PlasmaType(text);
     },
@@ -316,7 +316,7 @@ export const verifyDetailColumns: BasicColumn[] = [
   },
   {
     title: '效价类型',
-    dataIndex: '',
+    dataIndex: 'titerType',
     width: 100,
   },
   {
@@ -334,7 +334,7 @@ export const verifyDetailColumns: BasicColumn[] = [
 export const verifySumColumns: BasicColumn[] = [
   {
     title: '血浆类型',
-    dataIndex: 'immuType',
+    dataIndex: 'immType',
     format: (text) => {
       return PlasmaType(text);
     },

@@ -11,8 +11,8 @@
     @ok="closeModal"
   >
     <div class="modalTable">
-      <BasicTable @register="detailTable" id="detail" />
-      <BasicTable @register="sumTable" id="sum" />
+      <BasicTable @register="detailTable" :dataSource="detailTableSource" id="detail" />
+      <BasicTable @register="sumTable" :dataSource="sumTableSource" id="sum" />
     </div>
   </BasicModal>
 </template>
@@ -21,61 +21,45 @@
   import { useTable, BasicTable } from '@/components/Table';
   import { verifyDetailColumns, verifySumColumns } from './entrySearch.data';
   import { verifyNumApi } from '@/api/plasmaStore/entryPlasma';
-  import { reactive } from 'vue';
+  import { ref } from 'vue';
+  import { GetApiCoreBagStatisticsBatchNoResponse } from '@/api/type/batchManage';
 
   defineOptions({ name: 'VerifyNumModal' });
 
   defineEmits(['register']);
 
-  const state = reactive({
-    batchNo: '',
-    verifyNum: '',
-  });
+  const batchNo = ref('');
+  const detailTableSource = ref<GetApiCoreBagStatisticsBatchNoResponse['titerTypeList']>([]);
+  const sumTableSource = ref<GetApiCoreBagStatisticsBatchNoResponse['summaryList']>([]);
 
-  const [detailTable, { reload: reloadDetail }] = useTable({
-    immediate: false,
-    api: verifyNumApi,
+  const [detailTable, { setLoading: setDetailTableLoading }] = useTable({
     pagination: false,
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
     rowKey: 'verifyNum',
     columns: verifyDetailColumns,
     bordered: true,
-    beforeFetch: () => {
-      return state.batchNo;
-    },
   });
 
-  const [sumTable, { reload: reloadSum }] = useTable({
-    immediate: false,
-    api: verifyNumApi,
+  const [sumTable, { setLoading: setSumTableLoading }] = useTable({
     pagination: false,
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
     rowKey: 'verifyNum',
     columns: verifySumColumns,
     bordered: true,
-    beforeFetch: () => {
-      return state.batchNo;
-    },
   });
-  const [registerVerifyNum, { closeModal }] = useModalInner(({ batchNo }) => {
-    state.batchNo = batchNo;
+  const [registerVerifyNum, { closeModal }] = useModalInner((data) => {
+    batchNo.value = data.batchNo;
 
     reloadTable();
   });
 
-  function reloadTable() {
-    reloadDetail();
-    reloadSum();
+  async function reloadTable() {
+    setDetailTableLoading(true);
+    setSumTableLoading(true);
+    const originData = await verifyNumApi(batchNo.value);
+    setDetailTableLoading(false);
+    setSumTableLoading(false);
+
+    detailTableSource.value = originData.titerTypeList;
+    sumTableSource.value = originData.summaryList;
   }
 </script>
 <style>

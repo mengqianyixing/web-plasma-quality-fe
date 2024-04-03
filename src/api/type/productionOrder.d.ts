@@ -284,21 +284,25 @@ export interface GetApiProductOrderOrderNoResponse {
  * 接口 [生产指令撤销↗](https://yapi.sharing8.cn/project/529/interface/api/31518) 的 **请求类型**
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
- * @请求头 `DELETE /api/product/order/{orderNo}`
- * @更新时间 `2023-12-15 13:46:25`
+ * @请求头 `DELETE /api/product/order`
+ * @更新时间 `2024-04-02 18:19:49`
  */
-export interface DeleteApiProductOrderOrderNoRequest {
+export interface DeleteApiProductOrderRequest {
   orderNo: string;
+  /**
+   * 原因
+   */
+  cause: string;
 }
 
 /**
  * 接口 [生产指令撤销↗](https://yapi.sharing8.cn/project/529/interface/api/31518) 的 **返回类型**
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
- * @请求头 `DELETE /api/product/order/{orderNo}`
- * @更新时间 `2023-12-15 13:46:25`
+ * @请求头 `DELETE /api/product/order`
+ * @更新时间 `2024-04-02 18:19:49`
  */
-export type DeleteApiProductOrderOrderNoResponse = string;
+export type DeleteApiProductOrderResponse = string;
 
 /**
  * 接口 [生产指令审核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/31524) 的 **请求类型**
