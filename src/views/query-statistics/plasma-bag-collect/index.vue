@@ -17,6 +17,7 @@
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { message } from 'ant-design-vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'PlasmaBagCollect' });
@@ -53,6 +54,9 @@
         currPage: 1,
         pageSize,
       } as any);
+      if (data.length > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
+
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(lastLevelCols, data || [], rows.length);
       jsonToSheetXlsx({

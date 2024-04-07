@@ -75,6 +75,7 @@
     <DetailModal @register="registerDetailModal" />
     <CreateModal @register="registerModal" @success="handleSuccess" />
     <CheckModal @register="registerCheckModal" @success="handleSuccess" />
+    <DeleteModal @register="registerDeleteModal" @success="handleSuccess" />
     <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
@@ -86,12 +87,8 @@
   import CreateModal from './CreateModal.vue';
   import CheckModal from './CheckModal.vue';
   import ReportModal from '@/components/ReportModal/index.vue';
-  import {
-    getProOrders,
-    delProOrder,
-    reCheckProOrder,
-    checkProOrder,
-  } from '@/api/stockout/production-order';
+  import DeleteModal from './DeleteModal.vue';
+  import { getProOrders, reCheckProOrder, checkProOrder } from '@/api/stockout/production-order';
   import { getReportApi } from '@/api/report';
   import { createVNode, ref } from 'vue';
   import DetailModal from './DetailModal.vue';
@@ -105,6 +102,7 @@
   const [registerCheckModal, { openModal: openCheckModal }] = useModal();
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
   const [registerReportModal, { openModal: openReportModal }] = useModal();
+  const [registerDeleteModal, { openModal: openDeleteModal }] = useModal();
 
   const selectedRow = ref<Recordable>([]);
   const reportLoading = ref(false);
@@ -191,22 +189,8 @@
       return;
     }
 
-    createConfirm({
-      iconType: 'warning',
-      title: '撤销',
-      content: () =>
-        createVNode('span', null, [
-          '是否撤销该指令  ',
-          createVNode(
-            'span',
-            { style: 'color: red; font-size: 20px;' },
-            `${selectedRow.value[0]?.mesId}`,
-          ),
-        ]),
-      onOk: async () => {
-        await delProOrder(selectedRow.value[0]?.orderNo);
-        await reload();
-      },
+    openDeleteModal(true, {
+      record: selectedRow.value[0],
     });
   }
 

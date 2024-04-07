@@ -39,6 +39,7 @@
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { message } from 'ant-design-vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'ERPInspectionReport' });
@@ -120,20 +121,19 @@
     buttonLoading.value = true;
     try {
       const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
-      const data = (
-        await getERPInspectionReportList({
-          ...getForm().getFieldsValue(),
-          currPage: '1',
-          pageSize: pageSize,
-        })
-      ).result!;
+      const data = await getERPInspectionReportList({
+        ...getForm().getFieldsValue(),
+        currPage: '1',
+        pageSize: pageSize,
+      });
 
-      buttonLoading.value = false;
+      if (data.totalCount || 0 > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
 
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(
         lastLevelCols,
-        afterFetchDataFormat(data),
+        afterFetchDataFormat(data.result || []),
         rows.length,
       );
       jsonToSheetXlsx({

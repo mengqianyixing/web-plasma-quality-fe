@@ -1,17 +1,19 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight>
-    <div class="flex p-2 pt-4 mx-5 my-2 bg-white">
-      <BasicForm @register="registerBasicForm" :schemas="formSchema" />
-    </div>
+  <div>
     <a-tabs
-      class="flex-1 bg-white mx-5 my-2"
+      class="mt-2"
       default-active-key="outStockProd"
       v-model:activeKey="currentKey"
       type="card"
       size="small"
     >
       <a-tab-pane v-for="item in tabList" :key="item.key" :tab="item.label">
-        <BasicTable :api="item.api" @register="registerTable" :columns="item.columns">
+        <BasicTable
+          :api="item.api"
+          @register="registerTable"
+          :columns="item.columns"
+          :formConfig="item.formConfig"
+        >
           <template #dlvNo="{ record }">
             <span
               class="text-blue-500 underline cursor-pointer"
@@ -20,16 +22,24 @@
               {{ record?.dlvNo }}
             </span>
           </template>
+          <template #toolbar>
+            <a-button
+              type="primary"
+              @click="handleExport(item.api, item.label, item.columns)"
+              :loading="loading"
+            >
+              导出
+            </a-button>
+          </template>
         </BasicTable>
       </a-tab-pane>
     </a-tabs>
-  </PageWrapper>
 
-  <DetailModal @register="registerModal" />
+    <DetailModal @register="registerModal" />
+  </div>
 </template>
 <script lang="ts" setup>
-  import { BasicColumn, BasicTable, useTable } from '@/components/Table';
-  import { BasicForm, useForm } from '@/components/Form';
+  import { BasicColumn, BasicTable, type FormProps, useTable } from '@/components/Table';
   import {
     prodERPColumns,
     notProdERPColumns,
@@ -39,11 +49,20 @@
   import { Tabs } from 'ant-design-vue';
 
   import DetailModal from './DetailModal.vue';
-  import { PageWrapper } from '@/components/Page';
-  import { computed, ref } from 'vue';
+  import { ref } from 'vue';
   import { getERPOutNotProdList, getERPOutProdList } from '@/api/query-statistics/ERP';
-  import { PlasmaOutboundTypeValueEnum } from '@/enums/plasmaEnum';
   import { useModal } from '@/components/Modal';
+  import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import {
+    GetApiCoreBankErpOutNonProdRequest,
+    GetApiCoreBankErpOutNonProdResponse,
+    GetApiProductPrepareErpOutProdRequest,
+    GetApiProductPrepareErpOutProdResponse,
+  } from '@/api/type/queryStatistics';
+  import { message } from 'ant-design-vue';
+
+  const globalApiStore = useGlobalApiStoreWithOut();
 
   defineOptions({ name: 'ERPOutStore' });
   const [registerModal, { openModal }] = useModal();
@@ -53,48 +72,45 @@
 
   const currentKey = ref('outStockProd');
 
+  type ApiFunction<TParams, TResult> = (params: TParams) => Promise<TResult>;
   const tabList: {
     key: string;
     label: string;
     columns: BasicColumn[];
-    api: (params: any) => Promise<any>;
+    api:
+      | ApiFunction<GetApiProductPrepareErpOutProdRequest, GetApiProductPrepareErpOutProdResponse>
+      | ApiFunction<GetApiCoreBankErpOutNonProdRequest, GetApiCoreBankErpOutNonProdResponse>;
+    formConfig: Partial<FormProps>;
   }[] = [
     {
       key: 'outStockProd',
       label: '投产出库',
       columns: prodERPColumns,
       api: getERPOutProdList,
+      formConfig: {
+        schemas: searchFormSchemaByProd,
+        submitOnReset: true,
+        transformDateFunc(date) {
+          return date ? date.format('YYYY-MM-DD') : '';
+        },
+      },
     },
     {
       key: 'notOutStockProd',
-      label: '未投产出库',
+      label: '其他出库',
       columns: notProdERPColumns,
       api: getERPOutNotProdList,
+      formConfig: {
+        schemas: searchFormSchemaByNotProd,
+        submitOnReset: true,
+        transformDateFunc(date) {
+          return date ? date.format('YYYY-MM-DD') : '';
+        },
+      },
     },
   ];
 
-  const formSchema = computed(() =>
-    currentKey.value === 'outStockProd' ? searchFormSchemaByProd : searchFormSchemaByNotProd,
-  );
-  const [registerBasicForm, { getFieldsValue, setFieldsValue }] = useForm({
-    submitFunc: formSubmit,
-    submitOnReset: true,
-    actionColOptions: {
-      flex: '1 1 auto',
-      push: 6,
-    },
-    compact: true,
-  });
-
-  const [registerTable, { reload }] = useTable({
-    beforeFetch: (params) => {
-      if (currentKey.value === 'notOutStockProd' && !params.dlvType) {
-        params.dlvType = PlasmaOutboundTypeValueEnum.RMT;
-      }
-      setFieldsValue({ dlvType: PlasmaOutboundTypeValueEnum.RMT });
-
-      return { ...params };
-    },
+  const [registerTable, { getForm }] = useTable({
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -107,28 +123,56 @@
     clickToRowSelect: false,
     size: 'small',
     striped: false,
-    useSearchForm: false,
+    useSearchForm: true,
     bordered: true,
     showIndexColumn: false,
     immediate: true,
   });
 
-  async function formSubmit() {
-    await reload({
-      searchInfo: {
-        ...getFieldsValue(),
-      },
-    });
-  }
-
-  function handleDlvNoClick(dlvNo) {
+  function handleDlvNoClick(dlvNo: string) {
     openModal(true, {
       dlvNo,
     });
   }
+
+  const loading = ref(false);
+  async function handleExport(
+    api:
+      | ApiFunction<GetApiProductPrepareErpOutProdRequest, GetApiProductPrepareErpOutProdResponse>
+      | ApiFunction<GetApiCoreBankErpOutNonProdRequest, GetApiCoreBankErpOutNonProdResponse>,
+    fileName: string,
+    columns: BasicColumn[],
+  ) {
+    loading.value = true;
+    try {
+      const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
+      const OriginData = await api({
+        ...getForm().getFieldsValue(),
+        currPage: '1',
+        pageSize,
+      } as GetApiProductPrepareErpOutProdRequest & GetApiCoreBankErpOutNonProdRequest);
+
+      if (OriginData.totalCount || 0 > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+      const { result, merge: bodyMerge } = formatData(
+        lastLevelCols,
+        OriginData.result || [],
+        rows.length,
+      );
+      jsonToSheetXlsx({
+        data: [...rows, ...result],
+        json2sheetOpts: { skipHeader: true },
+        merges: [...headerMerge, ...bodyMerge],
+        filename: fileName + '.xlsx',
+      });
+    } finally {
+      loading.value = false;
+    }
+  }
 </script>
 <style scoped>
-  .root :deep(.ant-form-item-control-input-content) {
-    margin-left: 20px;
+  :deep(.vben-basic-table-form-container) {
+    padding: 0;
   }
 </style>

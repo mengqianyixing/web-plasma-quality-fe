@@ -347,7 +347,7 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '来浆类型',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {
@@ -355,7 +355,7 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '血浆类型',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {

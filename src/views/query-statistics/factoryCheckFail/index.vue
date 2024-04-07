@@ -16,6 +16,7 @@
   import { useRouter } from 'vue-router';
   import { ref } from 'vue';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { message } from 'ant-design-vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   const { currentRoute } = useRouter();
@@ -48,6 +49,9 @@
       const { getFieldsValue } = getForm();
       const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
       const data = await getListApi({ ...getFieldsValue(), currPage: 1, pageSize } as any);
+      if (data.totalCount || 0 > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
+
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(
         lastLevelCols,

@@ -65,25 +65,7 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '来浆类型',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
-  // {
-  //   field: 'immunity',
-  //   component: 'Select',
-  //   label: '血浆类型',
-  //   componentProps: {
-  //     options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
-  //   },
-  // },
-  // {
-  //   field: 'immTypeLevel',
-  //   label: '效价类型',
-  //   component: 'ApiSelect',
-  //   componentProps: {
-  //     api: getDilutionTypeApi,
-  //     labelField: 'key',
-  //     valueField: 'value',
-  //   },
-  // },
 ];

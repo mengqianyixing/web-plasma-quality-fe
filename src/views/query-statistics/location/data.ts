@@ -19,7 +19,7 @@ export const columns: BasicColumn[] = [
   },
 
   {
-    title: '箱号',
+    title: '当前箱号',
     dataIndex: 'boxNo',
   },
   {
@@ -27,7 +27,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'bagCount',
   },
   {
-    title: '托盘编号',
+    title: '当前托盘编号',
     dataIndex: 'trayNo',
   },
   {
@@ -35,7 +35,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'warehouseName',
   },
   {
-    title: '货位号',
+    title: '当前货位号',
     dataIndex: 'locationNo',
   },
   {
@@ -75,7 +75,7 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '血浆类型',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {

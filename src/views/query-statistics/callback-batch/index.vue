@@ -25,6 +25,7 @@
   import { getCallbackBatchStatistics } from '@/api/query-statistics/callback';
   import { SearchManager } from '@/enums/authCodeEnum';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { message } from 'ant-design-vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -61,6 +62,8 @@
         pageSize,
       });
       loading.value = false;
+      if (OriginData.totalCount || 0 > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(
         lastLevelCols,

@@ -1031,7 +1031,7 @@ export type DeleteApiCoreLabRegistrationLabItemResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem`
- * @更新时间 `2024-01-03 20:10:27`
+ * @更新时间 `2024-04-02 16:46:41`
  */
 export interface PutApiCoreLabRegistrationLabItemRequest {
   /**
@@ -1049,7 +1049,7 @@ export interface PutApiCoreLabRegistrationLabItemRequest {
   /**
    * 复核人编号
    */
-  checkeName: string;
+  checkName: string;
   /**
    * 批次信息
    */
@@ -1074,7 +1074,7 @@ export interface PutApiCoreLabRegistrationLabItemRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem`
- * @更新时间 `2024-01-03 20:10:27`
+ * @更新时间 `2024-04-02 16:46:41`
  */
 export type PutApiCoreLabRegistrationLabItemResponse = string;
 

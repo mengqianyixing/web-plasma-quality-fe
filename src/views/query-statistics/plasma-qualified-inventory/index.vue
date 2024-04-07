@@ -17,6 +17,7 @@
   import { useRouter } from 'vue-router';
   import { PageWrapper } from '@/components/Page';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { message } from 'ant-design-vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'PlasmaQualifiedInventory' });
@@ -62,6 +63,9 @@
         currPage: 1,
         pageSize,
       } as any);
+      if (data.length || 0 > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
+
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(lastLevelCols, data || [], rows.length);
       jsonToSheetXlsx({

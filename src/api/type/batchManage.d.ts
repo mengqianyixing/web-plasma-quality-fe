@@ -381,7 +381,7 @@ export type GetApiCoreBatchAcceptationBatchNoResponse = {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/statistics/{batchNo}`
- * @更新时间 `2024-02-05 14:41:38`
+ * @更新时间 `2024-04-02 17:37:31`
  */
 export interface GetApiCoreBagStatisticsBatchNoRequest {
   batchNo: string;
@@ -392,26 +392,42 @@ export interface GetApiCoreBagStatisticsBatchNoRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/statistics/{batchNo}`
- * @更新时间 `2024-02-05 14:41:38`
+ * @更新时间 `2024-04-02 17:37:31`
  */
-export type GetApiCoreBagStatisticsBatchNoResponse = {
-  /**
-   * 免疫类型
-   */
-  immuType?: string;
-  /**
-   * 血浆数量
-   */
-  plasmaNum?: number;
-  /**
-   * 效价类型
-   */
-  titerType?: string;
-  /**
-   * 血浆重量
-   */
-  plasmaWeight?: number;
-}[];
+export interface GetApiCoreBagStatisticsBatchNoResponse {
+  summaryList?: {
+    /**
+     * 免疫类型
+     */
+    immType: string;
+    /**
+     * 血浆数量
+     */
+    plasmaNum: number;
+    /**
+     * 血浆重量
+     */
+    plasmaWeight: number;
+  }[];
+  titerTypeList?: {
+    /**
+     * 免疫类型
+     */
+    immuType: string;
+    /**
+     * 血浆数量
+     */
+    plasmaNum: number;
+    /**
+     * 效价类型
+     */
+    titerType: string;
+    /**
+     * 血浆重量
+     */
+    plasmaWeight: number;
+  }[];
+}
 
 /**
  * 接口 [血浆批次详情↗](https://yapi.sharing8.cn/project/529/interface/api/31791) 的 **请求类型**

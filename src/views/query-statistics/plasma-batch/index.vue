@@ -68,6 +68,7 @@
   import { getHeader, formatData, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { message } from 'ant-design-vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'PlasmaBatchQueryStatistics' });
@@ -241,15 +242,20 @@
 
   async function handleExportComeData() {
     const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
-    const data = (
-      await getPlasmaBatchList({
-        ...getFormLeft().getFieldsValue(),
-        currPage: '1',
-        pageSize,
-      })
-    ).result!;
+    const data = await getPlasmaBatchList({
+      ...getFormLeft().getFieldsValue(),
+      currPage: '1',
+      pageSize,
+    });
+    if (data.totalCount || 0 > Number(pageSize))
+      return message.warning('最多只能导出【' + pageSize + '】条数据');
+
     const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
-    const { result, merge: bodyMerge } = formatData(lastLevelCols, leftFormat(data), rows.length);
+    const { result, merge: bodyMerge } = formatData(
+      lastLevelCols,
+      leftFormat(data.result || []),
+      rows.length,
+    );
     jsonToSheetXlsx({
       data: [...rows, ...result],
       json2sheetOpts: { skipHeader: true },
@@ -260,15 +266,20 @@
 
   async function handleExportQuarantineData() {
     const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
-    const data = (
-      await getPlasmaBatchListByQuarantine({
-        ...getFormRight().getFieldsValue(),
-        currPage: '1',
-        pageSize,
-      })
-    ).result!;
+    const data = await getPlasmaBatchListByQuarantine({
+      ...getFormRight().getFieldsValue(),
+      currPage: '1',
+      pageSize,
+    });
+    if (data.totalCount || 0 > Number(pageSize))
+      return message.warning('最多只能导出【' + pageSize + '】条数据');
+
     const { rows, merges: headerMerge, lastLevelCols } = getHeader(columnsByQuarantine);
-    const { result, merge: bodyMerge } = formatData(lastLevelCols, rightFormat(data), rows.length);
+    const { result, merge: bodyMerge } = formatData(
+      lastLevelCols,
+      rightFormat(data.result || []),
+      rows.length,
+    );
     jsonToSheetXlsx({
       data: [...rows, ...result],
       json2sheetOpts: { skipHeader: true },

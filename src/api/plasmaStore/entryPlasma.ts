@@ -9,6 +9,7 @@ import {
   GetApiCoreBagPlasmaRequest,
   GetApiCoreBagPlasmaResponse,
   GetApiCoreBagStatisticsBatchNoRequest,
+  GetApiCoreBagStatisticsBatchNoResponse,
 } from '@/api/type/batchManage';
 
 enum Api {
@@ -26,8 +27,8 @@ export const receptionDetailApi = (params: GetApiCoreBankReceptionRequest) =>
 export const bagPlasmaDetailApi = (params: GetApiCoreBagPlasmaRequest) =>
   defHttp.get<GetApiCoreBagPlasmaResponse>({ url: Api.BATCH_DETAIL, params });
 
-export const verifyNumApi = (params: GetApiCoreBagStatisticsBatchNoRequest) =>
-  defHttp.get<GetApiCoreBagStatisticsBatchNoRequest>({ url: Api.VERIFY_NUM + '/' + params });
+export const verifyNumApi = (params: GetApiCoreBagStatisticsBatchNoRequest['batchNo']) =>
+  defHttp.get<GetApiCoreBagStatisticsBatchNoResponse>({ url: Api.VERIFY_NUM + '/' + params });
 
 export const verifyNoPassNumApi = (params: GetApiCoreBagPlasmaRequest) =>
   defHttp.get<GetApiCoreBagPlasmaResponse>({ url: Api.BATCH_DETAIL, params });
