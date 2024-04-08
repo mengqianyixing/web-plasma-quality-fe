@@ -102,6 +102,10 @@
       useSearchForm: true,
       bordered: true,
       size: 'small',
+      afterFetch: (res) => {
+        clearSelectedRowKeys();
+        return res;
+      },
       rowSelection: { type: 'checkbox' },
     });
   function handleUnbinding() {

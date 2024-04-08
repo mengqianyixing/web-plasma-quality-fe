@@ -40,7 +40,6 @@
     columns,
     formConfig: {
       schemas: searchFormSchema,
-      showResetButton: false,
       submitFunc: () => {
         const values = getForm().getFieldsValue();
         const isNotEmptyObject = Object.keys(values).some(
@@ -70,6 +69,12 @@
     try {
       loading.value = true;
       const { getFieldsValue } = getForm();
+      const values = getFieldsValue();
+      const isNotEmptyObject = Object.keys(values).some((key) => values[key] || values[key] === 0);
+      if (isNotEmptyObject === false) {
+        message.warning('请输入条件后进行导出');
+        return;
+      }
       const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
       const data = await getListApi({ ...getFieldsValue(), currPage: 1, pageSize } as any);
       if ((data.totalCount || 0) > Number(pageSize))
