@@ -43,7 +43,7 @@
       dataIndex: 'batchNo',
     },
     {
-      title: '验收净重',
+      title: '验收净重（g）',
       dataIndex: 'verifyWeight',
     },
     {
