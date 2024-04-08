@@ -409,10 +409,19 @@
           const data = res.data.data;
           // 血浆不合格
           if (data.unqReason) {
-            openUnqualifiedModal(true, {
-              bagNo: bagNo.value,
-              unqReason: data.unqReason,
-            });
+            // 可投产的不合格，直接提示
+            if (data?.proBag === true) {
+              Modal.confirm({
+                content: `${bagNo.value}为${data.unqReason}血浆!`,
+                onOk: () => handleUnqualifiedSuccess(),
+                onCancel: () => Modal.destroyAll(),
+              });
+            } else {
+              openUnqualifiedModal(true, {
+                bagNo: bagNo.value,
+                unqReason: data.unqReason,
+              });
+            }
             return;
           }
 
@@ -442,11 +451,19 @@
           }
 
           success('分拣血浆成功!');
-          let chcheBagNo = bagNo.value; // 缓存箱号，打印用
+          let cacheBagNo = bagNo.value; // 缓存箱号，打印用
           bagNo.value = '';
           nextTick(() => {
             bagNoRef.value.focus();
           });
+
+          // 尾数箱自动封箱
+          if (data.lastBagMessage) {
+            Modal.info({
+              content: `${data.lastBagMessage}!`,
+              onOk: () => Modal.destroyAll(),
+            });
+          }
 
           // 准备号、批次详情数据
           prepareData.value = { ...data.preSummary };
@@ -567,25 +584,33 @@
 
             // 满箱
             if (data?.fullBox === true) {
+              let content = '';
+              if (data.selectedName === 'pros') content = '投产血浆';
+              if (data.selectedName === 'unProArr') content = '暂不投产血浆';
+              if (data.selectedName === 'utrkUnPro') content = '待放行血浆';
               Modal.confirm({
                 title: '提示?',
                 icon: createVNode(ExclamationCircleOutlined),
-                content: createVNode('div', { style: 'color:red;' }, '该箱已满,要进行打印箱签吗?'),
+                content: createVNode(
+                  'div',
+                  { style: 'color:red;' },
+                  `${content}已扫描完毕，确认打印箱签?`,
+                ),
                 onOk() {
                   // 走封箱操作 不需要提示
                   // _sortingBoxSealing(targetBox, true);
                   // 走打印逻辑
-                  printBox(chcheBagNo);
-                  console.log('OK');
+                  printBox(cacheBagNo);
+                  cacheBagNo = '';
                   prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
                 },
                 onCancel() {
                   console.log('Cancel');
+                  prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
                 },
                 class: 'test',
               });
             }
-            chcheBagNo = '';
           }
         } else {
           Modal.confirm({
@@ -752,7 +777,7 @@
         title: '可投产',
         immType: data.pros?.immType,
         pickType: 'PRO',
-        sortCount: data.pros?.sortCount || '',
+        sortCount: data.pros?.sortCount ?? '',
         totalCount: data.pros?.totalCount || '',
         bagNos: data.pros?.bagNos,
         isSelected: false,

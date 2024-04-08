@@ -1,5 +1,6 @@
 import { defHttp } from '@/utils/http/axios';
 import {
+  DeleteApiProductOrderRequest,
   GetApiProductOrderOrderNoRequest,
   GetApiProductOrderOrderNoResponse,
   PostApiProductOrderRequest,
@@ -38,8 +39,13 @@ export const getProOrderDetail = (params: GetApiProductOrderOrderNoRequest['orde
   return defHttp.get<GetApiProductOrderOrderNoResponse>({ url: `${Api.AddOrder}/${params}` });
 };
 
-export const delProOrder = (params: GetApiProductOrderOrderNoRequest['orderNo']) => {
-  return defHttp.delete({ url: `${Api.AddOrder}/${params}` });
+export const delProOrder = (params: DeleteApiProductOrderRequest) => {
+  return defHttp.delete(
+    { url: Api.AddOrder, params },
+    {
+      joinParamsToUrl: true,
+    },
+  );
 };
 
 export const checkProOrder = (params: PutApiProductOrderCheckOrderNoRequest['orderNo']) => {

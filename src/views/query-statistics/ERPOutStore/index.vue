@@ -46,7 +46,7 @@
     searchFormSchemaByProd,
     searchFormSchemaByNotProd,
   } from './out.data';
-  import { Tabs } from 'ant-design-vue';
+  import { Tabs, message } from 'ant-design-vue';
 
   import DetailModal from './DetailModal.vue';
   import { ref } from 'vue';
@@ -60,7 +60,6 @@
     GetApiProductPrepareErpOutProdRequest,
     GetApiProductPrepareErpOutProdResponse,
   } from '@/api/type/queryStatistics';
-  import { message } from 'ant-design-vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
