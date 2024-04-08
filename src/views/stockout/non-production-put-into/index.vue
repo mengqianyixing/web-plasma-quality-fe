@@ -66,13 +66,7 @@
           <a-button type="primary" @click="handleScan" v-auth="StockOutButtonEnum.NonPutIntoScan">
             扫描出库
           </a-button>
-          <a-dropdown
-            v-auth="[
-              NonconformityButtonEnum.PlasmaOutTransferPrint,
-              NonconformityButtonEnum.PlasmaOutPlasmaPrint,
-              NonconformityButtonEnum.PlasmaOutDestructionPrint,
-            ]"
-          >
+          <a-dropdown>
             <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
             <template #overlay>
               <Menu>
@@ -124,7 +118,7 @@
     revokeDeliverNonProductive,
     revokeReviewDeliverNonProductive,
   } from '@/api/stockout/non-productin-put-into';
-  import { NonconformityButtonEnum, StockOutButtonEnum } from '@/enums/authCodeEnum';
+  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
   import { PrintServerEnum } from '@/enums/printServerEnum';
   import { Menu, MenuItem, Dropdown as ADropdown } from 'ant-design-vue';
   import { getReportApi } from '@/api/report';
