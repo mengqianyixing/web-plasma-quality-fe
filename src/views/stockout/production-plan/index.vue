@@ -346,7 +346,7 @@
     });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.download = '原料血浆摘要.docx';
+    a.download = `原料血浆摘要${row.mesId}.docx`;
     a.href = url;
     a.click();
     window.URL.revokeObjectURL(url);
