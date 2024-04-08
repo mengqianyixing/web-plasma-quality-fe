@@ -11,79 +11,115 @@
     <template #footer>
       <a-button @click="handleClose">关闭</a-button>
     </template>
-    <BasicTable @register="registerTable">
-      <template #verifyState="{ record }"> {{ PlasmaStateMap.get(record?.verifyState) }} </template>
-    </BasicTable>
+    <BasicForm
+      @register="registerForm"
+      @submit="handleSubmit"
+      :submitButtonOptions="{ loading: tableLoading }"
+    />
+    <vxe-grid
+      v-bind="gridOptions"
+      :data="tableData"
+      show-overflow
+      class="inline-block w-100%"
+      :loading="tableLoading"
+    >
+      <template #collectAt="{ row }">
+        <span>{{ row.collectAt ? dayjs(row.collectAt).format('YYYY-MM-DD') : '-' }}</span>
+      </template>
+      <template #verifyAt="{ row }">
+        <span>{{ row.verifyAt ? dayjs(row.verifyAt).format('YYYY-MM-DD') : '-' }}</span>
+      </template>
+      <template #gender="{ row }">
+        <span>{{ row.gender === 'M' ? '男' : row.gender === 'F' ? '女' : '' }}</span>
+      </template>
+      <template #verifyState="{ row }">
+        <span>{{ PlasmaStateMap.get(row?.verifyState) }}</span>
+      </template>
+    </vxe-grid>
     <div class="absolute bottom-2 right-[35px] text-right">血浆总袋数：{{ verifyCount }}</div>
   </BasicModal>
 </template>
 <script lang="ts" setup>
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { BasicTable, useTable } from '@/components/Table';
+  import { BasicForm, useForm } from '@/components/Form';
   import { columns, searchFormSchema } from './batch.data';
-  import { ref } from 'vue';
+  import { ref, reactive } from 'vue';
   import { getPlasmaBag } from '@/api/inbound-management/accept-plasma';
+  import { VxeGridProps } from 'vxe-table';
+  import dayjs from 'dayjs';
+  import { GetApiCoreBatchPlasmaVerifyBagResponse } from '@/api/type/batchManage';
+
   import { PlasmaStateMap } from '@/enums/plasmaEnum';
 
   const verifyCount = ref(0);
+  const tableLoading = ref(false);
   const record = ref<Recordable>({});
+  const tableData = ref<GetApiCoreBatchPlasmaVerifyBagResponse>([]);
   const emit = defineEmits(['close', 'register']);
-
-  const [registerTable, { reload, getForm }] = useTable({
-    api: getPlasmaBag,
-    columns,
-    formConfig: {
-      labelWidth: 120,
-      schemas: searchFormSchema,
-      showResetButton: false,
-    },
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    afterFetch: (data) => {
-      verifyCount.value = data.length;
-    },
-    clickToRowSelect: true,
-    clearSelectOnPageChange: true,
-    size: 'small',
-    striped: false,
-    pagination: false,
-    useSearchForm: true,
-    scroll: {
-      y: 400,
-    },
-    tableSetting: {
-      size: false,
-      redo: false,
-      setting: false,
-    },
-    bordered: true,
-    showIndexColumn: false,
-    immediate: false,
-  });
 
   const [register, { closeModal }] = useModalInner(async (data) => {
     record.value = data.record;
-    await getForm().setFieldsValue({
+    await setFieldsValue({
       stationName: data.record.stationName,
       batchNo: data.record.batchNo,
       boxNo: data.record.boxNo,
       verifyResult: data.record?.field ?? '',
     });
-
-    await reload({
-      searchInfo: {
-        ...getForm().getFieldsValue(),
-      },
-    });
+    _getPlasmaBag({ ...getFieldsValue() });
   });
+
+  const gridOptions = reactive<VxeGridProps<any>>({
+    border: true,
+    height: '520px',
+    showOverflow: true,
+    exportConfig: {},
+    columnConfig: {
+      resizable: true,
+    },
+    scrollY: {
+      enabled: true,
+      gt: 0,
+    },
+    pagerConfig: {
+      enabled: false,
+    },
+    formConfig: {
+      enabled: false,
+    },
+    toolbarConfig: {
+      refresh: false,
+      loading: false,
+      export: false,
+      custom: false,
+    },
+    columns,
+    showFooter: false,
+  });
+
+  const [registerForm, { setFieldsValue, getFieldsValue }] = useForm({
+    labelWidth: 80,
+    schemas: searchFormSchema,
+    showResetButton: false,
+  });
+
+  async function _getPlasmaBag(data) {
+    try {
+      tableLoading.value = true;
+      const res = await getPlasmaBag(data);
+      tableData.value = res;
+      verifyCount.value = res.length;
+    } finally {
+      tableLoading.value = false;
+    }
+  }
+
+  async function handleSubmit() {
+    _getPlasmaBag({ ...getFieldsValue() });
+  }
 
   function handleClose() {
     closeModal();
-    if (getForm().getFieldsValue().boxNo) {
+    if (getFieldsValue().boxNo) {
       emit('close', record.value);
     }
   }
