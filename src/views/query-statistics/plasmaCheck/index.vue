@@ -177,7 +177,7 @@
     [checkKey, checkUnKey, exteriorKey].forEach((key) => {
       row[key][ratioKey] = row[key][numKey] / (row[bagCountKey] || 1);
     });
-    return { ...row, batch: '--', batchCount: '--', stationName: '合计', isCount: true };
+    return { ...row, batch: '--', stationName: '合计', isCount: true };
   }
   function getFollowUpCountRow(data: Recordable[]) {
     const row = followUpColumns.reduce((row, { dataIndex, children = [] }) => {

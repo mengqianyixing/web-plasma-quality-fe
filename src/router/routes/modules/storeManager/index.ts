@@ -106,6 +106,15 @@ const storeManager: AppRouteModule = {
       component: () => import('@/views/tray/outInStore/index.vue'),
     },
     {
+      path: 'ferry',
+      name: 'Ferry',
+      meta: {
+        title: '托盘越库',
+      },
+      id: 990060,
+      component: () => import('@/views/tray/ferry/index.vue'),
+    },
+    {
       path: 'site',
       name: 'PlasmaSite',
       meta: {
