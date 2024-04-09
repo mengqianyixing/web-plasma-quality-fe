@@ -11,6 +11,30 @@ import { h } from 'vue';
 import { Select, Tag } from 'ant-design-vue';
 import { customRenderDate } from '@/utils/tableHelpRender';
 
+function containsThreeOfFour(str: string) {
+  const hasDigit = /\d/.test(str);
+  const hasUpper = /[A-Z]/.test(str);
+  const hasLower = /[a-z]/.test(str);
+  const hasSpecial = /[^a-zA-Z0-9\s]/.test(str);
+  const count = (hasDigit ? 1 : 0) + (hasUpper ? 1 : 0) + (hasLower ? 1 : 0) + (hasSpecial ? 1 : 0);
+  return count === 4;
+}
+const dynamicPasswordRules = () => {
+  return [
+    {
+      required: true,
+      validator: (_, value) => {
+        if (!value) {
+          return Promise.reject('密码不能为空');
+        }
+        if (!containsThreeOfFour(value) || value.length < 8) {
+          return Promise.reject('密码必须包含大写字母、小写字母、特殊字符、数字且不小于8位!');
+        }
+        return Promise.resolve();
+      },
+    },
+  ];
+};
 export const columns: BasicColumn[] = [
   {
     title: '账号',
@@ -85,6 +109,7 @@ export const addFormSchema: FormSchema[] = [
     label: '密码',
     component: 'InputPassword',
     required: true,
+    dynamicRules: dynamicPasswordRules,
   },
   {
     field: 'roles',
@@ -142,27 +167,6 @@ export const userDetailFormSchema: FormSchema[] = [
       });
     },
   },
-  // {
-  //   field: 'menuIds',
-  //   label: '权限',
-  //   component: 'Select',
-  //   render: ({ model, field }) => {
-  //     return h(Select, {
-  //       value: model[field]
-  //         ?.filter((item) => routeIdMap[item])
-  //         ?.map((item) => routeIdMap[item]?.title ?? item),
-  //       mode: 'multiple',
-  //       options: model.roles
-  //         ?.filter((item) => routeIdMap[item])
-  //         ?.map((item) => ({
-  //           label: routeIdMap[item]?.title ?? item,
-  //           value: routeIdMap[item]?.title ?? item,
-  //         })),
-  //       placeholder: '-',
-  //       disabled: true,
-  //     });
-  //   },
-  // },
 ];
 
 export const passwordFormSchema: FormSchema[] = [
@@ -180,28 +184,7 @@ export const passwordFormSchema: FormSchema[] = [
     label: '密码',
     component: 'InputPassword',
     required: true,
-    dynamicRules: ({ values }) => {
-      return [
-        {
-          required: true,
-          validator: (_, value) => {
-            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/;
-            if (!value) {
-              return Promise.reject('密码不能为空');
-            }
-            if (!regex.test(value)) {
-              return Promise.reject(
-                '密码必须包含大写字母、小写字母、特殊字符、数字中的三种且不小于8位!',
-              );
-            }
-            if (value === values.userName) {
-              return Promise.reject('禁止使用用户名作为登录密码!');
-            }
-            return Promise.resolve();
-          },
-        },
-      ];
-    },
+    dynamicRules: dynamicPasswordRules,
   },
   {
     field: 'reNewPassword',

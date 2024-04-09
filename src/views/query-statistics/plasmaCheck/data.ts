@@ -92,7 +92,7 @@ export const checkColumns: BasicColumn[] = [
   {
     width: 140,
     title: '其他血浆不合格',
-    dataIndex: '',
+    dataIndex: 'other',
   },
 ];
 
