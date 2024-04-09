@@ -1,87 +1,84 @@
-import { BasicColumn, FormSchema } from '@/components/Table';
-import dayjs from 'dayjs';
+import { FormSchema } from '@/components/Table';
 
-export const columns: BasicColumn[] = [
+export const columns = [
   {
+    field: 'boxNo',
     title: '箱号',
-    dataIndex: 'boxNo',
     width: 120,
   },
   {
     title: '血浆编号',
-    dataIndex: 'bagNo',
+    field: 'bagNo',
+    width: 140,
   },
   {
     title: '采集日期',
-    dataIndex: 'collectAt',
-    customRender: ({ text }) => {
-      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-    },
+    field: 'collectAt',
+    slots: { default: 'collectAt' },
+    width: 120,
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    field: 'donorNo',
+    width: 120,
   },
   {
     title: '浆员名称',
-    dataIndex: 'donorName',
+    field: 'donorName',
+    width: 100,
   },
   {
     title: '性别',
-    dataIndex: 'gender',
-    width: 80,
-    customRender: ({ text }) => {
-      if (text === 'M') {
-        return '男';
-      } else if (text === 'F') {
-        return '女';
-      }
-      return '';
-    },
+    field: 'gender',
+    slots: { default: 'gender' },
+    width: 100,
   },
   {
     title: '血型',
-    dataIndex: 'bloodType',
-    width: 80,
+    field: 'bloodType',
+    width: 100,
   },
   {
     title: '浆站重量(g)',
-    dataIndex: 'rawWeight',
-    width: 120,
+    field: 'rawWeight',
+    width: 100,
   },
   {
     title: '验收净重(g)',
-    dataIndex: 'netWeight',
-    width: 120,
+    field: 'netWeight',
+    width: 100,
   },
   {
     title: '验收人',
-    dataIndex: 'verifyUser',
+    field: 'verifyUser',
+    width: 100,
   },
   {
     title: '复核人',
-    dataIndex: 'checker',
+    field: 'checker',
+    width: 100,
   },
   {
     title: '验收时间',
-    dataIndex: 'verifyAt',
+    field: 'verifyAt',
     width: 120,
-    customRender: ({ text }) => {
-      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-    },
+    slots: { default: 'verifyAt' },
   },
   {
     title: '验收状态',
-    dataIndex: 'verifyState',
-    slots: { customRender: 'verifyState' },
+    field: 'verifyState',
+    slots: { default: 'verifyState' },
+    width: 100,
   },
   {
     title: '血浆验收结果',
-    dataIndex: 'bagResult',
+    field: 'bagResult',
+    width: 120,
   },
   {
     title: '样本验收结果',
-    dataIndex: 'sampleResult',
+    field: 'sampleResult',
+    width: 120,
   },
 ];
 
@@ -93,16 +90,25 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       disabled: true,
     },
+    colProps: {
+      span: 4,
+    },
   },
   {
     field: 'batchNo',
     label: '血浆批号',
     component: 'Input',
+    colProps: {
+      span: 4,
+    },
   },
   {
     field: 'boxNo',
     label: '血浆箱号',
     component: 'Input',
+    colProps: {
+      span: 4,
+    },
   },
   {
     field: 'verifyState',
@@ -119,6 +125,9 @@ export const searchFormSchema: FormSchema[] = [
           label: '已验收',
         },
       ],
+    },
+    colProps: {
+      span: 4,
     },
   },
   {
@@ -140,6 +149,9 @@ export const searchFormSchema: FormSchema[] = [
           label: '缺浆',
         },
       ],
+    },
+    colProps: {
+      span: 4,
     },
   },
 ];

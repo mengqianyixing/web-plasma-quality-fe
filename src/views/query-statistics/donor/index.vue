@@ -6,17 +6,12 @@
     class="flex p-5px"
     content-class="flex flex-col w-full"
   >
-    <BasicForm @register="register" class="h-12 pt-2 bg-white" @submit="handleSubmit" />
-    <div class="p-3 m-2 bg-white">
+    <BasicForm @register="register" class="h-12 pt-2 bg-white mb--3" @submit="handleSubmit" />
+    <div class="p-3 bg-white">
       <div class="title">浆员基本信息</div>
       <Description @register="donorTable" :data="mockData" />
     </div>
-    <Tabs
-      class="flex-1 p-4 m-2 bg-white tabs"
-      type="card"
-      size="small"
-      v-model:activeKey="activeKey"
-    >
+    <Tabs class="flex-1 p-4 bg-white tabs" type="card" size="small" v-model:activeKey="activeKey">
       <TabPane key="batch" tab="血浆明细">
         <BasicTable @register="batchTable" class="donor-tab mt--2" />
       </TabPane>
