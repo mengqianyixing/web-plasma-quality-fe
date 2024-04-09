@@ -46,7 +46,7 @@
     searchFormSchemaByProd,
     searchFormSchemaByNotProd,
   } from './out.data';
-  import { Tabs } from 'ant-design-vue';
+  import { Tabs, message } from 'ant-design-vue';
 
   import DetailModal from './DetailModal.vue';
   import { ref } from 'vue';
@@ -60,7 +60,6 @@
     GetApiProductPrepareErpOutProdRequest,
     GetApiProductPrepareErpOutProdResponse,
   } from '@/api/type/queryStatistics';
-  import { message } from 'ant-design-vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -152,7 +151,7 @@
         pageSize,
       } as GetApiProductPrepareErpOutProdRequest & GetApiCoreBankErpOutNonProdRequest);
 
-      if (OriginData.totalCount || 0 > Number(pageSize))
+      if ((OriginData.totalCount || 0) > Number(pageSize))
         return message.warning('最多只能导出【' + pageSize + '】条数据');
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(

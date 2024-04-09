@@ -127,7 +127,7 @@
         currPage: 1,
         pageSize,
       } as any);
-      if (data.totalCount || 0 > Number(pageSize))
+      if ((data.totalCount || 0) > Number(pageSize))
         return message.warning('最多只能导出【' + pageSize + '】条数据');
 
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);

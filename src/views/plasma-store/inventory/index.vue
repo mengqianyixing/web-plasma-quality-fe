@@ -63,8 +63,7 @@
 
   const [registerForm, { updateSchema, getFieldsValue }] = useForm({
     labelWidth: 140,
-    showAdvancedButton: false,
-    actionColOptions: { style: 'right: 40px; top: 150px;  position: absolute;' },
+    actionColOptions: { style: 'right: 40px; top: 80px;  position: absolute;' },
     schemas: formSchema,
     transformDateFunc(date) {
       return dayjs(date).format('YYYY-MM-DD');

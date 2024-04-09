@@ -17,13 +17,13 @@
         </a-button>
       </div>
       <a-tabs default-active-key="detail" v-model:activeKey="currentKey">
-        <a-tab-pane key="batch" tab="血浆批号">
+        <a-tab-pane key="batch" tab="血浆批号" force-render>
           <BasicTable @register="registerBatchTable" />
         </a-tab-pane>
-        <a-tab-pane key="box" tab="血浆箱号">
+        <a-tab-pane key="box" tab="血浆箱号" force-render>
           <BasicTable @register="registerBoxTable" />
         </a-tab-pane>
-        <a-tab-pane key="detail" tab="血浆明细">
+        <a-tab-pane key="detail" tab="血浆明细" force-render>
           <BasicTable @register="registerDetailTable">
             <template #toolbar>
               <a-button type="primary" @click="handlePickPlasma" :disabled="isPreview">
@@ -270,7 +270,7 @@
       },
     ]);
 
-    if (unref(isPreview)) {
+    if (unref(isPreview) || unref(isUpdate)) {
       await setFieldsValue({
         ...data.record,
       });
@@ -278,14 +278,6 @@
       await reloadDetailTable();
 
       return;
-    }
-
-    if (unref(isUpdate)) {
-      await setFieldsValue({
-        ...data.record,
-      });
-
-      await reloadDetailTable();
     } else {
       setBoxTableData([]);
       setBatchTableData([]);
@@ -341,6 +333,7 @@
 
   function handleClose() {
     resetFields();
+    setDetailTableData([]);
     currentKey.value = 'detail';
     emit('success');
   }

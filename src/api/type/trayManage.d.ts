@@ -663,7 +663,7 @@ export type GetApiCoreBankTrayInstoreTrayNoResponse = boolean;
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/tray/boxes`
- * @更新时间 `2024-04-03 15:44:07`
+ * @更新时间 `2024-04-03 15:45:34`
  */
 export interface GetApiCoreBankTrayBoxesRequest {
   /**
@@ -701,7 +701,7 @@ export interface GetApiCoreBankTrayBoxesRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/tray/boxes`
- * @更新时间 `2024-04-03 15:44:07`
+ * @更新时间 `2024-04-03 15:45:34`
  */
 export interface GetApiCoreBankTrayBoxesResponse {
   currPage?: number;
@@ -741,6 +741,78 @@ export interface GetApiCoreBankTrayBoxesResponse {
      */
     trayNo?: string;
   }[];
+}
+
+/**
+ * 接口 [托盘越库提交↗](https://yapi.sharing8.cn/project/529/interface/api/34203) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/warehouse/ferry`
+ * @更新时间 `2024-04-07 14:11:50`
+ */
+export interface PostApiCoreBankTrayWarehouseFerryRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  /**
+   * 站点编号
+   */
+  siteNo: string;
+}
+
+/**
+ * 接口 [托盘越库提交↗](https://yapi.sharing8.cn/project/529/interface/api/34203) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/warehouse/ferry`
+ * @更新时间 `2024-04-07 14:11:50`
+ */
+export interface PostApiCoreBankTrayWarehouseFerryResponse {
+  /**
+   * 响应码
+   */
+  code: string;
+  /**
+   * 响应信息
+   */
+  msg: string;
+}
+
+/**
+ * 接口 [托盘越库确认\/取消↗](https://yapi.sharing8.cn/project/529/interface/api/34212) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `PUT /api/core/bank/tray/warehouse/ferry`
+ * @更新时间 `2024-04-07 14:14:13`
+ */
+export interface PutApiCoreBankTrayWarehouseFerryRequest {
+  /**
+   * 越库单id
+   */
+  ferryId: string;
+  /**
+   * 越库结果确认，confirm表示成功，cancel表示失败
+   */
+  action: string;
+}
+
+/**
+ * 接口 [托盘越库确认\/取消↗](https://yapi.sharing8.cn/project/529/interface/api/34212) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `PUT /api/core/bank/tray/warehouse/ferry`
+ * @更新时间 `2024-04-07 14:14:13`
+ */
+export interface PutApiCoreBankTrayWarehouseFerryResponse {
+  /**
+   * 响应码
+   */
+  code: string;
+  /**
+   * 响应信息
+   */
+  msg: string;
 }
 
 /* prettier-ignore-end */
