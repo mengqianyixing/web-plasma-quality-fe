@@ -599,7 +599,7 @@
   const closeRevoke = () => {
     revokeModalVisible.value = false;
   };
-
+  // 血浆不合格登记
   function handlePlasmaUnqualified() {
     if (!batchNo.value) {
       warning('请先选择批号!');
@@ -636,9 +636,9 @@
       },
     });
   }
-
   async function handleModalSuccess() {
     try {
+      const cacheBagNo = filterForm.value?.verifyBag?.[0]?.bagNo ?? '';
       tableLoading.value = true;
       const res = await getPlasmaVerify(batchNo.value);
       filterForm.value = res;
@@ -648,6 +648,17 @@
           bagNo: item,
         };
       });
+      // debugger;
+      if (
+        filterForm.value.verifyBagCount == filterForm.value.bagCount &&
+        filterForm.value.verifyBagCount
+      ) {
+        success('当前批验收完成');
+        openPrint(cacheBagNo);
+      } else if (!filterForm.value.unVerifyBag.length) {
+        success('当前箱验收完成');
+        openPrint(cacheBagNo);
+      }
     } finally {
       tableLoading.value = false;
     }
