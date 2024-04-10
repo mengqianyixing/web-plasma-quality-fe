@@ -44,7 +44,7 @@ export interface PostApiProductOrderResponse {}
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `POST /api/product/orders`
- * @更新时间 `2024-03-29 17:50:20`
+ * @更新时间 `2024-04-09 09:29:48`
  */
 export interface PostApiProductOrdersRequest {
   /**
@@ -98,7 +98,7 @@ export interface PostApiProductOrdersRequest {
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `POST /api/product/orders`
- * @更新时间 `2024-03-29 17:50:20`
+ * @更新时间 `2024-04-09 09:29:48`
  */
 export interface PostApiProductOrdersResponse {
   /**
@@ -130,6 +130,10 @@ export interface PostApiProductOrdersResponse {
      * 投产类型
      */
     orderType: string;
+    /**
+     * 流程id
+     */
+    orderId: string;
     /**
      * 投浆重量(t)
      */
@@ -405,5 +409,47 @@ export interface PutApiProductOrderReviewOrderNoRequest {
  * @更新时间 `2023-12-15 13:48:55`
  */
 export type PutApiProductOrderReviewOrderNoResponse = string;
+
+/**
+ * 接口 [查询历史任务↗](https://yapi.sharing8.cn/project/529/interface/api/34221) 的 **请求类型**
+ *
+ * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
+ * @请求头 `GET /api/sys/snaker/tasks/{orderId}`
+ * @更新时间 `2024-04-09 09:32:42`
+ */
+export interface GetApiSysSnakerTasksOrderIdRequest {
+  /**
+   * xxxx
+   */
+  orderId: string;
+}
+
+/**
+ * 接口 [查询历史任务↗](https://yapi.sharing8.cn/project/529/interface/api/34221) 的 **返回类型**
+ *
+ * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
+ * @请求头 `GET /api/sys/snaker/tasks/{orderId}`
+ * @更新时间 `2024-04-09 09:32:42`
+ */
+export interface GetApiSysSnakerTasksOrderIdResponse {
+  field_5: {
+    /**
+     * 操作人
+     */
+    name: string;
+    /**
+     * 节点
+     */
+    step: string;
+    /**
+     * 结果
+     */
+    result: string;
+    /**
+     * 操作时间
+     */
+    createTime: string;
+  }[];
+}
 
 /* prettier-ignore-end */
