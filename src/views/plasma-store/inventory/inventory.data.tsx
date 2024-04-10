@@ -93,7 +93,7 @@ export const formSchema: FormSchema[] = [
         <div class="flex gap-2">
           <Select disabled={disabled} style="width: 120px;" allowClear v-model:value={model[field]}>
             <Select.Option value="receipt">接收日期</Select.Option>
-            <Select.Option value="verify">发布验收日期</Select.Option>
+            <Select.Option value="verify">验收发布日期</Select.Option>
           </Select>
           <FormItem name="date">
             <FormItemRest>

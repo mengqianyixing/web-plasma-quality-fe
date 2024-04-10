@@ -10,10 +10,15 @@ import {
   PostApiSysDictionaryItemsRequest,
   PostApiSysDictionaryItemsResponse,
 } from '@/api/type/dictionary';
+import {
+  PostApiCoreBatchSampleAcceptPackRequest,
+  PostApiCoreBatchSampleAcceptPackResponse,
+} from '@/api/type/sampleManage';
 
 enum Api {
   SAMPLE_ACCEPT_RESTFUL = '/api/core/batch/sample/accept',
   DICTIONARY = '/api/sys/dictionaryItems',
+  SAMPLE_RECEIVE_BAG = '/api/core/batch/sample/accept/pack',
 }
 
 export const getSampleReceiveList = (params: GetApiCoreBatchSampleAcceptRequest) =>
@@ -31,6 +36,9 @@ export const getSampleReceiveDetail = (
 
 export const receiveSample = (params: PostApiCoreBatchSampleAcceptRequest) =>
   defHttp.post({ url: Api.SAMPLE_ACCEPT_RESTFUL, params });
+
+export const receiveSampleByBag = (params: PostApiCoreBatchSampleAcceptPackRequest) =>
+  defHttp.post<PostApiCoreBatchSampleAcceptPackResponse>({ url: Api.SAMPLE_RECEIVE_BAG, params });
 
 export const getSampleDictionary = (params: PostApiSysDictionaryItemsRequest) =>
   defHttp.post<PostApiSysDictionaryItemsResponse>({ url: Api.DICTIONARY, params });

@@ -68,3 +68,8 @@ sampleVerifyResultMap.set(
   sampleVerifyResultEnum.Unqualified,
 );
 sampleVerifyResultMap.set(sampleVerifyResultValueEnum.Qualified, sampleVerifyResultEnum.Qualified);
+
+export enum sampleReceiveModalEnum {
+  BCH = 'BCH',
+  BAG = 'BAG',
+}

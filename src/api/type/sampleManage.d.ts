@@ -210,4 +210,102 @@ export interface PutApiCoreSampleReleaseRequest {
  */
 export type PutApiCoreSampleReleaseResponse = string;
 
+/**
+ * 接口 [样本逐袋接收↗](https://yapi.sharing8.cn/project/529/interface/api/34239) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/batch/sample/accept/pack`
+ * @更新时间 `2024-04-10 11:27:35`
+ */
+export interface PostApiCoreBatchSampleAcceptPackRequest {
+  /**
+   * 样本袋号
+   */
+  packNo: string;
+  /**
+   * 样本接收单号，完成一袋未接收的样本袋接收之后会返回
+   */
+  bsaNo?: string;
+}
+
+/**
+ * 接口 [样本逐袋接收↗](https://yapi.sharing8.cn/project/529/interface/api/34239) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/batch/sample/accept/pack`
+ * @更新时间 `2024-04-10 11:27:35`
+ */
+export interface PostApiCoreBatchSampleAcceptPackResponse {
+  /**
+   * 接收单号，完成一袋接收后会返回单号，否则无返回
+   */
+  bsaNo?: string;
+  /**
+   * 出库日期
+   */
+  outWarehouseDate?: string;
+  /**
+   * 采浆公司编号
+   */
+  stationNo?: string;
+  /**
+   * 采浆公司名称
+   */
+  stationName?: string;
+  /**
+   * 样本批号
+   */
+  batchSampleNo?: string;
+  /**
+   * 样本类型
+   */
+  sampleType?: string;
+  /**
+   * 样本袋数
+   */
+  bagCount?: number;
+  /**
+   * 样本数量
+   */
+  totalCount?: number;
+  /**
+   * 接收状态，W-待接收，R-接收中，S-已接收
+   */
+  acceptState?: string;
+  /**
+   * 待接收列表
+   */
+  unAcceptList?: {
+    /**
+     * 样本袋号
+     */
+    sampleBagNo?: string;
+    /**
+     * 样本数量
+     */
+    sampleCount?: number;
+  }[];
+  /**
+   * 已接收列表
+   */
+  acceptedList?: {
+    /**
+     * 样本袋号
+     */
+    sampleBagNo?: string;
+    /**
+     * 样本数量
+     */
+    sampleCount?: number;
+    /**
+     * 接收人
+     */
+    acceptor?: string;
+    /**
+     * 接受日期
+     */
+    acceptAt?: string;
+  }[];
+}
+
 /* prettier-ignore-end */

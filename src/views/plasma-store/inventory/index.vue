@@ -56,7 +56,7 @@
   const sumNum = (list: any[], field: string) => {
     let count = 0;
     list.forEach((item) => {
-      count += Number(item[field]);
+      count = accAdd(count, item[field]);
     });
     return count;
   };
@@ -70,6 +70,22 @@
     },
     compact: true,
   });
+
+  function accAdd(arg1: number, arg2: number) {
+    let r1: number, r2: number, m: number;
+    try {
+      r1 = arg1.toString().split('.')[1].length;
+    } catch (e) {
+      r1 = 0;
+    }
+    try {
+      r2 = arg2.toString().split('.')[1].length;
+    } catch (e) {
+      r2 = 0;
+    }
+    m = Math.pow(10, Math.max(r1, r2));
+    return (arg1 * m + arg2 * m) / m;
+  }
 
   const gridOptions = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
     border: true,

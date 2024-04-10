@@ -14,7 +14,7 @@
     >
       <template #toolbar>
         <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
-          <span>未接收数：</span>
+          <span>未接收袋数：</span>
           <span>{{ unAcceptList?.length }}</span>
         </div>
       </template>
@@ -28,11 +28,13 @@
       <template #toolbar>
         <div class="flex items-center justify-between bg-[#ffffff]">
           <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
-            <span>已接收数：</span>
+            <span>已接收袋数：</span>
             <span>{{ acceptList?.length }}</span>
           </div>
           <div>
-            <a-button type="primary" @click="handleAcceptSample">接收</a-button>
+            <a-button type="primary" @click="handleAcceptSample" v-if="!isReceiveByBag">
+              接收
+            </a-button>
           </div>
         </div>
       </template>
@@ -41,7 +43,7 @@
 </template>
 
 <script setup lang="tsx">
-  import { computed, reactive, ref } from 'vue';
+  import { computed, reactive, ref, shallowRef } from 'vue';
 
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import Description from '@/components/Description/src/Description.vue';
@@ -49,7 +51,11 @@
   import { useModal } from '@/components/Modal';
 
   import SelectSampleBatchModal from './SelectSampleBatchModal.vue';
-  import { receiveSample, getSampleReceiveDetail } from '@/api/inbound-management/sample-receive';
+  import {
+    receiveSample,
+    getSampleReceiveDetail,
+    receiveSampleByBag,
+  } from '@/api/inbound-management/sample-receive';
   import { GetApiCoreBatchSampleAcceptBatchSampleNoResponse } from '@/api/type/batchManage';
   import { useMessage } from '@/hooks/web/useMessage';
   import dayjs from 'dayjs';
@@ -57,19 +63,51 @@
   import { GetApiCoreBankStockRequest } from '@/api/type/plasmaStoreManage';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { sampleReceiveModalEnum, sampleReceiveStatusValueEnum } from '@/enums/sampleEnum';
+  import { getSysParamsByParamKey } from '@/api/systemServer/params';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+
+  const { createMessage } = useMessage();
 
   defineOptions({ name: 'SampleAccept' });
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 
-  const sampleBatchData = ref<GetApiCoreBatchSampleAcceptBatchSampleNoResponse>({});
+  const sampleBatchData = ref<GetApiCoreBatchSampleAcceptBatchSampleNoResponse | {}>({});
   const inputValue = ref('');
   const tableLoading = ref(false);
 
   const { createConfirm } = useMessage();
 
+  getSysParamsByParamKey(SysParamsEnum.BatchSampleAcceptPattern).then((res) => {
+    receiveModal.value = res;
+  });
+  const receiveModal = shallowRef<sampleReceiveModalEnum>();
+  const isReceiveByBag = computed(() => receiveModal.value === sampleReceiveModalEnum.BAG);
+
   const schema: DescItem[] = [
+    {
+      field: 'bagNo',
+      label: '样本袋号',
+      contentMinWidth: 100,
+      render() {
+        return (
+          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
+            <a-input-search
+              placeholder="扫描袋号条码"
+              enter-button="接收"
+              value={bagValue}
+              onChange={(e) => (bagValue.value = e.target.value)}
+              onSearch={handleReceiveByBag}
+            />
+          </div>
+        );
+      },
+      show() {
+        return isReceiveByBag.value;
+      },
+    },
     {
       field: 'batchSampleNo',
       label: '样本批号',
@@ -137,8 +175,16 @@
     }
   }
 
-  const unAcceptList = computed(() => sampleBatchData.value?.unAcceptList ?? []);
-  const acceptList = computed(() => sampleBatchData.value?.acceptedList ?? []);
+  const unAcceptList = computed(
+    () =>
+      (sampleBatchData.value as GetApiCoreBatchSampleAcceptBatchSampleNoResponse)?.unAcceptList ??
+      [],
+  );
+  const acceptList = computed(
+    () =>
+      (sampleBatchData.value as GetApiCoreBatchSampleAcceptBatchSampleNoResponse)?.acceptedList ??
+      [],
+  );
   const gridOptionsUnaccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
     border: true,
     height: '760px',
@@ -226,12 +272,16 @@
   });
 
   async function handleSelectSampleBatchSuccess(record: Recordable) {
+    tableLoading.value = true;
     sampleBatchData.value = await getSampleReceiveDetail(record.batchSampleNo);
     inputValue.value = record.batchSampleNo;
+    tableLoading.value = false;
   }
 
   async function handlePressEnter() {
+    tableLoading.value = true;
     sampleBatchData.value = await getSampleReceiveDetail(inputValue.value);
+    tableLoading.value = false;
   }
 
   async function handleAcceptSample() {
@@ -246,5 +296,25 @@
         sampleBatchData.value = await getSampleReceiveDetail(inputValue.value);
       },
     });
+  }
+
+  const bagValue = ref('');
+  const bsaNo = ref<undefined | string>(undefined);
+  async function handleReceiveByBag() {
+    const receiveData = await receiveSampleByBag({
+      packNo: bagValue.value,
+      bsaNo: bsaNo.value!,
+    });
+    inputValue.value = receiveData.batchSampleNo!;
+    bsaNo.value = receiveData.bsaNo!;
+    await handlePressEnter();
+
+    if (receiveData.acceptState === sampleReceiveStatusValueEnum.S) {
+      bsaNo.value = undefined;
+      bagValue.value = '';
+      inputValue.value = '';
+      sampleBatchData.value = {};
+      createMessage.success('该批次接收完成');
+    }
   }
 </script>
