@@ -157,8 +157,8 @@
     plasmaCellList.value = list;
   }
   async function registration() {
-    setModalProps({ confirmLoading: true });
     const values = await validate();
+    setModalProps({ confirmLoading: true });
     submitRegistrationApi({ bsNo: bsNo.value, checkCompletionDate: values.checkCompletionDate })
       .then(() => {
         openCancelModal(false);
