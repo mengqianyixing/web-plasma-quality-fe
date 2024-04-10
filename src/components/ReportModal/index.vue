@@ -15,7 +15,7 @@
     <template #footer>
       <a-button @click="closeModal">取消</a-button>
       <a-button type="primary" @click="handleDownload" v-if="downloadFileName">下载</a-button>
-      <a-button type="primary" @click="handlePrint">打印</a-button>
+      <a-button type="primary" @click="handlePrint" :loading="loading">打印</a-button>
     </template>
     <div class="h-inherit max-h-inherit min-h-inherit">
       <iframe
@@ -42,6 +42,7 @@
   const iframeRef = ref<HTMLIFrameElement>();
   const link = ref('');
   const downloadFileName = ref('');
+  const loading = ref(false);
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (blobHelper) => {
     if (typeof blobHelper !== 'string' && Reflect.has(blobHelper, 'downloadFileName')) {
@@ -53,9 +54,14 @@
     setModalProps({ defaultFullscreen: true });
   });
 
-  function handlePrint() {
-    iframeRef.value?.contentWindow?.print();
-    updateReportPrintApi();
+  async function handlePrint() {
+    try {
+      loading.value = true;
+      await updateReportPrintApi();
+      iframeRef.value?.contentWindow?.print();
+    } finally {
+      loading.value = false;
+    }
   }
 
   function handleDownload() {
