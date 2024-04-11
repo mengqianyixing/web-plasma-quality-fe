@@ -29,15 +29,10 @@
     prepareProduceMap,
     prepareProduceValueEnum,
   } from '@/enums/stockoutEnum';
-  import { SERVER_ENUM } from '@/enums/serverEnum';
-  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-
-  const serverEnumStore = useServerEnumStoreWithOut();
-  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
+  import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
 
   let prepareNo = ''; // 准备号
   const [registerModal] = useModalInner(async (data) => {
-    console.log('血浆明细看看data', data);
     prepareNo = data.record.prepareNo;
     const sort = data.record.sort; // 分拣/待分拣
 
@@ -101,10 +96,7 @@
     },
     {
       title: '效价类型',
-      dataIndex: 'immType',
-      format(text) {
-        return `${PlasmaType(text)}`;
-      },
+      dataIndex: 'immTypeLevel',
     },
     {
       title: '效价值',
@@ -191,12 +183,14 @@
       },
     },
     {
-      field: 'immType',
+      field: 'immTypeLevel',
       label: '效价类型',
-      component: 'Select',
+      component: 'ApiSelect',
       colProps: { span: 4 },
       componentProps: {
-        options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+        api: getDilutionTypeApi,
+        labelField: 'key',
+        valueField: 'value',
       },
     },
   ];
