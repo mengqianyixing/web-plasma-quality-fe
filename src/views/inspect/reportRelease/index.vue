@@ -13,6 +13,7 @@
         <a-button
           type="primary"
           @click="handleCreate"
+          :loading="createLoading"
           v-auth="InspectButtonEnum.ReportReleaseCreate"
           >报告生成</a-button
         >
@@ -134,6 +135,8 @@
   const reportLoading = ref(false);
   const open = ref(false);
   const confirmLoading = ref(false);
+  const createLoading = ref(false);
+
   let revokeApi = revokeReportApi;
 
   const [registerModal, { openModal }] = useModal();
@@ -191,9 +194,14 @@
   async function handleCreate() {
     const [row] = getSelections(true);
     if (!row) return;
-    await createReportApi({ reportNo: row.reportNo });
-    message.success('制作成功');
-    reload();
+    try {
+      createLoading.value = true;
+      await createReportApi({ reportNo: row.reportNo });
+      message.success('制作成功');
+      reload();
+    } finally {
+      createLoading.value = false;
+    }
   }
   function handleUnCreate() {
     const [row] = getSelections(true);
