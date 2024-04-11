@@ -99,13 +99,18 @@
       },
     },
     {
+      title: '汇总日期',
+      dataIndex: 'createAt',
+      format: (text) => (text ? dayjs(text).format('YYYY-MM-DD') : '-'),
+    },
+    {
       title: '打印人',
       dataIndex: 'printor',
     },
     {
-      title: '打印时间',
+      title: '打印日期',
       dataIndex: 'printAt',
-      format: (text) => (text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-'),
+      format: (text) => (text ? dayjs(text).format('YYYY-MM-DD') : '-'),
     },
   ];
 
