@@ -11,11 +11,16 @@
       <div class="title">浆员基本信息</div>
       <Description @register="donorTable" :data="mockData" />
     </div>
-    <Tabs class="flex-1 p-4 bg-white tabs" type="card" size="small" v-model:activeKey="activeKey">
+    <Tabs
+      class="flex-1 p-4 mt--3 bg-white tabs"
+      type="card"
+      size="small"
+      v-model:activeKey="activeKey"
+    >
       <TabPane key="batch" tab="血浆明细">
         <BasicTable @register="batchTable" class="donor-tab mt--2" />
       </TabPane>
-      <TabPane key="callBack" tab="回访明细">
+      <TabPane key="callBack" tab="回访明细" forceRender>
         <BasicTable @register="callBackTable" class="donor-tab mt--2" />
       </TabPane>
       <TabPane key="titer" tab="效价趋势" class="mt--2">
