@@ -32,23 +32,15 @@
   import { defineEmits } from 'vue';
   import { getBatchListApi } from '@/api/inspect/resultRegistration';
   import { message } from 'ant-design-vue';
-  import { SERVER_ENUM } from '@/enums/serverEnum';
-  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-  import { useStation } from '@/hooks/common/useStation';
 
-  const serverEnumStore = useServerEnumStoreWithOut();
-  const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
-  const { getStationNameById } = useStation();
   defineOptions({ name: 'LocationModel' });
   const emit = defineEmits(['confirm', 'register']);
 
-  let rawData: Recordable[] = [];
-
   const [
     registerTable,
-    { clearSelectedRowKeys, reload, setPagination, getSelectRows, redoHeight, setLoading },
+    { clearSelectedRowKeys, reload, setPagination, getSelectRows, redoHeight },
   ] = useTable({
-    api: getData,
+    api: getBatchListApi,
     immediate: false,
     size: 'small',
     fetchSetting: {
@@ -74,34 +66,9 @@
   });
   const [registerModal] = useModalInner(async () => {
     setPagination({ current: 1 });
-    clearSelectedRowKeys();
-    try {
-      setLoading(true);
-      const res = await getBatchListApi({});
-      rawData = res;
-    } finally {
-      setLoading(false);
-    }
     reload();
   });
-  function getData(params) {
-    return new Promise((rs) => {
-      const { pageSize, currPage, stationName, sampleCode, bsNo } = params;
-      const fields = [
-        { key: 'stationName', value: getStationNameById(stationName) },
-        { key: 'sampleCode', value: SampleType(sampleCode) },
-        { key: 'bsNo', value: bsNo },
-      ].filter((_) => _.value);
-      const filterData = fields.reduce(
-        (pre, cur) => pre.filter((_) => cur.value === _[cur.key]),
-        rawData,
-      );
-      rs({
-        result: filterData.slice((currPage - 1) * pageSize, currPage * pageSize),
-        totalCount: filterData.length,
-      });
-    });
-  }
+
   function handleSubmit() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
