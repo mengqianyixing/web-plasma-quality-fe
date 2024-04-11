@@ -264,6 +264,13 @@ export default defineConfig([
             },
             outputFilePath: 'src/api/type/donorQuery.d.ts',
           },
+          {
+            id: 5832,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/dockingLogManage.d.ts',
+          },
         ],
       },
     ],

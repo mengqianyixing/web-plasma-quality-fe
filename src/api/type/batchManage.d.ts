@@ -2214,4 +2214,24 @@ export interface PostApiCoreBatchPlasmaVerifyBatchCommitBatchNoRequest {
  */
 export interface PostApiCoreBatchPlasmaVerifyBatchCommitBatchNoResponse {}
 
+/**
+ * 接口 [接收托盘校验↗](https://yapi.sharing8.cn/project/529/interface/api/34257) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/tray/check/{trayNo}`
+ * @更新时间 `2024-04-11 17:10:40`
+ */
+export interface GetApiCoreBatchTrayCheckTrayNoRequest {
+  trayNo: string;
+}
+
+/**
+ * 接口 [接收托盘校验↗](https://yapi.sharing8.cn/project/529/interface/api/34257) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/batch/tray/check/{trayNo}`
+ * @更新时间 `2024-04-11 17:10:40`
+ */
+export interface GetApiCoreBatchTrayCheckTrayNoResponse {}
+
 /* prettier-ignore-end */
