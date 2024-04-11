@@ -105,3 +105,8 @@ PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.DST, PlasmaOutboundTypeEnu
 PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.SIC, PlasmaOutboundTypeEnum.SIC);
 PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.NOR, PlasmaOutboundTypeEnum.NOR);
 PlasmaOutboundTypeMap.set(PlasmaOutboundTypeValueEnum.NPD, PlasmaOutboundTypeEnum.NPD);
+
+export enum plasmaReceiveModeEnum {
+  BCH = 'BCH',
+  BOX = 'BOX',
+}
