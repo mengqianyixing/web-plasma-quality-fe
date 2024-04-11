@@ -12,6 +12,8 @@ import {
   GetApiCoreBatchAcceptationBatchNoResponse,
   PostApiCoreBatchPlasmaAcceptBatchPauseRequest,
   PostApiCoreBatchPlasmaAcceptBatchPauseResponse,
+  GetApiCoreBatchTrayCheckTrayNoRequest,
+  GetApiCoreBatchTrayCheckTrayNoResponse,
 } from '@/api/type/batchManage';
 
 enum Api {
@@ -21,6 +23,7 @@ enum Api {
   CommitAcceptation = '/api/core/batch/commit/acceptation',
   GetAcceptationList = '/api/core/batch/acceptation',
   ReceivePause = '/api/core/batch/plasma/accept/batch/pause',
+  CheckTrayNo = '/api/core/batch/tray/check',
 }
 
 // 获取血浆接收详情
@@ -63,5 +66,12 @@ export const receivePause = (params: PostApiCoreBatchPlasmaAcceptBatchPauseReque
   return defHttp.post<PostApiCoreBatchPlasmaAcceptBatchPauseResponse>({
     url: Api.ReceivePause,
     params,
+  });
+};
+
+// 血浆接收-接收托盘校验
+export const checkTrayNo = (params: GetApiCoreBatchTrayCheckTrayNoRequest) => {
+  return defHttp.get<GetApiCoreBatchTrayCheckTrayNoResponse>({
+    url: `${Api.CheckTrayNo}/${params}`,
   });
 };
