@@ -15,7 +15,7 @@
       <TabPane key="batch" tab="血浆明细">
         <BasicTable @register="batchTable" class="donor-tab mt--2" />
       </TabPane>
-      <TabPane key="callBack" tab="回访明细">
+      <TabPane key="callBack" tab="回访明细" forceRender>
         <BasicTable @register="callBackTable" class="donor-tab mt--2" />
       </TabPane>
       <TabPane key="titer" tab="效价趋势" class="mt--2">

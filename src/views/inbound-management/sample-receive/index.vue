@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="tsx">
-  import { computed, reactive, ref, shallowRef } from 'vue';
+  import { computed, nextTick, reactive, ref, shallowRef, watch } from 'vue';
 
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import Description from '@/components/Description/src/Description.vue';
@@ -66,6 +66,10 @@
   import { sampleReceiveModalEnum, sampleReceiveStatusValueEnum } from '@/enums/sampleEnum';
   import { getSysParamsByParamKey } from '@/api/systemServer/params';
   import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { useScanHelper } from '@/hooks/common/useScanHelper';
+  import { debounce } from 'lodash-es';
+
+  const { barCode, enterFlag, startEvent } = useScanHelper();
 
   const { createMessage } = useMessage();
 
@@ -77,11 +81,13 @@
   const sampleBatchData = ref<GetApiCoreBatchSampleAcceptBatchSampleNoResponse | {}>({});
   const inputValue = ref('');
   const tableLoading = ref(false);
+  const bagRef = ref(null);
 
   const { createConfirm } = useMessage();
 
   getSysParamsByParamKey(SysParamsEnum.BatchSampleAcceptPattern).then((res) => {
     receiveModal.value = res;
+    if (isReceiveByBag.value) startEvent();
   });
   const receiveModal = shallowRef<sampleReceiveModalEnum>();
   const isReceiveByBag = computed(() => receiveModal.value === sampleReceiveModalEnum.BAG);
@@ -93,13 +99,14 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
-            <a-input-search
+          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1" ref="bagRef">
+            <a-input
+              ref={(el) => (bagRef.value = el)}
               placeholder="扫描袋号条码"
               enter-button="接收"
               value={bagValue}
               onChange={(e) => (bagValue.value = e.target.value)}
-              onSearch={handleReceiveByBag}
+              onPressEnter={_handleReceiveByBag}
             />
           </div>
         );
@@ -276,6 +283,10 @@
     sampleBatchData.value = await getSampleReceiveDetail(record.batchSampleNo);
     inputValue.value = record.batchSampleNo;
     tableLoading.value = false;
+    await nextTick(() => {
+      if (!bagRef.value) return;
+      (bagRef.value as HTMLInputElement)?.focus();
+    });
   }
 
   async function handlePressEnter() {
@@ -299,22 +310,40 @@
   }
 
   const bagValue = ref('');
+  watch(
+    () => [barCode.value, enterFlag.value],
+    (val) => {
+      if (val[0] && val[1]) {
+        bagValue.value = barCode.value;
+        _handleReceiveByBag();
+      }
+    },
+  );
+
+  const _handleReceiveByBag = debounce(handleReceiveByBag, 300);
+
   const bsaNo = ref<undefined | string>(undefined);
   async function handleReceiveByBag() {
-    const receiveData = await receiveSampleByBag({
-      packNo: bagValue.value,
-      bsaNo: bsaNo.value!,
-    });
-    inputValue.value = receiveData.batchSampleNo!;
-    bsaNo.value = receiveData.bsaNo!;
-    await handlePressEnter();
+    try {
+      const receiveData = await receiveSampleByBag({
+        packNo: bagValue.value,
+        bsaNo: bsaNo.value!,
+      });
+      inputValue.value = receiveData.batchSampleNo!;
+      bsaNo.value = receiveData.bsaNo!;
+      await handlePressEnter();
 
-    if (receiveData.acceptState === sampleReceiveStatusValueEnum.S) {
-      bsaNo.value = undefined;
+      if (receiveData.acceptState === sampleReceiveStatusValueEnum.S) {
+        bsaNo.value = undefined;
+        bagValue.value = '';
+        inputValue.value = '';
+        sampleBatchData.value = {};
+        createMessage.success('该批次接收完成');
+      }
+    } finally {
       bagValue.value = '';
-      inputValue.value = '';
-      sampleBatchData.value = {};
-      createMessage.success('该批次接收完成');
+      barCode.value = '';
+      enterFlag.value = false;
     }
   }
 </script>
