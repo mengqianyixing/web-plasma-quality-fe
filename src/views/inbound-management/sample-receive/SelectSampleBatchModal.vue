@@ -33,7 +33,7 @@
   const { createMessage } = useMessage();
   const { warning } = createMessage;
 
-  const [registerTable, { reload, setSelectedRowKeys }] = useTable({
+  const [registerTable, { reload, setSelectedRowKeys, clearSelectedRowKeys }] = useTable({
     api: getSampleReceiveList,
     columns: sampleAcceptColumns,
     formConfig: {
@@ -64,7 +64,6 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-
     bordered: true,
     showIndexColumn: false,
     canResize: false,
@@ -85,6 +84,7 @@
       return;
     }
     emit('success', selectedRow.value[0]);
+    clearSelectedRowKeys();
     closeModal();
   }
 
