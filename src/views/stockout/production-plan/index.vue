@@ -336,20 +336,23 @@
     const [row] = getSelections(true);
     if (!row) return;
 
-    loading.value = true;
-    const res = await downloadReport({
-      ReportKey: 'PLASMA_ABSTRACT',
-      contentKey: row.mesId,
-    });
-    const blob = new Blob([res.data], {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.download = `原料血浆摘要${row.mesId}.docx`;
-    a.href = url;
-    a.click();
-    window.URL.revokeObjectURL(url);
-    loading.value = false;
+    try {
+      loading.value = true;
+      const res = await downloadReport({
+        ReportKey: 'PLASMA_ABSTRACT',
+        contentKey: row.mesId,
+      });
+      const blob = new Blob([res.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.download = `原料血浆摘要${row.mesId}.docx`;
+      a.href = url;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } finally {
+      loading.value = false;
+    }
   }
 </script>
