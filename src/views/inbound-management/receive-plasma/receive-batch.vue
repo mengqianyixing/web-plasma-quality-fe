@@ -44,13 +44,18 @@
 </template>
 <script setup lang="tsx">
   import { ref, computed, reactive } from 'vue';
-  // import { debounce } from 'lodash-es';
-  import { getAccepts } from '@/api/inbound-management/receive-plasma';
+  import { debounce } from 'lodash-es';
+  import {
+    getAccepts,
+    acceptPlasmaBatch,
+    checkTrayNo,
+  } from '@/api/inbound-management/receive-plasma';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import Description from '@/components/Description/src/Description.vue';
-  // import { useMessage } from '@/hooks/web/useMessage';
+  import { useMessage } from '@/hooks/web/useMessage';
   import { VxeGridProps } from 'vxe-table';
   import { DescItem, useDescription } from '@/components/Description';
+  import { Modal } from 'ant-design-vue';
   import { useModal } from '@/components/Modal';
   import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal.vue';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
@@ -58,8 +63,8 @@
 
   defineOptions({ name: 'ReceivePlasma' });
 
-  // const { createMessage, createConfirm } = useMessage();
-  // const { success, warning } = createMessage;
+  const { createMessage, createConfirm } = useMessage();
+  const { success, warning } = createMessage;
   const [registerModal, { openModal }] = useModal();
 
   const filterForm = ref<any>({}); // 本批数据
@@ -98,6 +103,8 @@
               placeholder="请输入"
               onChange={(event) => (trayNo.value = event.target.value)}
               value={trayNo}
+              onkeyup={debounce(handlePressEntertrayNo, 500)}
+              disabled={tableLoading.value}
             />
           </div>
         );
@@ -131,65 +138,6 @@
     title: '血浆接收信息',
     schema: schema,
   });
-
-  // // 箱号扫描
-  // async function handlePressEnter(e) {
-  //   if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-  //     if (!boxNo.value) {
-  //       warning('请扫描箱号!');
-  //       return;
-  //     }
-  //     if (!trayNo.value) {
-  //       warning('请输入托盘编号!');
-  //       return;
-  //     }
-  //     const params = {
-  //       boxNo: boxNo.value,
-  //       trayNo: trayNo.value,
-  //       batchNo: batchNo.value,
-  //     };
-  //     try {
-  //       tableLoading.value = true;
-  //       const data = await acceptPlasma(params);
-  //       if (data) {
-  //         success('接收成功!');
-  //         filterForm.value = data;
-  //         if (data.acceptDetail?.unAcceptCount <= 0) {
-  //           // 一批接收完毕 提示
-  //           showConfirmGoon();
-  //         }
-  //       }
-  //     } finally {
-  //       tableLoading.value = false;
-  //       boxNo.value = '';
-  //       nextTick(() => {
-  //         boxNoRef.value.focus();
-  //       });
-  //     }
-  //   }
-  // }
-
-  // function showConfirmGoon() {
-  //   Modal.confirm({
-  //     title: '是否继续接收其他批次?',
-  //     content: createVNode('div', { style: 'color:red;' }, '当前批已接收完成！'),
-  //     onOk() {
-  //       // 清空当前批次信息
-  //       filterForm.value = {};
-  //       trayNo.value = '';
-  //       boxNo.value = '';
-  //       batchNo.value = '';
-  //       // 打开批号选择框
-  //       openBatchModal(true, {
-  //         fresh: true,
-  //       });
-  //     },
-  //     onCancel() {
-  //       console.log('Cancel');
-  //     },
-  //     class: 'test',
-  //   });
-  // }
 
   // 表格数据
   const unAcceptList = computed(() => filterForm.value?.acceptDetail?.unAcceptDetails ?? []);
@@ -305,16 +253,54 @@
   }
 
   async function handleAcceptSample() {
-    // createConfirm({
-    //   title: '确认',
-    //   content: '确认接收血浆',
-    //   iconType: 'warning',
-    //   onOk: async () => {
-    //     // await receiveSample({
-    //     //   batchSampleNo: inputValue.value,
-    //     // });
-    //     // sampleBatchData.value = await getSampleReceiveDetail(inputValue.value);
-    //   },
-    // });
+    if (!batchNo.value) {
+      warning('请先选择血浆批号!');
+      return;
+    }
+    if (!trayNo.value) {
+      warning('请扫描托盘编号!');
+      return;
+    }
+    createConfirm({
+      title: '确认',
+      content: '确认接收血浆',
+      iconType: 'warning',
+      onOk: async () => {
+        try {
+          tableLoading.value = true;
+          Modal.destroyAll();
+          await acceptPlasmaBatch({
+            batchNo: batchNo.value,
+            trayNo: trayNo.value,
+          });
+          success('血浆接收成功!');
+          batchModalSuccess(batchNo.value);
+        } finally {
+          tableLoading.value = false;
+        }
+      },
+      onCancel: () => Modal.destroyAll(),
+    });
+  }
+
+  // 托盘编号扫描
+  async function handlePressEntertrayNo(e) {
+    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+      if (!batchNo.value) {
+        warning('请先选择血浆批号!');
+        return;
+      }
+      if (!trayNo.value) {
+        warning('请扫描托盘编号!');
+        return;
+      }
+      try {
+        tableLoading.value = true;
+        await checkTrayNo(trayNo.value);
+        tableLoading.value = false;
+      } catch (err) {
+        tableLoading.value = false;
+      }
+    }
   }
 </script>
