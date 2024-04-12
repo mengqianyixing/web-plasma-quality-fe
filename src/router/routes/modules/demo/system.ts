@@ -86,6 +86,15 @@ const system: AppRouteModule = {
       },
       component: () => import('@/views/system/logs/index.vue'),
     },
+    {
+      path: 'thirdSysLogs',
+      name: 'ThirdSysLogs',
+      id: 101050,
+      meta: {
+        title: '交互日志',
+      },
+      component: () => import('@/views/system/thirdSysLogs/index.vue'),
+    },
   ],
 };
 
