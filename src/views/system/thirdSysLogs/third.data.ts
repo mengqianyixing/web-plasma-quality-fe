@@ -1,5 +1,6 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
+import dayjs from 'dayjs';
 
 export const columns: BasicColumn[] = [
   {
@@ -22,6 +23,9 @@ export const columns: BasicColumn[] = [
   {
     title: '创建时间',
     dataIndex: 'createTime',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD HH:MM:ss') : '-';
+    },
   },
   {
     title: '请求参数',
