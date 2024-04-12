@@ -145,7 +145,7 @@ export const getBoxList = (params: GetApiProductPrepareSummaryBoxPrepareNoReques
 
 export const getBagList = (params: GetApiProductPrepareSummaryBagPrepareNoRequest) => {
   return defHttp.get<GetApiProductPrepareSummaryBagPrepareNoResponse>({
-    url: `${Api.GetBagList}/${params.prepareNo}`,
+    url: `${Api.GetBagList}/${params.prepareNo}/${params.currPage}/${params.pageSize}`,
   });
 };
 

@@ -199,11 +199,11 @@ export interface GetApiCoreBatchSummaryResponse {
 }
 
 /**
- * 接口 [血浆接收↗](https://yapi.sharing8.cn/project/529/interface/api/31761) 的 **请求类型**
+ * 接口 [血浆接收箱↗](https://yapi.sharing8.cn/project/529/interface/api/31761) 的 **请求类型**
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/accept/box`
- * @更新时间 `2023-12-27 13:53:04`
+ * @更新时间 `2024-04-12 11:34:50`
  */
 export interface PostApiCoreBatchPlasmaAcceptBoxRequest {
   /**
@@ -225,11 +225,11 @@ export interface PostApiCoreBatchPlasmaAcceptBoxRequest {
 }
 
 /**
- * 接口 [血浆接收↗](https://yapi.sharing8.cn/project/529/interface/api/31761) 的 **返回类型**
+ * 接口 [血浆接收箱↗](https://yapi.sharing8.cn/project/529/interface/api/31761) 的 **返回类型**
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/accept/box`
- * @更新时间 `2023-12-27 13:53:04`
+ * @更新时间 `2024-04-12 11:34:50`
  */
 export interface PostApiCoreBatchPlasmaAcceptBoxResponse {
   /**
@@ -2233,5 +2233,36 @@ export interface GetApiCoreBatchTrayCheckTrayNoRequest {
  * @更新时间 `2024-04-11 17:10:40`
  */
 export interface GetApiCoreBatchTrayCheckTrayNoResponse {}
+
+/**
+ * 接口 [血浆接收批↗](https://yapi.sharing8.cn/project/529/interface/api/34275) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/accept/batch`
+ * @更新时间 `2024-04-12 11:35:02`
+ */
+export interface PostApiCoreBatchPlasmaAcceptBatchRequest {
+  /**
+   * 血浆批号
+   */
+  batchNo: string;
+  /**
+   * 复核人
+   */
+  checker?: string;
+  /**
+   * 托盘
+   */
+  trayNo: string;
+}
+
+/**
+ * 接口 [血浆接收批↗](https://yapi.sharing8.cn/project/529/interface/api/34275) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/accept/batch`
+ * @更新时间 `2024-04-12 11:35:02`
+ */
+export interface PostApiCoreBatchPlasmaAcceptBatchResponse {}
 
 /* prettier-ignore-end */
