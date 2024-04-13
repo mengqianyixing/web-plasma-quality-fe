@@ -18,10 +18,16 @@
           v-auth="SampleManageButtonEnum.SampleRelease"
           >发布
         </a-button>
+        <a-button
+          type="primary"
+          @click="handleArrange"
+          v-auth="SampleManageButtonEnum.SampleArrange"
+          >查看试管架
+        </a-button>
       </template>
     </BasicTable>
-
     <UnqualifiedModal @register="registerUnqualifiedModal" />
+    <ArrangeModel @register="registerArrangeModel" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
@@ -36,12 +42,14 @@
   import { onMounted, ref, watchEffect } from 'vue';
   import { useStation } from '@/hooks/common/useStation';
   import { SampleManageButtonEnum } from '@/enums/authCodeEnum';
+  import ArrangeModel from '@/views/inbound-management/components/arrange/index.vue';
 
   defineOptions({ name: 'SampleRelease' });
 
   const { createMessage, createConfirm } = useMessage();
 
   const [registerUnqualifiedModal, { openModal: openUnqualifiedModal }] = useModal();
+  const [registerArrangeModel, { openModal: openArrangeModel }] = useModal();
 
   const selectedRow = ref<Recordable>([]);
 
@@ -94,6 +102,13 @@
         batchSampleNo,
       },
     });
+  }
+  function handleArrange() {
+    if (selectedRow.value.length === 0) {
+      createMessage.warning('请选择数据');
+      return;
+    }
+    openArrangeModel(true, { batchNo: selectedRow.value[0]?.batchSampleNo });
   }
 
   async function handleRelease() {

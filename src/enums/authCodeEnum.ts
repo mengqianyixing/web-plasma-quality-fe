@@ -218,6 +218,7 @@ export enum StockOutButtonEnum {
 
 export enum SampleManageButtonEnum {
   SampleRelease = 'E_97003001',
+  SampleArrange = 'E_97003002',
 }
 
 export enum CallbackButtonEnum {

@@ -65,8 +65,11 @@ const sampleManager: AppRouteModule = {
       authElements: [
         {
           id: SampleManageButtonEnum.SampleRelease,
-          name: 'sampleRelease',
           title: '发布',
+        },
+        {
+          id: SampleManageButtonEnum.SampleArrange,
+          title: '查看试管架',
         },
       ],
     },

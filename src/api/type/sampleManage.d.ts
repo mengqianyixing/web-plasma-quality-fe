@@ -308,4 +308,145 @@ export interface PostApiCoreBatchSampleAcceptPackResponse {
   }[];
 }
 
+/**
+ * 接口 [查询样本排架列表↗](https://yapi.sharing8.cn/project/529/interface/api/34284) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/racks`
+ * @更新时间 `2024-04-12 20:30:30`
+ */
+export interface GetApiCoreBatchSampleRacksRequest {
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+  /**
+   * 架号
+   */
+  rackId?: string;
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+}
+
+/**
+ * 接口 [查询样本排架列表↗](https://yapi.sharing8.cn/project/529/interface/api/34284) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/racks`
+ * @更新时间 `2024-04-12 20:30:30`
+ */
+export type GetApiCoreBatchSampleRacksResponse = {
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+  /**
+   * 样本类型
+   */
+  sampleType?: string;
+  /**
+   * 架号
+   */
+  rackId?: string;
+  /**
+   * 样本编号范围
+   */
+  sampleNoRange?: string;
+  /**
+   * 样本数量
+   */
+  sampleCount?: number;
+  /**
+   * 缺号样本
+   */
+  lackSampleNo?: string;
+}[];
+
+/**
+ * 接口 [查询样本排架顺序详情列表↗](https://yapi.sharing8.cn/project/529/interface/api/34293) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/rack/detail`
+ * @更新时间 `2024-04-13 14:55:30`
+ */
+export interface GetApiCoreBatchSampleRackDetailRequest {
+  /**
+   * 架号
+   */
+  rackId: string;
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+}
+
+/**
+ * 接口 [查询样本排架顺序详情列表↗](https://yapi.sharing8.cn/project/529/interface/api/34293) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/rack/detail`
+ * @更新时间 `2024-04-13 14:55:30`
+ */
+export type GetApiCoreBatchSampleRackDetailResponse = {
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+  /**
+   * 样本类型
+   */
+  sampleType?: string;
+  /**
+   * 架号
+   */
+  rackId?: string;
+  /**
+   * 序号
+   */
+  rackPos?: number;
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+  /**
+   * 是否需要高亮显示，true表示需要，false表示不需要
+   */
+  highlight?: boolean;
+}[];
+
+/**
+ * 接口 [打印样本架签↗](https://yapi.sharing8.cn/project/529/interface/api/34302) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/batch/sample/rack/label`
+ * @更新时间 `2024-04-13 16:12:36`
+ */
+export interface PostApiCoreBatchSampleRackLabelRequest {
+  rackList: {
+    /**
+     * 架号
+     */
+    rackId: string;
+    /**
+     * 序号
+     */
+    sampleNoRange: string;
+    /**
+     * 批号
+     */
+    batchNo: string;
+  }[];
+}
+
+/**
+ * 接口 [打印样本架签↗](https://yapi.sharing8.cn/project/529/interface/api/34302) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/batch/sample/rack/label`
+ * @更新时间 `2024-04-13 16:12:36`
+ */
+export type PostApiCoreBatchSampleRackLabelResponse = string[];
+
 /* prettier-ignore-end */
