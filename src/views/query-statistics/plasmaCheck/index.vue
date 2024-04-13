@@ -203,7 +203,8 @@
   Promise.all([
     getSysSecondaryDictionary({
       dataKey: DictionaryReasonEnum.PlasmaFailedReason as any,
-      dictItemTypes: [DictionaryItemKeyEnum.PlasmaAccept],
+      dictItemTypes: [DictionaryItemKeyEnum.PlasmaAccept, DictionaryItemKeyEnum.SampleAccept],
+      show: 1,
     }),
     getSysSecondaryDictionary({
       dataKey: DictionaryReasonEnum.PlasmaFailedReason as any,
