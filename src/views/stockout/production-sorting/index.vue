@@ -581,36 +581,35 @@
                 });
               }
             }
-
-            // 满箱
-            if (data?.fullBox === true) {
-              let content = '';
-              if (data.selectedName === 'pros') content = '投产血浆';
-              if (data.selectedName === 'unProArr') content = '暂不投产血浆';
-              if (data.selectedName === 'utrkUnPro') content = '待放行血浆';
-              Modal.confirm({
-                title: '提示?',
-                icon: createVNode(ExclamationCircleOutlined),
-                content: createVNode(
-                  'div',
-                  { style: 'color:red;' },
-                  `${content}已扫描完毕，确认打印箱签?`,
-                ),
-                onOk() {
-                  // 走封箱操作 不需要提示
-                  // _sortingBoxSealing(targetBox, true);
-                  // 走打印逻辑
-                  printBox(cacheBagNo);
-                  cacheBagNo = '';
-                  prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
-                },
-                onCancel() {
-                  console.log('Cancel');
-                  prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
-                },
-                class: 'test',
-              });
-            }
+          }
+          // 满箱
+          if (data?.fullBox === true) {
+            let content = '';
+            if (data.selectedName === 'pros') content = '投产血浆';
+            if (data.selectedName === 'unPro') content = '暂不投产血浆';
+            if (data.selectedName === 'utrkUnPro') content = '待放行血浆';
+            Modal.confirm({
+              title: '提示?',
+              icon: createVNode(ExclamationCircleOutlined),
+              content: createVNode(
+                'div',
+                { style: 'color:red;' },
+                `${content}已扫描完毕，确认打印箱签?`,
+              ),
+              onOk() {
+                // 走封箱操作 不需要提示
+                // _sortingBoxSealing(targetBox, true);
+                // 走打印逻辑
+                printBox(cacheBagNo);
+                cacheBagNo = '';
+                prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+              },
+              onCancel() {
+                console.log('Cancel');
+                prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+              },
+              class: 'test',
+            });
           }
         } else {
           Modal.confirm({
@@ -837,7 +836,7 @@
       scrollObj.isTop = true;
       scrollObj.scollToIndex = 0;
     }
-    if (data.selectedName === 'unProArr') {
+    if (data.selectedName === 'unPro') {
       scrollObj.isTop = true;
       scrollObj.scollToIndex = data.selectedIndex + 1;
     }
