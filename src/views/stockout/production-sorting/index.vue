@@ -465,6 +465,15 @@
             });
           }
 
+          let mixBatch = false;
+          // 分拣的是另外一批的血浆
+          if (
+            batchData.value?.batchSummary?.batchNo &&
+            batchData.value?.batchSummary?.batchNo != data.batchSummary.batchNo
+          ) {
+            mixBatch = true;
+          }
+
           // 准备号、批次详情数据
           prepareData.value = { ...data.preSummary };
           batchData.value = {
@@ -483,8 +492,8 @@
               item.isSelected = false;
             }
           }
-          // 数据回显，当前准备号第一次分拣/继续批次之后的第一次分拣
-          if (firstOperate) {
+          // 数据回显，当前准备号第一次分拣/继续批次之后的第一次分拣 || 混批情况
+          if (firstOperate || mixBatch) {
             initBox(data, true);
           } else {
             // 可投产箱子
@@ -602,11 +611,11 @@
                 // 走打印逻辑
                 printBox(cacheBagNo);
                 cacheBagNo = '';
-                prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+                prepareModalSuccess({ prepareNo: prepareNo.value, pickMode });
               },
               onCancel() {
                 console.log('Cancel');
-                prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+                prepareModalSuccess({ prepareNo: prepareNo.value, pickMode });
               },
               class: 'test',
             });
