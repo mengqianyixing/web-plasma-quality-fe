@@ -27,7 +27,7 @@
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑' : '新增'));
 
-  const emit = defineEmits(['success']);
+  const emit = defineEmits(['success', 'register']);
 
   const isUpdate = ref(false);
   const paramsId = ref('');
