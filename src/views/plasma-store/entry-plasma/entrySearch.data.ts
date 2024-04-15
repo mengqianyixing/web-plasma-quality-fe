@@ -164,7 +164,7 @@ export const entryDetailModalColumns: BasicColumn[] = [
   },
   {
     title: '采集日期',
-    dataIndex: 'donorNo',
+    dataIndex: 'collectAt',
     width: 100,
   },
   {
