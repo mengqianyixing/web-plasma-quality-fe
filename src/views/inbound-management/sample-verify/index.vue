@@ -1,48 +1,51 @@
 <template>
-  <PageWrapper>
-    <Description @register="register" :data="sampleBatchData" />
-
+  <PageWrapper dense contentFullHeight fixedHeight>
+    <div class="flex flex-col h-full p-16px pb-4px">
+      <Description @register="register" :data="sampleBatchData" />
+      <div class="flex-1 pt-5px">
+        <div class="inline-block w-1/5 h-full pr-2">
+          <div class="font-medium text-[16px] bg-[#ffffff] rounded h-48px p-2 flex items-center">
+            <span>未验收数：</span>
+            <span>{{ unAcceptList?.length }}</span>
+          </div>
+          <div style="height: calc(100% - 60px)">
+            <vxe-grid v-bind="gridOptionsUnaccept" :data="unAcceptList" :loading="tableLoading">
+            </vxe-grid>
+          </div>
+        </div>
+        <div class="inline-block w-[80%] h-full">
+          <div class="flex justify-between items-center h-48px bg-[#ffffff] p-2">
+            <div class="font-medium text-[16px] bg-[#ffffff] rounded">
+              <span>已验收数：</span>
+              <span>{{ sampleBatchData.verifyedList?.length }}</span>
+            </div>
+            <div class="text-[16px] bg-[#ffffff] rounded">
+              <a-button @click="handleNonconformityRegister" class="mr-2"> 不合格登记 </a-button>
+              <a-button type="primary" @click="handleCompleteVerify" class="mr-2"
+                >完成验收</a-button
+              >
+              <a-button
+                type="primary"
+                @click="openArrangeModel(true, { batchNo: inputValue })"
+                :disabled="!sampleBatchData.verifyedList?.length"
+                >查看试管架</a-button
+              >
+            </div>
+          </div>
+          <div style="height: calc(100% - 60px)">
+            <vxe-grid v-bind="gridOptionsAccept" :data="acceptList" :loading="tableLoading">
+              <template #action="{ row }">
+                <TableAction outside :actions="createActions(row)" />
+              </template>
+            </vxe-grid>
+          </div>
+        </div>
+      </div>
+    </div>
     <SampleVerifyBatchModal
       @register="registerSampleVerifyBatchModal"
       @success="handleSelectSampleBatchSuccess"
     />
-
-    <vxe-grid
-      v-bind="gridOptionsUnaccept"
-      :data="unAcceptList"
-      class="inline-block w-1/5 pr-2 mt-1"
-      :loading="tableLoading"
-    >
-      <template #toolbar>
-        <div class="p-4 font-medium text-[16px] bg-[#ffffff] rounded">
-          <span>未验收数：</span>
-          <span>{{ unAcceptList?.length }}</span>
-        </div>
-      </template>
-    </vxe-grid>
-    <vxe-grid
-      v-bind="gridOptionsAccept"
-      :data="acceptList"
-      :loading="tableLoading"
-      class="inline-block w-[80%]"
-    >
-      <template #toolbar>
-        <div class="flex justify-between items-center bg-[#ffffff] p-2">
-          <div class="font-medium text-[16px] bg-[#ffffff] rounded">
-            <span>已验收数：</span>
-            <span>{{ sampleBatchData.verifyedList?.length }}</span>
-          </div>
-          <div class="text-[16px] bg-[#ffffff] rounded">
-            <a-button @click="handleNonconformityRegister" class="mr-2"> 不合格登记 </a-button>
-            <a-button type="primary" @click="handleCompleteVerify">完成验收</a-button>
-          </div>
-        </div>
-      </template>
-      <template #action="{ row }">
-        <TableAction outside :actions="createActions(row)" />
-      </template>
-    </vxe-grid>
-
     <NonconformityModal @register="registerNonconformityModal" @success="handleNRSuccess" />
     <RevokeVerifySampleModal
       @register="registerRevokeVerifySampleModal"
@@ -50,6 +53,7 @@
     />
     <StationMissingNumberModal @register="registerMissingModal" />
     <PlasmaVerifyNonconformityModal @register="registerPlasmaVerifyModal" />
+    <ArrangeModel @register="registerArrangeModel" />
   </PageWrapper>
 </template>
 
@@ -92,6 +96,7 @@
   import dayjs from 'dayjs';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import ArrangeModel from '../components/arrange/index.vue';
 
   defineOptions({ name: 'SampleVerify' });
 
@@ -212,31 +217,24 @@
   const [registerRevokeVerifySampleModal, { openModal: openRevokeVerifySampleModal }] = useModal();
   const [registerMissingModal, { openModal: openMissingModal }] = useModal();
   const [registerPlasmaVerifyModal, { openModal: openPlasmaVerifyModal }] = useModal();
+  const [registerArrangeModel, { openModal: openArrangeModel }] = useModal();
 
   const gridOptionsUnaccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
     border: true,
-    height: '760px',
+    height: '100%',
     showOverflow: true,
     exportConfig: {},
     columnConfig: {
       resizable: true,
     },
-    scrollY: {
-      enabled: true,
-      gt: 0,
-    },
+
     pagerConfig: {
       enabled: false,
     },
     formConfig: {
       enabled: false,
     },
-    toolbarConfig: {
-      refresh: false,
-      loading: false,
-      export: false,
-      custom: false,
-    },
+
     columns: [
       {
         field: 'sampleNo',
@@ -248,7 +246,7 @@
 
   const gridOptionsAccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
     border: true,
-    height: '760px',
+    height: '100%',
     showOverflow: true,
     columnConfig: {
       resizable: true,
@@ -263,12 +261,7 @@
     formConfig: {
       enabled: false,
     },
-    toolbarConfig: {
-      refresh: false,
-      loading: false,
-      export: false,
-      custom: false,
-    },
+
     columns: [
       {
         field: 'sampleNo',

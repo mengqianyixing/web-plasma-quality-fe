@@ -6,7 +6,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'shortName',
   },
   {
-    title: '全程',
+    title: '全称',
     dataIndex: 'fullName',
   },
   {
