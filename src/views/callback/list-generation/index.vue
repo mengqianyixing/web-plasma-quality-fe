@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" :columns="columnsComputed">
       <template #planNo="{ record }">
         <span
           class="text-blue-500 underline cursor-pointer"
@@ -47,9 +47,9 @@
   import CallbackDetailModal from '@/views/callback/list-generation/CallbackDetailModal.vue';
   import SelectStationNameModal from '@/views/callback/list-generation/SelectStationNameModal.vue';
 
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, computed } from 'vue';
 
-  import { columns, searchFormSchema } from './generation.data';
+  import { columns, searchFormSchema, callbackDetailModalColumns } from './generation.data';
 
   import { PageWrapper } from '@/components/Page';
   import {
@@ -57,34 +57,45 @@
     getCallbackDetail,
     getCallbackListApi,
   } from '@/api/callback/list-generation';
-  import {
-    CallbackStateValueEnum,
-    donorStatusMap,
-    donorStatusValueEnum,
-  } from '@/enums/callbackEnum';
-  import dayjs from 'dayjs';
+  import { callbackModalEnum, CallbackStateValueEnum } from '@/enums/callbackEnum';
   import { callbackConfirm } from '@/api/callback/list-confirm';
   import { CallbackButtonEnum } from '@/enums/authCodeEnum';
   import { useStation } from '@/hooks/common/useStation';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
   import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { getSysParamsByParamKey } from '@/api/systemServer/params';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { formatData, getHeader } from '@/components/Excel/src/Export2Excel';
 
   const { stationOptions, getStationNameById } = useStation();
   defineOptions({ name: 'CallbackGeneration' });
 
   const selectedRow = ref<Recordable>([]);
+  const callbackModel = ref('');
+  const isAModel = computed(() => callbackModel.value === callbackModalEnum.A);
+  const columnsComputed = computed(() => {
+    return isAModel.value
+      ? columns
+      : columns.filter((it) => !(it.title as string).includes('样本'));
+  });
 
   const serverEnumStore = useServerEnumStoreWithOut();
 
   const { createConfirm, createMessage } = useMessage();
 
-  onMounted(() => {
-    getForm().updateSchema({
+  onMounted(async () => {
+    await getSysParamsByParamKey(SysParamsEnum.CallbackModel).then((res) => {
+      callbackModel.value = res;
+    });
+    await getForm().updateSchema({
       field: 'stationNo',
       componentProps: {
         options: stationOptions,
       },
     });
+
+    !isAModel.value &&
+      (await getForm().removeSchemaByField('[sampleAcceptStartDate, sampleAcceptEndDate]'));
   });
 
   const [registerSelectModal, { openModal }] = useModal();
@@ -94,7 +105,6 @@
 
   const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
     api: getCallbackListApi,
-    columns,
     formConfig: {
       schemas: searchFormSchema,
       transformDateFunc(date) {
@@ -164,50 +174,17 @@
 
     exportLoading.value = true;
     try {
-      const exportData = await getCallbackDetail({
-        batchNo: selectedRow.value[0].planNo,
+      const OriginData = await getCallbackDetail({
+        batchNo: selectedRow.value[0]?.planNo,
       });
-
-      const _exportData = exportData!.map((it) => {
-        return {
-          donorNo: it.donorNo,
-          donorName: it.donorName,
-          gender: it.gender,
-          donatorStatus: donorStatusMap.get(it.donatorStatus as donorStatusValueEnum),
-          refuseDate: it.refuseDate ? dayjs(it.refuseDate).format('YYYY-MM-DD') : '',
-          refuseReason: it.refuseReason,
-          minPlasmaNo: it.minPlasmaNo,
-          minCollTime: it.minCollTime ? dayjs(it.minCollTime).format('YYYY-MM-DD') : '',
-          plasmaCount: it.plasmaCount,
-          maxCollectTime: it.maxCollectTime ? dayjs(it.maxCollectTime).format('YYYY-MM-DD') : '',
-          callbackDate: it.callbackDate,
-          callbackResult: it.callbackResult,
-          sampleNo: it.sampleNo,
-          sampleCollectTime: it.sampleCollectTime
-            ? dayjs(it.sampleCollectTime).format('YYYY-MM-DD')
-            : '',
-        };
-      });
-
-      jsonToSheetXlsx<any>({
-        header: {
-          donorNo: '浆员编号',
-          donorName: '浆员姓名',
-          gender: '性别',
-          donatorStatus: '浆员状态',
-          refuseDate: '拒绝日期',
-          refuseReason: '拒绝原因',
-          minPlasmaNo: '最早采浆血浆编号',
-          minCollTime: '最早待回访采浆日期',
-          plasmaCount: '待追踪袋数',
-          maxCollectTime: '最后采浆日期',
-          callbackDate: '回访日期',
-          callbackResult: '回访结果',
-          sampleNo: '样本编号',
-          sampleCollectTime: '样本采集日期',
-        },
-        filename: `${selectedRow.value[0].planNo}-回访名单.xlsx`,
-        data: _exportData,
+      exportLoading.value = false;
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(callbackDetailModalColumns);
+      const { result, merge: bodyMerge } = formatData(lastLevelCols, OriginData || [], rows.length);
+      jsonToSheetXlsx({
+        data: [...rows, ...result],
+        json2sheetOpts: { skipHeader: true },
+        merges: [...headerMerge, ...bodyMerge],
+        filename: `${selectedRow.value[0]?.planNo}-回访名单.xlsx`,
       });
 
       createMessage.success('导出成功');
