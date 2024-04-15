@@ -54,14 +54,16 @@
     if (data.isAccept) {
       mode.value = 'accept';
       // 设置接收状态默认值
-      await getForm().updateSchema({
-        field: 'acceptState',
-        defaultValue: ['S'],
-      });
-      await getForm().updateSchema({
-        field: 'verifyState',
-        defaultValue: ['R', 'W'],
-      });
+      await getForm().updateSchema([
+        {
+          field: 'acceptState',
+          defaultValue: ['S'],
+        },
+        {
+          field: 'verifyState',
+          defaultValue: ['R', 'W'],
+        },
+      ]);
     } else {
       // 接收页面打开
       await getForm().updateSchema({
@@ -228,7 +230,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    clickToRowSelect: false,
+    clickToRowSelect: true,
     rowSelection: {
       type: 'radio',
       onChange: (_, selectedRows: any) => {
