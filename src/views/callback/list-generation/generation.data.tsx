@@ -3,6 +3,7 @@ import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
 import dayjs from 'dayjs';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { VxeGridPropTypes } from '@/components/VxeTable';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 
@@ -134,59 +135,68 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
-export const callbackModalColumns: BasicColumn[] = [
+export const callbackModalColumns: VxeGridPropTypes.Columns = [
+  {
+    type: 'seq',
+    title: '序号',
+  },
+  {
+    type: 'checkbox',
+    width: 50,
+  },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
-    width: 200,
+    field: 'donorNo',
+    width: 150,
   },
   {
     title: '浆员姓名',
-    dataIndex: 'donorName',
+    field: 'donorName',
   },
   {
     title: '浆员状态',
-    dataIndex: 'donatorStatus',
-    format: (text) => {
-      return donorStatusMap.get(text as donorStatusValueEnum) as string;
+    field: 'donatorStatus',
+    formatter: ({ cellValue }) => {
+      return donorStatusMap.get(cellValue as donorStatusValueEnum) as string;
     },
   },
   {
     title: '拒绝日期',
-    dataIndex: 'refuseDate',
-    format: (text) => {
-      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    field: 'refuseDate',
+    formatter: ({ cellValue }) => {
+      return cellValue ? dayjs(cellValue).format('YYYY-MM-DD') : '-';
     },
   },
   {
     title: '拒绝原因',
-    dataIndex: 'refuseReason',
+    field: 'refuseReason',
   },
   {
     title: '性别',
-    dataIndex: 'gender',
+    field: 'gender',
   },
   {
     title: '最早待回访采浆日期',
-    dataIndex: 'minCollTime',
-    format: (text) => {
-      return text ? dayjs(text).format('YYYY-MM-DD') : '';
+    field: 'minCollTime',
+    formatter: ({ cellValue }) => {
+      return cellValue ? dayjs(cellValue).format('YYYY-MM-DD') : '';
     },
   },
   {
     title: '最早采浆血浆编号',
-    dataIndex: 'minPlasmaNo',
+    field: 'minPlasmaNo',
+    width: 150,
   },
   {
     title: '最后采浆日期',
-    dataIndex: 'maxCollectTime',
-    format: (text) => {
-      return text ? dayjs(text).format('YYYY-MM-DD') : '';
+    field: 'maxCollectTime',
+    formatter: ({ cellValue }) => {
+      return cellValue ? dayjs(cellValue).format('YYYY-MM-DD') : '';
     },
   },
   {
     title: '待追踪袋数',
-    dataIndex: 'plasmaCount',
+    field: 'plasmaCount',
   },
 ];
 
