@@ -253,15 +253,12 @@
   });
   function cellClick(failedCode: string, title: string, record: Recordable) {
     const { getForm } = tableList[0][1];
-    const [batchNoBegin, batchNoEnd] = record.batch.split('~');
     const values = getForm().getFieldsValue();
     openModal(true, {
       failedCode,
       title,
       ...values,
       stationNo: record.stationNo,
-      batchNoBegin,
-      batchNoEnd,
     });
   }
 </script>
