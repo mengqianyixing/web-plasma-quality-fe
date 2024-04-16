@@ -28,21 +28,34 @@
               <span>{{ acceptList?.length }}</span>
             </div>
             <div class="flex gap-2">
-              <a-button @click="handlePlasmaUnqualified">血浆不合格</a-button>
-              <a-button @click="handleSampleUnqualified">样本不合格</a-button>
-              <a-button @click="handleMissNumRegister">缺浆登记</a-button>
-              <a-button @click="suspendModal('BOX')">暂停箱记录</a-button>
-              <a-button @click="suspendModal('BCH')">暂停批记录</a-button>
-              <a-button @click="completeAccept">完成验收</a-button>
+              <a-button @click="handlePlasmaUnqualified" type="primary" :disabled="!batchNo"
+                >血浆不合格</a-button
+              >
+              <a-button @click="handleSampleUnqualified" type="primary" :disabled="!batchNo"
+                >样本不合格</a-button
+              >
+              <a-button @click="handleMissNumRegister" type="primary" :disabled="!batchNo"
+                >缺浆登记</a-button
+              >
+              <a-button @click="suspendModal('BOX')" type="primary" :disabled="!batchNo"
+                >暂停箱记录</a-button
+              >
+              <a-button @click="suspendModal('BCH')" type="primary" :disabled="!batchNo"
+                >暂停批记录</a-button
+              >
+              <a-button @click="completeAccept" type="primary" :disabled="!batchNo"
+                >完成验收</a-button
+              >
               <a-button
                 @click="
                   openInModal(true, { ...filterForm, isAccept: true, bizScen: 'plasmaVerify' })
                 "
-                :disabled="!filterForm.batchNo"
+                :disabled="!batchNo"
+                type="primary"
               >
                 托盘入库
               </a-button>
-              <a-button @click="openOutModal(true, filterForm)" :disabled="!filterForm.batchNo">
+              <a-button @click="openOutModal(true, filterForm)" :disabled="!batchNo" type="primary">
                 托盘出库
               </a-button>
               <!-- <a-button @click="openPrint">打印</a-button> -->
@@ -557,10 +570,6 @@
   // 暂停/继续框
   const suspendModalVisible = ref(false);
   const suspendModal = (pattern: string) => {
-    if (!filterForm.value.batchNo) {
-      warning('请先选择批次!');
-      return;
-    }
     if (pattern === 'BOX') {
       if (!checker.value) {
         warning('请先登录复核人!');
@@ -601,10 +610,6 @@
   };
   // 血浆不合格登记
   function handlePlasmaUnqualified() {
-    if (!batchNo.value) {
-      warning('请先选择批号!');
-      return;
-    }
     openPlasmaUnqualifiedModal(true, {
       record: {
         batchNo: batchNo.value,
@@ -613,11 +618,6 @@
   }
 
   function handleSampleUnqualified() {
-    if (!batchNo.value) {
-      warning('请先选择批号!');
-      return;
-    }
-
     openSampleUnqualifiedModal(true, {
       record: {
         batchSampleNo: batchNo.value,
@@ -626,10 +626,6 @@
   }
 
   function handleMissNumRegister() {
-    if (!batchNo.value) {
-      warning('请先选择批号!');
-      return;
-    }
     openMissNumModal(true, {
       record: {
         batchNo: batchNo.value,
@@ -681,10 +677,6 @@
 
   // 完成验收
   async function completeAccept() {
-    if (!filterForm.value.batchNo) {
-      warning('请先选择批次!');
-      return;
-    }
     if (
       filterForm.value.bagCount <= 0 ||
       filterForm.value.verifyBagCount != filterForm.value.bagCount

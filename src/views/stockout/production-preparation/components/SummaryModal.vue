@@ -38,19 +38,7 @@
       <BasicTable v-if="activeKey !== 'columnsBag'" @register="registerTable" :scroll="{ y: 520 }">
         <template #bodyCell="{ record, column }">
           <template v-if="column.key === 'action'">
-            <TableAction
-              :actions="[
-                {
-                  label: '删除',
-                  color: 'error',
-                  popConfirm: {
-                    title: '是否确认删除',
-                    placement: 'left',
-                    confirm: handleDel.bind(null, record),
-                  },
-                },
-              ]"
-            />
+            <a-button type="text" danger @click="handleDel(record)">删除</a-button>
           </template>
         </template>
       </BasicTable>
@@ -82,14 +70,15 @@
 <script lang="tsx" setup>
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
-  import { Row, Col, Tabs, TabPane } from 'ant-design-vue';
+  import { Row, Col, Tabs, TabPane, Modal } from 'ant-design-vue';
   import { VxeGridProps } from 'vxe-table';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
-  import { BasicTable, useTable, BasicColumn, TableAction } from '@/components/Table';
+  import { BasicTable, useTable, BasicColumn } from '@/components/Table';
+  import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { jsonToSheetXlsx } from '@/components/Excel';
-  import { ref, reactive, nextTick } from 'vue';
+  import { ref, reactive, nextTick, createVNode } from 'vue';
   import {
     prepareStateMap,
     bagFlagMap,
@@ -669,23 +658,36 @@
 
   // 删除
   async function handleDel(record) {
-    console.log('shanchu', record);
-    const params = {
-      prepareNo: prepareDetail.value.prepareNo,
-      immType: record.immType,
-      titerLevel: record.titerLevel,
-    };
-    // 箱
-    if (Object.prototype.hasOwnProperty.call(record, 'boxNo')) params['boxNos'] = [record.boxNo];
-    // 批
-    else params['batchNos'] = [record.batchNo];
+    Modal.confirm({
+      title: '是否确认删除?',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: '',
+      okText: '删除',
+      okType: 'danger',
+      cancelText: '取消',
+      async onOk() {
+        const params = {
+          prepareNo: prepareDetail.value.prepareNo,
+          immType: record.immType,
+          titerLevel: record.titerLevel,
+        };
+        // 箱
+        if (Object.prototype.hasOwnProperty.call(record, 'boxNo'))
+          params['boxNos'] = [record.boxNo];
+        // 批
+        else params['batchNos'] = [record.batchNo];
 
-    try {
-      setLoading(true);
-      await revokePickBag(params);
-      closePickModal();
-    } finally {
-      setLoading(false);
-    }
+        try {
+          setLoading(true);
+          await revokePickBag(params);
+          closePickModal();
+        } finally {
+          setLoading(false);
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   }
 </script>

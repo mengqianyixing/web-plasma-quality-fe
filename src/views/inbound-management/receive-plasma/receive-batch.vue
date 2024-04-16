@@ -29,10 +29,16 @@
             </div>
             <div class="flex gap-2">
               <!-- <a-button @click="susModal">暂停接收</a-button> -->
-              <a-button @click="openModal(true, filterForm)" :disabled="!filterForm.batchNo">
+              <a-button
+                @click="openModal(true, filterForm)"
+                :disabled="!filterForm.batchNo"
+                type="primary"
+              >
                 托盘入库
               </a-button>
-              <a-button type="primary" @click="handleAcceptSample">接收</a-button>
+              <a-button type="primary" @click="handleAcceptSample" :disabled="!filterForm.batchNo"
+                >接收</a-button
+              >
             </div>
           </div>
         </template>
@@ -253,10 +259,6 @@
   }
 
   async function handleAcceptSample() {
-    if (!batchNo.value) {
-      warning('请先选择血浆批号!');
-      return;
-    }
     if (!trayNo.value) {
       warning('请扫描托盘编号!');
       return;

@@ -28,8 +28,14 @@
               <span>{{ acceptList?.length }}</span>
             </div>
             <div class="flex gap-2">
-              <a-button @click="susModal">暂停接收</a-button>
-              <a-button @click="openModal(true, filterForm)" :disabled="!filterForm.batchNo">
+              <a-button @click="susModal" :disabled="!filterForm.batchNo" type="primary"
+                >暂停接收</a-button
+              >
+              <a-button
+                @click="openModal(true, filterForm)"
+                :disabled="!filterForm.batchNo"
+                type="primary"
+              >
                 托盘入库
               </a-button>
             </div>
@@ -363,10 +369,6 @@
 
   // 打开暂停记录框
   function susModal() {
-    if (!batchNo.value) {
-      warning('请先选择批号!');
-      return;
-    }
     openSusModal(true, {
       batchNo: batchNo.value,
     });
