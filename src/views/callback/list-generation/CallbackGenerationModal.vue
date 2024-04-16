@@ -5,26 +5,40 @@
     :title="getTitle"
     showFooter
     width="85%"
+    :min-height="650"
     @close="handleCancel"
   >
-    <BasicTable @register="registerTable" ref="table">
-      <template #toolbar>
-        <a-button type="primary" @click="handleAdd">新增</a-button>
-        <a-button type="primary" @click="handleDelete">撤销</a-button>
-      </template>
-    </BasicTable>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
+
+        <div class="flex-1 shrink-1">
+          <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData">
+            <template #toolbar>
+              <div class="h-40px bg-#ffffff mt-2 flex items-center">
+                <a-button type="primary" @click="handleAdd" class="absolute right-20">
+                  新增
+                </a-button>
+                <a-button type="primary" @click="handleDelete" class="absolute right-2">
+                  撤销
+                </a-button>
+              </div>
+            </template>
+          </vxe-grid>
+        </div>
+      </div>
+    </div>
 
     <template #footer>
       <a-button type="primary" @click="handleOk">确定</a-button>
     </template>
 
-    <AddCallbackPersonnelListModal @register="registerAddModal" @success="reload" />
+    <AddCallbackPersonnelListModal @register="registerAddModal" @success="initTableData" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
   import { BasicModal, useModal, useModalInner } from '@/components/Modal';
-  import { computed, ref, unref } from 'vue';
-  import { BasicTable, useTable } from '@/components/Table';
+  import { computed, nextTick, reactive, ref, unref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
 
   import AddCallbackPersonnelListModal from '@/views/callback/list-generation/AddCallbackPersonnelListModal.vue';
@@ -34,57 +48,86 @@
   } from '@/views/callback/list-generation/generation.data';
   import { getCallbackDetail, revokeCallback } from '@/api/callback/list-generation';
   import dayjs from 'dayjs';
+  import { BasicForm, useForm } from '@/components/Form';
+  import {
+    GetApiCoreDonorCallbackDetailRequest,
+    GetApiCoreDonorCallbackDetailResponse,
+  } from '@/api/type/callbackManage';
+  import { VxeGridProps, VxeTableInstance } from 'vxe-table';
 
   const emit = defineEmits(['success', 'register']);
 
-  const selectedRow = ref<Recordable>([]);
   const isUpdate = ref(false);
   const stationNo = ref('');
   const batchNo = ref('');
+  const vxeRef = ref<VxeTableInstance<GetApiCoreDonorCallbackDetailResponse[number]>>();
+
+  const tableData = ref<GetApiCoreDonorCallbackDetailResponse>([]);
 
   const { createConfirm } = useMessage();
 
-  const [registerTable, { reload }] = useTable({
-    api: getCallbackDetail,
-    columns: callbackModalColumns,
-    formConfig: {
-      showAdvancedButton: false,
-      schemas: callbackModalSearchFromSchema,
-      transformDateFunc(date) {
-        return dayjs(date).format('YYYY-MM-DD');
-      },
+  const [registerForm, { getFieldsValue }] = useForm({
+    showAdvancedButton: false,
+    schemas: callbackModalSearchFromSchema,
+    transformDateFunc(date) {
+      return dayjs(date).format('YYYY-MM-DD');
     },
-    pagination: false,
-    beforeFetch: (params) => {
-      return {
-        ...params,
-        batchNo: batchNo.value,
-      };
-    },
-    rowKey: 'donorNo',
-    clickToRowSelect: true,
-    rowSelection: {
-      type: 'checkbox',
-      onChange: (_, selectedRows: any) => {
-        selectedRow.value = selectedRows;
-      },
-    },
-    size: 'small',
-    striped: false,
-    useSearchForm: true,
-
-    bordered: true,
-    showIndexColumn: true,
-    indexColumnProps: {
-      width: 80,
-    },
-    immediate: false,
-    canResize: false,
+    submitFunc,
+    submitOnReset: true,
   });
+
+  const gridOptions = reactive<VxeGridProps<any>>({
+    height: 600,
+    border: true,
+    showOverflow: true,
+    align: 'center',
+    size: 'small',
+    exportConfig: {},
+    columnConfig: {
+      resizable: true,
+    },
+    scrollY: {
+      enabled: true,
+    },
+    checkboxConfig: {
+      highlight: true,
+      trigger: 'row',
+      range: true,
+    },
+    toolbarConfig: {
+      refresh: false,
+      loading: false,
+      export: false,
+      custom: false,
+    },
+    columns: callbackModalColumns,
+    showFooter: true,
+    autoResize: true,
+  });
+
+  const tableLoading = ref(false);
+  async function initTableData() {
+    try {
+      tableLoading.value = true;
+      tableData.value = await getCallbackDetail({
+        ...getFieldsValue(),
+        batchNo: batchNo.value,
+      } as GetApiCoreDonorCallbackDetailRequest);
+
+      await nextTick(() => {
+        vxeRef.value?.setAllCheckboxRow(true);
+      });
+    } finally {
+      tableLoading.value = false;
+    }
+  }
+
+  async function submitFunc() {
+    await initTableData();
+  }
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '生成名单'));
 
-  const table = ref(null);
   const [registerAddModal, { openModal }] = useModal();
   const [register, { setModalProps, closeModal }] = useModalInner((data) => {
     setModalProps({
@@ -95,7 +138,7 @@
     stationNo.value = data.record.stationNo;
     batchNo.value = data.record.batchNo;
 
-    reload();
+    initTableData();
   });
 
   async function handleAdd() {
@@ -116,10 +159,10 @@
       onOk: async () => {
         await revokeCallback({
           batchNo: batchNo.value,
-          donorNos: selectedRow.value.map((it) => it.donorNo),
+          donorNos: vxeRef.value!.getCheckboxRecords().map((it) => it?.donorNo)!,
         });
 
-        await reload();
+        await initTableData();
 
         emit('success');
       },
