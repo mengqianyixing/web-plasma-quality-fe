@@ -10,7 +10,7 @@
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
-        <BasicForm @register="registerForm" />
+        <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
 
         <div class="flex-1 shrink-1">
           <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData" />
