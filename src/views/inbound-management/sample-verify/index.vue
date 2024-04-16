@@ -9,8 +9,7 @@
             <span>{{ unAcceptList?.length }}</span>
           </div>
           <div style="height: calc(100% - 60px)">
-            <vxe-grid v-bind="gridOptionsUnaccept" :data="unAcceptList" :loading="tableLoading">
-            </vxe-grid>
+            <vxe-grid v-bind="gridOptionsUnaccept" :data="unAcceptList" :loading="tableLoading" />
           </div>
         </div>
         <div class="inline-block w-[80%] h-full">
@@ -21,15 +20,16 @@
             </div>
             <div class="text-[16px] bg-[#ffffff] rounded">
               <a-button @click="handleNonconformityRegister" class="mr-2"> 不合格登记 </a-button>
-              <a-button type="primary" @click="handleCompleteVerify" class="mr-2"
-                >完成验收</a-button
-              >
+              <a-button type="primary" @click="handleCompleteVerify" class="mr-2">
+                完成验收
+              </a-button>
               <a-button
                 type="primary"
                 @click="openArrangeModel(true, { batchNo: inputValue })"
                 :disabled="!sampleBatchData.verifyedList?.length"
-                >查看试管架</a-button
               >
+                查看试管架
+              </a-button>
             </div>
           </div>
           <div style="height: calc(100% - 60px)">
