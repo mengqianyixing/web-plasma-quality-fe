@@ -57,7 +57,7 @@
     getCallbackDetail,
     getCallbackListApi,
   } from '@/api/callback/list-generation';
-  import { callbackModalEnum, CallbackStateValueEnum } from '@/enums/callbackEnum';
+  import { callbackModalEnum, CallbackStateEnum } from '@/enums/callbackEnum';
   import { callbackConfirm } from '@/api/callback/list-confirm';
   import { CallbackButtonEnum } from '@/enums/authCodeEnum';
   import { useStation } from '@/hooks/common/useStation';
@@ -149,7 +149,7 @@
       return;
     }
 
-    if (selectedRow.value[0].state !== CallbackStateValueEnum.WIT) {
+    if (selectedRow.value[0].state !== CallbackStateEnum.WIT) {
       createMessage.warn('该状态不允许编辑');
       return;
     }
