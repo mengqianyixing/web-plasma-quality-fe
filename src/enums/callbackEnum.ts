@@ -32,3 +32,8 @@ export const donorStatusMap = new Map<donorStatusValueEnum, string>();
 donorStatusMap.set(donorStatusValueEnum.RFF, donorStatusEnum.RFF);
 donorStatusMap.set(donorStatusValueEnum.RFT, donorStatusEnum.RFT);
 donorStatusMap.set(donorStatusValueEnum.NOR, donorStatusEnum.NOR);
+
+export enum callbackModalEnum {
+  A = 'A',
+  B = 'B',
+}

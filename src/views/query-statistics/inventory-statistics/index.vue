@@ -155,7 +155,7 @@
     },
     {
       key: 'testQualifiedSummary',
-      label: '检查合格汇总',
+      label: '检测合格汇总',
       columns: baseColumns,
     },
     {
