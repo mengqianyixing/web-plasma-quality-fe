@@ -10,7 +10,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    :title="'血浆批号【' + state + '】托盘入库'"
+    :title="'血浆批号【' + state.batchNo + '】托盘入库'"
     width="1060px"
     @cancel="emit('close')"
     :minHeight="520"
@@ -46,14 +46,18 @@
   import { message, Modal } from 'ant-design-vue';
   import { getListApi, trayBoxListApi } from '@/api/tray/list';
   import InModal from '@/views/tray/outInStore/inModal.vue';
-  import { nextTick, ref } from 'vue';
+  import { nextTick, ref, reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { bindVerifyBoxApi } from '@/api/tray/relocation';
 
   const emit = defineEmits(['register', 'close']);
   defineOptions({ name: 'InStoreModal' });
 
-  const state = ref('');
+  const state = reactive({
+    batchNo: '',
+    queryFlow: void 0,
+    inOut: void 0,
+  });
   const bizScen = ref('');
 
   const [registerForm, { validate, clearValidate, setFieldsValue, getFieldsValue, resetFields }] =
@@ -72,7 +76,9 @@
   const [registerBindModal, { openModal }] = useModal();
 
   const [registerModal] = useModalInner(async (data) => {
-    state.value = data.batchNo;
+    state.batchNo = data.batchNo;
+    state.queryFlow = data.queryFlow;
+    state.inOut = data.inOut;
     bizScen.value = data.bizScen;
     rePage();
   });
@@ -99,7 +105,7 @@
     size: 'small',
     isCanResizeParent: true,
     rowSelection: { type: 'checkbox' },
-    beforeFetch: (p) => ({ ...p, closed: '0', batchNo: state.value }),
+    beforeFetch: (p) => ({ ...p, closed: '0', ...state }),
     afterFetch: (res) => {
       clearSelectedRowKeys();
       return res;

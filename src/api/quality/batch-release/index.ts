@@ -19,6 +19,8 @@ import {
   GetApiProductReleaseDetailResponse,
   PutApiProductReleaseReviewCancelRequest,
   PutApiProductReleaseCheckCancelRequest,
+  GetApiProductReleaseBagFlagsRequest,
+  GetApiProductReleaseBagFlagsResponse,
 } from '@/api/type/qualityMange';
 
 enum Api {
@@ -31,6 +33,7 @@ enum Api {
   CANCEL_RELEASE = '/api/product/release/cancel',
   NONCONFORMITY_LIST = '/api/product/release/unqualified/',
   PRESETS = '/api/product/release/detail',
+  PLASMA_RESTRICTION = '/api/product/release/bagFlags',
 }
 
 export const getListApi = (params: PostApiProductReleasesRequest) =>
@@ -67,3 +70,6 @@ export const getNonconformityListApi = (params: GetApiProductReleaseUnqualifiedO
 
 export const getPresetsApi = () =>
   defHttp.get<GetApiProductReleaseDetailResponse>({ url: Api.PRESETS });
+
+export const getPlasmaRestrictionListApi = (params: GetApiProductReleaseBagFlagsRequest) =>
+  defHttp.get<GetApiProductReleaseBagFlagsResponse>({ url: Api.PLASMA_RESTRICTION, params });

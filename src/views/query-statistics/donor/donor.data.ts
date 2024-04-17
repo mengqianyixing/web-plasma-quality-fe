@@ -20,73 +20,73 @@ export const searchFormSchema: FormSchema[] = [
 // 查询结果1————浆员信息
 export const donorSchema: DescItem[] = [
   {
-    label: '采浆公司:',
+    label: '采浆公司',
     field: 'stationName',
   },
   {
-    label: '浆员姓名:',
+    label: '浆员姓名',
     field: 'name',
   },
   {
-    label: '浆员编号:',
+    label: '浆员编号',
     field: 'donorNo',
   },
   {
-    label: '性别:',
+    label: '性别',
     field: 'gender',
   },
   {
-    label: '身份证号:',
+    label: '身份证号',
     field: 'idcardId',
   },
   {
-    label: '建档日期:',
+    label: '建档日期',
     field: 'createAt',
     render(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
   },
   {
-    label: '民族:',
+    label: '民族',
     field: 'nation',
   },
   {
-    label: '血型:',
+    label: '血型',
     field: 'bloodType',
   },
   {
-    label: '工作:',
+    label: '工作',
     field: 'profession',
   },
   {
-    label: '年龄:',
+    label: '年龄',
     field: 'age',
   },
   {
-    label: '浆员状态:',
+    label: '浆员状态',
     field: 'donorStatus',
   },
   {
-    label: '不合格依据日期:',
+    label: '不合格依据日期',
     field: 'blockCreateAt',
     render(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
   },
   {
-    label: '暂拒/淘汰原因:',
+    label: '暂拒/淘汰原因',
     field: 'failedCause',
   },
   {
-    label: '淘汰系统:',
+    label: '淘汰系统',
     field: 'blockSys',
   },
   {
-    label: '身份证地址:',
+    label: '身份证地址',
     field: 'idcardAddress',
   },
   {
-    label: '现居地址:',
+    label: '现居地址',
     field: 'currentAddress',
   },
 ];

@@ -142,27 +142,29 @@ export const plasmaRestrictionColumns: BasicColumn[] = [
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
-    width: '150px',
+    width: 120,
   },
   {
     title: '血浆箱号',
     dataIndex: 'boxNo',
-    width: '150px',
+    width: 120,
   },
   {
     title: '血浆总数',
     dataIndex: 'bagCount',
-    width: '150px',
+    width: 80,
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNos',
-    width: '300px',
+    width: 220,
+    ellipsis: false,
   },
   {
     title: '备注',
     dataIndex: 'remark',
-    width: '350px',
+    width: 220,
+    ellipsis: false,
   },
 ];
 export const nonconformityColumns: BasicColumn[] = [

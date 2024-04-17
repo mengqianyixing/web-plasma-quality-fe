@@ -48,14 +48,26 @@
               >
               <a-button
                 @click="
-                  openInModal(true, { ...filterForm, isAccept: true, bizScen: 'plasmaVerify' })
+                  openInModal(true, {
+                    ...filterForm,
+                    isAccept: true,
+                    bizScen: 'plasmaVerify',
+                    queryFlow: 'plasmaVerify',
+                    inOut: 'in',
+                  })
                 "
                 :disabled="!batchNo"
                 type="primary"
               >
                 托盘入库
               </a-button>
-              <a-button @click="openOutModal(true, filterForm)" :disabled="!batchNo" type="primary">
+              <a-button
+                @click="
+                  openOutModal(true, { ...filterForm, inOut: 'out', queryFlow: 'plasmaVerify' })
+                "
+                :disabled="!batchNo"
+                type="primary"
+              >
                 托盘出库
               </a-button>
               <!-- <a-button @click="openPrint">打印</a-button> -->

@@ -104,9 +104,9 @@
     getNonconformityListApi,
     submitCancelCreateApi,
     submitCancelReviewApi,
+    getPlasmaRestrictionListApi,
   } from '@/api/quality/batch-release';
   import { STATUS, STATUS_TEXT } from '@/enums/batchReleaseEnum';
-  import { getBindBoxsListApi } from '@/api/quality/plasma-restriction';
   import { QualityButtonEnum } from '@/enums/authCodeEnum';
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
@@ -220,8 +220,8 @@
     loading[type] = true;
     addLoading.value = true;
     try {
-      const res = await getBindBoxsListApi({
-        batchNos: row.batchNos,
+      const res = await getPlasmaRestrictionListApi({
+        orderNo: row.orderNo,
         currPage: '1',
         pageSize: '1',
       });
