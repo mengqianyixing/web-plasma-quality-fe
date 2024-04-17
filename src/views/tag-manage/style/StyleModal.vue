@@ -30,11 +30,7 @@
                     {
                       label: '删除',
                       color: 'error',
-                      popConfirm: {
-                        title: '是否确认删除',
-                        placement: 'left',
-                        confirm: handleStyleDelete.bind(null, record),
-                      },
+                      onClick: handleStyleDelete.bind(null, record),
                     },
                   ]"
                 />
@@ -60,7 +56,7 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { ref, computed, unref } from 'vue';
+  import { ref, computed, unref, createVNode } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { styleDetailColumns, formSchema } from './style.data';
@@ -68,7 +64,8 @@
 
   import StyleColumnModal from './StyleColumnModal.vue';
 
-  import { Tabs, TabPane } from 'ant-design-vue';
+  import { Tabs, TabPane, Modal } from 'ant-design-vue';
+  import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { addStyle, editStyle, getStylePreview, getTagDetail } from '@/api/tag/manage';
   import { GetApiSysTagTagNoResponse, PostApiSysTagPreviewRequest } from '@/api/type/tagManage';
   import type { Nullable } from '@vben/types';
@@ -251,7 +248,20 @@
   }
 
   function handleStyleDelete(record: Recordable) {
-    deleteTableDataRecord(record.key);
+    Modal.confirm({
+      title: '是否确认删除?',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: '',
+      okText: '删除',
+      okType: 'danger',
+      cancelText: '取消',
+      onOk() {
+        deleteTableDataRecord(record.key);
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   }
 
   function handleSuccess(rowRecord: Recordable, flag = false) {

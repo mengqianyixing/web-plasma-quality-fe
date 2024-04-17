@@ -17,11 +17,7 @@
               {
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
-                popConfirm: {
-                  title: '是否确认删除',
-                  placement: 'left',
-                  confirm: handleDelete.bind(null, record),
-                },
+                onClick: handleDelete.bind(null, record),
               },
             ]"
           />
@@ -39,7 +35,9 @@
   import RoleModal from './RoleModal.vue';
 
   import { columns, searchFormSchema } from './role.data';
-  import { ref } from 'vue';
+  import { ref, createVNode } from 'vue';
+  import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+  import { Modal } from 'ant-design-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { exportFile, formatDate, transferCSVData } from 'js-xxx';
   import { modulesRouteList } from '@/router/routes';
@@ -162,8 +160,21 @@
   }
 
   async function handleDelete(record: Recordable) {
-    await deleteCasDoorRole(record);
-    reload();
+    Modal.confirm({
+      title: '是否确认删除?',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: '',
+      okText: '删除',
+      okType: 'danger',
+      cancelText: '取消',
+      async onOk() {
+        await deleteCasDoorRole(record);
+        reload();
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   }
 
   function handleSuccess() {

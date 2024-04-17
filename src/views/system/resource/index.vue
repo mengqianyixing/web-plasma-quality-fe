@@ -17,11 +17,7 @@
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
                 tooltip: '删除此资源',
-                popConfirm: {
-                  title: '是否确认删除',
-                  placement: 'left',
-                  confirm: handleDelete.bind(null, record),
-                },
+                onClick: handleDelete.bind(null, record),
               },
             ]"
           />
@@ -33,6 +29,9 @@
 </template>
 
 <script setup lang="ts">
+  import { createVNode } from 'vue';
+  import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+  import { Modal } from 'ant-design-vue';
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { deleteResource, getResourcesList } from '@/api/systemServer/system';
   import { columns, searchFormSchema } from './resource.data';
@@ -84,7 +83,20 @@
   }
 
   async function handleDelete(record: Recordable) {
-    await deleteResource(record.resourceId);
+    Modal.confirm({
+      title: '是否确认删除?',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: '',
+      okText: '删除',
+      okType: 'danger',
+      cancelText: '取消',
+      async onOk() {
+        await deleteResource(record.resourceId);
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   }
 
   function handleSuccess() {
