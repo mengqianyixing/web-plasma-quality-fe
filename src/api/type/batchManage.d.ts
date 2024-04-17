@@ -434,7 +434,7 @@ export interface GetApiCoreBagStatisticsBatchNoResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/plasma`
- * @更新时间 `2024-02-05 15:17:03`
+ * @更新时间 `2024-04-16 17:18:43`
  */
 export interface GetApiCoreBagPlasmaRequest {
   /**
@@ -462,7 +462,7 @@ export interface GetApiCoreBagPlasmaRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/plasma`
- * @更新时间 `2024-02-05 15:17:03`
+ * @更新时间 `2024-04-16 17:18:43`
  */
 export interface GetApiCoreBagPlasmaResponse {
   totalCount?: number;
@@ -526,6 +526,70 @@ export interface GetApiCoreBagPlasmaResponse {
      * 血型
      */
     bloodType: string;
+    /**
+     * 血浆过程状态
+     */
+    plasmaStatus: string;
+    /**
+     * 检疫期类型
+     */
+    trackType: string;
+    /**
+     * 血浆不合格原因
+     */
+    unqReason: string;
+    /**
+     * 结果发布日期
+     */
+    testResultPubDate: string;
+    /**
+     * 复检结果
+     */
+    testResult: string;
+    /**
+     * 复检不合格项目
+     */
+    testUnqItem: string;
+    /**
+     * 血浆类型
+     */
+    plasmaType: string;
+    /**
+     * 效价结果值
+     */
+    titerResult: string;
+    /**
+     * 满足日期
+     */
+    fallDate: string;
+    /**
+     * 样本批号
+     */
+    sampleBatchNo: string;
+    /**
+     * 样本编号
+     */
+    sampleNo: string;
+    /**
+     * 采集日期
+     */
+    collectionDate: string;
+    /**
+     * 浆站检验日期
+     */
+    deptTestDate: string;
+    /**
+     * 厂家复检信息
+     */
+    factoryDate: string;
+    /**
+     * 样本结果
+     */
+    sampleResult: string;
+    /**
+     * 不合格项目
+     */
+    trackUnqItem: string;
     /**
      * 地址
      */

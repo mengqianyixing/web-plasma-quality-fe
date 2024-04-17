@@ -691,4 +691,37 @@ export interface PutApiProductReleaseReviewCancelRequest {
  */
 export interface PutApiProductReleaseReviewCancelResponse {}
 
+/**
+ * 接口 [查询血浆限制信息↗](https://yapi.sharing8.cn/project/529/interface/api/34314) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/product/release/bagFlags`
+ * @更新时间 `2024-04-17 15:45:48`
+ */
+export interface GetApiProductReleaseBagFlagsRequest {
+  orderNo: string;
+  currPage: string;
+  pageSize: string;
+}
+
+/**
+ * 接口 [查询血浆限制信息↗](https://yapi.sharing8.cn/project/529/interface/api/34314) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/product/release/bagFlags`
+ * @更新时间 `2024-04-17 15:45:48`
+ */
+export interface GetApiProductReleaseBagFlagsResponse {
+  totalCount: number;
+  currPage: null;
+  totalPage: null;
+  pageSize: null;
+  result?: {
+    boxNo: string;
+    batchNo: string;
+    bagCount: string;
+    bagNos: string;
+  }[];
+}
+
 /* prettier-ignore-end */
