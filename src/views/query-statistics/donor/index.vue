@@ -77,11 +77,9 @@
     column: 4,
     labelStyle: {
       width: '10%',
-      textAlign: 'right',
       padding: '10px 10px',
     },
     contentStyle: {
-      textAlign: 'left',
       padding: '10px 10px',
       width: '15%',
     },
