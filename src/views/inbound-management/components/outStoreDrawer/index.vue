@@ -1,16 +1,8 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: zcc
- * @Date: 2024-01-04 16:30:55
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-15 10:40:15
--->
 <template>
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    :title="'血浆批号【' + state + '】托盘出库'"
+    :title="'血浆批号【' + state.batchNo + '】托盘出库'"
     width="1060px"
     @cancel="emit('close')"
     :minHeight="520"
@@ -36,18 +28,24 @@
   import { getListApi } from '@/api/tray/list';
   import OutModal from '@/views/tray/outInStore/outModal.vue';
 
-  import { ref } from 'vue';
+  import { reactive } from 'vue';
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
 
-  const state = ref('');
+  const state = reactive({
+    batchNo: '',
+    queryFlow: void 0,
+    inOut: void 0,
+  });
 
   const emit = defineEmits(['register', 'close']);
   defineOptions({ name: 'OutStoreModal' });
 
   const [registerInModal, { openModal: openOutModal }] = useModal();
 
-  const [registerModal] = useModalInner(async ({ batchNo }) => {
-    state.value = batchNo;
+  const [registerModal] = useModalInner(async (data) => {
+    state.batchNo = data.batchNo;
+    state.queryFlow = data.queryFlow;
+    state.inOut = data.inOut;
     rePage();
   });
   const [
@@ -72,7 +70,7 @@
     size: 'small',
     isCanResizeParent: true,
     rowSelection: { type: 'checkbox' },
-    beforeFetch: (p) => ({ ...p, closed: '0', batchNo: state.value }),
+    beforeFetch: (p) => ({ ...p, closed: '0', ...state }),
     afterFetch: (res) => {
       clearSelectedRowKeys();
       return res;
