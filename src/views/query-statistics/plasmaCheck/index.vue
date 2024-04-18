@@ -30,9 +30,10 @@
     numKey,
     ratioKey,
     checkKey,
+    dateKey,
   } from './data';
   import { PageWrapper } from '@/components/Page';
-  import { TabPane, Tabs } from 'ant-design-vue';
+  import { TabPane, Tabs, message } from 'ant-design-vue';
   import { nextTick, ref } from 'vue';
   import { cloneDeep } from 'lodash-es';
   import { isArray, isObject } from '@/utils/is';
@@ -116,11 +117,11 @@
     }),
   );
 
-  const [registerTable] = useTable({
+  const [registerTable, { getForm }] = useTable({
     immediate: false,
     api: () => Promise.resolve([]),
     emptyDataIsShowTable: false,
-    formConfig: { schemas: searchFormSchema },
+    formConfig: { schemas: searchFormSchema, submitFunc },
     size: 'small',
     useSearchForm: true,
     beforeFetch: (p) => {
@@ -129,10 +130,24 @@
       return p;
     },
   });
+  function getFormDateIsNotNull() {
+    const values = getForm().getFieldsValue();
+    return dateKey.some((key) => values[key]);
+  }
+  function submitFunc() {
+    if (getFormDateIsNotNull()) {
+      reload();
+      return Promise.resolve();
+    }
+    message.warning('请选择日期后进行查询');
+    return Promise.reject();
+  }
   function reload() {
-    nextTick(() => {
-      tableList[activeKey.value][1].reload();
-    });
+    if (getFormDateIsNotNull()) {
+      nextTick(() => {
+        tableList[activeKey.value][1].reload();
+      });
+    }
   }
 
   function getTiterCountRow(data: Recordable[]) {
@@ -249,7 +264,6 @@
       })),
     );
     tableList[0][1].setColumns(CheckColumns);
-    reload();
   });
   function cellClick(failedCode: string, title: string, record: Recordable) {
     const { getForm } = tableList[0][1];

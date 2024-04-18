@@ -44,13 +44,19 @@
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable, TableAction } from '@/components/Table';
-  import { deleteCasDoorUser, getCasDoorUserDetail, getCasDoorUsers } from '@/api/oauth/users';
+  import {
+    deleteCasDoorUser,
+    getCasDoorUserDetail,
+    getCasDoorUsers,
+    setCasDoorUserPwd,
+  } from '@/api/oauth/users';
 
   import { useModal } from '@/components/Modal';
   import UsersModal from './UsersModal.vue';
   import UsersDetailModal from './UsersDetailModal.vue';
 
-  import { columns, searchFormSchema } from './users.data';
+  import { columns, searchFormSchema, initPassword } from './users.data';
+  import { Modal } from 'ant-design-vue';
 
   defineOptions({ name: 'Users' });
 
@@ -104,9 +110,17 @@
   }
 
   function handleSetPassword(record: Recordable) {
-    openModal(true, {
-      record,
-      isPassword: true,
+    Modal.confirm({
+      content: '确认重置账号【' + record.name + '】的密码?',
+      onOk: async () => {
+        setCasDoorUserPwd({
+          newPassword: initPassword,
+          reNewPassword: initPassword,
+          userName: record.name,
+        });
+        reload();
+      },
+      onCancel: () => Modal.destroyAll(),
     });
   }
 
