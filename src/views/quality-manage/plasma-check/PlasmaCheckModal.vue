@@ -11,7 +11,7 @@
   >
     <Description @register="registerPlasmaBatchDetail" :data="plasmaDetail" />
 
-    <div class="h-[300px]">
+    <div class="h-[350px] mb-4">
       <BasicTable @register="registerTable">
         <template #toolbar v-if="!isPreview">
           <a-button type="primary" @click="handleAdd">新增</a-button>
@@ -48,6 +48,7 @@
     PutApiCoreBatchPlasmaAuditRequest,
   } from '@/api/type/plasmaCheckManage';
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
+  import dayjs from 'dayjs';
 
   const plasmaDetail = ref<Recordable>({});
   const conclusionData = reactive<Recordable>({
@@ -96,18 +97,25 @@
       {
         title: '排序号',
         dataIndex: 'sort',
+        width: 80,
       },
       {
         title: '审核项目',
         dataIndex: 'auditItem',
+        align: 'left',
+        width: 200,
       },
       {
         title: '审核内容',
         dataIndex: 'auditContent',
+        align: 'left',
+        ellipsis: false,
       },
       {
         title: '审核结果',
         dataIndex: 'auditResult',
+        align: 'left',
+        width: 200,
       },
     ],
     rowSelection: {
@@ -161,7 +169,10 @@
       auditConclusion: conclusionData.conclusion,
     });
 
-    plasmaDetail.value = data.record;
+    plasmaDetail.value = {
+      ...data.record,
+      testIssueAt: dayjs(data.record.testIssueAt).format('YYYY-MM-DD'),
+    };
     isUpdate.value = !!data.isUpdate;
     isPreview.value = !!data.isPreview;
 
