@@ -4,7 +4,9 @@
       <!-- 采浆编号跳转 -->
       <template #batchNo="{ record }">
         <span
-          class="text-blue-500 underline cursor-pointer"
+          :class="
+            !record?.batchNo ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
           @click.stop.self="handleDetails(record, 'batchNo')"
         >
           {{ record?.batchNo }}
@@ -13,7 +15,9 @@
       <!-- 验收数量跳转 -->
       <template #verifyNum="{ record }">
         <span
-          class="text-blue-500 underline cursor-pointer"
+          :class="
+            !record?.verifyNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
           @click.stop.self="handleDetails(record, 'verifyNum')"
         >
           {{ record?.verifyNum }}
@@ -22,19 +26,25 @@
       <!-- 验收不合格数量跳转 -->
       <template #verifyNoPassNum="{ record }">
         <span
-          class="text-blue-500 underline cursor-pointer"
+          :class="
+            !record?.verifyNoPassNum
+              ? 'pointer-events-none'
+              : 'text-blue-500 underline cursor-pointer'
+          "
           @click.stop.self="handleDetails(record, 'verifyNoPassNum')"
         >
           {{ record?.verifyNoPassNum }}
         </span>
       </template>
       <!-- 不足量数量跳转 -->
-      <template #hortFallNum="{ record }">
+      <template #shortFallNum="{ record }">
         <span
-          class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetails(record, 'hortFallNum')"
+          :class="
+            !record?.shortFallNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleDetails(record, 'shortFallNum')"
         >
-          {{ record?.hortFallNum }}
+          {{ record?.shortFallNum }}
         </span>
       </template>
     </BasicTable>

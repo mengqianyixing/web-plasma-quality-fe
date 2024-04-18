@@ -103,7 +103,7 @@ export const entryColumns: BasicColumn[] = [
       {
         title: '不足量数量(袋)',
         dataIndex: '',
-        slots: { customRender: 'hortFallNum' },
+        slots: { customRender: 'shortFallNum' },
         width: 130,
       },
     ],
@@ -210,17 +210,17 @@ export const entryDetailModalColumns: BasicColumn[] = [
   },
   {
     title: '血浆过程状态',
-    dataIndex: '',
+    dataIndex: 'plasmaStatus',
     width: 100,
   },
   {
     title: '检疫期类型',
-    dataIndex: '',
+    dataIndex: 'trackType',
     width: 100,
   },
   {
     title: '血浆不合格原因',
-    dataIndex: '',
+    dataIndex: 'unqReason',
     width: 120,
   },
   {
@@ -228,27 +228,27 @@ export const entryDetailModalColumns: BasicColumn[] = [
     children: [
       {
         title: '结果发布日期',
-        dataIndex: '',
+        dataIndex: 'testResultPubDate',
         width: 120,
       },
       {
         title: '复检结果',
-        dataIndex: '',
+        dataIndex: 'testResult',
         width: 120,
       },
       {
         title: '不合格项目',
-        dataIndex: '',
+        dataIndex: 'testUnqItem',
         width: 120,
       },
       {
         title: '血浆类型',
-        dataIndex: '',
+        dataIndex: 'plasmaType',
         width: 120,
       },
       {
         title: '效价结果值',
-        dataIndex: '',
+        dataIndex: 'titerResult',
         width: 120,
       },
     ],
@@ -258,42 +258,42 @@ export const entryDetailModalColumns: BasicColumn[] = [
     children: [
       {
         title: '满足日期',
-        dataIndex: '',
+        dataIndex: 'fallDate',
         width: 120,
       },
       {
         title: '样本批号',
-        dataIndex: '',
+        dataIndex: 'sampleBatchNo',
         width: 120,
       },
       {
         title: '样本编号',
-        dataIndex: '',
+        dataIndex: 'sampleNo',
         width: 120,
       },
       {
         title: '采集日期',
-        dataIndex: '',
+        dataIndex: 'collectionDate',
         width: 120,
       },
       {
         title: '浆站检验日期',
-        dataIndex: '',
+        dataIndex: 'deptTestDate',
         width: 120,
       },
       {
         title: '厂家复检日期',
-        dataIndex: '',
+        dataIndex: 'factoryDate',
         width: 120,
       },
       {
         title: '样本结果',
-        dataIndex: '',
+        dataIndex: 'sampleResult',
         width: 120,
       },
       {
         title: '不合格项目',
-        dataIndex: '',
+        dataIndex: 'trackUnqItem',
         width: 120,
       },
     ],
