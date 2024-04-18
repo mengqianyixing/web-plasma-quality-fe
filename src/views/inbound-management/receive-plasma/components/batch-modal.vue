@@ -12,7 +12,12 @@
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
-        <BasicTable @register="registerTable" :searchInfo="searchInfo" :scroll="{ y: 420 }">
+        <BasicTable
+          @register="registerTable"
+          class="my-table"
+          :searchInfo="searchInfo"
+          :scroll="{ y: 420 }"
+        >
           <template #bodyCell="{ column, text }">
             <template v-if="column.dataIndex === 'acceptState'">
               {{ optsTransMap(receiveOpts, 'value', 'label')[text] }}
@@ -280,3 +285,10 @@
     clearSelectedRowKeys();
   }
 </script>
+<style lang="scss" scoped>
+  .my-table {
+    ::v-deep(.ant-table) {
+      min-height: 460px;
+    }
+  }
+</style>
