@@ -22,8 +22,8 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { useMessage } from '@/hooks/web/useMessage';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
-  import { nonconformityRegistration } from '@/api/nonconformity/box-manage';
-  import { PostApiCoreBagUnqualifiedRequest } from '@/api/type/nonconformityManage';
+  import { nonconformityRegistrationVerify } from '@/api/nonconformity/box-manage';
+  import { PostApiCoreBagUnqualifiedVerifyRequest } from '@/api/type/nonconformityManage';
   import { UnqualifiedEnum } from '@/api/_dictionary';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
@@ -113,7 +113,7 @@
     try {
       setModalProps({ confirmLoading: true });
       const values = await validate();
-      await nonconformityRegistration(values as PostApiCoreBagUnqualifiedRequest);
+      await nonconformityRegistrationVerify(values as PostApiCoreBagUnqualifiedVerifyRequest);
 
       createMessage.success('缺浆登记成功');
 
