@@ -328,7 +328,7 @@
   const acceptList = computed(() => filterForm.value?.verifyBag ?? []);
   const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
     border: true,
-    height: '670px',
+    height: '710px',
     showOverflow: true,
     exportConfig: {},
     columnConfig: {
@@ -365,7 +365,7 @@
   });
   const gridOptionsAccept = reactive<VxeGridProps<any>>({
     border: true,
-    height: '670px',
+    height: '710px',
     showOverflow: true,
     columnConfig: {
       resizable: true,

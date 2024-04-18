@@ -24,7 +24,7 @@ export const columns: BasicColumn[] = [
     title: '来浆类型',
     dataIndex: 'rawImm',
     format(text) {
-      return `${PlasmaType(text)}`;
+      return text ? `${PlasmaType(text)}` : '';
     },
   },
   {

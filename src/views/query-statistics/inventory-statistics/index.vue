@@ -9,7 +9,7 @@
       v-model:activeKey="currentKey"
       type="card"
     >
-      <a-tab-pane v-for="item in tabList" :key="item.key" :tab="item.label" />
+      <a-tab-pane v-for="item in tabListComputed" :key="item.key" :tab="item.label" />
     </a-tabs>
     <PageWrapper dense contentFullHeight>
       <BasicTable
@@ -30,19 +30,31 @@
   import { computed, onMounted, ref } from 'vue';
   import { getInventoryList } from '@/api/query-statistics/inventory';
   import { GetApiCoreBatchStockStatisticsResponse } from '@/api/type/queryStatistics';
-
-  defineOptions({ name: 'InventoryStatistics' });
+  import { getSysParamsByParamKey } from '@/api/systemServer/params';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
 
   const ATabs = Tabs;
   const ATabPane = Tabs.TabPane;
 
   const currentKey = ref('inStockSummary');
+  const quarantineBatchControlRes = ref('');
   const originData = ref<GetApiCoreBatchStockStatisticsResponse>({});
 
   const tableDataFields = computed(() => originData.value[currentKey.value] || []);
   const currentColumns = computed(
     () => tabList.find((item) => item.key === currentKey.value)?.columns || [],
   );
+  const tabListComputed = computed(() => {
+    if (quarantineBatchControlRes.value !== 'open') {
+      return (
+        tabList.filter(
+          (it) => !['unMeetQuarantineFirstTrace', 'unMeetQuarantineRepeateTrace'].includes(it.key),
+        ) || tabList
+      );
+    } else {
+      return tabList;
+    }
+  });
 
   const baseColumns: BasicColumn[] = [
     {
@@ -192,8 +204,11 @@
     setLoading(false);
   }
 
-  onMounted(() => {
-    reloadTable();
+  onMounted(async () => {
+    quarantineBatchControlRes.value = await getSysParamsByParamKey(
+      SysParamsEnum.QuarantineBatchControl,
+    );
+    await reloadTable();
   });
 </script>
 <style scoped>

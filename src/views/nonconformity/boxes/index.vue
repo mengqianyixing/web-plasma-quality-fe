@@ -50,6 +50,7 @@
         DictionaryItemKeyEnum.Quarantine,
         DictionaryItemKeyEnum.Other,
       ],
+      show: 1,
     });
 
     plasmaUnqualifiedDictionary.value = entries(groupBy(originDictionaryData, 'preBox')).map(

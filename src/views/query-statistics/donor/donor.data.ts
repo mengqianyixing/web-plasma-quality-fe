@@ -20,73 +20,73 @@ export const searchFormSchema: FormSchema[] = [
 // 查询结果1————浆员信息
 export const donorSchema: DescItem[] = [
   {
-    label: '采浆公司:',
+    label: '采浆公司',
     field: 'stationName',
   },
   {
-    label: '浆员姓名:',
+    label: '浆员姓名',
     field: 'name',
   },
   {
-    label: '浆员编号:',
+    label: '浆员编号',
     field: 'donorNo',
   },
   {
-    label: '性别:',
+    label: '性别',
     field: 'gender',
   },
   {
-    label: '身份证号:',
+    label: '身份证号',
     field: 'idcardId',
   },
   {
-    label: '建档日期:',
+    label: '建档日期',
     field: 'createAt',
     render(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
   },
   {
-    label: '民族:',
+    label: '民族',
     field: 'nation',
   },
   {
-    label: '血型:',
+    label: '血型',
     field: 'bloodType',
   },
   {
-    label: '工作:',
+    label: '工作',
     field: 'profession',
   },
   {
-    label: '年龄:',
+    label: '年龄',
     field: 'age',
   },
   {
-    label: '浆员状态:',
+    label: '浆员状态',
     field: 'donorStatus',
   },
   {
-    label: '不合格依据日期:',
+    label: '不合格依据日期',
     field: 'blockCreateAt',
     render(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
   },
   {
-    label: '暂拒/淘汰原因:',
+    label: '暂拒/淘汰原因',
     field: 'failedCause',
   },
   {
-    label: '淘汰系统:',
+    label: '淘汰系统',
     field: 'blockSys',
   },
   {
-    label: '身份证地址:',
+    label: '身份证地址',
     field: 'idcardAddress',
   },
   {
-    label: '现居地址:',
+    label: '现居地址',
     field: 'currentAddress',
   },
 ];
@@ -95,22 +95,22 @@ export const batchColumns: BasicColumn[] = [
   {
     title: '血浆批号',
     dataIndex: 'fkBatchNo',
-    width: 150,
+    width: 100,
   },
   {
     title: '浆站箱号',
     dataIndex: 'stationBoxNo',
-    width: 150,
+    width: 100,
   },
   {
     title: '现存箱号',
     dataIndex: 'boxNo',
-    width: 120,
+    width: 100,
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
-    width: 150,
+    width: 120,
   },
   {
     title: '采集日期',
@@ -123,22 +123,22 @@ export const batchColumns: BasicColumn[] = [
   {
     title: '来浆类型',
     dataIndex: 'rawImm',
-    width: 120,
+    width: 100,
   },
   {
     title: '浆站净重 g',
     dataIndex: 'rawWeight',
-    width: 100,
+    width: 90,
   },
   {
     title: '验收净重 g',
     dataIndex: 'netWeight',
-    width: 100,
+    width: 90,
   },
   {
     title: '效价类型',
     dataIndex: 'titerType',
-    width: 120,
+    width: 110,
     format: (text) =>
       (text || '')
         .split(',')
@@ -148,12 +148,12 @@ export const batchColumns: BasicColumn[] = [
   {
     title: '血浆过程状态',
     dataIndex: 'processState',
-    width: 120,
+    width: 210,
   },
   {
     title: '血浆不合格原因',
     dataIndex: 'failed',
-    width: 120,
+    width: 200,
   },
   {
     title: '血浆复检信息',
@@ -212,7 +212,7 @@ export const batchColumns: BasicColumn[] = [
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
-        width: 100,
+        width: 120,
       },
       {
         title: '样本批号',
@@ -222,7 +222,7 @@ export const batchColumns: BasicColumn[] = [
       {
         title: '样本编号',
         dataIndex: ['trackedSeeInfo', 'sampleNo'],
-        width: 135,
+        width: 130,
       },
       {
         title: '采集日期',
@@ -230,7 +230,7 @@ export const batchColumns: BasicColumn[] = [
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
-        width: 100,
+        width: 120,
       },
       {
         title: '浆站检验日期',
@@ -251,7 +251,7 @@ export const batchColumns: BasicColumn[] = [
       {
         title: '样本结果',
         dataIndex: ['trackedSeeInfo', 'reCheckResult'],
-        width: 100,
+        width: 90,
         format(text: any) {
           if (text === 1) {
             return '合格';
@@ -265,7 +265,7 @@ export const batchColumns: BasicColumn[] = [
       {
         title: '不合格项目',
         dataIndex: ['trackedSeeInfo', 'unqualifiedItems'],
-        width: 120,
+        width: 100,
       },
     ],
   },

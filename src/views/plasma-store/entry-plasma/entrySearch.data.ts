@@ -12,12 +12,13 @@ export const entryColumns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    width: 150,
+    width: 80,
   },
   {
     title: '血浆批号',
+    dataIndex: 'batchNo',
     slots: { customRender: 'batchNo' },
-    width: 120,
+    width: 80,
   },
   {
     title: '血浆情况',
@@ -25,43 +26,42 @@ export const entryColumns: BasicColumn[] = [
       {
         title: '采集开始日期',
         dataIndex: 'collectStartDate',
-        width: 100,
+        width: 110,
       },
       {
         title: '采集结束日期',
         dataIndex: 'collectEndDate',
-        width: 120,
+        width: 110,
       },
       {
         title: '浆站出库日期',
         dataIndex: 'stationOutDate',
-        width: 100,
+        width: 110,
       },
       {
         title: '出库数量(袋)',
         dataIndex: 'outNum',
-        width: 100,
+        width: 90,
       },
       {
         title: '出库总净重(kg)',
         dataIndex: 'outWeight',
-        width: 120,
+        width: 80,
       },
     ],
   },
   {
     title: '入库情况',
-    width: 500,
     children: [
       {
         title: '接收日期',
         dataIndex: 'acceptDate',
-        width: 100,
+        width: 110,
       },
       {
         title: '验收发布人',
         dataIndex: 'verifyPublisher',
-        width: 100,
+        width: 80,
       },
       {
         title: '验收发布日期',
@@ -70,14 +70,14 @@ export const entryColumns: BasicColumn[] = [
       },
       {
         title: '验收数量(袋)',
-        dataIndex: '',
+        dataIndex: 'verifyNum',
         slots: { customRender: 'verifyNum' },
-        width: 100,
+        width: 80,
       },
       {
         title: '验收总净重(kg)',
         dataIndex: 'verifyWeight',
-        width: 120,
+        width: 80,
       },
       {
         title: '差异数量(袋)',
@@ -87,24 +87,24 @@ export const entryColumns: BasicColumn[] = [
       {
         title: '差异总净重(kg)',
         dataIndex: 'diffWeight',
-        width: 120,
+        width: 80,
       },
       {
         title: '验收合格数量(袋)',
         dataIndex: 'verifyPassNum',
-        width: 130,
+        width: 80,
       },
       {
         title: '验收不合格数量(袋)',
-        dataIndex: '',
+        dataIndex: 'verifyNoPassNum',
         slots: { customRender: 'verifyNoPassNum' },
-        width: 140,
+        width: 80,
       },
       {
         title: '不足量数量(袋)',
-        dataIndex: '',
-        slots: { customRender: 'hortFallNum' },
-        width: 130,
+        dataIndex: 'shortFallNum',
+        slots: { customRender: 'shortFallNum' },
+        width: 80,
       },
     ],
   },
@@ -210,17 +210,17 @@ export const entryDetailModalColumns: BasicColumn[] = [
   },
   {
     title: '血浆过程状态',
-    dataIndex: '',
+    dataIndex: 'plasmaStatus',
     width: 100,
   },
   {
     title: '检疫期类型',
-    dataIndex: '',
+    dataIndex: 'trackType',
     width: 100,
   },
   {
     title: '血浆不合格原因',
-    dataIndex: '',
+    dataIndex: 'unqReason',
     width: 120,
   },
   {
@@ -228,27 +228,27 @@ export const entryDetailModalColumns: BasicColumn[] = [
     children: [
       {
         title: '结果发布日期',
-        dataIndex: '',
+        dataIndex: 'testResultPubDate',
         width: 120,
       },
       {
         title: '复检结果',
-        dataIndex: '',
+        dataIndex: 'testResult',
         width: 120,
       },
       {
         title: '不合格项目',
-        dataIndex: '',
+        dataIndex: 'testUnqItem',
         width: 120,
       },
       {
         title: '血浆类型',
-        dataIndex: '',
+        dataIndex: 'plasmaType',
         width: 120,
       },
       {
         title: '效价结果值',
-        dataIndex: '',
+        dataIndex: 'titerResult',
         width: 120,
       },
     ],
@@ -258,42 +258,42 @@ export const entryDetailModalColumns: BasicColumn[] = [
     children: [
       {
         title: '满足日期',
-        dataIndex: '',
+        dataIndex: 'fallDate',
         width: 120,
       },
       {
         title: '样本批号',
-        dataIndex: '',
+        dataIndex: 'sampleBatchNo',
         width: 120,
       },
       {
         title: '样本编号',
-        dataIndex: '',
+        dataIndex: 'sampleNo',
         width: 120,
       },
       {
         title: '采集日期',
-        dataIndex: '',
+        dataIndex: 'collectionDate',
         width: 120,
       },
       {
         title: '浆站检验日期',
-        dataIndex: '',
+        dataIndex: 'deptTestDate',
         width: 120,
       },
       {
         title: '厂家复检日期',
-        dataIndex: '',
+        dataIndex: 'factoryDate',
         width: 120,
       },
       {
         title: '样本结果',
-        dataIndex: '',
+        dataIndex: 'sampleResult',
         width: 120,
       },
       {
         title: '不合格项目',
-        dataIndex: '',
+        dataIndex: 'trackUnqItem',
         width: 120,
       },
     ],
