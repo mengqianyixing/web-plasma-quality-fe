@@ -647,6 +647,47 @@ export interface PostApiCoreBagUnqualifiedPickBatchRequest {
 export interface PostApiCoreBagUnqualifiedPickBatchResponse {}
 
 /**
+ * 接口 [血浆验收不合格登记↗](https://yapi.sharing8.cn/project/529/interface/api/34320) 的 **请求类型**
+ *
+ * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
+ * @请求头 `POST /api/core/bag/unqualified/verify`
+ * @更新时间 `2024-04-18 14:50:52`
+ */
+export interface PostApiCoreBagUnqualifiedVerifyRequest {
+  /**
+   * 不合格原因
+   */
+  fkFailedCode: string;
+  /**
+   * 复核人
+   */
+  checker: string;
+  /**
+   * 血浆编号
+   */
+  fkBagNo: string;
+  lack?: string;
+  remark?: string;
+  /**
+   * 区分页面用（验收弹窗）
+   */
+  pageFlag?: string;
+  /**
+   * 验收页面传，用于校验是否属于本批
+   */
+  batchNo?: string;
+}
+
+/**
+ * 接口 [血浆验收不合格登记↗](https://yapi.sharing8.cn/project/529/interface/api/34320) 的 **返回类型**
+ *
+ * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
+ * @请求头 `POST /api/core/bag/unqualified/verify`
+ * @更新时间 `2024-04-18 14:50:52`
+ */
+export type PostApiCoreBagUnqualifiedVerifyResponse = null;
+
+/**
  * 接口 [查询不合格出库申请单列表↗](https://yapi.sharing8.cn/project/529/interface/api/32073) 的 **请求类型**
  *
  * @分类 [不合格出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5369)

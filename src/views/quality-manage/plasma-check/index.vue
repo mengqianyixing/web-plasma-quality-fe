@@ -3,7 +3,9 @@
     <BasicTable @register="registerTable">
       <template #auditId="{ record }">
         <span
-          class="text-blue-500 underline cursor-pointer"
+          :class="
+            !record?.auditId ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
           @click.stop.self="handlePreview(record)"
         >
           {{ record?.auditId }}
@@ -83,6 +85,7 @@
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
   import { QualityButtonEnum } from '@/enums/authCodeEnum';
+
   const reportLoading = ref(false);
 
   const { stationOptions } = useStation();
@@ -136,7 +139,9 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-
+    scroll: {
+      x: 0,
+    },
     bordered: true,
     showIndexColumn: false,
     canResize: true,
@@ -368,3 +373,9 @@
     reload();
   }
 </script>
+
+<style scoped>
+  :deep(.ant-table th) {
+    white-space: wrap;
+  }
+</style>
