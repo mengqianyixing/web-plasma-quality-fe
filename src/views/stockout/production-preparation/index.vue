@@ -157,12 +157,14 @@
       dataIndex: 'prepareNo',
       align: 'left',
       width: 180,
+      resizable: true,
       slots: { customRender: 'prepareNo' },
     },
     {
       title: '投产类型',
       dataIndex: 'prodType',
       width: 100,
+      resizable: true,
       format(text) {
         return `${PlasmaType(text)}`;
       },
@@ -170,6 +172,7 @@
     {
       title: '挑浆模式',
       dataIndex: 'pickMode',
+      resizable: true,
       format(text) {
         return `${pickModeMap.get(text as pickModeValueEnum)}`;
       },
@@ -177,6 +180,7 @@
     {
       title: '是否限制血浆',
       dataIndex: 'bagFlag',
+      resizable: true,
       width: 120,
       format(text) {
         return `${bagFlagMap.get(text as bagFlagValueEnum)}`;
@@ -185,23 +189,27 @@
     {
       title: '批次数量',
       dataIndex: 'batchCount',
+      resizable: true,
       width: 80,
       slots: { customRender: 'batchCount' },
     },
     {
       title: '分拣血浆数量',
       dataIndex: 'pickBagCount',
+      resizable: true,
       width: 110,
       slots: { customRender: 'pickBagCount' },
     },
     {
       title: '投产血浆数量',
       dataIndex: 'prodBagCount',
+      resizable: true,
       width: 110,
       slots: { customRender: 'prodBagCount' },
     },
     {
       title: '投产血浆净重(kg)',
+      resizable: true,
       dataIndex: 'netWeight',
       customRender: ({ record }) => {
         if (record.summary && record.summary.netWeight !== null) {
@@ -214,6 +222,7 @@
       title: '浆员数量',
       dataIndex: 'donorCount',
       width: 80,
+      resizable: true,
       customRender: ({ record }) => {
         if (record.summary && record.summary.donorCount !== null) {
           return record.summary.donorCount;
@@ -224,31 +233,36 @@
     {
       title: '准备人',
       dataIndex: 'creator',
+      resizable: true,
     },
     {
-      title: '准备时间',
+      title: '准备日期',
+      resizable: true,
       dataIndex: 'createAt',
       format(text) {
-        return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
+        return text ? dayjs(text).format('YYYY-MM-DD') : '-';
       },
     },
     {
       title: '复核人',
+      resizable: true,
       dataIndex: 'reviewer',
       width: 100,
     },
     {
-      title: '复核时间',
+      title: '复核日期',
       dataIndex: 'reviewerAt',
+      resizable: true,
       width: 100,
       format(text) {
-        return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
+        return text ? dayjs(text).format('YYYY-MM-DD') : '-';
       },
     },
     {
       title: '分拣完成日期',
       dataIndex: 'sortingAt',
       width: 100,
+      resizable: true,
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD') : '-';
       },
@@ -257,6 +271,7 @@
       title: '状态',
       dataIndex: 'prepareState',
       width: 100,
+      resizable: true,
       format(text) {
         return `${prepareStateMap.get(text as prepareStateValueEnum)}`;
       },
@@ -353,7 +368,7 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-
+    canColDrag: true,
     bordered: true,
     showIndexColumn: false,
     canResize: true,
