@@ -12,12 +12,13 @@ export const entryColumns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    width: 150,
+    width: 80,
   },
   {
     title: '血浆批号',
+    dataIndex: 'batchNo',
     slots: { customRender: 'batchNo' },
-    width: 120,
+    width: 80,
   },
   {
     title: '血浆情况',
@@ -25,43 +26,42 @@ export const entryColumns: BasicColumn[] = [
       {
         title: '采集开始日期',
         dataIndex: 'collectStartDate',
-        width: 100,
+        width: 110,
       },
       {
         title: '采集结束日期',
         dataIndex: 'collectEndDate',
-        width: 120,
+        width: 110,
       },
       {
         title: '浆站出库日期',
         dataIndex: 'stationOutDate',
-        width: 100,
+        width: 110,
       },
       {
         title: '出库数量(袋)',
         dataIndex: 'outNum',
-        width: 100,
+        width: 90,
       },
       {
         title: '出库总净重(kg)',
         dataIndex: 'outWeight',
-        width: 120,
+        width: 80,
       },
     ],
   },
   {
     title: '入库情况',
-    width: 500,
     children: [
       {
         title: '接收日期',
         dataIndex: 'acceptDate',
-        width: 100,
+        width: 110,
       },
       {
         title: '验收发布人',
         dataIndex: 'verifyPublisher',
-        width: 100,
+        width: 80,
       },
       {
         title: '验收发布日期',
@@ -70,14 +70,14 @@ export const entryColumns: BasicColumn[] = [
       },
       {
         title: '验收数量(袋)',
-        dataIndex: '',
+        dataIndex: 'verifyNum',
         slots: { customRender: 'verifyNum' },
-        width: 100,
+        width: 80,
       },
       {
         title: '验收总净重(kg)',
         dataIndex: 'verifyWeight',
-        width: 120,
+        width: 80,
       },
       {
         title: '差异数量(袋)',
@@ -87,24 +87,24 @@ export const entryColumns: BasicColumn[] = [
       {
         title: '差异总净重(kg)',
         dataIndex: 'diffWeight',
-        width: 120,
+        width: 80,
       },
       {
         title: '验收合格数量(袋)',
         dataIndex: 'verifyPassNum',
-        width: 130,
+        width: 80,
       },
       {
         title: '验收不合格数量(袋)',
-        dataIndex: '',
+        dataIndex: 'verifyNoPassNum',
         slots: { customRender: 'verifyNoPassNum' },
-        width: 140,
+        width: 80,
       },
       {
         title: '不足量数量(袋)',
-        dataIndex: '',
+        dataIndex: 'shortFallNum',
         slots: { customRender: 'shortFallNum' },
-        width: 130,
+        width: 80,
       },
     ],
   },

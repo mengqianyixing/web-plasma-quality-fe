@@ -47,6 +47,9 @@
           {{ record?.shortFallNum }}
         </span>
       </template>
+      <template #toolbar>
+        <a-button type="primary" @click="handleExport" :loading="loading">导出</a-button>
+      </template>
     </BasicTable>
     <BatchNoModal @register="register" />
     <VerifyNumModal @register="registerVerifyNum" />
@@ -65,6 +68,12 @@
   import NoPassModal from './noPassModal.vue';
   import HortFallModal from './hortFallModal.vue';
 
+  import { ref } from 'vue';
+  import { message } from 'ant-design-vue';
+  import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { useRouter } from 'vue-router';
+
   const [register, { openModal }] = useModal();
   const [registerVerifyNum, { openModal: openVerifyNumModal }] = useModal();
   const [registerNoPass, { openModal: openNoPassModal }] = useModal();
@@ -72,7 +81,10 @@
 
   defineOptions({ name: 'EntryPlasma' });
 
-  const [registerTable] = useTable({
+  const globalApiStore = useGlobalApiStoreWithOut();
+  const { currentRoute } = useRouter();
+
+  const [registerTable, { getForm }] = useTable({
     api: receptionDetailApi,
     fetchSetting: {
       pageField: 'currPage',
@@ -85,6 +97,9 @@
       transformDateFunc(date) {
         return date ? date.format('YYYY-MM-DD') : '';
       },
+    },
+    scroll: {
+      x: 0,
     },
     rowKey: 'batchNo',
     columns: entryColumns,
@@ -107,4 +122,38 @@
       openHortFallModal(true, { batchNo: row.batchNo });
     }
   }
+
+  const loading = ref(false);
+  async function handleExport() {
+    loading.value = true;
+    try {
+      const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
+      const OriginData = await receptionDetailApi({
+        ...getForm().getFieldsValue(),
+        currPage: '1',
+        pageSize,
+      });
+      if ((OriginData.totalCount || 0) > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(entryColumns);
+      const { result, merge: bodyMerge } = formatData(
+        lastLevelCols,
+        OriginData.result || [],
+        rows.length,
+      );
+      jsonToSheetXlsx({
+        data: [...rows, ...result],
+        json2sheetOpts: { skipHeader: true },
+        merges: [...headerMerge, ...bodyMerge],
+        filename: currentRoute.value.meta.title + '.xlsx',
+      });
+    } finally {
+      loading.value = false;
+    }
+  }
 </script>
+<style scoped>
+  :deep(.ant-table th) {
+    white-space: wrap;
+  }
+</style>
