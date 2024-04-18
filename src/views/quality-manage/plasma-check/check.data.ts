@@ -12,6 +12,7 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
+    width: 120,
   },
   {
     title: '验收数量',
@@ -27,10 +28,12 @@ export const columns: BasicColumn[] = [
   {
     title: '合格血浆数量',
     dataIndex: 'qualifiedCount',
+    width: 80,
   },
   {
     title: '特免合格数量',
     dataIndex: 'titerQualifiedCount',
+    width: 80,
   },
   {
     title: '检测结果发布人',
@@ -42,6 +45,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 110,
   },
   {
     title: '审核单号',
