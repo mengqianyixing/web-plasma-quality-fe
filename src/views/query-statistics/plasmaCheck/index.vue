@@ -124,14 +124,10 @@
     formConfig: { schemas: searchFormSchema, submitFunc },
     size: 'small',
     useSearchForm: true,
-    beforeFetch: (p) => {
-      params = p;
-      reload();
-      return p;
-    },
   });
   function getFormDateIsNotNull() {
     const values = getForm().getFieldsValue();
+    params = values;
     return dateKey.some((key) => values[key]);
   }
   function submitFunc() {
