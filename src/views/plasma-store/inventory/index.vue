@@ -23,7 +23,7 @@
 
 <script lang="ts" setup>
   import { SearchManager } from '@/enums/authCodeEnum';
-  import { onMounted, reactive, watchEffect, ref } from 'vue';
+  import { onMounted, reactive, watchEffect, ref, nextTick } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { useStation } from '@/hooks/common/useStation';
   import { VxeGridProps } from 'vxe-table';
@@ -42,7 +42,10 @@
 
   const { stationOptions, getStationNameById } = useStation();
   onMounted(async () => {
-    await initTableData();
+    nextTick(async () => {
+      await initTableData();
+    });
+
     watchEffect(() => {
       updateSchema({
         field: 'stationNo',
@@ -141,7 +144,6 @@
         values.verifyPubStartDate = values.date[0];
         values.verifyPubEndDate = values.date[1];
       }
-
       const searchParams = {
         ...values,
       };
