@@ -38,6 +38,9 @@
 
   const [registerTable, { reload, getForm, clearSelectedRowKeys }] = useTable({
     api: getPlasmaBatchUnReleases,
+    pagination: {
+      pageSize: 10,
+    },
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',

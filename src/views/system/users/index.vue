@@ -41,7 +41,12 @@
 <script lang="ts" setup>
   import { createVNode } from 'vue';
   import { BasicTable, useTable, TableAction } from '@/components/Table';
-  import { deleteCasDoorUser, getCasDoorUserDetail, getCasDoorUsers } from '@/api/oauth/users';
+  import {
+    deleteCasDoorUser,
+    getCasDoorUserDetail,
+    getCasDoorUsers,
+    setCasDoorUserPwd,
+  } from '@/api/oauth/users';
   import { Modal } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 
@@ -49,7 +54,7 @@
   import UsersModal from './UsersModal.vue';
   import UsersDetailModal from './UsersDetailModal.vue';
 
-  import { columns, searchFormSchema } from './users.data';
+  import { columns, searchFormSchema, initPassword } from './users.data';
 
   defineOptions({ name: 'Users' });
 
@@ -103,9 +108,17 @@
   }
 
   function handleSetPassword(record: Recordable) {
-    openModal(true, {
-      record,
-      isPassword: true,
+    Modal.confirm({
+      content: '确认重置账号【' + record.name + '】的密码?',
+      onOk: async () => {
+        setCasDoorUserPwd({
+          newPassword: initPassword,
+          reNewPassword: initPassword,
+          userName: record.name,
+        });
+        reload();
+      },
+      onCancel: () => Modal.destroyAll(),
     });
   }
 

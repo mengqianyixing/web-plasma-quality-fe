@@ -143,24 +143,21 @@ export const cellList = [
     label: '保存失败总数',
   },
 ];
-export const importSuccessColumns: BasicColumn[] = [
-  { title: '样本编号', dataIndex: 'sampleNo', width: 120 },
-  { title: '浆员编号', dataIndex: 'donorNo', width: 120 },
-  { title: '浆员姓名', dataIndex: 'name', width: 100 },
+export const importSuccessColumns = [
+  { title: '样本编号', field: 'sampleNo' },
+  { title: '浆员编号', field: 'donorNo' },
+  { title: '浆员姓名', field: 'name' },
   {
     title: '血浆类型',
-    dataIndex: 'plasmaType',
-    customRender: ({ record }) => {
-      return PlasmaType(record.plasmaType);
-    },
-    width: 80,
+    field: 'plasmaType',
+    formatter: (record) => PlasmaType(record.plasmaType),
   },
-  { title: '效价结果', dataIndex: 'conclusion', width: 100 },
-  { title: '检测日期', dataIndex: 'checkAt', width: 100 },
-  { title: '效价结果值', dataIndex: 'titerResult', width: 100 },
+  { title: '效价结果', field: 'conclusion' },
+  { title: '检测日期', field: 'checkAt' },
+  { title: '效价结果值', field: 'titerResult' },
 ];
 
-export const importFailColumns: BasicColumn[] = [
-  { title: '无法保存数据', dataIndex: 'unsavedData' },
-  { title: '备注', dataIndex: 'notes' },
+export const importFailColumns = [
+  { title: '无法保存数据', field: 'unsavedData' },
+  { title: '备注', field: 'notes' },
 ];

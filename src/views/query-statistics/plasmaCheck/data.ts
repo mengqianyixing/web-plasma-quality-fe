@@ -16,6 +16,14 @@ export const checkKey = 'check';
 export const bagCountKey = 'bagCount';
 export const numKey = 'num';
 export const ratioKey = 'ratio';
+export const dateKey = [
+  'verificationBegin',
+  'verificationEnd',
+  'acceptBegin',
+  'acceptEnd',
+  'issueBegin',
+  'issueEnd',
+];
 
 export const checkColumns: BasicColumn[] = [
   {
@@ -205,16 +213,9 @@ export const searchFormSchema: FormSchema[] = [
       options: stationOptions,
     },
   },
+
   {
-    field: '[batchNoBegin, batchNoEnd]',
-    component: 'InputRange',
-    label: '血浆批号',
-    componentProps: {
-      isBetween: false,
-    },
-  },
-  {
-    field: '[verificationBegin,verificationEnd]',
+    field: '[' + dateKey[0] + ',' + dateKey[1] + ']',
     component: 'RangePicker',
     label: '验收发布日期',
     componentProps: {
@@ -223,12 +224,29 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '[acceptBegin,acceptEnd]',
+    field: '[' + dateKey[2] + ',' + dateKey[3] + ']',
     component: 'RangePicker',
     label: '接收日期',
     componentProps: {
       class: 'w-full',
       valueFormat: 'YYYY-MM-DD',
+    },
+  },
+  {
+    field: '[' + dateKey[4] + ',' + dateKey[5] + ']',
+    component: 'RangePicker',
+    label: '检测发布日期',
+    componentProps: {
+      class: 'w-full',
+      valueFormat: 'YYYY-MM-DD',
+    },
+  },
+  {
+    field: '[batchNoBegin, batchNoEnd]',
+    component: 'InputRange',
+    label: '血浆批号',
+    componentProps: {
+      isBetween: false,
     },
   },
   {
@@ -255,15 +273,6 @@ export const searchFormSchema: FormSchema[] = [
       api: getDilutionTypeApi,
       labelField: 'key',
       valueField: 'value',
-    },
-  },
-  {
-    field: '[issueBegin,issueEnd]',
-    component: 'RangePicker',
-    label: '检测发布日期',
-    componentProps: {
-      class: 'w-full',
-      valueFormat: 'YYYY-MM-DD',
     },
   },
 ];

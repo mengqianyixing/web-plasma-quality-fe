@@ -36,6 +36,7 @@ export const columns: BasicColumn[] = [
     title: '操作内容',
     dataIndex: 'optContent',
     ellipsis: false,
+    align: 'left',
   },
 ];
 

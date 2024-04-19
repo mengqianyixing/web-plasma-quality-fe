@@ -45,24 +45,24 @@
       <CellWapper :data="cellData" cell-width="33%" :cell-list="cellList" :gap="0" />
       <div class="flex-1 mt-8px">
         <div class="h-6/10">
-          <BasicTable @register="registerTable" />
+          <vxe-grid v-bind="topTableOptions" :data="dataSource.dataSaved" />
         </div>
         <div class="h-4/10">
-          <BasicTable @register="registerFailTable" />
+          <vxe-grid v-bind="bottomTableOptions" :data="dataSource.dataFaild" />
         </div>
       </div>
     </div>
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { BasicTable, useTable } from '@/components/Table';
   import { CellWapper } from '@/components/CellWapper';
   import { importSuccessColumns, importFailColumns, cellList } from './data';
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { ref, reactive } from 'vue';
+  import { ref, reactive, markRaw } from 'vue';
   import { Upload as AUpload, message } from 'ant-design-vue';
   import { uploadItemTiter } from '@/api/inspect/resultRegistration';
   import { PostApiCoreLabRegistrationTiterUploadResponse } from '@/api/type/inspectManage';
+  import { VxeGridProps } from 'vxe-table';
 
   const fileList = ref<File[]>([]);
   const loading = ref(false);
@@ -84,48 +84,71 @@
     dataSaved: PostApiCoreLabRegistrationTiterUploadResponse['dataSaved'];
     dataFaild: PostApiCoreLabRegistrationTiterUploadResponse['dataFaild'];
   }>({
-    dataSaved: [],
-    dataFaild: [],
+    dataSaved: markRaw([]),
+    dataFaild: markRaw([]),
   });
 
   defineOptions({ name: 'ImportModal' });
-
-  const [registerTable, { reload: reloadSaved }] = useTable({
-    api: () => Promise.resolve({ result: dataSource.dataSaved }),
-    fetchSetting: {
-      listField: 'result',
+  const topTableOptions = reactive<VxeGridProps<any>>({
+    border: true,
+    height: '280px',
+    showOverflow: true,
+    exportConfig: {},
+    columnConfig: {
+      resizable: true,
     },
-    immediate: false,
-    pagination: false,
+    scrollY: {
+      enabled: true,
+      gt: 0,
+    },
+    pagerConfig: {
+      enabled: false,
+    },
+    formConfig: {
+      enabled: false,
+    },
+    toolbarConfig: {
+      refresh: false,
+      loading: false,
+      export: false,
+      custom: false,
+    },
     columns: importSuccessColumns,
-    size: 'small',
-    useSearchForm: false,
-    showIndexColumn: false,
-    showTableSetting: false,
-    bordered: true,
-    isCanResizeParent: true,
+    showFooter: false,
   });
-  const [registerFailTable, { reload: reloadFaild }] = useTable({
-    api: () => Promise.resolve({ result: dataSource.dataFaild }),
-    fetchSetting: {
-      listField: 'result',
+  const bottomTableOptions = reactive<VxeGridProps<any>>({
+    border: true,
+    height: '280px',
+    showOverflow: true,
+    exportConfig: {},
+    columnConfig: {
+      resizable: true,
     },
-    immediate: false,
-    isCanResizeParent: true,
+    scrollY: {
+      enabled: true,
+      gt: 0,
+    },
+    pagerConfig: {
+      enabled: false,
+    },
+    formConfig: {
+      enabled: false,
+    },
+    toolbarConfig: {
+      refresh: false,
+      loading: false,
+      export: false,
+      custom: false,
+    },
     columns: importFailColumns,
-    size: 'small',
-    pagination: false,
-    useSearchForm: false,
-    showTableSetting: false,
-    bordered: true,
+    showFooter: false,
   });
+
   const [registerModal] = useModalInner(({ projectId, bsNo }) => {
     pid.value = projectId;
     bsno.value = bsNo;
-    dataSource.dataFaild.splice(0, dataSource.dataFaild.length);
-    dataSource.dataSaved.splice(0, dataSource.dataSaved.length);
-    reloadSaved();
-    reloadFaild();
+    dataSource.dataFaild = [];
+    dataSource.dataSaved = [];
     for (const key in cellData.value) {
       cellData.value[key] = '';
     }
@@ -143,10 +166,8 @@
         if (key === 'filename') continue;
         cellData.value[key] = summary[key];
       }
-      dataSource.dataFaild.splice(0, dataSource.dataFaild.length, ...dataFaild);
-      dataSource.dataSaved.splice(0, dataSource.dataSaved.length, ...dataSaved);
-      reloadSaved();
-      reloadFaild();
+      dataSource.dataFaild = markRaw(dataFaild || []);
+      dataSource.dataSaved = markRaw(dataSaved || []);
       message.success('导入成功');
     } finally {
       loading.value = false;
