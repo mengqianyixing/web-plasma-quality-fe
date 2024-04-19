@@ -139,6 +139,11 @@
   }
 
   async function handleLabelPrint() {
+    if (!selectedRowsRef.value.length) {
+      createMessage.warn('请选择一条记录');
+      return;
+    }
+
     const res = await getPrintRecord({
       labelType: 'UQF_BOX',
       bissNo: selectedRowsRef.value[0].boxNo,
