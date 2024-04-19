@@ -6,6 +6,7 @@
     :footer="null"
     width="100%"
     :draggable="false"
+    :destroyOnClose="true"
     :closeFunc="handleCloseFunc"
     defaultFullscreen
     :canFullscreen="false"
