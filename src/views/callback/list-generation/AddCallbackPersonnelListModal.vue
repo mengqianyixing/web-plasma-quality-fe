@@ -4,18 +4,14 @@
     @register="register"
     :title="getTitle"
     width="85%"
-    :min-height="650"
+    :min-height="680"
     showFooter
     @ok="handleOk"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <div class="absolute w-full h-full">
-        <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
+      <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
 
-        <div class="flex-1 shrink-1">
-          <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData" />
-        </div>
-      </div>
+      <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData" />
     </div>
   </BasicModal>
 </template>
