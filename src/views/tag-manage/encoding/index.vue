@@ -42,7 +42,7 @@
   const [registerTable, { reload }] = useTable({
     api: getEncodingRules,
     columns,
-    clickToRowSelect: false,
+    clickToRowSelect: true,
     size: 'small',
     striped: false,
     useSearchForm: false,
