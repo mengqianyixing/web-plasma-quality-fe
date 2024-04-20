@@ -28,6 +28,7 @@
       const row = getCountRow(res);
       return [...res, row];
     },
+    immediate: false,
   });
   function getCountRow(data: Recordable[]) {
     const row = columns.reduce((row, { dataIndex, children = [] }) => {

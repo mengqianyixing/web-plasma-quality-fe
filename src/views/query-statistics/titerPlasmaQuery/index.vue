@@ -65,6 +65,7 @@
       const row = getCountRow(formatData);
       return [...formatData, row];
     },
+    immediate: false,
   });
   function cellClick(slotName: string, data: Recordable) {
     const [rawImm, titerLevel] = slotName.split('');
