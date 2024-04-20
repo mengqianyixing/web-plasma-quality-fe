@@ -89,7 +89,6 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-
     rowKey: 'tagNo',
     rowSelection: {
       type: 'radio',

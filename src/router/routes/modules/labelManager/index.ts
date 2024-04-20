@@ -48,6 +48,15 @@ const labelManager: AppRouteModule = {
       id: 890030,
       component: () => import('@/views/tag-manage/print-record/index.vue'),
     },
+    {
+      path: 'replay',
+      name: 'TagReplay',
+      meta: {
+        title: '标签补打',
+      },
+      id: 890040,
+      component: () => import('@/views/tag-manage/replay/index.vue'),
+    },
   ],
 };
 export default labelManager;
