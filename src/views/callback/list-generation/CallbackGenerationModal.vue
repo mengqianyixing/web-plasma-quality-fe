@@ -5,28 +5,22 @@
     :title="getTitle"
     showFooter
     width="85%"
-    :min-height="650"
+    :min-height="680"
     @close="handleCancel"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <div class="absolute w-full h-full">
-        <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
+      <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
 
-        <div class="flex-1 shrink-1">
-          <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData">
-            <template #toolbar>
-              <div class="h-40px bg-#ffffff mt-2 flex items-center">
-                <a-button type="primary" @click="handleAdd" class="absolute right-20">
-                  新增
-                </a-button>
-                <a-button type="primary" @click="handleDelete" class="absolute right-2">
-                  撤销
-                </a-button>
-              </div>
-            </template>
-          </vxe-grid>
-        </div>
-      </div>
+      <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData">
+        <template #toolbar>
+          <div class="h-40px bg-#ffffff mt-2 flex items-center">
+            <a-button type="primary" @click="handleAdd" class="absolute right-20"> 新增 </a-button>
+            <a-button type="primary" @click="handleDelete" class="absolute right-2">
+              撤销
+            </a-button>
+          </div>
+        </template>
+      </vxe-grid>
     </div>
 
     <template #footer>

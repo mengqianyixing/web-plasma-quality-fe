@@ -3,6 +3,7 @@ import { BasicColumn } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { useStation } from '@/hooks/common/useStation';
+import dayjs from 'dayjs';
 
 const { stationOptions } = useStation();
 
@@ -121,6 +122,7 @@ export const searchFormSchema: FormSchema[] = [
     field: '[collectBeginAt,collectEndAt]',
     component: 'RangePicker',
     label: '采集日期',
+    defaultValue: [dayjs().subtract(1, 'year'), dayjs()],
     componentProps: {
       class: 'w-full',
       valueFormat: 'YYYY-MM-DD',

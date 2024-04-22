@@ -48,6 +48,24 @@ const nonconformity: AppRouteModule = {
         title: '不合格库房箱',
       },
       component: () => import('@/views/nonconformity/boxes/index.vue'),
+      authElements: [
+        {
+          id: NonconformityButtonEnum.BoxAdd,
+          title: '新增',
+        },
+        {
+          id: NonconformityButtonEnum.BoxEdit,
+          title: '编辑',
+        },
+        {
+          id: NonconformityButtonEnum.BoxDelete,
+          title: '撤销',
+        },
+        {
+          id: NonconformityButtonEnum.BoxPrint,
+          title: '标签打印',
+        },
+      ],
     },
     {
       path: 'plasma-manage',

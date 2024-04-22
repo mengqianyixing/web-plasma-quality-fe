@@ -651,7 +651,7 @@ export interface PostApiCoreBagUnqualifiedPickBatchResponse {}
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `POST /api/core/bag/unqualified/verify`
- * @更新时间 `2024-04-18 14:50:52`
+ * @更新时间 `2024-04-18 14:51:25`
  */
 export interface PostApiCoreBagUnqualifiedVerifyRequest {
   /**
@@ -683,7 +683,7 @@ export interface PostApiCoreBagUnqualifiedVerifyRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `POST /api/core/bag/unqualified/verify`
- * @更新时间 `2024-04-18 14:50:52`
+ * @更新时间 `2024-04-18 14:51:25`
  */
 export type PostApiCoreBagUnqualifiedVerifyResponse = null;
 

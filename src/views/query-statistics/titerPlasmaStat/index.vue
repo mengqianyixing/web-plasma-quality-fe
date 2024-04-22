@@ -35,6 +35,7 @@
       const row = getCountRow(formatData);
       return [...formatData, row];
     },
+    immediate: false,
   });
 
   function getCountRow(data: Recordable[]) {

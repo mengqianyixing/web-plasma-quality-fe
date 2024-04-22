@@ -3,14 +3,14 @@
     <BasicTable @register="registerTable">
       <template #prepareNo="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="clickPrepareNo(record)">
+          <a-button type="link" @click.stop="clickPrepareNo(record)">
             {{ record?.prepareNo }}
           </a-button>
         </div>
       </template>
       <template #batchCount="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="goPickBatchDetail(record)">
+          <a-button type="link" @click.stop="goPickBatchDetail(record)">
             {{ record.summary?.batchCount }}
           </a-button>
           <!-- <span @click="goPickBatchDetail(record)">
@@ -30,7 +30,7 @@
       </template>
       <template #prodBagCount="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="goPlasmaDetail(record, 'prepareProduce')">
+          <a-button type="link" @click.stop="goPlasmaDetail(record, 'prepareProduce')">
             {{ record.summary?.prodBagCount }}
           </a-button>
           <!-- <span>
@@ -173,6 +173,7 @@
       title: '挑浆模式',
       dataIndex: 'pickMode',
       resizable: true,
+      width: 150,
       format(text) {
         return `${pickModeMap.get(text as pickModeValueEnum)}`;
       },
@@ -211,6 +212,7 @@
       title: '投产血浆净重(kg)',
       resizable: true,
       dataIndex: 'netWeight',
+      width: 150,
       customRender: ({ record }) => {
         if (record.summary && record.summary.netWeight !== null) {
           return record.summary.netWeight;
@@ -233,11 +235,13 @@
     {
       title: '准备人',
       dataIndex: 'creator',
+      width: 80,
       resizable: true,
     },
     {
       title: '准备日期',
       resizable: true,
+      width: 150,
       dataIndex: 'createAt',
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD') : '-';
@@ -358,7 +362,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    clickToRowSelect: false,
+    clickToRowSelect: true,
     rowSelection: {
       type: 'radio',
       onChange: (_, selectedRows: any) => {

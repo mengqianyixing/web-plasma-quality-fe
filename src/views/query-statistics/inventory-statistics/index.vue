@@ -208,7 +208,7 @@
     quarantineBatchControlRes.value = await getSysParamsByParamKey(
       SysParamsEnum.QuarantineBatchControl,
     );
-    await reloadTable();
+    // await reloadTable();
   });
 </script>
 <style scoped>
