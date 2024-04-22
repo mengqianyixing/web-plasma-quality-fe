@@ -149,6 +149,11 @@ export enum QualityButtonEnum {
 }
 
 export enum NonconformityButtonEnum {
+  BoxAdd = 'E_92001001',
+  BoxEdit = 'E_92001002',
+  BoxDelete = 'E_92001003',
+  BoxPrint = 'E_92001004',
+
   PlasmaOutAdd = 'E_92003001',
   PlasmaOutUpdate = 'E_92003002',
   PlasmaOutRemove = 'E_92003003',
