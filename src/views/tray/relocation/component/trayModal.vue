@@ -47,12 +47,12 @@
       totalField: 'totalCount',
     },
     formConfig: {
-      schemas: formSchema,
+      schemas: formSchema.slice(0, 1),
     },
     immediate: false,
     rowKey: 'trayNo',
     columns: columns,
-    useSearchForm: false,
+    useSearchForm: true,
     bordered: true,
     beforeFetch: (params) => {
       return { ...params, ...state.params };
