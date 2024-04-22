@@ -40,6 +40,7 @@ export const columns: BasicColumn[] = [
         width: 120,
         title: '试剂批号',
         dataIndex: ['B', 'reagentBatch'],
+        ellipsis: false,
       },
       {
         width: 70,
@@ -96,6 +97,7 @@ export const columns: BasicColumn[] = [
         width: 120,
         title: '试剂批号',
         dataIndex: ['R', 'reagentBatch'],
+        ellipsis: false,
       },
       {
         width: 70,
@@ -153,6 +155,7 @@ export const columns: BasicColumn[] = [
         width: 120,
         title: '试剂批号',
         dataIndex: ['T', 'reagentBatch'],
+        ellipsis: false,
       },
       {
         width: 80,

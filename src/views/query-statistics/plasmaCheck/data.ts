@@ -25,7 +25,7 @@ export const dateKey = [
   'issueEnd',
 ];
 
-export const checkColumns: BasicColumn[] = [
+export const checkColumns: (customRender: Function) => BasicColumn[] = (customRender) => [
   {
     width: 70,
     title: '采浆公司',
@@ -71,6 +71,13 @@ export const checkColumns: BasicColumn[] = [
         width: 70,
         title: '合计',
         dataIndex: [exteriorKey, numKey],
+        customRender: ({ record }) =>
+          customRender({
+            record,
+            key: [exteriorKey, numKey].join('.'),
+            label: '外观验收不合格合计',
+            type: '1',
+          }),
       },
       {
         width: 70,
@@ -88,6 +95,13 @@ export const checkColumns: BasicColumn[] = [
         width: 70,
         title: '合计',
         dataIndex: [checkUnKey, numKey],
+        customRender: ({ record }) =>
+          customRender({
+            record,
+            key: [checkUnKey, numKey].join('.'),
+            label: '检测不合格合计',
+            type: 2,
+          }),
       },
       {
         width: 70,
@@ -101,6 +115,8 @@ export const checkColumns: BasicColumn[] = [
     width: 140,
     title: '其他血浆不合格',
     dataIndex: 'other',
+    customRender: ({ record }) =>
+      customRender({ record, key: 'other', label: '其他血浆不合格', type: 3 }),
   },
 ];
 

@@ -10,6 +10,7 @@ import {
 enum Api {
   LIST = '/api/core/lab/samples',
   DT = '/api/core/lab/samples/lab/item',
+  UN_DT = '/api/core/lab/samples/lab/unqualified/item',
 }
 
 export const getListApi = (params: PostApiCoreLabSamplesRequest) =>
@@ -17,3 +18,6 @@ export const getListApi = (params: PostApiCoreLabSamplesRequest) =>
 
 export const getDtApi = (params: PostApiCoreLabSamplesLabItemRequest) =>
   defHttp.post<PostApiCoreLabSamplesLabItemResponse>({ url: Api.DT, params });
+
+export const getUnDtApi = (params: PostApiCoreLabSamplesLabItemRequest) =>
+  defHttp.get<PostApiCoreLabSamplesLabItemResponse>({ url: Api.UN_DT, params });
