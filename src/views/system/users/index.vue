@@ -45,16 +45,18 @@
     deleteCasDoorUser,
     getCasDoorUserDetail,
     getCasDoorUsers,
-    setCasDoorUserPwd,
+    resetCasDoorUserPwd,
   } from '@/api/oauth/users';
   import { Modal } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
-
+  import { useMessage } from '@/hooks/web/useMessage';
   import { useModal } from '@/components/Modal';
   import UsersModal from './UsersModal.vue';
   import UsersDetailModal from './UsersDetailModal.vue';
 
-  import { columns, searchFormSchema, initPassword } from './users.data';
+  import { columns, searchFormSchema } from './users.data';
+
+  const { createMessage } = useMessage();
 
   defineOptions({ name: 'Users' });
 
@@ -111,11 +113,8 @@
     Modal.confirm({
       content: '确认重置账号【' + record.name + '】的密码?',
       onOk: async () => {
-        setCasDoorUserPwd({
-          newPassword: initPassword,
-          reNewPassword: initPassword,
-          userName: record.name,
-        });
+        await resetCasDoorUserPwd({ userName: record.name });
+        createMessage.success('重置密码成功！');
         reload();
       },
       onCancel: () => Modal.destroyAll(),

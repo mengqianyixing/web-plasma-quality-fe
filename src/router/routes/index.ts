@@ -91,6 +91,15 @@ export const LoginRoute: AppRouteRecordRaw = {
   },
 };
 
+export const ModifyPasswordRoute: AppRouteRecordRaw = {
+  path: '/modifypassword',
+  name: 'ModifyPassword',
+  component: () => import('@/views/sys/modifyPassword/index.vue'),
+  meta: {
+    title: '修改密码',
+  },
+};
+
 // Basic routing without permission
 // 未经许可的基本路由
 export const basicRoutes = [
@@ -99,4 +108,5 @@ export const basicRoutes = [
   ...mainOutRoutes,
   REDIRECT_ROUTE,
   PAGE_NOT_FOUND_ROUTE,
+  ModifyPasswordRoute,
 ];
