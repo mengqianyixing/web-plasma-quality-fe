@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2024-03-05 17:59:26`
+ * @更新时间 `2024-04-22 17:10:15`
  */
 export interface GetApiCoreBankTraiesRequest {
   /**
@@ -51,6 +51,22 @@ export interface GetApiCoreBankTraiesRequest {
    * 血浆箱号
    */
   boxNo?: string;
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+  /**
+   * 是否在库，0表示不在库，1表示在库
+   */
+  inBank?: string;
+  /**
+   * 查询业务流程节点，plasmaVerify表示血浆验收阶段查询托盘列表
+   */
+  queryFlow?: string;
+  /**
+   * 标识出库列表还是入库列表，"out"表示查询待验收的血浆所在的出库托盘列表，"in"表示查询已验收的血浆所在的入库托盘列表
+   */
+  inOut?: string;
 }
 
 /**
@@ -58,7 +74,7 @@ export interface GetApiCoreBankTraiesRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2024-03-05 17:59:26`
+ * @更新时间 `2024-04-22 17:10:15`
  */
 export interface GetApiCoreBankTraiesResponse {
   /**

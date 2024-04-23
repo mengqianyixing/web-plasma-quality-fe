@@ -13,6 +13,10 @@ export const columns: BasicColumn[] = [
     width: 150,
   },
   {
+    title: '血浆数量',
+    dataIndex: 'bagNum',
+  },
+  {
     title: '申请原因',
     dataIndex: 'reason',
     width: 200,

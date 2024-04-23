@@ -216,6 +216,8 @@ export enum StockOutButtonEnum {
   NonPutIntoCheck = 'E_91006008',
   NonPutIntoCancelCheck = 'E_91006009',
   NonPutIntoScan = 'E_91006010',
+  NonPlasmaTransferRecordReport = 'E_91006011',
+  PlasmaTransferApplyReport = 'E_91006012',
 
   PlasmaSummaryPlasmaSummaryReport = 'E_91007001',
   PlasmaSummaryPlasmaTrackUnqReport = 'E_91007002',

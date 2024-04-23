@@ -5,10 +5,12 @@
     title="按箱接收列表"
     showFooter
     width="85%"
+    :min-height="650"
     :showOkBtn="false"
-    @cancel="emit('success')"
+    :cancelText="'关闭'"
+    @cancel="handleClose"
   >
-    <div class="flex items-center gap-2 w-[300px]">
+    <div class="flex items-center gap-1 w-[300px]">
       <span class="w-[80px]">箱号：</span>
       <a-input
         ref="inputRef"
@@ -19,24 +21,33 @@
         v-model:value="inputValue"
       />
     </div>
-    <div class="flex mt-3">
-      <BasicTable @register="registerReceptionTable" :title="receptionTitle" />
-      <BasicTable @register="registerAcceptedTable" :title="acceptedTitle" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full flex h-full">
+        <div class="flex-1 shrink-1">
+          <BasicTable @register="registerReceptionTable" :title="receptionTitle" />
+        </div>
+
+        <div class="flex-1 shrink-1">
+          <BasicTable @register="registerAcceptedTable" :title="acceptedTitle" />
+        </div>
+      </div>
     </div>
   </BasicModal>
 </template>
 <script lang="ts" setup>
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { ref, computed, watchEffect, nextTick } from 'vue';
+  import { ref, computed, watch } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
   import { useMessage } from '@/hooks/web/useMessage';
-  import { useFocus } from '@vueuse/core';
+  import { useScanHelper } from '@/hooks/common/useScanHelper';
+  import { debounce } from 'lodash-es';
 
   import {
     getAcceptedReceptionList,
     getReceptionList,
     productionAcceptByBox,
   } from '@/api/stockout/production-put-into';
+  import { RemoveEventFn } from '@/hooks/event/useEventListener';
 
   const orderNo = ref('');
   const inputDisabled = ref(false);
@@ -45,10 +56,14 @@
   const emit = defineEmits(['success', 'register']);
   const { createMessage } = useMessage();
   const inputRef = ref<HTMLElement | null>(null);
-  const { focused } = useFocus(inputRef);
-  watchEffect(() => {
-    if (!focused.value) {
-      focused.value = true;
+
+  const { barCode, startEvent, enterFlag } = useScanHelper();
+  const _handleEnter = debounce(handleEnter, 300);
+
+  watch([barCode, enterFlag], async ([code, flag]) => {
+    if (code && flag) {
+      inputValue.value = code;
+      await _handleEnter();
     }
   });
 
@@ -92,8 +107,9 @@
     indexColumnProps: {
       width: 80,
     },
+    inset: false,
+    isCanResizeParent: true,
     immediate: false,
-    canResize: false,
   });
   const [registerAcceptedTable, { reload: reloadAccepted }] = useTable({
     api: getAcceptedReceptionList,
@@ -130,10 +146,16 @@
     indexColumnProps: {
       width: 80,
     },
+    inset: false,
+    isCanResizeParent: true,
     immediate: false,
-    canResize: false,
   });
-  const [register, { setModalProps }] = useModalInner((data) => {
+
+  let _removeEvent: RemoveEventFn = () => {};
+  const [register, { setModalProps, closeModal }] = useModalInner((data) => {
+    const { removeEvent } = startEvent();
+    _removeEvent = removeEvent;
+
     setModalProps({
       maskClosable: false,
     });
@@ -151,6 +173,10 @@
     inputDisabled.value = true;
 
     try {
+      setModalProps({
+        loading: true,
+      });
+
       await productionAcceptByBox({
         orderNo: orderNo.value,
         boxNo: inputValue.value,
@@ -158,13 +184,20 @@
 
       createMessage.success('接收成功');
     } finally {
+      setModalProps({
+        loading: false,
+      });
+
       inputValue.value = '';
       inputDisabled.value = false;
-      await nextTick(() => {
-        inputRef.value?.focus();
-      });
 
       reloadTable();
     }
+  }
+
+  function handleClose() {
+    _removeEvent();
+    closeModal();
+    emit('success');
   }
 </script>

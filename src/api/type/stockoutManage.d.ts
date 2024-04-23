@@ -1271,7 +1271,7 @@ export interface PostApiCoreBankDeliverNonproductiveResponse {}
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive`
- * @更新时间 `2024-02-29 14:27:12`
+ * @更新时间 `2024-04-22 16:52:29`
  */
 export interface GetApiCoreBankDeliverNonproductiveRequest {
   pageSize: string;
@@ -1299,7 +1299,7 @@ export interface GetApiCoreBankDeliverNonproductiveRequest {
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive`
- * @更新时间 `2024-02-29 14:27:12`
+ * @更新时间 `2024-04-22 16:52:29`
  */
 export interface GetApiCoreBankDeliverNonproductiveResponse {
   totalCount?: number;
@@ -1311,6 +1311,10 @@ export interface GetApiCoreBankDeliverNonproductiveResponse {
      * 申请单号
      */
     dlvNo: string;
+    /**
+     * 血浆数量
+     */
+    bagNum: string;
     /**
      * 申请原因
      */
