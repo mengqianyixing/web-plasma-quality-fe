@@ -311,6 +311,16 @@ const nonconformity: AppRouteModule = {
           name: 'scan',
           title: '扫描出库',
         },
+        {
+          id: StockOutButtonEnum.NonPlasmaTransferRecordReport,
+          name: 'nonPlasmaTransferRecord',
+          title: '非生产用血浆转移记录',
+        },
+        {
+          id: StockOutButtonEnum.PlasmaTransferApplyReport,
+          name: 'plasmaTransferApply',
+          title: '原料血浆转移申请表',
+        },
       ],
     },
     {
