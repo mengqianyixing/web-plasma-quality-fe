@@ -251,3 +251,14 @@ export enum SearchManager {
 
   CallbackBatchExport = 'E_90002601',
 }
+
+export enum TagManageButtonEnum {
+  TagStyleAdd = 'E_89001001',
+  TagStyleEdit = 'E_89001002',
+  TagStyleDelete = 'E_89001003',
+  TagStyleCopy = 'E_89001004',
+  TagStyleHistory = 'E_89001005',
+  TagStylePreview = 'E_89001006',
+  TagStyleOpen = 'E_89001007',
+  TagStyleClose = 'E_89001008',
+}

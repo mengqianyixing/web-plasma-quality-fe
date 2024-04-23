@@ -9,6 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import { TagManageButtonEnum } from '@/enums/authCodeEnum';
 
 const labelManager: AppRouteModule = {
   path: '/tag-manage',
@@ -29,6 +30,40 @@ const labelManager: AppRouteModule = {
       },
       id: 890010,
       component: () => import('@/views/tag-manage/style/index.vue'),
+      authElements: [
+        {
+          id: TagManageButtonEnum.TagStyleAdd,
+          title: '新增',
+        },
+        {
+          id: TagManageButtonEnum.TagStyleEdit,
+          title: '编辑',
+        },
+        {
+          id: TagManageButtonEnum.TagStyleDelete,
+          title: '撤销',
+        },
+        {
+          id: TagManageButtonEnum.TagStyleCopy,
+          title: '复制',
+        },
+        {
+          id: TagManageButtonEnum.TagStyleHistory,
+          title: '历史',
+        },
+        {
+          id: TagManageButtonEnum.TagStylePreview,
+          title: '预览',
+        },
+        {
+          id: TagManageButtonEnum.TagStyleOpen,
+          title: '启用',
+        },
+        {
+          id: TagManageButtonEnum.TagStyleClose,
+          title: '禁用',
+        },
+      ],
     },
     {
       path: 'encoding',
@@ -38,6 +73,7 @@ const labelManager: AppRouteModule = {
       },
       id: 890020,
       component: () => import('@/views/tag-manage/encoding/index.vue'),
+      authElements: [],
     },
     {
       path: 'print-record',
