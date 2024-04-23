@@ -40,7 +40,7 @@ export const formListSchema: FormSchema[] = [
     component: 'Select',
     ifShow: false,
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
   },
   {

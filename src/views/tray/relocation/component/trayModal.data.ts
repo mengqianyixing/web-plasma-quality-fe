@@ -31,7 +31,7 @@ export const columns: BasicColumn[] = [
 
 export const formSchema: FormSchema[] = [
   {
-    field: '',
+    field: 'trayNo',
     component: 'Input',
     label: '托盘编号',
   },

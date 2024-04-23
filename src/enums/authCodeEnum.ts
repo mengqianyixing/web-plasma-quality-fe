@@ -149,6 +149,11 @@ export enum QualityButtonEnum {
 }
 
 export enum NonconformityButtonEnum {
+  BoxAdd = 'E_92001001',
+  BoxEdit = 'E_92001002',
+  BoxDelete = 'E_92001003',
+  BoxPrint = 'E_92001004',
+
   PlasmaOutAdd = 'E_92003001',
   PlasmaOutUpdate = 'E_92003002',
   PlasmaOutRemove = 'E_92003003',
@@ -211,6 +216,8 @@ export enum StockOutButtonEnum {
   NonPutIntoCheck = 'E_91006008',
   NonPutIntoCancelCheck = 'E_91006009',
   NonPutIntoScan = 'E_91006010',
+  NonPlasmaTransferRecordReport = 'E_91006011',
+  PlasmaTransferApplyReport = 'E_91006012',
 
   PlasmaSummaryPlasmaSummaryReport = 'E_91007001',
   PlasmaSummaryPlasmaTrackUnqReport = 'E_91007002',
@@ -243,4 +250,15 @@ export enum SearchManager {
   CallbackExport = 'E_90002501',
 
   CallbackBatchExport = 'E_90002601',
+}
+
+export enum TagManageButtonEnum {
+  TagStyleAdd = 'E_89001001',
+  TagStyleEdit = 'E_89001002',
+  TagStyleDelete = 'E_89001003',
+  TagStyleCopy = 'E_89001004',
+  TagStyleHistory = 'E_89001005',
+  TagStylePreview = 'E_89001006',
+  TagStyleOpen = 'E_89001007',
+  TagStyleClose = 'E_89001008',
 }

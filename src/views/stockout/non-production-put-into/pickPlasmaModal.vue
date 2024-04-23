@@ -117,7 +117,7 @@
           label: '效价类型',
           component: 'Select',
           componentProps: {
-            options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+            options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
           },
         },
       ],

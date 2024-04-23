@@ -3,6 +3,8 @@ import {
   DeleteApiProductOrderRequest,
   GetApiProductOrderOrderNoRequest,
   GetApiProductOrderOrderNoResponse,
+  GetApiSysSnakerTasksOrderIdRequest,
+  GetApiSysSnakerTasksOrderIdResponse,
   PostApiProductOrderRequest,
   PostApiProductOrdersRequest,
   PostApiProductOrdersResponse,
@@ -18,6 +20,7 @@ enum Api {
   AddOrder = '/api/product/order',
   CheckOrder = '/api/product/order/check',
   ReCheckOrder = '/api/product/order/review',
+  GetOrderTasks = '/api/sys/snaker/tasks',
 }
 
 export const getProOrders = (params: PostApiProductOrdersRequest) => {
@@ -62,4 +65,10 @@ export const reCheckProOrder = (params: PutApiProductOrderReviewOrderNoRequest['
 
 export const cancelReCheckProOrder = (params: PutApiProductOrderReviewRequest) => {
   return defHttp.put({ url: Api.ReCheckOrder, params });
+};
+
+export const getProOrderTasks = (params: GetApiSysSnakerTasksOrderIdRequest['orderId']) => {
+  return defHttp.get<GetApiSysSnakerTasksOrderIdResponse>({
+    url: `${Api.GetOrderTasks}/${params}`,
+  });
 };

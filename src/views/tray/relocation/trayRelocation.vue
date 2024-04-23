@@ -93,11 +93,11 @@
     openLocationModal(false);
   }
   async function handleTraySelect(value: string, event: MouseEvent) {
-    openTrayModal(true, { params: { closed: 0 } });
+    openTrayModal(true, { params: { closed: 0, inBank: 1 } });
     if (value && event.type !== 'click') {
       searchTrayInfo(value);
     } else {
-      openTrayModal(true, { params: { closed: 0 } });
+      openTrayModal(true, { params: { closed: 0, inBank: 1 } });
     }
   }
   function trayConfim([{ trayNo }]) {

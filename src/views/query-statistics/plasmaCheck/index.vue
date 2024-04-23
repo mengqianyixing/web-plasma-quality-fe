@@ -35,7 +35,7 @@
   import { PageWrapper } from '@/components/Page';
   import { TabPane, Tabs, message } from 'ant-design-vue';
   import { nextTick, ref } from 'vue';
-  import { cloneDeep } from 'lodash-es';
+  import { cloneDeep, get } from 'lodash-es';
   import { isArray, isObject } from '@/utils/is';
   import {
     getCheckListApi,
@@ -54,9 +54,20 @@
 
   const [registerModal, { openModal }] = useModal();
   const activeKey = ref('0');
-  const CheckColumns = cloneDeep(checkColumns);
+  const CheckColumns = cloneDeep(
+    checkColumns(({ record, key, label, type }) => {
+      if (record.isCount) return get(record, key);
+      return (
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          onClick={() => cellClick(null, label, record, type)}
+        >
+          {get(record, key)}
+        </span>
+      );
+    }),
+  );
   let params = {};
-
   const tabList = [
     {
       api: getCheckListApi,
@@ -261,12 +272,13 @@
     );
     tableList[0][1].setColumns(CheckColumns);
   });
-  function cellClick(failedCode: string, title: string, record: Recordable) {
+  function cellClick(failedCode: string | null, title: string, record: Recordable, type?: string) {
     const { getForm } = tableList[0][1];
     const values = getForm().getFieldsValue();
     openModal(true, {
       failedCode,
       title,
+      type,
       ...values,
       stationNo: record.stationNo,
     });
