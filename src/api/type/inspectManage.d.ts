@@ -2362,11 +2362,31 @@ export type PutApiCoreLabMaterialTemplateDisableIdResponse = string;
  *
  * @分类 [物料预登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5739)
  * @请求头 `POST /api/core/lab/material/templates`
- * @更新时间 `2024-02-21 15:38:29`
+ * @更新时间 `2024-04-23 10:37:26`
  */
 export interface PostApiCoreLabMaterialTemplatesRequest {
   currPage: string;
   pageSize: string;
+  /**
+   *  检测项目
+   */
+  fkProjectId?: string;
+  /**
+   * 检测类型
+   */
+  testType?: string;
+  /**
+   * 物料名称
+   */
+  materialName?: string;
+  /**
+   * 批号
+   */
+  reagentBatch?: string;
+  /**
+   * 状态：停用/启用
+   */
+  materialState?: string;
 }
 
 /**
@@ -2374,7 +2394,7 @@ export interface PostApiCoreLabMaterialTemplatesRequest {
  *
  * @分类 [物料预登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5739)
  * @请求头 `POST /api/core/lab/material/templates`
- * @更新时间 `2024-02-21 15:38:29`
+ * @更新时间 `2024-04-23 10:37:26`
  */
 export interface PostApiCoreLabMaterialTemplatesResponse {
   totalCount: number;

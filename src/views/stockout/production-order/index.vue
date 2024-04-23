@@ -157,7 +157,7 @@
 
   function handleMesClick(record: Recordable) {
     openDetailModal(true, {
-      orderNo: record?.orderNo,
+      ...record,
     });
   }
 
