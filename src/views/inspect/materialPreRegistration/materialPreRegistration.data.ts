@@ -2,6 +2,16 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 import { getListApi } from '@/api/inspect/itemSetting';
 import dayjs, { Dayjs } from 'dayjs';
 
+const testTypeOptions = [
+  {
+    label: '初检',
+    value: 'INI',
+  },
+  {
+    label: '复检',
+    value: 'REI',
+  },
+];
 export const columns: BasicColumn[] = [
   {
     title: '检测项目',
@@ -86,16 +96,7 @@ export const formListSchema: FormSchema[] = [
     label: '检测类型',
     required: true,
     componentProps: {
-      options: [
-        {
-          label: '初检',
-          value: 'INI',
-        },
-        {
-          label: '复检',
-          value: 'REI',
-        },
-      ],
+      options: testTypeOptions,
     },
   },
   {
@@ -138,6 +139,53 @@ export const formListSchema: FormSchema[] = [
     label: '使用截至日期',
     componentProps: {
       class: 'w-full',
+    },
+  },
+];
+
+export const searchSchema: FormSchema[] = [
+  {
+    field: 'fkProjectId',
+    component: 'ApiSelect',
+    label: '检测项目',
+    componentProps: {
+      api: () =>
+        new Promise((rs) => {
+          getListApi({ currPage: 1, pageSize: 100, state: 'NORMAL' }).then((res) => {
+            rs(res.result);
+          });
+        }),
+      labelField: 'projectAbbr',
+      valueField: 'projectId',
+    },
+  },
+  {
+    field: 'testType',
+    component: 'Select',
+    label: '检测类型',
+    componentProps: {
+      options: testTypeOptions,
+    },
+  },
+  {
+    field: 'materialName',
+    component: 'Input',
+    label: '物料名称',
+  },
+  {
+    field: 'reagentBatch',
+    component: 'Input',
+    label: '试剂批号',
+  },
+  {
+    field: 'materialState',
+    component: 'Select',
+    label: '状态',
+    componentProps: {
+      options: [
+        { label: '停用', value: '停用' },
+        { label: '启用', value: '启用' },
+      ],
     },
   },
 ];

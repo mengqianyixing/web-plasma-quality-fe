@@ -75,7 +75,7 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { useModal } from '@/components/Modal';
-  import { columns } from './materialPreRegistration.data';
+  import { columns, searchSchema } from './materialPreRegistration.data';
   import { message, Modal } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import DateFormModal from './dateFormModal.vue';
@@ -121,8 +121,9 @@
     },
     scroll: { x: 0 },
     columns: columns,
+    formConfig: { schemas: searchSchema },
+    useSearchForm: true,
     size: 'small',
-    useSearchForm: false,
     showTableSetting: false,
     bordered: true,
     rowSelection: { type: 'radio' },
