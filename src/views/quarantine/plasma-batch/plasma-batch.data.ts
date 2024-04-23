@@ -37,6 +37,15 @@ export const STATE = {
   },
 };
 
+export const stateMap = {
+  failedBag: 'FAIL',
+  trackedNormalBag: 'QUA',
+  trackedSpecialBag: 'QUA',
+  firstUnTrackedBag: 'FIRST_UNTRACKED',
+  reUnTrackedBag: 'RE_UNTRACKED',
+  unProductionBag: 'UNPRO',
+};
+
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',

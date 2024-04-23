@@ -3216,7 +3216,7 @@ export interface PostApiCoreLabSamplesLabItemResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/lab/bag/check/details`
- * @更新时间 `2024-03-09 14:40:25`
+ * @更新时间 `2024-04-20 19:39:47`
  */
 export interface PostApiCoreLabBagCheckDetailsRequest {
   /**
@@ -3267,9 +3267,13 @@ export interface PostApiCoreLabBagCheckDetailsRequest {
    * 检测发布日期结束
    */
   issueEnd?: string;
-  failedCode: string;
+  failedCode?: string;
   pageSize: string;
   currPage: string;
+  /**
+   * 查询类型:1:外观；2：检测：3：其他
+   */
+  type?: number;
 }
 
 /**
@@ -3277,7 +3281,7 @@ export interface PostApiCoreLabBagCheckDetailsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/lab/bag/check/details`
- * @更新时间 `2024-03-09 14:40:25`
+ * @更新时间 `2024-04-20 19:39:47`
  */
 export interface PostApiCoreLabBagCheckDetailsResponse {
   totalCount: number;
@@ -4008,6 +4012,60 @@ export interface GetApiCoreBankErpOutDetailResponse {
      * 物料编码
      */
     materialNo: string;
+  }[];
+}
+
+/**
+ * 接口 [检测结果查询-检测不合格样本查询↗](https://yapi.sharing8.cn/project/529/interface/api/34356) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/lab/samples/lab/unqualified/item`
+ * @更新时间 `2024-04-20 19:39:39`
+ */
+export interface GetApiCoreLabSamplesLabUnqualifiedItemRequest {
+  filedReason: string;
+  batchNo: string;
+  currPage: string;
+  pageSize: string;
+}
+
+/**
+ * 接口 [检测结果查询-检测不合格样本查询↗](https://yapi.sharing8.cn/project/529/interface/api/34356) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/lab/samples/lab/unqualified/item`
+ * @更新时间 `2024-04-20 19:39:39`
+ */
+export interface GetApiCoreLabSamplesLabUnqualifiedItemResponse {
+  totalCount: number;
+  pageSize: null;
+  totalPage: null;
+  currPage: null;
+  result: {
+    /**
+     * 样本编号
+     */
+    sampleNo: string;
+    /**
+     * 检测项目
+     */
+    batchNo: string;
+    /**
+     * 不合格
+     */
+    sampleType: string;
+    /**
+     * od
+     */
+    donorNo: string;
+    /**
+     * cutoff
+     */
+    filed: string;
+    /**
+     * ct
+     */
+    collectAt: string;
   }[];
 }
 

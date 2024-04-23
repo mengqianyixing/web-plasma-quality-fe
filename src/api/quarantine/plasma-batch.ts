@@ -9,13 +9,16 @@
 // @TODO: [API TYPE] 稳定版后再使用 ytt 统一生成类型声明
 import { defHttp } from '@/utils/http/axios';
 import {
-  GetApiCoreBatchPlasmaReleaseRequest,
-  GetApiCoreBatchPlasmaReleaseResponse,
   GetApiCoreBatchPlasmaReleasesRequest,
   GetApiCoreBatchPlasmaReleasesResponse,
   GetApiCoreBatchPlasmaUnReleasesRequest,
   GetApiCoreBatchPlasmaUnReleasesResponse,
 } from '@/api/type/batchManage';
+
+import {
+  GetApiCoreBatchPlasmaReleaseBagsRequest,
+  GetApiCoreBatchPlasmaReleaseBagsResponse,
+} from '@/api/type/qualityMange';
 
 /**
  * 查询未放行列表
@@ -44,13 +47,13 @@ export const getPlasmaBatchReleases = (params?: GetApiCoreBatchPlasmaReleasesReq
   );
 
 /**
- * 查询放行单详情
+ * 批检疫期报告新增弹窗血浆明细
  * @param params
  * @returns
  */
-export const getPlasmaBatchRelease = (params?: GetApiCoreBatchPlasmaReleaseRequest) =>
-  defHttp.get<GetApiCoreBatchPlasmaReleaseResponse>(
-    { url: '/api/core/batch/plasma/release', params },
+export const getPlasmaBatchReleaseBags = (params?: GetApiCoreBatchPlasmaReleaseBagsRequest) =>
+  defHttp.get<GetApiCoreBatchPlasmaReleaseBagsResponse>(
+    { url: '/api/core/batch/plasma/release/bags', params },
     {
       joinParamsToUrl: true,
     },

@@ -55,11 +55,7 @@
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
-  import {
-    getPlasmaBatchReleases,
-    setPlasmaBatchRelease,
-    getPlasmaBatchRelease,
-  } from '@/api/quarantine/plasma-batch';
+  import { getPlasmaBatchReleases, setPlasmaBatchRelease } from '@/api/quarantine/plasma-batch';
   import { Modal, message } from 'ant-design-vue';
 
   import { useModal } from '@/components/Modal';
@@ -136,13 +132,11 @@
     return rows;
   }
   function handleDetailClick(record: Recordable, type: string, title: any) {
-    getPlasmaBatchRelease({ batchNo: record?.fkBpNo }).then((res) => {
-      openDetailModal(true, {
-        record,
-        ...res,
-        type,
-        title,
-      });
+    console.log(record, type, title);
+    openDetailModal(true, {
+      record,
+      type,
+      title,
     });
   }
 

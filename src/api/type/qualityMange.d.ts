@@ -632,24 +632,6 @@ export type GetApiProductReleaseDetailResponse = {
 }[];
 
 /**
- * 接口 [查询批检疫期报告中的不合格血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33853) 的 **请求类型**
- *
- * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
- * @请求头 `GET /api/core/batch/plasma/release/failed-bag`
- * @更新时间 `2024-03-11 20:23:39`
- */
-export interface GetApiCoreBatchPlasmaReleaseFailedBagRequest {}
-
-/**
- * 接口 [查询批检疫期报告中的不合格血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33853) 的 **返回类型**
- *
- * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
- * @请求头 `GET /api/core/batch/plasma/release/failed-bag`
- * @更新时间 `2024-03-11 20:23:39`
- */
-export interface GetApiCoreBatchPlasmaReleaseFailedBagResponse {}
-
-/**
  * 接口 [取消审核↗](https://yapi.sharing8.cn/project/529/interface/api/33909) 的 **请求类型**
  *
  * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
@@ -721,6 +703,62 @@ export interface GetApiProductReleaseBagFlagsResponse {
     batchNo: string;
     bagCount: string;
     bagNos: string;
+  }[];
+}
+
+/**
+ * 接口 [批检疫期报告新增弹窗血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/34362) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/core/batch/plasma/release/bags`
+ * @更新时间 `2024-04-23 15:04:20`
+ */
+export interface GetApiCoreBatchPlasmaReleaseBagsRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * 批检疫期报告血浆状态不能为空  FIRST_UNTRACKED("首次续追踪"),
+   *     RE_UNTRACKED("反复续追踪"),
+   *     QUA("检疫期合格"),
+   *
+   *     FAIL("不合格"),
+   *     UNPRO("非生产出库");
+   */
+  state: string;
+  /**
+   * 普通传 N 特免 传 null
+   */
+  ImmType?: string;
+  /**
+   * 批报告单号
+   */
+  brNo: string;
+}
+
+/**
+ * 接口 [批检疫期报告新增弹窗血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/34362) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/core/batch/plasma/release/bags`
+ * @更新时间 `2024-04-23 15:04:20`
+ */
+export interface GetApiCoreBatchPlasmaReleaseBagsResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    bagNo?: string;
+    donorNo?: string;
+    donorName?: string;
+    collectAt?: string;
+    netWeight?: number;
+    titerJudge?: string;
+    failedAt?: string;
+    fkFailedCode?: string;
+    pickBy?: string;
+    reviewBy?: string;
+    pickAt?: null;
   }[];
 }
 
