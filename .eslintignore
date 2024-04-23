@@ -14,3 +14,5 @@ dist
 /bin
 Dockerfile
 package.json
+
+src/views/quarantine/plasma-batch/PlasmaBatchDetailModal.vue
