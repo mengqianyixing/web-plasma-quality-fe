@@ -22,10 +22,17 @@
   import { ref, onMounted } from 'vue';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { useTable, BasicTable } from '@/components/Table';
-  import { modalCommonColumns, colMap } from './plasma-batch.data';
+  import { modalCommonColumns, colMap, stateMap } from './plasma-batch.data';
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
+  import { getPlasmaBatchReleaseBags } from '@/api/quarantine/plasma-batch';
 
-  const bagNos = ref<any>([]);
+  interface ParamsObj {
+    state: string;
+    ImmType?: string | null;
+    brNo: string;
+  }
+
+  const paramsObj = <ParamsObj>{};
   const modalTitle = ref<string>('');
   const modalColumns = ref<any[]>([]);
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
@@ -59,26 +66,38 @@
     return unProdReasonDictionary.value?.find((it) => it.id === unqReason)?.label ?? unqReason;
   }
   const [registerTable, { reload }] = useTable({
-    dataSource: bagNos,
+    api: getPlasmaBatchReleaseBags,
     size: 'small',
-    maxHeight: 300,
+    maxHeight: 350,
     columns: modalColumns,
-    pagination: false,
     clickToRowSelect: false,
     rowKey: 'batchNo',
     useSearchForm: false,
     showTableSetting: false,
     bordered: true,
     showIndexColumn: true,
-
     canResize: true,
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    immediate: false,
+    beforeFetch: (p) => {
+      return { ...p, ...paramsObj };
+    },
   });
 
   const [registerModal, { setModalProps }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: false });
     modalTitle.value = data.title + '详情';
     modalColumns.value = [...modalCommonColumns, ...colMap[data.type]];
-    bagNos.value = data.content?.[data.type] || [];
+    paramsObj.state = stateMap[data.type];
+    if (data.type === 'trackedNormalBag' || data.type === 'trackedSpecialBag') {
+      paramsObj.ImmType = data.type === 'trackedNormalBag' ? 'N' : null;
+    }
+    paramsObj.brNo = data.record.brNo;
     await reload();
   });
 </script>
