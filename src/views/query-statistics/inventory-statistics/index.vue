@@ -1,6 +1,6 @@
 <template>
   <div class="root">
-    <PageWrapper dense class="bg-white p-2 mt-2">
+    <PageWrapper dense class="bg-white p-2 mt-2 m-2">
       <BasicForm @register="registerBasicForm" />
     </PageWrapper>
     <a-tabs
@@ -11,7 +11,7 @@
     >
       <a-tab-pane v-for="item in tabListComputed" :key="item.key" :tab="item.label" />
     </a-tabs>
-    <PageWrapper dense contentFullHeight>
+    <PageWrapper dense contentFullHeight class="m-2">
       <BasicTable
         @register="registerTable"
         :columns="currentColumns"
@@ -179,7 +179,7 @@
 
   const [registerBasicForm, { getFieldsValue }] = useForm({
     schemas: searchFormSchema,
-    baseColProps: { flex: '0 0 373px' },
+    baseColProps: { flex: '0 0 400px' },
     actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
     submitFunc: reloadTable,
     submitOnReset: true,
