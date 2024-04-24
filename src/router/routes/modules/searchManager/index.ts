@@ -343,6 +343,12 @@ const trayManager: AppRouteModule = {
       },
       id: 9000330,
       component: () => import('@/views/query-statistics/plasma-qualified-inventory/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.PlasmaQualifiedInventoryExport,
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'plasmaBagCollect',
@@ -352,6 +358,12 @@ const trayManager: AppRouteModule = {
       },
       id: 9000340,
       component: () => import('@/views/query-statistics/plasma-bag-collect/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.PlasmaBagCollectExport,
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'plasmaRawInStorage',
@@ -361,6 +373,12 @@ const trayManager: AppRouteModule = {
       },
       id: 9000350,
       component: () => import('@/views/query-statistics/plasma-raw-in-storage/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.PlasmaRawInStoragePrint,
+          title: '打印',
+        },
+      ],
     },
   ],
 };

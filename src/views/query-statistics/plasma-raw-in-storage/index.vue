@@ -3,7 +3,7 @@
     <div class="h-2/3 mb-50px">
       <BasicTable @register="registerTable">
         <template #toolbar>
-          <a-button type="primary">打印</a-button>
+          <a-button type="primary" v-auth="SearchManager.PlasmaRawInStoragePrint"> 打印 </a-button>
         </template>
       </BasicTable>
     </div>
@@ -30,6 +30,7 @@
 
   import { getPlasmaRawInStorage } from '@/api/query-statistics/plasma';
   import { GetApiCoreBagOutInStorageStatisticResponse } from '@/api/type/queryStatistics';
+  import { SearchManager } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'PlasmaRawInStorage' });
 

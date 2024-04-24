@@ -2,7 +2,14 @@
   <PageWrapper dense contentFullHeight fixedHeight class="root">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
+        <a-button
+          type="primary"
+          @click="handleExport"
+          :loading="loading"
+          v-auth="SearchManager.PlasmaQualifiedInventoryExport"
+        >
+          导出
+        </a-button>
       </template>
     </BasicTable>
   </PageWrapper>
@@ -10,6 +17,7 @@
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './inventory.data';
+  import { SearchManager } from '@/enums/authCodeEnum';
 
   import { getPlasmaQualifiedInventory } from '@/api/query-statistics/plasma';
   import { ref } from 'vue';

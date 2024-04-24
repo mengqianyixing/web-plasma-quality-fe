@@ -92,6 +92,12 @@ const quarantineManager: AppRouteModule = {
       },
       id: 9000110,
       component: () => import('@/views/query-statistics/factoryCheckFail/index.vue'),
+      authElements: [
+        {
+          id: QuarantineButtonEnum.FactoryCheckFailExcel,
+          title: '导出',
+        },
+      ],
     },
     {
       path: '/quarantine/overdue-confirmation',

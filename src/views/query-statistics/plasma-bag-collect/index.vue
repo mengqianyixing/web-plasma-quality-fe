@@ -2,7 +2,14 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
+        <a-button
+          type="primary"
+          @click="handleExport"
+          :loading="loading"
+          v-auth="SearchManager.PlasmaBagCollectExport"
+        >
+          导出
+        </a-button>
       </template>
     </BasicTable>
   </PageWrapper>
@@ -10,6 +17,7 @@
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './collect.data';
+  import { SearchManager } from '@/enums/authCodeEnum';
 
   import { PageWrapper } from '@/components/Page';
   import { getPlasmaBagCollect } from '@/api/query-statistics/plasma';

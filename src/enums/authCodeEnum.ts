@@ -123,6 +123,8 @@ export enum QuarantineButtonEnum {
   PrintQuarantine = 'E_95003004',
 
   NonconformityTrackingReport = 'E_95004001',
+
+  FactoryCheckFailExcel = 'E_900011001',
 }
 
 export enum QualityButtonEnum {
@@ -250,6 +252,12 @@ export enum SearchManager {
   CallbackExport = 'E_90002501',
 
   CallbackBatchExport = 'E_90002601',
+
+  PlasmaQualifiedInventoryExport = 'E_900033001',
+
+  PlasmaBagCollectExport = 'E_900034001',
+
+  PlasmaRawInStoragePrint = 'E_900035001',
 }
 
 export enum TagManageButtonEnum {
