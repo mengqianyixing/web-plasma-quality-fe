@@ -1,5 +1,5 @@
 import type { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams } from '../types/table';
-import type { PaginationProps } from '../types/pagination';
+import type { PaginationProps } from '@/components/Table';
 import type { ComputedRef } from 'vue';
 import { computed, Ref, ref, reactive, toRaw, unref, watch } from 'vue';
 import { renderEditCell } from '../components/editable';
@@ -164,6 +164,12 @@ export function useColumns(
       if ((edit || editRow) && !isDefaultAction) {
         column.customRender = renderEditCell(column);
       }
+
+      //resize the column width
+      if (Reflect.has(column, 'width')) {
+        column.resizable = true;
+      }
+
       return reactive(column);
     };
 

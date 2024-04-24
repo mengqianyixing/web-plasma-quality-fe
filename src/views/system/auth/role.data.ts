@@ -1,4 +1,3 @@
-import { join } from 'node:path';
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
@@ -16,7 +15,6 @@ export const columns: BasicColumn[] = [
     className: 'empty-value',
     width: 200,
   },
-
   {
     title: '用户',
     dataIndex: 'users',

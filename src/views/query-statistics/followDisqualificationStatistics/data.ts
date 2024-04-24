@@ -28,6 +28,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '回访不合格追踪',
+    width: 100,
     children: [
       {
         dataIndex: [backTrackUnqKey, numKey],
@@ -44,6 +45,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '后续供浆检测不合格追踪',
+    width: 100,
     children: [
       {
         dataIndex: [followTrackNumUnqKey, numKey],
@@ -60,6 +62,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '其他无后续信息',
+    width: 100,
     children: [
       {
         dataIndex: [otherNumUnqKey, numKey],

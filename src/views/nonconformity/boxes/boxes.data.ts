@@ -23,7 +23,6 @@ export const columns: BasicColumn[] = [
   {
     title: '存放不合格血浆原因',
     dataIndex: 'unqReason',
-    resizable: true,
     ellipsis: false,
   },
   {
