@@ -8,7 +8,7 @@
     cancelText="关闭"
     width="1000px"
   >
-    <BasicTable @register="registerTable">
+    <BasicTable :columns="modalColumns" @register="registerTable">
       <template #unqReason="{ record }">
         {{ formatUnReason(record?.fkFailedCode) }}
       </template>
@@ -21,7 +21,7 @@
 <script lang="ts" setup>
   import { ref, onMounted } from 'vue';
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { useTable, BasicTable } from '@/components/Table';
+  import { useTable, BasicTable, BasicColumn } from '@/components/Table';
   import { modalCommonColumns, colMap, stateMap } from './plasma-batch.data';
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
   import { getPlasmaBatchReleaseBags } from '@/api/quarantine/plasma-batch';
@@ -32,9 +32,12 @@
     brNo: string;
   }
 
-  const paramsObj = <ParamsObj>{};
+  const paramsObj: ParamsObj = {
+    state: '',
+    brNo: '',
+  };
   const modalTitle = ref<string>('');
-  const modalColumns = ref<any[]>([]);
+  const modalColumns = ref<BasicColumn[]>([]);
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
   const unProdReasonDictionary = ref<Recordable[] | undefined>([]);
 
@@ -69,7 +72,6 @@
     api: getPlasmaBatchReleaseBags,
     size: 'small',
     maxHeight: 350,
-    columns: modalColumns,
     clickToRowSelect: false,
     rowKey: 'batchNo',
     useSearchForm: false,
