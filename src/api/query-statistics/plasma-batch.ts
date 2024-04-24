@@ -9,7 +9,7 @@ import {
 
 enum Api {
   Plasma_Batch_Statistics = '/api/core/batch/plasma/statistic',
-  Plasma_Batch_Quarantine_Statistics = '/api/core/batch/quarantine/statistic',
+  Plasma_Batch_Quarantine_Statistics = '/api/search/batch/quarantine/statistic',
 }
 
 export const getPlasmaBatchList = (params: GetApiCoreBatchPlasmaStatisticRequest) =>
