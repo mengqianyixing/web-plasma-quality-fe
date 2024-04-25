@@ -96,8 +96,10 @@
     modalTitle.value = data.title + '详情';
     modalColumns.value = [...modalCommonColumns, ...colMap[data.type]];
     paramsObj.state = stateMap[data.type];
-    if (data.type === 'trackedNormalBag' || data.type === 'trackedSpecialBag') {
-      paramsObj.ImmType = data.type === 'trackedNormalBag' ? 'N' : null;
+    if (data.type === 'trackedNormalBag') {
+      paramsObj.ImmType = 'N';
+    } else {
+      paramsObj.ImmType && delete paramsObj.ImmType;
     }
     paramsObj.brNo = data.record.brNo;
     await reload();
