@@ -126,13 +126,13 @@ export const formListSchema: FormSchema[] = [
     },
   },
   {
-    field: 'min',
+    field: 'minShow',
     component: 'Input',
     label: '效价最小值(大于等于)',
     defaultValue: null,
   },
   {
-    field: 'max',
+    field: 'maxShow',
     component: 'Input',
     label: '效价最大值(小于)',
     defaultValue: null,
