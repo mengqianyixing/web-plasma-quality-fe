@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" class="tableHeight">
       <template #testCount="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
@@ -65,3 +65,8 @@
     });
   }
 </script>
+<style scoped lang="less">
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
+  }
+</style>

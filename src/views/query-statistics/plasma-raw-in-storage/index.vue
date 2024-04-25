@@ -12,6 +12,7 @@
         @register="registerFooterTable"
         :dataSource="footerTableData"
         :columns="formatFooterColumns"
+        class="tableHeight"
       >
         <template #summary>
           <div class="w-85vw">
@@ -104,4 +105,8 @@
     ];
   }
 </script>
-<style scoped></style>
+<style scoped lang="less">
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
+  }
+</style>

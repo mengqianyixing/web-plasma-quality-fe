@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" />
+    <BasicTable @register="registerTable" class="tableHeight" />
     <TabelModal @register="registerModal" />
   </PageWrapper>
 </template>
@@ -227,3 +227,8 @@
     });
   }
 </script>
+<style scoped lang="less">
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
+  }
+</style>

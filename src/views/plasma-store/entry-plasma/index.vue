@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" class="tableHeight">
       <!-- 采浆编号跳转 -->
       <template #batchNo="{ record }">
         <span
@@ -155,5 +155,9 @@
 <style scoped>
   :deep(.ant-table th) {
     white-space: wrap;
+  }
+
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
   }
 </style>

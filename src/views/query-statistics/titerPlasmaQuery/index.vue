@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" class="tableHeight">
       <template #[slot.slotName]="data" v-for="slot in slots" :key="slot.slotName">
         <span v-if="data.record.isCount">
           {{ get(data.record, slot.key) }}
@@ -109,3 +109,8 @@
     return { ...row, stationName: '合计', batchNo: '批次数：' + data.length + '批', isCount: true };
   }
 </script>
+<style scoped lang="less">
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
+  }
+</style>
