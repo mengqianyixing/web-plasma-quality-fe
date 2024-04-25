@@ -610,7 +610,7 @@ export type DeleteApiSysDictItemAlenceDictItemIdResponse = string;
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
  * @请求头 `GET /api/sys/dict/item/alence/{dictItemId}`
- * @更新时间 `2024-01-12 17:41:21`
+ * @更新时间 `2024-04-25 15:50:26`
  */
 export interface GetApiSysDictItemAlenceDictItemIdRequest {
   dictItemId: string;
@@ -621,7 +621,7 @@ export interface GetApiSysDictItemAlenceDictItemIdRequest {
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
  * @请求头 `GET /api/sys/dict/item/alence/{dictItemId}`
- * @更新时间 `2024-01-12 17:41:21`
+ * @更新时间 `2024-04-25 15:50:26`
  */
 export interface GetApiSysDictItemAlenceDictItemIdResponse {
   dictItemId: string;
@@ -638,6 +638,8 @@ export interface GetApiSysDictItemAlenceDictItemIdResponse {
   priority?: string;
   min?: string;
   max?: string;
+  minShow?: string;
+  maxShow?: string;
 }
 
 /**
@@ -706,6 +708,26 @@ export interface GetApiSysDictItemTiterLevelResponse {
   key: string;
   value: string;
 }
+
+/**
+ * 接口 [根据血浆类型查询有效位数↗](https://yapi.sharing8.cn/project/529/interface/api/34368) 的 **请求类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `GET /api/core/lab/project/priceValidBit/{plasmaType}`
+ * @更新时间 `2024-04-24 15:17:28`
+ */
+export interface GetApiCoreLabProjectPriceValidBitPlasmaTypeRequest {
+  plasmaType: string;
+}
+
+/**
+ * 接口 [根据血浆类型查询有效位数↗](https://yapi.sharing8.cn/project/529/interface/api/34368) 的 **返回类型**
+ *
+ * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
+ * @请求头 `GET /api/core/lab/project/priceValidBit/{plasmaType}`
+ * @更新时间 `2024-04-24 15:17:28`
+ */
+export type GetApiCoreLabProjectPriceValidBitPlasmaTypeResponse = number;
 
 /**
  * 接口 [样品批次查询↗](https://yapi.sharing8.cn/project/529/interface/api/31905) 的 **请求类型**
