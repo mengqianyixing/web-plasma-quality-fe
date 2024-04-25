@@ -66,10 +66,9 @@
       }));
       if (data.dictItemId) {
         const res = await getTitlerTypeDtApi({ dictItemId: data.dictItemId });
-        setFieldsValue(res);
+        setFieldsValue({ ...res, max: res.maxShow, min: res.minShow });
         state.type = '编辑';
         disabledOptions.slice(0, 3).forEach((_) => (_.componentProps.disabled = true));
-        console.log(res);
         handlePlasmaTypeChange(res.plasmaType);
       } else {
         state.type = '新增';

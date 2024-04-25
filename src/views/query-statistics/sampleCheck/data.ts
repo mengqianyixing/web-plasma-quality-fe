@@ -60,8 +60,7 @@ export const columns: BasicColumn[] = [
     width: 100,
     title: '检测不合格',
     dataIndex: 'failed',
-    format: (t: any) => t?.join('、'),
-    ellipsis: false,
+    children: [],
   },
   {
     title: '验收不合格',
@@ -76,7 +75,6 @@ export const columns: BasicColumn[] = [
         title: '样本验收不合格',
         dataIndex: ['verification', 'sample'],
       },
-
       {
         width: 80,
         title: '合计',
