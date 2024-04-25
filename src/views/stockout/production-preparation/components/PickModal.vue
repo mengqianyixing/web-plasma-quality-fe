@@ -62,7 +62,6 @@
   const { success, warning } = createMessage;
 
   const emit = defineEmits(['closePickModal']);
-
   let pickMode = ref(); // 是否为按批挑选
   const pickLoading = ref(false);
   const prepareNo = ref(); // 准备号
@@ -233,7 +232,6 @@
 
   // 关闭弹框前
   function handleCloseFunc() {
-    resetFields();
     setTableData([]);
     setTableDataed([]);
     clearSelectedRowKeys();
@@ -356,7 +354,7 @@
       },
     },
   ];
-  const [registerForm, { updateSchema, getFieldsValue, resetFields, setFieldsValue }] = useForm({
+  const [registerForm, { updateSchema, getFieldsValue, setFieldsValue }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
     schemas: FormSchemas,
