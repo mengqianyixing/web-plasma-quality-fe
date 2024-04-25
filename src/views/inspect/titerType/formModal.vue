@@ -69,7 +69,6 @@
         setFieldsValue(res);
         state.type = '编辑';
         disabledOptions.slice(0, 3).forEach((_) => (_.componentProps.disabled = true));
-        console.log(res);
         handlePlasmaTypeChange(res.plasmaType);
       } else {
         state.type = '新增';

@@ -1,13 +1,13 @@
 import { defHttp } from '@/utils/http/axios';
 
 import {
-  PostApiCoreLabSampleDetailRequest,
-  PostApiCoreLabSampleDetailResponse,
+  GetApiSearchSampleLabRequest,
+  GetApiSearchSampleLabResponse,
 } from '@/api/type/queryStatistics';
 
 enum Api {
-  LIST = '/api/core/lab/sample/detail',
+  LIST = '/api/search/sample/lab',
 }
 
-export const getListApi = (params: PostApiCoreLabSampleDetailRequest) =>
-  defHttp.post<PostApiCoreLabSampleDetailResponse>({ url: Api.LIST, params });
+export const getListApi = (params: GetApiSearchSampleLabRequest) =>
+  defHttp.get<GetApiSearchSampleLabResponse>({ url: Api.LIST, params });

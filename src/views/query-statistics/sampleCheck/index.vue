@@ -3,16 +3,21 @@
     <BasicTable @register="registerTable" />
   </PageWrapper>
 </template>
-<script lang="ts" setup>
+<script lang="tsx" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './data';
   import { PageWrapper } from '@/components/Page';
   import { getListApi } from '@/api/query-statistics/sampleCheck';
   import { isArray, isObject } from '@/utils/is';
+  import {
+    DictionaryItemKeyEnum,
+    DictionaryReasonEnum,
+    getSysSecondaryDictionary,
+  } from '@/api/_dictionary';
 
   defineOptions({ name: 'SampleCheck' });
 
-  const [registerTable] = useTable({
+  const [registerTable, { setColumns, reload }] = useTable({
     api: getListApi,
     columns,
     formConfig: {
@@ -30,6 +35,21 @@
     },
     immediate: false,
   });
+  getSysSecondaryDictionary({
+    dataKey: DictionaryReasonEnum.PlasmaFailedReason as any,
+    dictItemTypes: [DictionaryItemKeyEnum.Test],
+  }).then((res1) => {
+    columns[7].children?.unshift(
+      ...(res1 || []).map((it) => ({
+        dataIndex: ['failed', it.dictItemId],
+        title: it.label,
+        width: it.label.length * 18,
+      })),
+    );
+    setColumns(columns);
+    reload();
+  });
+
   function getCountRow(data: Recordable[]) {
     const row = columns.reduce((row, { dataIndex, children = [] }) => {
       row[dataIndex as string] = 0;
