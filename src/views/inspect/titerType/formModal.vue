@@ -29,13 +29,14 @@
     getTitlerTypeDtApi,
     addTitlerTypeApi,
     updateTitlerTypeApi,
+    getDecimalPlacesApi,
   } from '@/api/inspect/titerType';
   import { isNumber } from '@/utils/is';
 
   const emit = defineEmits(['success', 'register']);
 
   defineOptions({ name: 'FormModel' });
-  const state = reactive({ dictItemId: '', type: '', isRequest: false });
+  const state = reactive({ dictItemId: '', type: '', isRequest: false, decimalPlaces: 1 });
 
   const [
     registerForm,
@@ -68,6 +69,8 @@
         setFieldsValue(res);
         state.type = '编辑';
         disabledOptions.slice(0, 3).forEach((_) => (_.componentProps.disabled = true));
+        console.log(res);
+        handlePlasmaTypeChange(res.plasmaType);
       } else {
         state.type = '新增';
         resetFields();
@@ -88,21 +91,44 @@
           rules: [{ validator: minValidator }],
           componentProps: { onChange: () => validateFields(['max']) },
         },
+        {
+          field: 'plasmaType',
+          componentProps: { onChange: handlePlasmaTypeChange },
+        },
       ]);
       clearValidate();
     },
   );
-  function maxValidator(_, value: number | void) {
+  function isValidNumber(input: string) {
+    const regex = /^-?\d+(\.\d+)?$/;
+    return regex.test(input);
+  }
+  function maxValidator(_, value: string) {
     const { min } = getFieldsValue();
-    if (!isNumber(min) || !isNumber(value)) return Promise.resolve();
-    if (min > value) return Promise.reject('最大值不能小于最小值');
+    if (!value) return Promise.resolve();
+    if (!isValidNumber(value)) return Promise.reject('请输入正确的数值');
+    if (parseFloat(value) < 0) return Promise.reject('不能输入负数');
+    if ((value.split('.')[1] || '').length > state.decimalPlaces)
+      return Promise.reject('请保留' + state.decimalPlaces + '位小数');
+    if (!isValidNumber(min)) return Promise.resolve();
+    if (parseFloat(min) > parseFloat(value)) return Promise.reject('最大值不能小于最小值');
     return Promise.resolve();
   }
-  function minValidator(_, value: number | void) {
+  function minValidator(_, value: string) {
     const { max } = getFieldsValue();
+    if (!value) return Promise.resolve();
+    if (!isValidNumber(value)) return Promise.reject('请输入正确的数值');
+    if (parseFloat(value) < 0) return Promise.reject('不能输入负数');
+    if ((value.split('.')[1] || '').length > state.decimalPlaces)
+      return Promise.reject('请保留' + state.decimalPlaces + '位小数');
     if (!isNumber(max) || !isNumber(value)) return Promise.resolve();
-    if (max < value) return Promise.reject('最小值不能大于最大值');
+    if (parseFloat(max) < parseFloat(value)) return Promise.reject('最小值不能大于最大值');
     return Promise.resolve();
+  }
+  function handlePlasmaTypeChange(plasmaType) {
+    getDecimalPlacesApi({ plasmaType }).then((res) => [
+      (state.decimalPlaces = res === null ? 1 : res),
+    ]);
   }
   async function handleSubmit() {
     try {

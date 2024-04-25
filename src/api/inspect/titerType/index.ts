@@ -18,12 +18,15 @@ import {
   PutApiSysDictItemAlenceResponse,
   DeleteApiSysDictItemAlenceDictItemIdRequest,
   DeleteApiSysDictItemAlenceDictItemIdResponse,
+  GetApiCoreLabProjectPriceValidBitPlasmaTypeRequest,
+  GetApiCoreLabProjectPriceValidBitPlasmaTypeResponse,
 } from '@/api/type/inspectManage';
 
 enum Api {
   LIST = `/api/sys/dict/item/alences`,
   FORM = '/api/sys/dict/item/alence',
   DT_RE = '/api/sys/dict/item/alence/',
+  DEC_PLACES = '/api/core/lab/project/priceValidBit/',
 }
 
 export const getListApi = (data: PostApiSysDictItemAlencesRequest) =>
@@ -49,3 +52,10 @@ export const getTitlerTypeDtApi = ({ dictItemId }: GetApiSysDictItemAlenceDictIt
 
 export const removeTitlerTypeApi = ({ dictItemId }: DeleteApiSysDictItemAlenceDictItemIdRequest) =>
   defHttp.delete<DeleteApiSysDictItemAlenceDictItemIdResponse>({ url: Api.DT_RE + dictItemId });
+
+export const getDecimalPlacesApi = ({
+  plasmaType,
+}: GetApiCoreLabProjectPriceValidBitPlasmaTypeRequest) =>
+  defHttp.get<GetApiCoreLabProjectPriceValidBitPlasmaTypeResponse>({
+    url: Api.DEC_PLACES + plasmaType,
+  });

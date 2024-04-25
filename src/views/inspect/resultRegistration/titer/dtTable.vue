@@ -61,7 +61,7 @@
     },
     pv: {
       type: Number,
-      default: 0,
+      default: 1,
     },
   });
   let userData = {};
@@ -83,15 +83,20 @@
         {
           required: true,
           field: 'titerValue',
-          component: 'InputNumber',
+          component: 'Input',
           label: '效价结果值',
-          componentProps: {
-            min: 0,
-            formatter: (n: string) => {
-              if (/\.[0-9]{2}/.test(n)) return n.replace(/([0-9]+\.[0-9]{1,1})[0-9]+/, '$1');
-              return n;
+          rules: [
+            {
+              validator: (_, value: string) => {
+                if (!isValidNumber(value)) return Promise.reject('请输入正确的数值');
+                if (parseFloat(value) < 0) return Promise.reject('不能输入负数');
+                const pv = props.pv === null ? 1 : props.pv;
+                if ((value.split('.')[1] || '').length > pv)
+                  return Promise.reject('请保留' + pv + '位小数');
+                return Promise.resolve();
+              },
             },
-          },
+          ],
         },
         {
           required: true,
@@ -116,6 +121,10 @@
       ],
       showActionButtonGroup: false,
     });
+  function isValidNumber(input: string) {
+    const regex = /^-?\d+(\.\d+)?$/;
+    return regex.test(input);
+  }
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     immediate: true,
     api: getCheckItemDtListApi,
@@ -144,13 +153,6 @@
       return res;
     },
   });
-  function formatter(n: string) {
-    const { pv } = props;
-    const reg1 = new RegExp(`[.]{1,1}[0-9]{${pv + 1}}`);
-    const reg2 = new RegExp(`([0-9]+[.]{1,1}[0-9]{${pv},${pv}})[0-9]+`);
-    if (reg1.test(n)) return n.replace(reg2, '$1');
-    return n;
-  }
   async function handleSubmit() {
     const { conclusion, reason, titerValue } = (await validate()) as any;
     const { username, userId } = userData as any;
@@ -182,12 +184,6 @@
             value: it.value === 'N' ? it.value : props.plasmaType + it.value,
             label: it.value === 'N' ? it.label : PlasmaType(props.plasmaType) + it.label,
           })),
-        },
-      },
-      {
-        field: 'titerValue',
-        componentProps: {
-          formatter,
         },
       },
     ]);
