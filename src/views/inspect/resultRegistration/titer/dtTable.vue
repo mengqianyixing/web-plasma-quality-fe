@@ -91,7 +91,7 @@
                 if (!isValidNumber(value)) return Promise.reject('请输入正确的数值');
                 if (parseFloat(value) < 0) return Promise.reject('不能输入负数');
                 const pv = props.pv === null ? 1 : props.pv;
-                if ((value.split('.')[1] || '').length > pv)
+                if ((value.split('.')[1] || '').length !== pv)
                   return Promise.reject('请保留' + pv + '位小数');
                 return Promise.resolve();
               },
