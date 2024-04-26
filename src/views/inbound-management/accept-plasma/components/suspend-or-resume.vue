@@ -16,13 +16,23 @@
         :labelCol="{ style: { width: '70px' } }"
         ref="formRef"
       >
-        <FormItem label="血浆批号" name="batchNo">
+        <FormItem label="血浆批号" name="batchNo" :rules="[{ required: true }]">
           <Input v-model:value="searchForm.batchNo" readonly />
         </FormItem>
-        <FormItem v-if="searchForm.pattern === 'BOX'" label="血浆箱号" name="boxNo">
+        <FormItem
+          v-if="searchForm.pattern === 'BOX'"
+          label="血浆箱号"
+          name="boxNo"
+          :rules="[{ required: true }]"
+        >
           <Input v-model:value="searchForm.boxNo" readonly />
         </FormItem>
-        <FormItem v-if="searchForm.pattern === 'BCH'" label="复核人" name="checker">
+        <FormItem
+          v-if="searchForm.pattern === 'BCH'"
+          label="复核人"
+          name="checker"
+          :rules="[{ required: true }]"
+        >
           <InputSearch
             enterButton="登录"
             placeholder="请点击登录"
@@ -32,10 +42,7 @@
             style="width: 180px"
           />
         </FormItem>
-        <!-- <FormItem label="复核人" v-if="searchForm.pattern === 'BOX'" name="checker">
-          <Input v-model:value="searchForm.checker" readonly />
-        </FormItem> -->
-        <FormItem label="备注" name="remark">
+        <FormItem label="备注" name="remark" :rules="[{ required: searchForm.pattern === 'BCH' }]">
           <Textarea v-model:value="searchForm.remark" :cols="50" />
         </FormItem>
         <FormItem>
@@ -79,8 +86,6 @@
     Textarea,
     Button,
     InputSearch,
-    // Select,
-    // SelectOption,
   } from 'ant-design-vue';
   import dayjs from 'dayjs';
   import {
@@ -97,10 +102,7 @@
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
 
-  const emit = defineEmits(['close', 'clearInfo', 'refresh-data']);
-  // const props = defineProps({
-  //   remark: String as PropType<any>,
-  // });
+  const emit = defineEmits(['close', 'clearInfo', 'refresh-data', 'register']);
 
   interface SearchForm {
     batchNo: string;
@@ -123,10 +125,6 @@
       title: '验收人',
       dataIndex: 'creater',
     },
-    // {
-    //   title: '复核人',
-    //   dataIndex: 'reviewer',
-    // },
     {
       title: '暂停操作时间',
       dataIndex: 'createAt',
@@ -147,13 +145,6 @@
         return '';
       },
     },
-    // {
-    //   title: '当前状态',
-    //   dataIndex: 'state',
-    //   customRender: ({ text }) => {
-    //     return boxSuspendEnum[text];
-    //   },
-    // },
   ]);
 
   let tableData = ref<any[]>([]);
@@ -216,54 +207,48 @@
 
   // 暂停
   const confirm = async () => {
-    if (searchForm.value.pattern === 'BOX') {
-      try {
-        const params = {
-          batchNo: searchForm.value.batchNo,
-          boxNo: searchForm.value.boxNo,
-          pattern: 'BOX',
-          state: 'PAUSE',
-          type: 'VER',
-          remark: searchForm.value.remark || null,
-        };
-        submitLoading.value = true;
-        const data = await plasmaPauseBox(params);
-        if (data === null) {
-          success('提交成功!');
-          emit('close', false);
-          emit('clearInfo');
+    formRef.value.validate().then(async () => {
+      if (searchForm.value.pattern === 'BOX') {
+        try {
+          const params = {
+            batchNo: searchForm.value.batchNo,
+            boxNo: searchForm.value.boxNo,
+            pattern: 'BOX',
+            state: 'PAUSE',
+            type: 'VER',
+            remark: searchForm.value.remark || null,
+          };
+          submitLoading.value = true;
+          const data = await plasmaPauseBox(params);
+          if (data === null) {
+            success('提交成功!');
+            emit('close', false);
+            emit('clearInfo');
+          }
+        } finally {
+          submitLoading.value = false;
         }
-      } finally {
-        submitLoading.value = false;
-      }
-    } else if (searchForm.value.pattern === 'BCH') {
-      if (!searchForm.value.checker) {
-        warning('请登录复核人');
-        return;
-      }
-      if (!searchForm.value.remark) {
-        warning('请填写备注!');
-        return;
-      }
-      try {
-        const params = {
-          batchNo: searchForm.value.batchNo,
-          checker: searchForm.value.checker,
-          remark: searchForm.value.remark,
-          state: 'PAUSE',
-          type: 'VER',
-        };
-        submitLoading.value = true;
-        const data = await plasmaPauseBatch(params);
-        if (data === null) {
-          success('提交成功!');
-          emit('close', false);
-          emit('clearInfo');
+      } else if (searchForm.value.pattern === 'BCH') {
+        try {
+          const params = {
+            batchNo: searchForm.value.batchNo,
+            checker: searchForm.value.checker,
+            remark: searchForm.value.remark,
+            state: 'PAUSE',
+            type: 'VER',
+          };
+          submitLoading.value = true;
+          const data = await plasmaPauseBatch(params);
+          if (data === null) {
+            success('提交成功!');
+            emit('close', false);
+            emit('clearInfo');
+          }
+        } finally {
+          submitLoading.value = false;
         }
-      } finally {
-        submitLoading.value = false;
       }
-    }
+    });
   };
 
   const getList = async () => {
@@ -306,58 +291,51 @@
       return;
     }
     const firstSelectedItem = tableSelected.value[0];
-    if (searchForm.value.pattern === 'BOX') {
-      try {
-        const params = {
-          batchNo: searchForm.value.batchNo,
-          boxNo: firstSelectedItem.boxNo,
-          // checker: searchForm.value.checker, // 传登录的复核人
-          state: 'RESTORE',
-          type: 'VER',
-          remark: searchForm.value.remark || null,
-        };
-        resumeLoading.value = true;
-        const data = await plasmaPauseBox(params);
-        if (data === null) {
-          success('操作成功!');
-          getList();
-          tableSelected.value = [];
+    formRef.value.validate().then(async () => {
+      if (searchForm.value.pattern === 'BOX') {
+        try {
+          const params = {
+            batchNo: searchForm.value.batchNo,
+            boxNo: firstSelectedItem.boxNo,
+            state: 'RESTORE',
+            type: 'VER',
+            remark: searchForm.value.remark || null,
+          };
+          resumeLoading.value = true;
+          const data = await plasmaPauseBox(params);
+          if (data === null) {
+            success('操作成功!');
+            getList();
+            tableSelected.value = [];
+          }
+        } finally {
+          resumeLoading.value = false;
+          emit('refresh-data');
+          hideModal();
         }
-      } finally {
-        resumeLoading.value = false;
-        emit('refresh-data');
-        hideModal();
-      }
-    } else if (searchForm.value.pattern === 'BCH') {
-      if (!searchForm.value.remark) {
-        warning('请填写备注!');
-        return;
-      }
-      if (!searchForm.value.checker) {
-        warning('请登录复核人');
-        return;
-      }
-      try {
-        const params = {
-          batchNo: searchForm.value.batchNo,
-          checker: searchForm.value.checker, // 传登录的复核人
-          remark: searchForm.value.remark,
-          state: 'RESTORE',
-          type: 'VER',
-        };
-        resumeLoading.value = true;
-        const data = await plasmaPauseBatch(params);
-        if (data === null) {
-          success('操作成功!');
-          getList();
-          tableSelected.value = [];
+      } else if (searchForm.value.pattern === 'BCH') {
+        try {
+          const params = {
+            batchNo: searchForm.value.batchNo,
+            checker: searchForm.value.checker, // 传登录的复核人
+            remark: searchForm.value.remark,
+            state: 'RESTORE',
+            type: 'VER',
+          };
+          resumeLoading.value = true;
+          const data = await plasmaPauseBatch(params);
+          if (data === null) {
+            success('操作成功!');
+            getList();
+            tableSelected.value = [];
+          }
+        } finally {
+          resumeLoading.value = false;
+          emit('refresh-data');
+          hideModal();
         }
-      } finally {
-        resumeLoading.value = false;
-        emit('refresh-data');
-        hideModal();
       }
-    }
+    });
   };
 
   const [registerLoginModal, { openModal }] = useModal();
