@@ -12,12 +12,14 @@ export const entryColumns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    className: 'empty-value',
     width: 80,
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
     slots: { customRender: 'batchNo' },
+    className: 'empty-value',
     width: 80,
   },
   {
@@ -26,26 +28,31 @@ export const entryColumns: BasicColumn[] = [
       {
         title: '采集开始日期',
         dataIndex: 'collectStartDate',
+        className: 'empty-value',
         width: 110,
       },
       {
         title: '采集结束日期',
         dataIndex: 'collectEndDate',
+        className: 'empty-value',
         width: 110,
       },
       {
         title: '浆站出库日期',
         dataIndex: 'stationOutDate',
+        className: 'empty-value',
         width: 110,
       },
       {
         title: '出库数量(袋)',
         dataIndex: 'outNum',
+        className: 'empty-value',
         width: 90,
       },
       {
         title: '出库总净重(kg)',
         dataIndex: 'outWeight',
+        className: 'empty-value',
         width: 80,
       },
     ],
@@ -56,54 +63,64 @@ export const entryColumns: BasicColumn[] = [
       {
         title: '接收日期',
         dataIndex: 'acceptDate',
+        className: 'empty-value',
         width: 110,
       },
       {
         title: '验收发布人',
         dataIndex: 'verifyPublisher',
+        className: 'empty-value',
         width: 80,
       },
       {
         title: '验收发布日期',
         dataIndex: 'verifyPubDate',
+        className: 'empty-value',
         width: 100,
       },
       {
         title: '验收数量(袋)',
         dataIndex: 'verifyNum',
         slots: { customRender: 'verifyNum' },
+        className: 'empty-value',
         width: 80,
       },
       {
         title: '验收总净重(kg)',
         dataIndex: 'verifyWeight',
+        className: 'empty-value',
         width: 80,
       },
       {
         title: '差异数量(袋)',
         dataIndex: 'diffNum',
+        className: 'empty-value',
         width: 100,
       },
       {
         title: '差异总净重(kg)',
         dataIndex: 'diffWeight',
+        className: 'empty-value',
         width: 80,
       },
       {
         title: '验收合格数量(袋)',
         dataIndex: 'verifyPassNum',
+        className: 'empty-value',
         width: 80,
       },
       {
         title: '验收不合格数量(袋)',
         dataIndex: 'verifyNoPassNum',
         slots: { customRender: 'verifyNoPassNum' },
+        className: 'empty-value',
         width: 80,
       },
       {
         title: '不足量数量(袋)',
         dataIndex: 'shortFallNum',
         slots: { customRender: 'shortFallNum' },
+        className: 'empty-value',
         width: 80,
       },
     ],
@@ -393,23 +410,23 @@ export const noPassModalColumns: BasicColumn[] = [
   },
   {
     title: '验收人',
-    dataIndex: 'receiver',
+    dataIndex: 'verifyBy',
   },
   {
     title: '复核人',
-    dataIndex: '',
+    dataIndex: 'verifyReviewer',
   },
   {
     title: '验收日期',
-    dataIndex: '',
+    dataIndex: 'verifyAt',
   },
   {
-    title: '血浆净重(kg)',
-    dataIndex: 'plasmaWeight',
+    title: '血浆净重(g)',
+    dataIndex: 'verifyWeight',
   },
   {
     title: '不合格原因',
-    dataIndex: '',
+    dataIndex: 'unqReason',
   },
 ];
 
