@@ -125,9 +125,10 @@
     return Promise.resolve();
   }
   function handlePlasmaTypeChange(plasmaType) {
-    getDecimalPlacesApi({ plasmaType }).then((res) => [
-      (state.decimalPlaces = res === null ? 1 : res),
-    ]);
+    getDecimalPlacesApi({ plasmaType }).then((res) => {
+      console.log(res);
+      state.decimalPlaces = res === null ? 1 : res;
+    });
   }
   async function handleSubmit() {
     try {
