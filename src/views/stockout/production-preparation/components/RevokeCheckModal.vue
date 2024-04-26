@@ -29,7 +29,7 @@
   const { createMessage } = useMessage();
   const { success } = createMessage;
 
-  const emit = defineEmits(['success']);
+  const emit = defineEmits(['success', 'register']);
 
   const formSchema: FormSchema[] = [
     {

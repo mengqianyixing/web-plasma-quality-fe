@@ -105,7 +105,7 @@
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
   const { createMessage } = useMessage();
 
-  const emit = defineEmits(['success']);
+  const emit = defineEmits(['success', 'register']);
   const activeKey = ref('columnsImmunity');
 
   const prepareDetail = ref(); // 准备详情

@@ -25,7 +25,7 @@
       </div>
       <BasicTable @register="registerTableEd" class="inline-block pr-2 w-4/20" />
     </div>
-    <Description @register="register" :data="prepareDetail" />
+    <Description @register="register" :data="prepareDetail" :schema="schema" />
   </BasicModal>
 </template>
 
@@ -61,7 +61,7 @@
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
 
-  const emit = defineEmits(['closePickModal']);
+  const emit = defineEmits(['closePickModal', 'register']);
   let pickMode = ref(); // 是否为按批挑选
   const pickLoading = ref(false);
   const prepareNo = ref(); // 准备号
@@ -237,7 +237,7 @@
     clearSelectedRowKeys();
     clearSelectedRowKeysed();
     emit('closePickModal');
-    return true;
+    return Promise.resolve(true);
   }
 
   const FormSchemas: FormSchema[] = [
@@ -628,7 +628,6 @@
   ];
   const [register] = useDescription({
     column: 4,
-    schema: schema,
   });
 
   // 点击查询未挑血浆，并缓存筛选条件
@@ -639,7 +638,6 @@
 
   // 未挑选表格勾选事件
   async function unSelectionChange(selectedRowKeys, selectedRows) {
-    console.log('微挑选勾选事件', getSelectRows(), selectedRows);
     // 一个都没勾，初始化数据
     if (!selectedRows.length) {
       _getPrepareList();
