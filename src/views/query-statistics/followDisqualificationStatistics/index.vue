@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" class="tableHeight">
       <template #otherNum="{ record }: { record: Recordable }">
         <span v-if="record.isCount"> {{ record[otherNumUnqKey][numKey] }}</span>
         <span
@@ -181,3 +181,8 @@
     });
   }
 </script>
+<style scoped lang="less">
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
+  }
+</style>

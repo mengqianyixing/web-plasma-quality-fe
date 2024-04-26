@@ -81,14 +81,14 @@
       updateSchema(disabledOptions);
       updateSchema([
         {
-          field: 'max',
+          field: 'maxShow',
           rules: [{ validator: maxValidator }],
-          componentProps: { onChange: () => validateFields(['min']) },
+          componentProps: { onChange: () => validateFields(['minShow']) },
         },
         {
-          field: 'min',
+          field: 'minShow',
           rules: [{ validator: minValidator }],
-          componentProps: { onChange: () => validateFields(['max']) },
+          componentProps: { onChange: () => validateFields(['maxShow']) },
         },
         {
           field: 'plasmaType',
@@ -103,25 +103,25 @@
     return regex.test(input);
   }
   function maxValidator(_, value: string) {
-    const { min } = getFieldsValue();
+    const { minShow } = getFieldsValue();
     if (!value) return Promise.resolve();
     if (!isValidNumber(value)) return Promise.reject('请输入正确的数值');
     if (parseFloat(value) < 0) return Promise.reject('不能输入负数');
-    if ((value.split('.')[1] || '').length > state.decimalPlaces)
+    if ((value.split('.')[1] || '').length !== state.decimalPlaces)
       return Promise.reject('请保留' + state.decimalPlaces + '位小数');
-    if (!isValidNumber(min)) return Promise.resolve();
-    if (parseFloat(min) > parseFloat(value)) return Promise.reject('最大值不能小于最小值');
+    if (!isValidNumber(minShow)) return Promise.resolve();
+    if (parseFloat(minShow) > parseFloat(value)) return Promise.reject('最大值不能小于最小值');
     return Promise.resolve();
   }
   function minValidator(_, value: string) {
-    const { max } = getFieldsValue();
+    const { maxShow } = getFieldsValue();
     if (!value) return Promise.resolve();
     if (!isValidNumber(value)) return Promise.reject('请输入正确的数值');
     if (parseFloat(value) < 0) return Promise.reject('不能输入负数');
-    if ((value.split('.')[1] || '').length > state.decimalPlaces)
+    if ((value.split('.')[1] || '').length !== state.decimalPlaces)
       return Promise.reject('请保留' + state.decimalPlaces + '位小数');
-    if (!isNumber(max) || !isNumber(value)) return Promise.resolve();
-    if (parseFloat(max) < parseFloat(value)) return Promise.reject('最小值不能大于最大值');
+    if (!isNumber(maxShow) || !isNumber(value)) return Promise.resolve();
+    if (parseFloat(maxShow) < parseFloat(value)) return Promise.reject('最小值不能大于最大值');
     return Promise.resolve();
   }
   function handlePlasmaTypeChange(plasmaType) {

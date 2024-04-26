@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" />
+    <BasicTable @register="registerTable" class="tableHeight" />
   </PageWrapper>
 </template>
 <script lang="tsx" setup>
@@ -81,3 +81,8 @@
     return { ...row, stationName: '合计', sampleType: '--', failed: ['--'] };
   }
 </script>
+<style scoped lang="less">
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
+  }
+</style>

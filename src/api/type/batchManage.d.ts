@@ -434,7 +434,7 @@ export interface GetApiCoreBagStatisticsBatchNoResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/plasma`
- * @更新时间 `2024-04-16 17:18:43`
+ * @更新时间 `2024-04-26 15:33:03`
  */
 export interface GetApiCoreBagPlasmaRequest {
   /**
@@ -462,7 +462,7 @@ export interface GetApiCoreBagPlasmaRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/plasma`
- * @更新时间 `2024-04-16 17:18:43`
+ * @更新时间 `2024-04-26 15:33:03`
  */
 export interface GetApiCoreBagPlasmaResponse {
   totalCount?: number;
@@ -471,11 +471,11 @@ export interface GetApiCoreBagPlasmaResponse {
   currPage?: number;
   result?: {
     /**
-     * 采浆公司编号
+     * 浆站号
      */
     stationNo: string;
     /**
-     * 采浆公司名称
+     * 浆站名称
      */
     stationName: string;
     /**
@@ -487,7 +487,7 @@ export interface GetApiCoreBagPlasmaResponse {
      */
     boxNo: string;
     /**
-     * 现存箱号
+     * 当前箱号
      */
     nowBoxNo: string;
     /**
@@ -507,93 +507,45 @@ export interface GetApiCoreBagPlasmaResponse {
      */
     donorName: string;
     /**
-     * 浆员状态
-     */
-    donorStatus: string;
-    /**
-     * 采浆类型
-     */
-    immType: string;
-    /**
-     * 浆站净重
-     */
-    stationWeight: number;
-    /**
-     * 验收净重
-     */
-    verifyWeight: number;
-    /**
      * 血型
      */
     bloodType: string;
     /**
-     * 血浆过程状态
+     * 浆员状态
      */
-    plasmaStatus: string;
-    /**
-     * 检疫期类型
-     */
-    trackType: string;
-    /**
-     * 血浆不合格原因
-     */
-    unqReason: string;
-    /**
-     * 结果发布日期
-     */
-    testResultPubDate: string;
-    /**
-     * 复检结果
-     */
-    testResult: string;
-    /**
-     * 复检不合格项目
-     */
-    testUnqItem: string;
+    donorStatus: string;
     /**
      * 血浆类型
      */
-    plasmaType: string;
+    immType: string;
     /**
-     * 效价结果值
+     * 浆站重量（g）
      */
-    titerResult: string;
+    stationWeight: number;
     /**
-     * 满足日期
+     * 验收净重（g）
      */
-    fallDate: string;
+    verifyWeight: number;
     /**
-     * 样本批号
-     */
-    sampleBatchNo: string;
-    /**
-     * 样本编号
-     */
-    sampleNo: string;
-    /**
-     * 采集日期
-     */
-    collectionDate: string;
-    /**
-     * 浆站检验日期
-     */
-    deptTestDate: string;
-    /**
-     * 厂家复检信息
-     */
-    factoryDate: string;
-    /**
-     * 样本结果
-     */
-    sampleResult: string;
-    /**
-     * 不合格项目
-     */
-    trackUnqItem: string;
-    /**
-     * 地址
+     * 浆员地址
      */
     address: string;
+    /**
+     * 验收人
+     */
+    verifyBy: string;
+    /**
+     * 验收时间
+     */
+    verifyAt: string;
+    /**
+     * 验收复核人
+     */
+    verifyReviewer: string;
+    /**
+     * 不合格原因
+     */
+    unqReason: string;
   }[];
 }
 
