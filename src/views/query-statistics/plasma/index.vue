@@ -46,6 +46,7 @@
         DictionaryItemKeyEnum.Sample,
         DictionaryItemKeyEnum.Other,
       ],
+      show: 123,
     });
 
     await getForm().updateSchema({

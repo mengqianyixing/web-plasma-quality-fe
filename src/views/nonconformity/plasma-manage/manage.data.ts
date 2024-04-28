@@ -184,6 +184,7 @@ export const searchSchema: FormSchema[] = [
           DictionaryItemKeyEnum.Quarantine,
           DictionaryItemKeyEnum.Other,
         ],
+        show: 123,
       },
       valueField: 'dictItemId',
     },
