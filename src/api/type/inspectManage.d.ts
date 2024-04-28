@@ -1004,25 +1004,21 @@ export type PostApiCoreLabRegistrationLabItemLabReportResponse = string;
  * 接口 [撤销登记↗](https://yapi.sharing8.cn/project/529/interface/api/31929) 的 **请求类型**
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
- * @请求头 `DELETE /api/core/lab/registration/labItem/labReport/{bsNo}/{reviewer}`
- * @更新时间 `2024-04-28 10:57:29`
+ * @请求头 `DELETE /api/core/lab/registration/labItem/labReport/{bsNo}`
+ * @更新时间 `2024-04-28 14:39:34`
  */
-export interface DeleteApiCoreLabRegistrationLabItemLabReportBsNoReviewerRequest {
+export interface DeleteApiCoreLabRegistrationLabItemLabReportBsNoRequest {
   bsNo: string;
-  /**
-   * 复核人姓名
-   */
-  reviewer: string;
 }
 
 /**
  * 接口 [撤销登记↗](https://yapi.sharing8.cn/project/529/interface/api/31929) 的 **返回类型**
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
- * @请求头 `DELETE /api/core/lab/registration/labItem/labReport/{bsNo}/{reviewer}`
- * @更新时间 `2024-04-28 10:57:29`
+ * @请求头 `DELETE /api/core/lab/registration/labItem/labReport/{bsNo}`
+ * @更新时间 `2024-04-28 14:39:34`
  */
-export type DeleteApiCoreLabRegistrationLabItemLabReportBsNoReviewerResponse = string;
+export type DeleteApiCoreLabRegistrationLabItemLabReportBsNoResponse = string;
 
 /**
  * 接口 [删除检验明细↗](https://yapi.sharing8.cn/project/529/interface/api/31932) 的 **请求类型**
@@ -1854,7 +1850,7 @@ export type DeleteApiCoreLabMaterialDetailResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `DELETE /api/core/lab/registration/labItem/unqualified`
- * @更新时间 `2024-03-06 15:07:14`
+ * @更新时间 `2024-04-28 14:48:42`
  */
 export interface DeleteApiCoreLabRegistrationLabItemUnqualifiedRequest {
   /**
@@ -1870,6 +1866,10 @@ export interface DeleteApiCoreLabRegistrationLabItemUnqualifiedRequest {
    */
   projectId: string;
   cause: string;
+  /**
+   * 复核人
+   */
+  reviewer?: string;
 }
 
 /**
@@ -1877,7 +1877,7 @@ export interface DeleteApiCoreLabRegistrationLabItemUnqualifiedRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `DELETE /api/core/lab/registration/labItem/unqualified`
- * @更新时间 `2024-03-06 15:07:14`
+ * @更新时间 `2024-04-28 14:48:42`
  */
 export type DeleteApiCoreLabRegistrationLabItemUnqualifiedResponse = string;
 

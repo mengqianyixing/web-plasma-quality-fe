@@ -68,7 +68,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: 'acceptAt',
+    field: '[acceptBeginAt, acceptEndAt]',
     label: '接收时间',
     component: 'RangePicker',
   },

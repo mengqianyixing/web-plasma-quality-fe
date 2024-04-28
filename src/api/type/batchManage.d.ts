@@ -839,7 +839,7 @@ export type PostApiCoreBatchSampleAcceptResponse = string;
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/accept`
- * @更新时间 `2024-04-28 13:59:38`
+ * @更新时间 `2024-04-28 15:07:34`
  */
 export interface GetApiCoreBatchSampleAcceptRequest {
   /**
@@ -863,13 +863,17 @@ export interface GetApiCoreBatchSampleAcceptRequest {
    */
   sampleType?: string;
   /**
-   * 接收状态
+   * 接收状态：W-未接收、R-接收中、S-已接收
    */
   acceptState?: string;
   /**
-   * 接收日期
+   * 接收开始日期
    */
-  acceptAt?: string;
+  acceptBeginAt?: string;
+  /**
+   * 接收结束日期
+   */
+  acceptEndAt?: string;
 }
 
 /**
@@ -877,7 +881,7 @@ export interface GetApiCoreBatchSampleAcceptRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/accept`
- * @更新时间 `2024-04-28 13:59:38`
+ * @更新时间 `2024-04-28 15:07:34`
  */
 export interface GetApiCoreBatchSampleAcceptResponse {
   /**
