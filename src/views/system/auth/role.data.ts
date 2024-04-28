@@ -4,11 +4,11 @@ import { Tag } from 'ant-design-vue';
 import { customRenderDate } from '@/utils/tableHelpRender';
 
 export const columns: BasicColumn[] = [
-  {
-    title: '角色编码',
-    dataIndex: 'name',
-    width: 100,
-  },
+  // {
+  //   title: '角色编码',
+  //   dataIndex: 'name',
+  //   width: 100,
+  // },
   {
     title: '角色名称',
     dataIndex: 'displayName',
@@ -41,11 +41,11 @@ export const columns: BasicColumn[] = [
 ];
 
 export const searchFormSchema: FormSchema[] = [
-  {
-    field: 'name',
-    label: '角色编码',
-    component: 'Input',
-  },
+  // {
+  //   field: 'name',
+  //   label: '角色编码',
+  //   component: 'Input',
+  // },
   {
     field: 'displayName',
     label: '角色名称',
