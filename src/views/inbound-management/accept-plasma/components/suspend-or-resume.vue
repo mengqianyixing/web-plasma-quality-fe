@@ -19,12 +19,7 @@
         <FormItem label="血浆批号" name="batchNo" :rules="[{ required: true }]">
           <Input v-model:value="searchForm.batchNo" readonly />
         </FormItem>
-        <FormItem
-          v-if="searchForm.pattern === 'BOX'"
-          label="血浆箱号"
-          name="boxNo"
-          :rules="[{ required: true }]"
-        >
+        <FormItem v-if="searchForm.pattern === 'BOX'" label="血浆箱号" name="boxNo">
           <Input v-model:value="searchForm.boxNo" readonly />
         </FormItem>
         <FormItem
