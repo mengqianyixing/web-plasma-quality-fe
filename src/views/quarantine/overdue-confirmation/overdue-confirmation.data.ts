@@ -107,4 +107,20 @@ export const searchFormSchema: FormSchema[] = [
       ],
     },
   },
+  {
+    field: '[confirmStartDate, confirmEndDate]',
+    component: 'RangePicker',
+    label: '确认日期',
+    componentProps: {
+      valueFormat: 'YYYY-MM-DD',
+    },
+  },
+  {
+    field: '[collectStartDate, collectEndDate]',
+    component: 'RangePicker',
+    label: '采浆日期',
+    componentProps: {
+      valueFormat: 'YYYY-MM-DD',
+    },
+  },
 ];

@@ -44,6 +44,11 @@ export const columns: BasicColumn[] = [
     width: 100,
   },
   {
+    title: '不合格血浆数量',
+    dataIndex: 'trackUnqBagCount',
+    width: 100,
+  },
+  {
     title: '不合格原因',
     dataIndex: 'failedReason',
     width: 150,
@@ -137,6 +142,14 @@ export const searchFormSchema: FormSchema[] = [
     label: '打印状态',
     componentProps: {
       options: serverEnumStore.getServerEnum(SERVER_ENUM.PrintState),
+    },
+  },
+  {
+    field: '[printStartDate, printEndDate]',
+    component: 'RangePicker',
+    label: '打印日期',
+    componentProps: {
+      valueFormat: 'YYYY-MM-DD',
     },
   },
 ];
