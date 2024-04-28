@@ -4,14 +4,17 @@
     @register="register"
     title="样本批次列表"
     width="80%"
+    :min-height="650"
     @ok="handleSelect"
   >
-    <div>
-      <BasicTable @register="registerTable">
-        <template #sampleType="{ record }">
-          {{ formatSampleType(record?.sampleType) }}
-        </template>
-      </BasicTable>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute flex flex-col w-full h-full">
+        <BasicTable @register="registerTable">
+          <template #sampleType="{ record }">
+            {{ formatSampleType(record?.sampleType) }}
+          </template>
+        </BasicTable>
+      </div>
     </div>
   </BasicModal>
 </template>
@@ -39,6 +42,9 @@
     formConfig: {
       labelWidth: 120,
       schemas: searchFormSchema,
+      transformDateFunc(date) {
+        return date ? date.format('YYYY-MM-DD') : '';
+      },
     },
     fetchSetting: {
       pageField: 'currPage',
@@ -66,7 +72,8 @@
     useSearchForm: true,
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    inset: true,
+    isCanResizeParent: true,
     immediate: false,
   });
 
