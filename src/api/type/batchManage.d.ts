@@ -839,7 +839,7 @@ export type PostApiCoreBatchSampleAcceptResponse = string;
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/accept`
- * @更新时间 `2023-12-28 11:00:14`
+ * @更新时间 `2024-04-28 13:59:38`
  */
 export interface GetApiCoreBatchSampleAcceptRequest {
   /**
@@ -858,6 +858,18 @@ export interface GetApiCoreBatchSampleAcceptRequest {
    * 采浆公司编号
    */
   stationNo?: string;
+  /**
+   * 样本类型
+   */
+  sampleType?: string;
+  /**
+   * 接收状态
+   */
+  acceptState?: string;
+  /**
+   * 接收日期
+   */
+  acceptAt?: string;
 }
 
 /**
@@ -865,7 +877,7 @@ export interface GetApiCoreBatchSampleAcceptRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/accept`
- * @更新时间 `2023-12-28 11:00:14`
+ * @更新时间 `2024-04-28 13:59:38`
  */
 export interface GetApiCoreBatchSampleAcceptResponse {
   /**

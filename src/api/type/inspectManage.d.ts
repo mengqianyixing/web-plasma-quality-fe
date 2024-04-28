@@ -1004,21 +1004,25 @@ export type PostApiCoreLabRegistrationLabItemLabReportResponse = string;
  * 接口 [撤销登记↗](https://yapi.sharing8.cn/project/529/interface/api/31929) 的 **请求类型**
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
- * @请求头 `DELETE /api/core/lab/registration/labItem/labReport/{bsNo}`
- * @更新时间 `2023-12-29 11:31:06`
+ * @请求头 `DELETE /api/core/lab/registration/labItem/labReport/{bsNo}/{reviewer}`
+ * @更新时间 `2024-04-28 10:57:29`
  */
-export interface DeleteApiCoreLabRegistrationLabItemLabReportBsNoRequest {
+export interface DeleteApiCoreLabRegistrationLabItemLabReportBsNoReviewerRequest {
   bsNo: string;
+  /**
+   * 复核人姓名
+   */
+  reviewer: string;
 }
 
 /**
  * 接口 [撤销登记↗](https://yapi.sharing8.cn/project/529/interface/api/31929) 的 **返回类型**
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
- * @请求头 `DELETE /api/core/lab/registration/labItem/labReport/{bsNo}`
- * @更新时间 `2023-12-29 11:31:06`
+ * @请求头 `DELETE /api/core/lab/registration/labItem/labReport/{bsNo}/{reviewer}`
+ * @更新时间 `2024-04-28 10:57:29`
  */
-export type DeleteApiCoreLabRegistrationLabItemLabReportBsNoResponse = string;
+export type DeleteApiCoreLabRegistrationLabItemLabReportBsNoReviewerResponse = string;
 
 /**
  * 接口 [删除检验明细↗](https://yapi.sharing8.cn/project/529/interface/api/31932) 的 **请求类型**
@@ -2384,7 +2388,7 @@ export type PutApiCoreLabMaterialTemplateDisableIdResponse = string;
  *
  * @分类 [物料预登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5739)
  * @请求头 `POST /api/core/lab/material/templates`
- * @更新时间 `2024-04-23 10:37:26`
+ * @更新时间 `2024-04-28 13:45:46`
  */
 export interface PostApiCoreLabMaterialTemplatesRequest {
   currPage: string;
@@ -2416,7 +2420,7 @@ export interface PostApiCoreLabMaterialTemplatesRequest {
  *
  * @分类 [物料预登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5739)
  * @请求头 `POST /api/core/lab/material/templates`
- * @更新时间 `2024-04-23 10:37:26`
+ * @更新时间 `2024-04-28 13:45:46`
  */
 export interface PostApiCoreLabMaterialTemplatesResponse {
   totalCount: number;
@@ -2468,6 +2472,14 @@ export interface PostApiCoreLabMaterialTemplatesResponse {
      * 复核日期
      */
     reviewAt: string;
+    /**
+     * 创建人
+     */
+    creator: string;
+    /**
+     * 创建时间
+     */
+    createAt: string;
   }[];
 }
 
@@ -2506,7 +2518,7 @@ export interface GetApiCoreLabMaterialTemplateIdResponse {
  *
  * @分类 [物料预登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5739)
  * @请求头 `PUT /api/core/lab/material/template/deadline`
- * @更新时间 `2024-03-06 09:43:52`
+ * @更新时间 `2024-04-28 13:57:35`
  */
 export interface PutApiCoreLabMaterialTemplateDeadlineRequest {
   /**
@@ -2517,6 +2529,10 @@ export interface PutApiCoreLabMaterialTemplateDeadlineRequest {
    * 主键id
    */
   id: string;
+  /**
+   * 复核人姓名
+   */
+  deadlineReviewer: string;
 }
 
 /**
@@ -2524,7 +2540,7 @@ export interface PutApiCoreLabMaterialTemplateDeadlineRequest {
  *
  * @分类 [物料预登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5739)
  * @请求头 `PUT /api/core/lab/material/template/deadline`
- * @更新时间 `2024-03-06 09:43:52`
+ * @更新时间 `2024-04-28 13:57:35`
  */
 export type PutApiCoreLabMaterialTemplateDeadlineResponse = string;
 
