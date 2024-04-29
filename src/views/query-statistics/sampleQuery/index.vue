@@ -1,6 +1,12 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" />
+    <BasicTable @register="registerTable">
+      <template #donorNo="{ record }: { record: Recordable }">
+        <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleJump(record)">
+          {{ record.donorNo }}
+        </span>
+      </template>
+    </BasicTable>
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -9,8 +15,10 @@
   import { PageWrapper } from '@/components/Page';
   import { getListApi } from '@/api/query-statistics/sampleQuery';
   import { message } from 'ant-design-vue';
+  import { useRouter } from 'vue-router';
 
   defineOptions({ name: 'SampleQuery' });
+  const { push } = useRouter();
 
   const [registerTable, { getForm, reload }] = useTable({
     immediate: false,
@@ -42,4 +50,7 @@
     useSearchForm: true,
     bordered: true,
   });
+  function handleJump(row: Recordable) {
+    push({ name: 'DonorQuery', query: { donorNo: row.donorNo } });
+  }
 </script>

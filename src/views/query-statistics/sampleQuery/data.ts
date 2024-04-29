@@ -51,6 +51,7 @@ export const columns: BasicColumn[] = [
   {
     title: '浆员编号',
     dataIndex: 'donorNo',
+    slots: { customRender: 'donorNo' },
     width: 120,
   },
   {
