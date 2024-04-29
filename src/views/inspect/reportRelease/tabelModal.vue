@@ -3,7 +3,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    :title="`检验${state.title}样本详情`"
+    :title="`${state.title}`"
     :minHeight="520"
     width="1000px"
     :showOkBtn="false"
@@ -17,7 +17,11 @@
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
-  import { totalUnqualifiedColumns, columnsMap } from './reportRelease.data';
+  import {
+    totalUnqualifiedColumns,
+    columnsMap,
+    totalUnqualifiedSearch,
+  } from './reportRelease.data';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { getUnqualifiedApi } from '@/api/inspect/reportRelease';
@@ -28,6 +32,7 @@
     immediate: false,
     api: getUnqualifiedApi,
     columns: totalUnqualifiedColumns,
+    formConfig: { schemas: totalUnqualifiedSearch },
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -35,7 +40,7 @@
       listField: 'result',
     },
     size: 'small',
-    useSearchForm: false,
+    useSearchForm: true,
     bordered: true,
     isCanResizeParent: true,
     inset: false,

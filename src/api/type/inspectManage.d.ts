@@ -1850,7 +1850,7 @@ export type DeleteApiCoreLabMaterialDetailResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `DELETE /api/core/lab/registration/labItem/unqualified`
- * @更新时间 `2024-04-28 14:48:42`
+ * @更新时间 `2024-04-28 15:20:41`
  */
 export interface DeleteApiCoreLabRegistrationLabItemUnqualifiedRequest {
   /**
@@ -1877,7 +1877,7 @@ export interface DeleteApiCoreLabRegistrationLabItemUnqualifiedRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `DELETE /api/core/lab/registration/labItem/unqualified`
- * @更新时间 `2024-04-28 14:48:42`
+ * @更新时间 `2024-04-28 15:20:41`
  */
 export type DeleteApiCoreLabRegistrationLabItemUnqualifiedResponse = string;
 
@@ -2130,7 +2130,7 @@ export interface PostApiCoreLabReportsResponse {
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/report/unqualified`
- * @更新时间 `2024-03-06 19:18:03`
+ * @更新时间 `2024-04-29 17:01:44`
  */
 export interface PostApiCoreLabReportUnqualifiedRequest {
   reportNo: string;
@@ -2140,6 +2140,9 @@ export interface PostApiCoreLabReportUnqualifiedRequest {
    * H,LU,Q
    */
   type: string;
+  donorNo?: string;
+  sampleNo?: string;
+  conclusion?: string;
 }
 
 /**
@@ -2147,7 +2150,7 @@ export interface PostApiCoreLabReportUnqualifiedRequest {
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/report/unqualified`
- * @更新时间 `2024-03-06 19:18:03`
+ * @更新时间 `2024-04-29 17:01:44`
  */
 export interface PostApiCoreLabReportUnqualifiedResponse {
   totalCount: number;
@@ -2388,7 +2391,7 @@ export type PutApiCoreLabMaterialTemplateDisableIdResponse = string;
  *
  * @分类 [物料预登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5739)
  * @请求头 `POST /api/core/lab/material/templates`
- * @更新时间 `2024-04-28 13:45:46`
+ * @更新时间 `2024-04-28 16:25:59`
  */
 export interface PostApiCoreLabMaterialTemplatesRequest {
   currPage: string;
@@ -2420,7 +2423,7 @@ export interface PostApiCoreLabMaterialTemplatesRequest {
  *
  * @分类 [物料预登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5739)
  * @请求头 `POST /api/core/lab/material/templates`
- * @更新时间 `2024-04-28 13:45:46`
+ * @更新时间 `2024-04-28 16:25:59`
  */
 export interface PostApiCoreLabMaterialTemplatesResponse {
   totalCount: number;
@@ -2480,6 +2483,8 @@ export interface PostApiCoreLabMaterialTemplatesResponse {
      * 创建时间
      */
     createAt: string;
+    deadlineReviewer: string;
+    deadlineCreator: string;
   }[];
 }
 

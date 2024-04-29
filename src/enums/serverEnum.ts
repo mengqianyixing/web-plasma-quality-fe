@@ -54,4 +54,5 @@ export enum SERVER_ENUM {
   ReportTemplateState = 'ReportTemplateState',
   SampleStatusEnum = 'SampleStatusEnum',
   BankTrayStatusEnum = 'BankTrayStatusEnum',
+  RsLabSampleType = 'RsLabSampleType',
 }

@@ -52,7 +52,7 @@
       <template #totalUnqualified="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetails(record, 3, '不合格')"
+          @click.stop.self="handleDetails(record, 3, '检测不合格样本总数')"
         >
           {{ record.totalUnqualified }}
         </span>
@@ -60,7 +60,7 @@
       <template #totalQualified="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetails(record, 4, '合格')"
+          @click.stop.self="handleDetails(record, 4, '检测合格样本总数')"
         >
           {{ record.totalQualified }}
         </span>
@@ -68,7 +68,7 @@
       <template #totalHighTiter="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetails(record, 1, '高效价')"
+          @click.stop.self="handleDetails(record, 1, '高效价总数')"
         >
           {{ record.totalHighTiter }}
         </span>
@@ -76,7 +76,7 @@
       <template #totalLowTiter="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetails(record, 2, '低效价')"
+          @click.stop.self="handleDetails(record, 2, '低效价总数')"
         >
           {{ record.totalLowTiter }}
         </span>
@@ -84,7 +84,7 @@
       <template #totalNormal="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetails(record, 5, '无效价')"
+          @click.stop.self="handleDetails(record, 5, '无效价总数')"
         >
           {{ record.totalNormal }}
         </span>

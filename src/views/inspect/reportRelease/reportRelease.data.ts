@@ -1,6 +1,7 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
 
 import { useStation } from '@/hooks/common/useStation';
 
@@ -117,7 +118,7 @@ export const searchFormschema: FormSchema[] = [
     component: 'Select',
     label: '样本类型',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.RsLabSampleType),
     },
   },
 
@@ -200,5 +201,28 @@ export const totalUnqualifiedColumns: BasicColumn[] = [
   {
     dataIndex: 'methodName',
     title: '检测方法',
+  },
+];
+
+export const totalUnqualifiedSearch: FormSchema[] = [
+  {
+    field: 'sampleNo',
+    label: '样品编号',
+    component: 'Input',
+  },
+  {
+    field: 'donorNo',
+    label: '浆员编号',
+    component: 'Input',
+  },
+  {
+    field: 'conclusion',
+    label: '效价类型',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getDilutionTypeApi,
+      labelField: 'key',
+      valueField: 'value',
+    },
   },
 ];
