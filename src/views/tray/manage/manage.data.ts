@@ -34,6 +34,7 @@ export const columns: BasicColumn[] = [
   {
     title: '已存放容量(袋)',
     dataIndex: 'totalBagNumber',
+    slots: { customRender: 'totalBagNumber' },
   },
   {
     title: '打印人姓名',
@@ -97,6 +98,33 @@ export const searchFormSchema: FormSchema[] = [
     field: 'prepareNo',
     label: '投产准备号',
   },
+  {
+    component: 'Select',
+    field: 'trayType',
+    label: '存放类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankTrayTypeEnum),
+    },
+  },
+  {
+    component: 'Select',
+    field: 'trayStatus',
+    label: '入库状态',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankTrayStatusEnum),
+    },
+  },
+  {
+    component: 'Select',
+    field: 'useStatus',
+    label: '负载状态',
+    componentProps: {
+      options: [
+        { label: '空载', value: '0' },
+        { label: '负载', value: '1' },
+      ],
+    },
+  },
 ];
 
 export const trayDtColumns: BasicColumn[] = [{ dataIndex: '', title: '托盘编号' }];
@@ -105,3 +133,16 @@ export const trayDtSearchSchema: FormSchema[] = [
 ];
 
 export const trayBoxColumns: BasicColumn[] = [{ title: '血浆箱号', dataIndex: 'boxNo' }];
+
+export const trayBagColumns: BasicColumn[] = [
+  { title: '血浆批号', dataIndex: 'batchNo' },
+  { title: '血浆编号', dataIndex: 'bagNo' },
+  { title: '浆员编号', dataIndex: 'donorNo' },
+  { title: '浆员姓名', dataIndex: 'donorName' },
+  { title: '现存箱号', dataIndex: 'currBoxNo' },
+];
+
+export const trayBagSearch: FormSchema[] = [
+  { label: '血浆批号', component: 'Input', field: 'batchNo' },
+  { label: '血浆编号', component: 'Input', field: 'bagNo' },
+];

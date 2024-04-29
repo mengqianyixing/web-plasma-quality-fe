@@ -25,12 +25,18 @@
           {{ record.totalNumber }}
         </span>
       </template>
+      <template #totalBagNumber="{ record }: { record: Recordable }">
+        <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleBag(record)">
+          {{ record.totalBagNumber }}
+        </span>
+      </template>
     </BasicTable>
     <BasicModal @register="registerModal" @ok="submit" showFooter title="托盘打印">
       <BasicForm @register="registerForm" />
     </BasicModal>
     <TableModal @register="registerTableModal" />
     <BoxTableModal @register="registerBoxTableModal" />
+    <BagTableModal @register="registerBagTableModal" />
     <Login
       @register="registerLoginModal"
       @success="login"
@@ -56,6 +62,7 @@
   import { message } from 'ant-design-vue';
   import TableModal from './tableDrawer.vue';
   import BoxTableModal from './boxTableDrawer.vue';
+  import BagTableModal from './bagTableDrawer.vue';
   import { ReCheckButtonEnum, StoreButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'TrayList' });
@@ -64,6 +71,7 @@
   const [registerModal, { openModal, closeModal, setModalProps }] = useModal();
   const [registerTableModal, { openModal: openTableModal }] = useModal();
   const [registerBoxTableModal, { openModal: openBoxTableModal }] = useModal();
+  const [registerBagTableModal, { openModal: openBagTableModal }] = useModal();
   const [registerForm, { validate }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
@@ -158,5 +166,8 @@
   }
   function handleBox(row: Recordable) {
     openBoxTableModal(true, { trayNo: row.trayNo });
+  }
+  function handleBag(row: Recordable) {
+    openBagTableModal(true, { trayNo: row.trayNo });
   }
 </script>

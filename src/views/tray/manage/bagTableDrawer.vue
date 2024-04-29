@@ -1,19 +1,11 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: zcc
- * @Date: 2023-12-23 16:49:51
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 17:08:12
--->
 <template>
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    title="托盘存放浆箱列表"
-    width="600px"
-    :minHeight="400"
+    title="托盘存放血浆列表"
+    width="1000px"
+    :minHeight="520"
     @fullscreen="redoHeight"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -26,27 +18,29 @@
 <script setup lang="ts">
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
-  import { trayBoxListApi } from '@/api/tray/list';
-  import { trayBoxColumns } from './manage.data';
+  import { trayBagListApi } from '@/api/tray/list';
+  import { trayBagColumns, trayBagSearch } from './manage.data';
   import { reactive } from 'vue';
 
-  defineOptions({ name: 'BoxTableModal' });
+  defineOptions({ name: 'BagTableModal' });
   const state = reactive({
     trayNo: '',
   });
-  const [registerTable, { reload, redoHeight }] = useTable({
+  const [registerTable, { reload, redoHeight, setPagination }] = useTable({
     immediate: false,
     isCanResizeParent: true,
     size: 'small',
-    api: getData,
+    api: trayBagListApi,
     inset: true,
+    formConfig: { schemas: trayBagSearch },
     fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
       listField: 'result',
     },
-    pagination: false,
-    rowKey: 'boxNo',
-    columns: trayBoxColumns,
-    useSearchForm: false,
+    columns: trayBagColumns,
+    useSearchForm: true,
     bordered: true,
     beforeFetch: (params) => {
       return { ...params, trayNo: state.trayNo };
@@ -54,15 +48,7 @@
   });
   const [registerModal] = useModalInner(({ trayNo }) => {
     state.trayNo = trayNo;
+    setPagination({ current: 1 });
     reload();
   });
-  function getData({ trayNo }) {
-    return new Promise((rs, rj) => {
-      trayBoxListApi({ trayNo })
-        .then((res) => {
-          rs({ result: res });
-        })
-        .catch(rj);
-    });
-  }
 </script>

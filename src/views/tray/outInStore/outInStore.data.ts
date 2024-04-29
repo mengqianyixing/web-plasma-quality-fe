@@ -89,6 +89,33 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Input',
     field: 'prepareNo',
   },
+  {
+    component: 'Select',
+    field: 'trayType',
+    label: '存放类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankTrayTypeEnum),
+    },
+  },
+  {
+    component: 'Select',
+    field: 'trayStatus',
+    label: '入库状态',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankTrayStatusEnum),
+    },
+  },
+  {
+    component: 'Select',
+    field: 'useStatus',
+    label: '负载状态',
+    componentProps: {
+      options: [
+        { label: '空载', value: '0' },
+        { label: '负载', value: '1' },
+      ],
+    },
+  },
 ];
 
 export const inStoreFormSchema: (houseChange: Function) => FormSchema[] = (houseChange) => [

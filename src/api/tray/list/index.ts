@@ -20,6 +20,8 @@ import {
   GetApiCoreBankTrayTrayNoResponse,
   GetApiCoreBankTrayBoxTrayNoRequest,
   GetApiCoreBankTrayBoxTrayNoResponse,
+  GetApiCoreBankTrayBagDetailRequest,
+  GetApiCoreBankTrayBagDetailResponse,
 } from '@/api/type/trayManage';
 
 export const getListApi = (params: GetApiCoreBankTraiesRequest) =>
@@ -43,4 +45,10 @@ export const trayBoxListApi = ({ trayNo }: GetApiCoreBankTrayBoxTrayNoRequest) =
 export const trayBoxListApiAccept = ({ trayNo }: GetApiCoreBankTrayBoxTrayNoRequest) =>
   defHttp.get<GetApiCoreBankTrayBoxTrayNoResponse>({
     url: `/api/core/bank/tray/box/verify/${trayNo}`,
+  });
+
+export const trayBagListApi = (params: GetApiCoreBankTrayBagDetailRequest) =>
+  defHttp.get<GetApiCoreBankTrayBagDetailResponse>({
+    url: `/api/core/bank/tray/bag/detail`,
+    params,
   });

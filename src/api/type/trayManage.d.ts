@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2024-04-22 17:10:15`
+ * @更新时间 `2024-04-29 15:43:12`
  */
 export interface GetApiCoreBankTraiesRequest {
   /**
@@ -67,6 +67,18 @@ export interface GetApiCoreBankTraiesRequest {
    * 标识出库列表还是入库列表，"out"表示查询待验收的血浆所在的出库托盘列表，"in"表示查询已验收的血浆所在的入库托盘列表
    */
   inOut?: string;
+  /**
+   * 存放类型，通过查询枚举类BankTrayTypeEnum
+   */
+  trayType?: string;
+  /**
+   * 入库状态，通过查询枚举类trayStatus
+   */
+  trayStatus?: string;
+  /**
+   * 负载状态，0-空载，1-负载
+   */
+  useStatus?: string;
 }
 
 /**
@@ -74,7 +86,7 @@ export interface GetApiCoreBankTraiesRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2024-04-22 17:10:15`
+ * @更新时间 `2024-04-29 15:43:12`
  */
 export interface GetApiCoreBankTraiesResponse {
   /**
@@ -829,6 +841,63 @@ export interface PutApiCoreBankTrayWarehouseFerryResponse {
    * 响应信息
    */
   msg: string;
+}
+
+/**
+ * 接口 [查询指定托盘下的所有血浆信息↗](https://yapi.sharing8.cn/project/529/interface/api/34560) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/bag/detail`
+ * @更新时间 `2024-04-29 16:54:31`
+ */
+export interface GetApiCoreBankTrayBagDetailRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 血浆编号
+   */
+  bagNo?: string;
+}
+
+/**
+ * 接口 [查询指定托盘下的所有血浆信息↗](https://yapi.sharing8.cn/project/529/interface/api/34560) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/bag/detail`
+ * @更新时间 `2024-04-29 16:54:31`
+ */
+export interface GetApiCoreBankTrayBagDetailResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 血浆批号
+     */
+    batchNo?: string;
+    /**
+     * 血浆编号
+     */
+    bagNo?: string;
+    /**
+     * 浆员编号
+     */
+    donorNo?: string;
+    /**
+     * 浆员姓名
+     */
+    donorName?: string;
+    /**
+     * 现存箱号
+     */
+    currBoxNo?: string;
+  }[];
 }
 
 /* prettier-ignore-end */
