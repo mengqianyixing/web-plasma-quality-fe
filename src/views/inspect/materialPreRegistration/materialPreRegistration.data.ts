@@ -19,7 +19,11 @@ export const columns: BasicColumn[] = [
     width: 100,
     ellipsis: false,
   },
-
+  {
+    title: '状态',
+    dataIndex: 'state',
+    width: 60,
+  },
   {
     title: '检测类型',
     dataIndex: 'testType',
@@ -194,8 +198,8 @@ export const searchSchema: FormSchema[] = [
     label: '状态',
     componentProps: {
       options: [
-        { label: '停用', value: '' },
-        { label: '在用', value: '' },
+        { label: '停用', value: '停用' },
+        { label: '在用', value: '启用' },
       ],
     },
   },
