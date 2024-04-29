@@ -122,7 +122,7 @@
         ct,
         bsNo: bsno,
         checker: userId,
-        checkeName: username,
+        checkName: username,
         projectIds: [pid],
       });
       message.success(sampleNo + '登记成功');

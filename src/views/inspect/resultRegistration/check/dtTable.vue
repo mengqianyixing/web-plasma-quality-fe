@@ -11,11 +11,16 @@
       @register="registerCancelModal"
       title="撤销原因"
       okText="提交"
-      width="300px"
+      width="400px"
       @ok="handleSubmit"
     >
       <BasicForm @register="registerForm" />
     </BasicModal>
+    <Login
+      @register="registerLoginModal"
+      @success="login"
+      :auth-code="ReCheckButtonEnum.ResultReRegistCheck"
+    />
   </div>
 </template>
 <script setup lang="ts">
@@ -25,6 +30,8 @@
   import { getCheckItemDtListApi, removeUnqualified } from '@/api/inspect/resultRegistration';
   import { useModal, BasicModal } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
+  import Login from '@/__components/ReviewLoginModal/index.vue';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const props = defineProps({
     checkResult: {
@@ -49,7 +56,8 @@
     },
   });
   const [registerCancelModal, { openModal: openCancelModal, setModalProps }] = useModal();
-  const [registerForm, { resetFields, clearValidate, validate }] = useForm({
+  const [registerLoginModal, { openModal: openLoginModal }] = useModal();
+  const [registerForm, { resetFields, clearValidate, validate, setFieldsValue }] = useForm({
     labelWidth: 80,
     baseColProps: { span: 24 },
     schemas: [
@@ -58,6 +66,20 @@
         component: 'Input',
         label: '原因',
         required: true,
+      },
+      {
+        field: 'reviewer',
+        component: 'InputSearch',
+        label: '复核人',
+        required: true,
+        componentProps: {
+          'enter-button': '登录',
+          placeholder: '请点击登录按钮',
+          readonly: true,
+          onSearch: () => {
+            openLoginModal(true, {});
+          },
+        },
       },
     ],
     showActionButtonGroup: false,
@@ -87,7 +109,7 @@
     },
   });
   async function handleSubmit() {
-    const { cause } = await validate();
+    const { cause, reviewer } = await validate();
     const [row] = getSelectRows();
     try {
       setModalProps({ confirmLoading: true });
@@ -96,6 +118,7 @@
         bsNo: props.bsNo,
         projectId: props.projectId,
         cause,
+        reviewer,
       });
       openCancelModal(false);
       message.success('撤销成功');
@@ -110,5 +133,8 @@
     resetFields();
     clearValidate();
     openCancelModal(true);
+  }
+  function login(userName, data) {
+    setFieldsValue({ reviewer: data.username });
   }
 </script>

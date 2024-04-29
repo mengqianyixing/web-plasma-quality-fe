@@ -17,12 +17,9 @@ export const columns: BasicColumn[] = [
     title: '检测项目',
     dataIndex: 'projectName',
     width: 100,
+    ellipsis: false,
   },
-  {
-    title: '状态',
-    dataIndex: 'state',
-    width: 60,
-  },
+
   {
     title: '检测类型',
     dataIndex: 'testType',
@@ -44,11 +41,13 @@ export const columns: BasicColumn[] = [
     title: '试剂批号',
     dataIndex: 'reagentBatch',
     width: 120,
+    ellipsis: false,
   },
   {
     title: '试剂放行单号',
     dataIndex: 'releaseNo',
-    width: 100,
+    width: 120,
+    ellipsis: false,
   },
   {
     title: '试剂有效期',
@@ -56,9 +55,15 @@ export const columns: BasicColumn[] = [
     width: 100,
   },
   {
-    title: '使用截至日期',
-    dataIndex: 'deadline',
+    title: '创建人',
+    dataIndex: 'creator',
     width: 100,
+  },
+  {
+    title: '创建日期',
+    dataIndex: 'createAt',
+    width: 100,
+    format: (text) => text?.slice(0, 10),
   },
   {
     title: '复核人',
@@ -69,8 +74,22 @@ export const columns: BasicColumn[] = [
     title: '复核日期',
     dataIndex: 'reviewAt',
     width: 100,
-
     format: (text) => text?.slice(0, 10),
+  },
+  {
+    title: '截止日期登记人',
+    dataIndex: 'deadlineCreator',
+    width: 120,
+  },
+  {
+    title: '截止日期复核人',
+    dataIndex: 'deadlineReviewer',
+    width: 120,
+  },
+  {
+    title: '使用截至日期',
+    dataIndex: 'deadline',
+    width: 100,
   },
 ];
 export const formListSchema: FormSchema[] = [
@@ -133,14 +152,6 @@ export const formListSchema: FormSchema[] = [
       disabledDate: (date: Dayjs) => date && date < dayjs(dayjs().format('YYYY-MM-DD')),
     },
   },
-  {
-    field: 'deadline',
-    component: 'DatePicker',
-    label: '使用截至日期',
-    componentProps: {
-      class: 'w-full',
-    },
-  },
 ];
 
 export const searchSchema: FormSchema[] = [
@@ -176,16 +187,5 @@ export const searchSchema: FormSchema[] = [
     field: 'reagentBatch',
     component: 'Input',
     label: '试剂批号',
-  },
-  {
-    field: 'materialState',
-    component: 'Select',
-    label: '状态',
-    componentProps: {
-      options: [
-        { label: '停用', value: '停用' },
-        { label: '启用', value: '启用' },
-      ],
-    },
   },
 ];

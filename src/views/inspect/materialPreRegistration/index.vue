@@ -12,12 +12,6 @@
       <template #toolbar>
         <a-button
           type="primary"
-          @click="handleUpdateDate"
-          v-auth="InspectButtonEnum.MaterialPreRegistrationUpdateDate"
-          >登记使用截止日期</a-button
-        >
-        <a-button
-          type="primary"
           @click="handleCreate"
           v-auth="InspectButtonEnum.MaterialPreRegistrationAdd"
           >新增</a-button
@@ -40,17 +34,12 @@
           v-auth="InspectButtonEnum.MaterialPreRegistrationUnReview"
           >取消复核</a-button
         >
+
         <a-button
           type="primary"
-          @click="handleCheckStatus(disableApi, '停用')"
-          v-auth="InspectButtonEnum.MaterialPreRegistrationDisable"
-          >停用</a-button
-        >
-        <a-button
-          type="primary"
-          @click="handleCheckStatus(enableApi, '启用')"
-          v-auth="InspectButtonEnum.MaterialPreRegistrationEnable"
-          >启用</a-button
+          @click="handleUpdateDate"
+          v-auth="InspectButtonEnum.MaterialPreRegistrationUpdateDate"
+          >登记使用截止日期</a-button
         >
       </template>
     </BasicTable>
@@ -81,13 +70,7 @@
   import DateFormModal from './dateFormModal.vue';
   import { ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
-  import {
-    getListApi,
-    reviewApi,
-    cancelReviewApi,
-    enableApi,
-    disableApi,
-  } from '@/api/inspect/materialPreRegistration';
+  import { getListApi, reviewApi, cancelReviewApi } from '@/api/inspect/materialPreRegistration';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'MaterialPreRegistration' });
@@ -154,6 +137,7 @@
   }
   function handleUpdateDate() {
     getSelections(true, ([row]) => {
+      if (row.deadline) return message.warning('已登记使用截止日期');
       openDateModal(true, { data: row });
     });
   }
@@ -193,21 +177,5 @@
     } finally {
       confirmLoading.value = false;
     }
-  }
-
-  function handleCheckStatus(api, text: string) {
-    getSelections(true, ([row]) => {
-      const { state } = row;
-      if (state === text) return message.warning('状态不需要变更');
-      Modal.confirm({
-        content: '确认' + text + '【' + row.projectName + row.testType + '】?',
-        onOk: async () => {
-          await api({ id: row.id });
-          clearSelectedRowKeys();
-          reload();
-        },
-        onCancel: () => Modal.destroyAll(),
-      });
-    });
   }
 </script>

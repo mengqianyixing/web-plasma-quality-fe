@@ -25,6 +25,8 @@ export enum ReCheckButtonEnum {
   VerifyRelease = 'E_98003003',
   VerifyList = 'E_98003004',
   VisualInspectionList = 'E_98003005',
+  MaterialPreRegistrationUpdateDateCheck = 'E_9600300010',
+  ResultReRegistCheck = 'E_9600100010',
 }
 
 export enum BaseSettingButtonEnum {
@@ -110,8 +112,6 @@ export enum InspectButtonEnum {
   MaterialPreRegistrationUpdate = 'E_96003002',
   MaterialPreRegistrationReview = 'E_96003003',
   MaterialPreRegistrationUnReview = 'E_96003004',
-  MaterialPreRegistrationDisable = 'E_96003005',
-  MaterialPreRegistrationEnable = 'E_96003006',
   MaterialPreRegistrationUpdateDate = 'E_96003007',
 }
 

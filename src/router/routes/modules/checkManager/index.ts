@@ -47,14 +47,6 @@ const checkManager: AppRouteModule = {
           id: InspectButtonEnum.MaterialPreRegistrationUnReview,
           title: '取消复核',
         },
-        {
-          id: InspectButtonEnum.MaterialPreRegistrationDisable,
-          title: '停用',
-        },
-        {
-          id: InspectButtonEnum.MaterialPreRegistrationEnable,
-          title: '启用',
-        },
       ],
       meta: {
         title: '检测物料登记',
@@ -106,7 +98,7 @@ const checkManager: AppRouteModule = {
         },
         {
           id: InspectButtonEnum.ResultRegistrationItemNotCheck,
-          title: '检测不合格未登记',
+          title: '检测未检测登记',
         },
         {
           id: InspectButtonEnum.ResultRegistrationSqImport,
