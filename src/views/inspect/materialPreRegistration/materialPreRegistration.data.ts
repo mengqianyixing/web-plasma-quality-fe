@@ -188,4 +188,15 @@ export const searchSchema: FormSchema[] = [
     component: 'Input',
     label: '试剂批号',
   },
+  {
+    field: 'materialState',
+    component: 'Select',
+    label: '状态',
+    componentProps: {
+      options: [
+        { label: '停用', value: '' },
+        { label: '在用', value: '' },
+      ],
+    },
+  },
 ];

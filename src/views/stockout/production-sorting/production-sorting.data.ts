@@ -1,12 +1,11 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
-import {
-  boxTypeMap,
-  boxTypeEnum,
-  TRAY_IN_STATE_TEXT,
-  TRAY_OUT_STATE_TEXT,
-} from '@/enums/stockoutEnum';
+import { boxTypeMap, boxTypeEnum } from '@/enums/stockoutEnum';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+const serverEnumStore = useServerEnumStoreWithOut();
+const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
 export const trayInStoreColumns: BasicColumn[] = [
   {
     title: '托盘编号',
@@ -23,7 +22,7 @@ export const trayInStoreColumns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'state',
-    format: (text) => TRAY_IN_STATE_TEXT.get(text) as string,
+    format: BankTrayStatusEnum,
   },
   {
     title: '存放库房',
@@ -145,7 +144,7 @@ export const trayOutStoreColumns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'state',
-    format: (text) => TRAY_OUT_STATE_TEXT.get(text) as string,
+    format: BankTrayStatusEnum,
   },
   {
     title: '存放库房',

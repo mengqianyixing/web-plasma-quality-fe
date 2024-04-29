@@ -68,8 +68,12 @@
   import { bindBoxApi } from '@/api/tray/relocation';
   import { trayBoxListApi } from '@/api/tray/list';
   import { getInStoreListApi, getSortingBoxListApi } from '@/api/stockout/production-sorting/index';
-  import { TRAY_STORE_STATE, TRAY_IN_STATE_TEXT } from '@/enums/stockoutEnum';
+  import { TRAY_STORE_STATE } from '@/enums/stockoutEnum';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
   const state = reactive({
     activeKey: '1',
     prepareNo: '',
@@ -186,9 +190,7 @@
     const rows: Recordable[] = getSelectRows();
     if (rows.length === 0) return message.warning('请选择数据');
     if (rows.some((_) => _.state !== TRAY_STORE_STATE.OUT)) {
-      return message.warning(
-        '请选择【' + TRAY_IN_STATE_TEXT.get(TRAY_STORE_STATE.OUT) + '】的数据',
-      );
+      return message.warning('请选择【' + BankTrayStatusEnum(TRAY_STORE_STATE.OUT) + '】的数据');
     }
     openInModal(true, { data: rows });
   }

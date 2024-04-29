@@ -53,4 +53,5 @@ export enum SERVER_ENUM {
   PrintState = 'PrintState',
   ReportTemplateState = 'ReportTemplateState',
   SampleStatusEnum = 'SampleStatusEnum',
+  BankTrayStatusEnum = 'BankTrayStatusEnum',
 }
