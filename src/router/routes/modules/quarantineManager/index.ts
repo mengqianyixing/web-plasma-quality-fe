@@ -83,6 +83,12 @@ const quarantineManager: AppRouteModule = {
       },
       id: 9000220,
       component: () => import('@/views/query-statistics/stationRefuse/index.vue'),
+      authElements: [
+        {
+          id: QuarantineButtonEnum.StationRefuseExport,
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'factoryCheckFail',

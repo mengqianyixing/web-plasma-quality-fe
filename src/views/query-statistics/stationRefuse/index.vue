@@ -17,7 +17,14 @@
         </div>
       </template>
       <template #toolbar>
-        <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
+        <a-button
+          type="primary"
+          @click="handleExport"
+          :loading="loading"
+          v-auth="QuarantineButtonEnum.StationRefuseExport"
+        >
+          导出
+        </a-button>
       </template>
     </BasicTable>
   </PageWrapper>
@@ -33,6 +40,7 @@
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { message } from 'ant-design-vue';
+  import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
 
   const { currentRoute } = useRouter();
   const globalApiStore = useGlobalApiStoreWithOut();
