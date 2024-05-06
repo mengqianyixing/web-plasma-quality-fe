@@ -63,7 +63,9 @@ export const searchFormSchema: FormSchema[] = [
     field: 'acceptState',
     label: '接收状态',
     component: 'Select',
+    defaultValue: ['W', 'R'],
     componentProps: {
+      mode: 'multiple',
       options: [...sampleReceiveStatusMap].map(([value, label]) => ({ value, label })),
     },
   },
