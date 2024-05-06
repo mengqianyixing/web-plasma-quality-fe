@@ -467,7 +467,7 @@ export interface GetApiCoreBagUnqualifiedBagNoResponse {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-03-13 09:46:27`
+ * @更新时间 `2024-05-06 15:37:30`
  */
 export interface GetApiCoreBagUnqualifiedRequest {
   pageSize: string;
@@ -539,7 +539,7 @@ export interface GetApiCoreBagUnqualifiedRequest {
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
  * @请求头 `GET /api/core/bag/unqualified`
- * @更新时间 `2024-03-13 09:46:27`
+ * @更新时间 `2024-05-06 15:37:30`
  */
 export interface GetApiCoreBagUnqualifiedResponse {
   totalCount?: number;
@@ -567,6 +567,10 @@ export interface GetApiCoreBagUnqualifiedResponse {
      * 浆员编号
      */
     donorNo: string;
+    /**
+     * 血型
+     */
+    bloodType: string;
     /**
      * 采集日期
      */

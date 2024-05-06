@@ -41,6 +41,11 @@ export const columns: BasicColumn[] = [
     width: 100,
   },
   {
+    title: '血型',
+    dataIndex: 'bloodType',
+    width: 50,
+  },
+  {
     title: '浆员姓名',
     dataIndex: 'donorName',
     width: 65,
@@ -52,6 +57,8 @@ export const columns: BasicColumn[] = [
   {
     title: '存放位置',
     dataIndex: 'stockLocation',
+    width: 230,
+    ellipsis: false,
   },
   {
     title: '箱号',
