@@ -76,11 +76,7 @@
               return;
             }
             const netWeight = Number(e) - tareWeight.value! * Number(getFieldsValue().verifyNum);
-
-            //尾数做平
-            const flag = Number(netWeight) % Number(getFieldsValue().verifyNum);
-            const myopiaValue = Math.floor(Number(netWeight) / Number(getFieldsValue().verifyNum));
-            const singleBagGrossWeight = flag ? myopiaValue + 1 : myopiaValue;
+            const singleBagGrossWeight = netWeight / Number(getFieldsValue().verifyNum);
 
             setFieldsValue({
               netWeight,
@@ -99,9 +95,10 @@
       },
       {
         field: 'singleBagGrossWeight',
-        label: '单袋净重(g)',
-        component: 'Input',
+        label: '单袋平均净重(g)',
+        component: 'InputNumber',
         componentProps: {
+          precision: 2,
           disabled: true,
         },
       },
