@@ -1,11 +1,3 @@
-<!--
- * @Author: chiyifan chiyf@stpass.com
- * @Date: 2024-03-12 19:54:21
- * @LastEditors: chiyifan chiyf@stpass.com
- * @LastEditTime: 2024-03-14 16:22:45
- * @FilePath: \psms-fe\src\views\inbound-management\components\PlasmaBatchDetailModal\index.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
   <BasicModal v-bind="$attrs" @register="register" title="验收详情" width="1400px" :minHeight="600">
     <template #footer>
@@ -27,7 +19,7 @@
         <span>{{ row.collectAt ? dayjs(row.collectAt).format('YYYY-MM-DD') : '-' }}</span>
       </template>
       <template #verifyAt="{ row }">
-        <span>{{ row.verifyAt ? dayjs(row.verifyAt).format('YYYY-MM-DD') : '-' }}</span>
+        <span>{{ row.verifyAt ? dayjs(row.verifyAt).format('YYYY-MM-DD HH:mm:ss') : '-' }}</span>
       </template>
       <template #gender="{ row }">
         <span>{{ row.gender === 'M' ? '男' : row.gender === 'F' ? '女' : '' }}</span>
@@ -36,7 +28,7 @@
         <span>{{ PlasmaStateMap.get(row?.verifyState) }}</span>
       </template>
     </vxe-grid>
-    <div class="absolute bottom-2 right-[35px] text-right">血浆总袋数：{{ verifyCount }}</div>
+    <div class="absolute -bottom-1 right-[35px] text-right">血浆总袋数：{{ verifyCount }}</div>
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -65,7 +57,7 @@
       boxNo: data.record.boxNo,
       verifyResult: data.record?.field ?? '',
     });
-    _getPlasmaBag({ ...getFieldsValue() });
+    await _getPlasmaBag({ ...getFieldsValue() });
   });
 
   const gridOptions = reactive<VxeGridProps<any>>({
@@ -97,7 +89,9 @@
   });
 
   const [registerForm, { setFieldsValue, getFieldsValue }] = useForm({
-    labelWidth: 80,
+    labelWidth: 100,
+    baseColProps: { flex: '0 1 285px' },
+    actionColOptions: { flex: '0 1 200px' },
     schemas: searchFormSchema,
     showResetButton: false,
   });
@@ -114,7 +108,7 @@
   }
 
   async function handleSubmit() {
-    _getPlasmaBag({ ...getFieldsValue() });
+    await _getPlasmaBag({ ...getFieldsValue() });
   }
 
   function handleClose() {

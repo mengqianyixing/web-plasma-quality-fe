@@ -640,7 +640,7 @@ export interface GetApiCoreBatchPlasmaVerifyBatchNoResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/bag`
- * @更新时间 `2024-01-09 14:02:50`
+ * @更新时间 `2024-05-06 16:30:11`
  */
 export interface GetApiCoreBatchPlasmaVerifyBagRequest {
   /**
@@ -652,7 +652,7 @@ export interface GetApiCoreBatchPlasmaVerifyBagRequest {
    */
   batchNo?: string;
   /**
-   * 箱号
+   * 现存箱号
    */
   boxNo?: string;
   /**
@@ -663,6 +663,30 @@ export interface GetApiCoreBatchPlasmaVerifyBagRequest {
    * 验收结果 0-不合格 1-合格
    */
   verifyResult?: string;
+  /**
+   * 验收人
+   */
+  verifyBy?: string;
+  /**
+   * 浆站箱号
+   */
+  stationBoxNo?: string;
+  /**
+   * desc 降序，asc 升序
+   */
+  order?: string;
+  /**
+   * 验收时间：bbvd.create_at
+   */
+  sidx?: string;
+  /**
+   * 血浆编号
+   */
+  bagNo?: string;
+  /**
+   * 现存箱号
+   */
+  nowBoxNo?: string;
 }
 
 /**
@@ -670,13 +694,17 @@ export interface GetApiCoreBatchPlasmaVerifyBagRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/bag`
- * @更新时间 `2024-01-09 14:02:50`
+ * @更新时间 `2024-05-06 16:30:11`
  */
 export type GetApiCoreBatchPlasmaVerifyBagResponse = {
   /**
-   * 箱号
+   * 浆站箱号
    */
   boxNo?: string;
+  /**
+   * 现存箱号
+   */
+  nowBoxNo?: string;
   /**
    * 袋号
    */

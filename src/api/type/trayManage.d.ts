@@ -848,7 +848,7 @@ export interface PutApiCoreBankTrayWarehouseFerryResponse {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/tray/bag/detail`
- * @更新时间 `2024-04-29 16:54:31`
+ * @更新时间 `2024-04-29 17:23:45`
  */
 export interface GetApiCoreBankTrayBagDetailRequest {
   /**
@@ -863,6 +863,14 @@ export interface GetApiCoreBankTrayBagDetailRequest {
    * 血浆编号
    */
   bagNo?: string;
+  /**
+   * 当前页码
+   */
+  currPage: string;
+  /**
+   * 页数大小
+   */
+  pageSize: string;
 }
 
 /**
@@ -870,7 +878,7 @@ export interface GetApiCoreBankTrayBagDetailRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/tray/bag/detail`
- * @更新时间 `2024-04-29 16:54:31`
+ * @更新时间 `2024-04-29 17:23:45`
  */
 export interface GetApiCoreBankTrayBagDetailResponse {
   currPage?: number;
