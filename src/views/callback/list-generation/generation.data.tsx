@@ -133,6 +133,14 @@ export const searchFormSchema: FormSchema[] = [
       format: 'YYYY-MM-DD',
     },
   },
+  {
+    field: '[samplePublishStartDate, samplePublishEndDate]',
+    label: '样本发布日期',
+    component: 'RangePicker',
+    componentProps: {
+      format: 'YYYY-MM-DD',
+    },
+  },
 ];
 
 export const callbackModalColumns: VxeGridPropTypes.Columns = [

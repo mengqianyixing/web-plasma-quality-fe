@@ -96,6 +96,8 @@
 
     !isAModel.value &&
       (await getForm().removeSchemaByField('[sampleAcceptStartDate, sampleAcceptEndDate]'));
+    !isAModel.value &&
+      (await getForm().removeSchemaByField('[samplePublishStartDate, samplePublishEndDate]'));
   });
 
   const [registerSelectModal, { openModal }] = useModal();
