@@ -54,7 +54,7 @@
     await setFieldsValue({
       stationName: data.record.stationName,
       batchNo: data.record.batchNo,
-      boxNo: data.record.boxNo,
+      stationBoxNo: data.record.boxNo,
       verifyResult: data.record?.field ?? '',
     });
     await _getPlasmaBag({ ...getFieldsValue() });
