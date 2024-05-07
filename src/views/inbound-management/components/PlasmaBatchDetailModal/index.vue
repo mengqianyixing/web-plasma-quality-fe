@@ -88,7 +88,7 @@
     showFooter: false,
   });
 
-  const [registerForm, { setFieldsValue, getFieldsValue }] = useForm({
+  const [registerForm, { setFieldsValue, getFieldsValue, resetFields }] = useForm({
     labelWidth: 100,
     baseColProps: { flex: '0 1 285px' },
     actionColOptions: { flex: '0 1 200px' },
@@ -112,6 +112,7 @@
   }
 
   function handleClose() {
+    resetFields();
     closeModal();
     if (getFieldsValue().boxNo) {
       emit('close', record.value);
