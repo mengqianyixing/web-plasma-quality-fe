@@ -2,6 +2,18 @@
   <PageWrapper dense contentFullHeight>
     <div class="flex-grow overflow-auto h-87vh">
       <BasicTable @register="registerTable">
+        <template #totalUnqualified="{ record }">
+          <span
+            :class="
+              !record?.totalUnqualified
+                ? 'pointer-events-none'
+                : 'text-blue-500 underline cursor-pointer'
+            "
+            @click.stop.self="handleOpenDetail(record)"
+          >
+            {{ record?.totalUnqualified }}
+          </span>
+        </template>
         <template #toolbar>
           <a-button
             type="primary"
@@ -26,6 +38,7 @@
         :total="pager.total"
       />
     </div>
+    <unqualified-modal @register="registerModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -35,11 +48,12 @@
   import { PageWrapper } from '@/components/Page';
   import { getERPInspectionReportList } from '@/api/query-statistics/ERP';
   import { reactive, ref } from 'vue';
-  import { Pagination } from 'ant-design-vue';
+  import { Pagination, message } from 'ant-design-vue';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
-  import { message } from 'ant-design-vue';
+  import { useModal } from '@/components/Modal';
+  import UnqualifiedModal from '@/views/query-statistics/ERPInspectionReport/UnqualifiedModal.vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'ERPInspectionReport' });
@@ -52,6 +66,8 @@
     pageSize: 10,
     total: 0,
   });
+
+  const [registerModal, { openModal }] = useModal();
 
   function afterFetchDataFormat(data) {
     const res: any[] = [];
@@ -145,5 +161,11 @@
     } finally {
       buttonLoading.value = false;
     }
+  }
+
+  function handleOpenDetail(record) {
+    openModal(true, {
+      record,
+    });
   }
 </script>

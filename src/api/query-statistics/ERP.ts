@@ -9,6 +9,8 @@ import {
   GetApiCoreBatchErpInboundQueryResponse,
   GetApiCoreLabErpTestReportQueryRequest,
   GetApiCoreLabErpTestReportQueryResponse,
+  GetApiCoreLabErpTestReportUnqualifiedRequest,
+  GetApiCoreLabErpTestReportUnqualifiedResponse,
   GetApiProductPrepareErpOutProdRequest,
   GetApiProductPrepareErpOutProdResponse,
 } from '@/api/type/queryStatistics';
@@ -16,6 +18,7 @@ import {
 enum Api {
   ERP_INBOUND = '/api/core/batch/erp/inbound/query',
   ERP_INSPECTION_REPORT = '/api/core/lab/erp/test-report/query',
+  ERP_INSPECTION_REPORT_DETAIL = '/api/core/lab/erp/test-report/unqualified',
   ERP_OUT_PROD = '/api/product/prepare/erp-out/prod',
   ERP_OUT_NOT_PROD = '/api/core/bank/erp-out/non-prod',
   ERP_OUT_DETAIL = '/api/core/bank/erp-out/detail',
@@ -30,6 +33,14 @@ export const getERPInboundList = (params: GetApiCoreBatchErpInboundQueryRequest)
 export const getERPInspectionReportList = (params: GetApiCoreLabErpTestReportQueryRequest) =>
   defHttp.get<GetApiCoreLabErpTestReportQueryResponse>(
     { url: Api.ERP_INSPECTION_REPORT, params },
+    { joinParamsToUrl: true },
+  );
+
+export const getERPInspectionReportDetail = (
+  params: GetApiCoreLabErpTestReportUnqualifiedRequest,
+) =>
+  defHttp.get<GetApiCoreLabErpTestReportUnqualifiedResponse>(
+    { url: Api.ERP_INSPECTION_REPORT_DETAIL, params },
     { joinParamsToUrl: true },
   );
 
