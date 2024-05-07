@@ -16,36 +16,67 @@ export const columns: BasicColumn[] = [
   {
     title: '托盘编号',
     dataIndex: 'trayNo',
+    width: 100,
+  },
+  {
+    title: '采浆公司',
+    dataIndex: 'stationNames',
+    width: 130,
+    ellipsis: false,
+  },
+  {
+    title: '血浆批号',
+    dataIndex: 'batchNoes',
+    width: 130,
+    ellipsis: false,
+  },
+  {
+    title: '箱号类型',
+    dataIndex: 'boxTypes',
+    width: 130,
+    ellipsis: false,
   },
   {
     title: '已存容量(箱)',
     dataIndex: 'totalNumber',
+    width: 110,
+  },
+  {
+    title: '已存容量(袋)',
+    dataIndex: 'totalBagNumber',
+    width: 110,
   },
   {
     title: '入库状态',
     dataIndex: 'trayStatus',
     format: BankTrayStatusEnum,
+    width: 80,
   },
   {
     title: '所在库房',
     dataIndex: 'wareHouseName',
+    width: 100,
   },
   {
     title: '所在货位',
     dataIndex: 'locationNo',
+    width: 80,
   },
 
   {
     title: '打印人',
     dataIndex: 'creater',
+    width: 90,
   },
   {
     title: '打印时间',
     dataIndex: 'createAt',
+    width: 150,
   },
   {
     title: '托盘状态',
     dataIndex: '',
+    width: 80,
     customRender: ({ record }) => {
       return record.closed ? '停用' : '启用';
     },
