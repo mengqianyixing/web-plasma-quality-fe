@@ -347,7 +347,10 @@ export const searchFormSchema: FormSchema[] = [
     label: '参考样本类型',
     component: 'Select',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+      options: [
+        { label: '血浆样本', value: 'NOR' },
+        { label: '回访样本', value: 'CAB' },
+      ],
     },
   },
   {
