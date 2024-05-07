@@ -223,6 +223,7 @@
       isPreview: true,
       stationName: getStationNameById(record.stationNo),
       state: serverEnumStore.getServerEnumText(SERVER_ENUM.CallbackPlanState)(record.state),
+      model: callbackModel.value,
     });
   }
 

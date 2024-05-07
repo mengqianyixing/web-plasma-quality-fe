@@ -3,7 +3,7 @@
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
         <Description @register="registerDescription" :data="descriptionData" />
-        <BasicTable @register="registerTable" />
+        <BasicTable @register="registerTable" :columns="columnsComputed" />
       </div>
     </div>
   </BasicModal>
@@ -20,6 +20,7 @@
   import { getCallbackDetail } from '@/api/callback/list-generation';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
+  import { callbackModalEnum } from '@/enums/callbackEnum';
 
   const isUpdate = ref(false);
   const isPreview = ref(false);
@@ -66,9 +67,14 @@
     schema: descriptionSchema,
   });
 
+  const callbackModel = ref('');
+  const columnsComputed = computed(() => {
+    return callbackModel.value === callbackModalEnum.A
+      ? callbackDetailModalColumns.filter((it) => (it.dataIndex as string) !== 'minPlasmaNo')
+      : callbackDetailModalColumns;
+  });
   const [registerTable, { reload }] = useTable({
     api: getCallbackDetail,
-    columns: callbackDetailModalColumns,
     formConfig: {
       schemas: callbackDetailFormSchema,
       transformDateFunc(date) {
@@ -110,6 +116,7 @@
     isUpdate.value = data.isUpdate;
     isPreview.value = data.isPreview;
     batchNo.value = data.planNo;
+    callbackModel.value = data.model;
     descriptionData.value = data;
     reload();
   });
