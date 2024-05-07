@@ -333,12 +333,8 @@ const nonconformity: AppRouteModule = {
       component: () => import('@/views/stockout/plasma-summary/index.vue'),
       authElements: [
         {
-          id: StockOutButtonEnum.PlasmaSummaryPlasmaSummaryReport,
-          title: '血浆汇总表',
-        },
-        {
-          id: StockOutButtonEnum.PlasmaSummaryPlasmaTrackUnqReport,
-          title: '续追踪不合格记录',
+          id: StockOutButtonEnum.PlasmaSummaryReport,
+          title: '打印',
         },
       ],
     },

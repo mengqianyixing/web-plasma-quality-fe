@@ -223,8 +223,7 @@ export enum StockOutButtonEnum {
   NonPlasmaTransferRecordReport = 'E_91006011',
   PlasmaTransferApplyReport = 'E_91006012',
 
-  PlasmaSummaryPlasmaSummaryReport = 'E_91007001',
-  PlasmaSummaryPlasmaTrackUnqReport = 'E_91007002',
+  PlasmaSummaryReport = 'E_91007001',
 }
 
 export enum SampleManageButtonEnum {
