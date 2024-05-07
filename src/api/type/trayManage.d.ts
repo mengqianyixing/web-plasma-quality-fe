@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2024-04-29 15:43:12`
+ * @更新时间 `2024-05-06 18:36:10`
  */
 export interface GetApiCoreBankTraiesRequest {
   /**
@@ -86,7 +86,7 @@ export interface GetApiCoreBankTraiesRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2024-04-29 15:43:12`
+ * @更新时间 `2024-05-06 18:36:10`
  */
 export interface GetApiCoreBankTraiesResponse {
   /**
@@ -157,6 +157,18 @@ export interface GetApiCoreBankTraiesResponse {
      * DLV-出库中,REC-入库中,MVE-移库中,FRY-越库中,IN-在库,OUT-不在库
      */
     trayStatus?: string;
+    /**
+     * 采浆公司，例如：简阳,南江
+     */
+    stationNames?: string;
+    /**
+     * 血浆批号，例如：12120240407,12120240408,B101107
+     */
+    batchNoes?: string;
+    /**
+     * 箱号类型，例如：WTL,WTH,RTL,TL,T,N
+     */
+    boxTypes?: string;
   }[];
 }
 

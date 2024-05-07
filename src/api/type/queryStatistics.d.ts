@@ -4158,4 +4158,72 @@ export type GetApiSearchSampleLabResponse = {
   other: string;
 }[];
 
+/**
+ * 接口 [ERP-检验报告查询：不合格血浆详情列表↗](https://yapi.sharing8.cn/project/529/interface/api/34590) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/lab/erp/test-report/unqualified`
+ * @更新时间 `2024-05-07 15:07:56`
+ */
+export interface GetApiCoreLabErpTestReportUnqualifiedRequest {
+  /**
+   * 当前页码
+   */
+  currPage: string;
+  /**
+   * 页数大小
+   */
+  pageSize: string;
+  /**
+   * 血浆批号
+   */
+  batchNo: string;
+  /**
+   * 效价类型
+   */
+  titerType: string;
+}
+
+/**
+ * 接口 [ERP-检验报告查询：不合格血浆详情列表↗](https://yapi.sharing8.cn/project/529/interface/api/34590) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/lab/erp/test-report/unqualified`
+ * @更新时间 `2024-05-07 15:07:56`
+ */
+export type GetApiCoreLabErpTestReportUnqualifiedResponse = {
+  /**
+   * 浆员姓名
+   */
+  donorName?: string;
+  /**
+   * 浆员编号
+   */
+  donorNo?: string;
+  /**
+   * 血浆编号
+   */
+  bagNo?: string;
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+  /**
+   * 验收净重（g）
+   */
+  netWeight?: number;
+  /**
+   * 效价类型
+   */
+  titerType?: string;
+  /**
+   * 不合格原因
+   */
+  unqualifiedReason?: string;
+  /**
+   * 入不合格库日期
+   */
+  inStoreTime?: string;
+}[];
+
 /* prettier-ignore-end */

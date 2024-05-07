@@ -217,6 +217,11 @@ export const callbackDetailModalColumns: BasicColumn[] = [
     width: 40,
   },
   {
+    title: '血型',
+    dataIndex: 'bloodType',
+    width: 40,
+  },
+  {
     title: '浆员状态',
     dataIndex: 'donatorStatus',
     format: (text) => {

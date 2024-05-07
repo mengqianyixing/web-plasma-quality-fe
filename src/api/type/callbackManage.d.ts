@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback`
- * @更新时间 `2024-03-09 10:57:49`
+ * @更新时间 `2024-05-07 15:49:41`
  */
 export interface GetApiCoreDonorCallbackRequest {
   pageSize: string;
@@ -49,6 +49,14 @@ export interface GetApiCoreDonorCallbackRequest {
    * 回访样本接收日期止
    */
   sampleAcceptEndDate?: string;
+  /**
+   * 回访样本发布日期
+   */
+  samplePublishStartDate: string;
+  /**
+   * 回访样本发布日期
+   */
+  samplePublishEndDate: string;
 }
 
 /**
@@ -56,7 +64,7 @@ export interface GetApiCoreDonorCallbackRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback`
- * @更新时间 `2024-03-09 10:57:49`
+ * @更新时间 `2024-05-07 15:49:41`
  */
 export interface GetApiCoreDonorCallbackResponse {
   totalCount?: number;
@@ -262,7 +270,7 @@ export type PostApiCoreDonorCallbackNeedResponse = null;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-30 10:55:20`
+ * @更新时间 `2024-05-07 10:35:29`
  */
 export interface GetApiCoreDonorCallbackDetailRequest {
   /**
@@ -290,7 +298,7 @@ export interface GetApiCoreDonorCallbackDetailRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-30 10:55:20`
+ * @更新时间 `2024-05-07 10:35:29`
  */
 export type GetApiCoreDonorCallbackDetailResponse = {
   stationNo: string;
@@ -298,6 +306,10 @@ export type GetApiCoreDonorCallbackDetailResponse = {
   donorName: string;
   idcardId: string;
   gender: string;
+  /**
+   * 血型
+   */
+  bloodType: string;
   donatorStatus: string;
   immType: string;
   refuseDate?: string | null;
