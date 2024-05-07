@@ -11,7 +11,7 @@ import { PlasmaStateMap } from '@/enums/plasmaEnum';
 
 export const columns: BasicColumn[] = [
   {
-    title: '箱号',
+    title: '浆站箱号',
     dataIndex: 'boxNo',
     slots: { customRender: 'boxNo' },
   },
@@ -70,7 +70,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: 'boxNo',
-    label: '血浆箱号',
+    label: '浆站箱号',
     component: 'Input',
   },
   {

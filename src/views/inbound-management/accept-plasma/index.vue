@@ -28,24 +28,24 @@
               <span>{{ acceptList?.length }}</span>
             </div>
             <div class="flex gap-2">
-              <a-button @click="handlePlasmaUnqualified" type="primary" :disabled="!batchNo"
-                >血浆不合格</a-button
-              >
-              <a-button @click="handleSampleUnqualified" type="primary" :disabled="!batchNo"
-                >样本不合格</a-button
-              >
-              <a-button @click="handleMissNumRegister" type="primary" :disabled="!batchNo"
-                >缺浆登记</a-button
-              >
-              <a-button @click="suspendModal('BOX')" type="primary" :disabled="!batchNo"
-                >暂停箱记录</a-button
-              >
-              <a-button @click="suspendModal('BCH')" type="primary" :disabled="!batchNo"
-                >暂停批记录</a-button
-              >
-              <a-button @click="completeAccept" type="primary" :disabled="!batchNo"
-                >完成验收</a-button
-              >
+              <a-button @click="handlePlasmaUnqualified" type="primary" :disabled="!batchNo">
+                血浆不合格
+              </a-button>
+              <a-button @click="handleSampleUnqualified" type="primary" :disabled="!batchNo">
+                样本不合格
+              </a-button>
+              <a-button @click="handleMissNumRegister" type="primary" :disabled="!batchNo">
+                缺浆登记
+              </a-button>
+              <a-button @click="suspendModal('BOX')" type="primary" :disabled="!batchNo">
+                暂停箱记录
+              </a-button>
+              <a-button @click="suspendModal('BCH')" type="primary" :disabled="!batchNo">
+                暂停批记录
+              </a-button>
+              <a-button @click="completeAccept" type="primary" :disabled="!batchNo">
+                完成验收
+              </a-button>
               <a-button
                 @click="
                   openInModal(true, {
@@ -83,7 +83,7 @@
     <LoginModal
       @register="registerLoginModal"
       @success="handleSuccess"
-      :auth-code="ReCheckButtonEnum.ReCheckLogin"
+      :auth-code="ReCheckButtonEnum.MissNumCheck"
     />
     <BatchDetail @register="registerBatchDetail" @close="handleBatchDetailClose" />
     <BoxDetail @register="registerBoxDetail" @success="handleGoDetail" />
