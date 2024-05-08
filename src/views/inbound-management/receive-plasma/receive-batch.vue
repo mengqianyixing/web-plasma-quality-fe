@@ -36,9 +36,9 @@
               >
                 托盘入库
               </a-button>
-              <a-button type="primary" @click="handleAcceptSample" :disabled="!filterForm.batchNo"
-                >接收</a-button
-              >
+              <a-button type="primary" @click="handleAcceptSample" :disabled="!filterForm.batchNo">
+                接收
+              </a-button>
             </div>
           </div>
         </template>
@@ -254,6 +254,7 @@
 
   // 批号框确认
   async function batchModalSuccess(data) {
+    trayNo.value = '';
     batchNo.value = data;
     filterForm.value = await getAccepts(data);
   }

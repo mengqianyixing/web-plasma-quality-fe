@@ -73,7 +73,7 @@ export const receivePause = (params: PostApiCoreBatchPlasmaAcceptBatchPauseReque
 };
 
 // 血浆接收-接收托盘校验
-export const checkTrayNo = (params: GetApiCoreBatchTrayCheckTrayNoRequest) => {
+export const checkTrayNo = (params: GetApiCoreBatchTrayCheckTrayNoRequest['trayNo']) => {
   return defHttp.get<GetApiCoreBatchTrayCheckTrayNoResponse>({
     url: `${Api.CheckTrayNo}/${params}`,
   });
