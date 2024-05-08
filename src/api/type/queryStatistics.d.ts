@@ -1227,7 +1227,7 @@ export interface GetApiCoreLabErpTestReportQueryResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/product/inquiry`
- * @更新时间 `2024-03-13 10:50:20`
+ * @更新时间 `2024-05-08 11:13:06`
  */
 export interface PostApiProductInquiryRequest {
   /**
@@ -1283,7 +1283,7 @@ export interface PostApiProductInquiryRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/product/inquiry`
- * @更新时间 `2024-03-13 10:50:20`
+ * @更新时间 `2024-05-08 11:13:06`
  */
 export interface PostApiProductInquiryResponse {
   totalCount: number;
@@ -1334,6 +1334,7 @@ export interface PostApiProductInquiryResponse {
      * 代数
      */
     bagCount: string;
+    orderNo: string;
   }[];
   currPage: null;
 }

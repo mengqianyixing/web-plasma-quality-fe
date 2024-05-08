@@ -12,24 +12,27 @@ export const columns: BasicColumn[] = [
     title: '名单编号',
     dataIndex: 'planNo',
     slots: { customRender: 'planNo' },
-    width: 120,
+    width: 110,
   },
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 75,
   },
   {
     title: '浆员数量',
     dataIndex: 'donorNum',
+    width: 80,
   },
   {
     title: '生成人',
     dataIndex: 'creator',
+    width: 80,
   },
   {
     title: '生成日期',
     dataIndex: 'createAt',
-    width: 120,
+    width: 100,
   },
   {
     title: '样本批号',
@@ -39,45 +42,47 @@ export const columns: BasicColumn[] = [
   {
     title: '自主回访',
     dataIndex: 'selfBackNum',
-    width: 80,
+    width: 75,
   },
   {
     title: '回访成功',
     dataIndex: 'okNum',
-    width: 80,
+    width: 75,
   },
   {
     title: '回访失败',
     dataIndex: 'failedNum',
-    width: 80,
+    width: 75,
   },
   {
     title: '恢复采浆',
     dataIndex: 'recoverNum',
-    width: 80,
+    width: 75,
   },
   {
     title: '未回访',
     dataIndex: 'noVisitNum',
-    width: 80,
+    width: 60,
   },
   {
     title: '样本接收人',
     dataIndex: 'sampleAcceptBy',
+    width: 88,
   },
   {
     title: '样本接收日期',
     dataIndex: 'sampleAcceptAt',
-    width: 100,
+    width: 105,
   },
   {
     title: '样本发布人',
     dataIndex: 'samplePublishBy',
+    width: 100,
   },
   {
     title: '样本发布日期',
     dataIndex: 'samplePublishAt',
-    width: 100,
+    width: 105,
   },
   {
     title: '确认人',
@@ -298,6 +303,10 @@ export const callbackDetailModalColumns: BasicColumn[] = [
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
     width: 100,
+  },
+  {
+    title: '剩余天数',
+    dataIndex: 'deadline',
   },
 ];
 

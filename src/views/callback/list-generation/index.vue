@@ -247,3 +247,8 @@
     });
   }
 </script>
+<style scoped>
+  :deep(.ant-table th) {
+    white-space: wrap;
+  }
+</style>

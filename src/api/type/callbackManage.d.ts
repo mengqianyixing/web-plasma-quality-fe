@@ -270,7 +270,7 @@ export type PostApiCoreDonorCallbackNeedResponse = null;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-05-07 10:35:29`
+ * @更新时间 `2024-05-08 14:57:32`
  */
 export interface GetApiCoreDonorCallbackDetailRequest {
   /**
@@ -298,7 +298,7 @@ export interface GetApiCoreDonorCallbackDetailRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-05-07 10:35:29`
+ * @更新时间 `2024-05-08 14:57:32`
  */
 export type GetApiCoreDonorCallbackDetailResponse = {
   stationNo: string;
@@ -315,6 +315,10 @@ export type GetApiCoreDonorCallbackDetailResponse = {
   refuseDate?: string | null;
   refuseReason?: string | null;
   minCollTime: string;
+  /**
+   * 剩余天数
+   */
+  deadline: string;
   minPlasmaNo: string;
   maxCollectTime: string;
   plasmaCount: number;
