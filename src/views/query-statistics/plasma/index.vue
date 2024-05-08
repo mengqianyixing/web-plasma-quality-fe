@@ -25,7 +25,7 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { message } from 'ant-design-vue';
 
-  import { cloneDeep, isEmpty } from 'lodash-es';
+  import { cloneDeep, isNull, isEqual } from 'lodash-es';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -91,6 +91,16 @@
     immediate: false,
   });
 
+  function isEmptyValue(value) {
+    return !(
+      isEqual(value, {}) || // 空对象
+      typeof value === 'undefined' || // undefined
+      isNull(value) || // null
+      value === '' || // 空字符串
+      (Array.isArray(value) && value.length === 0)
+    );
+  }
+
   function deleteInvalidProperties(obj, strict = true) {
     if (!obj) return obj;
     const copyObj = cloneDeep(obj);
@@ -99,7 +109,7 @@
         copyObj[key] = deleteInvalidProperties(value, strict);
         value = copyObj[key];
       }
-      if (isEmpty(value)) {
+      if (!isEmptyValue(value)) {
         delete copyObj[key];
       }
     });
