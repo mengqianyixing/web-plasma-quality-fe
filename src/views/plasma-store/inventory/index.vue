@@ -10,6 +10,7 @@
           <a-button
             type="primary"
             class="absolute right-8"
+            :loading="loading"
             @click="handleExport"
             v-auth="SearchManager.InventoryExport"
           >
@@ -23,7 +24,7 @@
 
 <script lang="ts" setup>
   import { SearchManager } from '@/enums/authCodeEnum';
-  import { onMounted, reactive, watchEffect, ref, nextTick } from 'vue';
+  import { onMounted, reactive, watchEffect, ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { useStation } from '@/hooks/common/useStation';
   import { VxeGridProps } from 'vxe-table';
@@ -41,11 +42,7 @@
   const { createMessage } = useMessage();
 
   const { stationOptions, getStationNameById } = useStation();
-  onMounted(async () => {
-    nextTick(async () => {
-      await initTableData();
-    });
-
+  onMounted(() => {
     watchEffect(() => {
       updateSchema({
         field: 'stationNo',
@@ -131,7 +128,7 @@
   });
 
   const tableLoading = ref(false);
-  const tableData = ref<Recordable[]>([{}]);
+  const tableData = ref<Recordable[]>([]);
   async function initTableData() {
     try {
       const values = getFieldsValue();
@@ -170,6 +167,7 @@
     await initTableData();
   }
 
+  const loading = ref(false);
   async function handleExport() {
     const values = getFieldsValue();
 
@@ -192,6 +190,7 @@
     delete searchParams.dateKey;
     delete searchParams.date;
 
+    loading.value = true;
     const originExportData = await inventoryDetailApi(searchParams as GetApiCoreBankStockRequest);
 
     if (originExportData.length === 0) {
@@ -212,6 +211,8 @@
         return omit(it, ['inWeightG', 'outWeightG']);
       }),
     });
+
+    loading.value = false;
   }
 </script>
 
