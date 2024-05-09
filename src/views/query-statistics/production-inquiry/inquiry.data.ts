@@ -3,6 +3,7 @@ import { BasicColumn } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import dayjs from 'dayjs';
+import { PLASMA_STATUS_TEXT } from '@/enums/productionPlanEnum';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 
@@ -10,10 +11,12 @@ export const columns: BasicColumn[] = [
   {
     title: '制造批号',
     dataIndex: 'mesId',
+    slots: { customRender: 'mesId' },
   },
   {
     title: '投产类型',
     dataIndex: 'orderType',
+    width: 80,
   },
   {
     title: '计划出库日期',
@@ -106,5 +109,60 @@ export const searchFormSchema: FormSchema[] = [
     field: '[batchNoBegin, batchNoEnd]',
     component: 'InputRange',
     label: '血浆批号',
+  },
+];
+
+export const productionInquiryDetailColumns: BasicColumn[] = [
+  {
+    title: '采浆公司',
+    dataIndex: 'stationName',
+    width: 80,
+  },
+  {
+    title: '血浆批号',
+    dataIndex: 'batchNo',
+    ellipsis: false,
+  },
+  {
+    title: '血浆箱号',
+    dataIndex: 'boxNo',
+    ellipsis: false,
+  },
+  {
+    title: '血浆编号',
+    dataIndex: 'bagNo',
+    ellipsis: false,
+  },
+  {
+    title: '采集日期',
+    format: (text) => text?.slice(0, 10),
+    dataIndex: 'collectAt',
+  },
+  {
+    title: '浆员编号',
+    dataIndex: 'fkDonorNo',
+  },
+  {
+    title: '浆员姓名',
+    dataIndex: 'donorName',
+  },
+  {
+    title: '血型',
+    dataIndex: 'bloodType',
+  },
+  {
+    title: '效价类型',
+    dataIndex: 'immunity',
+  },
+  {
+    title: '效价值',
+    dataIndex: 'titer',
+  },
+  {
+    title: '血浆状态',
+    dataIndex: 'verified',
+    customRender: ({ record }) => {
+      return PLASMA_STATUS_TEXT.get(record.verified);
+    },
   },
 ];
