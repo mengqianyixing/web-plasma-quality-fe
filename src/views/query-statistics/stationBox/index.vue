@@ -48,8 +48,8 @@
   });
 
   function _getStationBoxList(params) {
-    const { stationNo, batchStartNo, batchEndNo, boxNo } = params;
-    if (!stationNo && !batchStartNo && !batchEndNo && !boxNo) {
+    const { stationNo, batchStartNo, batchEndNo, boxNo, rawImm } = params;
+    if (!stationNo && !batchStartNo && !batchEndNo && !boxNo && !rawImm) {
       createMessage.warning('请输入查询条件');
       return Promise.reject();
     }
