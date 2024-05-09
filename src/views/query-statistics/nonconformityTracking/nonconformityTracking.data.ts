@@ -4,6 +4,7 @@ import { useStation } from '@/hooks/common/useStation';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { getNonReasonListApi } from '@/api/query-statistics/nonconformityTracking';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import dayjs from 'dayjs';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const BlockSource = serverEnumStore.getServerEnumText(SERVER_ENUM.BagBlockSource);
@@ -74,6 +75,9 @@ export const columns: BasicColumn[] = [
   {
     title: '打印时间',
     dataIndex: 'printAt',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
     width: 130,
   },
 ];
