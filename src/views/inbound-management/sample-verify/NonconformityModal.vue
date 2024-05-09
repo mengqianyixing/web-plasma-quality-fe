@@ -43,19 +43,6 @@
     showActionButtonGroup: false,
     schemas: [
       {
-        field: 'checker',
-        component: 'InputSearch',
-        label: '复核人',
-        componentProps: {
-          'enter-button': '登录',
-          placeholder: '请点击登录按钮',
-          readonly: true,
-          onSearch: handleLogin,
-        },
-        colProps: { span: 20 },
-        required: true,
-      },
-      {
         field: 'unqualifiedReasonCode',
         label: '不合格原因',
         component: 'ApiSelect',
@@ -74,6 +61,19 @@
         field: 'sampleNo',
         label: '样本编号',
         component: 'Input',
+        colProps: { span: 20 },
+        required: true,
+      },
+      {
+        field: 'checker',
+        component: 'InputSearch',
+        label: '复核人',
+        componentProps: {
+          'enter-button': '登录',
+          placeholder: '请点击登录按钮',
+          readonly: true,
+          onSearch: handleLogin,
+        },
         colProps: { span: 20 },
         required: true,
       },
