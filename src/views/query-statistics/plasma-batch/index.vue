@@ -57,18 +57,17 @@
 
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema, columnsByQuarantine } from './batch.data';
-  import { Pagination, Tabs } from 'ant-design-vue';
+  import { Pagination, Tabs, message } from 'ant-design-vue';
 
   import { PageWrapper } from '@/components/Page';
   import {
     getPlasmaBatchList,
     getPlasmaBatchListByQuarantine,
   } from '@/api/query-statistics/plasma-batch';
-  import { reactive, ref, watch } from 'vue';
+  import { reactive, ref } from 'vue';
   import { getHeader, formatData, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
-  import { message } from 'ant-design-vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'PlasmaBatchQueryStatistics' });
@@ -80,21 +79,6 @@
   const APagination = Pagination;
 
   const currentKey = ref('come');
-
-  watch(
-    () => currentKey.value,
-    (val) => {
-      if (val === 'come') {
-        setTimeout(() => {
-          reloadLeft();
-        }, 0);
-      } else {
-        setTimeout(() => {
-          reloadRight();
-        }, 0);
-      }
-    },
-  );
 
   const pager = reactive({
     current: 1,
@@ -156,6 +140,7 @@
     bordered: true,
     showIndexColumn: false,
     canResize: false,
+    immediate: false,
   });
 
   function rightFormat(data) {
@@ -213,6 +198,7 @@
     bordered: true,
     showIndexColumn: false,
     canResize: false,
+    immediate: false,
   });
   function handlePageChange(e) {
     pager.current = e;
