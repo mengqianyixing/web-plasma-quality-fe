@@ -71,7 +71,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: '[samplePubStartDate, samplePubEndDate]',
     component: 'RangePicker',
-    label: '回访样本检测日期',
+    label: '检测发布日期',
     componentProps: {
       valueFormat: 'YYYY-MM-DD',
     },
