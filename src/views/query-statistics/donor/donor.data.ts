@@ -233,14 +233,6 @@ export const batchColumns: BasicColumn[] = [
         width: 120,
       },
       {
-        title: '浆站检验日期',
-        dataIndex: ['trackedSeeInfo', 'stationCheckDate'],
-        format(text) {
-          return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-        },
-        width: 120,
-      },
-      {
         title: '厂家复检日期',
         dataIndex: ['trackedSeeInfo', 'reCheckDate'],
         format(text) {

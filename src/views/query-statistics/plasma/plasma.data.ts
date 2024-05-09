@@ -176,14 +176,6 @@ export const columns: BasicColumn[] = [
         },
       },
       {
-        title: '浆站检验日期',
-        dataIndex: ['trackedSeeInfo', 'stationCheckDate'],
-        width: 150,
-        format(text) {
-          return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-        },
-      },
-      {
         title: '厂家复检日期',
         dataIndex: ['trackedSeeInfo', 'reCheckDate'],
         width: 150,
