@@ -31,29 +31,34 @@
 
 <script lang="tsx" setup>
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { BasicForm, useForm, FormSchema } from '@/components/Form';
-  import { BasicColumn, useTable, BasicTable } from '@/components/Table';
+  import { BasicForm, FormSchema, useForm } from '@/components/Form';
+  import { BasicColumn, BasicTable, useTable } from '@/components/Table';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
-  import { Input, FormItem, FormItemRest, Button } from 'ant-design-vue';
+  import { Button } from 'ant-design-vue';
   import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons-vue';
-  import { ref, h } from 'vue';
+  import { h, ref } from 'vue';
   import dayjs from 'dayjs';
   import { useMessage } from '@/hooks/web/useMessage';
   import {
-    getPrepareList,
     getPickBatch,
     getPickBox,
-    pickBag,
-    revokePickBag,
     getPickedBatch,
     getPickedBox,
+    getPrepareList,
     getSummaryPreview,
+    pickBag,
+    revokePickBag,
   } from '@/api/stockout/production-preparation.js';
   import { useStation } from '@/hooks/common/useStation';
-  import { prepareStateMap, bagFlagMap, pickModeMap } from '@/enums/stockoutEnum';
+  import { bagFlagMap, pickModeMap, prepareStateMap } from '@/enums/stockoutEnum';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import {
+    GetApiProductPrepareSummaryPreviewRequest,
+    PostApiProductPreparePickBagRequest,
+    PostApiProductPrepareRevokePickBagRequest,
+  } from '@/api/type/productionPreparation';
 
   const { stationOptions } = useStation();
   const serverEnumStore = useServerEnumStoreWithOut();
@@ -74,10 +79,10 @@
     const prodTypeName = PlasmaType(prodType.value);
     const untablePropsCols = [...columnsUn]; // 未挑选表格列
     // 更新汇总数据
-    _getPrepareList();
+    await _getPrepareList();
     // 按批
     if (data.isBatch) {
-      updateSchema([
+      await updateSchema([
         {
           component: 'Select',
           label: '首次挑浆',
@@ -119,7 +124,7 @@
         ],
       });
     } else {
-      updateSchema([
+      await updateSchema([
         {
           component: 'Select',
           label: '首次挑浆',
@@ -164,7 +169,7 @@
     }
     // 非普浆
     if (prodType.value !== 'N') {
-      updateSchema([
+      await updateSchema([
         {
           component: 'Select',
           label: '效价类型',
@@ -203,7 +208,7 @@
         },
       );
     } else {
-      updateSchema([
+      await updateSchema([
         {
           component: 'Input',
           label: '效价类型',
@@ -214,7 +219,7 @@
           },
         },
       ]);
-      setFieldsValue({
+      await setFieldsValue({
         titerLevel: '普通',
       });
       untablePropsCols.push({
@@ -226,8 +231,8 @@
     setProps({
       columns: untablePropsCols,
     });
-    queryUntable();
-    reloaded();
+    await queryUntable();
+    await reloaded();
   });
 
   // 关闭弹框前
@@ -258,37 +263,10 @@
       labelWidth: 90,
     },
     {
-      field: 'minCollectDay',
-      defaultValue: '', // 第一个默认值
-      fields: ['maxCollectDay'],
-      defaultValueObj: { maxCollectDay: '' }, // 第二个默认值
-      component: 'Input',
+      field: '[minCollectDay,maxCollectDay]',
+      label: '采集天数',
+      component: 'InputRange',
       colProps: { span: 5 },
-      renderColContent({ model, field }, { disabled }) {
-        return (
-          <FormItem name="minCollectDay" label="采集天数" label-col={{ style: { width: '90px' } }}>
-            <Input.Group compact>
-              <Input
-                disabled={disabled}
-                style="width: 130px"
-                v-model:value={model[field]}
-                autocomplete="off"
-                placeholder="请输入"
-              ></Input>
-              <span style="margin-top: 4px;padding: 0 15px;border-right: 0;">至</span>
-              <FormItemRest>
-                <Input
-                  style="width: 130px; margin-left: -1px;"
-                  placeholder="请输入"
-                  autocomplete="off"
-                  v-model:value={model['maxCollectDay']}
-                  disabled={disabled}
-                />
-              </FormItemRest>
-            </Input.Group>
-          </FormItem>
-        );
-      },
     },
     {
       component: 'Input',
@@ -321,37 +299,10 @@
       colProps: { span: 5 },
     },
     {
-      field: 'minTiter',
-      defaultValue: '', // 第一个默认值
-      fields: ['maxTiter'],
-      defaultValueObj: { maxTiter: '' }, // 第二个默认值
-      component: 'Input',
+      field: '[minTiter,maxTiter]',
+      label: '效价范围',
+      component: 'InputRange',
       colProps: { span: 5 },
-      renderColContent({ model, field }, { disabled }) {
-        return (
-          <FormItem name="minTiter" label="效价范围" label-col={{ style: { width: '90px' } }}>
-            <Input.Group compact>
-              <Input
-                disabled={disabled}
-                style="width: 130px"
-                v-model:value={model[field]}
-                autocomplete="off"
-                placeholder="请输入"
-              ></Input>
-              <span style="margin-top: 4px;padding: 0 15px;border-right: 0;">至</span>
-              <FormItemRest>
-                <Input
-                  style="width: 130px; margin-left: -1px;"
-                  autocomplete="off"
-                  placeholder="请输入"
-                  v-model:value={model['maxTiter']}
-                  disabled={disabled}
-                />
-              </FormItemRest>
-            </Input.Group>
-          </FormItem>
-        );
-      },
     },
   ];
   const [registerForm, { updateSchema, getFieldsValue, setFieldsValue }] = useForm({
@@ -637,10 +588,10 @@
   }
 
   // 未挑选表格勾选事件
-  async function unSelectionChange(selectedRowKeys, selectedRows) {
+  async function unSelectionChange(_, selectedRows) {
     // 一个都没勾，初始化数据
     if (!selectedRows.length) {
-      _getPrepareList();
+      await _getPrepareList();
       return;
     }
     await compareFilter();
@@ -711,15 +662,14 @@
 
     pickLoading.value = true;
     try {
-      const res = await pickBag(params);
-      console.log(res);
+      await pickBag(params as unknown as PostApiProductPreparePickBagRequest);
       success('挑选成功!');
       clearSelectedRowKeys();
       clearSelectedRowKeysed();
-      queryUntable();
-      reloaded();
+      await queryUntable();
+      await reloaded();
       // 挑选成功，查询落地数据作为汇总详情数据
-      _getPrepareList();
+      await _getPrepareList();
     } finally {
       pickLoading.value = false;
     }
@@ -745,14 +695,14 @@
 
     pickLoading.value = true;
     try {
-      await revokePickBag(params);
+      await revokePickBag(params as unknown as PostApiProductPrepareRevokePickBagRequest);
       success('挑选成功!');
       clearSelectedRowKeys();
       clearSelectedRowKeysed();
-      queryUntable();
-      reloaded();
+      await queryUntable();
+      await reloaded();
       // 挑选成功，查询落地数据作为汇总详情数据
-      _getPrepareList();
+      await _getPrepareList();
     } finally {
       pickLoading.value = false;
     }
@@ -783,8 +733,9 @@
     // 普浆不需要效价类型
     prodType.value === 'N' && delete params.titerLevel;
 
-    const data = await getSummaryPreview(params);
-    prepareDetail.value = data;
+    prepareDetail.value = await getSummaryPreview(
+      params as unknown as GetApiProductPrepareSummaryPreviewRequest,
+    );
   }
 
   // 获取汇总数据（已挑非实时）
