@@ -179,7 +179,7 @@ const trayManager: AppRouteModule = {
       meta: {
         title: '批号查询',
       },
-      id: 9000280,
+      id: 9000281,
       component: () => import('@/views/query-statistics/batch-statistics/index.vue'),
     },
     {
@@ -238,7 +238,7 @@ const trayManager: AppRouteModule = {
       meta: {
         title: '浆员查询',
       },
-      id: 9000270,
+      id: 9000271,
       component: () => import('@/views/query-statistics/donor/index.vue'),
     },
     {
@@ -331,7 +331,7 @@ const trayManager: AppRouteModule = {
       meta: {
         title: '检测结果查询',
       },
-      id: 9000100,
+      id: 9000101,
       component: () => import('@/views/query-statistics/checkResult/index.vue'),
     },
 
