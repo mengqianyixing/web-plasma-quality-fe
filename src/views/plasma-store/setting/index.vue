@@ -32,7 +32,7 @@
       <template #houseName="{ record }: { record: Recordable }">
         <span
           :class="
-            record.houseType[1] === STORE_FLAG.F ? '' : 'text-blue-500 underline cursor-pointer'
+            record.houseType[1] === STORE_FLAG.S ? 'text-blue-500 underline cursor-pointer' : ''
           "
           @click.stop.self="handleDetails(record)"
         >
@@ -120,7 +120,7 @@
   }
   function handleDetails(row: Recordable) {
     houseNo.value = row.houseNo;
-    if (row.houseType[1] === STORE_FLAG.F) {
+    if (row.houseType[1] !== STORE_FLAG.S) {
       return;
     } else {
       openLoactionModal(true, { houseNo: row.houseNo });
