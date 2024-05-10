@@ -161,7 +161,7 @@ const trayManager: AppRouteModule = {
       meta: {
         title: '入库查询',
       },
-      id: 990060,
+      id: 9900600,
       component: () => import('@/views/plasma-store/entry-plasma/index.vue'),
     },
     {
