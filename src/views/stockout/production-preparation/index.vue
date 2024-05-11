@@ -156,7 +156,7 @@
       title: '投产准备号',
       dataIndex: 'prepareNo',
       align: 'left',
-      width: 180,
+      width: 120,
       resizable: true,
       slots: { customRender: 'prepareNo' },
     },
@@ -173,7 +173,7 @@
       title: '挑浆模式',
       dataIndex: 'pickMode',
       resizable: true,
-      width: 150,
+      width: 130,
       format(text) {
         return `${pickModeMap.get(text as pickModeValueEnum)}`;
       },
@@ -182,7 +182,7 @@
       title: '是否限制血浆',
       dataIndex: 'bagFlag',
       resizable: true,
-      width: 120,
+      width: 100,
       format(text) {
         return `${bagFlagMap.get(text as bagFlagValueEnum)}`;
       },
@@ -191,21 +191,21 @@
       title: '批次数量',
       dataIndex: 'batchCount',
       resizable: true,
-      width: 80,
+      width: 75,
       slots: { customRender: 'batchCount' },
     },
     {
       title: '分拣血浆数量',
       dataIndex: 'pickBagCount',
       resizable: true,
-      width: 110,
+      width: 105,
       slots: { customRender: 'pickBagCount' },
     },
     {
       title: '投产血浆数量',
       dataIndex: 'prodBagCount',
       resizable: true,
-      width: 110,
+      width: 105,
       slots: { customRender: 'prodBagCount' },
     },
     {
@@ -223,7 +223,7 @@
     {
       title: '浆员数量',
       dataIndex: 'donorCount',
-      width: 80,
+      width: 75,
       resizable: true,
       customRender: ({ record }) => {
         if (record.summary && record.summary.donorCount !== null) {
@@ -274,7 +274,7 @@
     {
       title: '状态',
       dataIndex: 'prepareState',
-      width: 100,
+      width: 80,
       resizable: true,
       format(text) {
         return `${prepareStateMap.get(text as prepareStateValueEnum)}`;
