@@ -16,7 +16,7 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { reactive } from 'vue';
+  import { nextTick, reactive } from 'vue';
   import {
     totalUnqualifiedColumns,
     columnsMap,
@@ -28,7 +28,7 @@
 
   const state = reactive({ reportNo: '', type: 1, title: '' });
 
-  const [registerTable, { redoHeight, reload, setColumns }] = useTable({
+  const [registerTable, { redoHeight, reload, setColumns, getForm }] = useTable({
     immediate: false,
     api: getUnqualifiedApi,
     columns: totalUnqualifiedColumns,
@@ -49,6 +49,10 @@
     },
   });
   const [registerModal] = useModalInner(async ({ reportNo, type, title }) => {
+    await nextTick();
+    const { setFieldsValue, getFieldsValue } = getForm();
+    const nullFormObject = Object.keys(getFieldsValue()).reduce((t, c) => ((t[c] = void 0), t), {});
+    setFieldsValue(nullFormObject);
     state.reportNo = reportNo;
     state.type = type;
     state.title = title;

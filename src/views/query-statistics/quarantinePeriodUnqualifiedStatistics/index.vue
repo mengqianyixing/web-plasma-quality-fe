@@ -37,7 +37,7 @@
   const cloneColumns = cloneDeep(columns);
   const [registerModal, { openModal }] = useModal();
 
-  const [registerTable, { setColumns, reload, getForm }] = useTable({
+  const [registerTable, { setColumns, getForm }] = useTable({
     immediate: false,
     api: getListApi,
     columns: cloneColumns,
@@ -209,7 +209,6 @@
       })),
     );
     setColumns(cloneColumns);
-    reload();
   });
   function cellClick(
     unqBagQuaType: string,

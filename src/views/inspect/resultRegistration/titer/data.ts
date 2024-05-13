@@ -70,11 +70,6 @@ export const dtSearchSchema: FormSchema[] = [
     label: '样本编号',
     component: 'Input',
   },
-  // {
-  //   field: '',
-  //   label: '板号',
-  //   component: 'Input',
-  // },
   {
     field: 'valenceResult',
     label: '效价结果',
@@ -147,11 +142,7 @@ export const importSuccessColumns = [
   { title: '样本编号', field: 'sampleNo' },
   { title: '浆员编号', field: 'donorNo' },
   { title: '浆员姓名', field: 'name' },
-  {
-    title: '血浆类型',
-    field: 'plasmaType',
-    formatter: (record) => PlasmaType(record.plasmaType),
-  },
+
   { title: '效价结果', field: 'conclusion' },
   { title: '检测日期', field: 'checkAt' },
   { title: '效价结果值', field: 'titerResult' },
