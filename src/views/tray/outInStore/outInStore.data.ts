@@ -108,7 +108,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     label: '样本批次',
     component: 'Input',
-    field: 'sampleNo',
+    field: 'batchSampleNo',
   },
   {
     label: '样本编号',
