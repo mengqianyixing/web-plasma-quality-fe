@@ -2,7 +2,6 @@ import { FormSchema } from '@/components/Form';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { useStation } from '@/hooks/common/useStation';
-import dayjs from 'dayjs';
 
 const { stationOptions } = useStation();
 
@@ -43,7 +42,6 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: '[acceptBeginAt,acceptEndAt]',
     label: '接收日期',
-    defaultValue: [dayjs().subtract(1, 'year'), dayjs()],
     component: 'RangePicker',
     componentProps: {
       valueFormat: 'YYYY-MM-DD',
