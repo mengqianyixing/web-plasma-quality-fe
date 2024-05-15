@@ -4,7 +4,6 @@ import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
 import { PlasmaOutboundTypeMap, PlasmaOutboundTypeValueEnum } from '@/enums/plasmaEnum';
 import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
 import { Select, RangePicker, FormItem, FormItemRest } from 'ant-design-vue';
-import dayjs from 'dayjs';
 
 export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
@@ -87,7 +86,6 @@ export const formSchema: FormSchema[] = [
     field: 'dateKey',
     defaultValue: 'receipt',
     fields: ['date'],
-    defaultValueObj: { date: [dayjs().subtract(1, 'year'), dayjs()] },
     component: 'Input',
     label: '日期',
     render({ model, field }, { disabled }) {

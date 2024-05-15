@@ -171,10 +171,6 @@
   async function handleExport() {
     const values = getFieldsValue();
 
-    if (!values.date) {
-      return createMessage.warning('请选择日期');
-    }
-
     if (values.dateKey === 'receipt' && values.date) {
       values.receiptStartDate = values.date[0];
       values.receiptEndDate = values.date[1];
@@ -206,7 +202,7 @@
     delete header['undefined'];
     jsonToSheetXlsx<any>({
       header,
-      filename: `库存${values.date[0]}-${values.date[1]}${dateFlag}.xlsx`,
+      filename: `库存查询-${dateFlag}.xlsx`,
       data: originExportData.map((it) => {
         return omit(it, ['inWeightG', 'outWeightG']);
       }),
