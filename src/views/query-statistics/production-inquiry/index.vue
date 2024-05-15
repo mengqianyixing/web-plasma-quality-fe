@@ -11,7 +11,7 @@
       </template>
     </BasicTable>
 
-    <ProductionInquiryDetail @register="registerModal" />
+    <PickedModal @register="registerModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -21,7 +21,7 @@
   import { PageWrapper } from '@/components/Page';
   import { getProductionInquiry } from '@/api/query-statistics/production';
 
-  import ProductionInquiryDetail from './ProductionInquiryDetail.vue';
+  import PickedModal from '@/views/stockout/production-plan/picked-modal.vue';
 
   defineOptions({ name: 'ProductionInquiry' });
 
@@ -48,6 +48,7 @@
   function handleMesIdClick(record) {
     openModal(true, {
       record,
+      disabled: true,
     });
   }
 </script>
