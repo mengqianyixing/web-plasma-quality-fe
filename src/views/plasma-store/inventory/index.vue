@@ -134,6 +134,10 @@
       const values = getFieldsValue();
       tableLoading.value = true;
 
+      if (!values.date) {
+        return createMessage.warning('请选择日期');
+      }
+
       if (values.dateKey === 'receipt' && values.date) {
         values.receiptStartDate = values.date[0];
         values.receiptEndDate = values.date[1];
