@@ -85,6 +85,7 @@
     {
       title: '采浆公司',
       field: 'stationName',
+      width: 100,
     },
     {
       title: '未挑数量',
@@ -114,6 +115,7 @@
     {
       title: '最早采集日期',
       field: 'minCollectAt',
+      width: 130,
       formatter({ cellValue }) {
         return cellValue ? dayjs(cellValue).format('YYYY-MM-DD') : '-';
       },
@@ -266,12 +268,10 @@
         {
           title: `${prodType.value}H,${prodTypeName}高效价`,
           field: 'heightCount',
-          width: 150,
         },
         {
           title: `${prodType.value}L,${prodTypeName}低效价`,
           field: 'lowCount',
-          width: 150,
         },
       );
     } else {
@@ -598,9 +598,9 @@
   }
 
   // 未挑选表格勾选事件
-  async function selectChangeEvent({ row }) {
+  async function selectChangeEvent({ records }) {
     // 一个都没勾，初始化数据
-    if (!row.length) {
+    if (!records.length) {
       await _getPrepareList();
       return;
     }
