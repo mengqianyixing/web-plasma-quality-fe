@@ -14,11 +14,7 @@
   import { PageWrapper } from '@/components/Page';
   import { getPlasmaQueryList } from '@/api/query-statistics/plasma';
   import { onMounted, ref } from 'vue';
-  import {
-    DictionaryItemKeyEnum,
-    DictionaryReasonEnum,
-    getSysSecondaryDictionary,
-  } from '@/api/_dictionary';
+  import { DictionaryReasonEnum, getSysSecondaryDictionary } from '@/api/_dictionary';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
@@ -38,14 +34,7 @@
   onMounted(async () => {
     plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
       dataKey: DictionaryReasonEnum.PlasmaFailedReason,
-      dictItemTypes: [
-        DictionaryItemKeyEnum.PlasmaFailed,
-        DictionaryItemKeyEnum.Track,
-        DictionaryItemKeyEnum.Test,
-        DictionaryItemKeyEnum.Quarantine,
-        DictionaryItemKeyEnum.Sample,
-        DictionaryItemKeyEnum.Other,
-      ],
+      dictItemTypes: [],
       show: 123,
     });
 

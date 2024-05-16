@@ -258,7 +258,6 @@
         width: it.label.length * 18,
         customRender: ({ record }) => {
           if (record.isCount) return record[checkUnKey]?.[it.dictItemId];
-          console.log(record.isCount);
           return (
             <span
               class="text-blue-500 underline cursor-pointer"
@@ -273,13 +272,11 @@
     tableList[0][1].setColumns(CheckColumns);
   });
   function cellClick(failedCode: string | null, title: string, record: Recordable, type?: string) {
-    const { getForm } = tableList[0][1];
-    const values = getForm().getFieldsValue();
     openModal(true, {
       failedCode,
       title,
       type,
-      ...values,
+      ...params,
       stationNo: record.stationNo,
     });
   }

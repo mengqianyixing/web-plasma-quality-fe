@@ -34,6 +34,7 @@
 
   defineOptions({ name: 'QuarantinePeriodUnqualifiedStatistics' });
 
+  let formData: Recordable = {};
   const cloneColumns = cloneDeep(columns);
   const [registerModal, { openModal }] = useModal();
 
@@ -82,6 +83,7 @@
         formatParams[key] = params[key];
       }
     }
+    formData = formatParams;
     return formatParams;
   }
 
@@ -216,11 +218,10 @@
     title: string,
     record: Recordable,
   ) {
-    const values = getForm().getFieldsValue();
     openModal(true, {
       failedCode,
       title,
-      ...getFormatParams(values),
+      ...formData,
       stationNo: record.stationNo,
       unqBagQuaType,
     });

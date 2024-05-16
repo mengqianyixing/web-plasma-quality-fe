@@ -45,6 +45,7 @@
   const cloneColumns = cloneDeep(columns);
 
   const [registerModal, { openModal }] = useModal();
+  let formData: Recordable = {};
 
   const [registerTable, { getForm, reload, setColumns }] = useTable({
     immediate: false,
@@ -66,6 +67,7 @@
     pagination: false,
     showIndexColumn: false,
     afterFetch: (res: Recordable[]) => {
+      formData = getForm().getFieldsValue();
       const formatData = res.map((row) => ({
         ...row,
         [backTrackUnqKey]: { ...row[backTrackUnqKey], ...row[backTrackUnqKey][projectsKey] },
@@ -171,11 +173,10 @@
     title: string,
     record: Recordable,
   ) {
-    const values = getForm().getFieldsValue();
     openModal(true, {
       failedCode,
       title,
-      ...values,
+      ...formData,
       year: record.year,
       trackType,
     });
