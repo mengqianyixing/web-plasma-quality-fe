@@ -200,6 +200,7 @@ export enum StockOutButtonEnum {
   ProductionPlanTransferReport = 'E_91004009',
   ProductionPlanMaterialReport = 'E_910040010',
   ProductionPlanPlasmaReport = 'E_910040011',
+  ProductionPlanPMS = 'E_910040012',
 
   PutIntoTrayStockOut = 'E_91005001',
   PutIntoBoxStockOut = 'E_91005002',
@@ -229,6 +230,8 @@ export enum StockOutButtonEnum {
 export enum SampleManageButtonEnum {
   SampleRelease = 'E_97003001',
   SampleArrange = 'E_97003002',
+  TestPlanAdd = 'E_97004001',
+  TestPlanUpdate = 'E_97004002',
 }
 
 export enum CallbackButtonEnum {

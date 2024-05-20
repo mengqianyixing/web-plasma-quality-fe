@@ -73,6 +73,23 @@ const sampleManager: AppRouteModule = {
         },
       ],
     },
+    {
+      path: 'test-plan',
+      name: 'TestPlan',
+      id: 970040,
+      meta: { title: '检测计划' },
+      component: () => import('@/views/sample-manage/testPlan/index.vue'),
+      authElements: [
+        {
+          id: SampleManageButtonEnum.TestPlanAdd,
+          title: '新增',
+        },
+        {
+          id: SampleManageButtonEnum.TestPlanUpdate,
+          title: '编辑',
+        },
+      ],
+    },
   ],
 };
 
