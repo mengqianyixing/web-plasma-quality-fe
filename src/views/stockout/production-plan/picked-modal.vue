@@ -53,14 +53,20 @@
             @change="change"
             class="h-full bg-white tabs"
           >
-            <TabPane v-for="tab in tabList" :key="tab.key" :tab="tab.label">
-              <div style="height: calc(100% - 20px)">
-                <component
-                  :is="componentMap.get(tab.key)"
-                  @register="tableInstanceMap.get(tab.key)[0]"
-                />
-              </div>
-            </TabPane>
+            <template v-for="tab in tabList">
+              <TabPane
+                :key="tab.key"
+                :tab="tab.label"
+                v-if="tab.key !== TAB.STACKER || state.isStacker"
+              >
+                <div style="height: calc(100% - 20px)">
+                  <component
+                    :is="componentMap.get(tab.key)"
+                    @register="tableInstanceMap.get(tab.key)[0]"
+                  />
+                </div>
+              </TabPane>
+            </template>
           </Tabs>
         </div>
       </div>
@@ -89,6 +95,7 @@
     orderNo: '',
     disabled: '',
     loading: false,
+    isStacker: false,
   });
   const cellData = ref(cellList.reduce((t, c) => ((t[c.field] = ''), t), {}));
   const initComponent = () => tabList.reduce((t, c) => (t.set(c.key, 'div'), t), new Map());
@@ -120,9 +127,10 @@
     return t;
   }, new Map());
 
-  const [registerModal] = useModalInner(async ({ orderNo, disabled }) => {
+  const [registerModal] = useModalInner(async ({ orderNo, disabled, isStacker }) => {
     state.orderNo = orderNo;
     state.disabled = disabled;
+    state.isStacker = isStacker;
     change(activeKey.value);
     getData();
   });

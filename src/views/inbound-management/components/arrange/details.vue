@@ -7,7 +7,7 @@
     @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <div class="absolute w-full h-full">
+      <div class="absolute w-full h-full arrangedt-table">
         <div class="flex-1 h-full shrink-1">
           <BasicTable @register="registerTable" />
         </div>
@@ -38,10 +38,19 @@
     formConfig: {
       schemas: searchForm.slice(-1),
     },
-    // rowClassName: ({ record }) => record.highlight ? 'bg-orange-400' : ''
+    rowClassName: (record: Recordable) => (record.highlight ? 'bg-yellow-200' : ''),
   });
   const [registerModal] = useModalInner((data) => {
     state.rackId = data.rackId;
     reload();
   });
 </script>
+<style lang="less">
+  .arrangedt-table {
+    .bg-yellow-200 {
+      .ant-table-cell {
+        background-color: inherit !important;
+      }
+    }
+  }
+</style>

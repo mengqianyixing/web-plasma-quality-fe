@@ -183,6 +183,10 @@ const nonconformity: AppRouteModule = {
           title: '撤销审核',
         },
         {
+          id: StockOutButtonEnum.ProductionPlanPMS,
+          title: 'PMS组垛',
+        },
+        {
           id: StockOutButtonEnum.ProductionPlanCheckListReport,
           title: '原料血浆投产清单',
         },

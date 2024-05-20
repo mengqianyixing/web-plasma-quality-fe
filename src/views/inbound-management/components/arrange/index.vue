@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-    <DetailsModel @register="registerDtModal"></DetailsModel>
+    <DetailsModel @register="registerDtModal" />
     <ReportModal @register="registerReportModal" />
   </BasicModal>
 </template>
@@ -76,8 +76,7 @@
     },
   });
   const [registerModal] = useModalInner((data) => {
-    // state.batchNo = data.batchNo
-    state.batchNo = '104202404492';
+    state.batchNo = data.batchNo;
     setPagination({ current: 1 });
     reload();
   });

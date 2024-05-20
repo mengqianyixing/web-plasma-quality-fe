@@ -37,6 +37,13 @@
         >
         <a-button
           type="primary"
+          @click="handleStacker"
+          v-if="isStacker"
+          v-auth="StockOutButtonEnum.ProductionPlanPMS"
+          >PMS组垛</a-button
+        >
+        <a-button
+          type="primary"
           @click="handleCancelCheck()"
           v-auth="StockOutButtonEnum.ProductionPlanReCheck"
           >撤销审核</a-button
@@ -144,7 +151,9 @@
   import { getReportApi } from '@/api/report';
   import { useModal } from '@/components/Modal';
   import { downloadReport } from '@/api/stockout/plasma-summary';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'ProductionPlan' });
 
   const [registerReportModal, { openModal: openReportModal }] = useModal();
@@ -154,6 +163,7 @@
   const open = ref(false);
   const reportLoading = ref(false);
   const cancelText = ref('');
+  const isStacker = ref(false);
 
   let iterator: AsyncIterator<any>;
 
@@ -193,6 +203,9 @@
     },
   });
 
+  globalApiStore.getSysParamsValue('regroupModel').then((res) => {
+    isStacker.value = res === 'open';
+  });
   function getSelections(onlyOne: boolean) {
     const rows = getSelectRows();
     if (rows.length === 0) {
@@ -213,14 +226,27 @@
       ${STATUS_TEXT.get(STATUS.PLI)}
       】的数据`);
     }
-    openModal(true, row);
+    openModal(true, { ...row, isStacker: isStacker.value });
   }
 
   function success() {
     clearSelectedRowKeys();
     reload();
   }
-
+  function handleStacker() {
+    const [row] = getSelections(true);
+    if (!row) return;
+    Modal.confirm({
+      content: '确认调用制造批号【' + row.mesId + '】的PMS组垛任务?',
+      onOk: async () => {
+        message.info('待开发！！！');
+        clearSelectedRowKeys();
+        reload();
+        // message.success('调用组跺任务成功！');
+      },
+      onCancel: () => Modal.destroyAll(),
+    });
+  }
   async function confirmCancel() {
     await validate();
     iterator.next();
@@ -316,7 +342,7 @@
   }
 
   function handleDetails(record: Recordable) {
-    openModal(true, { ...record, disabled: true });
+    openModal(true, { ...record, disabled: true, isStacker: isStacker.value });
   }
   async function handlePrint(reportType: string) {
     const [row] = getSelections(true);
