@@ -43,7 +43,7 @@ export const columns: BasicColumn[] = [
     slots: { customRender: 'noPassBagNum' },
   },
   {
-    title: '缺号数量',
+    title: '缺浆数量',
     dataIndex: 'lackNoNum',
     slots: { customRender: 'lackNoNum' },
   },
