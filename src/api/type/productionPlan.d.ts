@@ -819,4 +819,45 @@ export interface PutApiProductPlanReviewCancelRequest {
  */
 export interface PutApiProductPlanReviewCancelResponse {}
 
+/**
+ * 接口 [组垛垛号详情↗](https://yapi.sharing8.cn/project/529/interface/api/34800) 的 **请求类型**
+ *
+ * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
+ * @请求头 `GET /api/product/plan/stack/{orderNo}`
+ * @更新时间 `2024-05-16 18:03:00`
+ */
+export interface GetApiProductPlanStackOrderNoRequest {
+  orderNo: string;
+}
+
+/**
+ * 接口 [组垛垛号详情↗](https://yapi.sharing8.cn/project/529/interface/api/34800) 的 **返回类型**
+ *
+ * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
+ * @请求头 `GET /api/product/plan/stack/{orderNo}`
+ * @更新时间 `2024-05-16 18:03:00`
+ */
+export type GetApiProductPlanStackOrderNoResponse = {
+  /**
+   * 垛号
+   */
+  stackNo?: string;
+  /**
+   * 托盘数
+   */
+  trayNum?: number;
+  /**
+   * 血浆数
+   */
+  bagNum?: number;
+  /**
+   * 总净重
+   */
+  totalWeight?: number;
+  /**
+   * 效价类型
+   */
+  titerType?: string;
+}[];
+
 /* prettier-ignore-end */

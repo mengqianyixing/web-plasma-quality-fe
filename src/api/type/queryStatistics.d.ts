@@ -1624,10 +1624,10 @@ export interface GetApiCoreBatchStockStatisticsResponse {
  * 接口 [血浆检测-检测结果汇总↗](https://yapi.sharing8.cn/project/529/interface/api/33547) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/bag/check`
- * @更新时间 `2024-02-29 20:39:17`
+ * @请求头 `GET /api/search/plasma/check`
+ * @更新时间 `2024-05-09 15:22:36`
  */
-export interface PostApiCoreLabBagCheckRequest {
+export interface GetApiSearchPlasmaCheckRequest {
   /**
    * 采浆公司
    */
@@ -1682,10 +1682,10 @@ export interface PostApiCoreLabBagCheckRequest {
  * 接口 [血浆检测-检测结果汇总↗](https://yapi.sharing8.cn/project/529/interface/api/33547) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/bag/check`
- * @更新时间 `2024-02-29 20:39:17`
+ * @请求头 `GET /api/search/plasma/check`
+ * @更新时间 `2024-05-09 15:22:36`
  */
-export type PostApiCoreLabBagCheckResponse = {
+export type GetApiSearchPlasmaCheckResponse = {
   stationName: string;
   other: string;
   checkUn: {};
@@ -1703,68 +1703,68 @@ export type PostApiCoreLabBagCheckResponse = {
  * 接口 [血浆检测-效价结果汇总↗](https://yapi.sharing8.cn/project/529/interface/api/33562) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/bag/titer`
- * @更新时间 `2024-02-28 20:14:21`
+ * @请求头 `GET /api/search/plasma/titer`
+ * @更新时间 `2024-05-09 15:28:17`
  */
-export interface PostApiCoreLabBagTiterRequest {
+export interface GetApiSearchPlasmaTiterRequest {
   /**
    * 采浆公司
    */
-  stationNo?: string;
+  stationNo: string;
   /**
    * 血浆批号开始
    */
-  batchNoBegin?: string;
+  batchNoBegin: string;
   /**
    * 血浆批号结束
    */
-  batchNoEnd?: string;
+  batchNoEnd: string;
   /**
    * 验收发布日期开始
    */
-  verificationBegin?: string;
+  verificationBegin: string;
   /**
    * 验收发布日期结束
    */
-  verificationEnd?: string;
+  verificationEnd: string;
   /**
    * 接收日期开始
    */
-  acceptBegin?: string;
+  acceptBegin: string;
   /**
    * 接收日期结束
    */
-  acceptEnd?: string;
+  acceptEnd: string;
   /**
    * 来浆类型
    */
-  rawImm?: string;
+  rawImm: string;
   /**
    * 血浆类型
    */
-  plasmaType?: string;
+  plasmaType: string;
   /**
    * 效价类型
    */
-  titerType?: string;
+  titerType: string;
   /**
    * 检测发布日期开始
    */
-  issueBegin?: string;
+  issueBegin: string;
   /**
    * 检测发布日期结束
    */
-  issueEnd?: string;
+  issueEnd: string;
 }
 
 /**
  * 接口 [血浆检测-效价结果汇总↗](https://yapi.sharing8.cn/project/529/interface/api/33562) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/bag/titer`
- * @更新时间 `2024-02-28 20:14:21`
+ * @请求头 `GET /api/search/plasma/titer`
+ * @更新时间 `2024-05-09 15:28:17`
  */
-export type PostApiCoreLabBagTiterResponse = {
+export type GetApiSearchPlasmaTiterResponse = {
   stationName: string;
   titerCount: string;
   titerTypes: string;
@@ -1777,68 +1777,68 @@ export type PostApiCoreLabBagTiterResponse = {
  * 接口 [血浆检测-续追踪不合格汇总↗](https://yapi.sharing8.cn/project/529/interface/api/33567) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/bag/track`
- * @更新时间 `2024-02-28 20:11:08`
+ * @请求头 `GET /api/search/plasma/track`
+ * @更新时间 `2024-05-09 15:30:08`
  */
-export interface PostApiCoreLabBagTrackRequest {
+export interface GetApiSearchPlasmaTrackRequest {
   /**
    * 采浆公司
    */
-  stationNo?: string;
+  stationNo: string;
   /**
    * 血浆批号开始
    */
-  batchNoBegin?: string;
+  batchNoBegin: string;
   /**
    * 血浆批号结束
    */
-  batchNoEnd?: string;
+  batchNoEnd: string;
   /**
    * 验收发布日期开始
    */
-  verificationBegin?: string;
+  verificationBegin: string;
   /**
    * 验收发布日期结束
    */
-  verificationEnd?: string;
+  verificationEnd: string;
   /**
    * 接收日期开始
    */
-  acceptBegin?: string;
+  acceptBegin: string;
   /**
    * 接收日期结束
    */
-  acceptEnd?: string;
+  acceptEnd: string;
   /**
    * 来浆类型
    */
-  rawImm?: string;
+  rawImm: string;
   /**
    * 血浆类型
    */
-  plasmaType?: string;
+  plasmaType: string;
   /**
    * 效价类型
    */
-  titerType?: string;
+  titerType: string;
   /**
    * 检测发布日期开始
    */
-  issueBegin?: string;
+  issueBegin: string;
   /**
    * 检测发布日期结束
    */
-  issueEnd?: string;
+  issueEnd: string;
 }
 
 /**
  * 接口 [血浆检测-续追踪不合格汇总↗](https://yapi.sharing8.cn/project/529/interface/api/33567) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/bag/track`
- * @更新时间 `2024-02-28 20:11:08`
+ * @请求头 `GET /api/search/plasma/track`
+ * @更新时间 `2024-05-09 15:30:08`
  */
-export interface PostApiCoreLabBagTrackResponse {
+export interface GetApiSearchPlasmaTrackResponse {
   /**
    * 采浆公司
    */
@@ -2739,7 +2739,7 @@ export interface GetApiSearchProdPrepareResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-batch`
- * @更新时间 `2024-03-01 18:01:03`
+ * @更新时间 `2024-05-13 15:51:55`
  */
 export interface GetApiCoreBagUnqualifiedStatisticBatchRequest {
   pageSize: string;
@@ -2779,7 +2779,7 @@ export interface GetApiCoreBagUnqualifiedStatisticBatchRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-batch`
- * @更新时间 `2024-03-01 18:01:03`
+ * @更新时间 `2024-05-13 15:51:55`
  */
 export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
   totalCount?: number;
@@ -2813,25 +2813,185 @@ export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
      */
     verifyPassNum?: number;
     /**
-     * 验收不合格
+     * 验收(献血浆者符合性)
+     */
+    plasmaDonorBlockNum?: number;
+    /**
+     * 血浆验收(无样本)
+     */
+    plasmaMissSampleNum?: number;
+    /**
+     * 验收(破袋)
+     */
+    plasmaDamagedNum?: number;
+    /**
+     * 验收(无标签)
+     */
+    tagMissNum?: number;
+    /**
+     * 验收(血浆标签内容缺失)
+     */
+    tagContentMissNum?: number;
+    /**
+     * 验收(颜色异常)
+     */
+    plasmaColorErrNum?: number;
+    /**
+     * 验收(脂血)
+     */
+    plasmaLipemia?: number;
+    /**
+     * 验收(溶血)
+     */
+    plasmaHemolysisNum?: number;
+    /**
+     * 验收(其他)
+     */
+    plasmaOtherNum?: string;
+    /**
+     * 验收不合格合计
      */
     verifyUnqNum?: number;
     /**
-     * 检测不合格
+     * 验收不合格比率
+     */
+    verifyUnqRate?: string;
+    /**
+     * 检测不合格ALT
+     */
+    altNum?: number;
+    /**
+     * 检测不合格HBV-DNA
+     */
+    natHBsAgNum?: number;
+    /**
+     * 检测不合格HBsAg
+     */
+    hbsAgNum?: number;
+    /**
+     * 检测不合格HCV-RNA
+     */
+    natHCVNum?: number;
+    /**
+     * 检测不合格HCV抗体
+     */
+    hcvNum?: number;
+    /**
+     * 检测不合格HIV-1/HIV-2抗体
+     */
+    hivNum?: number;
+    /**
+     * 检测不合格HIV-RNA
+     */
+    natHIVNum?: number;
+    /**
+     * 检测不合格TP
+     */
+    tpNum?: number;
+    /**
+     * 检测不合格TP抗体
+     */
+    tpTNum?: number;
+    /**
+     * 检测不合格合计
      */
     testUnqNum?: number;
     /**
-     * 检疫期不合格
+     * 检测不合格比率
+     */
+    testUnqRate?: string;
+    /**
+     * 检疫期献血浆者符合性
+     */
+    quarantineDonorBlockNum?: number;
+    /**
+     * 检疫期不合格HBV-DNA
+     */
+    quarantineNatHBsAgNum?: number;
+    /**
+     * 检疫期不合格HBsAg
+     */
+    quarantineHBsAgNum?: number;
+    /**
+     * 检疫期不合格HCV-RNA
+     */
+    quarantineNatHCVNum?: number;
+    /**
+     * 检疫期不合格HCV抗体
+     */
+    quarantineHCVNum?: number;
+    /**
+     * 检疫期不合格HIV-1/HIV-2抗体
+     */
+    quarantineHIVNum?: number;
+    /**
+     * 检疫期不合格HIV-RNA
+     */
+    quarantineNatHIVNum?: number;
+    /**
+     * 检疫期不合格合计
      */
     quarantineUnqNum?: number;
     /**
-     * 续追踪不合格
+     * 检疫期不合格比率
+     */
+    quarantineUnqRate?: string;
+    /**
+     * 续追踪不合格HBV-DNA
+     */
+    trackNatHBsAgNum?: number;
+    /**
+     * 续追踪不合格HBsAg
+     */
+    trackHBsAgNum?: number;
+    /**
+     * 续追踪不合格HCV-RNA
+     */
+    trackNatHCVNum?: number;
+    /**
+     * 续追踪不合格HCV抗体
+     */
+    trackHCVNum?: number;
+    /**
+     * 续追踪不合格HIV-1/HIV-2抗体
+     */
+    trackHIVNum?: number;
+    /**
+     * 续追踪不合格HIV-RNA
+     */
+    trackNatHIVNum?: number;
+    /**
+     * 续追踪不合格超一年
+     */
+    EXPNum?: number;
+    /**
+     * 续追踪不合格合计
      */
     trackUnqNum?: number;
     /**
-     * 其他不合格
+     * 续追踪不合格比率
+     */
+    trackUnqRate?: string;
+    /**
+     * 其他
+     */
+    otherNum?: string;
+    /**
+     * 其他（破袋）
+     */
+    damagedNum?: string;
+    /**
+     * 其他（外部告知追溯）
+     */
+    externalTraceNum?: string;
+    /**
+     * 其他不合格合计
      */
     otherUnqNum?: number;
+    /**
+     * 其他不合格比率
+     */
+    otherUnqRate?: string;
     /**
      * 合计
      */
@@ -2968,10 +3128,10 @@ export interface PostApiCoreDonorStateResponse {
  * 接口 [厂家检测不合格查询↗](https://yapi.sharing8.cn/project/529/interface/api/33713) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/item/query`
- * @更新时间 `2024-03-05 17:42:43`
+ * @请求头 `GET /api/search/plasma/factory`
+ * @更新时间 `2024-05-15 16:28:56`
  */
-export interface PostApiCoreLabItemQueryRequest {
+export interface GetApiSearchPlasmaFactoryRequest {
   pageSize: string;
   currPage: string;
   /**
@@ -3003,10 +3163,10 @@ export interface PostApiCoreLabItemQueryRequest {
  * 接口 [厂家检测不合格查询↗](https://yapi.sharing8.cn/project/529/interface/api/33713) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/item/query`
- * @更新时间 `2024-03-05 17:42:43`
+ * @请求头 `GET /api/search/plasma/factory`
+ * @更新时间 `2024-05-15 16:28:56`
  */
-export interface PostApiCoreLabItemQueryResponse {
+export interface GetApiSearchPlasmaFactoryResponse {
   currPage: number;
   pageSize: number;
   totalCount: number;
@@ -3216,10 +3376,10 @@ export interface PostApiCoreLabSamplesLabItemResponse {
  * 接口 [血浆检测-检测结果汇总-不合格详情↗](https://yapi.sharing8.cn/project/529/interface/api/33818) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/bag/check/details`
- * @更新时间 `2024-04-20 19:39:47`
+ * @请求头 `GET /api/search/plasma/check/details`
+ * @更新时间 `2024-05-09 15:26:20`
  */
-export interface PostApiCoreLabBagCheckDetailsRequest {
+export interface GetApiSearchPlasmaCheckDetailsRequest {
   /**
    * 采浆公司
    */
@@ -3274,17 +3434,17 @@ export interface PostApiCoreLabBagCheckDetailsRequest {
   /**
    * 查询类型:1:外观；2：检测：3：其他
    */
-  type?: number;
+  type?: string;
 }
 
 /**
  * 接口 [血浆检测-检测结果汇总-不合格详情↗](https://yapi.sharing8.cn/project/529/interface/api/33818) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/bag/check/details`
- * @更新时间 `2024-04-20 19:39:47`
+ * @请求头 `GET /api/search/plasma/check/details`
+ * @更新时间 `2024-05-09 15:26:20`
  */
-export interface PostApiCoreLabBagCheckDetailsResponse {
+export interface GetApiSearchPlasmaCheckDetailsResponse {
   totalCount: number;
   pageSize: number;
   totalPage: number;
