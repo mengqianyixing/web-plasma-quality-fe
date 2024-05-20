@@ -41,8 +41,9 @@ export const columns: BasicColumn[] = [
     children: [
       {
         title: '合计',
-        dataIndex: [checkUnqKey, numKey],
         width: 70,
+        dataIndex: [checkUnqKey, numKey],
+        slots: { customRender: checkUnqKey },
       },
       {
         title: '比率(%)',
@@ -59,8 +60,9 @@ export const columns: BasicColumn[] = [
     children: [
       {
         title: '合计',
-        dataIndex: [quarantineUnqKey, numKey],
         width: 70,
+        dataIndex: [quarantineUnqKey, numKey],
+        slots: { customRender: quarantineUnqKey },
       },
       {
         title: '比率(%)',
@@ -79,6 +81,7 @@ export const columns: BasicColumn[] = [
         title: '合计',
         dataIndex: [trackUnqKey, numKey],
         width: 70,
+        slots: { customRender: trackUnqKey },
       },
       {
         title: '比率(%)',
