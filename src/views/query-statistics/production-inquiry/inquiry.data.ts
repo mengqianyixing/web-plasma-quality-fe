@@ -4,7 +4,9 @@ import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import dayjs from 'dayjs';
 import { PLASMA_STATUS_TEXT } from '@/enums/productionPlanEnum';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+const { boxText } = useServerConfig();
 const serverEnumStore = useServerEnumStoreWithOut();
 
 export const columns: BasicColumn[] = [
@@ -124,7 +126,7 @@ export const productionInquiryDetailColumns: BasicColumn[] = [
     ellipsis: false,
   },
   {
-    title: '血浆箱号',
+    title: '血浆' + boxText,
     dataIndex: 'boxNo',
     ellipsis: false,
   },

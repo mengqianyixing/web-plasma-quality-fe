@@ -3,7 +3,9 @@ import { BasicColumn } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 // import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+const { boxText } = useServerConfig();
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
@@ -17,7 +19,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'batchNo',
   },
   {
-    title: '浆站箱号',
+    title: '浆站' + boxText,
     dataIndex: 'boxNo',
   },
   {
@@ -58,7 +60,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'boxNo',
     component: 'Input',
-    label: '浆站箱号',
+    label: '浆站' + boxText,
   },
   {
     field: 'rawImm',

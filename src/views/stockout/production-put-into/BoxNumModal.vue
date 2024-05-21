@@ -34,7 +34,9 @@
   import { getBoxNumDetailList } from '@/api/stockout/production-put-into';
 
   import DetailModal from './DetailModal.vue';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+  const { boxText } = useServerConfig();
   const orderNo = ref('');
 
   defineEmits(['success', 'register']);
@@ -49,7 +51,7 @@
         dataIndex: 'prepareNo',
       },
       {
-        title: '血浆箱号',
+        title: '血浆' + boxText,
         dataIndex: 'boxNo',
       },
       {

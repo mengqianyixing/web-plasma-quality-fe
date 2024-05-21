@@ -7,7 +7,13 @@
  * @LastEditTime: 2024-01-10 15:44:41
 -->
 <template>
-  <BasicModal v-bind="$attrs" @register="registerModal" showFooter title="托盘详情" width="600px">
+  <BasicModal
+    v-bind="$attrs"
+    @register="registerModal"
+    showFooter
+    :title="trayText + '详情'"
+    width="600px"
+  >
     <BasicTable @register="registerTable" v-show="false" />
   </BasicModal>
 </template>
@@ -17,6 +23,9 @@
   import { trayDtListApi } from '@/api/tray/list';
   import { trayDtColumns, trayDtSearchSchema } from './manage.data';
   import { reactive } from 'vue';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
+
+  const { trayText } = useServerConfig();
 
   defineOptions({ name: 'TableModal' });
   const state = reactive({

@@ -10,6 +10,9 @@ import {
   CLOSED,
   CLOSED_TEXT,
 } from '@/enums/plasmaStoreEnum';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
+
+const { trayText } = useServerConfig();
 
 export const columns: BasicColumn[] = [
   {
@@ -172,7 +175,7 @@ export const locationColumns: BasicColumn[] = [
     dataIndex: 'locationNo',
   },
   {
-    title: '托盘号',
+    title: trayText + '号',
     dataIndex: 'trayNo',
   },
   {
@@ -191,7 +194,7 @@ export const locationSearchForSchema: FormSchema[] = [
   },
   {
     field: 'trayNo',
-    label: '托盘号',
+    label: trayText + '号',
     component: 'Input',
   },
 ];

@@ -1,6 +1,8 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { useStation } from '@/hooks/common/useStation';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+const { boxText } = useServerConfig();
 const { stationOptions } = useStation();
 export const columns: BasicColumn[] = [
   {
@@ -70,7 +72,7 @@ export const boxColumns: BasicColumn[] = [
     dataIndex: 'batchNo',
   },
   {
-    title: '血浆箱号',
+    title: '血浆' + boxText,
     dataIndex: 'boxNo',
   },
   {

@@ -10,6 +10,7 @@ import {
 enum Api {
   SYS_PARAMS = '/api/sys/params',
   SYS_PARAMS_RESTFUL = '/api/sys/param',
+  SYS_PARAMS_CONTENT = '/api/sys/param/context',
 }
 
 export const getSysParamsList = (params: GetApiSysParamsRequest) =>
@@ -26,3 +27,6 @@ export const deleteSysParams = (params: DeleteApiSysParamIdRequest['id']) =>
 
 export const getSysParamsByParamKey = (params: string) =>
   defHttp.get({ url: Api.SYS_PARAMS_RESTFUL + '/' + params });
+
+export const getSysParamsContentByParamKey = (params: string) =>
+  defHttp.get({ url: Api.SYS_PARAMS_CONTENT + '/' + params });

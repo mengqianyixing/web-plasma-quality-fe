@@ -34,7 +34,7 @@
                 :disabled="!filterForm.batchNo"
                 type="primary"
               >
-                托盘入库
+                {{ trayText }}入库
               </a-button>
               <a-button type="primary" @click="handleAcceptSample" :disabled="!filterForm.batchNo">
                 接收
@@ -66,8 +66,10 @@
   import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal.vue';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import dayjs from 'dayjs';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   defineOptions({ name: 'ReceivePlasma' });
+  const { trayText, boxText } = useServerConfig();
 
   const { createMessage, createConfirm } = useMessage();
   const { success, warning } = createMessage;
@@ -100,7 +102,7 @@
     },
     {
       field: 'trayNo',
-      label: '托盘编号',
+      label: trayText + '编号',
       contentMinWidth: 100,
       render() {
         return (
@@ -180,7 +182,7 @@
       },
       {
         field: 'boxNo',
-        title: '箱号',
+        title: boxText,
       },
       {
         field: 'plasmaCount',
@@ -220,10 +222,10 @@
       },
       {
         field: 'trayNo',
-        title: '托盘编号',
+        title: trayText + '编号',
       },
       {
-        title: '箱号',
+        title: boxText,
         field: 'boxNo',
       },
       {
@@ -261,7 +263,7 @@
 
   async function handleAcceptSample() {
     if (!trayNo.value) {
-      warning('请扫描托盘编号!');
+      warning('请扫描' + trayText + '编号!');
       return;
     }
     createConfirm({
@@ -294,7 +296,7 @@
         return;
       }
       if (!trayNo.value) {
-        warning('请扫描托盘编号!');
+        warning('请扫描' + trayText + '编号!');
         return;
       }
       try {

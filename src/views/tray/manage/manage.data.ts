@@ -9,12 +9,15 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
+
+const { trayText, boxText } = useServerConfig();
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
 export const columns: BasicColumn[] = [
   {
-    title: '托盘编号',
+    title: trayText + '编号',
     dataIndex: 'trayNo',
     fixed: 'left',
   },
@@ -71,7 +74,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     component: 'Input',
     field: 'trayNo',
-    label: '托盘编号',
+    label: trayText + '编号',
   },
   {
     component: 'Input',
@@ -86,7 +89,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     component: 'Input',
     field: 'boxNo',
-    label: '血浆箱号',
+    label: '血浆' + boxText,
   },
   {
     component: 'Input',
@@ -127,19 +130,19 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
-export const trayDtColumns: BasicColumn[] = [{ dataIndex: '', title: '托盘编号' }];
+export const trayDtColumns: BasicColumn[] = [{ dataIndex: '', title: trayText + '编号' }];
 export const trayDtSearchSchema: FormSchema[] = [
-  { label: '托盘编号', field: '', component: 'Input' },
+  { label: trayText + '编号', field: '', component: 'Input' },
 ];
 
-export const trayBoxColumns: BasicColumn[] = [{ title: '血浆箱号', dataIndex: 'boxNo' }];
+export const trayBoxColumns: BasicColumn[] = [{ title: '血浆' + boxText, dataIndex: 'boxNo' }];
 
 export const trayBagColumns: BasicColumn[] = [
   { title: '血浆批号', dataIndex: 'batchNo' },
   { title: '血浆编号', dataIndex: 'bagNo' },
   { title: '浆员编号', dataIndex: 'donorNo' },
   { title: '浆员姓名', dataIndex: 'donorName' },
-  { title: '现存箱号', dataIndex: 'currBoxNo' },
+  { title: '现存' + boxText, dataIndex: 'currBoxNo' },
 ];
 
 export const trayBagSearch: FormSchema[] = [

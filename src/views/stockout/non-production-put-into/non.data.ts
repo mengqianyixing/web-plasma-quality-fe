@@ -2,7 +2,9 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 import dayjs from 'dayjs';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+const { boxText } = useServerConfig();
 const serverEnumStore = useServerEnumStoreWithOut();
 
 export const columns: BasicColumn[] = [
@@ -134,7 +136,7 @@ export const plasmaDetailColumns: BasicColumn[] = [
     dataIndex: 'batchNo',
   },
   {
-    title: '血浆箱号',
+    title: '血浆' + boxText,
     dataIndex: 'boxNo',
   },
   {
@@ -177,7 +179,7 @@ export const plasmaBoxColumns: BasicColumn[] = [
     dataIndex: 'batchNo',
   },
   {
-    title: '血浆箱号',
+    title: '血浆' + boxText,
     dataIndex: 'boxNo',
   },
   {

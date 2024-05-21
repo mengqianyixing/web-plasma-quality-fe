@@ -59,7 +59,7 @@
                 :disabled="!batchNo"
                 type="primary"
               >
-                托盘入库
+                {{ trayText }}入库
               </a-button>
               <a-button
                 @click="
@@ -68,7 +68,7 @@
                 :disabled="!batchNo"
                 type="primary"
               >
-                托盘出库
+                {{ trayText }}出库
               </a-button>
               <!-- <a-button @click="openPrint">打印</a-button> -->
             </div>
@@ -147,8 +147,10 @@
   import SampleUnqualifiedModal from '@/views/inbound-management/accept-plasma/components/SampleUnqualifiedModal.vue';
   import MissNumModal from '@/views/inbound-management/accept-plasma/components/MissNumModal.vue';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   defineOptions({ name: 'AcceptPlasma' });
+  const { trayText, boxText } = useServerConfig();
 
   const { createMessage, createWarningModal } = useMessage();
   const { success, warning } = createMessage;
@@ -205,7 +207,7 @@
     },
     {
       field: 'trayNo',
-      label: '托盘编号',
+      label: trayText + '编号',
       contentMinWidth: 100,
       render() {
         return (
@@ -245,7 +247,7 @@
     },
     {
       field: 'boxNo',
-      label: '当前箱号',
+      label: '当前' + boxText,
       render() {
         return (
           <div>

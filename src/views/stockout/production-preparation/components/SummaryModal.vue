@@ -23,7 +23,7 @@
         <TabPane key="columnsImmunity" tab="效价类型" force-render />
         <TabPane key="columnsStation" tab="采浆公司" />
         <TabPane key="columnsBatch" tab="血浆批次" />
-        <TabPane key="columnsBox" tab="血浆箱号" />
+        <TabPane key="columnsBox" :tab="`血浆${boxText}`" />
         <TabPane key="columnsBag" tab="血浆明细" />
         <template #rightExtra v-if="activeKey === 'columnsBag'">
           <a-button
@@ -100,7 +100,9 @@
   } from '@/api/stockout/production-preparation.js';
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
   import dayjs from 'dayjs';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+  const { boxText } = useServerConfig();
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
   const { createMessage } = useMessage();
@@ -360,7 +362,7 @@
       dataIndex: 'batchNo',
     },
     {
-      title: '血浆箱号',
+      title: '血浆' + boxText,
       dataIndex: 'boxNo',
     },
     {
@@ -388,7 +390,7 @@
       field: 'batchNo',
     },
     {
-      title: '血浆箱号',
+      title: '血浆' + boxText,
       field: 'boxNo',
     },
     {
@@ -633,7 +635,7 @@
         header: {
           stationName: '浆站名称',
           batchNo: '血浆批号',
-          boxNo: '血浆箱号',
+          boxNo: '血浆' + boxText,
           bagNo: '血浆编号',
           collectAt: '采集日期',
           donorNo: '浆员编号',

@@ -11,7 +11,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    title="托盘存放浆箱列表"
+    :title="trayText + '存放浆箱列表'"
     width="600px"
     :minHeight="400"
     @fullscreen="redoHeight"
@@ -29,6 +29,9 @@
   import { trayBoxListApi } from '@/api/tray/list';
   import { trayBoxColumns } from './manage.data';
   import { reactive } from 'vue';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
+
+  const { trayText } = useServerConfig();
 
   defineOptions({ name: 'BoxTableModal' });
   const state = reactive({

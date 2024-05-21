@@ -9,12 +9,15 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
+
+const { trayText, boxText } = useServerConfig();
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
 export const columns: BasicColumn[] = [
   {
-    title: '托盘编号',
+    title: trayText + '编号',
     dataIndex: 'trayNo',
     width: 100,
   },
@@ -31,7 +34,7 @@ export const columns: BasicColumn[] = [
     ellipsis: false,
   },
   {
-    title: '箱号类型',
+    title: boxText + '类型',
     dataIndex: 'boxTypes',
     width: 130,
     ellipsis: false,
@@ -74,7 +77,7 @@ export const columns: BasicColumn[] = [
     width: 150,
   },
   {
-    title: '托盘状态',
+    title: trayText + '状态',
     dataIndex: '',
     width: 80,
     customRender: ({ record }) => {
@@ -85,7 +88,7 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    label: '托盘编号',
+    label: trayText + '编号',
     component: 'Input',
     field: 'trayNo',
   },
@@ -97,7 +100,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     component: 'Input',
     field: 'boxNo',
-    label: '血浆箱号',
+    label: '血浆' + boxText,
   },
 
   {

@@ -22,7 +22,9 @@
 
   import { detailColumns } from '@/views/stockout/production-put-into/production-put-into.data';
   import { getForPlasmaListApi } from '@/api/stockout/production-plan';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+  const { boxText } = useServerConfig();
   const orderNo = ref('');
 
   defineEmits(['success', 'register']);
@@ -39,7 +41,7 @@
         },
         {
           field: 'boxNo',
-          label: '血浆箱号',
+          label: '血浆' + boxText,
           component: 'Input',
         },
         {

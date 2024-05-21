@@ -2,6 +2,7 @@ import type { Router, RouteLocationNormalized } from 'vue-router';
 import { useAppStoreWithOut } from '@/store/modules/app';
 import { useUserStoreWithOut } from '@/store/modules/user';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { useServerConfigStoreWithOut } from '@/store/modules/serverConfig';
 import { useTransitionSetting } from '@/hooks/setting/useTransitionSetting';
 import { AxiosCanceler } from '@/utils/http/axios/axiosCancel';
 import { Modal, notification } from 'ant-design-vue';
@@ -121,6 +122,7 @@ function createModifyPasswordGuard(router: Router) {
 async function createServerEnumsGuard(router: Router) {
   const userStore = useUserStoreWithOut();
   const serverEnumStore = useServerEnumStoreWithOut();
+  const serverConfigStore = useServerConfigStoreWithOut();
   router.beforeEach(async (to) => {
     if (to.name === PAGE_NOT_FOUND_NAME) {
       return true;
@@ -129,6 +131,7 @@ async function createServerEnumsGuard(router: Router) {
       return true;
     }
     await serverEnumStore.setServerEnum();
+    await serverConfigStore.setServerConfig();
     return true;
   });
   router.afterEach((to) => {

@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="register"
-    title="托盘出库"
+    :title="trayText + '出库'"
     showFooter
     width="30%"
     @ok="handleOk"
@@ -17,8 +17,10 @@
   import { ref } from 'vue';
   import { submitOutHouseApi } from '@/api/tray/relocation';
   import { getHouseSiteApi } from '@/api/plasmaStore/site';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   const { createMessage } = useMessage();
+  const { trayText } = useServerConfig();
 
   const houseNo = ref('');
   const [registerTable, { updateSchema, setFieldsValue, validate, resetFields }] = useForm({
@@ -26,7 +28,7 @@
     schemas: [
       {
         field: 'trayNos',
-        label: '托盘编号',
+        label: trayText + '编号',
         component: 'Select',
         componentProps: {
           mode: 'multiple',

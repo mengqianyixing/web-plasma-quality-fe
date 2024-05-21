@@ -18,7 +18,7 @@
       autocomplete="off"
       layout="inline"
     >
-      <FormItem label="血浆箱号" name="boxNo">
+      <FormItem :label="'血浆' + boxText" name="boxNo">
         <Input v-model:value="boxNo" readonly />
       </FormItem>
 
@@ -53,7 +53,9 @@
   import dayjs from 'dayjs';
   import { debounce } from 'lodash-es';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+  const { boxText } = useServerConfig();
   const { createMessage } = useMessage();
   const { warning, success } = createMessage;
 
@@ -74,7 +76,7 @@
 
   const columns = [
     {
-      title: '血浆箱号',
+      title: '血浆' + boxText,
       dataIndex: 'boxNo',
     },
     {

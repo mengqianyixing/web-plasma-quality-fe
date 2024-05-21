@@ -22,6 +22,9 @@ import {
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { formatKg } from '@/utils';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
+
+const { trayText, boxText } = useServerConfig();
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -193,7 +196,7 @@ export const tabList = [
   },
   {
     key: TAB.BOX,
-    label: '血浆箱号',
+    label: '血浆' + boxText,
     checkbox: true,
     api: formatResp(getSelectBoxListApi),
   },
@@ -272,7 +275,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
       width: 80,
     },
     {
-      title: '托盘数量',
+      title: trayText + '数量',
       dataIndex: 'trayNum',
       width: 80,
     },
@@ -306,7 +309,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
       width: 120,
     },
     {
-      title: '血浆箱号',
+      title: '血浆' + boxText,
       dataIndex: 'boxNo',
       width: 120,
     },
@@ -425,7 +428,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
       width: 120,
     },
     {
-      title: '血浆箱号',
+      title: '血浆' + boxText,
       dataIndex: 'boxNo',
       width: 120,
     },
@@ -537,7 +540,7 @@ export const pickingColumns: Record<string, BasicColumn[]> = {
       width: 120,
     },
     {
-      title: '血浆箱号',
+      title: '血浆' + boxText,
       dataIndex: 'boxNo',
       width: 120,
     },
@@ -574,7 +577,7 @@ export const pickingColumns: Record<string, BasicColumn[]> = {
 };
 
 export const boxScheam: FormSchema = {
-  label: '血浆箱号',
+  label: '血浆' + boxText,
   field: 'boxNo',
   component: 'Input',
 };

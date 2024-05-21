@@ -35,6 +35,9 @@
   import LocationModal from '@/components/BusinessDrawer/locationDrawer/index.vue';
   import { getHouseSiteApi } from '@/api/plasmaStore/site';
   import { useLoading } from '@/components/Loading';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
+
+  const { trayText } = useServerConfig();
 
   const state = reactive<{
     houseList: Recordable[];
@@ -75,7 +78,7 @@
       listField: 'result',
     },
     formConfig: {
-      schemas: [{ label: '托盘编号', component: 'Input', field: 'trayNo' }],
+      schemas: [{ label: trayText + '编号', component: 'Input', field: 'trayNo' }],
     },
     rowKey: 'houseNo',
     columns: taryRelocationColumns,

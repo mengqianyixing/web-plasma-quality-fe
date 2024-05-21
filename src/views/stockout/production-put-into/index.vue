@@ -24,7 +24,7 @@
             @click="handleTrayStockOut"
             v-auth="StockOutButtonEnum.PutIntoTrayStockOut"
           >
-            托盘出库
+            {{ trayText }}出库
           </a-button>
           <a-button
             type="primary"
@@ -113,8 +113,10 @@
   } from '@/api/stockout/production-put-into';
   import { getProOrders } from '@/api/stockout/production-order';
   import { statusValueEnum } from '@/enums/stockoutEnum';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   defineOptions({ name: 'ProductionPutInto' });
+  const { trayText } = useServerConfig();
 
   const [registerBoxOutStoreModal, { openModal: openBoxOutStoreModal }] = useModal();
   const [registerReceiveModal, { openModal: openBoxReceiveModal }] = useModal();
@@ -183,7 +185,7 @@
     if (!selectRowsCheck()) return;
 
     if (selectedRow.value[0]?.state !== statusValueEnum.PVD) {
-      createMessage.warn('只有待出库状态下的制造批号才允许托盘出库');
+      createMessage.warn('只有待出库状态下的制造批号才允许' + trayText + '出库');
       return;
     }
 

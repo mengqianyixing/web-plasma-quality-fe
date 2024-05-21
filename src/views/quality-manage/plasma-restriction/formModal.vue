@@ -34,7 +34,9 @@
   import { message } from 'ant-design-vue';
   import { boxColumns } from './plasma-restriction.data';
   import { submitMarkApi, getBoxListApi } from '@/api/quality/plasma-restriction';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+  const { boxText } = useServerConfig();
   const emit = defineEmits(['success', 'register']);
   defineOptions({ name: 'FormModel' });
 
@@ -82,7 +84,7 @@
       const rows = getSelectRows();
       if (rows.length === 0) return message.warning('请选择数据');
       const notAlike = rows.some((_) => _.batchNo !== rows[0].batchNo);
-      if (notAlike) return message.warning('只能选择同一批次的箱号');
+      if (notAlike) return message.warning('只能选择同一批次的' + boxText);
       setModalProps({ confirmLoading: true });
       await submitMarkApi({
         remark: values.remark,

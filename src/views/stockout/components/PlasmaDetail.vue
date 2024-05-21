@@ -30,7 +30,9 @@
     prepareProduceValueEnum,
   } from '@/enums/stockoutEnum';
   import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+  const { boxText } = useServerConfig();
   let prepareNo = ''; // 准备号
   const [registerModal] = useModalInner(async (data) => {
     prepareNo = data.record.prepareNo;
@@ -76,7 +78,7 @@
       title: '血浆批号',
     },
     {
-      title: '血浆箱号',
+      title: '血浆' + boxText,
       dataIndex: 'boxNo',
     },
     {
@@ -154,7 +156,7 @@
     },
     {
       field: 'boxNo',
-      label: '血浆箱号',
+      label: '血浆' + boxText,
       component: 'Input',
       colProps: { span: 4 },
     },

@@ -42,6 +42,9 @@
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
   import { groupBy, entries } from 'lodash-es';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
+
+  const { boxText } = useServerConfig();
 
   const { createMessage, createConfirm } = useMessage();
 
@@ -141,7 +144,7 @@
 
     createConfirm({
       title: '撤销',
-      content: '确认撤销该箱号？',
+      content: '确认撤销该' + boxText + '？',
       iconType: 'warning',
       onOk: async () => {
         await deleteBox(selectedRowsRef.value[0].boxNo);

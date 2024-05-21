@@ -1,14 +1,17 @@
 import { FormSchema } from '@/components/Table';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
+
+const { boxText } = useServerConfig();
 
 export const columns = [
   {
     field: 'nowBoxNo',
-    title: '现存箱号',
+    title: '现存' + boxText,
     width: 120,
   },
   {
     field: 'boxNo',
-    title: '浆站箱号',
+    title: '浆站' + boxText,
     width: 120,
   },
   {
@@ -108,12 +111,12 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: 'nowBoxNo',
-    label: '现存箱号',
+    label: '现存' + boxText,
     component: 'Input',
   },
   {
     field: 'stationBoxNo',
-    label: '浆站箱号',
+    label: '浆站' + boxText,
     component: 'Input',
   },
   {

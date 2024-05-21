@@ -3,7 +3,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    title="托盘存放血浆列表"
+    :title="trayText + '存放血浆列表'"
     width="1000px"
     :minHeight="520"
     @fullscreen="redoHeight"
@@ -21,8 +21,11 @@
   import { trayBagListApi } from '@/api/tray/list';
   import { trayBagColumns, trayBagSearch } from './manage.data';
   import { reactive } from 'vue';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   defineOptions({ name: 'BagTableModal' });
+  const { trayText } = useServerConfig();
+
   const state = reactive({
     trayNo: '',
   });

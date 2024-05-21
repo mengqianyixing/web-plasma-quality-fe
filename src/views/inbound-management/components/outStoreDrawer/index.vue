@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    :title="'血浆批号【' + state.batchNo + '】托盘出库'"
+    :title="'血浆批号【' + state.batchNo + '】' + trayText + '出库'"
     width="1060px"
     @cancel="emit('close')"
     :minHeight="520"
@@ -30,7 +30,9 @@
 
   import { reactive } from 'vue';
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+  const { trayText } = useServerConfig();
   const state = reactive({
     batchNo: '',
     queryFlow: void 0,
@@ -84,10 +86,11 @@
   function handleOut() {
     const rows = getSelections(false);
     if (!rows.length) return false;
-    if (!rows.every((_) => _.wareHouseName)) return message.warning('所选托盘存在未入库!');
+    if (!rows.every((_) => _.wareHouseName))
+      return message.warning('所选' + trayText + '存在未入库!');
     const [firstRow] = rows;
     const notAlike = rows.some((_) => _.wareHouseName !== firstRow.wareHouseName);
-    if (notAlike) return message.warning('所选托盘不属于同一库房!');
+    if (notAlike) return message.warning('所选' + trayText + '不属于同一库房!');
     if (firstRow.houseType[1] === STORE_FLAG.S) {
       openOutModal(true, { data: rows, showSite: true });
     } else {

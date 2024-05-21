@@ -9,9 +9,11 @@ import {
 import dayjs from 'dayjs';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
+const { trayText, boxText } = useServerConfig();
 
 export const columns: BasicColumn[] = [
   {
@@ -165,7 +167,7 @@ export const detailColumns: BasicColumn[] = [
     dataIndex: 'batchNo',
   },
   {
-    title: '血浆箱号',
+    title: '血浆' + boxText,
     dataIndex: 'boxNo',
   },
   {
@@ -199,7 +201,7 @@ export const detailColumns: BasicColumn[] = [
 
 export const trayColumns: BasicColumn[] = [
   {
-    title: '托盘编号',
+    title: trayText + '编号',
     dataIndex: 'trayNo',
   },
   {

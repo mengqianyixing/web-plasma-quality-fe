@@ -1,17 +1,20 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
 
 import { useStation } from '@/hooks/common/useStation';
+
+const { trayText, boxText } = useServerConfig();
 
 const { stationOptions } = useStation();
 
 export const plasmaTrayModelColumns: BasicColumn[] = [
   { title: '血浆批号', dataIndex: '' },
-  { title: '血浆箱号', dataIndex: '' },
+  { title: '血浆' + boxText, dataIndex: '' },
   { title: '血浆袋数', dataIndex: '' },
 ];
 export const taryRelocationColumns: BasicColumn[] = [
   {
-    title: '托盘编号',
+    title: trayText + '编号',
     dataIndex: '',
   },
   {
@@ -74,7 +77,7 @@ export const trayRelocationFormSchema: (fn1: Function, fn2: Function) => FormSch
   f2,
 ) => [
   {
-    label: '托盘编号',
+    label: trayText + '编号',
     component: 'InputSearch',
     field: 'trayNo',
     required: true,
@@ -98,13 +101,13 @@ export const trayRelocationFormSchema: (fn1: Function, fn2: Function) => FormSch
 export const plasmaBoxScanFormSchema: FormSchema[] = [
   {
     component: 'Input',
-    label: '托盘编号',
+    label: trayText + '编号',
     field: 'trayNo',
     colProps: { span: 8 },
   },
   {
     component: 'Input',
-    label: '箱号',
+    label: boxText,
     field: 'boxId',
     colProps: { span: 8 },
   },
@@ -112,22 +115,22 @@ export const plasmaBoxScanFormSchema: FormSchema[] = [
 export const plasmaBoxScanSearchFormSchema: FormSchema[] = [
   {
     component: 'Input',
-    label: '托盘编号',
+    label: trayText + '编号',
     field: 'trayNo',
   },
   {
     component: 'Input',
-    label: '箱号',
+    label: boxText,
     field: 'boxId',
   },
 ];
 export const plasmaBoxScanColumns: (isBinding: boolean) => BasicColumn[] = (isBinding) => [
   {
-    title: '箱号',
+    title: boxText,
     dataIndex: '',
   },
   {
-    title: '目标托盘',
+    title: '目标' + trayText,
     dataIndex: '',
   },
   {
@@ -166,7 +169,7 @@ export const plasmaBoxHandColumns: BasicColumn[] = [
     dataIndex: 'stationName',
   },
   {
-    title: '箱号',
+    title: boxText,
     dataIndex: 'boxNo',
   },
   {
@@ -189,13 +192,13 @@ export const plasmaBoxHandColumns: BasicColumn[] = [
 export const sampleBoxScanFormSchema: FormSchema[] = [
   {
     component: 'Input',
-    label: '托盘编号',
+    label: trayText + '编号',
     field: 'trayNo',
     colProps: { span: 8 },
   },
   {
     component: 'Input',
-    label: '样本箱号',
+    label: '样本' + boxText,
     field: 'boxId',
     colProps: { span: 8 },
   },
@@ -203,22 +206,22 @@ export const sampleBoxScanFormSchema: FormSchema[] = [
 export const sampleBoxScanSearchFormSchema: FormSchema[] = [
   {
     component: 'Input',
-    label: '托盘编号',
+    label: trayText + '编号',
     field: '',
   },
   {
     component: 'Input',
-    label: '样本箱号',
+    label: '样本' + boxText,
     field: '',
   },
 ];
 export const sampleBoxScanColumns: (isBinding: boolean) => BasicColumn[] = (isBinding) => [
   {
-    title: '样本箱号',
+    title: '样本' + boxText,
     dataIndex: '',
   },
   {
-    title: '目标托盘',
+    title: '目标' + trayText,
     dataIndex: '',
   },
   {
@@ -253,7 +256,7 @@ export const sampleBoxHandColumns: BasicColumn[] = [
     dataIndex: '',
   },
   {
-    title: '样本箱号',
+    title: '样本' + boxText,
     dataIndex: '采浆公司',
   },
   {

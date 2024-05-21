@@ -11,7 +11,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    title="托盘出库"
+    :title="trayText + '出库'"
     width="500px"
     :minHeight="400"
     @ok="handleSubmit"
@@ -35,6 +35,9 @@
   import { siteNoSchema } from './outInStore.data';
   import { submitOutHouseApi } from '@/api/tray/relocation';
   import { getHouseSiteApi } from '@/api/plasmaStore/site';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
+
+  const { trayText } = useServerConfig();
 
   const emit = defineEmits(['success']);
   const state = reactive({
@@ -46,7 +49,7 @@
     api: getData,
     fetchSetting: { listField: 'result' },
     rowKey: 'trayNo',
-    columns: [{ title: '托盘编号', dataIndex: 'trayNo' }],
+    columns: [{ title: trayText + '编号', dataIndex: 'trayNo' }],
     useSearchForm: false,
     bordered: true,
     pagination: false,

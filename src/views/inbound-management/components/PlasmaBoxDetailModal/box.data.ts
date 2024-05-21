@@ -8,10 +8,13 @@
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { PlasmaStateMap } from '@/enums/plasmaEnum';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
+
+const { trayText, boxText } = useServerConfig();
 
 export const columns: BasicColumn[] = [
   {
-    title: '浆站箱号',
+    title: '浆站' + boxText,
     dataIndex: 'boxNo',
     slots: { customRender: 'boxNo' },
   },
@@ -42,7 +45,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'checker',
   },
   {
-    title: '托盘编号',
+    title: trayText + '编号',
     dataIndex: 'trayNo',
     width: 80,
   },
@@ -70,7 +73,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: 'boxNo',
-    label: '浆站箱号',
+    label: '浆站' + boxText,
     component: 'Input',
   },
   {

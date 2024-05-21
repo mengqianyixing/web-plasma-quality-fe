@@ -3,7 +3,9 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 import dayjs from 'dayjs';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+const { boxText } = useServerConfig();
 const serverEnumStore = useServerEnumStoreWithOut();
 const ConclusionType = serverEnumStore.getServerEnumText(SERVER_ENUM.ConclusionType);
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -98,12 +100,12 @@ export const batchColumns: BasicColumn[] = [
     width: 100,
   },
   {
-    title: '浆站箱号',
+    title: '浆站' + boxText,
     dataIndex: 'stationBoxNo',
     width: 100,
   },
   {
-    title: '现存箱号',
+    title: '现存' + boxText,
     dataIndex: 'boxNo',
     width: 100,
   },

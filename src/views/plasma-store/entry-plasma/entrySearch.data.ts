@@ -3,7 +3,9 @@ import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { useStation } from '@/hooks/common/useStation';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+const { boxText } = useServerConfig();
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -165,12 +167,12 @@ export const entryDetailModalColumns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: '浆站箱号',
+    title: '浆站' + boxText,
     dataIndex: 'boxNo',
     width: 150,
   },
   {
-    title: '现存箱号',
+    title: '现存' + boxText,
     dataIndex: 'nowBoxNo',
     width: 150,
   },
@@ -371,7 +373,7 @@ export const verifySumColumns: BasicColumn[] = [
 
 export const noPassSearchFormSchema: FormSchema[] = [
   {
-    label: '浆站箱号',
+    label: '浆站' + boxText,
     component: 'Input',
     field: 'boxNo',
   },
@@ -401,7 +403,7 @@ export const noPassModalColumns: BasicColumn[] = [
     dataIndex: 'donorName',
   },
   {
-    title: '浆站箱号',
+    title: '浆站' + boxText,
     dataIndex: 'boxNo',
   },
   {

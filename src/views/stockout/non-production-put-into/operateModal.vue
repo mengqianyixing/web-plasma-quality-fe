@@ -20,7 +20,7 @@
         <a-tab-pane key="batch" tab="血浆批号" force-render>
           <BasicTable @register="registerBatchTable" />
         </a-tab-pane>
-        <a-tab-pane key="box" tab="血浆箱号" force-render>
+        <a-tab-pane key="box" :tab="`血浆${boxText}`" force-render>
           <BasicTable @register="registerBoxTable" />
         </a-tab-pane>
         <a-tab-pane key="detail" tab="血浆明细" force-render>
@@ -63,7 +63,9 @@
     PutApiCoreBankDeliverNonproductiveRequest,
   } from '@/api/type/stockoutManage';
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
+  const { boxText } = useServerConfig();
   const ATabs = Tabs;
   const ATabPane = TabPane;
   defineOptions({ name: 'OperateModal' });

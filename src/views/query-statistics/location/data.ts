@@ -3,6 +3,9 @@ import { BasicColumn } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { useStation } from '@/hooks/common/useStation';
+import { useServerConfig } from '@/hooks/common/useServerConfig';
+
+const { trayText, boxText } = useServerConfig();
 
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
@@ -19,7 +22,7 @@ export const columns: BasicColumn[] = [
   },
 
   {
-    title: '当前箱号',
+    title: '当前' + boxText,
     dataIndex: 'boxNo',
   },
   {
@@ -27,7 +30,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'bagCount',
   },
   {
-    title: '当前托盘编号',
+    title: '当前' + trayText + '编号',
     dataIndex: 'trayNo',
   },
   {
@@ -62,7 +65,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'boxNo',
     component: 'Input',
-    label: '血浆(样本)箱号',
+    label: '血浆(样本)' + boxText,
   },
   {
     field: 'bagNo',
@@ -81,7 +84,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'trayNo',
     component: 'Input',
-    label: '托盘编号',
+    label: trayText + '编号',
   },
   {
     field: 'trayType',
