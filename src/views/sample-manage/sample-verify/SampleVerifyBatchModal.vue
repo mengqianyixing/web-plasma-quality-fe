@@ -29,7 +29,7 @@
   import {
     sampleVerifyColumns,
     searchFormSchema,
-  } from '@/views/inbound-management/sample-verify/verify.data';
+  } from '@/views/sample-manage/sample-verify/verify.data';
   import { useMessage } from '@/hooks/web/useMessage';
   import { getSampleVerifyList } from '@/api/inbound-management/sample-verify';
   import { sampleTypeEnum } from '@/enums/sampleEnum';

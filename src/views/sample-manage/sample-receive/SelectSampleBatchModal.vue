@@ -26,7 +26,7 @@
   import {
     sampleAcceptColumns,
     searchFormSchema,
-  } from '@/views/inbound-management/sample-receive/receive.data';
+  } from '@/views/sample-manage/sample-receive/receive.data';
   import { useMessage } from '@/hooks/web/useMessage';
   import { sampleTypeEnum } from '@/enums/sampleEnum';
 

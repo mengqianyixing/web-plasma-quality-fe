@@ -31,7 +31,7 @@ const sampleManager: AppRouteModule = {
         title: '样本接收',
       },
       id: 970010,
-      component: () => import('@/views/inbound-management/sample-receive/index.vue'),
+      component: () => import('@/views/sample-manage/sample-receive/index.vue'),
     },
     {
       path: 'sample-verify',
@@ -40,7 +40,7 @@ const sampleManager: AppRouteModule = {
         title: '样本验收',
       },
       id: 970020,
-      component: () => import('@/views/inbound-management/sample-verify/index.vue'),
+      component: () => import('@/views/sample-manage/sample-verify/index.vue'),
       authElements: [
         {
           id: ReCheckButtonEnum.NonconformitySampleCheck,

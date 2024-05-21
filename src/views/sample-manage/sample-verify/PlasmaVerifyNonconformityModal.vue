@@ -1,5 +1,11 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="register" title="缺号列表" width="80%" :showOkBtn="false">
+  <BasicModal
+    v-bind="$attrs"
+    @register="register"
+    title="血浆验收不合格列表"
+    width="80%"
+    :showOkBtn="false"
+  >
     <div>
       <BasicTable @register="registerTable" />
     </div>
@@ -9,17 +15,17 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { ref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
-  import { missingNumberListColumns } from '@/views/inbound-management/sample-verify/verify.data';
-  import { getMissingNumberList } from '@/api/inbound-management/sample-verify';
+  import { plasmaUnqualifiedColumns } from '@/views/sample-manage/sample-verify/verify.data';
+  import { getVerifyUnqualified } from '@/api/inbound-management/sample-verify';
 
   const batchSampleNo = ref('');
+
   const [registerTable, { reload }] = useTable({
-    api: getMissingNumberList,
-    columns: missingNumberListColumns,
+    api: getVerifyUnqualified,
+    columns: plasmaUnqualifiedColumns,
     beforeFetch: (_) => {
       return batchSampleNo.value;
     },
-    showIndexColumn: true,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -32,6 +38,7 @@
     useSearchForm: false,
 
     bordered: true,
+    showIndexColumn: true,
     canResize: false,
     immediate: false,
   });

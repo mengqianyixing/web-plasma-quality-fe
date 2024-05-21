@@ -69,8 +69,8 @@
   import { useMessage } from '@/hooks/web/useMessage';
 
   import SampleVerifyBatchModal from './SampleVerifyBatchModal.vue';
-  import StationMissingNumberModal from '@/views/inbound-management/sample-verify/StationMissingNumberModal.vue';
-  import PlasmaVerifyNonconformityModal from '@/views/inbound-management/sample-verify/PlasmaVerifyNonconformityModal.vue';
+  import StationMissingNumberModal from '@/views/sample-manage/sample-verify/StationMissingNumberModal.vue';
+  import PlasmaVerifyNonconformityModal from '@/views/sample-manage/sample-verify/PlasmaVerifyNonconformityModal.vue';
   import NonconformityModal from './NonconformityModal.vue';
   import RevokeVerifySampleModal from './RevokeVerifySampleModal.vue';
   import {
@@ -96,7 +96,7 @@
   import dayjs from 'dayjs';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-  import ArrangeModel from '../components/arrange/index.vue';
+  import ArrangeModel from '@/views/inbound-management/components/arrange/index.vue';
 
   defineOptions({ name: 'SampleVerify' });
 
