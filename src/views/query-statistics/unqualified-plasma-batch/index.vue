@@ -62,6 +62,7 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
+    immediate: false,
   });
 
   const loading = ref(false);
