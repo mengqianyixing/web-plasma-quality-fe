@@ -75,6 +75,7 @@ enum Api {
   CANCEL_REVIEW_PLAN = '/api/product/plan/review/cancel',
   CHECK_PLAN = '/api/product/plan/check/',
   CANCEL_CHECK_PLAN = '/api/product/plan/check/cancel',
+  PMS = '/api/product/plan/bag-out/',
 }
 
 export const getListApi = (data: PostApiProductPlanOrdersRequest) =>
@@ -176,4 +177,8 @@ export const submitCheckCancelApi = (data: PutApiProductPlanCheckCancelRequest) 
   defHttp.put<PutApiProductPlanCheckCancelResponse>({
     url: Api.CANCEL_CHECK_PLAN,
     data: data,
+  });
+export const submitPMSApi = (data: PutApiProductPlanReviewOrderNoRequest) =>
+  defHttp.get({
+    url: Api.PMS + data.orderNo,
   });

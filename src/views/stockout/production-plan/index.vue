@@ -142,6 +142,7 @@
     submitReviewlApi,
     submitCheckCancelApi,
     submitChecklApi,
+    submitPMSApi,
   } from '@/api/stockout/production-plan';
   import { nextTick, ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
@@ -239,10 +240,10 @@
     Modal.confirm({
       content: '确认调用制造批号【' + row.mesId + '】的PMS组垛任务?',
       onOk: async () => {
-        message.info('待开发！！！');
+        await submitPMSApi({ orderNo: row.orderNo });
+        message.success('调用组垛任务成功！');
         clearSelectedRowKeys();
         reload();
-        // message.success('调用组跺任务成功！');
       },
       onCancel: () => Modal.destroyAll(),
     });
