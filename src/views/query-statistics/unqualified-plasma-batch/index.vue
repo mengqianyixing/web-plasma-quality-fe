@@ -77,7 +77,7 @@
       });
       if ((OriginData.totalCount || 0) > Number(pageSize))
         return message.warning('最多只能导出【' + pageSize + '】条数据');
-      const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(columnsRef.value);
       const { result, merge: bodyMerge } = formatData(
         lastLevelCols,
         OriginData.result || [],

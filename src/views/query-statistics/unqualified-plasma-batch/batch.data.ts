@@ -51,7 +51,6 @@ export const columns: BasicColumn[] = [
       {
         title: '验收(破袋)',
         dataIndex: 'plasmaDamagedNum',
-        ifShow: false,
         width: 100,
       },
       {

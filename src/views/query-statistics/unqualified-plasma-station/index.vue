@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" :columns="columnsRef">
       <template #toolbar>
         <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
       </template>
@@ -8,7 +8,7 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup>
-  import { BasicTable, useTable } from '@/components/Table';
+  import { BasicColumn, BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './station.data';
   import { PageWrapper } from '@/components/Page';
   import { getUnqualifiedPlasmaStation } from '@/api/query-statistics/batch-statistics';
@@ -21,6 +21,7 @@
 
   const globalApiStore = useGlobalApiStoreWithOut();
   const { currentRoute } = useRouter();
+  const columnsRef = ref<BasicColumn[]>(columns);
 
   defineOptions({ name: 'UnqualifiedPlasmaByStation' });
 
@@ -29,6 +30,28 @@
     columns,
     formConfig: {
       schemas: searchFormSchema,
+    },
+    afterFetch: (data) => {
+      const nullCols: string[] = [];
+      if (data.length > 0) {
+        for (const key in data[0]) {
+          if (data[0][key] === null) {
+            nullCols.push(key);
+          }
+        }
+      }
+
+      columnsRef.value = columns.map((it) => {
+        if (it.children) {
+          return {
+            ...it,
+            children: it.children.filter(
+              (child) => !nullCols.includes(child.dataIndex as unknown as string),
+            ) as any,
+          };
+        }
+        return it;
+      });
     },
     fetchSetting: {
       pageField: 'currPage',
@@ -40,6 +63,7 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
+    immediate: false,
   });
 
   const loading = ref(false);
@@ -55,7 +79,7 @@
       });
       if ((OriginData.totalCount || 0) > Number(pageSize))
         return message.warning('最多只能导出【' + pageSize + '】条数据');
-      const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(columnsRef.value);
       const { result, merge: bodyMerge } = formatData(
         lastLevelCols,
         OriginData.result || [],
