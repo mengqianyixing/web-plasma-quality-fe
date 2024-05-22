@@ -56,28 +56,31 @@ export const columns: BasicColumn[] = [
   {
     title: '采集日期',
     dataIndex: 'collDate',
+    width: 100,
   },
   {
     title: '存放位置',
     dataIndex: 'stockLocation',
-    width: 230,
+    width: 150,
     ellipsis: false,
   },
   {
     title: boxText,
     dataIndex: 'boxNo',
     ellipsis: false,
+    width: 130,
   },
   {
     title: '不合格原因',
     dataIndex: 'unqReason',
     slots: { customRender: 'unqReason' },
     ellipsis: false,
-    width: 200,
+    width: 170,
   },
   {
     title: '不合格日期',
     dataIndex: 'unqDate',
+    width: 100,
   },
   {
     title: '不合格入库日期',
@@ -85,6 +88,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 110,
   },
   {
     title: '不合格出库日期',
@@ -92,6 +96,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 110,
   },
   {
     title: '状态',
@@ -99,12 +104,12 @@ export const columns: BasicColumn[] = [
     format(text) {
       return nonconformityPlasmaMap.get(<NonconformityPlasmaStatusValueEnum>text) as string;
     },
-    width: 120,
+    width: 105,
   },
   {
     title: '审核状态',
     dataIndex: 'checked',
-    width: 80,
+    width: 65,
   },
 ];
 
