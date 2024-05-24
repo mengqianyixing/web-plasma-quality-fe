@@ -7,19 +7,22 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 80,
   },
   {
     title: '入库数量（袋）',
     dataIndex: 'inNum',
+    width: 100,
   },
-
   {
     title: '验收数量（袋）',
     dataIndex: 'verifyNum',
+    width: 100,
   },
   {
     title: '验收合格数量（袋）',
     dataIndex: 'verifyPassNum',
+    width: 130,
   },
   {
     title: '验收不合格',

@@ -27,7 +27,6 @@
 
   const [registerTable, { getForm }] = useTable({
     api: getUnqualifiedPlasmaStation,
-    columns,
     formConfig: {
       schemas: searchFormSchema,
     },
