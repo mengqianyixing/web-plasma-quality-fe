@@ -105,6 +105,8 @@
     columns,
     formConfig: {
       schemas: searchFormSchema,
+      submitFunc,
+      submitOnReset: true,
     },
     fetchSetting: {
       pageField: 'currPage',
@@ -167,5 +169,11 @@
     openModal(true, {
       record,
     });
+  }
+
+  async function submitFunc() {
+    pager.current = 1;
+
+    await reload();
   }
 </script>

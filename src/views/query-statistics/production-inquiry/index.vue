@@ -47,7 +47,7 @@
 
   function handleMesIdClick(record) {
     openModal(true, {
-      record,
+      ...record,
       disabled: true,
     });
   }
