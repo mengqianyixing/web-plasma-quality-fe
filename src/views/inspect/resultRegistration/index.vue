@@ -11,15 +11,7 @@
             v-auth="InspectButtonEnum.ResultRegistrationSelect"
             >选择</a-button
           >
-          <a-button
-            class="mr-15px"
-            type="primary"
-            @click="handleAddItem"
-            :disabled="!bsNo"
-            v-auth="InspectButtonEnum.ResultRegistrationItemAdd"
-          >
-            新增检测项目
-          </a-button>
+
           <a-button
             v-auth="InspectButtonEnum.ResultRegistrationRegist"
             class="mr-15px"
@@ -61,7 +53,6 @@
         </TabPane>
       </Tabs>
       <BatchModal @register="registerModal" @confirm="confirm" />
-      <CheckItemModal @register="registerCIModal" @confirm="confirm2" />
       <BasicModal
         @register="registerCancelModal"
         title="登记"
@@ -80,12 +71,11 @@
   import { CellWapper, Cell } from '@/components/CellWapper';
   import { cellList } from './resultRegistration.data';
   import { TabPane, Tabs, Modal, message } from 'ant-design-vue';
-  import { ref, unref } from 'vue';
+  import { ref } from 'vue';
   import CheckPage from './check/index.vue';
   import TiterPage from './titer/index.vue';
   import MaterialRegistration from './materialRegistration/index.vue';
   import BatchModal from './batchDrawer.vue';
-  import CheckItemModal from './checkItemDrawer.vue';
   import { useModal, BasicModal } from '@/components/Modal';
   import {
     getPlasmaCountApi,
@@ -130,15 +120,12 @@
     showActionButtonGroup: false,
   });
   const [registerModal, { openModal: openModal }] = useModal();
-  const [registerCIModal, { openModal: openCIModal }] = useModal();
   const [registerCancelModal, { openModal: openCancelModal, setModalProps }] = useModal();
 
   function handleSelect() {
     openModal(true, {});
   }
-  function handleAddItem() {
-    openCIModal(true, { bsNo: unref(bsNo) });
-  }
+
   async function confirm(row: Recordable) {
     bsNo.value = row.bsNo;
     rowData.value = row;
@@ -189,10 +176,6 @@
       },
       onCancel: () => Modal.destroyAll(),
     });
-  }
-  function confirm2() {
-    openCIModal(false);
-    reloadMap.value.forEach((fn) => fn());
   }
   function saveReload(fn: Function, activeKey: string) {
     bsNo.value && fn();

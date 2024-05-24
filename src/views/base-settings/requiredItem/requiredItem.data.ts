@@ -1,5 +1,4 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { getListApi } from '@/api/inspect/itemSetting';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
@@ -20,6 +19,13 @@ export const columns: BasicColumn[] = [
   {
     title: '必检项目',
     dataIndex: 'projectCodes',
+    ellipsis: false,
+    format: (text: any) => (text || []).join('、'),
+  },
+  {
+    title: '默认检测项目',
+    ellipsis: false,
+    dataIndex: 'defaultProjectCodes',
     format: (text: any) => (text || []).join('、'),
   },
 ];
@@ -46,16 +52,18 @@ export const formListSchema: FormSchema[] = [
   {
     label: '必检项目',
     field: 'projectIds',
-    component: 'ApiSelect',
+    component: 'Select',
     required: true,
     componentProps: {
       mode: 'multiple',
-      api: () =>
-        new Promise((rs) => {
-          getListApi({ currPage: 1, pageSize: 100, state: 'NORMAL' }).then((res) => {
-            rs(res.result);
-          });
-        }),
+    },
+  },
+  {
+    label: '默认检测项目',
+    field: 'defaultProjectIds',
+    component: 'Select',
+    componentProps: {
+      mode: 'multiple',
       labelField: 'projectAbbr',
       valueField: 'projectId',
     },

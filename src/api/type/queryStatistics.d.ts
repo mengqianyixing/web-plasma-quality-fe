@@ -561,16 +561,16 @@ export interface GetApiCoreBankLocationStatisticsResponse {
  * 接口 [检测结果查询↗](https://yapi.sharing8.cn/project/529/interface/api/33462) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/samples`
- * @更新时间 `2024-02-26 15:04:17`
+ * @请求头 `GET /api/search/sample/result`
+ * @更新时间 `2024-05-22 14:26:24`
  */
-export interface PostApiCoreLabSamplesRequest {
+export interface GetApiSearchSampleResultRequest {
   pageSize: string;
   currPage: string;
   /**
    * 样本批号
    */
-  bsNo?: string;
+  bsNo: string;
   /**
    * 样本类型
    */
@@ -593,10 +593,10 @@ export interface PostApiCoreLabSamplesRequest {
  * 接口 [检测结果查询↗](https://yapi.sharing8.cn/project/529/interface/api/33462) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/samples`
- * @更新时间 `2024-02-26 15:04:17`
+ * @请求头 `GET /api/search/sample/result`
+ * @更新时间 `2024-05-22 14:26:24`
  */
-export interface PostApiCoreLabSamplesResponse {
+export interface GetApiSearchSampleResultResponse {
   totalCount: number;
   pageSize: null;
   totalPage: null;
@@ -1971,10 +1971,10 @@ export interface GetApiCoreDonorCallbackStatisticStationResponse {
  * 接口 [特免血浆查询↗](https://yapi.sharing8.cn/project/529/interface/api/33594) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/bag/titer`
- * @更新时间 `2024-03-02 11:17:35`
+ * @请求头 `GET /api/search/plasma/privilege`
+ * @更新时间 `2024-05-21 14:19:05`
  */
-export interface PostApiCoreBagTiterRequest {
+export interface GetApiSearchPlasmaPrivilegeRequest {
   /**
    * 采浆公司
    */
@@ -2037,10 +2037,10 @@ export interface PostApiCoreBagTiterRequest {
  * 接口 [特免血浆查询↗](https://yapi.sharing8.cn/project/529/interface/api/33594) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/bag/titer`
- * @更新时间 `2024-03-02 11:17:35`
+ * @请求头 `GET /api/search/plasma/privilege`
+ * @更新时间 `2024-05-21 14:19:05`
  */
-export type PostApiCoreBagTiterResponse = {
+export type GetApiSearchPlasmaPrivilegeResponse = {
   /**
    * 采浆公司
    */
@@ -3463,10 +3463,10 @@ export interface GetApiSearchPlasmaCheckDetailsResponse {
  * 接口 [特免血浆查询-详情↗](https://yapi.sharing8.cn/project/529/interface/api/33825) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/bag/titer/details`
- * @更新时间 `2024-03-09 15:40:21`
+ * @请求头 `GET /api/search/plasma/privilege/details`
+ * @更新时间 `2024-05-21 14:27:15`
  */
-export interface PostApiCoreBagTiterDetailsRequest {
+export interface GetApiSearchPlasmaPrivilegeDetailsRequest {
   /**
    * 采浆公司
    */
@@ -3491,10 +3491,10 @@ export interface PostApiCoreBagTiterDetailsRequest {
  * 接口 [特免血浆查询-详情↗](https://yapi.sharing8.cn/project/529/interface/api/33825) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/bag/titer/details`
- * @更新时间 `2024-03-09 15:40:21`
+ * @请求头 `GET /api/search/plasma/privilege/details`
+ * @更新时间 `2024-05-21 14:27:15`
  */
-export interface PostApiCoreBagTiterDetailsResponse {
+export interface GetApiSearchPlasmaPrivilegeDetailsResponse {
   totalCount: number;
   pageSize: number;
   totalPage: number;

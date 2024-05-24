@@ -54,6 +54,7 @@ import {
   DeleteApiCoreLabRegistrationLabItemUnqualifiedResponse,
   PostApiCoreLabMbBaninRequest,
   PostApiCoreLabMbBaninResponse,
+  PostApiCoreLabRegistrationLabItemBsNoResponse,
 } from '@/api/type/inspectManage';
 
 enum Api {
@@ -187,3 +188,8 @@ export const deleteMaterialApi = (data: DeleteApiCoreLabMaterialDetailRequest) =
 
 export const submitSqImportApi = (data: PostApiCoreLabMbBaninRequest) =>
   defHttp.post<PostApiCoreLabMbBaninResponse>({ url: Api.SQ_IMPORT, data });
+
+export const submitItemDtApi = (data: { bsNo: string }) =>
+  defHttp.post<PostApiCoreLabRegistrationLabItemBsNoResponse>({
+    url: '/api/core/lab/registration/labItem/' + data.bsNo,
+  });

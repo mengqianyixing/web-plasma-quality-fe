@@ -826,4 +826,970 @@ export interface GetApiCoreSamplePlanDetailResponse {
   }[];
 }
 
+/**
+ * 接口 [保留样本出库申请单列表↗](https://yapi.sharing8.cn/project/529/interface/api/34836) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample`
+ * @更新时间 `2024-05-21 17:49:05`
+ */
+export interface GetApiCoreBankDeliverSampleRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo?: string;
+  /**
+   * 申请日期起
+   */
+  applyStartDate?: string;
+  /**
+   * 申请日期止
+   */
+  applyEndDate?: string;
+  /**
+   * 状态
+   */
+  state?: string;
+  pageSize: string;
+  currPage: string;
+}
+
+/**
+ * 接口 [保留样本出库申请单列表↗](https://yapi.sharing8.cn/project/529/interface/api/34836) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample`
+ * @更新时间 `2024-05-21 17:49:05`
+ */
+export interface GetApiCoreBankDeliverSampleResponse {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+  /**
+   * 批次数量
+   */
+  batchNum: number;
+  /**
+   * 样本袋数
+   */
+  sampleNum: string;
+  /**
+   * 血浆最晚投产日期
+   */
+  bagLatestProdDate: string;
+  /**
+   * 备注
+   */
+  remark?: string;
+  /**
+   * 申请人
+   */
+  applyBy?: string;
+  /**
+   * 申请日期
+   */
+  applyDate?: string;
+  /**
+   * 审核人
+   */
+  reviewer?: string;
+  /**
+   * 审核日期
+   */
+  reviewDate?: string;
+  state?: string;
+}
+
+/**
+ * 接口 [保留样本出库单创建↗](https://yapi.sharing8.cn/project/529/interface/api/34842) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/bank/deliver/sample`
+ * @更新时间 `2024-05-22 17:24:50`
+ */
+export interface PostApiCoreBankDeliverSampleRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+  /**
+   * 备注
+   */
+  remark?: string;
+}
+
+/**
+ * 接口 [保留样本出库单创建↗](https://yapi.sharing8.cn/project/529/interface/api/34842) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/bank/deliver/sample`
+ * @更新时间 `2024-05-22 17:24:50`
+ */
+export interface PostApiCoreBankDeliverSampleResponse {}
+
+/**
+ * 接口 [保留样本出库单样本批次详情列表↗](https://yapi.sharing8.cn/project/529/interface/api/34848) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/detail`
+ * @更新时间 `2024-05-24 10:37:04`
+ */
+export interface GetApiCoreBankDeliverSampleDetailRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+}
+
+/**
+ * 接口 [保留样本出库单样本批次详情列表↗](https://yapi.sharing8.cn/project/529/interface/api/34848) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/detail`
+ * @更新时间 `2024-05-24 10:37:04`
+ */
+export type GetApiCoreBankDeliverSampleDetailResponse = {
+  /**
+   * 浆站名称
+   */
+  stationName: string;
+  /**
+   * 样本袋数
+   */
+  sampleBagNum: number;
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+  /**
+   * 样本数
+   */
+  sampleNum: string;
+  /**
+   * 最晚投产时间
+   */
+  bagLatestProdDate: string;
+}[];
+
+/**
+ * 接口 [批量挑选保留样本批次列表↗](https://yapi.sharing8.cn/project/529/interface/api/34854) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample-pick`
+ * @更新时间 `2024-05-24 10:43:11`
+ */
+export interface GetApiCoreBankDeliverSamplePickRequest {
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+}
+
+/**
+ * 接口 [批量挑选保留样本批次列表↗](https://yapi.sharing8.cn/project/529/interface/api/34854) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample-pick`
+ * @更新时间 `2024-05-24 10:43:11`
+ */
+export type GetApiCoreBankDeliverSamplePickResponse = {
+  /**
+   * 采浆公司
+   */
+  stationName: string;
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+  /**
+   * 样本袋数
+   */
+  sampleBagNum: string;
+  /**
+   * 样本数量
+   */
+  sampleNum: string;
+  /**
+   * 血浆最晚投产日期
+   */
+  bagLatestProdDate: string;
+}[];
+
+/**
+ * 接口 [保留样本出库单详情删除↗](https://yapi.sharing8.cn/project/529/interface/api/34866) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `DELETE /api/core/bank/deliver/sample-pick`
+ * @更新时间 `2024-05-24 10:40:57`
+ */
+export interface DeleteApiCoreBankDeliverSamplePickRequest {
+  /**
+   * 单号
+   */
+  dlvNo: string;
+  /**
+   * 批号列表
+   */
+  batchNos: string[];
+}
+
+/**
+ * 接口 [保留样本出库单详情删除↗](https://yapi.sharing8.cn/project/529/interface/api/34866) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `DELETE /api/core/bank/deliver/sample-pick`
+ * @更新时间 `2024-05-24 10:40:57`
+ */
+export interface DeleteApiCoreBankDeliverSamplePickResponse {}
+
+/**
+ * 接口 [保留样本挑选↗](https://yapi.sharing8.cn/project/529/interface/api/34872) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/bank/deliver/sample-pick`
+ * @更新时间 `2024-05-24 10:45:52`
+ */
+export interface PostApiCoreBankDeliverSamplePickRequest {
+  /**
+   * 单号
+   */
+  dlvNo: string;
+  /**
+   * 血浆批号
+   */
+  batchNos: string[];
+}
+
+/**
+ * 接口 [保留样本挑选↗](https://yapi.sharing8.cn/project/529/interface/api/34872) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/bank/deliver/sample-pick`
+ * @更新时间 `2024-05-24 10:45:52`
+ */
+export interface PostApiCoreBankDeliverSamplePickResponse {}
+
+/**
+ * 接口 [保留样本出库移提交申请↗](https://yapi.sharing8.cn/project/529/interface/api/34878) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `PUT /api/core/bank/deliver/sample/ready/{dlvNo}`
+ * @更新时间 `2024-05-23 14:44:58`
+ */
+export interface PutApiCoreBankDeliverSampleReadyDlvNoRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+}
+
+/**
+ * 接口 [保留样本出库移提交申请↗](https://yapi.sharing8.cn/project/529/interface/api/34878) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `PUT /api/core/bank/deliver/sample/ready/{dlvNo}`
+ * @更新时间 `2024-05-23 14:44:58`
+ */
+export interface PutApiCoreBankDeliverSampleReadyDlvNoResponse {}
+
+/**
+ * 接口 [保留样本出库移提交申请撤销↗](https://yapi.sharing8.cn/project/529/interface/api/34884) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `DELETE /api/core/bank/deliver/sample/ready/{dlvNo}`
+ * @更新时间 `2024-05-23 14:45:54`
+ */
+export interface DeleteApiCoreBankDeliverSampleReadyDlvNoRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+}
+
+/**
+ * 接口 [保留样本出库移提交申请撤销↗](https://yapi.sharing8.cn/project/529/interface/api/34884) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `DELETE /api/core/bank/deliver/sample/ready/{dlvNo}`
+ * @更新时间 `2024-05-23 14:45:54`
+ */
+export interface DeleteApiCoreBankDeliverSampleReadyDlvNoResponse {}
+
+/**
+ * 接口 [保留样本出库申请单审核↗](https://yapi.sharing8.cn/project/529/interface/api/34890) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `PUT /api/core/bank/deliver/sample/process/{dlvNo}`
+ * @更新时间 `2024-05-23 14:46:53`
+ */
+export interface PutApiCoreBankDeliverSampleProcessDlvNoRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+}
+
+/**
+ * 接口 [保留样本出库申请单审核↗](https://yapi.sharing8.cn/project/529/interface/api/34890) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `PUT /api/core/bank/deliver/sample/process/{dlvNo}`
+ * @更新时间 `2024-05-23 14:46:53`
+ */
+export interface PutApiCoreBankDeliverSampleProcessDlvNoResponse {}
+
+/**
+ * 接口 [保留样本出库申请单审核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/34896) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `DELETE /api/core/bank/deliver/sample/process/{dlvNo}`
+ * @更新时间 `2024-05-23 14:47:27`
+ */
+export interface DeleteApiCoreBankDeliverSampleProcessDlvNoRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+}
+
+/**
+ * 接口 [保留样本出库申请单审核撤销↗](https://yapi.sharing8.cn/project/529/interface/api/34896) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `DELETE /api/core/bank/deliver/sample/process/{dlvNo}`
+ * @更新时间 `2024-05-23 14:47:27`
+ */
+export interface DeleteApiCoreBankDeliverSampleProcessDlvNoResponse {}
+
+/**
+ * 接口 [保留样本扫描列表↗](https://yapi.sharing8.cn/project/529/interface/api/34902) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/scan`
+ * @更新时间 `2024-05-23 15:37:25`
+ */
+export interface GetApiCoreBankDeliverSampleScanRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+}
+
+/**
+ * 接口 [保留样本扫描列表↗](https://yapi.sharing8.cn/project/529/interface/api/34902) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/scan`
+ * @更新时间 `2024-05-23 15:37:25`
+ */
+export type GetApiCoreBankDeliverSampleScanResponse = {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+  /**
+   * 备注
+   */
+  remark: string;
+  /**
+   * 批次数量
+   */
+  batchNum: string;
+  /**
+   * 样本袋数
+   */
+  sampleBagNum: string;
+  /**
+   * 样本数量
+   */
+  sampleNum: string;
+  /**
+   * 未出库袋数
+   */
+  waitOutNum: string;
+  /**
+   * 已出库袋数
+   */
+  outedNum: string;
+  waitList: {
+    /**
+     * 样本袋号
+     */
+    sampleBagNo: string;
+    /**
+     * 样本数量
+     */
+    sampleNum: string;
+  }[];
+  outedList: {
+    /**
+     * 样本袋号
+     */
+    sampleBagNo: string;
+    /**
+     * 出库日期
+     */
+    outDate: string;
+    /**
+     * 出库人
+     */
+    scanBy: string;
+    /**
+     * 样本数量
+     */
+    sampleNum: string;
+  }[];
+}[];
+
+/**
+ * 接口 [保留样本袋出库扫描↗](https://yapi.sharing8.cn/project/529/interface/api/34908) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/bank/deliver/sample/scan`
+ * @更新时间 `2024-05-23 15:26:21`
+ */
+export interface PostApiCoreBankDeliverSampleScanRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+  /**
+   * 样本袋号
+   */
+  sampleBagNo: string;
+}
+
+/**
+ * 接口 [保留样本袋出库扫描↗](https://yapi.sharing8.cn/project/529/interface/api/34908) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/bank/deliver/sample/scan`
+ * @更新时间 `2024-05-23 15:26:21`
+ */
+export interface PostApiCoreBankDeliverSampleScanResponse {}
+
+/**
+ * 接口 [保留样本托盘出库列表↗](https://yapi.sharing8.cn/project/529/interface/api/34914) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/tray`
+ * @更新时间 `2024-05-23 15:49:39`
+ */
+export interface GetApiCoreBankDeliverSampleTrayRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+  /**
+   * 托盘编号
+   */
+  trayNo?: string;
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+}
+
+/**
+ * 接口 [保留样本托盘出库列表↗](https://yapi.sharing8.cn/project/529/interface/api/34914) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/tray`
+ * @更新时间 `2024-05-23 15:49:39`
+ */
+export interface GetApiCoreBankDeliverSampleTrayResponse {
+  /**
+   * 托盘号
+   */
+  trayNo?: string;
+  /**
+   * 采浆公司
+   */
+  stationName?: string;
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+  /**
+   * 样本袋号
+   */
+  sampleBagNo?: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+  /**
+   * 存放位置
+   */
+  location?: string;
+}
+
+/**
+ * 接口 [保留样本接收：获取新的保留箱号↗](https://yapi.sharing8.cn/project/529/interface/api/34920) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/pack/next-boxno`
+ * @更新时间 `2024-05-24 09:24:47`
+ */
+export interface GetApiCoreBatchSampleAcceptPackNextBoxnoRequest {}
+
+/**
+ * 接口 [保留样本接收：获取新的保留箱号↗](https://yapi.sharing8.cn/project/529/interface/api/34920) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/pack/next-boxno`
+ * @更新时间 `2024-05-24 09:24:47`
+ */
+export type GetApiCoreBatchSampleAcceptPackNextBoxnoResponse = string;
+
+/**
+ * 接口 [保留样本接收：样本逐袋接收↗](https://yapi.sharing8.cn/project/529/interface/api/34926) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/batch/sample/accept/keep-pack`
+ * @更新时间 `2024-05-23 19:54:21`
+ */
+export interface PostApiCoreBatchSampleAcceptKeepPackRequest {
+  /**
+   * 样本接收单号
+   */
+  bsaNo?: string;
+  /**
+   * 托盘号
+   */
+  trayNo?: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+  /**
+   * 样本袋号
+   */
+  packNo: string;
+}
+
+/**
+ * 接口 [保留样本接收：样本逐袋接收↗](https://yapi.sharing8.cn/project/529/interface/api/34926) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/batch/sample/accept/keep-pack`
+ * @更新时间 `2024-05-23 19:54:21`
+ */
+export interface PostApiCoreBatchSampleAcceptKeepPackResponse {
+  /**
+   * 样本接收单号
+   */
+  bsaNo?: string;
+  /**
+   * 托盘编号
+   */
+  trayNo?: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+  /**
+   * 当前箱的样本袋数
+   */
+  packCount?: number;
+  /**
+   * 出库日期
+   */
+  outWarehouseDate?: string;
+  /**
+   * 采浆公司编号
+   */
+  stationNo?: string;
+  /**
+   * 采浆公司
+   */
+  stationName?: string;
+  /**
+   * 样本批号
+   */
+  batchSampleNo?: string;
+  /**
+   * 样本类型
+   */
+  sampleType?: string;
+  /**
+   * 样本袋数
+   */
+  bagCount?: number;
+  /**
+   * 样本数量
+   */
+  totalCount?: number;
+  /**
+   * 接收状态
+   */
+  acceptState?: string;
+  /**
+   * 未接收列表
+   */
+  unAcceptList?: {
+    /**
+     * 样本袋号
+     */
+    sampleBagNo?: string;
+    /**
+     * 样本数量
+     */
+    sampleCount?: number;
+  }[];
+  /**
+   * 已接收列表
+   */
+  acceptedList?: {
+    /**
+     * 托盘编号
+     */
+    trayNo?: string;
+    /**
+     * 箱号
+     */
+    boxNo?: string;
+    /**
+     * 样本袋号
+     */
+    sampleBagNo?: string;
+    /**
+     * 样本数量
+     */
+    sampleCount?: number;
+    /**
+     * 接收人
+     */
+    acceptor?: string;
+    /**
+     * 接收日期
+     */
+    acceptAt?: string;
+  }[];
+}
+
+/**
+ * 接口 [保留样本托盘出库↗](https://yapi.sharing8.cn/project/529/interface/api/34932) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/tray-out`
+ * @更新时间 `2024-05-23 16:00:02`
+ */
+export interface GetApiCoreBankDeliverSampleTrayOutRequest {}
+
+/**
+ * 接口 [保留样本托盘出库↗](https://yapi.sharing8.cn/project/529/interface/api/34932) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/tray-out`
+ * @更新时间 `2024-05-23 16:00:02`
+ */
+export interface GetApiCoreBankDeliverSampleTrayOutResponse {}
+
+/**
+ * 接口 [保留样本接收：点击样本袋号超链接查看样本明细↗](https://yapi.sharing8.cn/project/529/interface/api/34956) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/keep-pack/detail`
+ * @更新时间 `2024-05-23 20:06:05`
+ */
+export interface GetApiCoreBatchSampleAcceptKeepPackDetailRequest {
+  /**
+   * 当前页面
+   */
+  currPage: string;
+  /**
+   * 页数大小
+   */
+  pageSize: string;
+  /**
+   * 采浆公司编号
+   */
+  stationNo: string;
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+  /**
+   * 样本袋号
+   */
+  packNo?: string;
+}
+
+/**
+ * 接口 [保留样本接收：点击样本袋号超链接查看样本明细↗](https://yapi.sharing8.cn/project/529/interface/api/34956) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/keep-pack/detail`
+ * @更新时间 `2024-05-23 20:06:05`
+ */
+export interface GetApiCoreBatchSampleAcceptKeepPackDetailResponse {
+  /**
+   * 当前页码
+   */
+  currPage?: number;
+  /**
+   * 页大小
+   */
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 采浆公司编号
+     */
+    stationNo?: string;
+    /**
+     * 采浆公司
+     */
+    stationName?: string;
+    /**
+     * 样本批号
+     */
+    batchNo?: string;
+    /**
+     * 样本袋号
+     */
+    packNo?: string;
+    /**
+     * 箱号
+     */
+    boxNo?: string;
+    /**
+     * 样本编号
+     */
+    sampleNo?: string;
+    /**
+     * 采集日期
+     */
+    collectAt?: string;
+    /**
+     * 浆员编号
+     */
+    donorNo?: string;
+    /**
+     * 浆员姓名
+     */
+    donorName?: string;
+  }[];
+}
+
+/**
+ * 接口 [保留样本接收：托盘入库列表↗](https://yapi.sharing8.cn/project/529/interface/api/34962) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/keep-pack/traies`
+ * @更新时间 `2024-05-24 10:45:53`
+ */
+export interface GetApiCoreBatchSampleAcceptKeepPackTraiesRequest {
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+  /**
+   * 样本袋号
+   */
+  packNo?: string;
+  /**
+   * 托盘编号
+   */
+  trayNo?: string;
+}
+
+/**
+ * 接口 [保留样本接收：托盘入库列表↗](https://yapi.sharing8.cn/project/529/interface/api/34962) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/keep-pack/traies`
+ * @更新时间 `2024-05-24 10:45:53`
+ */
+export type GetApiCoreBatchSampleAcceptKeepPackTraiesResponse = {
+  /**
+   * 托盘编号
+   */
+  trayNo?: string;
+  /**
+   * 箱号
+   */
+  boxCount?: number;
+  /**
+   * 样本袋数
+   */
+  packCount?: number;
+  /**
+   * 样本数量
+   */
+  sampleCount?: number;
+  /**
+   * 状态
+   */
+  state?: string;
+  /**
+   * 存放库房
+   */
+  houseName?: string;
+  /**
+   * 存放货位
+   */
+  locationNo?: string;
+}[];
+
+/**
+ * 接口 [保留样本接收：箱明细列表↗](https://yapi.sharing8.cn/project/529/interface/api/34968) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/keep-pack/boxes`
+ * @更新时间 `2024-05-23 20:22:19`
+ */
+export interface GetApiCoreBatchSampleAcceptKeepPackBoxesRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+}
+
+/**
+ * 接口 [保留样本接收：箱明细列表↗](https://yapi.sharing8.cn/project/529/interface/api/34968) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/keep-pack/boxes`
+ * @更新时间 `2024-05-23 20:22:19`
+ */
+export type GetApiCoreBatchSampleAcceptKeepPackBoxesResponse = {
+  /**
+   * 托盘编号
+   */
+  trayNo?: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+  /**
+   * 样本袋数
+   */
+  packCount?: number;
+  /**
+   * 封箱人
+   */
+  sealer?: string;
+  /**
+   * 封箱时间
+   */
+  sealAt?: string;
+}[];
+
+/**
+ * 接口 [保留样本接收：样本袋明细列表↗](https://yapi.sharing8.cn/project/529/interface/api/34974) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/keep-pack/packes`
+ * @更新时间 `2024-05-23 20:27:39`
+ */
+export interface GetApiCoreBatchSampleAcceptKeepPackPackesRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+}
+
+/**
+ * 接口 [保留样本接收：样本袋明细列表↗](https://yapi.sharing8.cn/project/529/interface/api/34974) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/keep-pack/packes`
+ * @更新时间 `2024-05-23 20:27:39`
+ */
+export type GetApiCoreBatchSampleAcceptKeepPackPackesResponse = {
+  /**
+   * 托盘编号
+   */
+  trayNo?: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+  /**
+   * 样本袋号
+   */
+  packNo?: string;
+  /**
+   * 样本数量
+   */
+  sampleCount?: number;
+  /**
+   * 接收人
+   */
+  acceptor?: string;
+  /**
+   * 接收时间
+   */
+  acceptAt?: string;
+}[];
+
+/**
+ * 接口 [保留样本接收：撤销样本袋接收↗](https://yapi.sharing8.cn/project/529/interface/api/34980) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `PUT /api/core/batch/sample/accept/keep-pack/revoke`
+ * @更新时间 `2024-05-23 20:32:42`
+ */
+export interface PutApiCoreBatchSampleAcceptKeepPackRevokeRequest {
+  /**
+   * 样本袋号
+   */
+  packNo: string;
+}
+
+/**
+ * 接口 [保留样本接收：撤销样本袋接收↗](https://yapi.sharing8.cn/project/529/interface/api/34980) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `PUT /api/core/batch/sample/accept/keep-pack/revoke`
+ * @更新时间 `2024-05-23 20:32:42`
+ */
+export interface PutApiCoreBatchSampleAcceptKeepPackRevokeResponse {
+  /**
+   * 响应码
+   */
+  code: string;
+  /**
+   * 响应时间
+   */
+  msg: string;
+}
+
+/**
+ * 接口 [新增预检项↗](https://yapi.sharing8.cn/project/529/interface/api/34944) 的 **请求类型**
+ *
+ * @分类 [预检登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5938)
+ * @请求头 `POST /api/core/lab/preview`
+ * @更新时间 `2024-05-24 17:28:54`
+ */
+export type PostApiCoreLabPreviewRequest = {
+  bsNo: string;
+  immunity: string;
+  projectIds: string[];
+}[];
+
+/**
+ * 接口 [新增预检项↗](https://yapi.sharing8.cn/project/529/interface/api/34944) 的 **返回类型**
+ *
+ * @分类 [预检登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5938)
+ * @请求头 `POST /api/core/lab/preview`
+ * @更新时间 `2024-05-24 17:28:54`
+ */
+export type PostApiCoreLabPreviewResponse = string;
+
 /* prettier-ignore-end */

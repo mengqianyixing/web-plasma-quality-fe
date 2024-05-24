@@ -30,7 +30,7 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { batchColumns, batchSearchScheam } from './resultRegistration.data';
   import { defineEmits } from 'vue';
-  import { getBatchListApi } from '@/api/inspect/resultRegistration';
+  import { getBatchListApi, submitItemDtApi } from '@/api/inspect/resultRegistration';
   import { message } from 'ant-design-vue';
 
   defineOptions({ name: 'LocationModel' });
@@ -69,10 +69,13 @@
     reload();
   });
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     const [row] = rows;
+    if (row.status === '未登记') {
+      await submitItemDtApi({ bsNo: row.bsNo });
+    }
     emit('confirm', row);
   }
 </script>

@@ -254,4 +254,24 @@ export interface GetApiSysParamParamKeyRequest {
  */
 export type GetApiSysParamParamKeyResponse = string;
 
+/**
+ * 接口 [根据参数key查询参数当前模式下valueContext↗](https://yapi.sharing8.cn/project/521/interface/api/34824) 的 **请求类型**
+ *
+ * @分类 [系统参数↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5397)
+ * @请求头 `GET /api/sys/param/context/{paramKey}`
+ * @更新时间 `2024-05-21 17:19:22`
+ */
+export interface GetApiSysParamContextParamKeyRequest {
+  paramKey: string;
+}
+
+/**
+ * 接口 [根据参数key查询参数当前模式下valueContext↗](https://yapi.sharing8.cn/project/521/interface/api/34824) 的 **返回类型**
+ *
+ * @分类 [系统参数↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5397)
+ * @请求头 `GET /api/sys/param/context/{paramKey}`
+ * @更新时间 `2024-05-21 17:19:22`
+ */
+export type GetApiSysParamContextParamKeyResponse = string;
+
 /* prettier-ignore-end */

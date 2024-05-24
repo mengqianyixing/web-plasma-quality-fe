@@ -11,26 +11,29 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { reactive } from 'vue';
+  import { nextTick, reactive } from 'vue';
   import { formListSchema } from './requiredItem.data';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { message } from 'ant-design-vue';
   import { addApi, getDtApi, updateApi } from '@/api/base-settings/requiredItem';
+  import { getListApi } from '@/api/inspect/itemSetting';
 
   const emit = defineEmits(['success', 'register']);
   defineOptions({ name: 'FormModel' });
 
-  const state = reactive({ type: '', api: addApi });
+  const state = reactive({ type: '', api: addApi, options: [] as Recordable[] });
   const NOR = 'NOR'; //血浆样本
 
-  const [registerForm, { validate, setFieldsValue, clearValidate, resetFields, updateSchema }] =
-    useForm({
-      labelWidth: 120,
-      baseColProps: { span: 24 },
-      schemas: formListSchema,
-      showActionButtonGroup: false,
-    });
+  const [
+    registerForm,
+    { validate, setFieldsValue, clearValidate, resetFields, updateSchema, getFieldsValue },
+  ] = useForm({
+    labelWidth: 120,
+    baseColProps: { span: 24 },
+    schemas: formListSchema,
+    showActionButtonGroup: false,
+  });
   const [registerModal, { setModalProps, closeModal }] = useModalInner(
     async ({ sampleType, rawImmEnum, sampleTypeEnum }) => {
       resetFields();
@@ -48,6 +51,10 @@
         },
       };
       updateSchema(sampleTypeChangeSchema);
+      updateSchema({
+        field: 'projectIds',
+        componentProps: { options: state.options, onChange: handleChange },
+      });
       state.api = addApi;
       state.type = '新增';
       if (sampleType) {
@@ -59,6 +66,14 @@
       clearValidate();
     },
   );
+  async function handleChange(ids: string[]) {
+    await nextTick();
+    const filterOptions = state.options.filter((it) => !ids.includes(it.value));
+    updateSchema({ field: 'defaultProjectIds', componentProps: { options: filterOptions } });
+    const { defaultProjectIds } = getFieldsValue();
+    const filterIds = defaultProjectIds.filter((it) => !ids.includes(it));
+    setFieldsValue({ defaultProjectIds: filterIds });
+  }
   async function handleSubmit() {
     try {
       const values = await validate();
@@ -75,4 +90,10 @@
       setModalProps({ confirmLoading: false });
     }
   }
+  getListApi({ currPage: 1, pageSize: 100, state: 'NORMAL' }).then((res) => {
+    state.options = res.result?.map((it) => ({
+      label: it.projectAbbr,
+      value: it.projectId,
+    })) as any;
+  });
 </script>

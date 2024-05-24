@@ -38,8 +38,12 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { ref, unref } from 'vue';
   import { CheckboxGroup as ACheckboxGroup, message, Checkbox as ACheckbox } from 'ant-design-vue';
-  import { getCheckItemListApi, addItemApi } from '@/api/inspect/resultRegistration';
-  import { GetApiCoreLabRegistrationLabProjectsBsNoResponse } from '@/api/type/inspectManage';
+  import {
+    getCheckItemListApi,
+    addItemApi,
+    sampleRelease,
+  } from '@/api/sample-manage/sample-release';
+  import { GetApiCoreLabRegistrationLabRequestProjectsBsNoResponse } from '@/api/type/inspectManage';
 
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
@@ -60,9 +64,9 @@
   };
   const emit = defineEmits(['confirm']);
 
-  const state = ref<CheckGrop[] & GetApiCoreLabRegistrationLabProjectsBsNoResponse>([]);
+  const state = ref<CheckGrop[] & GetApiCoreLabRegistrationLabRequestProjectsBsNoResponse>([]);
   const bsno = ref('');
-  const [registerModal, { setModalProps }] = useModalInner(async ({ bsNo }) => {
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(async ({ bsNo }) => {
     bsno.value = bsNo;
     const res = await getCheckItemListApi({ bsNo });
     if (res.length === 0) {
@@ -75,7 +79,7 @@
           ..._,
           checkAll: false,
           indeterminate: false,
-          values: _.labProjects.filter((it) => it.check).map((it) => it.projectId),
+          values: _.labProjects.filter((it) => it.check || it.acquiesce).map((it) => it.projectId),
           options: _.labProjects.map((_) => ({
             value: _.projectId,
             label: _.projectAbbr,
@@ -91,22 +95,21 @@
   async function handleSubmit() {
     const validate = unref(state).some((_) => _.values.length > 0);
     if (!validate) return message.warning('请选择项目');
-    const list = unref(state).reduce((t, _) => {
-      const l = _.values.map((projectId) => ({
-        projectId,
-        plasmaType: _.plasmaType,
-        bsNo: unref(bsno),
-      }));
-      t.push(...l);
-      return t;
-    }, [] as unknown[]);
+    const list = state.value.map((it) => ({
+      bsNo: unref(bsno),
+      immunity: it.plasmaType,
+      projectIds: it.values,
+    }));
     try {
       setModalProps({ confirmLoading: true });
       await addItemApi(list);
       message.success('项目添加成功');
+      await sampleRelease({ batchSampleNo: unref(bsno) });
+      message.success('发布成功');
     } finally {
       setModalProps({ confirmLoading: false });
     }
+    closeModal();
     emit('confirm');
   }
   function allChange(event: any, item: CheckGrop) {
