@@ -1,0 +1,172 @@
+<template>
+  <PageWrapper dense contentFullHeight fixedHeight>
+    <BasicTable @register="registerTable">
+      <template #toolbar>
+        <a-button type="primary" @click="handleAddRequisition">新增</a-button>
+        <a-button type="primary" @click="handleEditRequisition">编辑</a-button>
+        <a-button type="primary" @click="handleSubmitApplication">提交申请</a-button>
+        <a-button type="primary" @click="handleCancelApplication">撤销申请</a-button>
+        <a-button type="primary" @click="handleCheck">审核</a-button>
+        <a-button type="primary" @click="handleCancelCheck">撤销审核</a-button>
+        <a-button type="primary" @click="handleOutBound">出库</a-button>
+        <a-button type="primary" @click="handlePrint">打印</a-button>
+      </template>
+      <template #dlvNo="{ record }">
+        <span
+          :class="!record?.dlvNo ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'"
+          @click.stop.self="handleOpenDlvDetail(record)"
+        >
+          {{ record?.dlvNo }}
+        </span>
+      </template>
+    </BasicTable>
+
+    <RequisitionModal @register="registerRequisitionModal" />
+    <DlvDetailModal @register="registerDlvDetailModal" />
+  </PageWrapper>
+</template>
+
+<script setup lang="ts">
+  import { BasicTable, useTable } from '@/components/Table';
+  import { PageWrapper } from '@/components/Page';
+  import { columns, searchFormSchema } from './reserve.data';
+
+  import { useModal } from '@/components/Modal';
+  import {
+    cancelApplication,
+    cancelCheckApplication,
+    checkApplication,
+    getReserveSampleList,
+    submitApplication,
+  } from '@/api/sample-manage/reserve-sample-destory';
+
+  import RequisitionModal from '@/views/sample-manage/reserve-sample-destroy-outbound/RequisitionModal.vue';
+  import DlvDetailModal from '@/views/sample-manage/reserve-sample-destroy-outbound/DlvDetailModal.vue';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  const { createConfirm, createMessage } = useMessage();
+  defineOptions({ name: 'ReserveSampleDestroyOutbound' });
+
+  const [registerRequisitionModal, { openModal: openRequisitionModal }] = useModal();
+  const [registerDlvDetailModal, { openModal: openDlvDetailModal }] = useModal();
+
+  const [registerTable, { reload, getSelectRows }] = useTable({
+    api: getReserveSampleList,
+    columns: columns,
+    size: 'small',
+    useSearchForm: true,
+    showTableSetting: false,
+    bordered: true,
+    formConfig: {
+      schemas: searchFormSchema,
+      transformDateFunc(date) {
+        return date ? date.format('YYYY-MM-DD') : '';
+      },
+    },
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    rowSelection: { type: 'radio' },
+  });
+
+  function handleAddRequisition() {
+    openRequisitionModal(true, {
+      isAdd: true,
+    });
+  }
+
+  function handleEditRequisition() {
+    openRequisitionModal(true, {
+      isAdd: false,
+    });
+  }
+
+  async function handleSubmitApplication() {
+    if (getSelectRows().length === 0) {
+      createMessage.warn('请选择提交申请单号');
+      return;
+    }
+
+    createConfirm({
+      title: '确认',
+      content: '是否提交申请？',
+      iconType: 'warning',
+      onOk: async () => {
+        await submitApplication(getSelectRows()[0]?.dlvNo);
+
+        createMessage.success('提交成功');
+        await reload();
+      },
+    });
+  }
+
+  function handleCancelApplication() {
+    if (getSelectRows().length === 0) {
+      createMessage.warn('请选择撤销申请单号');
+      return;
+    }
+
+    createConfirm({
+      title: '确认',
+      content: '是否撤销申请？',
+      iconType: 'warning',
+      onOk: async () => {
+        await cancelApplication(getSelectRows()[0]?.dlvNo);
+
+        createMessage.success('撤销成功');
+        await reload();
+      },
+    });
+  }
+
+  function handleCheck() {
+    if (getSelectRows().length === 0) {
+      createMessage.warn('请选择审核申请单号');
+      return;
+    }
+
+    createConfirm({
+      title: '确认',
+      content: '是否提交审核？',
+      iconType: 'warning',
+      onOk: async () => {
+        await checkApplication(getSelectRows()[0]?.dlvNo);
+
+        createMessage.success('审核成功');
+        await reload();
+      },
+    });
+  }
+
+  function handleCancelCheck() {
+    if (getSelectRows().length === 0) {
+      createMessage.warn('请选择撤销审核申请单号');
+      return;
+    }
+
+    createConfirm({
+      title: '确认',
+      content: '是否撤销？',
+      iconType: 'warning',
+      onOk: async () => {
+        await cancelCheckApplication(getSelectRows()[0]?.dlvNo);
+
+        createMessage.success('撤销成功');
+        await reload();
+      },
+    });
+  }
+
+  function handleOutBound() {}
+
+  function handlePrint() {}
+
+  function handleOpenDlvDetail(record) {
+    openDlvDetailModal(true, {
+      ...record,
+    });
+  }
+</script>

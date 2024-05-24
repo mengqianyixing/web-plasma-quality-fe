@@ -74,6 +74,15 @@ const sampleManager: AppRouteModule = {
       ],
     },
     {
+      path: 'reserve-sample-destroy-outbound',
+      name: 'ReserveSampleDestroyOutbound',
+      id: 970100,
+      meta: {
+        title: '保留样本销毁出库',
+      },
+      component: () => import('@/views/sample-manage/reserve-sample-destroy-outbound/index.vue'),
+    },
+    {
       path: 'test-plan',
       name: 'TestPlan',
       id: 970040,
