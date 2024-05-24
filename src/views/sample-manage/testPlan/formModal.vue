@@ -20,9 +20,16 @@
         <BasicForm @register="registerForm">
           <template #batchList="{ field, model }">
             <div class="border h-200px overscroll-auto border-neutral-200 p-4px">
-              <a-tag closable v-for="tag in model[field]" @close="() => tagClose(tag)" :key="tag">{{
-                tag
-              }}</a-tag>
+              <a-tag
+                closable
+                class="p-2px mb-5px"
+                v-for="(tag, i) in model[field]"
+                @close="() => tagClose(tag)"
+                :key="tag"
+              >
+                <a-badge :count="i + 1" />
+                {{ tag }}
+              </a-tag>
             </div>
           </template>
         </BasicForm>
@@ -42,7 +49,7 @@
     getFormDtApi,
   } from '@/api/sample-manage/test-plan';
   import { BasicTable, useTable } from '@/components/Table';
-  import { Tag as ATag } from 'ant-design-vue';
+  import { Tag as ATag, Badge as ABadge } from 'ant-design-vue';
 
   const emit = defineEmits(['success', 'register']);
 
