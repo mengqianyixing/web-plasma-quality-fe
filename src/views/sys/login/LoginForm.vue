@@ -154,9 +154,10 @@
 
   async function handleCasDoorLogin() {
     // @ts-ignore
-    oauth
-      .goToCasDoorLogin()
-      .then((res) => (window.location.href = res.data ?? window.location.href));
+    oauth.goToCasDoorLogin().then((res) => {
+      console.log(res.data, res, window.location.href, 'login-res');
+      return (window.location.href = res.data ?? window.location.href);
+    });
   }
 
   async function handleLogin() {

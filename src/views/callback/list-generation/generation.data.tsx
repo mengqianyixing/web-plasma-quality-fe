@@ -150,12 +150,12 @@ export const searchFormSchema: FormSchema[] = [
 
 export const callbackModalColumns: VxeGridPropTypes.Columns = [
   {
-    type: 'seq',
-    title: '序号',
-  },
-  {
     type: 'checkbox',
     width: 50,
+  },
+  {
+    type: 'seq',
+    title: '序号',
   },
   {
     title: '浆员编号',
