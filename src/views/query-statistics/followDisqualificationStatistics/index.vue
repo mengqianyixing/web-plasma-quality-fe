@@ -132,7 +132,7 @@
                 )
               }
             >
-              {record[backTrackUnqKey]?.[it.dictItemId]}
+              {record[backTrackUnqKey]?.[it.dictItemId] || 0}
             </span>
           );
         },
@@ -157,7 +157,7 @@
                 )
               }
             >
-              {record[followTrackNumUnqKey]?.[it.dictItemId]}
+              {record[followTrackNumUnqKey]?.[it.dictItemId] || 0}
             </span>
           );
         },
