@@ -12,8 +12,6 @@ function goToCasDoorLogin() {
   return fetch(`/api/sys/casdoor/login?redirectUri=${encodeURIComponent(window.location.origin)}`, {
     method: 'GET',
   }).then((res) => {
-    //todo remove
-    console.log(res, 'login-res');
     return res.json();
   });
 }
