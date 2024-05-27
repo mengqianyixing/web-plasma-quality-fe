@@ -33,7 +33,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: '[collectBeginAt, collectEndAt]',
-    label: '采集时间',
+    label: '采集日期',
     component: 'RangePicker',
   },
 ];
