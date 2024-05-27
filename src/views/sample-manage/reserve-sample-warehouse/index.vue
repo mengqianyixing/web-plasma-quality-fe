@@ -1,11 +1,6 @@
 <template>
   <PageWrapper>
     <Description @register="register" :data="sampleBatchData" />
-    <SelectSampleBatchModal
-      @register="registerSelectModal"
-      @success="handleSelectSampleBatchSuccess"
-    />
-
     <vxe-grid
       v-bind="gridOptionsUnaccept"
       :data="unAcceptList"
@@ -31,14 +26,19 @@
             <span>已接收袋数：</span>
             <span>{{ acceptList?.length }}</span>
           </div>
-          <div>
-            <a-button type="primary" @click="handleAcceptSample" v-if="!isReceiveByBag">
-              接收
-            </a-button>
+          <div class="flex gap-2">
+            <a-button type="primary" @click="handleTrayInBand"> 入库 </a-button>
+            <a-button type="primary" @click="handleAcceptSample"> 接收完成 </a-button>
           </div>
         </div>
       </template>
     </vxe-grid>
+
+    <SelectSampleBatchModal
+      @register="registerSelectModal"
+      @success="handleSelectSampleBatchSuccess"
+    />
+    <TrayInModal @register="registerTrayInModal" />
   </PageWrapper>
 </template>
 
@@ -51,8 +51,9 @@
   import { useModal } from '@/components/Modal';
 
   import SelectSampleBatchModal from '../__components/SelectSampleBatchModal.vue';
+  import TrayInModal from '@/views/sample-manage/reserve-sample-warehouse/TrayInModal.vue';
+
   import {
-    receiveSample,
     getSampleReceiveDetail,
     receiveSampleByBag,
   } from '@/api/inbound-management/sample-receive';
@@ -68,12 +69,13 @@
   import { SysParamsEnum } from '@/enums/sysParamsEnum';
   import { useScanHelper } from '@/hooks/common/useScanHelper';
   import { debounce } from 'lodash-es';
+  import { keepPackAccept } from '@/api/sample-manage/reserve-sample-destory';
 
   const { barCode, enterFlag, startEvent } = useScanHelper();
 
   const { createMessage } = useMessage();
 
-  defineOptions({ name: 'SampleAccept' });
+  defineOptions({ name: 'ReserveSampleWarehouse' });
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
@@ -83,7 +85,10 @@
   const tableLoading = ref(false);
   const bagRef = ref(null);
 
-  const { createConfirm } = useMessage();
+  const trayRef = ref(null);
+  const trayValue = ref('');
+
+  const packNo = ref('');
 
   getSysParamsByParamKey(SysParamsEnum.BatchSampleAcceptPattern).then((res) => {
     receiveModal.value = res;
@@ -94,25 +99,57 @@
 
   const schema: DescItem[] = [
     {
-      field: 'bagNo',
+      field: 'trayNo',
+      label: '托盘编号',
+      contentMinWidth: 100,
+      render() {
+        return (
+          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1" ref="bagRef">
+            <a-input
+              ref={(el) => (trayRef.value = el)}
+              placeholder="扫描托盘编号"
+              value={trayValue}
+              onChange={(e) => (trayValue.value = e.target.value)}
+            />
+          </div>
+        );
+      },
+    },
+    {
+      field: 'boxNo',
+      label: '箱号',
+      contentMinWidth: 100,
+      render() {
+        return (
+          <div class="flex items-center justify-between gap-2 -mt-1" ref="bagRef">
+            <a-input
+              ref={(el) => (trayRef.value = el)}
+              placeholder="扫描托盘编号"
+              value={trayValue}
+              onChange={(e) => (trayValue.value = e.target.value)}
+            />
+            <div class="flex items-center justify-center w-[80px]">袋数(3)</div>
+            <a-button type="primary">封箱</a-button>
+          </div>
+        );
+      },
+    },
+    {
+      field: 'packNo',
       label: '样本袋号',
       contentMinWidth: 100,
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[300px] -mt-1" ref="bagRef">
             <a-input
-              ref={(el) => (bagRef.value = el)}
-              placeholder="扫描袋号条码"
+              placeholder="扫描样本袋号"
+              value={packNo}
               enter-button="接收"
-              value={bagValue}
-              onChange={(e) => (bagValue.value = e.target.value)}
-              onPressEnter={_handleReceiveByBag}
+              onChange={(e) => (packNo.value = e.target.value)}
+              onSearch={handleAcceptSample}
             />
           </div>
         );
-      },
-      show() {
-        return isReceiveByBag.value;
       },
     },
     {
@@ -168,6 +205,7 @@
   });
 
   const [registerSelectModal, { openModal: openSelectSampleBatchModal }] = useModal();
+  const [registerTrayInModal, { openModal: openTrayInModal }] = useModal();
 
   function handleSelectSampleBatch(value: string, event: MouseEvent) {
     if (value && event.type !== 'click') {
@@ -194,7 +232,7 @@
   );
   const gridOptionsUnaccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
     border: true,
-    height: '760px',
+    height: '750px',
     showOverflow: true,
     exportConfig: {},
     columnConfig: {
@@ -231,7 +269,7 @@
 
   const gridOptionsAccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
     border: true,
-    height: '760px',
+    height: '750px',
     showOverflow: true,
     columnConfig: {
       resizable: true,
@@ -296,16 +334,8 @@
   }
 
   async function handleAcceptSample() {
-    createConfirm({
-      title: '确认',
-      content: '确认接收样本',
-      iconType: 'warning',
-      onOk: async () => {
-        await receiveSample({
-          batchSampleNo: inputValue.value,
-        });
-        sampleBatchData.value = await getSampleReceiveDetail(inputValue.value);
-      },
+    await keepPackAccept({
+      packNo: packNo.value,
     });
   }
 
@@ -345,5 +375,9 @@
       barCode.value = '';
       enterFlag.value = false;
     }
+  }
+
+  function handleTrayInBand() {
+    openTrayInModal(true);
   }
 </script>
