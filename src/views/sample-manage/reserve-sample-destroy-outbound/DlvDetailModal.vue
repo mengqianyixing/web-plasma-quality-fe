@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="register"
-    title="批量挑选保留样本批次"
+    title="申请详情"
     width="80%"
     :min-height="650"
     showFooter
@@ -38,10 +38,14 @@
   import { Tabs } from 'ant-design-vue';
 
   import { ref } from 'vue';
-  import { getReserveSampleList } from '@/api/sample-manage/reserve-sample-destory';
+  import {
+    getDeliverSampleDetail,
+    getDeliverSampleDetailByBag,
+  } from '@/api/sample-manage/reserve-sample-destory';
 
   import {
-    columns,
+    requisitionDetailByBag,
+    requisitionDetailByBatch,
     searchFormSchema,
   } from '@/views/sample-manage/reserve-sample-destroy-outbound/reserve.data';
 
@@ -50,7 +54,7 @@
   const ATabs = Tabs;
   const ATabPane = Tabs.TabPane;
 
-  const desData = ref([]);
+  const desData = ref({});
   const currentKey = ref('batch');
 
   const [registerDescription] = useDescription({
@@ -69,11 +73,11 @@
       },
       {
         label: '批次数量',
-        field: '',
+        field: 'batchNum',
       },
       {
         label: '样本袋数',
-        field: '',
+        field: 'sampleNum',
       },
       {
         label: '样本数量',
@@ -82,17 +86,26 @@
     ],
   });
 
+  const dlvNo = ref('');
+
   const [register, { setModalProps }] = useModalInner(async (data) => {
+    dlvNo.value = data.dlvNo;
+    desData.value = data;
+
     setModalProps({
       maskClosable: false,
     });
-
-    console.log(data, 'data');
   });
 
   const [registerBatchTable] = useTable({
-    api: getReserveSampleList,
-    columns: columns,
+    api: getDeliverSampleDetail,
+    columns: requisitionDetailByBatch,
+    beforeFetch: (params) => {
+      return {
+        ...params,
+        dlvNo: dlvNo.value,
+      };
+    },
     size: 'small',
     useSearchForm: false,
     showTableSetting: false,
@@ -114,8 +127,14 @@
   });
 
   const [registerBagTable] = useTable({
-    api: getReserveSampleList,
-    columns: columns,
+    api: getDeliverSampleDetailByBag,
+    columns: requisitionDetailByBag,
+    beforeFetch: (params) => {
+      return {
+        ...params,
+        dlvNo: dlvNo.value,
+      };
+    },
     size: 'small',
     useSearchForm: false,
     showTableSetting: false,
