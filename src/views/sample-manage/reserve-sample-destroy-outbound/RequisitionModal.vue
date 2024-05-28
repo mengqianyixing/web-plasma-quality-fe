@@ -125,7 +125,7 @@
       custom: false,
     },
     columns: requisitionColumns,
-    showFooter: true,
+    showFooter: false,
     autoResize: true,
   });
 
@@ -191,9 +191,14 @@
   }
 
   async function initTableData() {
-    tableData.value = await getDeliverSampleDetail({
-      dlvNo: getFieldsValue()?.dlvNo,
-    });
+    try {
+      tableLoading.value = true;
+      tableData.value = await getDeliverSampleDetail({
+        dlvNo: getFieldsValue()?.dlvNo,
+      });
+    } finally {
+      tableLoading.value = false;
+    }
   }
 
   async function handlePickSuccess() {
