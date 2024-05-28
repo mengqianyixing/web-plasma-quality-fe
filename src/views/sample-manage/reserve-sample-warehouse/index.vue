@@ -302,7 +302,7 @@
     columns: [
       {
         field: 'trayNo',
-        title: '托盘编号',
+        title: trayText + '编号',
         formatter(params) {
           return params.cellValue ? params.cellValue : '-';
         },
