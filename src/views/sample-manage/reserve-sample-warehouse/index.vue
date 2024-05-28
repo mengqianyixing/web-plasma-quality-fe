@@ -80,8 +80,10 @@
     revokeKeepPack,
   } from '@/api/sample-manage/reserve-sample-destory';
   import { PostApiCoreBatchSampleAcceptKeepPackResponse } from '@/api/type/sampleManage';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   const { createMessage, createConfirm } = useMessage();
+  const { boxText, trayText } = useServerConfig();
 
   defineOptions({ name: 'ReserveSampleWarehouse' });
 
@@ -100,14 +102,14 @@
   const schema: DescItem[] = [
     {
       field: 'trayNo',
-      label: '托盘编号',
+      label: trayText + '编号',
       contentMinWidth: 100,
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[300px] -mt-1" ref="bagRef">
             <a-input
               ref={(el) => (trayRef.value = el)}
-              placeholder="扫描托盘编号"
+              placeholder={'扫描' + trayText + '编号'}
               value={trayValue}
               onChange={(e) => (trayValue.value = e.target.value)}
             />
@@ -117,13 +119,13 @@
     },
     {
       field: 'boxNo',
-      label: '箱号',
+      label: boxText + '号',
       contentMinWidth: 100,
       render() {
         return (
           <div class="flex items-center justify-between gap-2 -mt-1" ref="bagRef">
             <a-input
-              placeholder="扫描托盘编号"
+              placeholder={'扫描' + boxText + '号'}
               value={boxNoValue}
               onChange={(e) => (boxNoValue.value = e.target.value)}
             />

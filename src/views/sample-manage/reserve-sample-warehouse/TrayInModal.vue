@@ -58,6 +58,7 @@
   import ReBindModal from '@/views/sample-manage/reserve-sample-warehouse/ReBindModal.vue';
   import { ref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   const [registerBox, { openModal: openBoxModal }] = useModal();
   const [registerBag, { openModal: openBagModal }] = useModal();
@@ -65,6 +66,7 @@
   const [registerReBindModal, { openModal: openReBindModal }] = useModal();
 
   defineEmits(['register']);
+  const { boxText, trayText } = useServerConfig();
 
   const [registerTable, { reload, redoHeight, getSelectRows, clearSelectedRowKeys }] = useTable({
     api: getTrayList,
@@ -92,11 +94,11 @@
     },
     columns: [
       {
-        title: '托盘编号',
+        title: trayText + '编号',
         dataIndex: 'trayNo',
       },
       {
-        title: '箱数',
+        title: boxText + '数',
         dataIndex: 'boxCount',
         slots: { customRender: 'boxCount' },
       },
@@ -134,7 +136,7 @@
           },
         },
         {
-          label: '托盘编号',
+          label: trayText + '编号',
           field: 'trayNo',
           component: 'Input',
           colProps: {
@@ -160,7 +162,7 @@
   const { createMessage } = useMessage();
   function handleInBand() {
     if (!getSelectRows().length) {
-      return createMessage.error('请选择托盘');
+      return createMessage.error('请选择' + trayText);
     }
     openInModal(true, {
       data: getSelectRows(),

@@ -23,8 +23,10 @@
   import { getBagDetail } from '@/api/sample-manage/reserve-sample-destory';
   import dayjs from 'dayjs';
   import { ref } from 'vue';
+  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   defineEmits(['register']);
+  const { boxText, trayText } = useServerConfig();
 
   const [registerTable, { reload, redoHeight }] = useTable({
     api: getBagDetail,
@@ -44,11 +46,11 @@
     },
     columns: [
       {
-        title: '托盘编号',
+        title: trayText + '编号',
         dataIndex: 'trayNo',
       },
       {
-        title: '箱号',
+        title: boxText + '号',
         dataIndex: 'boxNo',
       },
       {
