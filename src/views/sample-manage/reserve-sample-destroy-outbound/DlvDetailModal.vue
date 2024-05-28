@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="register"
-    title="批量挑选保留样本批次"
+    title="申请详情"
     width="80%"
     :min-height="650"
     showFooter
@@ -10,7 +10,7 @@
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
-        <Description :data="desData" @register="registerDescription" />
+        <Description :data="desData" @register="registerDescription" :schema="schema" />
 
         <div class="flex-1 w-full">
           <a-tabs
@@ -33,15 +33,19 @@
 </template>
 <script lang="ts" setup>
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { Description, useDescription } from '@/components/Description';
+  import { DescItem, Description, useDescription } from '@/components/Description';
   import { BasicTable, useTable } from '@/components/Table';
   import { Tabs } from 'ant-design-vue';
 
   import { ref } from 'vue';
-  import { getReserveSampleList } from '@/api/sample-manage/reserve-sample-destory';
+  import {
+    getDeliverSampleDetail,
+    getDeliverSampleDetailByBag,
+  } from '@/api/sample-manage/reserve-sample-destory';
 
   import {
-    columns,
+    requisitionDetailByBag,
+    requisitionDetailByBatch,
     searchFormSchema,
   } from '@/views/sample-manage/reserve-sample-destroy-outbound/reserve.data';
 
@@ -50,49 +54,59 @@
   const ATabs = Tabs;
   const ATabPane = Tabs.TabPane;
 
-  const desData = ref([]);
+  const desData = ref({});
   const currentKey = ref('batch');
+  const schema: DescItem[] = [
+    {
+      label: '申请单号',
+      field: 'dlvNo',
+    },
+    {
+      label: '备注',
+      field: 'remark',
+    },
+    {
+      label: '批次数量',
+      field: 'batchNum',
+    },
+    {
+      label: '样本袋数',
+      field: 'sampleNum',
+    },
+    {
+      label: '样本数量',
+      field: 'totalNum',
+    },
+  ];
 
   const [registerDescription] = useDescription({
     column: 3,
     labelStyle: {
       width: '10%',
     },
-    schema: [
-      {
-        label: '申请单号',
-        field: 'dlvNo',
-      },
-      {
-        label: '备注',
-        field: 'remark',
-      },
-      {
-        label: '批次数量',
-        field: '',
-      },
-      {
-        label: '样本袋数',
-        field: '',
-      },
-      {
-        label: '样本数量',
-        field: '',
-      },
-    ],
   });
 
+  const dlvNo = ref('');
+
   const [register, { setModalProps }] = useModalInner(async (data) => {
+    dlvNo.value = data.dlvNo;
+    desData.value = data;
+
     setModalProps({
       maskClosable: false,
+      destroyOnClose: true,
     });
-
-    console.log(data, 'data');
   });
 
   const [registerBatchTable] = useTable({
-    api: getReserveSampleList,
-    columns: columns,
+    api: getDeliverSampleDetail,
+    columns: requisitionDetailByBatch,
+    beforeFetch: (params) => {
+      return {
+        ...params,
+        dlvNo: dlvNo.value,
+      };
+    },
     size: 'small',
     useSearchForm: false,
     showTableSetting: false,
@@ -114,8 +128,14 @@
   });
 
   const [registerBagTable] = useTable({
-    api: getReserveSampleList,
-    columns: columns,
+    api: getDeliverSampleDetailByBag,
+    columns: requisitionDetailByBag,
+    beforeFetch: (params) => {
+      return {
+        ...params,
+        dlvNo: dlvNo.value,
+      };
+    },
     size: 'small',
     useSearchForm: false,
     showTableSetting: false,

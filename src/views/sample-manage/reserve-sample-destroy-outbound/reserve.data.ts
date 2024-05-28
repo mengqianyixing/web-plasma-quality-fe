@@ -1,5 +1,6 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { VxeGridPropTypes } from '@/components/VxeTable';
+import dayjs from 'dayjs';
 
 export const columns: BasicColumn[] = [
   {
@@ -104,5 +105,92 @@ export const requisitionColumns: VxeGridPropTypes.Columns = [
   {
     title: '血浆最晚投产日期',
     field: 'bagLatestProdDate',
+  },
+];
+
+export const requisitionDetailByBatch: BasicColumn[] = [
+  {
+    dataIndex: 'stationName',
+    title: '采浆公司',
+  },
+  {
+    dataIndex: 'batchNo',
+    title: '样本批号',
+  },
+  {
+    dataIndex: 'sampleBagNum',
+    title: '样本袋数',
+  },
+  {
+    dataIndex: 'sampleNum',
+    title: '样本数量',
+  },
+  {
+    dataIndex: 'bagLatestProdDate',
+    title: '血浆最晚投产日期',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
+  },
+];
+export const requisitionDetailByBag: BasicColumn[] = [
+  {
+    dataIndex: 'stationName',
+    title: '采浆公司',
+  },
+  {
+    dataIndex: 'batchNo',
+    title: '样本批号',
+  },
+  {
+    dataIndex: 'sampleBagNum',
+    title: '样本袋数',
+  },
+  {
+    dataIndex: 'sampleNum',
+    title: '样本数量',
+  },
+  {
+    dataIndex: 'bagLatestProdDate',
+    title: '血浆最晚投产日期',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
+  },
+];
+
+export const trayColumns: VxeGridPropTypes.Columns = [
+  {
+    type: 'checkbox',
+    width: 50,
+  },
+  {
+    type: 'seq',
+    title: '序号',
+    width: 80,
+  },
+  {
+    title: '托盘号',
+    field: 'trayNo',
+  },
+  {
+    title: '采浆公司',
+    field: 'stationName',
+  },
+  {
+    title: '样本批号',
+    field: 'batchNo',
+  },
+  {
+    title: '样本袋号',
+    field: 'sampleBagNo',
+  },
+  {
+    title: '箱号',
+    field: 'boxNo',
+  },
+  {
+    title: '存放位置',
+    field: 'location',
   },
 ];

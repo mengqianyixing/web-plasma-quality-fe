@@ -6,20 +6,42 @@ import {
   DeleteApiCoreBankDeliverSampleProcessDlvNoResponse,
   DeleteApiCoreBankDeliverSampleReadyDlvNoRequest,
   DeleteApiCoreBankDeliverSampleReadyDlvNoResponse,
+  GetApiCoreBankDeliverSampleDetailBagRequest,
+  GetApiCoreBankDeliverSampleDetailBagResponse,
   GetApiCoreBankDeliverSampleDetailRequest,
   GetApiCoreBankDeliverSampleDetailResponse,
   GetApiCoreBankDeliverSamplePickRequest,
   GetApiCoreBankDeliverSamplePickResponse,
   GetApiCoreBankDeliverSampleRequest,
   GetApiCoreBankDeliverSampleResponse,
+  GetApiCoreBankDeliverSampleScanRequest,
+  GetApiCoreBankDeliverSampleScanResponse,
+  GetApiCoreBankDeliverSampleTrayRequest,
+  GetApiCoreBankDeliverSampleTrayResponse,
+  GetApiCoreBatchSampleAcceptKeepPackBoxesRequest,
+  GetApiCoreBatchSampleAcceptKeepPackBoxesResponse,
+  GetApiCoreBatchSampleAcceptKeepPackDetailRequest,
+  GetApiCoreBatchSampleAcceptKeepPackDetailResponse,
+  GetApiCoreBatchSampleAcceptKeepPackPackesRequest,
+  GetApiCoreBatchSampleAcceptKeepPackPackesResponse,
+  GetApiCoreBatchSampleAcceptKeepPackTraiesRequest,
+  GetApiCoreBatchSampleAcceptKeepPackTraiesResponse,
   PostApiCoreBankDeliverSamplePickRequest,
   PostApiCoreBankDeliverSamplePickResponse,
   PostApiCoreBankDeliverSampleRequest,
   PostApiCoreBankDeliverSampleResponse,
+  PostApiCoreBankDeliverSampleScanRequest,
+  PostApiCoreBankDeliverSampleScanResponse,
+  PostApiCoreBatchSampleAcceptKeepPackRequest,
+  PostApiCoreBatchSampleAcceptKeepPackResponse,
   PutApiCoreBankDeliverSampleProcessDlvNoRequest,
   PutApiCoreBankDeliverSampleProcessDlvNoResponse,
   PutApiCoreBankDeliverSampleReadyDlvNoRequest,
   PutApiCoreBankDeliverSampleReadyDlvNoResponse,
+  PutApiCoreBatchSampleAcceptKeepPackRevokeRequest,
+  PutApiCoreBatchSampleAcceptKeepPackRevokeResponse,
+  PutApiCoreBatchSampleAcceptKeepPackSealRequest,
+  PutApiCoreBatchSampleAcceptKeepPackSealResponse,
 } from '@/api/type/sampleManage';
 
 enum Api {
@@ -28,6 +50,16 @@ enum Api {
   PICK_SAMPLE_LIST = '/api/core/bank/deliver/sample-pick',
   SUBMIT_APPLICATION = '/api/core/bank/deliver/sample/ready',
   CHECK_APPLICATION = '/api/core/bank/deliver/sample/process',
+  SAMPLE_ACCEPT = '/api/core/batch/sample/accept/keep-pack',
+  SCAN_LIST = '/api/core/bank/deliver/sample/scan',
+  KEEP_PACK_OUT_BAND_TRAY_LIST = '/api/core/bank/deliver/sample/tray',
+  KEEP_PACK_OUT_BAND_DETAIL = '/api/core/batch/sample/accept/keep-pack/detail',
+  TRAY_LIST = '/api/core/batch/sample/accept/keep-pack/traies',
+  BOX_DETAIL = '/api/core/batch/sample/accept/keep-pack/boxes',
+  BAG_DETAIL = '/api/core/batch/sample/accept/keep-pack/packes',
+  DELIVER_DETAIL = '/api/core/bank/deliver/sample/detail-bag',
+  ACCEPT_SEAR = '/api/core/batch/sample/accept/keep-pack/seal',
+  REVOKE_KEEP_PACK = '/api/core/batch/sample/accept/keep-pack/revoke',
 }
 
 export const getReserveSampleList = (params: GetApiCoreBankDeliverSampleRequest) =>
@@ -46,6 +78,17 @@ export const getDeliverSampleDetail = (params: GetApiCoreBankDeliverSampleDetail
   defHttp.get<GetApiCoreBankDeliverSampleDetailResponse>(
     {
       url: Api.DELIVER_SAMPLE_DETAIL,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+export const getDeliverSampleDetailByBag = (params: GetApiCoreBankDeliverSampleDetailBagRequest) =>
+  defHttp.get<GetApiCoreBankDeliverSampleDetailBagResponse>(
+    {
+      url: Api.DELIVER_DETAIL,
       params,
     },
     {
@@ -93,4 +136,94 @@ export const cancelCheckApplication = (
 ) =>
   defHttp.delete<DeleteApiCoreBankDeliverSampleProcessDlvNoResponse>({
     url: Api.CHECK_APPLICATION + '/' + params,
+  });
+
+export const keepPackAccept = (params: PostApiCoreBatchSampleAcceptKeepPackRequest) =>
+  defHttp.post<PostApiCoreBatchSampleAcceptKeepPackResponse>({
+    url: Api.SAMPLE_ACCEPT,
+    params,
+  });
+
+export const keepPackOutBandList = (params: GetApiCoreBankDeliverSampleScanRequest) =>
+  defHttp.get<GetApiCoreBankDeliverSampleScanResponse>(
+    {
+      url: Api.SCAN_LIST,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+export const keepPackScan = (params: PostApiCoreBankDeliverSampleScanRequest) =>
+  defHttp.post<PostApiCoreBankDeliverSampleScanResponse>({
+    url: Api.SCAN_LIST,
+    params,
+  });
+
+export const keepPackOutBandTrayList = (params: GetApiCoreBankDeliverSampleTrayRequest) =>
+  defHttp.get<GetApiCoreBankDeliverSampleTrayResponse>(
+    {
+      url: Api.KEEP_PACK_OUT_BAND_TRAY_LIST,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+export const keepPackDetail = (params: GetApiCoreBatchSampleAcceptKeepPackDetailRequest) =>
+  defHttp.get<GetApiCoreBatchSampleAcceptKeepPackDetailResponse>(
+    {
+      url: Api.KEEP_PACK_OUT_BAND_DETAIL,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+export const getTrayList = (params: GetApiCoreBatchSampleAcceptKeepPackTraiesRequest) =>
+  defHttp.get<GetApiCoreBatchSampleAcceptKeepPackTraiesResponse>(
+    {
+      url: Api.TRAY_LIST,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+export const getBoxDetail = (params: GetApiCoreBatchSampleAcceptKeepPackBoxesRequest) =>
+  defHttp.get<GetApiCoreBatchSampleAcceptKeepPackBoxesResponse>(
+    {
+      url: Api.BOX_DETAIL,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+export const getBagDetail = (params: GetApiCoreBatchSampleAcceptKeepPackPackesRequest) =>
+  defHttp.get<GetApiCoreBatchSampleAcceptKeepPackPackesResponse>(
+    {
+      url: Api.BAG_DETAIL,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+export const acceptSeal = (params: PutApiCoreBatchSampleAcceptKeepPackSealRequest) =>
+  defHttp.put<PutApiCoreBatchSampleAcceptKeepPackSealResponse>({
+    url: Api.ACCEPT_SEAR,
+    params,
+  });
+
+export const revokeKeepPack = (params: PutApiCoreBatchSampleAcceptKeepPackRevokeRequest) =>
+  defHttp.put<PutApiCoreBatchSampleAcceptKeepPackRevokeResponse>({
+    url: Api.REVOKE_KEEP_PACK,
+    params,
   });

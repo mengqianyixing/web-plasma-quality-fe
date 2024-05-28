@@ -5,7 +5,8 @@
     title="保留样本批量出库申请"
     width="80%"
     :min-height="650"
-    @ok="handleOk"
+    :showOkBtn="false"
+    @cancel="handleCancel"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -21,9 +22,9 @@
         <template #toolbar>
           <div class="flex items-center justify-between mt-2 p-1">
             <div class="flex gap-5 text-17px">
-              <span>批次数量: {{ 123 }}</span>
-              <span>样本袋数: {{ 123 }}</span>
-              <span>样本数量: {{ 123 }}</span>
+              <span>批次数量: {{ batchTotal }}</span>
+              <span>样本袋数: {{ sampleBagNumTotal }}</span>
+              <span>样本数量: {{ sampleNumTotal }}</span>
             </div>
             <div class="h-40px bg-#ffffff mt-2 flex items-center gap-2">
               <a-button type="primary" @click="handlePick"> 挑选 </a-button>
@@ -40,7 +41,7 @@
 <script lang="ts" setup>
   import { BasicForm, useForm } from '@/components/Form';
   import { BasicModal, useModal, useModalInner } from '@/components/Modal';
-  import { reactive, ref } from 'vue';
+  import { computed, reactive, ref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import {
     deleteDeliverSample,
@@ -64,7 +65,7 @@
 
   const [registerModal, { openModal }] = useModal();
 
-  const [registerForm, { validate, getFieldsValue, resetFields }] = useForm({
+  const [registerForm, { validate, getFieldsValue, resetFields, setFieldsValue }] = useForm({
     showActionButtonGroup: false,
     labelWidth: 80,
     schemas: [
@@ -89,7 +90,16 @@
   });
 
   const tableLoading = ref(false);
-  const tableData = ref([]);
+
+  const tableData = ref<GetApiCoreBankDeliverSampleDetailResponse>([]);
+  const batchTotal = computed(() => tableData.value.length);
+  const sampleBagNumTotal = computed(() =>
+    tableData.value.reduce((acc, cur) => acc + Number(cur.sampleBagNum), 0),
+  );
+  const sampleNumTotal = computed(() =>
+    tableData.value.reduce((acc, cur) => acc + Number(cur.sampleNum), 0),
+  );
+
   const gridOptions = reactive<VxeGridProps<any>>({
     height: 600,
     border: true,
@@ -115,17 +125,23 @@
       custom: false,
     },
     columns: requisitionColumns,
-    showFooter: true,
+    showFooter: false,
     autoResize: true,
   });
 
-  const [register, { closeModal, setModalProps }] = useModalInner((data) => {
+  const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
     setModalProps({
       maskClosable: false,
+      destroyOnClose: true,
     });
 
     if (data.isAdd) {
-      resetFields();
+      await resetFields();
+    } else {
+      await setFieldsValue({
+        ...data.record,
+      });
+      await initTableData();
     }
   });
 
@@ -175,16 +191,21 @@
   }
 
   async function initTableData() {
-    await getDeliverSampleDetail({
-      dlvNo: getFieldsValue()?.dlvNo,
-    });
+    try {
+      tableLoading.value = true;
+      tableData.value = await getDeliverSampleDetail({
+        dlvNo: getFieldsValue()?.dlvNo,
+      });
+    } finally {
+      tableLoading.value = false;
+    }
   }
 
   async function handlePickSuccess() {
     await initTableData();
   }
 
-  function handleOk() {
+  function handleCancel() {
     emit('success');
     closeModal();
   }

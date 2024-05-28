@@ -83,6 +83,15 @@ const sampleManager: AppRouteModule = {
       component: () => import('@/views/sample-manage/reserve-sample-destroy-outbound/index.vue'),
     },
     {
+      path: 'reserve-sample-warehouse',
+      name: 'ReserveSampleWarehouse',
+      id: 970110,
+      meta: {
+        title: '保留样本入库',
+      },
+      component: () => import('@/views/sample-manage/reserve-sample-warehouse/index.vue'),
+    },
+    {
       path: 'test-plan',
       name: 'TestPlan',
       id: 970040,

@@ -21,8 +21,9 @@
       </template>
     </BasicTable>
 
-    <RequisitionModal @register="registerRequisitionModal" />
+    <RequisitionModal @register="registerRequisitionModal" @success="handleSuccess" />
     <DlvDetailModal @register="registerDlvDetailModal" />
+    <OutBandModal @register="registerOutBandModal" />
   </PageWrapper>
 </template>
 
@@ -32,6 +33,7 @@
   import { columns, searchFormSchema } from './reserve.data';
 
   import { useModal } from '@/components/Modal';
+  import { useMessage } from '@/hooks/web/useMessage';
   import {
     cancelApplication,
     cancelCheckApplication,
@@ -42,15 +44,16 @@
 
   import RequisitionModal from '@/views/sample-manage/reserve-sample-destroy-outbound/RequisitionModal.vue';
   import DlvDetailModal from '@/views/sample-manage/reserve-sample-destroy-outbound/DlvDetailModal.vue';
-  import { useMessage } from '@/hooks/web/useMessage';
+  import OutBandModal from '@/views/sample-manage/reserve-sample-destroy-outbound/OutBandModal.vue';
 
   const { createConfirm, createMessage } = useMessage();
   defineOptions({ name: 'ReserveSampleDestroyOutbound' });
 
   const [registerRequisitionModal, { openModal: openRequisitionModal }] = useModal();
   const [registerDlvDetailModal, { openModal: openDlvDetailModal }] = useModal();
+  const [registerOutBandModal, { openModal: openOutBandModal }] = useModal();
 
-  const [registerTable, { reload, getSelectRows }] = useTable({
+  const [registerTable, { reload, getSelectRows, clearSelectedRowKeys }] = useTable({
     api: getReserveSampleList,
     columns: columns,
     size: 'small',
@@ -70,6 +73,10 @@
       listField: 'result',
     },
     rowSelection: { type: 'radio' },
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
   });
 
   function handleAddRequisition() {
@@ -79,8 +86,14 @@
   }
 
   function handleEditRequisition() {
+    if (getSelectRows().length === 0) {
+      createMessage.warn('请选择审核申请单号');
+      return;
+    }
+
     openRequisitionModal(true, {
       isAdd: false,
+      record: getSelectRows()[0],
     });
   }
 
@@ -160,7 +173,16 @@
     });
   }
 
-  function handleOutBound() {}
+  function handleOutBound() {
+    if (getSelectRows().length === 0) {
+      createMessage.warn('请选择出库申请单号');
+      return;
+    }
+
+    openOutBandModal(true, {
+      ...getSelectRows()[0],
+    });
+  }
 
   function handlePrint() {}
 
@@ -168,5 +190,9 @@
     openDlvDetailModal(true, {
       ...record,
     });
+  }
+
+  async function handleSuccess() {
+    await reload();
   }
 </script>
