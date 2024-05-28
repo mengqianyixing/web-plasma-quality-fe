@@ -21,7 +21,7 @@
       </template>
     </BasicTable>
 
-    <RequisitionModal @register="registerRequisitionModal" @success="reload" />
+    <RequisitionModal @register="registerRequisitionModal" @success="handleSuccess" />
     <DlvDetailModal @register="registerDlvDetailModal" />
     <OutBandModal @register="registerOutBandModal" />
   </PageWrapper>
@@ -53,7 +53,7 @@
   const [registerDlvDetailModal, { openModal: openDlvDetailModal }] = useModal();
   const [registerOutBandModal, { openModal: openOutBandModal }] = useModal();
 
-  const [registerTable, { reload, getSelectRows }] = useTable({
+  const [registerTable, { reload, getSelectRows, clearSelectedRowKeys }] = useTable({
     api: getReserveSampleList,
     columns: columns,
     size: 'small',
@@ -73,6 +73,10 @@
       listField: 'result',
     },
     rowSelection: { type: 'radio' },
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
   });
 
   function handleAddRequisition() {
@@ -186,5 +190,9 @@
     openDlvDetailModal(true, {
       ...record,
     });
+  }
+
+  async function handleSuccess() {
+    await reload();
   }
 </script>
