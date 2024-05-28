@@ -831,7 +831,7 @@ export interface GetApiCoreSamplePlanDetailResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample`
- * @更新时间 `2024-05-21 17:49:05`
+ * @更新时间 `2024-05-28 11:38:08`
  */
 export interface GetApiCoreBankDeliverSampleRequest {
   /**
@@ -859,7 +859,7 @@ export interface GetApiCoreBankDeliverSampleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample`
- * @更新时间 `2024-05-21 17:49:05`
+ * @更新时间 `2024-05-28 11:38:08`
  */
 export interface GetApiCoreBankDeliverSampleResponse {
   /**
@@ -874,6 +874,10 @@ export interface GetApiCoreBankDeliverSampleResponse {
    * 样本袋数
    */
   sampleNum: string;
+  /**
+   * 样本数
+   */
+  totalNum: string;
   /**
    * 血浆最晚投产日期
    */
@@ -1278,7 +1282,7 @@ export interface PostApiCoreBankDeliverSampleScanResponse {}
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/tray`
- * @更新时间 `2024-05-23 15:49:39`
+ * @更新时间 `2024-05-28 11:27:52`
  */
 export interface GetApiCoreBankDeliverSampleTrayRequest {
   /**
@@ -1304,7 +1308,7 @@ export interface GetApiCoreBankDeliverSampleTrayRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/tray`
- * @更新时间 `2024-05-23 15:49:39`
+ * @更新时间 `2024-05-28 11:27:52`
  */
 export interface GetApiCoreBankDeliverSampleTrayResponse {
   /**
@@ -1327,6 +1331,10 @@ export interface GetApiCoreBankDeliverSampleTrayResponse {
    * 箱号
    */
   boxNo?: string;
+  /**
+   * 库房号
+   */
+  houseNo?: string;
   /**
    * 存放位置
    */
@@ -1863,6 +1871,127 @@ export type GetApiCoreBankDeliverSampleDetailBagResponse = {
    */
   location: string;
 }[];
+
+/**
+ * 接口 [保留样本接收：样本批号列表↗](https://yapi.sharing8.cn/project/529/interface/api/35004) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/keep-pack/batches`
+ * @更新时间 `2024-05-28 15:40:33`
+ */
+export interface GetApiCoreBatchSampleAcceptKeepPackBatchesRequest {
+  /**
+   * 当前页码
+   */
+  currPage: string;
+  /**
+   * 页数大小
+   */
+  pageSize: string;
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+  /**
+   * 采浆公司编号
+   */
+  stationNo?: string;
+  /**
+   * 样本类型，PER-保留样本
+   */
+  sampleType?: string;
+  /**
+   * 接收状态数组，W-待接收、R-接收中，S-已接收
+   */
+  acceptState?: string;
+  /**
+   * 接收开始日期
+   */
+  acceptBeginDate?: string;
+  /**
+   * 接收结束日期
+   */
+  acceptEndDate?: string;
+}
+
+/**
+ * 接口 [保留样本接收：样本批号列表↗](https://yapi.sharing8.cn/project/529/interface/api/35004) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/keep-pack/batches`
+ * @更新时间 `2024-05-28 15:40:33`
+ */
+export interface GetApiCoreBatchSampleAcceptKeepPackBatchesResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 采浆公司
+     */
+    stationName?: string;
+    /**
+     * 样本批号
+     */
+    batchNo?: string;
+    /**
+     * 样本类型
+     */
+    sampleType?: string;
+    /**
+     * 样本数量
+     */
+    sampleCount?: number;
+    /**
+     * 接收状态
+     */
+    acceptState?: string;
+  }[];
+}
+
+/**
+ * 接口 [保留样本接收：查询指定批次的接收详情↗](https://yapi.sharing8.cn/project/529/interface/api/35010) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/keep-pack/{batchNo}`
+ * @更新时间 `2024-05-28 16:48:37`
+ */
+export interface GetApiCoreBatchSampleAcceptKeepPackBatchNoRequest {
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+}
+
+/**
+ * 接口 [保留样本接收：查询指定批次的接收详情↗](https://yapi.sharing8.cn/project/529/interface/api/35010) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/batch/sample/accept/keep-pack/{batchNo}`
+ * @更新时间 `2024-05-28 16:48:37`
+ */
+export interface GetApiCoreBatchSampleAcceptKeepPackBatchNoResponse {
+  outWarehouseDate?: string;
+  stationNo?: string;
+  stationName?: string;
+  batchSampleNo?: string;
+  sampleType?: string;
+  bagCount?: number;
+  totalCount?: number;
+  acceptState?: string;
+  unAcceptList?: {
+    sampleBagNo?: string;
+    sampleCount?: number;
+  }[];
+  acceptedList?: {
+    trayNo?: string;
+    boxNo?: string;
+    sampleBagNo?: string;
+    sampleCount?: number;
+    acceptor?: string;
+    acceptAt?: string;
+  }[];
+}
 
 /**
  * 接口 [新增预检项↗](https://yapi.sharing8.cn/project/529/interface/api/34944) 的 **请求类型**
