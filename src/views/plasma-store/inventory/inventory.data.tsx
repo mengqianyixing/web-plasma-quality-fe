@@ -1,9 +1,12 @@
 import { VxeGridPropTypes } from '@/components/VxeTable';
 import { FormSchema } from '@/components/Form';
-import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
 import { PlasmaOutboundTypeMap, PlasmaOutboundTypeValueEnum } from '@/enums/plasmaEnum';
 import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
 import { Select, RangePicker, FormItem, FormItemRest } from 'ant-design-vue';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+
+const serverEnumStore = useServerEnumStoreWithOut();
 
 export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
@@ -118,11 +121,9 @@ export const formSchema: FormSchema[] = [
   {
     label: '血浆过程状态',
     field: 'state',
-    component: 'ApiSelect',
+    component: 'Select',
     componentProps: {
-      api: getSysDictionary,
-      params: [DictionaryEnum.StockPlasmaProcessStatus],
-      resultField: '[0].dictImtes',
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BagFlow),
     },
     colProps: {
       span: 5,
