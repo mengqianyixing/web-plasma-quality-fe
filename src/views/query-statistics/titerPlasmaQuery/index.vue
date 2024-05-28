@@ -28,7 +28,7 @@
   import { PageWrapper } from '@/components/Page';
   import { getListApi } from '@/api/query-statistics/titerPlasmaQuery';
   import { isObject } from '@/utils/is';
-  import { PostApiCoreBagTiterResponse } from '@/api/type/queryStatistics';
+  import { GetApiSearchPlasmaPrivilegeResponse } from '@/api/type/queryStatistics';
   import { get } from 'lodash-es';
   import { useModal } from '@/components/Modal';
   import TabelModal from './tabelModal.vue';
@@ -90,7 +90,7 @@
     bordered: true,
     pagination: false,
     showIndexColumn: false,
-    afterFetch: (res: PostApiCoreBagTiterResponse) => {
+    afterFetch: (res: GetApiSearchPlasmaPrivilegeResponse) => {
       const formatData = res.map((row) => {
         row['B'] = row.titers.find((it) => it.rawImm === '乙免') || {};
         row['R'] = row.titers.find((it) => it.rawImm === '狂免') || {};
