@@ -24,21 +24,25 @@ export const columns: BasicColumn[] = [
     width: 80,
     title: '样本总数',
     dataIndex: 'sampleCount',
+    format: (v) => v || 0,
   },
   {
     width: 100,
     title: '已接收未检测',
     dataIndex: 'acceptCount',
+    format: (v) => v || 0,
   },
   {
     width: 80,
     title: '检测样本',
     dataIndex: 'checkCount',
+    format: (v) => v || 0,
   },
   {
     width: 80,
     title: '检测中',
     dataIndex: 'checkingCount',
+    format: (v) => v || 0,
   },
   {
     title: '检测合格',
@@ -47,6 +51,7 @@ export const columns: BasicColumn[] = [
         width: 80,
         title: '合格',
         dataIndex: ['check', 'count'],
+        format: (v) => v || 0,
       },
       {
         width: 80,
@@ -69,16 +74,19 @@ export const columns: BasicColumn[] = [
         width: 120,
         title: '血浆验收不合格',
         dataIndex: ['verification', 'bag'],
+        format: (v) => v || 0,
       },
       {
         width: 120,
         title: '样本验收不合格',
         dataIndex: ['verification', 'sample'],
+        format: (v) => v || 0,
       },
       {
         width: 80,
         title: '合计',
         dataIndex: ['verification', 'count'],
+        format: (v) => v || 0,
       },
       {
         width: 80,
@@ -92,6 +100,7 @@ export const columns: BasicColumn[] = [
     width: 100,
     title: '其他不合格',
     dataIndex: 'other',
+    format: (v) => v || 0,
   },
 ];
 
