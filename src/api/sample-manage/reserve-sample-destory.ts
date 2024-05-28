@@ -18,6 +18,10 @@ import {
   GetApiCoreBankDeliverSampleScanResponse,
   GetApiCoreBankDeliverSampleTrayRequest,
   GetApiCoreBankDeliverSampleTrayResponse,
+  GetApiCoreBatchSampleAcceptKeepPackBatchesRequest,
+  GetApiCoreBatchSampleAcceptKeepPackBatchesResponse,
+  GetApiCoreBatchSampleAcceptKeepPackBatchNoRequest,
+  GetApiCoreBatchSampleAcceptKeepPackBatchNoResponse,
   GetApiCoreBatchSampleAcceptKeepPackBoxesRequest,
   GetApiCoreBatchSampleAcceptKeepPackBoxesResponse,
   GetApiCoreBatchSampleAcceptKeepPackDetailRequest,
@@ -60,6 +64,7 @@ enum Api {
   DELIVER_DETAIL = '/api/core/bank/deliver/sample/detail-bag',
   ACCEPT_SEAR = '/api/core/batch/sample/accept/keep-pack/seal',
   REVOKE_KEEP_PACK = '/api/core/batch/sample/accept/keep-pack/revoke',
+  BATCH_KEEP_PACK = '/api/core/batch/sample/accept/keep-pack/batches',
 }
 
 export const getReserveSampleList = (params: GetApiCoreBankDeliverSampleRequest) =>
@@ -226,4 +231,22 @@ export const revokeKeepPack = (params: PutApiCoreBatchSampleAcceptKeepPackRevoke
   defHttp.put<PutApiCoreBatchSampleAcceptKeepPackRevokeResponse>({
     url: Api.REVOKE_KEEP_PACK,
     params,
+  });
+
+export const getKeepPackBatchList = (params: GetApiCoreBatchSampleAcceptKeepPackBatchesRequest) =>
+  defHttp.get<GetApiCoreBatchSampleAcceptKeepPackBatchesResponse>(
+    {
+      url: Api.BATCH_KEEP_PACK,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+export const getKeepPackDetail = (
+  params: GetApiCoreBatchSampleAcceptKeepPackBatchNoRequest['batchNo'],
+) =>
+  defHttp.get<GetApiCoreBatchSampleAcceptKeepPackBatchNoResponse>({
+    url: Api.SAMPLE_ACCEPT + '/' + params,
   });

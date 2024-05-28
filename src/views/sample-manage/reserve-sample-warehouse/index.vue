@@ -56,14 +56,14 @@
 </template>
 
 <script setup lang="tsx">
-  import { computed, nextTick, reactive, ref, shallowRef, unref } from 'vue';
+  import { computed, reactive, ref, unref } from 'vue';
 
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
   import { useModal } from '@/components/Modal';
 
-  import SelectSampleBatchModal from '../__components/SelectSampleBatchModal.vue';
+  import SelectSampleBatchModal from './SelectSampleBatchModal.vue';
   import TrayInModal from '@/views/sample-manage/reserve-sample-warehouse/TrayInModal.vue';
   import DetailModal from './DetailModal.vue';
 
@@ -71,32 +71,22 @@
   import dayjs from 'dayjs';
   import { VxeGridProps } from 'vxe-table';
   import { GetApiCoreBankStockRequest } from '@/api/type/plasmaStoreManage';
-  import { SERVER_ENUM } from '@/enums/serverEnum';
-  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-  import { sampleReceiveModalEnum, sampleReceiveStatusValueEnum } from '@/enums/sampleEnum';
-  import { getSysParamsByParamKey } from '@/api/systemServer/params';
-  import { SysParamsEnum } from '@/enums/sysParamsEnum';
-  import { useScanHelper } from '@/hooks/common/useScanHelper';
+  import { sampleReceiveStatusValueEnum } from '@/enums/sampleEnum';
   import { debounce } from 'lodash-es';
   import {
     acceptSeal,
+    getKeepPackDetail,
     keepPackAccept,
     revokeKeepPack,
   } from '@/api/sample-manage/reserve-sample-destory';
   import { PostApiCoreBatchSampleAcceptKeepPackResponse } from '@/api/type/sampleManage';
 
-  const { startEvent } = useScanHelper();
-
   const { createMessage, createConfirm } = useMessage();
 
   defineOptions({ name: 'ReserveSampleWarehouse' });
 
-  const serverEnumStore = useServerEnumStoreWithOut();
-
   const originKeepPackData = ref<PostApiCoreBatchSampleAcceptKeepPackResponse>({});
-  const inputValue = ref('');
   const tableLoading = ref(false);
-  const bagRef = ref(null);
 
   const trayRef = ref(null);
   const trayValue = ref('');
@@ -106,13 +96,6 @@
   const packNo = ref('');
 
   const packCount = computed(() => `袋数(${originKeepPackData.value?.packCount ?? 0})`);
-
-  getSysParamsByParamKey(SysParamsEnum.BatchSampleAcceptPattern).then((res) => {
-    receiveModal.value = res;
-    if (isReceiveByBag.value) startEvent();
-  });
-  const receiveModal = shallowRef<sampleReceiveModalEnum>();
-  const isReceiveByBag = computed(() => receiveModal.value === sampleReceiveModalEnum.BAG);
 
   const schema: DescItem[] = [
     {
@@ -202,12 +185,19 @@
       label: '样本类型',
     },
     {
-      field: 'bagCount',
-      label: '样本袋数',
-    },
-    {
       field: 'totalCount',
       label: '样本数量',
+      render(text) {
+        return (
+          <span onClick={handleSampleCountClick} class="underline text-#2d5cf6 cursor-pointer">
+            {text}
+          </span>
+        );
+      },
+    },
+    {
+      field: 'bagCount',
+      label: '样本袋数',
     },
   ];
   const [register] = useDescription({
@@ -230,9 +220,6 @@
     } else {
       openSelectSampleBatchModal(true, {
         reload: true,
-        record: {
-          sampleType: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
-        },
       });
     }
   }
@@ -359,13 +346,15 @@
   });
 
   async function handleSelectSampleBatchSuccess(record: Recordable) {
+    batchValue.value = record.batchNo;
+
+    await initTableData();
+  }
+
+  async function initTableData() {
     tableLoading.value = true;
-    inputValue.value = record.batchSampleNo;
+    originKeepPackData.value = await getKeepPackDetail(batchValue.value);
     tableLoading.value = false;
-    await nextTick(() => {
-      if (!bagRef.value) return;
-      (bagRef.value as HTMLInputElement)?.focus();
-    });
   }
 
   const _handleAcceptSample = debounce(handleAcceptSample, 300);
@@ -426,7 +415,6 @@
   }
 
   function handleCancel(row) {
-    console.log(row);
     createConfirm({
       title: '确认',
       content: '是否撤销？',
@@ -435,8 +423,16 @@
         await revokeKeepPack({
           packNo: row.sampleBagNo,
         });
+
+        await initTableData();
         createMessage.success('撤销成功');
       },
+    });
+  }
+
+  function handleSampleCountClick() {
+    openDetailModal(true, {
+      ...unref(originKeepPackData),
     });
   }
 </script>
