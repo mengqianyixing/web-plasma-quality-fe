@@ -24,7 +24,7 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'queryDate',
-    label: '采浆公司',
+    label: '库存汇总日期',
     defaultValue: dayjs().subtract(1, 'day'),
     component: 'DatePicker',
   },

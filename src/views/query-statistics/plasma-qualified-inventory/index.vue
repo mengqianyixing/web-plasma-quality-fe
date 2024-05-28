@@ -87,12 +87,28 @@
     }
   }
 
+  function accAdd(arg1: number, arg2: number) {
+    let r1: number, r2: number, m: number;
+    try {
+      r1 = arg1.toString().split('.')[1].length;
+    } catch (e) {
+      r1 = 0;
+    }
+    try {
+      r2 = arg2.toString().split('.')[1].length;
+    } catch (e) {
+      r2 = 0;
+    }
+    m = Math.pow(10, Math.max(r1, r2));
+    return (arg1 * m + arg2 * m) / m;
+  }
+
   function handleSummary(tableData: any[]) {
     let immTypeCount = 0;
     let immTypeWeight = 0;
     tableData.forEach((item) => {
-      immTypeCount += item.immTypeCount;
-      immTypeWeight += item.immTypeWeight;
+      immTypeCount = accAdd(immTypeCount, item.immTypeCount);
+      immTypeWeight = accAdd(immTypeWeight, item.immTypeWeight);
     });
     return [
       {
