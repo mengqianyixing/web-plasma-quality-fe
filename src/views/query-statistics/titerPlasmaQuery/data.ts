@@ -48,7 +48,6 @@ export const columns = [
         title: '试剂批号',
         align: 'center',
         field: 'B.reagentBatch',
-        ellipsis: false,
       },
       {
         width: 70,
