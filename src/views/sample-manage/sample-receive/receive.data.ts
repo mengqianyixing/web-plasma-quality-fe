@@ -56,7 +56,9 @@ export const searchFormSchema: FormSchema[] = [
     label: '样本类型',
     component: 'Select',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+      options: serverEnumStore
+        .getServerEnum(SERVER_ENUM.SampleType)
+        .filter((it) => ['ELP', 'CAB'].includes(it.value)),
     },
   },
   {
