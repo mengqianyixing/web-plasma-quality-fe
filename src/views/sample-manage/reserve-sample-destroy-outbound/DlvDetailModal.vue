@@ -94,6 +94,7 @@
 
     setModalProps({
       maskClosable: false,
+      destroyOnClose: true,
     });
   });
 

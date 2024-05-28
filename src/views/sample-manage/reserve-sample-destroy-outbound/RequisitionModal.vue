@@ -5,7 +5,8 @@
     title="保留样本批量出库申请"
     width="80%"
     :min-height="650"
-    @ok="handleOk"
+    :showOkBtn="false"
+    @cancel="handleCancel"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -131,6 +132,7 @@
   const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
     setModalProps({
       maskClosable: false,
+      destroyOnClose: true,
     });
 
     if (data.isAdd) {
@@ -198,7 +200,7 @@
     await initTableData();
   }
 
-  function handleOk() {
+  function handleCancel() {
     emit('success');
     closeModal();
   }

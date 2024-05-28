@@ -21,7 +21,7 @@
       </template>
     </BasicTable>
 
-    <RequisitionModal @register="registerRequisitionModal" />
+    <RequisitionModal @register="registerRequisitionModal" @success="reload" />
     <DlvDetailModal @register="registerDlvDetailModal" />
     <OutBandModal @register="registerOutBandModal" />
   </PageWrapper>
