@@ -125,6 +125,7 @@
     await getForm().setFieldsValue({
       stationNo: data.stationNo,
       batchNo: data.batchSampleNo,
+      packNo: data.sampleBagNo,
     });
     await reload();
   });
