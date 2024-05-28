@@ -10,7 +10,7 @@
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
-        <Description :data="desData" @register="registerDescription" />
+        <Description :data="desData" @register="registerDescription" :schema="schema" />
 
         <div class="flex-1 w-full">
           <a-tabs
@@ -33,7 +33,7 @@
 </template>
 <script lang="ts" setup>
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { Description, useDescription } from '@/components/Description';
+  import { DescItem, Description, useDescription } from '@/components/Description';
   import { BasicTable, useTable } from '@/components/Table';
   import { Tabs } from 'ant-design-vue';
 
@@ -56,34 +56,34 @@
 
   const desData = ref({});
   const currentKey = ref('batch');
+  const schema: DescItem[] = [
+    {
+      label: '申请单号',
+      field: 'dlvNo',
+    },
+    {
+      label: '备注',
+      field: 'remark',
+    },
+    {
+      label: '批次数量',
+      field: 'batchNum',
+    },
+    {
+      label: '样本袋数',
+      field: 'sampleNum',
+    },
+    {
+      label: '样本数量',
+      field: 'totalNum',
+    },
+  ];
 
   const [registerDescription] = useDescription({
     column: 3,
     labelStyle: {
       width: '10%',
     },
-    schema: [
-      {
-        label: '申请单号',
-        field: 'dlvNo',
-      },
-      {
-        label: '备注',
-        field: 'remark',
-      },
-      {
-        label: '批次数量',
-        field: 'batchNum',
-      },
-      {
-        label: '样本袋数',
-        field: 'sampleNum',
-      },
-      {
-        label: '样本数量',
-        field: '',
-      },
-    ],
   });
 
   const dlvNo = ref('');

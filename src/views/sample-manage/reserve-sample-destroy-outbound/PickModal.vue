@@ -29,11 +29,13 @@
     GetApiCoreBankDeliverSamplePickResponse,
   } from '@/api/type/sampleManage';
   import dayjs from 'dayjs';
+  import { useStation } from '@/hooks/common/useStation';
 
   const emit = defineEmits(['success', 'register']);
 
   const tableData = ref<GetApiCoreBankDeliverSamplePickResponse>([]);
   const vxeRef = ref<VxeTableInstance<GetApiCoreBankDeliverSamplePickResponse[number]>>();
+  const { stationOptions } = useStation();
 
   const [registerForm, { getFieldsValue }] = useForm({
     showAdvancedButton: false,
@@ -42,6 +44,9 @@
         label: '采浆公司',
         field: 'stationNo',
         component: 'Select',
+        componentProps: {
+          options: stationOptions,
+        },
         colProps: {
           span: 6,
         },
