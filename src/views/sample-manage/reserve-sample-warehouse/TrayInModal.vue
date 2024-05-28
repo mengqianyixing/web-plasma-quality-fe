@@ -168,10 +168,6 @@
   }
 
   function handleTrayBind() {
-    if (!getSelectRows().length) {
-      return createMessage.error('请选择托盘');
-    }
-
     openReBindModal();
   }
 
