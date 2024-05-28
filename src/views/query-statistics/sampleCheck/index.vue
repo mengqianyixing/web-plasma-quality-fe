@@ -69,11 +69,8 @@
       for (const key in it) {
         const data = it[key];
         if (isObject(data)) {
-          console.log(data);
           for (const ck in data) {
-            console.log(ck, row[key][ck], key, ck);
             row[key][ck] += data[ck] || 0;
-            console.log(ck, row[key][ck], key, ck, '-----');
           }
         } else {
           row[key] += data || 0;
