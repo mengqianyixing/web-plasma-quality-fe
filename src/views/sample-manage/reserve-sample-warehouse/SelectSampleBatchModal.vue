@@ -63,7 +63,7 @@
       labelWidth: 120,
       schemas: [
         {
-          field: 'batchSampleNo',
+          field: 'batchNo',
           label: '样本批号',
           component: 'Input',
           colProps: { span: 8 },
