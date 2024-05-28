@@ -5,43 +5,39 @@
     showFooter
     title="托盘入库"
     width="80%"
-    :minHeight="400"
+    :minHeight="650"
     @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
-        <div class="flex-1 shrink-1" style="height: calc(100% - 56px)">
-          <BasicTable @register="registerTable">
-            <template #boxCount="{ record }">
-              <span
-                :class="
-                  !record?.boxCount
-                    ? 'pointer-events-none'
-                    : 'text-blue-500 underline cursor-pointer'
-                "
-                @click.stop.self="handleBoxCountClick(record)"
-              >
-                {{ record?.boxCount }}
-              </span>
-            </template>
-            <template #packCount="{ record }">
-              <span
-                :class="
-                  !record?.packCount
-                    ? 'pointer-events-none'
-                    : 'text-blue-500 underline cursor-pointer'
-                "
-                @click.stop.self="handlePackCountClick(record)"
-              >
-                {{ record?.packCount }}
-              </span>
-            </template>
-            <template #toolbar>
-              <a-button type="primary" @click="handleInBand">入库</a-button>
-              <a-button type="primary" @click="handleTrayBind">托盘重绑</a-button>
-            </template>
-          </BasicTable>
-        </div>
+        <BasicTable @register="registerTable">
+          <template #boxCount="{ record }">
+            <span
+              :class="
+                !record?.boxCount ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+              "
+              @click.stop.self="handleBoxCountClick(record)"
+            >
+              {{ record?.boxCount }}
+            </span>
+          </template>
+          <template #packCount="{ record }">
+            <span
+              :class="
+                !record?.packCount
+                  ? 'pointer-events-none'
+                  : 'text-blue-500 underline cursor-pointer'
+              "
+              @click.stop.self="handlePackCountClick(record)"
+            >
+              {{ record?.packCount }}
+            </span>
+          </template>
+          <template #toolbar>
+            <a-button type="primary" @click="handleInBand">入库</a-button>
+            <a-button type="primary" @click="handleTrayBind">托盘重绑</a-button>
+          </template>
+        </BasicTable>
       </div>
     </div>
 
@@ -60,6 +56,8 @@
   import BagDetailModal from '@/views/sample-manage/reserve-sample-warehouse/BagDetailModal.vue';
   import InModal from '@/views/tray/outInStore/inModal.vue';
   import ReBindModal from '@/views/sample-manage/reserve-sample-warehouse/ReBindModal.vue';
+  import { ref } from 'vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const [registerBox, { openModal: openBoxModal }] = useModal();
   const [registerBag, { openModal: openBagModal }] = useModal();
@@ -68,8 +66,18 @@
 
   defineEmits(['register']);
 
-  const [registerTable, { reload, redoHeight }] = useTable({
+  const [registerTable, { reload, redoHeight, getSelectRows, clearSelectedRowKeys }] = useTable({
     api: getTrayList,
+    beforeFetch: (params) => {
+      return {
+        ...params,
+        batchNo: batchNo.value,
+      };
+    },
+    afterFetch: (data) => {
+      clearSelectedRowKeys();
+      return data;
+    },
     inset: true,
     isCanResizeParent: true,
     fetchSetting: {
@@ -77,6 +85,10 @@
       sizeField: 'pageSize',
       totalField: 'totalCount',
       listField: 'result',
+    },
+    clickToRowSelect: true,
+    rowSelection: {
+      type: 'checkbox',
     },
     columns: [
       {
@@ -135,20 +147,31 @@
       },
     },
     bordered: true,
-    pagination: false,
   });
 
-  const [registerModal, { setModalProps }] = useModalInner(() => {
+  const batchNo = ref('');
+  const [registerModal, { setModalProps }] = useModalInner((data) => {
     setModalProps({ confirmLoading: false });
+    batchNo.value = data.batchNo;
 
     reload();
   });
 
+  const { createMessage } = useMessage();
   function handleInBand() {
-    openInModal();
+    if (!getSelectRows().length) {
+      return createMessage.error('请选择托盘');
+    }
+    openInModal(true, {
+      data: getSelectRows(),
+    });
   }
 
   function handleTrayBind() {
+    if (!getSelectRows().length) {
+      return createMessage.error('请选择托盘');
+    }
+
     openReBindModal();
   }
 

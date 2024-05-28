@@ -1,6 +1,6 @@
 <template>
   <PageWrapper>
-    <Description @register="register" :data="sampleBatchData" />
+    <Description @register="register" :data="originKeepPackData" />
     <vxe-grid
       v-bind="gridOptionsUnaccept"
       :data="unAcceptList"
@@ -12,6 +12,11 @@
           <span>未接收袋数：</span>
           <span>{{ unAcceptList?.length }}</span>
         </div>
+      </template>
+      <template #sampleBagNo="{ row }">
+        <span class="text-blue-500 cursor-pointer" @click="handleOpenDetail(row)">
+          {{ row?.sampleBagNo }}
+        </span>
       </template>
     </vxe-grid>
     <vxe-grid
@@ -28,9 +33,16 @@
           </div>
           <div class="flex gap-2">
             <a-button type="primary" @click="handleTrayInBand"> 入库 </a-button>
-            <a-button type="primary" @click="handleAcceptSample"> 接收完成 </a-button>
           </div>
         </div>
+      </template>
+      <template #sampleBagNo="{ row }">
+        <span class="text-blue-500 cursor-pointer" @click="handleOpenDetail(row)">
+          {{ row?.sampleBagNo }}
+        </span>
+      </template>
+      <template #action="{ row }">
+        <span class="text-blue-500 cursor-pointer" @click="handleCancel(row)"> 撤销 </span>
       </template>
     </vxe-grid>
 
@@ -39,11 +51,12 @@
       @success="handleSelectSampleBatchSuccess"
     />
     <TrayInModal @register="registerTrayInModal" />
+    <DetailModal @register="registerDetailModal" />
   </PageWrapper>
 </template>
 
 <script setup lang="tsx">
-  import { computed, nextTick, reactive, ref, shallowRef, watch } from 'vue';
+  import { computed, nextTick, reactive, ref, shallowRef, unref } from 'vue';
 
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import Description from '@/components/Description/src/Description.vue';
@@ -52,12 +65,8 @@
 
   import SelectSampleBatchModal from '../__components/SelectSampleBatchModal.vue';
   import TrayInModal from '@/views/sample-manage/reserve-sample-warehouse/TrayInModal.vue';
+  import DetailModal from './DetailModal.vue';
 
-  import {
-    getSampleReceiveDetail,
-    receiveSampleByBag,
-  } from '@/api/inbound-management/sample-receive';
-  import { GetApiCoreBatchSampleAcceptBatchSampleNoResponse } from '@/api/type/batchManage';
   import { useMessage } from '@/hooks/web/useMessage';
   import dayjs from 'dayjs';
   import { VxeGridProps } from 'vxe-table';
@@ -69,26 +78,34 @@
   import { SysParamsEnum } from '@/enums/sysParamsEnum';
   import { useScanHelper } from '@/hooks/common/useScanHelper';
   import { debounce } from 'lodash-es';
-  import { keepPackAccept } from '@/api/sample-manage/reserve-sample-destory';
+  import {
+    acceptSeal,
+    keepPackAccept,
+    revokeKeepPack,
+  } from '@/api/sample-manage/reserve-sample-destory';
+  import { PostApiCoreBatchSampleAcceptKeepPackResponse } from '@/api/type/sampleManage';
 
-  const { barCode, enterFlag, startEvent } = useScanHelper();
+  const { startEvent } = useScanHelper();
 
-  const { createMessage } = useMessage();
+  const { createMessage, createConfirm } = useMessage();
 
   defineOptions({ name: 'ReserveSampleWarehouse' });
 
   const serverEnumStore = useServerEnumStoreWithOut();
-  const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 
-  const sampleBatchData = ref<GetApiCoreBatchSampleAcceptBatchSampleNoResponse | {}>({});
+  const originKeepPackData = ref<PostApiCoreBatchSampleAcceptKeepPackResponse>({});
   const inputValue = ref('');
   const tableLoading = ref(false);
   const bagRef = ref(null);
 
   const trayRef = ref(null);
   const trayValue = ref('');
+  const boxNoValue = ref('');
+  const batchValue = ref('');
 
   const packNo = ref('');
+
+  const packCount = computed(() => `袋数(${originKeepPackData.value?.packCount ?? 0})`);
 
   getSysParamsByParamKey(SysParamsEnum.BatchSampleAcceptPattern).then((res) => {
     receiveModal.value = res;
@@ -123,13 +140,14 @@
         return (
           <div class="flex items-center justify-between gap-2 -mt-1" ref="bagRef">
             <a-input
-              ref={(el) => (trayRef.value = el)}
               placeholder="扫描托盘编号"
-              value={trayValue}
-              onChange={(e) => (trayValue.value = e.target.value)}
+              value={boxNoValue}
+              onChange={(e) => (boxNoValue.value = e.target.value)}
             />
-            <div class="flex items-center justify-center w-[80px]">袋数(3)</div>
-            <a-button type="primary">封箱</a-button>
+            <div class="flex items-center justify-center w-[80px]">{packCount.value}</div>
+            <a-button type="primary" onClick={handleSeal}>
+              封箱
+            </a-button>
           </div>
         );
       },
@@ -141,12 +159,12 @@
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[300px] -mt-1" ref="bagRef">
-            <a-input
+            <a-input-search
               placeholder="扫描样本袋号"
               value={packNo}
               enter-button="接收"
               onChange={(e) => (packNo.value = e.target.value)}
-              onSearch={handleAcceptSample}
+              onSearch={_handleAcceptSample}
             />
           </div>
         );
@@ -163,7 +181,8 @@
               readonly
               placeholder="请点击选择"
               enter-button="选择"
-              value={inputValue}
+              value={batchValue}
+              onChange={(e) => (batchValue.value = e.target.value)}
               onSearch={handleSelectSampleBatch}
             />
           </div>
@@ -181,9 +200,6 @@
     {
       field: 'sampleType',
       label: '样本类型',
-      render(text) {
-        return <span>{SampleType(text)}</span>;
-      },
     },
     {
       field: 'bagCount',
@@ -206,10 +222,11 @@
 
   const [registerSelectModal, { openModal: openSelectSampleBatchModal }] = useModal();
   const [registerTrayInModal, { openModal: openTrayInModal }] = useModal();
+  const [registerDetailModal, { openModal: openDetailModal }] = useModal();
 
   function handleSelectSampleBatch(value: string, event: MouseEvent) {
     if (value && event.type !== 'click') {
-      handlePressEnter();
+      // handlePressEnter();
     } else {
       openSelectSampleBatchModal(true, {
         reload: true,
@@ -222,12 +239,12 @@
 
   const unAcceptList = computed(
     () =>
-      (sampleBatchData.value as GetApiCoreBatchSampleAcceptBatchSampleNoResponse)?.unAcceptList ??
+      (originKeepPackData.value as PostApiCoreBatchSampleAcceptKeepPackResponse)?.unAcceptList ??
       [],
   );
   const acceptList = computed(
     () =>
-      (sampleBatchData.value as GetApiCoreBatchSampleAcceptBatchSampleNoResponse)?.acceptedList ??
+      (originKeepPackData.value as PostApiCoreBatchSampleAcceptKeepPackResponse)?.acceptedList ??
       [],
   );
   const gridOptionsUnaccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
@@ -258,6 +275,9 @@
       {
         field: 'sampleBagNo',
         title: '样本袋号',
+        slots: {
+          default: 'sampleBagNo',
+        },
       },
       {
         field: 'sampleCount',
@@ -292,9 +312,24 @@
     },
     columns: [
       {
+        field: 'trayNo',
+        title: '托盘编号',
+        formatter(params) {
+          return params.cellValue ? params.cellValue : '-';
+        },
+      },
+      {
+        field: 'boxNo',
+        title: '样本箱号',
+        width: 150,
+      },
+      {
         field: 'sampleBagNo',
         title: '样本袋号',
-        width: 200,
+        width: 150,
+        slots: {
+          default: 'sampleBagNo',
+        },
       },
       {
         field: 'sampleCount',
@@ -312,13 +347,19 @@
           return params.cellValue ? dayjs(params.cellValue).format('YYYY-MM-DD HH:mm:ss') : '-';
         },
       },
+      {
+        title: '操作',
+        field: 'action',
+        slots: {
+          default: 'action',
+        },
+      },
     ],
     showFooter: false,
   });
 
   async function handleSelectSampleBatchSuccess(record: Recordable) {
     tableLoading.value = true;
-    sampleBatchData.value = await getSampleReceiveDetail(record.batchSampleNo);
     inputValue.value = record.batchSampleNo;
     tableLoading.value = false;
     await nextTick(() => {
@@ -327,57 +368,75 @@
     });
   }
 
-  async function handlePressEnter() {
-    tableLoading.value = true;
-    sampleBatchData.value = await getSampleReceiveDetail(inputValue.value);
-    tableLoading.value = false;
-  }
+  const _handleAcceptSample = debounce(handleAcceptSample, 300);
 
   async function handleAcceptSample() {
-    await keepPackAccept({
+    const originRes = await keepPackAccept({
       packNo: packNo.value,
+      boxNo: boxNoValue.value,
     });
+
+    originKeepPackData.value = originRes;
+    boxNoValue.value = originRes.boxNo!;
+    trayValue.value = originRes.trayNo!;
+    batchValue.value = originRes.batchSampleNo!;
+
+    if (originRes.acceptState === sampleReceiveStatusValueEnum.S) {
+      createMessage.success('该批次接收完成');
+
+      if (!trayValue.value) {
+        createMessage.warn('请扫描托盘编号,进行封箱');
+      } else {
+        await handleSeal();
+      }
+    }
   }
 
-  const bagValue = ref('');
-  watch(
-    () => [barCode.value, enterFlag.value],
-    (val) => {
-      if (val[0] && val[1]) {
-        bagValue.value = barCode.value;
-        _handleReceiveByBag();
-      }
-    },
-  );
-
-  const _handleReceiveByBag = debounce(handleReceiveByBag, 300);
-
-  const bsaNo = ref<undefined | string>(undefined);
-  async function handleReceiveByBag() {
+  async function handleSeal() {
     try {
-      const receiveData = await receiveSampleByBag({
-        packNo: bagValue.value,
-        bsaNo: bsaNo.value!,
+      await acceptSeal({
+        boxNo: boxNoValue.value,
+        trayNo: trayValue.value,
       });
-      inputValue.value = receiveData.batchSampleNo!;
-      bsaNo.value = receiveData.bsaNo!;
-      await handlePressEnter();
 
-      if (receiveData.acceptState === sampleReceiveStatusValueEnum.S) {
-        bsaNo.value = undefined;
-        bagValue.value = '';
-        inputValue.value = '';
-        sampleBatchData.value = {};
-        createMessage.success('该批次接收完成');
-      }
+      boxNoValue.value = '';
+
+      createMessage.success('封箱成功，正在打印标签');
     } finally {
-      bagValue.value = '';
-      barCode.value = '';
-      enterFlag.value = false;
+      createMessage.warn('操作失败，请重试');
     }
   }
 
   function handleTrayInBand() {
-    openTrayInModal(true);
+    if (!batchValue.value) {
+      createMessage.warn('请先选择样本批号');
+      return;
+    }
+
+    openTrayInModal(true, {
+      batchNo: batchValue.value,
+    });
+  }
+
+  function handleOpenDetail(row) {
+    openDetailModal(true, {
+      ...row,
+      ...unref(originKeepPackData),
+    });
+  }
+
+  function handleCancel(row) {
+    console.log(row);
+    createConfirm({
+      title: '确认',
+      content: '是否撤销？',
+      iconType: 'warning',
+      onOk: async () => {
+        await revokeKeepPack({
+          packNo: row.sampleBagNo,
+        });
+        createMessage.success('撤销成功');
+      },
+    });
   }
 </script>

@@ -38,6 +38,10 @@ import {
   PutApiCoreBankDeliverSampleProcessDlvNoResponse,
   PutApiCoreBankDeliverSampleReadyDlvNoRequest,
   PutApiCoreBankDeliverSampleReadyDlvNoResponse,
+  PutApiCoreBatchSampleAcceptKeepPackRevokeRequest,
+  PutApiCoreBatchSampleAcceptKeepPackRevokeResponse,
+  PutApiCoreBatchSampleAcceptKeepPackSealRequest,
+  PutApiCoreBatchSampleAcceptKeepPackSealResponse,
 } from '@/api/type/sampleManage';
 
 enum Api {
@@ -54,6 +58,8 @@ enum Api {
   BOX_DETAIL = '/api/core/batch/sample/accept/keep-pack/boxes',
   BAG_DETAIL = '/api/core/batch/sample/accept/keep-pack/packes',
   DELIVER_DETAIL = '/api/core/bank/deliver/sample/detail-bag',
+  ACCEPT_SEAR = '/api/core/batch/sample/accept/keep-pack/seal',
+  REVOKE_KEEP_PACK = '/api/core/batch/sample/accept/keep-pack/revoke',
 }
 
 export const getReserveSampleList = (params: GetApiCoreBankDeliverSampleRequest) =>
@@ -209,3 +215,15 @@ export const getBagDetail = (params: GetApiCoreBatchSampleAcceptKeepPackPackesRe
       joinParamsToUrl: true,
     },
   );
+
+export const acceptSeal = (params: PutApiCoreBatchSampleAcceptKeepPackSealRequest) =>
+  defHttp.put<PutApiCoreBatchSampleAcceptKeepPackSealResponse>({
+    url: Api.ACCEPT_SEAR,
+    params,
+  });
+
+export const revokeKeepPack = (params: PutApiCoreBatchSampleAcceptKeepPackRevokeRequest) =>
+  defHttp.put<PutApiCoreBatchSampleAcceptKeepPackRevokeResponse>({
+    url: Api.REVOKE_KEEP_PACK,
+    params,
+  });

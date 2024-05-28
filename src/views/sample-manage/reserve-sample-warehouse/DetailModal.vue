@@ -5,14 +5,13 @@
     showFooter
     title="样本明细"
     width="80%"
-    :minHeight="400"
+    :minHeight="650"
     @fullscreen="redoHeight"
+    :showOkBtn="false"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
-        <div class="flex-1 shrink-1" style="height: calc(100% - 56px)">
-          <BasicTable @register="registerTable" />
-        </div>
+        <BasicTable @register="registerTable" />
       </div>
     </div>
   </BasicModal>
@@ -27,7 +26,7 @@
   defineEmits(['register']);
   const { stationOptions } = useStation();
 
-  const [registerTable, { reload, redoHeight }] = useTable({
+  const [registerTable, { reload, redoHeight, getForm }] = useTable({
     api: keepPackDetail,
     inset: true,
     isCanResizeParent: true,
@@ -118,12 +117,15 @@
       },
     },
     bordered: true,
-    pagination: false,
   });
 
-  const [registerModal, { setModalProps }] = useModalInner(() => {
+  const [registerModal, { setModalProps }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: false });
 
-    reload();
+    await getForm().setFieldsValue({
+      stationNo: data.stationNo,
+      batchNo: data.batchSampleNo,
+    });
+    await reload();
   });
 </script>

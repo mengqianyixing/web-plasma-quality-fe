@@ -28,6 +28,12 @@
 
   const [registerTable, { reload, redoHeight }] = useTable({
     api: getBagDetail,
+    beforeFetch: (params) => {
+      return {
+        ...params,
+        trayNo: trayNo.value,
+      };
+    },
     inset: true,
     isCanResizeParent: true,
     fetchSetting: {
