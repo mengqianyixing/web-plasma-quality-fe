@@ -57,7 +57,11 @@
     getCallbackDetail,
     getCallbackListApi,
   } from '@/api/callback/list-generation';
-  import { callbackModalEnum, CallbackStateEnum } from '@/enums/callbackEnum';
+  import {
+    callbackModalEnum,
+    CallbackStateEnum,
+    QuarantineBatchControlEnum,
+  } from '@/enums/callbackEnum';
   import { callbackConfirm } from '@/api/callback/list-confirm';
   import { CallbackButtonEnum } from '@/enums/authCodeEnum';
   import { useStation } from '@/hooks/common/useStation';
@@ -72,7 +76,11 @@
 
   const selectedRow = ref<Recordable>([]);
   const callbackModel = ref('');
+  const quarantineBatchControl = ref('');
   const isAModel = computed(() => callbackModel.value === callbackModalEnum.A);
+  const quarantineBatchControlModal = computed(
+    () => quarantineBatchControl.value === QuarantineBatchControlEnum.OPEN,
+  );
   const columnsComputed = computed(() => {
     return isAModel.value
       ? columns
@@ -86,6 +94,9 @@
   onMounted(async () => {
     await getSysParamsByParamKey(SysParamsEnum.CallbackModel).then((res) => {
       callbackModel.value = res;
+    });
+    await getSysParamsByParamKey(SysParamsEnum.QuarantineBatchControl).then((res) => {
+      quarantineBatchControl.value = res;
     });
     await getForm().updateSchema({
       field: 'stationNo',
@@ -161,6 +172,7 @@
       record: {
         batchNo: selectedRow.value[0].planNo,
         stationNo: selectedRow.value[0].stationNo,
+        isShowTrackType: callbackModel.value && quarantineBatchControlModal.value,
       },
     });
 
@@ -215,6 +227,7 @@
         options: stationOptions,
         stationNo: id,
         batchNo: batchNo.value,
+        isShowTrackType: callbackModel.value && quarantineBatchControlModal.value,
       },
     });
   }
@@ -226,6 +239,7 @@
       stationName: getStationNameById(record.stationNo),
       state: serverEnumStore.getServerEnumText(SERVER_ENUM.CallbackPlanState)(record.state),
       model: callbackModel.value,
+      isShowTrackType: callbackModel.value && quarantineBatchControlModal.value,
     });
   }
 

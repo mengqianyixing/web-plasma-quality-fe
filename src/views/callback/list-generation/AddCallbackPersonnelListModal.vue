@@ -11,7 +11,13 @@
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
 
-      <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData" />
+      <vxe-grid
+        v-bind="gridOptions"
+        ref="vxeRef"
+        :loading="tableLoading"
+        :data="tableData"
+        :columns="columnsComputed"
+      />
     </div>
   </BasicModal>
 </template>
@@ -42,6 +48,14 @@
   const tableData = ref<GetApiCoreDonorCallbackNeedResponse>([]);
   const vxeRef = ref<VxeTableInstance<GetApiCoreDonorCallbackNeedResponse[number]>>();
   const gapDays = ref(0);
+
+  const isShowTrackType = ref(false);
+
+  const columnsComputed = computed(() =>
+    isShowTrackType.value
+      ? callbackModalColumns
+      : callbackModalColumns.filter((it) => it.field !== 'trackType'),
+  );
 
   const [registerForm, { updateSchema, getFieldsValue }] = useForm({
     showAdvancedButton: false,
@@ -77,7 +91,6 @@
       export: false,
       custom: false,
     },
-    columns: callbackModalColumns,
     showFooter: true,
   });
 
@@ -92,6 +105,7 @@
     isUpdate.value = data.isUpdate;
     stationNo.value = data.record.stationNo;
     batchNo.value = data.record.batchNo;
+    isShowTrackType.value = data.record.isShowTrackType;
 
     gapDays.value = (await globalApiStore.getSysParamsValue('callbackGapDays')) as number;
 

@@ -24,6 +24,7 @@
 
   const isUpdate = ref(false);
   const isPreview = ref(false);
+  const isShowTrackType = ref(false);
   const batchNo = ref('');
 
   const descriptionData = ref({});
@@ -70,7 +71,11 @@
   const callbackModel = ref('');
   const columnsComputed = computed(() => {
     return callbackModel.value === callbackModalEnum.A
-      ? callbackDetailModalColumns.filter((it) => (it.dataIndex as string) !== 'minPlasmaNo')
+      ? isShowTrackType.value
+        ? callbackDetailModalColumns.filter((it) => (it.dataIndex as string) !== 'minPlasmaNo')
+        : callbackDetailModalColumns.filter(
+            (it) => !['minPlasmaNo', 'trackType'].includes(it.dataIndex as string),
+          )
       : callbackDetailModalColumns;
   });
   const [registerTable, { reload }] = useTable({
@@ -117,6 +122,8 @@
     isPreview.value = data.isPreview;
     batchNo.value = data.planNo;
     callbackModel.value = data.model;
+    isShowTrackType.value = data.isShowTrackType;
+
     descriptionData.value = data;
     reload();
   });

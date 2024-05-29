@@ -11,7 +11,13 @@
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
 
-      <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData">
+      <vxe-grid
+        v-bind="gridOptions"
+        ref="vxeRef"
+        :loading="tableLoading"
+        :data="tableData"
+        :columns="columnsComputed"
+      >
         <template #toolbar>
           <div class="h-40px bg-#ffffff mt-2 flex items-center">
             <a-button type="primary" @click="handleAdd" class="absolute right-20"> 新增 </a-button>
@@ -52,6 +58,13 @@
   const emit = defineEmits(['success', 'register']);
 
   const isUpdate = ref(false);
+  const isShowTrackType = ref(false);
+
+  const columnsComputed = computed(() =>
+    isShowTrackType.value
+      ? callbackModalColumns
+      : callbackModalColumns.filter((it) => it.field !== 'trackType'),
+  );
   const stationNo = ref('');
   const batchNo = ref('');
   const vxeRef = ref<VxeTableInstance<GetApiCoreDonorCallbackDetailResponse[number]>>();
@@ -94,7 +107,6 @@
       export: false,
       custom: false,
     },
-    columns: callbackModalColumns,
     showFooter: true,
     autoResize: true,
   });
@@ -131,6 +143,7 @@
     isUpdate.value = data.isUpdate;
     stationNo.value = data.record.stationNo;
     batchNo.value = data.record.batchNo;
+    isShowTrackType.value = data.record.isShowTrackType;
 
     initTableData();
   });
@@ -141,6 +154,7 @@
       record: {
         stationNo: stationNo.value,
         batchNo: batchNo.value,
+        isShowTrackType: isShowTrackType.value,
       },
     });
   }
