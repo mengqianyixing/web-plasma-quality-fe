@@ -7,12 +7,15 @@ import {
   GetApiCoreBagUnqualifiedStatisticStationResponse,
   GetApiCoreBatchStatisticRequest,
   GetApiCoreBatchStatisticResponse,
+  GetApiSearchBatchCountTotalRequest,
+  GetApiSearchBatchCountTotalResponse,
 } from '@/api/type/queryStatistics';
 
 enum Api {
   BATCH_STATISTICS = '/api/core/batch/statistic',
   UNQUALIFIED_PLASMA_STATION = '/api/core/bag/unqualified/statistic-station',
   UNQUALIFIED_PLASMA_BATCH = '/api/core/bag/unqualified/statistic-batch',
+  UNQUALIFIED_PLASMA_COUNT_TOTAL = '/api/search/batch/count-total',
 }
 
 export const getBatchList = (params: GetApiCoreBatchStatisticRequest) =>
@@ -33,6 +36,15 @@ export const getUnqualifiedPlasmaBatch = (params: GetApiCoreBagUnqualifiedStatis
   defHttp.get<GetApiCoreBagUnqualifiedStatisticBatchResponse>(
     {
       url: Api.UNQUALIFIED_PLASMA_BATCH,
+      params,
+    },
+    { joinParamsToUrl: true },
+  );
+
+export const getUnqualifiedPlasmaCountTotal = (params: GetApiSearchBatchCountTotalRequest) =>
+  defHttp.get<GetApiSearchBatchCountTotalResponse>(
+    {
+      url: Api.UNQUALIFIED_PLASMA_COUNT_TOTAL,
       params,
     },
     { joinParamsToUrl: true },

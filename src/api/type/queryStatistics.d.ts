@@ -4387,4 +4387,252 @@ export type GetApiCoreLabErpTestReportUnqualifiedResponse = {
   inStoreTime?: string;
 }[];
 
+/**
+ * 接口 [不合格按批统计合计↗](https://yapi.sharing8.cn/project/529/interface/api/35016) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/batch/count-total`
+ * @更新时间 `2024-05-28 17:17:42`
+ */
+export interface GetApiSearchBatchCountTotalRequest {
+  /**
+   * 验收发布日期起止
+   */
+  verifyPubStartDate: string;
+  verifyPubEndDate: string;
+  /**
+   * 入库日期起止
+   */
+  inStoreStartDate: string;
+  inStoreEndDate: string;
+  /**
+   * 检测发布日期起止
+   */
+  issueStartDate: string;
+  issueEndDate: string;
+  /**
+   * 不合格入库日期起止
+   */
+  unqInStoreStartDate: string;
+  unqInStoreEndDate: string;
+  /**
+   * 采浆公司
+   */
+  stationNo: string;
+  /**
+   * 血浆批号
+   */
+  batchNo: string;
+}
+
+/**
+ * 接口 [不合格按批统计合计↗](https://yapi.sharing8.cn/project/529/interface/api/35016) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/batch/count-total`
+ * @更新时间 `2024-05-28 17:17:42`
+ */
+export interface GetApiSearchBatchCountTotalResponse {
+  /**
+   * 入库数量（袋）
+   */
+  inStoreNum?: number;
+  /**
+   * 验收数量（袋）
+   */
+  verifyNum?: number;
+  /**
+   * 验收合格数量（袋）
+   */
+  verifyPassNum?: number;
+  /**
+   * 血浆验收(无样本)
+   */
+  plasmaMissSampleNum?: number;
+  /**
+   * 验收(献血浆者符合性)
+   */
+  plasmaDonorBlockNum?: number;
+  /**
+   * 验收(破袋)
+   */
+  plasmaDamagedNum?: number;
+  /**
+   * 验收(无标签)
+   */
+  tagMissNum?: number;
+  /**
+   * 验收(血浆标签内容缺失)
+   */
+  tagContentMissNum?: number;
+  /**
+   * 验收(颜色异常)
+   */
+  plasmaColorErrNum?: number;
+  /**
+   * 验收(脂血)
+   */
+  plasmaLipemia?: number;
+  /**
+   * 验收(溶血)
+   */
+  plasmaHemolysisNum?: number;
+  /**
+   * 验收(其他)
+   */
+  plasmaOtherNum?: number;
+  /**
+   * 验收不合格比率
+   */
+  verifyUnqRate?: string;
+  /**
+   * 检测不合格ALT
+   */
+  altNum?: number;
+  /**
+   * 检测不合格HBV-DNA
+   */
+  natHBsAgNum?: number;
+  /**
+   * 检测不合格HBsAg
+   */
+  hbsAgNum?: number;
+  /**
+   * 检测不合格HCV-RNA
+   */
+  natHCVNum?: number;
+  /**
+   * 检测不合格HCV抗体
+   */
+  hcvNum?: number;
+  /**
+   * 检测不合格HIV-1/HIV-2抗体
+   */
+  hivNum?: number;
+  /**
+   * 检测不合格HIV-RNA
+   */
+  natHIVNum?: number;
+  /**
+   * 检测不合格TP
+   */
+  tpNum?: number;
+  /**
+   * 检测不合格TP抗体
+   */
+  tpTNum?: number;
+  /**
+   * 检测不合格比率
+   */
+  testUnqRate?: string;
+  /**
+   * 检疫期献血浆者符合性
+   */
+  quarantineDonorBlockNum?: number;
+  /**
+   * 检疫期不合格HBV-DNA
+   */
+  quarantineNatHBsAgNum?: number;
+  /**
+   * 检疫期不合格HBsAg
+   */
+  quarantineHBsAgNum?: number;
+  /**
+   * 检疫期不合格HCV-RNA
+   */
+  quarantineNatHCVNum?: number;
+  /**
+   * 检疫期不合格HCV抗体
+   */
+  quarantineHCVNum?: number;
+  /**
+   * 检疫期不合格HIV-1/HIV-2抗体
+   */
+  quarantineHIVNum?: number;
+  /**
+   * 检疫期不合格HIV-RNA
+   */
+  quarantineNatHIVNum?: number;
+  /**
+   * 检疫期不合格合计
+   */
+  quarantineUnqNum?: number;
+  /**
+   * 检疫期不合格比率
+   */
+  quarantineUnqRate?: string;
+  /**
+   * 续追踪不合格HBV-DNA
+   */
+  trackNatHBsAgNum?: number;
+  /**
+   * 续追踪不合格HBsAg
+   */
+  trackHBsAgNum?: number;
+  /**
+   * 续追踪不合格HCV-RNA
+   */
+  trackNatHCVNum?: number;
+  /**
+   * 续追踪不合格HCV抗体
+   */
+  trackHCVNum?: number;
+  /**
+   * 续追踪不合格HIV-1/HIV-2抗体
+   */
+  trackHIVNum?: number;
+  /**
+   * 续追踪不合格HIV-RNA
+   */
+  trackNatHIVNum?: number;
+  /**
+   * 续追踪不合格比率
+   */
+  trackUnqRate?: string;
+  /**
+   * 续追踪不合格合计
+   */
+  trackUnqNum?: number;
+  /**
+   * 其他
+   */
+  otherNum?: number;
+  /**
+   * 其他（破袋）
+   */
+  damagedNum?: number;
+  /**
+   * 其他（外部告知追溯）
+   */
+  externalTraceNum?: number;
+  /**
+   * 其他不合格合计
+   */
+  otherUnqRate?: string;
+  /**
+   * 验收不合格合计
+   */
+  verifyUnqNum?: number;
+  /**
+   * 检测不合格合计
+   */
+  testUnqNum?: number;
+  /**
+   * 其他不合格合计
+   */
+  otherUnqNum?: number;
+  /**
+   * 合计
+   */
+  totalNum?: number;
+  /**
+   * 不合格率
+   */
+  unqRate?: string;
+  /**
+   * 续追踪不合格超一年
+   */
+  expnum?: number;
+}
+
 /* prettier-ignore-end */
