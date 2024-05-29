@@ -16,7 +16,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '入库数量（袋）',
-    dataIndex: 'inNum',
+    dataIndex: 'inStoreNum',
     width: 100,
   },
   {
