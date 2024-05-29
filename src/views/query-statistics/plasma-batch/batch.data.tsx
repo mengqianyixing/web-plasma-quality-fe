@@ -39,6 +39,7 @@ export const columns: BasicColumn[] = [
   {
     title: '验收血浆不合格编号',
     dataIndex: 'verifyUnqNos',
+    ellipsis: false,
   },
 ];
 

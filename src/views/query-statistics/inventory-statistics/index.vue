@@ -1,8 +1,8 @@
 <template>
-  <div class="root">
-    <PageWrapper dense class="bg-white p-2">
-      <BasicForm @register="registerBasicForm" class="relative" />
-    </PageWrapper>
+  <div class="root p-3">
+    <div class="pt-5 bg-white mb-16px">
+      <BasicForm @register="registerBasicForm" />
+    </div>
     <a-tabs
       class="mt-2"
       default-active-key="inStockSummary"
