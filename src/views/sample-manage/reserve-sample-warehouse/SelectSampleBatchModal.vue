@@ -21,16 +21,13 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { sampleReceiveStatusMap } from '@/enums/sampleEnum';
   import { getKeepPackBatchList } from '@/api/sample-manage/reserve-sample-destory';
-  import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useStation } from '@/hooks/common/useStation';
-  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
   const emit = defineEmits(['success', 'register']);
 
   const selectedRow = ref<Recordable>([]);
   const { createMessage } = useMessage();
   const { stationOptions } = useStation();
-  const serverEnumStore = useServerEnumStoreWithOut();
 
   const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
     api: getKeepPackBatchList,
@@ -42,10 +39,6 @@
       {
         title: '样本批号',
         dataIndex: 'batchNo',
-      },
-      {
-        title: '样本类型',
-        dataIndex: 'sampleType',
       },
       {
         title: '样本数量',
@@ -78,16 +71,6 @@
           },
         },
         {
-          field: 'sampleType',
-          label: '样本类型',
-          component: 'Select',
-          componentProps: {
-            options: serverEnumStore
-              .getServerEnum(SERVER_ENUM.SampleType)
-              .filter((it) => it.value === 'PER'),
-          },
-        },
-        {
           field: 'acceptState',
           label: '接收状态',
           component: 'Select',
@@ -99,7 +82,7 @@
         },
         {
           field: '[acceptBeginAt, acceptEndAt]',
-          label: '接收时间',
+          label: '接收日期',
           component: 'RangePicker',
         },
       ],
