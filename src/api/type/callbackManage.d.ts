@@ -148,7 +148,7 @@ export interface GetApiCoreDonorCallbackResponse {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/need`
- * @更新时间 `2024-01-13 11:09:01`
+ * @更新时间 `2024-05-28 18:30:19`
  */
 export interface GetApiCoreDonorCallbackNeedRequest {
   stationNo: string;
@@ -175,6 +175,10 @@ export interface GetApiCoreDonorCallbackNeedRequest {
    * 批次号
    */
   batchNo: string;
+  /**
+   * 血浆状态， 首次反复， 1 首次 2反复
+   */
+  trackType?: string;
 }
 
 /**
@@ -182,7 +186,7 @@ export interface GetApiCoreDonorCallbackNeedRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/need`
- * @更新时间 `2024-01-13 11:09:01`
+ * @更新时间 `2024-05-28 18:30:19`
  */
 export type GetApiCoreDonorCallbackNeedResponse = {
   stationNo: string;
@@ -206,6 +210,10 @@ export type GetApiCoreDonorCallbackNeedResponse = {
    * 状态
    */
   donatorStatus: string;
+  /**
+   * 首次反复
+   */
+  trackType: string;
   /**
    * 拒绝日期
    */
@@ -270,7 +278,7 @@ export type PostApiCoreDonorCallbackNeedResponse = null;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-05-08 14:57:32`
+ * @更新时间 `2024-05-28 18:29:16`
  */
 export interface GetApiCoreDonorCallbackDetailRequest {
   /**
@@ -291,6 +299,10 @@ export interface GetApiCoreDonorCallbackDetailRequest {
   gapDays?: string;
   minCollectTime?: string;
   maxCollectTime?: string;
+  /**
+   * 血浆状态  传1首次 2反复
+   */
+  trackType?: string;
 }
 
 /**
@@ -298,7 +310,7 @@ export interface GetApiCoreDonorCallbackDetailRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-05-08 14:57:32`
+ * @更新时间 `2024-05-28 18:29:16`
  */
 export type GetApiCoreDonorCallbackDetailResponse = {
   stationNo: string;
@@ -312,6 +324,10 @@ export type GetApiCoreDonorCallbackDetailResponse = {
   bloodType: string;
   donatorStatus: string;
   immType: string;
+  /**
+   * 首次反复，状态
+   */
+  trackType: string;
   refuseDate?: string | null;
   refuseReason?: string | null;
   minCollTime: string;
