@@ -24,7 +24,7 @@
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
-  import { columns, searchFormSchema } from './data';
+  import { columns, searchFormSchema, dateKey } from './data';
   import { PageWrapper } from '@/components/Page';
   import { getListApi } from '@/api/query-statistics/titerPlasmaQuery';
   import { isObject } from '@/utils/is';
@@ -34,6 +34,7 @@
   import TabelModal from './tabelModal.vue';
   import { reactive, ref } from 'vue';
   import { VxeGridProps } from 'vxe-table';
+  import { message } from 'ant-design-vue';
 
   defineOptions({ name: 'TiterPlasmaQuery' });
 
@@ -77,11 +78,13 @@
     columns: columns as any,
     showFooter: false,
   });
-  const [registerTable] = useTable({
+  const [registerTable, { getForm, reload }] = useTable({
     api: getListApi,
+    immediate: false,
     columns: [],
     formConfig: {
       schemas: searchFormSchema,
+      submitFunc,
     },
     emptyDataIsShowTable: false,
     size: 'small',
@@ -105,9 +108,20 @@
       unAcceptList.value = data as any;
       return [];
     },
-    immediate: false,
   });
 
+  function getFormDateIsNotNull() {
+    const values = getForm().getFieldsValue();
+    return dateKey.some((key) => values[key]);
+  }
+  function submitFunc() {
+    if (getFormDateIsNotNull()) {
+      reload();
+      return Promise.resolve();
+    }
+    message.warning('请选择日期后进行查询');
+    return Promise.reject();
+  }
   function cellClick(slotName: string, data: Recordable) {
     const [rawImm, titerLevel] = slotName.split('');
     const { batchNo, stationNo } = data;

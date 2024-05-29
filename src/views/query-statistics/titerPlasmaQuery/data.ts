@@ -6,6 +6,14 @@ import { useStation } from '@/hooks/common/useStation';
 
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
+export const dateKey = [
+  'verificationBegin',
+  'verificationEnd',
+  'collectionBegin',
+  'collectionEnd',
+  'issueBegin',
+  'issueEnd',
+];
 export const columns = [
   {
     width: 90,
@@ -375,7 +383,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '[verificationBegin,verificationEnd]',
+    field: '[' + dateKey[0] + ',' + dateKey[1] + ']',
     component: 'RangePicker',
     label: '验收发布日期',
     componentProps: {
@@ -384,7 +392,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '[collectionBegin,collectionEnd]',
+    field: '[' + dateKey[2] + ',' + dateKey[3] + ']',
     component: 'RangePicker',
     label: '采集日期',
     componentProps: {
@@ -419,7 +427,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '效价值',
   },
   {
-    field: '[issueBegin,issueEnd]',
+    field: '[' + dateKey[4] + ',' + dateKey[5] + ']',
     component: 'RangePicker',
     label: '检测发布日期',
     componentProps: {

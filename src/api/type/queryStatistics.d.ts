@@ -3007,70 +3007,70 @@ export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
  * 接口 [浆员状态查询↗](https://yapi.sharing8.cn/project/529/interface/api/33706) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/donor/state`
- * @更新时间 `2024-03-04 16:04:04`
+ * @请求头 `GET /api/search/donor/status`
+ * @更新时间 `2024-05-29 15:23:35`
  */
-export interface PostApiCoreDonorStateRequest {
+export interface GetApiSearchDonorStatusRequest {
   /**
    * 采浆公司
    */
-  stationNo: string;
+  stationNo?: string;
   /**
    * 血浆批号
    */
-  batch: string;
+  batch?: string;
   /**
    * 采集日期开始
    */
-  collectBegin: string;
+  collectBegin?: string;
   /**
    * 采集日期结束
    */
-  collectEnd: string;
+  collectEnd?: string;
   /**
    * 血浆类型
    */
-  immunity: string;
+  immunity?: string;
   /**
    * 淘汰原 因
    */
-  cause: string;
+  cause?: string;
   /**
    * 效价结果开始
    */
-  titerBenign: string;
+  titerBenign?: string;
   /**
    * 效价结果结束
    */
-  titerEnd: string;
+  titerEnd?: string;
   /**
    * 浆员状态
    */
-  state: string;
+  state?: string;
   /**
    * 淘汰系统
    */
-  blockBy: string;
+  blockBy?: string;
   /**
    * 检测发布日期开始
    */
-  checkBegin: string;
+  checkBegin?: string;
   /**
    * 检测发布日期结束
    */
-  checkEnd: string;
+  checkEnd?: string;
   /**
    * 回访状态
    */
-  callback: string;
+  callback?: string;
   /**
    * 不合格依据日期开始
    */
-  listenBegin: string;
+  listenBegin?: string;
   /**
    * 不合格依据日期结束
    */
-  listenEnd: string;
+  listenEnd?: string;
   pageSize: string;
   currPage: string;
 }
@@ -3079,10 +3079,10 @@ export interface PostApiCoreDonorStateRequest {
  * 接口 [浆员状态查询↗](https://yapi.sharing8.cn/project/529/interface/api/33706) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/donor/state`
- * @更新时间 `2024-03-04 16:04:04`
+ * @请求头 `GET /api/search/donor/status`
+ * @更新时间 `2024-05-29 15:23:35`
  */
-export interface PostApiCoreDonorStateResponse {
+export interface GetApiSearchDonorStatusResponse {
   currPage: number;
   pageSize: number;
   totalCount: number;

@@ -1,13 +1,13 @@
 import { defHttp } from '@/utils/http/axios';
 
 import {
-  PostApiCoreDonorStateRequest,
-  PostApiCoreDonorStateResponse,
+  GetApiSearchDonorStatusRequest,
+  GetApiSearchDonorStatusResponse,
 } from '@/api/type/queryStatistics';
 
 enum Api {
-  LIST = '/api/core/donor/state',
+  LIST = '/api/search/donor/status',
 }
 
-export const getListApi = (params: PostApiCoreDonorStateRequest) =>
-  defHttp.post<PostApiCoreDonorStateResponse>({ url: Api.LIST, params });
+export const getListApi = (params: GetApiSearchDonorStatusRequest) =>
+  defHttp.get<GetApiSearchDonorStatusResponse>({ url: Api.LIST, params });
