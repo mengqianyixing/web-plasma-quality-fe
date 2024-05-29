@@ -144,12 +144,11 @@
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[300px] -mt-1" ref="bagRef">
-            <a-input-search
-              placeholder="扫描样本袋号"
+            <a-input
+              placeholder="扫描样本袋号或输入袋号回车"
               value={packNo}
-              enter-button="接收"
               onChange={(e) => (packNo.value = e.target.value)}
-              onSearch={_handleAcceptSample}
+              onPressEnter={_handleAcceptSample}
             />
           </div>
         );
@@ -216,14 +215,10 @@
   const [registerTrayInModal, { openModal: openTrayInModal }] = useModal();
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
 
-  function handleSelectSampleBatch(value: string, event: MouseEvent) {
-    if (value && event.type !== 'click') {
-      // handlePressEnter();
-    } else {
-      openSelectSampleBatchModal(true, {
-        reload: true,
-      });
-    }
+  function handleSelectSampleBatch() {
+    openSelectSampleBatchModal(true, {
+      reload: true,
+    });
   }
 
   const unAcceptList = computed(
