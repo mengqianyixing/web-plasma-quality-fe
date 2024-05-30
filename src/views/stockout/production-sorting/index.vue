@@ -88,10 +88,8 @@
   import BatchSuspendModal from './components/batch-suspend-modal.vue';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   defineOptions({ name: 'ProductionSorting' });
-  const { trayText, boxText } = useServerConfig();
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -265,13 +263,13 @@
               disabled={!prepareNo.value}
               onclick={() => openOutStoreModal(true, { prepareNo: prepareNo.value })}
             >
-              {trayText}出库
+              托盘出库
             </a-button>
             <a-button
               disabled={!prepareNo.value}
               onclick={() => openInStoreModal(true, { prepareNo: prepareNo.value })}
             >
-              {trayText}入库
+              托盘入库
             </a-button>
             <a-button disabled={!prepareNo.value} onclick={_completeSorting}>
               分拣完成
@@ -299,7 +297,7 @@
   const batchSchema: DescItem[] = [
     {
       field: 'boxNo',
-      label: '血浆' + boxText,
+      label: '血浆箱号',
       contentMinWidth: 100,
       render() {
         return (
@@ -648,7 +646,7 @@
   async function _sortingAllQua(e, boxNoNow?) {
     if (e.code === 'Enter' || e.code === 'NumpadEnter' || e === true) {
       if (!boxNo.value && e !== true) {
-        warning('请扫描血浆' + boxText + '!');
+        warning('请扫描血浆箱号!');
         return;
       }
       if (!prepareNo.value && e !== true) {
@@ -657,13 +655,14 @@
       }
       try {
         openFullLoading();
-        await sortingAllQua({
+        const res = await sortingAllQua({
           prepareNo: prepareNo.value,
           boxNo: e === true ? boxNoNow : boxNo.value,
         });
         success('整箱分拣成功!');
         boxNo.value = '';
         bagNo.value = '';
+        console.log('整箱扫描', res);
         // 请求总览数据
         prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
       } finally {
@@ -893,6 +892,7 @@
 
   // 合箱
   async function _sortingMouldAssembling(data) {
+    console.log('合箱', data);
     if (!prepareNo.value) {
       warning('请选择投产准备号!');
       return;
@@ -912,7 +912,8 @@
         };
         try {
           openFullLoading();
-          await sortingMouldAssembling(params);
+          const res = await sortingMouldAssembling(params);
+          console.log('合箱成功:', res);
           success('合箱成功!');
           // 请求总览数据
           prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
@@ -929,6 +930,7 @@
 
   // 封箱
   async function _sortingBoxSealing(data, noTip?) {
+    console.log('封箱', data);
     if (!prepareNo.value) {
       warning('请选择投产准备号!');
       return;
@@ -963,7 +965,8 @@
       };
       try {
         openFullLoading();
-        await sortingBoxSealing(params);
+        const res = await sortingBoxSealing(params);
+        console.log('封箱成功:', res);
         success('封箱成功!');
         // 走打印逻辑
         printBox(data.bagNos[0]);

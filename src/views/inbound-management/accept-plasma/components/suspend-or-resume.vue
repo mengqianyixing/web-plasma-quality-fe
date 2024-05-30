@@ -19,7 +19,7 @@
         <FormItem label="血浆批号" name="batchNo" :rules="[{ required: true }]">
           <Input v-model:value="searchForm.batchNo" readonly />
         </FormItem>
-        <FormItem v-if="searchForm.pattern === 'BOX'" :label="`血浆{${boxText}}`" name="boxNo">
+        <FormItem v-if="searchForm.pattern === 'BOX'" label="血浆箱号" name="boxNo">
           <Input v-model:value="searchForm.boxNo" readonly />
         </FormItem>
         <FormItem
@@ -93,9 +93,7 @@
 
   import { useMessage } from '@/hooks/web/useMessage';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
-  const { trayText, boxText } = useServerConfig();
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
 
@@ -168,11 +166,11 @@
     } else if (searchForm.value.pattern === 'BOX') {
       columns.value.unshift(
         {
-          title: trayText + '编号',
+          title: '托盘编号',
           dataIndex: 'trayNo',
         },
         {
-          title: '血浆' + boxText,
+          title: '血浆箱号',
           dataIndex: 'boxNo',
         },
         {

@@ -37,9 +37,7 @@
   import { pickBoxMap, pickBoxValueEnum, boxTypeMap, boxTypeValueEnum } from '@/enums/stockoutEnum';
   import dayjs from 'dayjs';
   import PackingCheckModal from '@/views/stockout/production-sorting/components/packing-check-modal.vue';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
-  const { boxText } = useServerConfig();
   const prepareNo = ref(''); // 投产准备号
   // const emit = defineEmits(['success', 'register']);
   const [registerModal] = useModalInner(async (data) => {
@@ -49,7 +47,7 @@
 
   const columns = [
     {
-      title: '血浆' + boxText,
+      title: '血浆箱号',
       dataIndex: 'boxNo',
       width: 180,
     },
@@ -102,7 +100,7 @@
     },
     {
       field: 'boxNo',
-      label: '血浆' + boxText,
+      label: '血浆箱号',
       component: 'Input',
       colProps: { span: 6 },
     },

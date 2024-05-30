@@ -4,9 +4,7 @@ import dayjs from 'dayjs';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useStation } from '@/hooks/common/useStation';
-import { useServerConfig } from '@/hooks/common/useServerConfig';
 
-const { boxText } = useServerConfig();
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
 
@@ -22,12 +20,12 @@ export const columns: BasicColumn[] = [
     width: 150,
   },
   {
-    title: '浆站' + boxText,
+    title: '浆站箱号',
     dataIndex: 'stationBoxNo',
     width: 150,
   },
   {
-    title: '现存' + boxText,
+    title: '现存箱号',
     dataIndex: 'currBoxNo',
     width: 150,
   },
@@ -240,7 +238,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: 'currBoxNo',
-    label: '现存' + boxText,
+    label: '现存箱号',
     component: 'Input',
   },
   {

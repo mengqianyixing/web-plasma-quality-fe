@@ -33,10 +33,8 @@
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
   import { getListApi } from '@/api/tray/list';
   import { StoreButtonEnum } from '@/enums/authCodeEnum';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   defineOptions({ name: 'TrayOutInStore' });
-  const { trayText } = useServerConfig();
 
   const [registerOutModal, { openModal }] = useModal();
   const [registerInModal, { openModal: openInModal }] = useModal();
@@ -67,11 +65,10 @@
   function handleOutStore() {
     const rows = getSelections(false);
     if (!rows.length) return false;
-    if (!rows.every((_) => _.wareHouseName))
-      return message.warning('所选' + trayText + '存在未入库!');
+    if (!rows.every((_) => _.wareHouseName)) return message.warning('所选托盘存在未入库!');
     const [firstRow] = rows;
     const notAlike = rows.some((_) => _.wareHouseName !== firstRow.wareHouseName);
-    if (notAlike) return message.warning('所选' + trayText + '不属于同一库房!');
+    if (notAlike) return message.warning('所选托盘不属于同一库房!');
     if (firstRow.houseType[1] === STORE_FLAG.S) {
       openModal(true, { data: rows, showSite: true });
     } else {
@@ -80,8 +77,7 @@
   }
   function handleInStore() {
     const rows = getSelections<string>(false);
-    if (rows.some((_) => _.wareHouseName))
-      return message.warning('所选' + trayText + '存在已入库!');
+    if (rows.some((_) => _.wareHouseName)) return message.warning('所选托盘存在已入库!');
     if (!rows.length) return false;
     openInModal(true, { data: rows });
   }

@@ -15,9 +15,6 @@ import {
 
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { SERVER_ENUM } from '@/enums/serverEnum';
-import { useServerConfig } from '@/hooks/common/useServerConfig';
-
-const { boxText } = useServerConfig();
 
 const serverEnumStore = useServerEnumStoreWithOut();
 
@@ -65,7 +62,7 @@ export const columns: BasicColumn[] = [
     ellipsis: false,
   },
   {
-    title: boxText,
+    title: '箱号',
     dataIndex: 'boxNo',
     ellipsis: false,
     width: 130,
@@ -263,7 +260,7 @@ export const inStoreSchema: FormSchema[] = [
   },
   {
     field: 'boxNo',
-    label: '不合格' + boxText,
+    label: '不合格箱号',
     component: 'Input',
     colProps: { span: 20 },
     required: true,
@@ -280,7 +277,7 @@ export const inStoreSchema: FormSchema[] = [
 export const detailSchema: DescItem[] = [
   { field: 'bagNo', label: '血浆编号' },
   { field: 'batchNo', label: '血浆批号' },
-  { field: 'boxNo', label: '血浆' + boxText },
+  { field: 'boxNo', label: '血浆箱号' },
   { field: 'stationName', label: '采浆公司' },
   { field: 'donorNo', label: '浆员编号' },
   { field: 'donorName', label: '浆员姓名' },

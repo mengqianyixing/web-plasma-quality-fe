@@ -31,7 +31,7 @@
         </span>
       </template>
     </BasicTable>
-    <BasicModal @register="registerModal" @ok="submit" showFooter :title="trayText + '打印'">
+    <BasicModal @register="registerModal" @ok="submit" showFooter title="托盘打印">
       <BasicForm @register="registerForm" />
     </BasicModal>
     <TableModal @register="registerTableModal" />
@@ -64,10 +64,8 @@
   import BoxTableModal from './boxTableDrawer.vue';
   import BagTableModal from './bagTableDrawer.vue';
   import { ReCheckButtonEnum, StoreButtonEnum } from '@/enums/authCodeEnum';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   defineOptions({ name: 'TrayList' });
-  const { trayText } = useServerConfig();
 
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
   const [registerModal, { openModal, closeModal, setModalProps }] = useModal();
@@ -81,7 +79,7 @@
       {
         component: 'InputNumber',
         field: 'trayNumber',
-        label: trayText + '数量',
+        label: '托盘数量',
         defaultValue: 1,
         required: true,
         componentProps: {

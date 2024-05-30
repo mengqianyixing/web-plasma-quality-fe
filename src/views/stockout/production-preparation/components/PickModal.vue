@@ -71,9 +71,7 @@
     PostApiProductPrepareRevokePickBagRequest,
   } from '@/api/type/productionPreparation';
   import { VxeGridPropTypes } from 'vxe-table/types/grid';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
-  const { boxText } = useServerConfig();
   const { stationOptions } = useStation();
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -159,7 +157,7 @@
         {
           component: 'Input',
           field: 'boxNo',
-          label: '血浆' + boxText,
+          label: '血浆箱号',
           ifShow: false,
         },
       ]);
@@ -203,7 +201,7 @@
         },
         {
           component: 'Input',
-          label: '血浆' + boxText,
+          label: '血浆箱号',
           field: 'boxNo',
           ifShow: true,
         },
@@ -214,7 +212,7 @@
           width: 50,
         },
         {
-          title: '待挑选血浆' + boxText,
+          title: '待挑选血浆箱号',
           field: 'boxNo',
           sortable: true,
           width: 150,
@@ -229,7 +227,7 @@
         api: getPickedBox,
         columns: [
           {
-            title: '已挑选血浆' + boxText,
+            title: '已挑选血浆箱号',
             dataIndex: 'boxNo',
             align: 'left',
             fixed: true,
@@ -336,7 +334,7 @@
     },
     {
       component: 'Input',
-      label: '血浆' + boxText,
+      label: '血浆箱号',
       field: 'boxNo',
       colProps: { span: 5 },
     },

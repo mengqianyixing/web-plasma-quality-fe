@@ -11,10 +11,10 @@
     <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button type="primary" @click="handleBinding" v-show="props.isBinding">
-          绑定{{ trayText }}
+          绑定托盘
         </a-button>
         <a-button type="primary" @click="handleUnbinding" v-show="!props.isBinding">
-          解绑{{ trayText }}
+          解绑托盘
         </a-button>
       </template>
     </BasicTable>
@@ -30,9 +30,6 @@
   import { plasmaBoxHandSearchFormSchema, plasmaBoxHandColumns } from './relocation.data';
   import { BasicModal, useModal } from '@/components/Modal';
   import { message, Modal } from 'ant-design-vue';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
-
-  const { trayText } = useServerConfig();
 
   const props = defineProps({
     isBinding: {
@@ -43,7 +40,7 @@
   const [registerForm, { validate, clearValidate }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
-    schemas: [{ label: trayText + '编号', required: true, component: 'Input', field: 'taryNo' }],
+    schemas: [{ label: '托盘编号', required: true, component: 'Input', field: 'taryNo' }],
     showActionButtonGroup: false,
     showResetButton: false,
   });

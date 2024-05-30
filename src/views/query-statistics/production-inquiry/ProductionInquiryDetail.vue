@@ -20,9 +20,7 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { getForPlasmaListApi } from '@/api/stockout/production-plan';
   import { productionInquiryDetailColumns } from '@/views/query-statistics/production-inquiry/inquiry.data';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
-  const { boxText } = useServerConfig();
   defineEmits(['register']);
 
   const orderNo = ref('');
@@ -38,7 +36,7 @@
         },
         {
           field: 'boxNo',
-          label: '血浆' + boxText,
+          label: '血浆箱号',
           component: 'Input',
         },
         {

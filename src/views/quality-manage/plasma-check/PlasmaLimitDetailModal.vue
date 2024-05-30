@@ -37,9 +37,7 @@
   import { getBindBoxListApi } from '@/api/quality/plasma-restriction';
   import Description from '@/components/Description/src/Description.vue';
   import { useDescription } from '@/components/Description';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
-  const { boxText } = useServerConfig();
   const batchNo = ref('');
   const plasmaLimitDesData = ref<Recordable>({});
   const tableData = ref([]);
@@ -70,7 +68,7 @@
     api: getBindBoxListApi,
     columns: [
       {
-        title: boxText,
+        title: '箱号',
         dataIndex: 'boxNo',
       },
       {

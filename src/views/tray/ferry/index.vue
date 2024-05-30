@@ -15,11 +15,8 @@
   import { getHouseSiteApi } from '@/api/plasmaStore/site';
   import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
   import { settingListApi } from '@/api/plasmaStore/setting';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   defineOptions({ name: 'Ferry' });
-
-  const { trayText } = useServerConfig();
   const [registerForm, { updateSchema, clearValidate, validate, setProps, setFieldsValue }] =
     useForm({
       labelWidth: 90,
@@ -29,7 +26,7 @@
         {
           field: 'trayNo',
           component: 'Input',
-          label: trayText + '编号',
+          label: '托盘编号',
           required: true,
         },
         {

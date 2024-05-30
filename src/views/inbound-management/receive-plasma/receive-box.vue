@@ -36,7 +36,7 @@
                 :disabled="!filterForm.batchNo"
                 type="primary"
               >
-                {{ trayText }}入库
+                托盘入库
               </a-button>
             </div>
           </div>
@@ -68,10 +68,8 @@
   import { Modal } from 'ant-design-vue';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import dayjs from 'dayjs';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   defineOptions({ name: 'ReceivePlasma' });
-  const { trayText, boxText } = useServerConfig();
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
@@ -106,7 +104,7 @@
     },
     {
       field: 'trayNo',
-      label: trayText + '编号',
+      label: '托盘编号',
       contentMinWidth: 100,
       render() {
         return (
@@ -124,7 +122,7 @@
     },
     {
       field: 'boxNo',
-      label: boxText,
+      label: '箱号',
       contentMinWidth: 100,
       render() {
         return (
@@ -181,11 +179,11 @@
   async function handlePressEnter(e) {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
       if (!boxNo.value) {
-        warning('请扫描' + boxText + '!');
+        warning('请扫描箱号!');
         return;
       }
       if (!trayNo.value) {
-        warning('请输入' + trayText + '编号!');
+        warning('请输入托盘编号!');
         return;
       }
       const params = {
@@ -222,7 +220,7 @@
         return;
       }
       if (!trayNo.value) {
-        warning('请扫描' + trayText + '编号!');
+        warning('请扫描托盘编号!');
         return;
       }
       try {
@@ -296,7 +294,7 @@
       },
       {
         field: 'boxNo',
-        title: boxText,
+        title: '箱号',
       },
       {
         field: 'plasmaCount',
@@ -336,10 +334,10 @@
       },
       {
         field: 'trayNo',
-        title: trayText + '编号',
+        title: '托盘编号',
       },
       {
-        title: boxText,
+        title: '箱号',
         field: 'boxNo',
       },
       {

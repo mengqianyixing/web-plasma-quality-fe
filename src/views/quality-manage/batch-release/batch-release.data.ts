@@ -7,9 +7,7 @@ import {
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { formatKg } from '@/utils';
-import { useServerConfig } from '@/hooks/common/useServerConfig';
 
-const { boxText } = useServerConfig();
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
@@ -147,7 +145,7 @@ export const plasmaRestrictionColumns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: '血浆' + boxText,
+    title: '血浆箱号',
     dataIndex: 'boxNo',
     width: 120,
   },

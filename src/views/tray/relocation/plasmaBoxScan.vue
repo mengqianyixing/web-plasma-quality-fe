@@ -27,9 +27,6 @@
   import { message, Modal } from 'ant-design-vue';
   import { trayBoxListApi } from '@/api/tray/list';
   import { ref } from 'vue';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
-
-  const { trayText } = useServerConfig();
 
   const count = ref(0);
   const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
@@ -73,7 +70,7 @@
   }
   async function handleSubmit() {
     const { boxId, trayNo } = getFieldsValue();
-    if (boxId && !trayNo) message.warning('请扫描' + trayText + '编号');
+    if (boxId && !trayNo) message.warning('请扫描托盘编号');
     if (trayNo) {
       const list = await trayBoxListApi({ trayNo });
       count.value = list.length;

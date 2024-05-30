@@ -11,7 +11,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    :title="trayText + `出库`"
+    :title="`托盘出库`"
     width="1200px"
     :show-ok-btn="false"
     cancelText="关闭"
@@ -54,7 +54,7 @@
         <div class="absolute flex flex-col w-full h-full">
           <BasicTable @register="registerBindTable">
             <template #toolbar>
-              <a-button type="primary" @click="handleUnbind">解绑{{ trayText }}</a-button>
+              <a-button type="primary" @click="handleUnbind">解绑托盘</a-button>
             </template>
           </BasicTable>
         </div>
@@ -79,9 +79,6 @@
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
-
-  const { trayText, boxText } = useServerConfig();
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
@@ -168,7 +165,7 @@
     const boxNos = getSelectRowKeys();
     if (boxNos.length === 0) return message.warning('请选择数据');
     Modal.confirm({
-      content: '确定解绑' + boxText + '【' + boxNos.join('、') + '】?',
+      content: '确定解绑箱号【' + boxNos.join('、') + '】?',
       onOk: async () => {
         await bindBoxApi({ trayNo: state.trayNo, type: 'unbind', boxes: boxNos as string[] });
         message.success('解绑成功');

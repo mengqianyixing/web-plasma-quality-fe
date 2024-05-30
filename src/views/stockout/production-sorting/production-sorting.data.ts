@@ -3,15 +3,12 @@ import { BasicColumn } from '@/components/Table';
 import { boxTypeMap, boxTypeEnum } from '@/enums/stockoutEnum';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-import { useServerConfig } from '@/hooks/common/useServerConfig';
-
-const { trayText, boxText } = useServerConfig();
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
 export const trayInStoreColumns: BasicColumn[] = [
   {
-    title: trayText + '编号',
+    title: '托盘编号',
     dataIndex: 'trayNo',
   },
   {
@@ -39,12 +36,12 @@ export const trayInStoreColumns: BasicColumn[] = [
 
 export const trayInStoreFormSchema: FormSchema[] = [
   {
-    label: trayText + '编号',
+    label: '托盘编号',
     field: 'trayNo',
     component: 'Input',
   },
   {
-    label: '血浆' + boxText,
+    label: '血浆箱号',
     field: 'boxNo',
     component: 'Input',
   },
@@ -53,19 +50,19 @@ export const trayInStoreFormSchema: FormSchema[] = [
 export const bindFormSchema: FormSchema[] = [
   {
     field: 'trayNo',
-    label: trayText + '编号',
+    label: '托盘编号',
     component: 'Input',
     componentProps: {
-      placeholder: '扫描' + trayText + '编号',
+      placeholder: '扫描托盘编号',
       autocomplete: 'off',
     },
   },
   {
     field: 'boxId',
-    label: '血浆' + boxText,
+    label: '血浆箱号',
     component: 'Input',
     componentProps: {
-      placeholder: '扫描血浆' + boxText,
+      placeholder: '扫描血浆箱号',
       autocomplete: 'off',
       onkeyup: () => {
         console.log(112);
@@ -87,13 +84,13 @@ export const bindSearchFormSchema: FormSchema[] = [
   },
   {
     field: 'boxNo',
-    label: '血浆' + boxText,
+    label: '血浆箱号',
     component: 'Input',
   },
 ];
 export const sortingBoxBindColumns: BasicColumn[] = [
   {
-    title: '血浆' + boxText,
+    title: '血浆箱号',
     dataIndex: 'boxNo',
   },
   {
@@ -115,14 +112,14 @@ export const sortingBoxBindColumns: BasicColumn[] = [
     format: (text) => text?.slice(0, 10),
   },
   {
-    title: trayText + '编号',
+    title: '托盘编号',
     dataIndex: 'trayNo',
   },
 ];
 
 export const trayOutStoreColumns: BasicColumn[] = [
   {
-    title: trayText + '编号',
+    title: '托盘编号',
     dataIndex: 'trayNo',
   },
   {
@@ -160,7 +157,7 @@ export const trayOutStoreColumns: BasicColumn[] = [
 ];
 export const trayOutStoreFormSchema: FormSchema[] = [
   {
-    label: trayText + '编号',
+    label: '托盘编号',
     field: 'trayNo',
     component: 'Input',
   },
@@ -170,7 +167,7 @@ export const trayOutStoreFormSchema: FormSchema[] = [
     component: 'Input',
   },
   {
-    label: '血浆' + boxText,
+    label: '血浆箱号',
     field: 'boxNo',
     component: 'Input',
   },
@@ -204,7 +201,7 @@ export const boxBindColumns: BasicColumn[] = [
     dataIndex: 'batchNo',
   },
   {
-    title: '血浆' + boxText,
+    title: '血浆箱号',
     dataIndex: 'boxNo',
   },
   {

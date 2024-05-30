@@ -10,7 +10,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    :title="'血浆批号【' + state.batchNo + '】' + trayText + ' 入库'"
+    :title="'血浆批号【' + state.batchNo + '】托盘入库'"
     width="1060px"
     @cancel="emit('close')"
     :minHeight="520"
@@ -21,7 +21,7 @@
         <BasicTable @register="registerTable" ref="tableRef">
           <template #toolbar>
             <a-button type="primary" @click="handleIn">入库</a-button>
-            <a-button type="primary" @click="handleReBind">{{ trayText }}重绑</a-button>
+            <a-button type="primary" @click="handleReBind">托盘重绑</a-button>
           </template>
         </BasicTable>
       </div>
@@ -30,7 +30,7 @@
     <BasicModal
       @register="registerBindModal"
       showFooter
-      :title="trayText + '重绑'"
+      title="托盘重绑"
       width="360px"
       @ok="okFunction"
       @cancel="emit('close')"
@@ -49,12 +49,9 @@
   import { nextTick, ref, reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { bindVerifyBoxApi } from '@/api/tray/relocation';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
-
-  defineOptions({ name: 'InStoreModal' });
 
   const emit = defineEmits(['register', 'close']);
-  const { trayText, boxText } = useServerConfig();
+  defineOptions({ name: 'InStoreModal' });
 
   const state = reactive({
     batchNo: '',
@@ -68,8 +65,8 @@
       labelWidth: 90,
       baseColProps: { span: 24 },
       schemas: [
-        { label: trayText + '编号', component: 'Input', field: 'trayNo', required: true },
-        { label: boxText, component: 'Input', field: 'boxId', required: true },
+        { label: '托盘编号', component: 'Input', field: 'trayNo', required: true },
+        { label: '箱号', component: 'Input', field: 'boxId', required: true },
       ],
       showActionButtonGroup: false,
       autoSubmitOnEnter: true,
@@ -122,8 +119,7 @@
   function handleIn() {
     const rows = getSelections(false);
     if (rows.length === 0) return;
-    if (rows.some((_) => _.wareHouseName))
-      return message.warning('所选' + trayText + '存在已入库!');
+    if (rows.some((_) => _.wareHouseName)) return message.warning('所选托盘存在已入库!');
     openInModal(true, {
       data: rows,
       otherParams: {

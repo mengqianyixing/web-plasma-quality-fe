@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="register"
-    :title="trayText + '出库'"
+    title="托盘出库"
     showFooter
     width="85%"
     @ok="handleTrayOutStore"
@@ -22,9 +22,6 @@
   import { useMessage } from '@/hooks/web/useMessage';
 
   import TrayOutConfirmModal from '@/views/stockout/production-put-into/TrayOutConfirmModal.vue';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
-
-  const { trayText } = useServerConfig();
 
   const orderNo = ref('');
   const selectedRow = ref<Recordable>([]);
@@ -42,7 +39,7 @@
       schemas: [
         {
           field: 'trayNo',
-          label: trayText + '编号',
+          label: '托盘编号',
           component: 'Input',
         },
       ],
@@ -111,7 +108,7 @@
     }
 
     if (new Set([selectedRow.value.map((it) => it.houseName)]).size !== 1) {
-      warning('请选择同一库房的' + trayText + '进行出库');
+      warning('请选择同一库房的托盘进行出库');
       return;
     }
 

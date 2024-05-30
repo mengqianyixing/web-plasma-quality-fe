@@ -3,7 +3,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    :title="trayText + '入库'"
+    title="托盘入库"
     width="500px"
     :minHeight="400"
     @ok="handleSubmit"
@@ -38,9 +38,6 @@
   import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
   import { settingListApi } from '@/api/plasmaStore/setting';
   import { submitInHouseApi } from '@/api/tray/relocation';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
-
-  const { trayText } = useServerConfig();
 
   const emit = defineEmits(['success']);
   type Record = {
@@ -68,7 +65,7 @@
     },
     rowKey: 'trayNo',
     columns: [
-      { title: trayText + '编号', dataIndex: 'trayNo' },
+      { title: '托盘编号', dataIndex: 'trayNo' },
       {
         title: '货位',
         dataIndex: 'location',

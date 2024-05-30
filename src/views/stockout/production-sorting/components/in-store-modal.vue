@@ -11,7 +11,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    :title="trayText + `入库`"
+    :title="`托盘入库`"
     width="1200px"
     :show-ok-btn="false"
     cancelText="关闭"
@@ -38,7 +38,7 @@
               </BasicTable>
             </div>
           </TabPane>
-          <TabPane :tab="trayText + '入库'" key="2">
+          <TabPane tab="托盘入库" key="2">
             <BasicTable @register="registerTable">
               <template #toolbar>
                 <a-button type="primary" @click="handleInStore">入库</a-button>
@@ -71,9 +71,6 @@
   import { TRAY_STORE_STATE } from '@/enums/stockoutEnum';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
-
-  const { trayText, boxText } = useServerConfig();
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
@@ -176,9 +173,9 @@
     const rows: Recordable[] = getBindSelectRows();
     if (rows.length === 0) return message.warning('请选择数据');
     const [row] = rows;
-    if (!row.trayNo) return message.warning('请选择已绑定' + trayText + '的数据');
+    if (!row.trayNo) return message.warning('请选择已绑定托盘的数据');
     Modal.confirm({
-      content: '确定解绑' + boxText + '【' + row.boxNo + '】?',
+      content: '确定解绑箱号【' + row.boxNo + '】?',
       onOk: async () => {
         await bindBoxApi({ trayNo: row.trayNo, type: 'unbind', boxes: [row.boxNo] });
         message.success('解绑成功');
@@ -213,7 +210,7 @@
   async function handleSubmit(e: KeyboardEvent) {
     if (e.code !== 'Enter' && e.code !== 'NumpadEnter') return;
     const { boxId, trayNo } = getFieldsValue();
-    if (boxId && !trayNo) message.warning('请扫描' + trayText + '编号');
+    if (boxId && !trayNo) message.warning('请扫描托盘编号');
     let count = 0;
     if (trayNo) {
       const list = await trayBoxListApi({ trayNo });

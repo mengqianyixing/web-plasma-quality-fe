@@ -11,18 +11,18 @@
     @cancel="handleClose"
   >
     <div class="flex items-center gap-1 w-[300px]">
-      <span class="w-[80px]">{{ boxText }}：</span>
+      <span class="w-[80px]">箱号：</span>
       <a-input
         ref="inputRef"
         size="large"
         @press-enter="handleEnter"
-        :placeholder="'请扫' + boxText"
+        placeholder="请扫箱号"
         :disabled="inputDisabled"
         v-model:value="inputValue"
       />
     </div>
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <div class="absolute flex w-full h-full">
+      <div class="absolute w-full flex h-full">
         <div class="flex-1 shrink-1">
           <BasicTable @register="registerReceptionTable" :title="receptionTitle" />
         </div>
@@ -48,9 +48,7 @@
     productionAcceptByBox,
   } from '@/api/stockout/production-put-into';
   import { RemoveEventFn } from '@/hooks/event/useEventListener';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
-  const { boxText } = useServerConfig();
   const orderNo = ref('');
   const inputDisabled = ref(false);
   const inputValue = ref('');
@@ -78,7 +76,7 @@
     api: getReceptionList,
     columns: [
       {
-        title: boxText,
+        title: '箱号',
         dataIndex: 'boxNo',
       },
       {
@@ -117,7 +115,7 @@
     api: getAcceptedReceptionList,
     columns: [
       {
-        title: boxText,
+        title: '箱号',
         dataIndex: 'boxNo',
       },
       {

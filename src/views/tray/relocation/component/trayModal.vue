@@ -11,7 +11,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    :title="trayText + '选择'"
+    title="托盘选择"
     width="1200px"
     @ok="handleSubmit"
     :minHeight="520"
@@ -31,9 +31,6 @@
   import { reactive } from 'vue';
   import { columns, formSchema } from './trayModal.data';
   import { getListApi } from '@/api/tray/list';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
-
-  const { trayText } = useServerConfig();
 
   const emit = defineEmits(['confim', 'register']);
   const state = reactive({ disabledKeys: [] as string[], params: {} });
@@ -77,7 +74,7 @@
 
   function handleSubmit() {
     const rows = getSelectRows();
-    if (!rows.length) return message.warning('请选择' + trayText);
+    if (!rows.length) return message.warning('请选择托盘');
     emit('confim', rows);
   }
 </script>

@@ -1,12 +1,9 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
-import { useServerConfig } from '@/hooks/common/useServerConfig';
-
-const { boxText } = useServerConfig();
 
 export const columns: BasicColumn[] = [
   {
-    title: boxText,
+    title: '箱号',
     dataIndex: 'boxNo',
     resizable: true,
     width: 200,
@@ -39,7 +36,7 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'boxNo',
-    label: boxText,
+    label: '箱号',
     component: 'Input',
   },
 ];

@@ -16,17 +16,15 @@
   import { nextTick } from 'vue';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm, FormSchema } from '@/components/Form';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   defineOptions({ name: 'ReprintModal' });
-  const { boxText } = useServerConfig();
 
   const emit = defineEmits(['success', 'register']);
 
   const ReprintRecordFormSchema: FormSchema[] = [
     {
       field: 'boxNo',
-      label: '血浆' + boxText,
+      label: '血浆箱号',
       component: 'Input',
       colProps: {
         span: 18,

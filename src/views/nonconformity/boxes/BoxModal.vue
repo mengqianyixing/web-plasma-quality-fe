@@ -24,9 +24,6 @@
     PutApiCoreBankUnqualifiedBoxRequest,
   } from '@/api/type/nonconformityManage';
   import { HoseType } from '@/enums/nonconforityEnum';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
-
-  const { boxText } = useServerConfig();
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑' : '新增'));
 
@@ -59,7 +56,7 @@
     if (unref(isUpdate)) {
       appendSchemaByField(
         {
-          label: boxText,
+          label: '箱号',
           field: 'boxNo',
           component: 'Input',
           colProps: { span: 20 },
@@ -95,7 +92,7 @@
     baseColProps: { span: 24 },
     schemas: [
       {
-        label: boxText + '类型',
+        label: '箱号类型',
         field: 'unqReason',
         component: 'Select',
         colProps: { span: 20 },
