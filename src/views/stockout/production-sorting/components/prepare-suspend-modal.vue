@@ -25,7 +25,6 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
-  import { Modal } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import dayjs from 'dayjs';
   import { ref, createVNode } from 'vue';
@@ -104,8 +103,11 @@
     canResize: false,
   });
 
+  const { createConfirm } = useMessage();
+
   function suspend() {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '暂停准备号分拣',
       icon: createVNode(ExclamationCircleOutlined),
       content: createVNode(
@@ -118,7 +120,7 @@
           setLoading(true);
           await preparePause({ prepareNo: prepareNo.value, state: 'PAUSE' });
           success('暂停准备号成功!');
-          reload();
+          await reload();
         } finally {
           setLoading(false);
         }
@@ -131,7 +133,8 @@
   }
 
   function resume() {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '继续准备号分拣',
       icon: createVNode(ExclamationCircleOutlined),
       content: createVNode(
@@ -144,7 +147,7 @@
           setLoading(true);
           await preparePause({ prepareNo: prepareNo.value, state: 'RESTORE' });
           success('继续准备号成功!');
-          reload();
+          await reload();
         } finally {
           setLoading(false);
         }

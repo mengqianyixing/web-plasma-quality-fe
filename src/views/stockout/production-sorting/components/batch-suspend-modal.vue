@@ -25,7 +25,6 @@
   import { useModalInner } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
   import { BasicTable, useTable } from '@/components/Table';
-  import { Modal } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import dayjs from 'dayjs';
   import { ref, createVNode } from 'vue';
@@ -121,12 +120,15 @@
     canResize: false,
   });
 
+  const { createConfirm } = useMessage();
+
   function suspend() {
     if (!batchNo.value) {
       warning('请先进行分拣');
       return;
     }
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '暂停批分拣',
       icon: createVNode(ExclamationCircleOutlined),
       content: createVNode(
@@ -161,7 +163,8 @@
       return;
     }
     const selected = selectedRow.value[0];
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '继续批分拣',
       icon: createVNode(ExclamationCircleOutlined),
       content: createVNode(

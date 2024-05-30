@@ -15,8 +15,9 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { trayBoxListApi } from '@/api/tray/list';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { bindVerifyBoxApi } from '@/api/tray/relocation';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const emit = defineEmits(['register', 'close']);
 
@@ -35,18 +36,18 @@
     setModalProps({ confirmLoading: false });
   });
 
+  const { createConfirm } = useMessage();
+
   async function okFunction() {
     const values = await validate();
     const list = await trayBoxListApi({ trayNo: values.trayNo });
 
     if (list.length >= 24) {
-      Modal.confirm({
+      createConfirm({
+        iconType: 'warning',
         content: '托盘绑定已满24箱，继续绑定?',
         onOk: async () => {
           await submit();
-        },
-        onCancel: () => {
-          Modal.destroyAll();
         },
       });
     } else {

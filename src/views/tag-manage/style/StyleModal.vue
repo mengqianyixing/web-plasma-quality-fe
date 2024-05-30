@@ -64,13 +64,14 @@
 
   import StyleColumnModal from './StyleColumnModal.vue';
 
-  import { Tabs, TabPane, Modal } from 'ant-design-vue';
+  import { Tabs, TabPane } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { addStyle, editStyle, getStylePreview, getTagDetail } from '@/api/tag/manage';
   import { GetApiSysTagTagNoResponse, PostApiSysTagPreviewRequest } from '@/api/type/tagManage';
   import type { Nullable } from '@vben/types';
   import { CodeEditor, MODE } from '@/components/CodeEditor';
   import { tagStatusValueEnum } from '@/enums/tagManageEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const ATabs = Tabs;
   const ATabPane = TabPane;
@@ -247,8 +248,11 @@
     } as PostApiSysTagPreviewRequest);
   }
 
+  const { createConfirm } = useMessage();
+
   function handleStyleDelete(record: Recordable) {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'error',
       title: '是否确认删除?',
       icon: createVNode(ExclamationCircleOutlined),
       content: '',

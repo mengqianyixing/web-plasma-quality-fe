@@ -29,9 +29,10 @@
 
   import { plasmaBoxHandSearchFormSchema, plasmaBoxHandColumns } from './relocation.data';
   import { BasicModal, useModal } from '@/components/Modal';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { bindBoxApi, getBankBoxesList } from '@/api/tray/relocation';
   import { watch } from 'vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const props = defineProps({
     isBinding: {
@@ -108,10 +109,14 @@
       },
       rowSelection: { type: 'checkbox' },
     });
+
+  const { createConfirm } = useMessage();
+
   function handleUnbinding() {
     const row = getSelectRows();
     if (row.length === 0) return message.warning('请选择数据');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认?',
       onOk: async () => {
         const boxes = row.map((_) => _.boxNo);
@@ -125,7 +130,6 @@
         });
         await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function handleBinding() {

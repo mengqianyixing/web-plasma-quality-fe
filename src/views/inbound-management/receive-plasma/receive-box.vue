@@ -65,7 +65,6 @@
   import { useModal } from '@/components/Modal';
   import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
-  import { Modal } from 'ant-design-vue';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import dayjs from 'dayjs';
 
@@ -237,8 +236,11 @@
     }
   }
 
+  const { createConfirm } = useMessage();
+
   function showConfirmGoon() {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '是否继续接收其他批次?',
       content: createVNode('div', { style: 'color:red;' }, '当前批已接收完成！'),
       onOk() {

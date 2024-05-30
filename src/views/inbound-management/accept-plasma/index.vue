@@ -130,7 +130,6 @@
     plasmaComplete,
   } from '@/api/inbound-management/accept-plasma';
   import { getPrintRecord, printRecord } from '@/api/tag/printRecord';
-  import { Modal } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import dayjs from 'dayjs';
 
@@ -514,7 +513,8 @@
       if (!checker.value) {
         checker.value = val;
       } else {
-        Modal.confirm({
+        createConfirm({
+          iconType: 'warning',
           title: '确认是否替换当前复核人？',
           content: `替换复核人为：【${val}】`,
           onOk() {
@@ -687,6 +687,8 @@
     showBoxDetailModal();
   }
 
+  const { createConfirm } = useMessage();
+
   // 完成验收
   async function completeAccept() {
     if (
@@ -696,7 +698,8 @@
       warning('请先验收完血浆!');
       return;
     }
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '提示?',
       icon: createVNode(ExclamationCircleOutlined),
       content: createVNode('div', { style: 'color:red;' }, '确认验收完成吗?'),

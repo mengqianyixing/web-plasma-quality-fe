@@ -114,7 +114,6 @@
   import { useModal } from '@/components/Modal';
   import dayjs from 'dayjs';
   import { ref, createVNode } from 'vue';
-  import { Modal } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import SummaryModal from './components/SummaryModal.vue';
@@ -445,6 +444,8 @@
     });
   }
 
+  const { createConfirm } = useMessage();
+
   // 完成准备
   function completePreparation() {
     if (!selectedRow.value.length) {
@@ -464,14 +465,15 @@
       warning('当前账号无此权限!');
       return;
     }
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '确定要完成准备吗?',
       icon: createVNode(ExclamationCircleOutlined),
       content: createVNode('div', { style: 'color:red;' }, `投产准备号：${prepareNo}`),
       async onOk() {
         await completePrepare({ prepareNo });
         success('完成准备成功!');
-        reload();
+        await reload();
         selectedRow.value = [];
       },
       onCancel() {
@@ -519,7 +521,8 @@
       return;
     }
 
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '确定要通过复核吗?',
       icon: createVNode(ExclamationCircleOutlined),
       content: createVNode('div', { style: 'color:red;' }, `投产准备号：${prepareNo}`),

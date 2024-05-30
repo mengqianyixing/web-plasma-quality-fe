@@ -153,6 +153,7 @@
   import { useModal } from '@/components/Modal';
   import { downloadReport } from '@/api/stockout/plasma-summary';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'ProductionPlan' });
@@ -234,18 +235,21 @@
     clearSelectedRowKeys();
     reload();
   }
+
+  const { createConfirm } = useMessage();
+
   function handleStacker() {
     const [row] = getSelections(true);
     if (!row) return;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认调用制造批号【' + row.mesId + '】的PMS组垛任务?',
       onOk: async () => {
         await submitPMSApi({ orderNo: row.orderNo });
         message.success('调用组垛任务成功！');
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   async function confirmCancel() {
@@ -317,15 +321,15 @@
     }
   }
   function handleConfirm({ api, text, row }) {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + text + '制造批号' + row.mesId + '?',
       onOk: async () => {
         await api({ orderNo: row.orderNo, cause: '.' });
         clearSelectedRowKeys();
-        reload();
+        await reload();
         message.success(text + '成功');
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   async function handleCancelConfirm({ api, row }) {

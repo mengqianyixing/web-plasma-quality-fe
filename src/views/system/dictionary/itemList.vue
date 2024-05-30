@@ -39,7 +39,7 @@
   import { useModal } from '@/components/Modal';
   import { useRoute } from 'vue-router';
   import ItemFormModal from './itemFormDrawer.vue';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import {
     getDictListApi,
     getDictItemListApi,
@@ -51,6 +51,7 @@
   import { ref, onMounted } from 'vue';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
   import { cloneDeep } from 'lodash-es';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const currentRoute = useRoute();
   const dictId = ref(currentRoute.meta.dictId);
@@ -305,23 +306,27 @@
       isUpdate: true,
     });
   }
+
+  const { createConfirm } = useMessage();
+
   function handleRemove() {
     const [row] = getSelectRow();
     if (!row) return;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: `确定删除${row.itemKey}？`,
       onOk: async () => {
         isDelete.value = true;
         openLoginModal(true, {});
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function handleSwitch(enable: boolean) {
     const [row] = getSelectRow();
     if (!row) return;
     if (enable === !!row.enable) return message.warning('状态不需要变更');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + (enable ? '启用' : '禁用') + row.itemKey + '?',
       onOk: async () => {
         if (!enable) {
@@ -334,7 +339,6 @@
         clearSelectedRowKeys();
         await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 </script>

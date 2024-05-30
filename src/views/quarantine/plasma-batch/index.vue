@@ -56,7 +56,7 @@
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { getPlasmaBatchReleases, setPlasmaBatchRelease } from '@/api/quarantine/plasma-batch';
-  import { Modal, message } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
 
   import { useModal } from '@/components/Modal';
   import PlasmaBatchModal from './PlasmaBatchModal.vue';
@@ -69,6 +69,7 @@
   import { get } from 'lodash-es';
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'PlasmaBatchReport' });
 
@@ -146,9 +147,12 @@
     });
   }
 
+  const { createConfirm } = useMessage();
+
   function handleOption(state: string, title: string) {
     getSelections(true, ([row]) => {
-      Modal.confirm({
+      createConfirm({
+        iconType: 'warning',
         content: '确认' + title + '?',
         onOk: async () => {
           setPlasmaBatchRelease({
@@ -163,7 +167,6 @@
               reload();
             });
         },
-        onCancel: () => Modal.destroyAll(),
       });
     });
   }

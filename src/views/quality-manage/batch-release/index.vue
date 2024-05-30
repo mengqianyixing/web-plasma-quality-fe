@@ -111,6 +111,7 @@
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -241,20 +242,23 @@
   function okFun() {
     iterator.next();
   }
+
+  const { createConfirm } = useMessage();
+
   function handleReview() {
     getSelections(true, ([row]) => {
       if (row.state !== STATUS.ROD) {
         return message.warning(`请选择【${STATUS_TEXT.get(STATUS.ROD)}】的数据`);
       }
       iterator = handleNext(row, 'review', () => {
-        Modal.confirm({
+        createConfirm({
+          iconType: 'warning',
           content: '确认复核制造批号【' + row.mesId + '】?',
           onOk: async () => {
             await submitReviewApi({ prNo: row.prNo });
             success();
             message.success('复核成功');
           },
-          onCancel: () => Modal.destroyAll(),
         });
       });
       iterator.next();
@@ -266,14 +270,14 @@
         return message.warning(`请选择【${STATUS_TEXT.get(STATUS.WAT)}】的数据`);
       }
       iterator = handleNext(row, 'release', () => {
-        Modal.confirm({
+        createConfirm({
+          iconType: 'warning',
           content: '确认放行制造批号【' + row.mesId + '】?',
           onOk: async () => {
             await submitReleaseApi({ prNo: row.prNo });
             success();
             message.success('放行成功');
           },
-          onCancel: () => Modal.destroyAll(),
         });
       });
       iterator.next();

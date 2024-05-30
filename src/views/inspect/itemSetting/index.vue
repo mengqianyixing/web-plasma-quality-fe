@@ -55,7 +55,7 @@
   import { PageWrapper } from '@/components/Page';
   import { useModal } from '@/components/Modal';
   import { columns, searchFormschema } from './itemSetting.data';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import {
     getListApi,
@@ -63,6 +63,7 @@
     removeItemSettingApi,
   } from '@/api/inspect/itemSetting';
   import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'ItemSetting' });
 
@@ -114,18 +115,20 @@
     clearSelectedRowKeys();
     reload();
   }
+  const { createConfirm } = useMessage();
+
   function handleRemove() {
     const [row] = getSelections(true);
     if (!row) return;
     const { projectId, projectName } = row;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认删除' + projectName + '?',
       onOk: async () => {
         await removeItemSettingApi({ id: projectId });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function handleCheckStatus(action: number) {
@@ -133,14 +136,14 @@
     if (!row) return;
     const { projectName, projectId, state } = row;
     if (state === action) return message.warning('状态不需要变更');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + (action ? '禁用' : '启用') + projectName + '?',
       onOk: async () => {
         await updateItemSettingApi({ projectId, state: action, enableFlag: '1' });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function handleDetails(record: Recordable) {

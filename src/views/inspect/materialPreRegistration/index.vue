@@ -72,6 +72,7 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { getListApi, reviewApi, cancelReviewApi } from '@/api/inspect/materialPreRegistration';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'MaterialPreRegistration' });
 
@@ -145,16 +146,19 @@
     clearSelectedRowKeys();
     reload();
   }
+
+  const { createConfirm } = useMessage();
+
   function handleReview() {
     getSelections(true, ([row]) => {
-      Modal.confirm({
+      createConfirm({
+        iconType: 'warning',
         content: '确认复核【' + row.projectName + row.testType + '】?',
         onOk: async () => {
           await reviewApi({ id: row.id });
           clearSelectedRowKeys();
-          reload();
+          await reload();
         },
-        onCancel: () => Modal.destroyAll(),
       });
     });
   }
@@ -173,7 +177,7 @@
       await cancelReviewApi({ id: row.id, cause });
       open.value = false;
       message.success('取消复核成功');
-      reload();
+      await reload();
     } finally {
       confirmLoading.value = false;
     }

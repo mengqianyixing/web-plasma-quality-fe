@@ -79,12 +79,13 @@
   import StyleModal from './StyleModal.vue';
   import StyleHistoryModal from './StyleHistoryModal.vue';
   import HistoryStylePreviewModal from './HistoryStylePreviewModal.vue';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
 
   import { getTagDictionary } from '@/api/tag/encoding';
   import { TagDictionaryType } from '@/enums/dictionaryEnum';
   import { PostApiSysTagPreviewRequest } from '@/api/type/tagManage';
   import { tagStatusValueEnum } from '@/enums/tagManageEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'TagStyle' });
 
@@ -159,15 +160,17 @@
     }
   }
 
+  const { createConfirm } = useMessage();
+
   function handleCheckStatus(action: string) {
     const [row] = getSelections(true);
     if (!row) return;
 
     const { tagName, state } = row;
     if (state === action) return message.warning('状态不需要变更');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + (action == tagStatusValueEnum.DSB ? '禁用' : '启用') + tagName + '?',
-
       onOk: async () => {
         if (action == tagStatusValueEnum.EAB) {
           await enableStyle(row.tagNo);
@@ -179,7 +182,6 @@
           await reload();
         }
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 
@@ -231,14 +233,14 @@
     if (action) return;
 
     const { tagName } = row;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认撤销' + tagName + '?',
       onOk: async () => {
         await deleteStyle(row.tagNo);
         clearSelectedRowKeys();
         await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 

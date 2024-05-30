@@ -33,13 +33,14 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { areaListApi, checkHouseApi } from '@/api/plasmaStore/setting';
   import { areaColumns as columns, cellSchema } from './setting.data';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { CellWapper } from '@/components/CellWapper';
   import FormModel from './formModel.vue';
   import CapacityModel from './capacityModel.vue';
   import { CLOSED } from '@/enums/plasmaStoreEnum';
 
   import { reactive } from 'vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const emit = defineEmits(['register', 'close']);
   defineOptions({ name: 'AreaModel' });
@@ -114,18 +115,21 @@
     }
     return findTableDataRecord(selectedRowKeys[0]) as Recordable;
   }
+
+  const { createConfirm } = useMessage();
+
   function handleCheckStatus(action: string) {
     const { closed, houseNo, houseName } = getOnlyOneRow();
     if (!houseNo) return;
     if (closed === action) return message.warning('状态不需要变更');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + (action ? '禁用' : '启用') + houseName + '?',
       onOk: async () => {
         await checkHouseApi({ closed: action, houseNo });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function fetchSuccess() {

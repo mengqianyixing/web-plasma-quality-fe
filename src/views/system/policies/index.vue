@@ -29,7 +29,6 @@
 <script lang="ts" setup>
   import { createVNode } from 'vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
-  import { Modal } from 'ant-design-vue';
   import { BasicTable, useTable, TableAction } from '@/components/Table';
   import { deleteCasDoorPolicy, getCasDoorPolicies } from '@/api/oauth/policies';
 
@@ -37,6 +36,7 @@
   import PolicyModal from './PolicyModal.vue';
 
   import { columns, searchFormSchema } from './policies.data';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'Policies' });
 
@@ -80,8 +80,11 @@
     });
   }
 
+  const { createConfirm } = useMessage();
+
   async function handleDelete(record: Recordable) {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '是否确认删除?',
       icon: createVNode(ExclamationCircleOutlined),
       content: '',
@@ -90,7 +93,7 @@
       cancelText: '取消',
       async onOk() {
         await deleteCasDoorPolicy(record);
-        reload();
+        await reload();
       },
       onCancel() {
         console.log('Cancel');

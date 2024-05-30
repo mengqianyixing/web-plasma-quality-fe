@@ -31,12 +31,12 @@
 <script setup lang="ts">
   import { createVNode } from 'vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
-  import { Modal } from 'ant-design-vue';
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { deleteResource, getResourcesList } from '@/api/systemServer/system';
   import { columns, searchFormSchema } from './resource.data';
   import { useModal } from '@/components/Modal';
   import ResourceModel from '@/views/system/resource/ResourceModel.vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const [registerModal, { openModal }] = useModal();
 
@@ -65,7 +65,6 @@
       width: 120,
       title: '操作',
       dataIndex: 'action',
-      // slots: { customRender: 'action' },
     },
   });
 
@@ -82,9 +81,12 @@
     });
   }
 
+  const { createConfirm } = useMessage();
+
   async function handleDelete(record: Recordable) {
-    Modal.confirm({
+    createConfirm({
       title: '是否确认删除?',
+      iconType: 'warning',
       icon: createVNode(ExclamationCircleOutlined),
       content: '',
       okText: '删除',

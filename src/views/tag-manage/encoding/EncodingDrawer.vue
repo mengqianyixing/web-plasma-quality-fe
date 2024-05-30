@@ -45,7 +45,7 @@
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { encodingDetailColumns } from './encoding.data';
   import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
-  import { Tabs, TabPane, Modal } from 'ant-design-vue';
+  import { Tabs, TabPane } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import type { Nullable } from '@vben/types';
   import { useModal } from '@/components/Modal';
@@ -54,6 +54,7 @@
 
   import EncodingModal from './EncodingModal.vue';
   import { GetApiSysCodingRuleCodingTypeResponse } from '@/api/type/encodingManage';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const ATabs = Tabs;
   const ATabPane = TabPane;
@@ -135,8 +136,11 @@
     });
   }
 
+  const { createConfirm } = useMessage();
+
   function handleEncodingDel(record: Recordable) {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'error',
       title: '是否确认删除?',
       icon: createVNode(ExclamationCircleOutlined),
       content: '',
