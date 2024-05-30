@@ -2,7 +2,7 @@
   <BasicModal
     @register="registerReBindModal"
     showFooter
-    :title="trayText + '重绑'"
+    :title="'托盘重绑'"
     width="360px"
     @ok="okFunction"
     @cancel="emit('close')"
@@ -14,20 +14,18 @@
 <script setup lang="ts">
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
   import { trayBoxListApi } from '@/api/tray/list';
   import { message, Modal } from 'ant-design-vue';
   import { bindVerifyBoxApi } from '@/api/tray/relocation';
 
-  const { trayText, boxText } = useServerConfig();
   const emit = defineEmits(['register', 'close']);
 
   const [registerForm, { validate, setFieldsValue, getFieldsValue }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
     schemas: [
-      { label: trayText + '编号', component: 'Input', field: 'trayNo', required: true },
-      { label: boxText, component: 'Input', field: 'boxId', required: true },
+      { label: '托盘编号', component: 'Input', field: 'trayNo', required: true },
+      { label: '箱号', component: 'Input', field: 'boxId', required: true },
     ],
     showActionButtonGroup: false,
     autoSubmitOnEnter: true,
