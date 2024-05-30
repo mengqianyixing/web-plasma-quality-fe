@@ -22,11 +22,9 @@
   import { keepPackDetail } from '@/api/sample-manage/reserve-sample-destory';
   import dayjs from 'dayjs';
   import { useStation } from '@/hooks/common/useStation';
-  import { useServerConfig } from '@/hooks/common/useServerConfig';
 
   defineEmits(['register']);
   const { stationOptions } = useStation();
-  const { boxText } = useServerConfig();
 
   const [registerTable, { reload, redoHeight, getForm }] = useTable({
     api: keepPackDetail,
@@ -52,7 +50,7 @@
         dataIndex: 'packNo',
       },
       {
-        title: boxText + '号',
+        title: '箱号',
         dataIndex: 'boxNo',
       },
       {
@@ -98,7 +96,7 @@
           },
         },
         {
-          label: boxText + '号',
+          label: '箱号',
           field: 'boxNo',
           component: 'Input',
           colProps: {
