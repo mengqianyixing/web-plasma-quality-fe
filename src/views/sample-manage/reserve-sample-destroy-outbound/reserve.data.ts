@@ -1,6 +1,10 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { VxeGridPropTypes } from '@/components/VxeTable';
 import dayjs from 'dayjs';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+
+const serverEnumStore = useServerEnumStoreWithOut();
 
 export const columns: BasicColumn[] = [
   {
@@ -71,7 +75,10 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: 'state',
-    component: 'ApiSelect',
+    component: 'Select',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankDeliverstateType),
+    },
     label: '状态',
   },
 ];
