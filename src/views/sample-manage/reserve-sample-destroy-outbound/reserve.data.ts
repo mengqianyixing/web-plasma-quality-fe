@@ -64,7 +64,7 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'dlvNO',
+    field: 'dlvNo',
     component: 'Input',
     label: '申请单号',
   },
