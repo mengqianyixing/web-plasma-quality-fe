@@ -21,17 +21,17 @@
           </div>
           <div
             class="flex justify-end mx-5 mt-3 bg-white sticky bottom-0 right-0"
-            v-if="leftTableLength > 0"
+            v-if="pagerLeft.total > 0"
           >
-            <span class="mr-2">共{{ leftTableLength }}条数据</span>
+            <span class="mr-2">共{{ pagerLeft.total }}条数据</span>
             <a-pagination
               @change="handlePageChange"
               @show-size-change="handleSizeChange"
               size="small"
               show-size-changer
               show-quick-jumper
-              v-model:current="pager.current"
-              :total="pager.total"
+              v-model:current="pagerLeft.current"
+              :total="pagerLeft.total"
             />
           </div>
         </a-tab-pane>
@@ -46,17 +46,17 @@
             </div>
             <div
               class="flex justify-end mx-5 mt-3 bg-white sticky bottom-0 right-0"
-              v-if="rightTaleLength > 0"
+              v-if="pagerRight.total > 0"
             >
-              <span class="mr-2">共{{ rightTaleLength }}条数据</span>
+              <span class="mr-2">共{{ pagerRight.total }}条数据</span>
               <a-pagination
                 @change="handlePageChange"
                 @show-size-change="handleSizeChange"
                 size="small"
                 show-size-changer
                 show-quick-jumper
-                v-model:current="pager.current"
-                :total="pager.total"
+                v-model:current="pagerRight.current"
+                :total="pagerRight.total"
               />
             </div>
           </PageWrapper>
@@ -82,6 +82,7 @@
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { BasicForm, useForm } from '@/components/Form';
+  import { debounce } from 'lodash-es';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'PlasmaBatchQueryStatistics' });
@@ -94,11 +95,18 @@
 
   const currentKey = ref('come');
 
-  const pager = reactive({
+  const pagerLeft = reactive({
     current: 1,
     pageSize: 10,
     total: 0,
   });
+
+  const pagerRight = reactive({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
+
   function leftFormat(data) {
     const res: any[] = [];
     data.forEach((item) => {
@@ -113,17 +121,27 @@
     return res;
   }
 
-  const leftTableLength = ref(0);
-  const rightTaleLength = ref(0);
-
+  const _reloadTable = debounce(reloadTable, 300) as () => Promise<void>;
   const [registerBasicForm, { getFieldsValue }] = useForm({
     schemas: searchFormSchema,
     labelWidth: 100,
     actionColOptions: { style: 'max-width:unset; position: absolute; right: 10px;' },
-    submitFunc: reloadTable,
+    submitFunc: _reloadTable,
+    resetFunc: resetFunc,
     submitOnReset: true,
     compact: true,
   });
+
+  const resetFlag = ref(false);
+  async function resetFunc() {
+    resetFlag.value = true;
+    if (currentKey.value === 'come') {
+      pagerLeft.current = 1;
+    } else {
+      pagerRight.current = 1;
+    }
+    await _reloadTable();
+  }
 
   async function reloadTable() {
     if (currentKey.value === 'come') {
@@ -142,16 +160,16 @@
       return {
         ...params,
         ...getFieldsValue(),
-        currPage: pager.current ? pager.current : 1,
-        pageSize: pager.pageSize,
+        currPage: pagerLeft.current ? pagerLeft.current : 1,
+        pageSize: pagerLeft.pageSize,
       };
     },
     afterFetch: (data) => {
       const _data = getRawDataSourceLeft();
-      leftTableLength.value = data.length;
-      pager.total = _data.totalCount;
-      pager.pageSize = _data.pageSize;
-      pager.current = _data.currPage;
+
+      pagerLeft.total = _data.totalCount;
+      pagerLeft.pageSize = _data.pageSize;
+      pagerLeft.current = _data.currPage;
       return leftFormat(data);
     },
     pagination: false,
@@ -193,17 +211,17 @@
     beforeFetch: (params) => {
       return {
         ...params,
-        currPage: pager.current ? pager.current : 1,
-        pageSize: pager.pageSize,
+        ...getFieldsValue(),
+        currPage: pagerRight.current ? pagerRight.current : 1,
+        pageSize: pagerRight.pageSize,
       };
     },
     afterFetch: (data) => {
       const _data = getRawDataSourceRight();
-      rightTaleLength.value = data.length;
 
-      pager.total = _data.totalCount;
-      pager.pageSize = _data.pageSize;
-      pager.current = _data.currPage;
+      pagerRight.total = _data.totalCount;
+      pagerRight.pageSize = _data.pageSize;
+      pagerRight.current = _data.currPage;
       return rightFormat(data);
     },
     pagination: false,
@@ -223,24 +241,23 @@
     canResize: false,
     immediate: false,
   });
-  function handlePageChange(e) {
-    pager.current = e;
-
+  async function handlePageChange(e) {
     if (currentKey.value === 'come') {
-      reloadLeft();
+      pagerLeft.current = e;
     } else {
-      reloadRight();
+      pagerRight.current = e;
     }
+    await reloadTable();
   }
 
-  function handleSizeChange(_, size) {
-    pager.pageSize = size;
-
+  async function handleSizeChange(_, size) {
     if (currentKey.value === 'come') {
-      reloadLeft();
+      pagerLeft.pageSize = size;
     } else {
-      reloadRight();
+      pagerRight.pageSize = size;
     }
+
+    await reloadTable();
   }
 
   async function handleExportComeData() {
