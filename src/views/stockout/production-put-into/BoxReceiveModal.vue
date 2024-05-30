@@ -22,7 +22,7 @@
       />
     </div>
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <div class="absolute w-full flex h-full">
+      <div class="absolute flex w-full h-full">
         <div class="flex-1 shrink-1">
           <BasicTable @register="registerReceptionTable" :title="receptionTitle" />
         </div>
@@ -72,7 +72,7 @@
   const receptionTitle = computed(() => `未接收箱数：${receptionCount.value}`);
   const acceptedTitle = computed(() => `已接收箱数：${acceptedCount.value}`);
 
-  const [registerReceptionTable, { reload: reloadReception }] = useTable({
+  const [registerReceptionTable, { reload: reloadReception, getRawDataSource }] = useTable({
     api: getReceptionList,
     columns: [
       {
@@ -96,8 +96,8 @@
         orderNo: orderNo.value,
       };
     },
-    afterFetch: (data) => {
-      receptionCount.value = data.length;
+    afterFetch: () => {
+      receptionCount.value = getRawDataSource().totalCount;
     },
     size: 'small',
     striped: false,
@@ -111,7 +111,10 @@
     isCanResizeParent: true,
     immediate: false,
   });
-  const [registerAcceptedTable, { reload: reloadAccepted }] = useTable({
+  const [
+    registerAcceptedTable,
+    { reload: reloadAccepted, getRawDataSource: getRawDataSourceAccepted },
+  ] = useTable({
     api: getAcceptedReceptionList,
     columns: [
       {
@@ -135,8 +138,8 @@
         orderNo: orderNo.value,
       };
     },
-    afterFetch: (data) => {
-      acceptedCount.value = data.length;
+    afterFetch: () => {
+      acceptedCount.value = getRawDataSourceAccepted().totalCount;
     },
     size: 'small',
     striped: false,
