@@ -64,7 +64,7 @@
       return res;
     },
   });
-  const [registerModal] = useModalInner(async () => {
+  const [registerModal, { setModalProps }] = useModalInner(async () => {
     setPagination({ current: 1 });
     reload();
   });
@@ -74,7 +74,12 @@
     if (rows.length === 0) return message.warning('请选择一条数据');
     const [row] = rows;
     if (row.status === '未登记') {
-      await submitItemDtApi({ bsNo: row.bsNo });
+      try {
+        setModalProps({ confirmLoading: true });
+        await submitItemDtApi({ bsNo: row.bsNo });
+      } finally {
+        setModalProps({ confirmLoading: false });
+      }
     }
     emit('confirm', row);
   }
