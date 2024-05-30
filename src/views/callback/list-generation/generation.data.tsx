@@ -165,6 +165,7 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
   {
     title: '浆员姓名',
     field: 'donorName',
+    width: 80,
   },
   {
     title: '浆员状态',
@@ -172,6 +173,10 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
     formatter: ({ cellValue }) => {
       return donorStatusMap.get(cellValue as donorStatusValueEnum) as string;
     },
+  },
+  {
+    title: '血浆状态',
+    field: 'trackType',
   },
   {
     title: '拒绝日期',
@@ -187,6 +192,7 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
   {
     title: '性别',
     field: 'gender',
+    width: 50,
   },
   {
     title: '最早待回访采浆日期',
@@ -222,6 +228,11 @@ export const callbackDetailModalColumns: BasicColumn[] = [
   {
     title: '浆员姓名',
     dataIndex: 'donorName',
+    width: 70,
+  },
+  {
+    title: '血浆状态',
+    dataIndex: 'trackType',
     width: 70,
   },
   {

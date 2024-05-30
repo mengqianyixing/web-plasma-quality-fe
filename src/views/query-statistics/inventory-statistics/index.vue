@@ -1,8 +1,8 @@
 <template>
-  <div class="root">
-    <PageWrapper dense class="bg-white p-2 mt-2 m-2">
+  <div class="root p-3">
+    <div class="pt-5 bg-white mb-16px">
       <BasicForm @register="registerBasicForm" />
-    </PageWrapper>
+    </div>
     <a-tabs
       class="mt-2"
       default-active-key="inStockSummary"
@@ -179,10 +179,12 @@
 
   const [registerBasicForm, { getFieldsValue }] = useForm({
     schemas: searchFormSchema,
-    baseColProps: { flex: '0 0 400px' },
-    actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
+    labelWidth: 100,
+    baseColProps: { flex: '0 1 360px' },
+    actionColOptions: { flex: '0 1 200px' },
     submitFunc: reloadTable,
     submitOnReset: true,
+    compact: true,
   });
 
   const [registerTable, { setLoading }] = useTable({

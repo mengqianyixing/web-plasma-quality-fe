@@ -37,3 +37,8 @@ export enum callbackModalEnum {
   A = 'A',
   B = 'B',
 }
+
+export enum QuarantineBatchControlEnum {
+  OPEN = 'open',
+  CLOSE = 'close',
+}

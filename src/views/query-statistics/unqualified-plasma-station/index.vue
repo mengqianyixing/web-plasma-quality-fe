@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight>
+  <PageWrapper dense contentFullHeight fixedHeight class="root">
     <BasicTable @register="registerTable" :columns="columnsRef">
       <template #toolbar>
         <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
@@ -11,17 +11,25 @@
   import { BasicColumn, BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './station.data';
   import { PageWrapper } from '@/components/Page';
-  import { getUnqualifiedPlasmaStation } from '@/api/query-statistics/batch-statistics';
+  import {
+    getUnqualifiedPlasmaCountTotal,
+    getUnqualifiedPlasmaStation,
+  } from '@/api/query-statistics/batch-statistics';
   import { ref } from 'vue';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
 
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { useRouter } from 'vue-router';
   import { message } from 'ant-design-vue';
+  import {
+    GetApiSearchBatchCountTotalRequest,
+    GetApiSearchBatchCountTotalResponse,
+  } from '@/api/type/queryStatistics';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   const { currentRoute } = useRouter();
   const columnsRef = ref<BasicColumn[]>(columns);
+  const totalData = ref<GetApiSearchBatchCountTotalResponse>({});
 
   defineOptions({ name: 'UnqualifiedPlasmaByStation' });
 
@@ -30,7 +38,11 @@
     formConfig: {
       schemas: searchFormSchema,
     },
-    afterFetch: (data) => {
+    afterFetch: async (data) => {
+      totalData.value = await getUnqualifiedPlasmaCountTotal(
+        getForm().getFieldsValue() as GetApiSearchBatchCountTotalRequest,
+      );
+
       const nullCols: string[] = [];
       if (data.length > 0) {
         for (const key in data[0]) {
@@ -51,7 +63,17 @@
         }
         return it;
       });
+
+      if (!data.length) {
+        return [];
+      }
+
+      return [
+        ...data.map((it, idx) => ({ ...it, index: idx + 1 })),
+        { ...totalData.value, index: '合计' },
+      ];
     },
+    showIndexColumn: false,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -95,3 +117,10 @@
     }
   }
 </script>
+<style scoped>
+  .root :deep(.ant-table-tbody tr:last-child) {
+    position: sticky;
+    bottom: 0;
+    background-color: #f5f5f5;
+  }
+</style>

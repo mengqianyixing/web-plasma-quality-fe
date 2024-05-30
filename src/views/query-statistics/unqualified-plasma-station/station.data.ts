@@ -5,13 +5,18 @@ import { useStation } from '@/hooks/common/useStation';
 const { stationOptions } = useStation();
 export const columns: BasicColumn[] = [
   {
+    title: '序号',
+    dataIndex: 'index',
+    width: 80,
+  },
+  {
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 80,
   },
   {
     title: '入库数量（袋）',
-    dataIndex: 'inNum',
+    dataIndex: 'inStoreNum',
     width: 100,
   },
   {
@@ -291,7 +296,7 @@ export const columns: BasicColumn[] = [
       {
         title: '比率',
         dataIndex: 'unqRate',
-        width: 60,
+        width: 80,
       },
     ],
   },
