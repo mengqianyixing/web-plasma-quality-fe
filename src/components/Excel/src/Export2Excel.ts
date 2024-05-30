@@ -24,7 +24,11 @@ function setColumnWidth(data, worksheet, min = 3) {
   data.forEach((item) => {
     Object.keys(item).forEach((key) => {
       const cur = item[key];
-      const length = (cur?.length ?? min) * 2;
+      //如果cur字符串包含数字，那么就取数字的长度想这样采集日期：2024-05-02-2024-06-30，不然就*2
+      const length = String(cur)
+        .split('')
+        .map((c) => (/\d/.test(c) ? 1 : 2))
+        .reduce((a, b) => a + b, 0);
       obj[key] = Math.max(length, obj[key] ?? min);
     });
   });

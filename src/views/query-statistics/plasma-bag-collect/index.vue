@@ -65,12 +65,37 @@
       if ((data.length || 0) > Number(pageSize))
         return message.warning('最多只能导出【' + pageSize + '】条数据');
 
+      data.push({
+        stationName: '合计',
+        bagCollectCount: data.reduce((prev, cur) => prev + Number(cur.bagCollectCount), 0),
+        bagAcceptCount: data.reduce((prev, cur) => prev + Number(cur.bagAcceptCount), 0),
+      });
+
+      // 获取当前日期
+      const dateMerge = { s: { r: 0, c: 0 }, e: { r: 0, c: 2 } };
+
+      const headerWithDate = [
+        {
+          stationName: `采集日期：${
+            getForm().getFieldsValue().collectBeginAt
+              ? `${getForm().getFieldsValue().collectBeginAt}-${
+                  getForm().getFieldsValue().collectEndAt
+                }`
+              : '无'
+          }`,
+        },
+      ];
+
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(lastLevelCols, data || [], rows.length);
+
+      const combinedData = [...headerWithDate, ...rows, ...result];
+      const combinedMerges = [dateMerge, ...headerMerge, ...bodyMerge];
+
       jsonToSheetXlsx({
-        data: [...rows, ...result],
+        data: combinedData,
         json2sheetOpts: { skipHeader: true },
-        merges: [...headerMerge, ...bodyMerge],
+        merges: combinedMerges,
         filename: currentRoute.value.meta.title + '.xlsx',
       });
     } finally {
