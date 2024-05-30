@@ -21,7 +21,7 @@
 
   const emit = defineEmits(['register', 'close']);
 
-  const [registerForm, { validate, setFieldsValue, getFieldsValue }] = useForm({
+  const [registerForm, { validate, setFieldsValue, getFieldsValue, resetFields }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
     schemas: [
@@ -34,6 +34,7 @@
 
   const [registerReBindModal, { setModalProps }] = useModalInner(() => {
     setModalProps({ confirmLoading: false });
+    resetFields();
   });
 
   const { createConfirm } = useMessage();
@@ -60,6 +61,7 @@
     await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind' });
     await setFieldsValue({ boxId: '', trayNo: '' });
     message.success('操作成功');
+    await resetFields();
   }
 </script>
 
