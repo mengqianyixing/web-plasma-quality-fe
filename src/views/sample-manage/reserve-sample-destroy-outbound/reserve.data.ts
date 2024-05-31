@@ -150,19 +150,22 @@ export const requisitionDetailByBag: BasicColumn[] = [
     title: '样本批号',
   },
   {
-    dataIndex: 'sampleBagNum',
-    title: '样本袋数',
+    dataIndex: 'sampleBagNo',
+    title: '样本袋号',
   },
   {
     dataIndex: 'sampleNum',
     title: '样本数量',
   },
   {
-    dataIndex: 'bagLatestProdDate',
-    title: '血浆最晚投产日期',
-    format(text) {
-      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-    },
+    dataIndex: 'boxNo',
+    title: '箱号',
+    ellipsis: false,
+  },
+  {
+    dataIndex: 'location',
+    title: '存放位置',
+    ellipsis: false,
   },
 ];
 
