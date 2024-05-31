@@ -82,6 +82,7 @@
           component: 'Select',
           componentProps: {
             options: stationOptions,
+            disabled: true,
           },
           colProps: {
             span: 6,
