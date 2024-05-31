@@ -12,13 +12,13 @@ type FileData = File;
  *
  * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
  * @请求头 `POST /api/core/donor/list`
- * @更新时间 `2024-02-23 15:55:32`
+ * @更新时间 `2024-05-31 11:16:49`
  */
 export interface PostApiCoreDonorListRequest {
   /**
-   * 浆员编号
+   * 浆员卡号
    */
-  donorNo: string;
+  cardNo: string;
 }
 
 /**
@@ -26,13 +26,17 @@ export interface PostApiCoreDonorListRequest {
  *
  * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
  * @请求头 `POST /api/core/donor/list`
- * @更新时间 `2024-02-23 15:55:32`
+ * @更新时间 `2024-05-31 11:16:49`
  */
 export interface PostApiCoreDonorListResponse {
   /**
    * 浆员编号
    */
   donorNo?: string;
+  /**
+   * 浆员卡号
+   */
+  cardNo?: string;
   /**
    * 身份证号
    */
@@ -100,10 +104,11 @@ export interface PostApiCoreDonorListResponse {
  *
  * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
  * @请求头 `POST /api/core/donor/plasma`
- * @更新时间 `2024-02-23 16:12:26`
+ * @更新时间 `2024-05-31 15:45:49`
  */
 export interface PostApiCoreDonorPlasmaRequest {
-  donorNo: string;
+  donorNo?: string;
+  cardNo: string;
   currPage: string;
   pageSize: string;
 }
@@ -113,7 +118,7 @@ export interface PostApiCoreDonorPlasmaRequest {
  *
  * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
  * @请求头 `POST /api/core/donor/plasma`
- * @更新时间 `2024-02-23 16:12:26`
+ * @更新时间 `2024-05-31 15:45:49`
  */
 export interface PostApiCoreDonorPlasmaResponse {
   totalCount: number;
@@ -235,12 +240,13 @@ export interface PostApiCoreDonorPlasmaResponse {
  *
  * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
  * @请求头 `POST /api/core/donor/callbacks`
- * @更新时间 `2024-02-23 17:15:52`
+ * @更新时间 `2024-05-31 15:49:07`
  */
 export interface PostApiCoreDonorCallbacksRequest {
-  donorNo: string;
+  ''?: string;
   currPage: string;
   pageSize: string;
+  cardNo: string;
 }
 
 /**
@@ -248,7 +254,7 @@ export interface PostApiCoreDonorCallbacksRequest {
  *
  * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
  * @请求头 `POST /api/core/donor/callbacks`
- * @更新时间 `2024-02-23 17:15:52`
+ * @更新时间 `2024-05-31 15:49:07`
  */
 export interface PostApiCoreDonorCallbacksResponse {
   totalCount: number;
@@ -291,21 +297,21 @@ export interface PostApiCoreDonorCallbacksResponse {
  * 接口 [效价趋势图↗](https://yapi.sharing8.cn/project/529/interface/api/33407) 的 **请求类型**
  *
  * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
- * @请求头 `GET /api/core/donor/chart/{donorNo}`
- * @更新时间 `2024-02-23 18:13:12`
+ * @请求头 `GET /api/core/donor/chart/{cardNo}`
+ * @更新时间 `2024-05-31 15:51:08`
  */
-export interface GetApiCoreDonorChartDonorNoRequest {
-  donorNo: string;
+export interface GetApiCoreDonorChartCardNoRequest {
+  cardNo: string;
 }
 
 /**
  * 接口 [效价趋势图↗](https://yapi.sharing8.cn/project/529/interface/api/33407) 的 **返回类型**
  *
  * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
- * @请求头 `GET /api/core/donor/chart/{donorNo}`
- * @更新时间 `2024-02-23 18:13:12`
+ * @请求头 `GET /api/core/donor/chart/{cardNo}`
+ * @更新时间 `2024-05-31 15:51:08`
  */
-export type GetApiCoreDonorChartDonorNoResponse = {
+export type GetApiCoreDonorChartCardNoResponse = {
   /**
    * 免疫类型
    */

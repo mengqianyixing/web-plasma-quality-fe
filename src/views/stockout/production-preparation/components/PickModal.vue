@@ -15,6 +15,7 @@
     <div class="flex gap-1 mt-1 mb-2">
       <vxe-grid
         ref="tableRef"
+        :loading="vxeTableLoading"
         @checkbox-change="selectChangeEvent"
         v-bind="gridOptions"
         :data="unPickTableData"
@@ -144,7 +145,6 @@
     const prodTypeName = PlasmaType(prodType.value);
     // 更新汇总数据
     await _getPrepareList();
-    await reloadLeftTable();
     // 按批
     if (data.isBatch) {
       await updateSchema([
@@ -296,6 +296,7 @@
       });
     }
 
+    await reloadLeftTable();
     await queryUntable();
     await reloaded();
   });
@@ -411,6 +412,7 @@
     showFooter: false,
     sortConfig: {
       trigger: 'cell',
+      remote: true,
     },
   });
 
@@ -768,32 +770,43 @@
     });
   }
 
+  const vxeTableLoading = ref(false);
   async function reloadLeftTable() {
     const formValue = getFieldsValue();
     prodType.value === 'N' && delete formValue.titerLevel;
 
+    vxeTableLoading.value = true;
+
     if (pickMode.value) {
-      unPickTableData.value = (
-        (await getPickBatch({
-          prepareNo: prepareNo.value,
-          currPage: String(1),
-          pageSize: String(99999),
-          sort: sorter.value?.order,
-          orderBy: sorter.value?.field,
-          ...formValue,
-        })) as any
-      )?.result;
+      try {
+        unPickTableData.value = (
+          (await getPickBatch({
+            prepareNo: prepareNo.value,
+            currPage: String(1),
+            pageSize: String(99999),
+            sort: sorter.value?.order,
+            orderBy: sorter.value?.field,
+            ...formValue,
+          })) as any
+        )?.result;
+      } finally {
+        vxeTableLoading.value = false;
+      }
     } else {
-      unPickTableData.value = (
-        (await getPickBox({
-          prepareNo: prepareNo.value,
-          currPage: String(1),
-          pageSize: String(99999),
-          sort: sorter.value?.order,
-          orderBy: sorter.value?.field,
-          ...formValue,
-        } as any)) as any
-      )?.result;
+      try {
+        unPickTableData.value = (
+          (await getPickBox({
+            prepareNo: prepareNo.value,
+            currPage: String(1),
+            pageSize: String(99999),
+            sort: sorter.value?.order,
+            orderBy: sorter.value?.field,
+            ...formValue,
+          } as any)) as any
+        )?.result;
+      } finally {
+        vxeTableLoading.value = false;
+      }
     }
   }
 

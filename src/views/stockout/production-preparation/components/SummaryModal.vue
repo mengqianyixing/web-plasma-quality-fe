@@ -70,7 +70,7 @@
 <script lang="tsx" setup>
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
-  import { Row, Col, Tabs, TabPane, Modal } from 'ant-design-vue';
+  import { Row, Col, Tabs, TabPane } from 'ant-design-vue';
   import { VxeGridProps } from 'vxe-table';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
@@ -656,9 +656,12 @@
     }
   }
 
+  const { createConfirm } = useMessage();
+
   // 删除
   async function handleDel(record) {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '是否确认删除?',
       icon: createVNode(ExclamationCircleOutlined),
       content: '',

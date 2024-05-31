@@ -37,7 +37,6 @@
   import { columns, searchFormSchema } from './role.data';
   import { ref, createVNode } from 'vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
-  import { Modal } from 'ant-design-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { exportFile, formatDate, transferCSVData } from 'js-xxx';
   import { modulesRouteList } from '@/router/routes';
@@ -159,9 +158,12 @@
     createMessage.success('导出成功');
   }
 
+  const { createConfirm } = useMessage();
+
   async function handleDelete(record: Recordable) {
-    Modal.confirm({
+    createConfirm({
       title: '是否确认删除?',
+      iconType: 'warning',
       icon: createVNode(ExclamationCircleOutlined),
       content: '',
       okText: '删除',
@@ -169,7 +171,7 @@
       cancelText: '取消',
       async onOk() {
         await deleteCasDoorRole(record);
-        reload();
+        await reload();
       },
       onCancel() {
         console.log('Cancel');

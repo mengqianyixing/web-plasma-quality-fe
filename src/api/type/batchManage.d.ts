@@ -434,7 +434,7 @@ export interface GetApiCoreBagStatisticsBatchNoResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/plasma`
- * @更新时间 `2024-04-26 15:33:03`
+ * @更新时间 `2024-05-31 10:13:46`
  */
 export interface GetApiCoreBagPlasmaRequest {
   /**
@@ -462,7 +462,7 @@ export interface GetApiCoreBagPlasmaRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/bag/plasma`
- * @更新时间 `2024-04-26 15:33:03`
+ * @更新时间 `2024-05-31 10:13:46`
  */
 export interface GetApiCoreBagPlasmaResponse {
   totalCount?: number;
@@ -499,9 +499,9 @@ export interface GetApiCoreBagPlasmaResponse {
      */
     collectAt: string;
     /**
-     * 浆员编号
+     * 浆员卡号
      */
-    donorNo: string;
+    cardNo: string;
     /**
      * 浆员姓名
      */
@@ -640,7 +640,7 @@ export interface GetApiCoreBatchPlasmaVerifyBatchNoResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/bag`
- * @更新时间 `2024-05-06 16:30:11`
+ * @更新时间 `2024-05-31 10:14:09`
  */
 export interface GetApiCoreBatchPlasmaVerifyBagRequest {
   /**
@@ -694,7 +694,7 @@ export interface GetApiCoreBatchPlasmaVerifyBagRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/verify/bag`
- * @更新时间 `2024-05-06 16:30:11`
+ * @更新时间 `2024-05-31 10:14:09`
  */
 export type GetApiCoreBatchPlasmaVerifyBagResponse = {
   /**
@@ -714,9 +714,9 @@ export type GetApiCoreBatchPlasmaVerifyBagResponse = {
    */
   collectAt?: string;
   /**
-   * 浆员编号
+   * 浆员卡号
    */
-  donorNo?: string;
+  cardNo?: string;
   /**
    * 浆员名称
    */
@@ -1633,7 +1633,7 @@ export interface PostApiCoreBatchPlasmaVerifyRevokeBagResponse {}
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/verify/lack/{batchSampleNo}`
- * @更新时间 `2024-03-06 09:38:50`
+ * @更新时间 `2024-05-31 10:14:26`
  */
 export interface GetApiCoreBatchSampleVerifyLackBatchSampleNoRequest {
   /**
@@ -1647,7 +1647,7 @@ export interface GetApiCoreBatchSampleVerifyLackBatchSampleNoRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/verify/lack/{batchSampleNo}`
- * @更新时间 `2024-03-06 09:38:50`
+ * @更新时间 `2024-05-31 10:14:26`
  */
 export type GetApiCoreBatchSampleVerifyLackBatchSampleNoResponse = {
   /**
@@ -1659,9 +1659,9 @@ export type GetApiCoreBatchSampleVerifyLackBatchSampleNoResponse = {
    */
   donorName?: string;
   /**
-   * 浆员编号
+   * 浆员卡号
    */
-  donorNo?: string;
+  cardNo?: string;
   /**
    * 采浆日期
    */
@@ -1708,7 +1708,7 @@ export interface PostApiCoreBatchPlasmaWeightResponse {}
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/verify/unqualified/{batchSampleNo}`
- * @更新时间 `2023-12-30 14:05:52`
+ * @更新时间 `2024-05-31 10:14:41`
  */
 export interface GetApiCoreBatchSampleVerifyUnqualifiedBatchSampleNoRequest {
   /**
@@ -1722,7 +1722,7 @@ export interface GetApiCoreBatchSampleVerifyUnqualifiedBatchSampleNoRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/verify/unqualified/{batchSampleNo}`
- * @更新时间 `2023-12-30 14:05:52`
+ * @更新时间 `2024-05-31 10:14:41`
  */
 export type GetApiCoreBatchSampleVerifyUnqualifiedBatchSampleNoResponse = {
   /**
@@ -1734,9 +1734,9 @@ export type GetApiCoreBatchSampleVerifyUnqualifiedBatchSampleNoResponse = {
    */
   donorName?: string;
   /**
-   * 浆员编号
+   * 浆员卡号
    */
-  donorNo?: string;
+  cardNo?: string;
   /**
    * 采浆日期
    */

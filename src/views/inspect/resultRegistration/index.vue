@@ -70,7 +70,7 @@
   import { PageWrapper } from '@/components/Page';
   import { CellWapper, Cell } from '@/components/CellWapper';
   import { cellList } from './resultRegistration.data';
-  import { TabPane, Tabs, Modal, message } from 'ant-design-vue';
+  import { TabPane, Tabs, message } from 'ant-design-vue';
   import { ref } from 'vue';
   import CheckPage from './check/index.vue';
   import TiterPage from './titer/index.vue';
@@ -87,6 +87,7 @@
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
   import { BasicForm, useForm } from '@/components/Form';
   import dayjs, { Dayjs } from 'dayjs';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'ResultRegistration' });
 
@@ -161,8 +162,11 @@
     clearValidate();
   }
 
+  const { createConfirm } = useMessage();
+
   function unRegistration() {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认撤销' + bsNo.value + '?',
       onOk: async () => {
         try {
@@ -174,7 +178,6 @@
           reloadMap.value.forEach((fn) => fn());
         }
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function saveReload(fn: Function, activeKey: string) {

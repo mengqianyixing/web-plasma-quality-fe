@@ -10,22 +10,27 @@
   <PageWrapper dense contentFullHeight fixedHeight class="p-16px">
     <div class="flex items-center justify-center h-full bg-white">
       <a-button @click="handleComputed" size="large" type="primary" :loading="loading"
-        >检疫期计算</a-button
-      >
+        >检疫期计算
+      </a-button>
     </div>
   </PageWrapper>
 </template>
 <script setup lang="ts">
-  import { Modal, message } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { PageWrapper } from '@/components/Page';
   import { submitComputed } from '@/api/quarantine/computed';
   import { ref } from 'vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'Computed' });
 
   const loading = ref(false);
+
+  const { createConfirm } = useMessage();
+
   function handleComputed() {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认触发检疫期计算?',
       onOk: async () => {
         try {
@@ -36,7 +41,6 @@
           loading.value = false;
         }
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 </script>

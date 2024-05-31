@@ -48,7 +48,8 @@
     removeTableApi,
   } from '@/api/nonconformity/plasmaOut';
   import { reactive } from 'vue';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const emit = defineEmits(['close', 'register']);
 
@@ -113,6 +114,8 @@
     clearValidate();
   });
 
+  const { createConfirm } = useMessage();
+
   const methods = {
     addClick: () => {
       if (!state.dlvNo) return message.warning('请先保存申请单');
@@ -123,13 +126,13 @@
       if (rows.length === 0) return message.warning('请选择一条数据');
       if (rows.length > 1) return message.warning('只能选择一条数据');
       const [row] = rows;
-      Modal.confirm({
+      createConfirm({
+        iconType: 'warning',
         content: '确认删除' + row.bagNo + '?',
         onOk: async () => {
           await removeTableApi({ bagNo: row.bagNo });
-          reload();
+          await reload();
         },
-        onCancel: () => Modal.destroyAll(),
       });
     },
     submit: async () => {

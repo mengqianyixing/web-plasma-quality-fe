@@ -28,7 +28,6 @@
               <span>{{ acceptList?.length }}</span>
             </div>
             <div class="flex gap-2">
-              <!-- <a-button @click="susModal">暂停接收</a-button> -->
               <a-button
                 @click="openModal(true, filterForm)"
                 :disabled="!filterForm.batchNo"

@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-04 16:30:55
  * @LastEditors: zcc
@@ -43,12 +43,13 @@
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchForm } from './data';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { getListApi, trayBoxListApi } from '@/api/tray/list';
   import InModal from '@/views/tray/outInStore/inModal.vue';
   import { nextTick, ref, reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { bindVerifyBoxApi } from '@/api/tray/relocation';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const emit = defineEmits(['register', 'close']);
   defineOptions({ name: 'InStoreModal' });
@@ -134,22 +135,22 @@
     resetFields();
     clearValidate();
   }
+  const { createConfirm } = useMessage();
+
   async function okFunction() {
     const values = await validate();
     const list = await trayBoxListApi({ trayNo: values.trayNo });
 
     if (list.length >= 24) {
-      Modal.confirm({
+      createConfirm({
+        iconType: 'warning',
         content: '托盘绑定已满24箱，继续绑定?',
         onOk: async () => {
-          submit();
-        },
-        onCancel: () => {
-          Modal.destroyAll();
+          await submit();
         },
       });
     } else {
-      submit();
+      await submit();
     }
   }
   async function submit() {

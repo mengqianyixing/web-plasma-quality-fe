@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-29 10:43:03
  * @LastEditors: zcc
@@ -55,7 +55,7 @@
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form';
-  import { message, TabPane, Tabs, Modal } from 'ant-design-vue';
+  import { message, TabPane, Tabs } from 'ant-design-vue';
   import { nextTick, reactive } from 'vue';
   import {
     trayInStoreColumns,
@@ -67,10 +67,11 @@
   import InModal from '@/views/tray/outInStore/inModal.vue';
   import { bindBoxApi } from '@/api/tray/relocation';
   import { trayBoxListApi } from '@/api/tray/list';
-  import { getInStoreListApi, getSortingBoxListApi } from '@/api/stockout/production-sorting/index';
+  import { getInStoreListApi, getSortingBoxListApi } from '@/api/stockout/production-sorting';
   import { TRAY_STORE_STATE } from '@/enums/stockoutEnum';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
@@ -169,20 +170,21 @@
   function cancel() {
     emit('close');
   }
+
+  const { createConfirm } = useMessage();
+
   function handleUnbind() {
     const rows: Recordable[] = getBindSelectRows();
     if (rows.length === 0) return message.warning('请选择数据');
     const [row] = rows;
     if (!row.trayNo) return message.warning('请选择已绑定托盘的数据');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确定解绑箱号【' + row.boxNo + '】?',
       onOk: async () => {
         await bindBoxApi({ trayNo: row.trayNo, type: 'unbind', boxes: [row.boxNo] });
         message.success('解绑成功');
-        reloadBind();
-      },
-      onCancel: () => {
-        Modal.destroyAll();
+        await reloadBind();
       },
     });
   }
@@ -218,17 +220,15 @@
     }
     if (!boxId || !trayNo) return;
     if (count >= 24) {
-      Modal.confirm({
+      createConfirm({
+        iconType: 'warning',
         content: '托盘绑定已满24箱，继续绑定?',
         onOk: async () => {
-          submit();
-        },
-        onCancel: () => {
-          Modal.destroyAll();
+          await submit();
         },
       });
     } else {
-      submit();
+      await submit();
     }
   }
 </script>

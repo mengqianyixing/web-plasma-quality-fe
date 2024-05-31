@@ -35,11 +35,11 @@
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { ref, createVNode } from 'vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
-  import { Modal } from 'ant-design-vue';
   import { historyStyle, historyStylePreview, reuseStyle } from '@/api/tag/manage';
   import { columnsHistory, searchHistoryFormSchema } from '@/views/tag-manage/style/style.data';
 
   import HistoryStylePreviewModal from './HistoryStylePreviewModal.vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const hisNo = ref('');
 
@@ -49,7 +49,7 @@
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: false });
     hisNo.value = data.record.tagNo;
-    reload();
+    await reload();
     await getForm().updateSchema({
       field: 'labelType',
       componentProps: {
@@ -94,8 +94,11 @@
     });
   }
 
+  const { createConfirm } = useMessage();
+
   async function handleReuse(record: Recordable) {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '是否重用该样式?',
       icon: createVNode(ExclamationCircleOutlined),
       content: '',

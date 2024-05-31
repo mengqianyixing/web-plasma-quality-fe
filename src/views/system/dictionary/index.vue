@@ -42,12 +42,13 @@
   import { PageWrapper } from '@/components/Page';
   import { columns, searchFormSchema } from './dictionary.data';
   import { useModal } from '@/components/Modal';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import FormModel from './formDrawer.vue';
   import ItemListModal from './itemListDrawer.vue';
   import { getDictListApi, removeDictApi, getDictItemListApi } from '@/api/dictionary';
   import { PostApiSysDictsResponse } from '@/api/type/dictionary';
   import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'Dictionary' });
 
@@ -119,18 +120,21 @@
     if (row.systemLevel > 0) return message.warning('系统字典不可修改');
     openModal(true, { data: row, isUpdate: true });
   }
+
+  const { createConfirm } = useMessage();
+
   function handleRemove() {
     const [row] = getSelectRow();
     if (!row) return;
     if (row.systemLevel > 0) return message.warning('系统字典不可删除');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: `确定删除${row.dictName}？`,
       onOk: async () => {
-        removeDictApi({ dictId: row.dictId });
+        await removeDictApi({ dictId: row.dictId });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function handleCreateItem() {

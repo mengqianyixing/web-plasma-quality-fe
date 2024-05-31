@@ -141,6 +141,7 @@
   import { NonconformityButtonEnum } from '@/enums/authCodeEnum';
   import { PrintServerEnum } from '@/enums/printServerEnum';
   import { getReportApi } from '@/api/report';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'PlasmaOut' });
 
@@ -243,18 +244,20 @@
       confirmLoading.value = false;
     }
   }
+  const { createConfirm } = useMessage();
+
   async function handleProcess() {
     const [row] = getSelections(true);
     if (!row) return;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认审核' + row.dlvNo + '?',
       onOk: async () => {
         await processApi({ no: row.dlvNo });
         message.success('审核成功');
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   async function handleUnProcess() {

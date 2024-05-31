@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-26 15:27:18
  * @LastEditors: zcc
@@ -31,11 +31,12 @@
   import { PageWrapper } from '@/components/Page';
   import { useModal } from '@/components/Modal';
   import { columns, searchFormschema } from './titer.data';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import DtModal from './dtDrawer.vue';
   import ImportModal from './importDrawer.vue';
   import { getListApi, deleteTiterApi } from '@/api/inspect/titerImport';
   import { useStation } from '@/hooks/common/useStation';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const { getStationNameById } = useStation();
 
@@ -89,18 +90,21 @@
     clearSelectedRowKeys();
     reload();
   }
+
+  const { createConfirm } = useMessage();
+
   function handleRemove() {
     const [row] = getSelections(true);
     if (!row) return;
     const { bsNo, type } = row;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认删除' + bsNo + '?',
       onOk: async () => {
         await deleteTiterApi({ bsNo, type });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 </script>

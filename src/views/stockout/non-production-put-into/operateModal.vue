@@ -7,7 +7,7 @@
     :showOkBtn="false"
     :showCancelBtn="false"
     @cancel="handleClose"
-    width="1200px"
+    width="80%"
   >
     <div>
       <BasicForm @register="registerForm" />
@@ -132,20 +132,14 @@
   watch(
     () => currentKey.value,
     (val) => {
-      if (!getFieldsValue().dlvNo) return;
+      if (!getFieldsValue()?.dlvNo) return;
 
       if (val === 'batch') {
-        setTimeout(() => {
-          reloadBatchTable();
-        }, 0);
+        reloadBatchTable();
       } else if (val === 'box') {
-        setTimeout(() => {
-          reloadBoxTable();
-        }, 0);
+        reloadBoxTable();
       } else {
-        setTimeout(() => {
-          reloadDetailTable();
-        }, 0);
+        reloadDetailTable();
       }
     },
   );

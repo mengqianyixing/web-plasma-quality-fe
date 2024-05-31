@@ -23,10 +23,11 @@
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { columns, searchFormSchema } from './overdue-confirmation.data';
   import { getListApi, submitConfirmApi } from '@/api/quarantine/overdue-confirmation';
   import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'OverdueConfirmation' });
 
@@ -52,20 +53,23 @@
       schemas: searchFormSchema,
     },
   });
+
+  const { createConfirm } = useMessage();
+
   function handleReview() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择数据');
     const [row] = rows;
     if (row.creator) return message.warning('请选择【未确认】的数据');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认血浆编号【' + row.bagNo + '】?',
       onOk: async () => {
         await submitConfirmApi({ bagNo: row.bagNo });
         message.success('确认成功');
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 </script>

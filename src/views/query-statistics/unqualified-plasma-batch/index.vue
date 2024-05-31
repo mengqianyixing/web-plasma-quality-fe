@@ -1,15 +1,32 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight class="root">
+  <PageWrapper dense contentFullHeight class="root">
     <BasicTable @register="registerTable" :columns="columnsRef">
       <template #toolbar>
         <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
       </template>
     </BasicTable>
+    <div
+      class="flex justify-end items-center bg-white absolute bottom-0 right-6 mt-2"
+      v-if="pagerLeft.total > 0"
+    >
+      <span class="mr-2">共{{ pagerLeft.total }}条数据</span>
+      <a-pagination
+        @change="handlePageChange"
+        @show-size-change="handleSizeChange"
+        size="small"
+        show-size-changer
+        show-quick-jumper
+        v-model:current="pagerLeft.current"
+        v-model:pageSize="pagerLeft.pageSize"
+        :total="pagerLeft.total"
+      />
+    </div>
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicColumn, BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './batch.data';
+  import { Pagination as APagination, message } from 'ant-design-vue';
   import { PageWrapper } from '@/components/Page';
   import {
     getUnqualifiedPlasmaBatch,
@@ -17,14 +34,15 @@
   } from '@/api/query-statistics/batch-statistics';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
 
-  import { ref } from 'vue';
+  import { reactive, ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
-  import { message } from 'ant-design-vue';
   import {
     GetApiSearchBatchCountTotalRequest,
     GetApiSearchBatchCountTotalResponse,
   } from '@/api/type/queryStatistics';
+  import { PositionType } from 'ant-design-vue/es/image/style';
+  import { debounce } from 'lodash-es';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'UnqualifiedPlasmaByBatch' });
@@ -33,9 +51,64 @@
   const columnsRef = ref<BasicColumn[]>(columns);
   const totalData = ref<GetApiSearchBatchCountTotalResponse>({});
 
-  const [registerTable, { getForm }] = useTable({
+  const pagerLeft = reactive({
+    current: 1,
+    pageSize: 30,
+    total: 0,
+  });
+  const totalStyle = ref<{
+    position: PositionType;
+    top: number | string;
+    bottom: number | string;
+  }>({
+    position: 'sticky',
+    top: 0,
+    bottom: 0,
+  });
+  watch(
+    () => totalData.value,
+    () => {
+      setTimeout(() => {
+        const bodyDom = document.getElementsByClassName('ant-table-tbody')[0];
+        const containerDom = document.getElementsByClassName('ant-table-container')[0];
+        const headerDom = document.getElementsByClassName('ant-table-thead')[0];
+
+        const length = getDataSource().length;
+        const filterPx = (str: string) => str.replace(/px/g, '');
+
+        const bodyH = Number(filterPx(getComputedStyle(bodyDom).height));
+        const containerH = Number(filterPx(getComputedStyle(containerDom).height));
+        const headerH = Number(filterPx(getComputedStyle(headerDom).height));
+
+        if (bodyH < containerH - headerH) {
+          totalStyle.value.position = 'relative';
+          totalStyle.value.top = containerH - 38 * length - headerH - 15 + 'px';
+          totalStyle.value.bottom = '';
+        } else {
+          totalStyle.value.position = 'sticky';
+          totalStyle.value.bottom = 0;
+          totalStyle.value.top = '';
+        }
+      }, 300);
+    },
+  );
+
+  const [registerTable, { getForm, getDataSource, getRawDataSource, reload }] = useTable({
     api: getUnqualifiedPlasmaBatch,
+    beforeFetch: (params) => {
+      return {
+        ...params,
+        currPage: pagerLeft.current,
+        pageSize: pagerLeft.pageSize,
+      };
+    },
     afterFetch: async (data) => {
+      const _data = getRawDataSource();
+
+      pagerLeft.total = _data.totalCount;
+      pagerLeft.pageSize = _data.pageSize;
+      pagerLeft.current = _data.currPage;
+
       totalData.value = await getUnqualifiedPlasmaCountTotal(
         getForm().getFieldsValue() as GetApiSearchBatchCountTotalRequest,
       );
@@ -72,6 +145,8 @@
     },
     formConfig: {
       schemas: searchFormSchema,
+      resetFunc: resetFunc,
+      submitOnReset: true,
     },
     showIndexColumn: false,
     fetchSetting: {
@@ -85,7 +160,16 @@
     useSearchForm: true,
     bordered: true,
     immediate: false,
+    pagination: false,
   });
+
+  const _reloadTable = debounce(reload, 300) as () => Promise<void>;
+
+  async function resetFunc() {
+    pagerLeft.current = 1;
+
+    await _reloadTable();
+  }
 
   const loading = ref(false);
   async function handleExport() {
@@ -115,11 +199,24 @@
       loading.value = false;
     }
   }
+
+  async function handlePageChange(e) {
+    pagerLeft.current = e;
+
+    await reload();
+  }
+
+  async function handleSizeChange(_, size) {
+    pagerLeft.pageSize = size;
+
+    await reload();
+  }
 </script>
 <style scoped>
   .root :deep(.ant-table-tbody tr:last-child) {
-    position: sticky;
-    bottom: 0;
+    position: v-bind('totalStyle.position');
+    top: v-bind('totalStyle.top');
+    bottom: v-bind('totalStyle.bottom');
     background-color: #f5f5f5;
   }
 </style>

@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-19 14:20:15
  * @LastEditors: zcc
@@ -36,7 +36,7 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { formColumns, formSchema } from './batch-release.data';
   import {
     getFormApi,
@@ -47,6 +47,7 @@
   import ItemModal from './item-modal.vue';
   import { reactive, computed } from 'vue';
   import { GetApiProductReleasePrNoResponse } from '@/api/type/qualityMange';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const state = reactive<{
     tableData: GetApiProductReleasePrNoResponse['releaseDetail'];
@@ -131,19 +132,22 @@
       appNames: appNames.value.filter((_) => _ !== row.appName),
     });
   }
+
+  const { createConfirm } = useMessage();
+
   function handleRemove() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择数据');
     const [row] = rows;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认删除项目【' + row.appName + '】?',
       onOk: async () => {
         const index = state.tableData.findIndex((_) => _.appName === row.appName);
         state.tableData.splice(index, 1);
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 

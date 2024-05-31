@@ -65,7 +65,6 @@
   import { useModal } from '@/components/Modal';
   import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
-  import { Modal } from 'ant-design-vue';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import dayjs from 'dayjs';
 
@@ -143,13 +142,6 @@
       field: 'stationName',
       label: '采浆公司',
     },
-    // {
-    //   field: 'transNo',
-    //   label: '出库单号',
-    //   render(text) {
-    //     return <span>{text}</span>;
-    //   },
-    // },
     {
       field: 'boxCount',
       label: '血浆箱数',
@@ -196,6 +188,7 @@
         const data = await acceptPlasma(params);
         if (data) {
           success('接收成功!');
+          batchNo.value = data.batchNo;
           filterForm.value = data;
           if (data.acceptDetail?.unAcceptCount <= 0) {
             // 一批接收完毕 提示
@@ -205,7 +198,7 @@
       } finally {
         tableLoading.value = false;
         boxNo.value = '';
-        nextTick(() => {
+        await nextTick(() => {
           boxNoRef.value.focus();
         });
       }
@@ -237,8 +230,11 @@
     }
   }
 
+  const { createConfirm } = useMessage();
+
   function showConfirmGoon() {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '是否继续接收其他批次?',
       content: createVNode('div', { style: 'color:red;' }, '当前批已接收完成！'),
       onOk() {

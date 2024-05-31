@@ -1166,7 +1166,7 @@ export type PostApiCoreLabRegistrationLabItemTiterResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/labItems`
- * @更新时间 `2024-03-13 16:19:53`
+ * @更新时间 `2024-05-31 11:24:40`
  */
 export interface PostApiCoreLabRegistrationLabItemsRequest {
   pageSize: number;
@@ -1202,7 +1202,7 @@ export interface PostApiCoreLabRegistrationLabItemsRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/labItems`
- * @更新时间 `2024-03-13 16:19:53`
+ * @更新时间 `2024-05-31 11:24:40`
  */
 export interface PostApiCoreLabRegistrationLabItemsResponse {
   totalCount: number;
@@ -1218,6 +1218,10 @@ export interface PostApiCoreLabRegistrationLabItemsResponse {
      * 浆员编号
      */
     donorNo: string;
+    /**
+     * 浆员卡号
+     */
+    cardNo: string;
     /**
      * 浆员姓名
      */
@@ -1274,7 +1278,7 @@ export interface PostApiCoreLabRegistrationLabItemsResponse {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `GET /api/core/lab/registration/donor/{sampleNo}`
- * @更新时间 `2024-01-03 20:11:19`
+ * @更新时间 `2024-05-31 11:30:08`
  */
 export interface GetApiCoreLabRegistrationDonorSampleNoRequest {
   sampleNo: string;
@@ -1285,13 +1289,17 @@ export interface GetApiCoreLabRegistrationDonorSampleNoRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `GET /api/core/lab/registration/donor/{sampleNo}`
- * @更新时间 `2024-01-03 20:11:19`
+ * @更新时间 `2024-05-31 11:30:08`
  */
 export interface GetApiCoreLabRegistrationDonorSampleNoResponse {
   /**
    * 浆员编号
    */
   donorNo: string;
+  /**
+   * 浆员卡号
+   */
+  cardNo: string;
   /**
    * 浆员姓名
    */
@@ -1344,7 +1352,7 @@ export interface PutApiCoreLabRegistrationLabItemTiterResponse {}
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/sample`
- * @更新时间 `2024-01-03 20:11:46`
+ * @更新时间 `2024-05-31 11:32:47`
  */
 export interface PostApiCoreLabRegistrationSampleRequest {
   bsNo: string;
@@ -1358,11 +1366,12 @@ export interface PostApiCoreLabRegistrationSampleRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/sample`
- * @更新时间 `2024-01-03 20:11:46`
+ * @更新时间 `2024-05-31 11:32:47`
  */
 export type PostApiCoreLabRegistrationSampleResponse = {
   sampleNo: string;
   donorNo: string;
+  cardNo: string;
   name: string;
 }[];
 
@@ -1371,7 +1380,7 @@ export type PostApiCoreLabRegistrationSampleResponse = {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload`
- * @更新时间 `2024-01-03 10:33:42`
+ * @更新时间 `2024-05-31 13:59:46`
  */
 export interface PostApiCoreLabRegistrationTiterUploadRequest {
   file: FileData;
@@ -1384,7 +1393,7 @@ export interface PostApiCoreLabRegistrationTiterUploadRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload`
- * @更新时间 `2024-01-03 10:33:42`
+ * @更新时间 `2024-05-31 13:59:46`
  */
 export interface PostApiCoreLabRegistrationTiterUploadResponse {
   /**
@@ -1429,6 +1438,10 @@ export interface PostApiCoreLabRegistrationTiterUploadResponse {
      * 姓名
      */
     name: string;
+    /**
+     * 浆员卡号
+     */
+    cardNo: string;
     /**
      * 血浆类型
      */
@@ -2195,7 +2208,7 @@ export interface PostApiCoreLabReportsResponse {
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/report/unqualified`
- * @更新时间 `2024-04-29 17:01:44`
+ * @更新时间 `2024-05-31 14:06:45`
  */
 export interface PostApiCoreLabReportUnqualifiedRequest {
   reportNo: string;
@@ -2215,7 +2228,7 @@ export interface PostApiCoreLabReportUnqualifiedRequest {
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/report/unqualified`
- * @更新时间 `2024-04-29 17:01:44`
+ * @更新时间 `2024-05-31 14:06:45`
  */
 export interface PostApiCoreLabReportUnqualifiedResponse {
   totalCount: number;
@@ -2231,6 +2244,10 @@ export interface PostApiCoreLabReportUnqualifiedResponse {
      * 浆员编号
      */
     donorNo: string;
+    /**
+     * 浆员卡号
+     */
+    cardNo: string;
     /**
      * 浆员姓名
      */

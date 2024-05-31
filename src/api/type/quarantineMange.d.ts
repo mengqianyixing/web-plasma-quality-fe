@@ -30,7 +30,7 @@ export type GetApiCoreBagQuarantineResponse = null;
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `GET /api/core/bag/plasma/expired`
- * @更新时间 `2024-01-29 18:23:43`
+ * @更新时间 `2024-05-31 15:15:44`
  */
 export interface GetApiCoreBagPlasmaExpiredRequest {
   /**
@@ -57,6 +57,10 @@ export interface GetApiCoreBagPlasmaExpiredRequest {
    * 页数大小不能为空
    */
   pageSize: string;
+  /**
+   * 浆员卡号
+   */
+  cardNo: string;
 }
 
 /**
@@ -64,7 +68,7 @@ export interface GetApiCoreBagPlasmaExpiredRequest {
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `GET /api/core/bag/plasma/expired`
- * @更新时间 `2024-01-29 18:23:43`
+ * @更新时间 `2024-05-31 15:15:44`
  */
 export interface GetApiCoreBagPlasmaExpiredResponse {
   totalCount?: number;
@@ -109,6 +113,10 @@ export interface GetApiCoreBagPlasmaExpiredResponse {
      */
     donorNo: string;
     /**
+     * 浆员卡号
+     */
+    cardNo: string;
+    /**
      * 浆员名称
      */
     donorName: string;
@@ -152,7 +160,7 @@ export type PostApiCoreBagPlasmaExpiredResponse = null;
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `GET /api/core/donor/unqualified/track`
- * @更新时间 `2024-03-26 15:51:00`
+ * @更新时间 `2024-05-31 15:24:40`
  */
 export interface GetApiCoreDonorUnqualifiedTrackRequest {
   currPage: string;
@@ -198,7 +206,7 @@ export interface GetApiCoreDonorUnqualifiedTrackRequest {
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `GET /api/core/donor/unqualified/track`
- * @更新时间 `2024-03-26 15:51:00`
+ * @更新时间 `2024-05-31 15:24:40`
  */
 export interface GetApiCoreDonorUnqualifiedTrackResponse {
   totalCount?: number;
@@ -227,6 +235,10 @@ export interface GetApiCoreDonorUnqualifiedTrackResponse {
      * 浆员编号
      */
     donorNo?: string;
+    /**
+     * 浆员卡号
+     */
+    cardNo?: string;
     /**
      * 姓名
      */

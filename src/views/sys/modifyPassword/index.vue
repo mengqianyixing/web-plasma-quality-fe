@@ -10,7 +10,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { Modal, Card, Button } from 'ant-design-vue';
+  import { Card, Button } from 'ant-design-vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { useUserStoreWithOut } from '@/store/modules/user';
   import { setCasDoorUserPwd } from '@/api/oauth/users';
@@ -36,12 +36,15 @@
   });
 
   onMounted(() => {
-    setFieldsValue({ userName: userStore.userInfo.userAccount });
+    setFieldsValue({ userName: userStore.userInfo!.userAccount });
   });
+
+  const { createConfirm } = useMessage();
 
   async function submitFunc() {
     const values = await validate();
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认修改密码吗?',
       onOk: async () => {
         try {
@@ -55,17 +58,17 @@
           await setProps({ submitButtonOptions: { loading: false } });
         }
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 
   function handleLogout() {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '取消修改密码将出系统，确认退出吗?',
       onOk: async () => {
         try {
           await setProps({ resetButtonOptions: { loading: true } });
-          userStore.logout(true);
+          await userStore.logout(true);
         } catch (error) {
           await setProps({ resetButtonOptions: { loading: false } });
         }

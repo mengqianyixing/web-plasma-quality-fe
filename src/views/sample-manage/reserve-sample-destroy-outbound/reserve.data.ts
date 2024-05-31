@@ -1,6 +1,10 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { VxeGridPropTypes } from '@/components/VxeTable';
 import dayjs from 'dayjs';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+
+const serverEnumStore = useServerEnumStoreWithOut();
 
 export const columns: BasicColumn[] = [
   {
@@ -60,7 +64,7 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'dlvNO',
+    field: 'dlvNo',
     component: 'Input',
     label: '申请单号',
   },
@@ -71,7 +75,10 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: 'state',
-    component: 'ApiSelect',
+    component: 'Select',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankDeliverstateType),
+    },
     label: '状态',
   },
 ];
@@ -143,19 +150,22 @@ export const requisitionDetailByBag: BasicColumn[] = [
     title: '样本批号',
   },
   {
-    dataIndex: 'sampleBagNum',
-    title: '样本袋数',
+    dataIndex: 'sampleBagNo',
+    title: '样本袋号',
   },
   {
     dataIndex: 'sampleNum',
     title: '样本数量',
   },
   {
-    dataIndex: 'bagLatestProdDate',
-    title: '血浆最晚投产日期',
-    format(text) {
-      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-    },
+    dataIndex: 'boxNo',
+    title: '箱号',
+    ellipsis: false,
+  },
+  {
+    dataIndex: 'location',
+    title: '存放位置',
+    ellipsis: false,
   },
 ];
 

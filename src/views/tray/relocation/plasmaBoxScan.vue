@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-21 17:19:22
  * @LastEditors: zcc
@@ -24,9 +24,10 @@
     plasmaBoxScanColumns,
   } from './relocation.data';
   import { bindBoxApi } from '@/api/tray/relocation';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { trayBoxListApi } from '@/api/tray/list';
   import { ref } from 'vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const count = ref(0);
   const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
@@ -63,11 +64,14 @@
   async function submit() {
     const { boxId, trayNo } = getFieldsValue();
     await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: [boxId] });
-    setFieldsValue({ boxId: '' });
+    await setFieldsValue({ boxId: '' });
     message.success('操作成功');
     const list = await trayBoxListApi({ trayNo });
     count.value = list.length;
   }
+
+  const { createConfirm } = useMessage();
+
   async function handleSubmit() {
     const { boxId, trayNo } = getFieldsValue();
     if (boxId && !trayNo) message.warning('请扫描托盘编号');
@@ -77,17 +81,15 @@
     }
     if (!boxId || !trayNo) return;
     if (count.value >= 24 && props.isBinding) {
-      Modal.confirm({
+      createConfirm({
+        iconType: 'warning',
         content: '托盘绑定已满24箱，继续绑定?',
         onOk: async () => {
-          submit();
-        },
-        onCancel: () => {
-          Modal.destroyAll();
+          await submit();
         },
       });
     } else {
-      submit();
+      await submit();
     }
   }
 </script>

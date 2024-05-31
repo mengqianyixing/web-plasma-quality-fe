@@ -382,6 +382,8 @@
   const [registerPrepareSuspendModal, { openModal: openPrepareSuspendModal }] = useModal();
   const [registerBatchSuspendModal, { openModal: openBatchSuspendModal }] = useModal();
 
+  const { createConfirm } = useMessage();
+
   // 血浆扫描
   async function handlePressEnter(e) {
     if (e.code === 'Enter' || e.code === 'NumpadEnter' || e === true) {
@@ -411,10 +413,10 @@
           if (data.unqReason) {
             // 可投产的不合格，直接提示
             if (data?.proBag === true) {
-              Modal.confirm({
+              createConfirm({
+                iconType: 'warning',
                 content: `${bagNo.value}为${data.unqReason}血浆!`,
                 onOk: () => handleUnqualifiedSuccess(),
-                onCancel: () => Modal.destroyAll(),
               });
             } else {
               openUnqualifiedModal(true, {
@@ -427,7 +429,8 @@
 
           // 整箱血浆为合格
           if (data.fullBoxQua) {
-            Modal.confirm({
+            createConfirm({
+              iconType: 'warning',
               title: '提示?',
               icon: createVNode(ExclamationCircleOutlined),
               content: createVNode(
@@ -597,7 +600,8 @@
             if (data.selectedName === 'pros') content = '投产血浆';
             if (data.selectedName === 'unPro') content = '暂不投产血浆';
             if (data.selectedName === 'utrkUnPro') content = '待放行血浆';
-            Modal.confirm({
+            createConfirm({
+              iconType: 'warning',
               title: '提示?',
               icon: createVNode(ExclamationCircleOutlined),
               content: createVNode(
@@ -621,7 +625,8 @@
             });
           }
         } else {
-          Modal.confirm({
+          createConfirm({
+            iconType: 'warning',
             title: '提示',
             icon: createVNode(ExclamationCircleOutlined),
             autoFocusButton: 'ok',
@@ -901,7 +906,8 @@
       warning('请先分拣血浆');
       return;
     }
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '提示?',
       icon: createVNode(ExclamationCircleOutlined),
       content: createVNode('div', { style: 'color:red;' }, '确认合箱重扫吗?'),
@@ -916,7 +922,7 @@
           console.log('合箱成功:', res);
           success('合箱成功!');
           // 请求总览数据
-          prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+          await prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
         } finally {
           closeFullLoading();
         }
@@ -942,12 +948,13 @@
     if (noTip) {
       doThis();
     } else {
-      Modal.confirm({
+      createConfirm({
+        iconType: 'warning',
         title: '提示?',
         icon: createVNode(ExclamationCircleOutlined),
         content: createVNode('div', { style: 'color:red;' }, '确认封箱并打印箱标签吗?'),
         async onOk() {
-          doThis();
+          await doThis();
         },
         onCancel() {
           console.log('Cancel');
@@ -991,7 +998,8 @@
       prepareData.value.sortTotal > 0 &&
       prepareData.value.sortTotal === prepareData.value.sortCount
     ) {
-      Modal.confirm({
+      createConfirm({
+        iconType: 'warning',
         title: '提示?',
         icon: createVNode(ExclamationCircleOutlined),
         content: createVNode('div', { style: 'color:red;' }, '确认要完成分拣吗?'),

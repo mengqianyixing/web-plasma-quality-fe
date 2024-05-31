@@ -47,7 +47,6 @@
     getCasDoorUsers,
     resetCasDoorUserPwd,
   } from '@/api/oauth/users';
-  import { Modal } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { useModal } from '@/components/Modal';
@@ -109,20 +108,23 @@
     });
   }
 
+  const { createConfirm } = useMessage();
+
   function handleSetPassword(record: Recordable) {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认重置账号【' + record.name + '】的密码?',
       onOk: async () => {
         await resetCasDoorUserPwd({ userName: record.name });
         createMessage.success('重置密码成功！');
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 
   async function handleDelete(record: Recordable) {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'error',
       title: '是否确认删除?',
       icon: createVNode(ExclamationCircleOutlined),
       content: '',
@@ -131,7 +133,7 @@
       cancelText: '取消',
       async onOk() {
         await deleteCasDoorUser(record);
-        reload();
+        await reload();
       },
       onCancel() {
         console.log('Cancel');

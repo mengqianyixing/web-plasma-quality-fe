@@ -355,10 +355,15 @@
   const _handleAcceptSample = debounce(handleAcceptSample, 300);
 
   async function handleAcceptSample() {
-    const originRes = await keepPackAccept({
-      packNo: packNo.value,
-      boxNo: boxNoValue.value,
-    });
+    let originRes: PostApiCoreBatchSampleAcceptKeepPackResponse;
+    try {
+      originRes = await keepPackAccept({
+        packNo: packNo.value,
+        boxNo: boxNoValue.value,
+      });
+    } finally {
+      packNo.value = '';
+    }
 
     originKeepPackData.value = originRes;
     boxNoValue.value = originRes.boxNo!;

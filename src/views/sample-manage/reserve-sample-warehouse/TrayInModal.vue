@@ -168,7 +168,7 @@
   }
 
   function handleTrayBind() {
-    openReBindModal();
+    openReBindModal(true, {});
   }
 
   function handleBoxCountClick(record) {
