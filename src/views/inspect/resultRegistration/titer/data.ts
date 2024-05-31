@@ -49,7 +49,7 @@ export const dtColumns: getColumns = (checkResult) => [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     width: 120,
   },
   {
@@ -104,7 +104,7 @@ export const enterColumns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
   },
   {
     title: '浆员姓名',
@@ -140,7 +140,7 @@ export const cellList = [
 ];
 export const importSuccessColumns = [
   { title: '样本编号', field: 'sampleNo' },
-  { title: '浆员编号', field: 'donorNo' },
+  { title: '浆员编号', field: 'cardNo' },
   { title: '浆员姓名', field: 'name' },
 
   { title: '效价结果', field: 'conclusion' },

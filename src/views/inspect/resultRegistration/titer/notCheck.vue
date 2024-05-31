@@ -45,7 +45,7 @@
       label: '浆员姓名',
     },
     {
-      field: 'donorNo',
+      field: 'cardNo',
       label: '浆员编号',
     },
     {

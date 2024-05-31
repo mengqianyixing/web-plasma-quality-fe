@@ -178,7 +178,7 @@ export const detailColumns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'fkDonorNo',
+    dataIndex: 'cardNo',
   },
   {
     title: '浆员姓名',

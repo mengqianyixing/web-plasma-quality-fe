@@ -402,7 +402,7 @@
     },
     {
       title: '浆员编号',
-      field: 'donorNo',
+      field: 'cardNo',
     },
     {
       title: '浆员姓名',

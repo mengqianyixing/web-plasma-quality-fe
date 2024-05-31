@@ -191,7 +191,7 @@ export const modalColumns: BasicColumn[] = [
 const trackedColumns: BasicColumn[] = [
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     width: 100,
   },
   {
@@ -219,7 +219,7 @@ const trackedColumns: BasicColumn[] = [
 const otherColumns: BasicColumn[] = [
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     width: 100,
   },
   {
@@ -254,7 +254,7 @@ export const colMap: Record<string, BasicColumn[]> = {
     },
     {
       title: '浆员编号',
-      dataIndex: 'donorNo',
+      dataIndex: 'cardNo',
       width: 100,
     },
     {

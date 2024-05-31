@@ -10,6 +10,7 @@
   import { donorChartApi } from '@/api/query-statistics/donor';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
   const serverEnumStore = useServerEnumStoreWithOut();
 
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -20,7 +21,7 @@
   const { setOptions } = useECharts(chartRef as Ref<HTMLDivElement>);
 
   watch(
-    () => props.donorNo,
+    () => props.cardNo,
     async (v) => {
       if (!v) return;
       await nextTick();
@@ -31,7 +32,7 @@
     },
   );
   async function getData() {
-    const res = await donorChartApi(props.donorNo as string);
+    const res = await donorChartApi(props.cardNo as string);
     const allXAxisData = res.reduce((dates, it) => {
       it.line.forEach((l) => {
         dates.push(l.collectAt.slice(0, 10));
@@ -50,7 +51,7 @@
         ),
       };
       return [...data, l];
-    }, <Recordable[]>[]);
+    }, [] as Recordable[]);
     const legendData = res.map((it) => PlasmaType(it.immunity));
     const showDataZoomCount = 10;
     const showDataZoom = xAxisData.length > showDataZoomCount;

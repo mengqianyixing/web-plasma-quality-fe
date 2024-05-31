@@ -159,7 +159,7 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
   },
   {
     title: '浆员编号',
-    field: 'donorNo',
+    field: 'cardNo',
     width: 150,
   },
   {
@@ -222,7 +222,7 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
 export const callbackDetailModalColumns: BasicColumn[] = [
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     width: 110,
   },
   {
@@ -338,7 +338,7 @@ export const addCallbackModalSearchFromSchema: FormSchema[] = [
     colProps: { span: 4 },
   },
   {
-    field: 'donorNo',
+    field: 'cardNo',
     label: '浆员编号',
     component: 'Input',
     colProps: { span: 4 },
@@ -371,7 +371,7 @@ export const callbackModalSearchFromSchema: FormSchema[] = [
     colProps: { span: 4 },
   },
   {
-    field: 'donorNo',
+    field: 'cardNo',
     label: '浆员编号',
     component: 'Input',
     colProps: { span: 5 },
@@ -401,7 +401,7 @@ export const callbackDetailFormSchema: FormSchema[] = [
     colProps: { span: 4 },
   },
   {
-    field: 'donorNo',
+    field: 'cardNo',
     label: '浆员编号',
     component: 'Input',
     colProps: { span: 5 },

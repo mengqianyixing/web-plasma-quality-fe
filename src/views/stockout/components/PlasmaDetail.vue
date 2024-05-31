@@ -92,7 +92,7 @@
     },
     {
       title: '浆员编号',
-      dataIndex: 'donorNo',
+      dataIndex: 'cardNo',
     },
     {
       title: '效价类型',

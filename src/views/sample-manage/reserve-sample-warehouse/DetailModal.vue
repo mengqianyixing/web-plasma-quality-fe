@@ -66,7 +66,7 @@
       },
       {
         title: '浆员编号',
-        dataIndex: 'donorNo',
+        dataIndex: 'cardNo',
       },
       {
         title: '浆员姓名',

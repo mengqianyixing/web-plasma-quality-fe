@@ -11,7 +11,7 @@ const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 // 查询条件：浆员编号
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'donorNo',
+    field: 'cardNo',
     label: '浆员编号',
     component: 'Input',
     required: true,
@@ -29,7 +29,7 @@ export const donorSchema: DescItem[] = [
   },
   {
     label: '浆员编号',
-    field: 'donorNo',
+    field: 'cardNo',
   },
   {
     label: '性别',

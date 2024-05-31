@@ -50,7 +50,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     slots: { customRender: 'donorNo' },
     width: 120,
   },
@@ -130,7 +130,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: 'donorNo',
+    field: 'cardNo',
     component: 'Input',
     label: '浆员编号',
   },

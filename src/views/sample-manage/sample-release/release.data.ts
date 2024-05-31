@@ -145,7 +145,7 @@ export const unqualifiedColumns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
   },
   {
     title: '不合格原因',

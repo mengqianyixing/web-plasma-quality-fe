@@ -279,7 +279,7 @@ export const detailSchema: DescItem[] = [
   { field: 'batchNo', label: '血浆批号' },
   { field: 'boxNo', label: '血浆箱号' },
   { field: 'stationName', label: '采浆公司' },
-  { field: 'donorNo', label: '浆员编号' },
+  { field: 'cardNo', label: '浆员编号' },
   { field: 'donorName', label: '浆员姓名' },
   { field: 'donorStatus', label: '浆员状态' },
   { field: 'gender', label: '性别' },

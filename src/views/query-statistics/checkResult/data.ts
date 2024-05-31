@@ -294,7 +294,7 @@ export const unDtColumns: BasicColumn[] = [
     width: 110,
   },
   {
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     title: '浆员编号',
     width: 110,
   },

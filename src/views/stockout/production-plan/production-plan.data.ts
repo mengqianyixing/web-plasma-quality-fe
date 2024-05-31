@@ -442,7 +442,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
     },
     {
       title: '浆员编号',
-      dataIndex: 'fkDonorNo',
+      dataIndex: 'cardNo',
       width: 120,
     },
     {

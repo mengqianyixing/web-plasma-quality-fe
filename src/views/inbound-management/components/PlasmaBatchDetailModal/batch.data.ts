@@ -24,7 +24,7 @@ export const columns = [
   },
   {
     title: '浆员编号',
-    field: 'donorNo',
+    field: 'cardNo',
     width: 120,
   },
   {

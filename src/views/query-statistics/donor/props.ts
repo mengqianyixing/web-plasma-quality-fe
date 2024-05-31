@@ -13,7 +13,7 @@ export const basicProps = {
     type: String as PropType<string>,
     default: '280px',
   },
-  donorNo: {
+  cardNo: {
     type: String as PropType<string>,
   },
 };

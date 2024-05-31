@@ -59,7 +59,7 @@
       },
       {
         title: '浆员编号',
-        dataIndex: 'donorNo',
+        dataIndex: 'cardNo',
       },
       {
         title: '采集日期',
@@ -85,7 +85,7 @@
           component: 'Select',
         },
         {
-          field: 'donorNo',
+          field: 'cardNo',
           label: '浆员编号',
           component: 'Input',
         },

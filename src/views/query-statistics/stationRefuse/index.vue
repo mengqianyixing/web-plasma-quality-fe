@@ -12,7 +12,7 @@
       <template #donorNo="{ record }">
         <div class="z-999">
           <a-button type="link" @click="clickDonorNo(record)">
-            {{ record?.donorNo }}
+            {{ record?.cardNo }}
           </a-button>
         </div>
       </template>
@@ -83,7 +83,7 @@
   });
 
   function clickDonorNo(record) {
-    router.push({ path: '/search/donor', query: { donorNo: record.donorNo } });
+    router.push({ path: '/search/donor', query: { cardNo: record.cardNo } });
   }
 
   const loading = ref(false);

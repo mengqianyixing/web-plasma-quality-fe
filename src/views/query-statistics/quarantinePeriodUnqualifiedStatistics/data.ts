@@ -140,7 +140,7 @@ export const searchFormSchema: FormSchema[] = [
 
 export const dtColumns: BasicColumn[] = [
   {
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     title: '浆员编号',
   },
   {

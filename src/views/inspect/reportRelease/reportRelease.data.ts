@@ -187,7 +187,7 @@ export const totalUnqualifiedColumns: BasicColumn[] = [
     title: '样品编号',
   },
   {
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     title: '浆员编号',
   },
   {
@@ -211,7 +211,7 @@ export const totalUnqualifiedSearch: FormSchema[] = [
     component: 'Input',
   },
   {
-    field: 'donorNo',
+    field: 'cardNo',
     label: '浆员编号',
     component: 'Input',
   },

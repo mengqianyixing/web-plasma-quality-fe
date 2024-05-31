@@ -3,7 +3,7 @@
     <BasicTable @register="registerTable">
       <template #donorNo="{ record }: { record: Recordable }">
         <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleJump(record)">
-          {{ record.donorNo }}
+          {{ record.cardNo }}
         </span>
       </template>
     </BasicTable>
@@ -52,6 +52,6 @@
     bordered: true,
   });
   function handleJump(row: Recordable) {
-    push({ name: 'DonorQuery', query: { donorNo: row.donorNo } });
+    push({ name: 'DonorQuery', query: { cardNo: row.cardNo } });
   }
 </script>

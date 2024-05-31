@@ -12,7 +12,7 @@
       <Description @register="donorTable" :data="mockData" />
     </div>
     <Tabs
-      class="flex-1 p-4 mt--3 bg-white tabs"
+      class="flex-1 p-4 bg-white mt--3 tabs"
       type="card"
       size="small"
       v-model:activeKey="activeKey"
@@ -24,7 +24,7 @@
         <BasicTable @register="callBackTable" class="donor-tab mt--2" />
       </TabPane>
       <TabPane key="titer" tab="效价趋势" class="mt--2">
-        <Chart :donorNo="donorNo" />
+        <Chart :cardNo="cardNo" />
       </TabPane>
     </Tabs>
   </PageWrapper>
@@ -60,10 +60,10 @@
 
   // 浆员查询
   const mockData = ref({});
-  const donorNo = ref('');
+  const cardNo = ref('');
   async function handleSubmit() {
     const values = await validate();
-    donorNo.value = values.donorNo;
+    cardNo.value = values.cardNo;
     donorInfoListApi(values as PostApiCoreDonorListRequest).then((res) => {
       mockData.value = res;
     });
@@ -92,7 +92,7 @@
     beforeFetch: (params) => {
       return {
         ...params,
-        donorNo: donorNo.value,
+        cardNo: cardNo.value,
       };
     },
     fetchSetting: {
@@ -114,7 +114,7 @@
     beforeFetch: (params) => {
       return {
         ...params,
-        donorNo: donorNo.value,
+        cardNo: cardNo.value,
       };
     },
     fetchSetting: {
@@ -131,8 +131,8 @@
   });
 
   onMounted(() => {
-    if (router.query?.donorNo) {
-      setFieldsValue({ donorNo: router.query.donorNo });
+    if (router.query?.cardNo) {
+      setFieldsValue({ cardNo: router.query.cardNo });
       setTimeout(() => {
         handleSubmit();
       }, 0);

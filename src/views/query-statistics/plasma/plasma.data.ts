@@ -44,7 +44,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     width: 100,
   },
   {
@@ -242,7 +242,7 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Input',
   },
   {
-    field: 'donorNo',
+    field: 'cardNo',
     label: '浆员编号',
     component: 'Input',
   },

@@ -137,7 +137,7 @@ export const trayBoxColumns: BasicColumn[] = [{ title: '血浆箱号', dataIndex
 export const trayBagColumns: BasicColumn[] = [
   { title: '血浆批号', dataIndex: 'batchNo' },
   { title: '血浆编号', dataIndex: 'bagNo' },
-  { title: '浆员编号', dataIndex: 'donorNo' },
+  { title: '浆员编号', dataIndex: 'cardNo' },
   { title: '浆员姓名', dataIndex: 'donorName' },
   { title: '现存箱号', dataIndex: 'currBoxNo' },
 ];

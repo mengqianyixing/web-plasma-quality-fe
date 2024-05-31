@@ -186,7 +186,7 @@ export const entryDetailModalColumns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     width: 100,
   },
   {

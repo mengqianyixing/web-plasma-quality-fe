@@ -143,7 +143,7 @@ export const plasmaDetailColumns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
   },
   {
     title: '检疫期类型',

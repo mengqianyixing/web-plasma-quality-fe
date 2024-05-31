@@ -57,7 +57,7 @@ export const missingNumberListColumns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
   },
   {
     title: '采浆日期',
@@ -83,7 +83,7 @@ export const plasmaUnqualifiedColumns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
   },
   {
     title: '采浆日期',

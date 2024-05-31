@@ -69,7 +69,7 @@
       },
       {
         title: '浆员编号',
-        dataIndex: 'donorNo',
+        dataIndex: 'cardNo',
       },
     ],
     fetchSetting: {
@@ -103,7 +103,7 @@
       },
       {
         title: '浆员编号',
-        dataIndex: 'donorNo',
+        dataIndex: 'cardNo',
       },
     ],
     fetchSetting: {
