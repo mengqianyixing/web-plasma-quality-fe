@@ -238,7 +238,7 @@
     useSearchForm: false,
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    canResize: true,
     immediate: false,
   });
   async function handlePageChange(e) {
