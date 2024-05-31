@@ -142,13 +142,6 @@
       field: 'stationName',
       label: '采浆公司',
     },
-    // {
-    //   field: 'transNo',
-    //   label: '出库单号',
-    //   render(text) {
-    //     return <span>{text}</span>;
-    //   },
-    // },
     {
       field: 'boxCount',
       label: '血浆箱数',
@@ -195,6 +188,7 @@
         const data = await acceptPlasma(params);
         if (data) {
           success('接收成功!');
+          batchNo.value = data.batchNo;
           filterForm.value = data;
           if (data.acceptDetail?.unAcceptCount <= 0) {
             // 一批接收完毕 提示
@@ -204,7 +198,7 @@
       } finally {
         tableLoading.value = false;
         boxNo.value = '';
-        nextTick(() => {
+        await nextTick(() => {
           boxNoRef.value.focus();
         });
       }
