@@ -6,8 +6,8 @@ import {
 } from '@/api/type/queryStatistics';
 
 enum Api {
-  LIST = '/api/core/bag/titer/count',
+  LIST = '/api/search/plasma/privilege/count',
 }
 
 export const getListApi = (params: PostApiCoreBagTiterCountRequest) =>
-  defHttp.post<PostApiCoreBagTiterCountResponse>({ url: Api.LIST, params });
+  defHttp.get<PostApiCoreBagTiterCountResponse>({ url: Api.LIST, params });
