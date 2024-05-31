@@ -70,7 +70,6 @@
               >
                 托盘出库
               </a-button>
-              <!-- <a-button @click="openPrint">打印</a-button> -->
             </div>
           </div>
         </template>
@@ -457,6 +456,7 @@
         tableLoading.value = true;
         const data = await plasmaVerifyBag(params);
         if (data) {
+          batchNo.value = data.batchNo;
           filterForm.value.stationName = data.stationName;
           filterForm.value.batchNo = data.batchNo;
           filterForm.value.verifyBagCount = data.verifyBagCount;
@@ -491,17 +491,17 @@
               filterForm.value.verifyBagCount
             ) {
               success('当前批验收完成');
-              openPrint(bagNo.value);
+              await openPrint(bagNo.value);
             } else if (!filterForm.value.unVerifyBag.length) {
               success('当前箱验收完成');
-              openPrint(bagNo.value);
+              await openPrint(bagNo.value);
             }
           }
         }
       } finally {
         tableLoading.value = false;
         bagNo.value = '';
-        nextTick(() => {
+        await nextTick(() => {
           bagNoRef.value.focus();
         });
       }
