@@ -152,7 +152,7 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '回访状态',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.CallbackState),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.CallbackAdapterState),
     },
   },
   {

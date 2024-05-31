@@ -56,4 +56,5 @@ export enum SERVER_ENUM {
   BankTrayStatusEnum = 'BankTrayStatusEnum',
   RsLabSampleType = 'RsLabSampleType',
   SampleMixTypeEnum = 'SampleMixTypeEnum',
+  CallbackAdapterState = 'CallbackAdapterState',
 }

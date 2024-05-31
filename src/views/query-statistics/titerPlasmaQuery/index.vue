@@ -24,7 +24,7 @@
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
-  import { columns, searchFormSchema, dateKey } from './data';
+  import { columns, searchFormSchema } from './data';
   import { PageWrapper } from '@/components/Page';
   import { getListApi } from '@/api/query-statistics/titerPlasmaQuery';
   import { isObject } from '@/utils/is';
@@ -110,16 +110,16 @@
     },
   });
 
-  function getFormDateIsNotNull() {
+  function getFormIsNotNull() {
     const values = getForm().getFieldsValue();
-    return dateKey.some((key) => values[key]);
+    return Object.values(values).some((v) => v || v === 0);
   }
   function submitFunc() {
-    if (getFormDateIsNotNull()) {
+    if (getFormIsNotNull()) {
       reload();
       return Promise.resolve();
     }
-    message.warning('请选择日期后进行查询');
+    message.warning('请选择或输入条件进行查询');
     return Promise.reject();
   }
   function cellClick(slotName: string, data: Recordable) {
