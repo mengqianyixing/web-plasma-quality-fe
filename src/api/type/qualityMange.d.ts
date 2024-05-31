@@ -711,7 +711,7 @@ export interface GetApiProductReleaseBagFlagsResponse {
  *
  * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
  * @请求头 `GET /api/core/batch/plasma/release/bags`
- * @更新时间 `2024-04-23 15:04:20`
+ * @更新时间 `2024-05-31 15:03:46`
  */
 export interface GetApiCoreBatchPlasmaReleaseBagsRequest {
   currPage: string;
@@ -740,7 +740,7 @@ export interface GetApiCoreBatchPlasmaReleaseBagsRequest {
  *
  * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
  * @请求头 `GET /api/core/batch/plasma/release/bags`
- * @更新时间 `2024-04-23 15:04:20`
+ * @更新时间 `2024-05-31 15:03:46`
  */
 export interface GetApiCoreBatchPlasmaReleaseBagsResponse {
   totalCount?: number;
@@ -750,6 +750,7 @@ export interface GetApiCoreBatchPlasmaReleaseBagsResponse {
   result?: {
     bagNo?: string;
     donorNo?: string;
+    cardNo?: string;
     donorName?: string;
     collectAt?: string;
     netWeight?: number;

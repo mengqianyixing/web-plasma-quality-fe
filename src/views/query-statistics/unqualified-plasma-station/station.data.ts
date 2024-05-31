@@ -84,6 +84,51 @@ export const columns: BasicColumn[] = [
         width: 120,
       },
       {
+        title: '样本验收(献血浆者符合性)',
+        dataIndex: 'sampleDonorBlockNum',
+        width: 160,
+      },
+      {
+        title: '验收(破管)',
+        dataIndex: 'sampleDamagedNum',
+        width: 120,
+      },
+      {
+        title: '验收(样本标签信息无法识别)',
+        dataIndex: 'sampleTagMissNum',
+        width: 200,
+      },
+      {
+        title: '验收(样本装量不足)',
+        dataIndex: 'sampleLessNum',
+        width: 150,
+      },
+      {
+        title: '验收(样本颜色异常)',
+        dataIndex: 'showColorErrNum',
+        width: 150,
+      },
+      {
+        title: '验收(样本脂血)',
+        dataIndex: 'lipemiaNum',
+        width: 120,
+      },
+      {
+        title: '验收(样本溶血)',
+        dataIndex: 'sampleHemolysisNum',
+        width: 120,
+      },
+      {
+        title: '验收(无样本)',
+        dataIndex: 'sampleMissNum',
+        width: 120,
+      },
+      {
+        title: '验收(样本无标签)',
+        dataIndex: 'sampleMissTagNum',
+        width: 130,
+      },
+      {
         title: '验收不合格比率',
         dataIndex: 'verifyUnqRate',
         width: 150,

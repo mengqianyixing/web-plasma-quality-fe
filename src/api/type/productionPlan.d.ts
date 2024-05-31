@@ -406,7 +406,7 @@ export type GetApiProductPlanBatchOrderNoResponse = {
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/bag`
- * @更新时间 `2024-01-23 17:11:42`
+ * @更新时间 `2024-05-31 14:35:40`
  */
 export interface PostApiProductPlanBagRequest {
   orderNo: string;
@@ -425,7 +425,7 @@ export interface PostApiProductPlanBagRequest {
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/bag`
- * @更新时间 `2024-01-23 17:11:42`
+ * @更新时间 `2024-05-31 14:35:40`
  */
 export interface PostApiProductPlanBagResponse {
   totalCount: number;
@@ -461,6 +461,10 @@ export interface PostApiProductPlanBagResponse {
      * 浆员姓名
      */
     donorName: number;
+    /**
+     * 浆员卡号
+     */
+    cardNo: string;
     /**
      * 血浆类型
      */

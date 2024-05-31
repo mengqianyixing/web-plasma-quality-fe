@@ -148,7 +148,7 @@ export interface GetApiCoreDonorCallbackResponse {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/need`
- * @更新时间 `2024-05-28 18:30:19`
+ * @更新时间 `2024-05-31 10:25:07`
  */
 export interface GetApiCoreDonorCallbackNeedRequest {
   stationNo: string;
@@ -186,7 +186,7 @@ export interface GetApiCoreDonorCallbackNeedRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/need`
- * @更新时间 `2024-05-28 18:30:19`
+ * @更新时间 `2024-05-31 10:25:07`
  */
 export type GetApiCoreDonorCallbackNeedResponse = {
   stationNo: string;
@@ -194,6 +194,10 @@ export type GetApiCoreDonorCallbackNeedResponse = {
    * 浆员编号
    */
   donorNo: string;
+  /**
+   * 浆员卡号
+   */
+  cardNo: string;
   /**
    * 浆员姓名
    */
@@ -278,7 +282,7 @@ export type PostApiCoreDonorCallbackNeedResponse = null;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-05-28 18:29:16`
+ * @更新时间 `2024-05-31 10:32:28`
  */
 export interface GetApiCoreDonorCallbackDetailRequest {
   /**
@@ -303,6 +307,10 @@ export interface GetApiCoreDonorCallbackDetailRequest {
    * 血浆状态  传1首次 2反复
    */
   trackType?: string;
+  /**
+   * 浆员卡号
+   */
+  cardNo: string;
 }
 
 /**
@@ -310,7 +318,7 @@ export interface GetApiCoreDonorCallbackDetailRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-05-28 18:29:16`
+ * @更新时间 `2024-05-31 10:32:28`
  */
 export type GetApiCoreDonorCallbackDetailResponse = {
   stationNo: string;
@@ -530,7 +538,7 @@ export type GetApiCoreDonorCallbackResultResponse = {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/defeat`
- * @更新时间 `2024-01-26 14:35:42`
+ * @更新时间 `2024-05-31 10:43:25`
  */
 export interface GetApiCoreDonorCallbackDefeatRequest {
   pageSize: string;
@@ -558,7 +566,7 @@ export interface GetApiCoreDonorCallbackDefeatRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/defeat`
- * @更新时间 `2024-01-26 14:35:42`
+ * @更新时间 `2024-05-31 10:43:25`
  */
 export type GetApiCoreDonorCallbackDefeatResponse = {
   /**
@@ -569,6 +577,10 @@ export type GetApiCoreDonorCallbackDefeatResponse = {
    * 浆员编号
    */
   donorNo: string;
+  /**
+   * 浆员卡号
+   */
+  cardNo: string;
   /**
    * 浆员姓名
    */
@@ -608,7 +620,7 @@ export type GetApiCoreDonorCallbackDefeatResponse = {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/block`
- * @更新时间 `2024-02-27 15:49:19`
+ * @更新时间 `2024-05-31 10:53:31`
  */
 export interface GetApiCoreDonorBlockRequest {
   pageSize: string;
@@ -644,7 +656,7 @@ export interface GetApiCoreDonorBlockRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/block`
- * @更新时间 `2024-02-27 15:49:19`
+ * @更新时间 `2024-05-31 10:53:31`
  */
 export interface GetApiCoreDonorBlockResponse {
   totalCount?: number;
@@ -660,6 +672,10 @@ export interface GetApiCoreDonorBlockResponse {
      * 浆站编号
      */
     donorNo: string;
+    /**
+     * 浆员卡号
+     */
+    cardNo: string;
     /**
      * 浆员名称
      */
