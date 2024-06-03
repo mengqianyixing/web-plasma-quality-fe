@@ -1,5 +1,4 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import dayjs from 'dayjs';
 import { tagEncodingTypeMap } from '@/enums/tagManageEnum';
 
 export const columns: BasicColumn[] = [
@@ -11,20 +10,6 @@ export const columns: BasicColumn[] = [
     title: '名称',
     dataIndex: 'name',
     width: 300,
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createdAt',
-    format(text) {
-      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
-    },
-  },
-  {
-    title: '更新时间',
-    dataIndex: 'updatedAt',
-    format(text) {
-      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
-    },
   },
 ];
 

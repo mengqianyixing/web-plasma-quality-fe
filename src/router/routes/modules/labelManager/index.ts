@@ -66,16 +66,6 @@ const labelManager: AppRouteModule = {
       ],
     },
     {
-      path: 'encoding',
-      name: 'TagEncoding',
-      meta: {
-        title: '标签编码管理',
-      },
-      id: 890020,
-      component: () => import('@/views/tag-manage/encoding/index.vue'),
-      authElements: [],
-    },
-    {
       path: 'print-record',
       name: 'TagPrintRecord',
       meta: {

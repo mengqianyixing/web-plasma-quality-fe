@@ -1,42 +1,49 @@
 <template>
-  <BasicDrawer
+  <BasicModal
     v-bind="$attrs"
-    @register="registerDrawer"
+    @register="registerEditModal"
     showFooter
     :title="getTitle"
     width="1000px"
+    :min-height="600"
     @ok="handleSubmit"
   >
-    <a-tabs v-model:activeKey="activeKey">
-      <a-tab-pane key="1" tab="编辑">
-        <BasicTable @register="registerTable">
-          <template #toolbar>
-            <div class="flex gap-2">
-              <a-button type="primary" @click="handleAdd"> 新增 </a-button>
-            </div>
-          </template>
-          <template #bodyCell="{ record, column }">
-            <template v-if="column.key === 'action'">
-              <TableAction
-                :actions="[
-                  {
-                    label: '删除',
-                    color: 'error',
-                    onClick: handleEncodingDel.bind(null, record),
-                  },
-                ]"
-              />
-            </template>
-          </template>
-        </BasicTable>
-      </a-tab-pane>
-      <a-tab-pane key="2" tab="编辑JSON" force-render>
-        <div class="h-[100vh]">
-          <CodeEditor v-model:value="JsonValue" :mode="modeValue" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute flex flex-col w-full h-full">
+        <div class="flex-1 w-full">
+          <a-tabs v-model:activeKey="activeKey" class="h-full bg-white tabs">
+            <a-tab-pane key="1" tab="编辑">
+              <BasicTable @register="registerTable">
+                <template #toolbar>
+                  <div class="flex gap-2">
+                    <a-button type="primary" @click="handleAdd"> 新增 </a-button>
+                  </div>
+                </template>
+                <template #bodyCell="{ record, column }">
+                  <template v-if="column.key === 'action'">
+                    <TableAction
+                      :actions="[
+                        {
+                          label: '删除',
+                          color: 'error',
+                          onClick: handleEncodingDel.bind(null, record),
+                        },
+                      ]"
+                    />
+                  </template>
+                </template>
+              </BasicTable>
+            </a-tab-pane>
+            <a-tab-pane key="2" tab="编辑JSON" force-render>
+              <div class="h-[100vh]">
+                <CodeEditor v-model:value="JsonValue" :mode="modeValue" />
+              </div>
+            </a-tab-pane>
+          </a-tabs>
         </div>
-      </a-tab-pane>
-    </a-tabs>
-  </BasicDrawer>
+      </div>
+    </div>
+  </BasicModal>
 
   <EncodingModal @register="registerModal" @success="handleSuccess" />
 </template>
@@ -44,11 +51,10 @@
   import { ref, computed, unref, createVNode } from 'vue';
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { encodingDetailColumns } from './encoding.data';
-  import { BasicDrawer, useDrawerInner } from '@/components/Drawer';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { Tabs, TabPane } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import type { Nullable } from '@vben/types';
-  import { useModal } from '@/components/Modal';
   import { CodeEditor, MODE } from '@/components/CodeEditor';
   import { editEncoding, getEncodingDetail } from '@/api/tag/encoding';
 
@@ -77,7 +83,8 @@
     size: 'small',
     striped: false,
     useSearchForm: false,
-
+    inset: true,
+    isCanResizeParent: true,
     bordered: true,
     pagination: false,
     showIndexColumn: false,
@@ -86,13 +93,12 @@
       dataIndex: 'action',
       fixed: 'right',
     },
-    canResize: true,
   });
 
   const [registerModal, { openModal }] = useModal();
 
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    setDrawerProps({ confirmLoading: false });
+  const [registerEditModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
+    setModalProps({ confirmLoading: false });
     isUpdate.value = !!data?.isUpdate;
 
     if (unref(isUpdate)) {
@@ -109,7 +115,7 @@
 
   async function handleSubmit() {
     try {
-      setDrawerProps({ confirmLoading: true });
+      setModalProps({ confirmLoading: true });
       if (unref(isUpdate)) {
         if (activeKey.value === '1') {
           await editEncoding({
@@ -123,10 +129,10 @@
           });
         }
       }
-      closeDrawer();
+      closeModal();
       emit('success');
     } finally {
-      setDrawerProps({ confirmLoading: false });
+      setModalProps({ confirmLoading: false });
     }
   }
 
@@ -167,3 +173,8 @@
     });
   }
 </script>
+<style scoped>
+  .tabs :deep(.ant-tabs-content) {
+    height: 100%;
+  }
+</style>
