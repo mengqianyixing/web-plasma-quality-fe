@@ -162,15 +162,13 @@
     switch (flag) {
       case 'add':
         openPlasmaCheckModal(true, {
-          isPreview: false,
-          isUpdate: false,
+          flag,
           record: selectedRowsRef.value[0],
         });
         break;
       case 'edit':
         openPlasmaCheckModal(true, {
-          isPreview: false,
-          isUpdate: true,
+          flag,
           record: selectedRowsRef.value[0],
         });
         break;
@@ -242,8 +240,7 @@
     if (!flag) return;
 
     openPlasmaCheckModal(true, {
-      isPreview: false,
-      isUpdate: false,
+      flag: 'add',
       record: selectedRowsRef.value[0],
     });
   }
@@ -260,8 +257,7 @@
     if (!flag) return;
 
     openPlasmaCheckModal(true, {
-      isPreview: false,
-      isUpdate: true,
+      flag: 'edit',
       record: selectedRowsRef.value[0],
     });
   }
@@ -362,8 +358,7 @@
 
   function handlePreview(record) {
     openPlasmaCheckModal(true, {
-      isPreview: true,
-      isUpdate: true,
+      flag: 'preview',
       record: record,
     });
   }
