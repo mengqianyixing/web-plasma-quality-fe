@@ -1,11 +1,3 @@
-<!--
- * @Descripttion:
- * @version:
- * @Author: zcc
- * @Date: 2023-12-21 17:19:22
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 18:04:02
--->
 <template>
   <div class="h-full">
     <BasicTable @register="registerTable">
@@ -33,6 +25,9 @@
   import { bindBoxApi, getBankBoxesList } from '@/api/tray/relocation';
   import { watch } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { cloneDeep, isEqual, isNull } from 'lodash-es';
+
+  const { createMessage } = useMessage();
 
   const props = defineProps({
     isBinding: {
@@ -43,9 +38,6 @@
   watch(
     () => props.isBinding,
     (val) => {
-      setTimeout(() => {
-        reload();
-      }, 0);
       if (!val) {
         setTimeout(() => {
           setColumns([
@@ -80,6 +72,43 @@
     showActionButtonGroup: false,
     showResetButton: false,
   });
+
+  function isEmptyValue(value) {
+    return !(
+      isEqual(value, {}) || // 空对象
+      typeof value === 'undefined' || // undefined
+      isNull(value) || // null
+      value === '' || // 空字符串
+      (Array.isArray(value) && value.length === 0)
+    );
+  }
+
+  function deleteInvalidProperties(obj, strict = true) {
+    if (!obj) return obj;
+    const copyObj = cloneDeep(obj);
+    Object.entries(obj).forEach(([key, value]) => {
+      if (value && typeof value === 'object') {
+        copyObj[key] = deleteInvalidProperties(value, strict);
+        value = copyObj[key];
+      }
+      if (!isEmptyValue(value)) {
+        delete copyObj[key];
+      }
+    });
+    return copyObj;
+  }
+
+  async function submitFunc() {
+    const searchForm = getForm().getFieldsValue();
+
+    const _searchForm = deleteInvalidProperties(searchForm);
+
+    if (Object.keys(_searchForm).length === 0) {
+      createMessage.error('请至少输入一个查询条件');
+    } else {
+      await reload();
+    }
+  }
   const [registerTable, { getSelectRows, reload, clearSelectedRowKeys, getForm, setColumns }] =
     useTable({
       immediate: false,
@@ -98,6 +127,8 @@
       },
       formConfig: {
         schemas: plasmaBoxHandSearchFormSchema,
+        submitFunc,
+        submitOnReset: true,
       },
       columns: plasmaBoxHandColumns,
       useSearchForm: true,
