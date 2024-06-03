@@ -28,17 +28,18 @@ export const columns: BasicColumn[] = [
     title: '血浆批号',
     dataIndex: 'batchNo',
     ellipsis: false,
+    width: 120,
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
     slots: { customRender: 'bagNo' },
-    width: 120,
+    width: 150,
   },
   {
     title: '浆员编号',
     dataIndex: 'donorNo',
-    width: 100,
+    width: 150,
   },
   {
     title: '血型',
