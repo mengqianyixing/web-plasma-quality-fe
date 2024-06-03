@@ -186,6 +186,14 @@ const callManager: AppRouteModule = {
       },
       authElements: [
         {
+          id: BaseSettingButtonEnum.StationAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.StationEdit,
+          title: '编辑',
+        },
+        {
           id: BaseSettingButtonEnum.StationEnable,
           name: 'stationEnable',
           title: '启用按钮权限',

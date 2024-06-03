@@ -3,8 +3,12 @@
     <BasicTable @register="registerTable">
       <template #toolbar>
         <div class="flex gap-2">
-          <a-button type="primary" @click="handleAdd">新增</a-button>
-          <a-button type="primary" @click="handleEdit">编辑</a-button>
+          <a-button type="primary" @click="handleAdd" v-auth="BaseSettingButtonEnum.StationAdd">
+            新增
+          </a-button>
+          <a-button type="primary" @click="handleEdit" v-auth="BaseSettingButtonEnum.StationEdit"
+            >编辑
+          </a-button>
           <a-button
             type="primary"
             @click="handleEnable"

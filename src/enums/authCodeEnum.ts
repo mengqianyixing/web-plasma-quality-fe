@@ -30,6 +30,8 @@ export enum ReCheckButtonEnum {
 }
 
 export enum BaseSettingButtonEnum {
+  StationAdd = 'E_1000701',
+  StationEdit = 'E_1000702',
   StationEnable = 'E_100070',
   StationDisable = 'E_100080',
 

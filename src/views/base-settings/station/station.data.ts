@@ -2,12 +2,17 @@ import { BasicColumn } from '@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
+    title: '排序',
+    dataIndex: 'sort',
+  },
+  {
     title: '简称',
     dataIndex: 'shortName',
   },
   {
     title: '全称',
     dataIndex: 'fullName',
+    width: 250,
   },
   {
     title: '血浆皮重（g）',

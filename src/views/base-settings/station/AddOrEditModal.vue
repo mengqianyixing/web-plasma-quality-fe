@@ -75,6 +75,13 @@
     baseColProps: { span: 24 },
     schemas: [
       {
+        label: '排序',
+        field: 'sort',
+        component: 'InputNumber',
+        colProps: { span: 20 },
+        required: true,
+      },
+      {
         label: '浆站编码',
         field: 'stationNo',
         component: 'Input',
