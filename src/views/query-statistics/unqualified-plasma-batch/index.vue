@@ -176,19 +176,24 @@
     try {
       loading.value = true;
       const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
-      const OriginData = await getUnqualifiedPlasmaBatch({
+
+      let OriginData: any[];
+      const batchRes = await getUnqualifiedPlasmaBatch({
         ...getForm().getFieldsValue(),
         currPage: '1',
         pageSize: pageSize,
       });
-      if ((OriginData.totalCount || 0) > Number(pageSize))
+
+      const totalData = await getUnqualifiedPlasmaCountTotal(
+        getForm().getFieldsValue() as GetApiSearchBatchCountTotalRequest,
+      );
+
+      OriginData = batchRes.result!.map((it, idx) => ({ ...it, index: idx + 1 }));
+      OriginData.push({ ...totalData, index: '合计' });
+      if ((batchRes.totalCount || 0) > Number(pageSize))
         return message.warning('最多只能导出【' + pageSize + '】条数据');
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columnsRef.value);
-      const { result, merge: bodyMerge } = formatData(
-        lastLevelCols,
-        OriginData.result || [],
-        rows.length,
-      );
+      const { result, merge: bodyMerge } = formatData(lastLevelCols, OriginData || [], rows.length);
       jsonToSheetXlsx({
         data: [...rows, ...result],
         json2sheetOpts: { skipHeader: true },
