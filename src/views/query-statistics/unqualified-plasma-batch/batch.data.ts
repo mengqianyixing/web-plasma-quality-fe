@@ -89,16 +89,6 @@ export const columns: BasicColumn[] = [
         width: 100,
       },
       {
-        title: '验收不合格合计',
-        dataIndex: 'verifyUnqNum',
-        width: 120,
-      },
-      {
-        title: '验收不合格比率',
-        dataIndex: 'verifyUnqRate',
-        width: 150,
-      },
-      {
         title: '样本验收(献血浆者符合性)',
         dataIndex: 'sampleDonorBlockNum',
         width: 160,
@@ -142,6 +132,16 @@ export const columns: BasicColumn[] = [
         title: '验收(样本无标签)',
         dataIndex: 'sampleMissTagNum',
         width: 130,
+      },
+      {
+        title: '验收不合格合计',
+        dataIndex: 'verifyUnqNum',
+        width: 120,
+      },
+      {
+        title: '验收不合格比率',
+        dataIndex: 'verifyUnqRate',
+        width: 150,
       },
     ],
   },
