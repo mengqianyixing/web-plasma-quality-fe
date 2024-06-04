@@ -210,6 +210,9 @@
       setTableData(res.itemList as any[]);
     } else {
       conclusionData.conclusion = await getCheckConclusionTemplate(data.record?.batchNo);
+      await setFieldsValue({
+        auditConclusion: conclusionData.conclusion,
+      });
 
       const dictionaryArr = await getSysDictionary([DictionaryEnum.PlasmaRelease]);
       if (!dictionaryArr.length) return;
