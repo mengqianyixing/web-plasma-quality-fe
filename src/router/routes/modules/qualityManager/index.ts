@@ -107,7 +107,7 @@ const checkManager: AppRouteModule = {
         },
         {
           id: QualityButtonEnum.BatchReleaseCancelAdd,
-          title: '取消审核',
+          title: '撤销审核',
         },
         {
           id: QualityButtonEnum.BatchReleaseReview,
@@ -115,7 +115,7 @@ const checkManager: AppRouteModule = {
         },
         {
           id: QualityButtonEnum.BatchReleaseCancelReview,
-          title: '取消复核',
+          title: '撤销复核',
         },
         {
           id: QualityButtonEnum.BatchReleaseRelease,
@@ -123,7 +123,7 @@ const checkManager: AppRouteModule = {
         },
         {
           id: QualityButtonEnum.BatchReleaseUnRelease,
-          title: '取消放行',
+          title: '撤销放行',
         },
         {
           id: QualityButtonEnum.BatchReleasePrint,

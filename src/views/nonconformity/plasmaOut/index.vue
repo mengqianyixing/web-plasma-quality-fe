@@ -30,7 +30,7 @@
           type="primary"
           @click="handleUnProcess"
           v-auth="NonconformityButtonEnum.PlasmaOutUnProcess"
-          >取消审核
+          >撤销审核
         </a-button>
         <a-button type="primary" @click="handleScan" v-auth="NonconformityButtonEnum.PlasmaOutScan">
           出库扫描
@@ -263,7 +263,7 @@
   async function handleUnProcess() {
     const [row] = getSelections(true);
     if (!row) return;
-    type.value = '取消审核';
+    type.value = '撤销审核';
     open.value = true;
     api = unProcessApi;
     await resetFields();

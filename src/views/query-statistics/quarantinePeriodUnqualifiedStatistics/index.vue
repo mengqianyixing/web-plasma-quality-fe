@@ -119,11 +119,10 @@
     resetFields();
     if (field === 'stationNo') {
       return setFieldsValue(values);
-    } else if (field === 'blockBy') {
-      setFieldsValue({ stationNo: values.stationNo, blockBy: values.blockBy });
-    } else if (field === '[blockStartDate, blockEndDate]') {
+    } else if (field === 'blockBy' || field === '[blockStartDate, blockEndDate]') {
       setFieldsValue({
         stationNo: values.stationNo,
+        blockBy: values.blockBy,
         blockStartDate: values.blockStartDate,
         blockEndDate: values.blockEndDate,
       });

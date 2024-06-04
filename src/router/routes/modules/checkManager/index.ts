@@ -45,7 +45,7 @@ const checkManager: AppRouteModule = {
         },
         {
           id: InspectButtonEnum.MaterialPreRegistrationUnReview,
-          title: '取消复核',
+          title: '撤销复核',
         },
       ],
       meta: {

@@ -16,7 +16,7 @@
         <a-button type="primary" @click="handlePickPlasma">挑浆</a-button>
         <a-button type="primary" @click="handleInStore">入库</a-button>
         <a-button type="primary" @click="handleCheck">审核</a-button>
-        <a-button type="primary" @click="handleCancelCheck">取消审核</a-button>
+        <a-button type="primary" @click="handleCancelCheck">撤销审核</a-button>
       </template>
     </BasicTable>
 
@@ -157,7 +157,7 @@
     createConfirm({
       iconType: 'warning',
       title: '提示',
-      content: '确定取消审核吗？',
+      content: '确定撤销审核吗？',
       onOk: async () => {
         await nonconformityRedoCheck(selectedRow.value[0]?.bagNo);
 

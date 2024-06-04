@@ -32,7 +32,7 @@
           type="primary"
           @click="handleCancelReview"
           v-auth="InspectButtonEnum.MaterialPreRegistrationUnReview"
-          >取消复核</a-button
+          >撤销复核</a-button
         >
 
         <a-button
@@ -176,7 +176,7 @@
       confirmLoading.value = true;
       await cancelReviewApi({ id: row.id, cause });
       open.value = false;
-      message.success('取消复核成功');
+      message.success('撤销复核成功');
       await reload();
     } finally {
       confirmLoading.value = false;

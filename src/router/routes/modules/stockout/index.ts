@@ -127,7 +127,7 @@ const nonconformity: AppRouteModule = {
         {
           id: StockOutButtonEnum.ProductionOrderCancelRecheck,
           name: 'cancelRecheck',
-          title: '取消复核',
+          title: '撤销复核',
         },
         {
           id: StockOutButtonEnum.ProductionOrderExamine,
@@ -137,7 +137,7 @@ const nonconformity: AppRouteModule = {
         {
           id: StockOutButtonEnum.ProductionOrderCancelExamine,
           name: 'cancelExam',
-          title: '取消审核',
+          title: '撤销审核',
         },
         {
           id: StockOutButtonEnum.ProductionOrderPrint,

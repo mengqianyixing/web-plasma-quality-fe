@@ -19,7 +19,7 @@
           type="primary"
           @click="handleCancelCreate"
           v-auth="QualityButtonEnum.BatchReleaseCancelAdd"
-          >取消审核</a-button
+          >撤销审核</a-button
         >
         <a-button
           type="primary"
@@ -32,7 +32,7 @@
           type="primary"
           @click="handleCancelReview"
           v-auth="QualityButtonEnum.BatchReleaseUpdate"
-          >取消复核</a-button
+          >撤销复核</a-button
         >
         <a-button
           type="primary"
@@ -45,7 +45,7 @@
           type="primary"
           @click="handleCancelRelease"
           v-auth="QualityButtonEnum.BatchReleaseUnRelease"
-          >取消放行</a-button
+          >撤销放行</a-button
         >
         <a-button
           type="primary"
@@ -76,7 +76,7 @@
       okText="提交"
       width="300px"
       :confirmLoading="confirmLoading"
-      :title="'取消原因'"
+      :title="'撤销原因'"
     >
       <div class="m-20px">
         <BasicForm @register="registerForm" />
@@ -323,7 +323,7 @@
       try {
         await dialogCallBackFn({ prNo: row.prNo, reason: values.reason });
         success();
-        message.success('取消成功');
+        message.success('撤销成功');
         open.value = false;
       } finally {
         confirmLoading.value = false;
