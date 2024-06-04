@@ -91,7 +91,7 @@ export const columns: BasicColumn[] = [
       {
         title: '样本验收(献血浆者符合性)',
         dataIndex: 'sampleDonorBlockNum',
-        width: 160,
+        width: 180,
       },
       {
         title: '验收(破管)',
