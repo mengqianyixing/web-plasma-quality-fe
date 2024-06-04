@@ -140,7 +140,7 @@ export type GetApiCoreSampleBatchsResponse = {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/sample/unqualified`
- * @更新时间 `2024-01-05 14:53:03`
+ * @更新时间 `2024-05-31 17:15:08`
  */
 export interface GetApiCoreSampleUnqualifiedRequest {
   /**
@@ -162,7 +162,7 @@ export interface GetApiCoreSampleUnqualifiedRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/sample/unqualified`
- * @更新时间 `2024-01-05 14:53:03`
+ * @更新时间 `2024-05-31 17:15:08`
  */
 export type GetApiCoreSampleUnqualifiedResponse = {
   /**
@@ -173,6 +173,7 @@ export type GetApiCoreSampleUnqualifiedResponse = {
    * 浆员姓名
    */
   donorName?: string;
+  cardNo?: string;
   /**
    * 浆员编号
    */
@@ -1504,7 +1505,7 @@ export interface GetApiCoreBankDeliverSampleTrayOutResponse {}
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/batch/sample/accept/keep-pack/detail`
- * @更新时间 `2024-05-23 20:06:05`
+ * @更新时间 `2024-05-31 17:19:14`
  */
 export interface GetApiCoreBatchSampleAcceptKeepPackDetailRequest {
   /**
@@ -1538,7 +1539,7 @@ export interface GetApiCoreBatchSampleAcceptKeepPackDetailRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/batch/sample/accept/keep-pack/detail`
- * @更新时间 `2024-05-23 20:06:05`
+ * @更新时间 `2024-05-31 17:19:14`
  */
 export interface GetApiCoreBatchSampleAcceptKeepPackDetailResponse {
   /**
@@ -1587,6 +1588,7 @@ export interface GetApiCoreBatchSampleAcceptKeepPackDetailResponse {
      * 浆员姓名
      */
     donorName?: string;
+    cardNo?: string;
   }[];
 }
 

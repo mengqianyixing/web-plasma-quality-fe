@@ -860,7 +860,7 @@ export interface PutApiCoreBankTrayWarehouseFerryResponse {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/tray/bag/detail`
- * @更新时间 `2024-04-29 17:23:45`
+ * @更新时间 `2024-06-03 10:10:33`
  */
 export interface GetApiCoreBankTrayBagDetailRequest {
   /**
@@ -890,7 +890,7 @@ export interface GetApiCoreBankTrayBagDetailRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/tray/bag/detail`
- * @更新时间 `2024-04-29 17:23:45`
+ * @更新时间 `2024-06-03 10:10:33`
  */
 export interface GetApiCoreBankTrayBagDetailResponse {
   currPage?: number;
@@ -917,6 +917,7 @@ export interface GetApiCoreBankTrayBagDetailResponse {
      * 现存箱号
      */
     currBoxNo?: string;
+    cardNo?: string;
   }[];
 }
 

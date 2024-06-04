@@ -1239,10 +1239,10 @@ export interface GetApiCoreLabErpTestReportQueryResponse {
  * 接口 [投产查询↗](https://yapi.sharing8.cn/project/529/interface/api/33497) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/product/inquiry`
- * @更新时间 `2024-05-08 11:13:06`
+ * @请求头 `GET /api/search/prod/inquiry`
+ * @更新时间 `2024-06-04 11:30:23`
  */
-export interface PostApiProductInquiryRequest {
+export interface GetApiSearchProdInquiryRequest {
   /**
    * 制造批号
    */
@@ -1287,18 +1287,18 @@ export interface PostApiProductInquiryRequest {
    * 血浆采集日期结束
    */
   collectionAtEnd?: string;
-  pageSize: number;
-  currPage: number;
+  pageSize: string;
+  currPage: string;
 }
 
 /**
  * 接口 [投产查询↗](https://yapi.sharing8.cn/project/529/interface/api/33497) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/product/inquiry`
- * @更新时间 `2024-05-08 11:13:06`
+ * @请求头 `GET /api/search/prod/inquiry`
+ * @更新时间 `2024-06-04 11:30:23`
  */
-export interface PostApiProductInquiryResponse {
+export interface GetApiSearchProdInquiryResponse {
   totalCount: number;
   pageSize: null;
   totalPage: null;
@@ -3021,7 +3021,7 @@ export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/donor/status`
- * @更新时间 `2024-05-31 16:37:52`
+ * @更新时间 `2024-05-31 16:42:10`
  */
 export interface GetApiSearchDonorStatusRequest {
   /**
@@ -3093,7 +3093,7 @@ export interface GetApiSearchDonorStatusRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/donor/status`
- * @更新时间 `2024-05-31 16:37:52`
+ * @更新时间 `2024-05-31 16:42:10`
  */
 export interface GetApiSearchDonorStatusResponse {
   currPage: number;
@@ -3143,7 +3143,7 @@ export interface GetApiSearchDonorStatusResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/factory`
- * @更新时间 `2024-05-15 16:28:56`
+ * @更新时间 `2024-05-31 16:48:30`
  */
 export interface GetApiSearchPlasmaFactoryRequest {
   pageSize: string;
@@ -3178,7 +3178,7 @@ export interface GetApiSearchPlasmaFactoryRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/factory`
- * @更新时间 `2024-05-15 16:28:56`
+ * @更新时间 `2024-05-31 16:48:30`
  */
 export interface GetApiSearchPlasmaFactoryResponse {
   currPage: number;
@@ -3205,6 +3205,10 @@ export interface GetApiSearchPlasmaFactoryResponse {
      * 献血浆者编号
      */
     donorNo: string;
+    /**
+     * 浆员卡号
+     */
+    cardNo: string;
     /**
      * 姓名
      */
@@ -3391,7 +3395,7 @@ export interface PostApiCoreLabSamplesLabItemResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/check/details`
- * @更新时间 `2024-05-09 15:26:20`
+ * @更新时间 `2024-05-31 16:50:30`
  */
 export interface GetApiSearchPlasmaCheckDetailsRequest {
   /**
@@ -3456,7 +3460,7 @@ export interface GetApiSearchPlasmaCheckDetailsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/check/details`
- * @更新时间 `2024-05-09 15:26:20`
+ * @更新时间 `2024-05-31 16:50:30`
  */
 export interface GetApiSearchPlasmaCheckDetailsResponse {
   totalCount: number;
@@ -3467,6 +3471,7 @@ export interface GetApiSearchPlasmaCheckDetailsResponse {
     bagNo?: string;
     station?: string;
     donorNo?: string;
+    cardNo?: string;
     name?: string;
     batchNo?: string;
     collectionAt?: string;
@@ -3478,7 +3483,7 @@ export interface GetApiSearchPlasmaCheckDetailsResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege/details`
- * @更新时间 `2024-05-21 14:27:15`
+ * @更新时间 `2024-05-31 16:53:02`
  */
 export interface GetApiSearchPlasmaPrivilegeDetailsRequest {
   /**
@@ -3506,7 +3511,7 @@ export interface GetApiSearchPlasmaPrivilegeDetailsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege/details`
- * @更新时间 `2024-05-21 14:27:15`
+ * @更新时间 `2024-05-31 16:53:02`
  */
 export interface GetApiSearchPlasmaPrivilegeDetailsResponse {
   totalCount: number;
@@ -3516,6 +3521,7 @@ export interface GetApiSearchPlasmaPrivilegeDetailsResponse {
   result?: {
     donorNo: string;
     name: string;
+    cardNo: string;
     bagNo: string;
     titerValue: string;
     collectionAt: string;
@@ -3691,7 +3697,7 @@ export type GetApiCoreBagUnqualifiedStatisticQuarantineResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal/detail`
- * @更新时间 `2024-03-13 15:00:49`
+ * @更新时间 `2024-05-31 16:55:02`
  */
 export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailRequest {
   currPage: string;
@@ -3728,7 +3734,7 @@ export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal/detail`
- * @更新时间 `2024-03-13 15:00:49`
+ * @更新时间 `2024-05-31 16:55:02`
  */
 export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailResponse {
   totalCount?: number;
@@ -3739,6 +3745,7 @@ export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailResponse {
     bagNo?: string;
     batchNo?: string;
     donorNo?: string;
+    cardNo?: string;
     name?: string;
     collectAt?: string;
   }[];
@@ -3749,7 +3756,7 @@ export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-quarantine/detail`
- * @更新时间 `2024-03-13 15:13:41`
+ * @更新时间 `2024-05-31 16:57:04`
  */
 export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailRequest {
   currPage: string;
@@ -3783,7 +3790,7 @@ export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-quarantine/detail`
- * @更新时间 `2024-03-13 15:13:41`
+ * @更新时间 `2024-05-31 16:57:04`
  */
 export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailResponse {
   totalCount?: number;
@@ -3794,6 +3801,7 @@ export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailResponse {
     bagNo?: string;
     batchNo?: string;
     donorNo?: string;
+    cardNo?: string;
     name?: string;
     collectAt?: string;
   }[];
@@ -4195,7 +4203,7 @@ export interface GetApiCoreBankErpOutDetailResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/lab/samples/lab/unqualified/item`
- * @更新时间 `2024-04-20 19:39:39`
+ * @更新时间 `2024-05-31 17:04:31`
  */
 export interface GetApiCoreLabSamplesLabUnqualifiedItemRequest {
   filedReason: string;
@@ -4209,7 +4217,7 @@ export interface GetApiCoreLabSamplesLabUnqualifiedItemRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/lab/samples/lab/unqualified/item`
- * @更新时间 `2024-04-20 19:39:39`
+ * @更新时间 `2024-05-31 17:04:31`
  */
 export interface GetApiCoreLabSamplesLabUnqualifiedItemResponse {
   totalCount: number;
@@ -4233,6 +4241,7 @@ export interface GetApiCoreLabSamplesLabUnqualifiedItemResponse {
      * od
      */
     donorNo: string;
+    cardNo: string;
     /**
      * cutoff
      */
@@ -4338,7 +4347,7 @@ export type GetApiSearchSampleLabResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/lab/erp/test-report/unqualified`
- * @更新时间 `2024-05-07 15:07:56`
+ * @更新时间 `2024-05-31 17:09:39`
  */
 export interface GetApiCoreLabErpTestReportUnqualifiedRequest {
   /**
@@ -4364,13 +4373,17 @@ export interface GetApiCoreLabErpTestReportUnqualifiedRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/lab/erp/test-report/unqualified`
- * @更新时间 `2024-05-07 15:07:56`
+ * @更新时间 `2024-05-31 17:09:39`
  */
 export type GetApiCoreLabErpTestReportUnqualifiedResponse = {
   /**
    * 浆员姓名
    */
   donorName?: string;
+  /**
+   * 浆员卡号
+   */
+  cardNo?: string;
   /**
    * 浆员编号
    */

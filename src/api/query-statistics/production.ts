@@ -1,13 +1,13 @@
 import { defHttp } from '@/utils/http/axios';
 
 import {
-  PostApiProductInquiryRequest,
-  PostApiProductInquiryResponse,
+  GetApiSearchProdInquiryRequest,
+  GetApiSearchProdInquiryResponse,
 } from '@/api/type/queryStatistics';
 
 enum Api {
-  PRODUCTION_INQUIRY = '/api/product/inquiry',
+  PRODUCTION_INQUIRY = '/api/search/prod/inquiry',
 }
 
-export const getProductionInquiry = (params: PostApiProductInquiryRequest) =>
-  defHttp.post<PostApiProductInquiryResponse>({ url: Api.PRODUCTION_INQUIRY, params });
+export const getProductionInquiry = (params: GetApiSearchProdInquiryRequest) =>
+  defHttp.get<GetApiSearchProdInquiryResponse>({ url: Api.PRODUCTION_INQUIRY, params });
