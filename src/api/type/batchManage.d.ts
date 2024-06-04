@@ -2325,4 +2325,57 @@ export interface PostApiCoreBatchPlasmaAcceptBatchRequest {
  */
 export interface PostApiCoreBatchPlasmaAcceptBatchResponse {}
 
+/**
+ * 接口 [批次不足量详情↗](https://yapi.sharing8.cn/project/529/interface/api/35190) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/search/batch/detail/short-fall`
+ * @更新时间 `2024-06-04 17:56:56`
+ */
+export interface GetApiSearchBatchDetailShortFallRequest {
+  pageSize: string;
+  currPage: string;
+  batchNo: string;
+}
+
+/**
+ * 接口 [批次不足量详情↗](https://yapi.sharing8.cn/project/529/interface/api/35190) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/search/batch/detail/short-fall`
+ * @更新时间 `2024-06-04 17:56:56`
+ */
+export interface GetApiSearchBatchDetailShortFallResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 血浆批号
+     */
+    batchNo?: string;
+    /**
+     * 血浆编号
+     */
+    bagNo?: string;
+    /**
+     * 浆员姓名
+     */
+    name?: string;
+    /**
+     * 浆员编号
+     */
+    donorNo?: null;
+    /**
+     * 来浆日期
+     */
+    collectDate?: string;
+    /**
+     * 浆站净重（g）
+     */
+    rawWeight?: number;
+  }[];
+}
+
 /* prettier-ignore-end */

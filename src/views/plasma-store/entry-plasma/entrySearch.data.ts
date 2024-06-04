@@ -3,6 +3,7 @@ import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { useStation } from '@/hooks/common/useStation';
+import dayjs from 'dayjs';
 
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
@@ -433,26 +434,29 @@ export const noPassModalColumns: BasicColumn[] = [
 export const hortFallNumModalColumns: BasicColumn[] = [
   {
     title: '血浆批号',
-    dataIndex: '',
+    dataIndex: 'batchNo',
   },
   {
     title: '血浆编号',
-    dataIndex: '',
+    dataIndex: 'bagNo',
   },
   {
     title: '浆员姓名',
-    dataIndex: '',
+    dataIndex: 'name',
   },
   {
-    title: '浆员批号',
-    dataIndex: '',
+    title: '浆员编号',
+    dataIndex: 'donorNo',
   },
   {
-    title: '采集日期',
-    dataIndex: '',
+    title: '来浆日期',
+    dataIndex: 'collectDate',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
   },
   {
     title: '浆站净重',
-    dataIndex: '',
+    dataIndex: 'rawWeight',
   },
 ];

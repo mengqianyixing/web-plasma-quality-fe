@@ -10,6 +10,8 @@ import {
   GetApiCoreBagPlasmaResponse,
   GetApiCoreBagStatisticsBatchNoRequest,
   GetApiCoreBagStatisticsBatchNoResponse,
+  GetApiSearchBatchDetailShortFallRequest,
+  GetApiSearchBatchDetailShortFallResponse,
 } from '@/api/type/batchManage';
 
 enum Api {
@@ -19,6 +21,7 @@ enum Api {
   BATCH_DETAIL = '/api/core/bag/plasma',
   // 验收数量详情
   VERIFY_NUM = '/api/core/bag/statistics',
+  SHORT_FAIL = '/api/search/batch/detail/short-fall',
 }
 
 export const receptionDetailApi = (params: GetApiCoreBankReceptionRequest) =>
@@ -32,3 +35,11 @@ export const verifyNumApi = (params: GetApiCoreBagStatisticsBatchNoRequest['batc
 
 export const verifyNoPassNumApi = (params: GetApiCoreBagPlasmaRequest) =>
   defHttp.get<GetApiCoreBagPlasmaResponse>({ url: Api.BATCH_DETAIL, params });
+
+export const shortFailList = (params: GetApiSearchBatchDetailShortFallRequest) =>
+  defHttp.get<GetApiSearchBatchDetailShortFallResponse>(
+    { url: Api.SHORT_FAIL, params },
+    {
+      joinParamsToUrl: true,
+    },
+  );
