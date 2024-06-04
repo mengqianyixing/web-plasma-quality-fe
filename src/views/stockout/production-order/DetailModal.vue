@@ -99,7 +99,11 @@
     });
     try {
       detailData.value = await getProOrderDetail(orderNo.value);
-      timeLineData.value = await getProOrderTasks(orderId.value);
+      if (orderId.value) {
+        timeLineData.value = await getProOrderTasks(orderId.value);
+      } else {
+        timeLineData.value = [];
+      }
     } finally {
       setModalProps({
         loading: false,
