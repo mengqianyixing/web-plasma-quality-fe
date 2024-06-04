@@ -9,6 +9,7 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+
 const serverEnumStore = useServerEnumStoreWithOut();
 const ReportTemplateState = serverEnumStore.getServerEnumText(SERVER_ENUM.ReportTemplateState);
 export const columns: BasicColumn[] = [
@@ -35,6 +36,11 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
+    title: '起草人',
+    dataIndex: 'creator',
+    width: 120,
+  },
+  {
     title: '模版版本号',
     dataIndex: 'templateVersion',
     width: 120,
@@ -48,6 +54,17 @@ export const columns: BasicColumn[] = [
     title: '有效期至',
     dataIndex: 'expiredDate',
     width: 120,
+  },
+  {
+    title: '修改人',
+    dataIndex: 'updater',
+    width: 120,
+  },
+  {
+    title: '修改日期',
+    dataIndex: 'updateAt',
+    width: 120,
+    format: (v) => v?.slice(0, 10),
   },
   {
     title: '状态',
