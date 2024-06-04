@@ -43,18 +43,6 @@ export const columns: BasicColumn[] = [
     dataIndex: 'times',
     width: 100,
   },
-  {
-    title: '创建日期',
-    dataIndex: 'createAt',
-    format: (text) => (text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-'),
-    width: 200,
-  },
-  {
-    title: '更新日期',
-    dataIndex: 'updateAt',
-    format: (text) => (text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-'),
-    width: 200,
-  },
 ];
 
 export const columnsHistory: BasicColumn[] = [
