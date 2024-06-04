@@ -72,7 +72,7 @@
   import { VxeGridProps } from 'vxe-table';
   import { GetApiCoreBankStockRequest } from '@/api/type/plasmaStoreManage';
   import { sampleReceiveStatusValueEnum } from '@/enums/sampleEnum';
-  import { debounce } from 'lodash-es';
+  import { debounce, cloneDeep } from 'lodash-es';
   import {
     acceptSeal,
     getKeepPackDetail,
@@ -357,10 +357,20 @@
   async function handleAcceptSample() {
     let originRes: PostApiCoreBatchSampleAcceptKeepPackResponse;
     try {
-      originRes = await keepPackAccept({
+      const params = {
+        batchNo: batchValue.value,
         packNo: packNo.value,
         boxNo: boxNoValue.value,
+      };
+
+      const _params = cloneDeep(params);
+      Object.keys(_params).forEach((key) => {
+        if (!_params[key]) {
+          delete _params[key];
+        }
       });
+
+      originRes = await keepPackAccept(_params);
     } finally {
       packNo.value = '';
     }
