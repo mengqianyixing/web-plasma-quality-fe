@@ -118,7 +118,7 @@ const nonconformity: AppRouteModule = {
         {
           id: NonconformityButtonEnum.PlasmaOutUnProcess,
 
-          title: '取消审核',
+          title: '撤销审核',
         },
         {
           id: NonconformityButtonEnum.PlasmaOutScan,

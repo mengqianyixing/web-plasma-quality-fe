@@ -44,7 +44,7 @@
     orderNo.value = data?.record?.orderNo;
   });
 
-  const getTitle = computed(() => (!unref(isReCheck) ? '取消审核' : '取消复核'));
+  const getTitle = computed(() => (!unref(isReCheck) ? '撤销审核' : '撤销复核'));
 
   async function handleSubmit() {
     try {

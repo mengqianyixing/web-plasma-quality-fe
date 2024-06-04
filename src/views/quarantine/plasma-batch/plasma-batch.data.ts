@@ -28,7 +28,7 @@ export const STATE = {
   },
   C: {
     value: 'C',
-    label: '取消',
+    label: '撤销',
   },
   ALL: {
     value: '',

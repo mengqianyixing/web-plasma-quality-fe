@@ -218,7 +218,7 @@
       confirmLoading.value = true;
       await revokeApi({ reportNo: row.reportNo, cause });
       open.value = false;
-      message.success('取消成功');
+      message.success('撤销成功');
       reload();
     } finally {
       confirmLoading.value = false;
