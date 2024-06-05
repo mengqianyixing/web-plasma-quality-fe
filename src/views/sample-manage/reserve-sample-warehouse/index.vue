@@ -33,6 +33,7 @@
           </div>
           <div class="flex gap-2">
             <a-button type="primary" @click="handleTrayInBand"> 入库 </a-button>
+            <a-button type="primary" @click="handleAcceptComplete"> 接收完成 </a-button>
           </div>
         </div>
       </template>
@@ -42,7 +43,9 @@
         </span>
       </template>
       <template #action="{ row }">
-        <span class="text-blue-500 cursor-pointer" @click="handleCancel(row)"> 撤销 </span>
+        <a-button type="link" :disabled="cancelDisabled" @click="handleCancel(row)">
+          撤销
+        </a-button>
       </template>
     </vxe-grid>
 
@@ -78,6 +81,7 @@
     getKeepPackDetail,
     keepPackAccept,
     revokeKeepPack,
+    acceptComplete,
   } from '@/api/sample-manage/reserve-sample-destory';
   import { PostApiCoreBatchSampleAcceptKeepPackResponse } from '@/api/type/sampleManage';
 
@@ -123,7 +127,7 @@
         return (
           <div class="flex items-center justify-between gap-2 -mt-1" ref="bagRef">
             <a-input
-              placeholder="扫描托盘编号"
+              placeholder="扫描箱号"
               value={boxNoValue}
               onChange={(e) => (boxNoValue.value = e.target.value)}
             />
@@ -351,6 +355,8 @@
     originKeepPackData.value = await getKeepPackDetail(batchValue.value);
     trayValue.value = originKeepPackData.value.trayNo || '';
     boxNoValue.value = originKeepPackData.value.boxNo || '';
+
+    cancelDisabled.value = originKeepPackData.value.acceptState === sampleReceiveStatusValueEnum.S;
     tableLoading.value = false;
   }
 
@@ -363,6 +369,7 @@
         batchNo: batchValue.value,
         packNo: packNo.value,
         boxNo: boxNoValue.value,
+        trayNo: trayValue.value,
       };
 
       const _params = cloneDeep(params);
@@ -445,6 +452,24 @@
   function handleSampleCountClick() {
     openDetailModal(true, {
       ...unref(originKeepPackData),
+    });
+  }
+
+  const cancelDisabled = ref(false);
+  async function handleAcceptComplete() {
+    createConfirm({
+      title: '确认',
+      content: '是否确认接收完成？',
+      iconType: 'warning',
+      onOk: async () => {
+        await acceptComplete({
+          batchNo: batchValue.value,
+        });
+
+        cancelDisabled.value = true;
+
+        createMessage.success('接收完成');
+      },
     });
   }
 </script>

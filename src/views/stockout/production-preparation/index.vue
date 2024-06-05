@@ -96,6 +96,13 @@
           >
             撤销复核
           </a-button>
+          <a-button
+            @click="handleTask"
+            v-auth="StockOutButtonEnum.ProductionPreparationSortTask"
+            type="primary"
+          >
+            PMS分拣
+          </a-button>
         </div>
       </template>
     </BasicTable>
@@ -138,6 +145,7 @@
   import { useUserStore } from '@/store/modules/user';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { productionPMSTask } from '@/api/stockout/production-put-into';
 
   defineOptions({ name: 'ProductionPreparation' });
 
@@ -341,7 +349,7 @@
     },
   ];
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
     api: getPrepareList,
     columns,
     formConfig: {
@@ -587,6 +595,28 @@
     openPlasmaDetailModal(true, {
       record,
       prepareProduce,
+    });
+  }
+
+  async function handleTask() {
+    if (!selectedRow.value.length) {
+      warning('请先选择投产准备号!');
+      return;
+    }
+
+    createConfirm({
+      title: '确认',
+      content: '请确认是否生成PMS分拣任务？',
+      iconType: 'warning',
+      onOk: async () => {
+        await productionPMSTask({
+          prepareNo: (selectedRow.value as any)[0]?.prepareNo,
+          taskType: 'SEND',
+        });
+        createMessage.success('生成PMS分拣任务成功');
+        await reload();
+        clearSelectedRowKeys();
+      },
     });
   }
 </script>

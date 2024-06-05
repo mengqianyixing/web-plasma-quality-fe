@@ -73,6 +73,11 @@ const nonconformity: AppRouteModule = {
           title: '撤销复核',
         },
         {
+          id: StockOutButtonEnum.ProductionPreparationSortTask,
+          name: 'sortTask',
+          title: 'PMS分拣',
+        },
+        {
           id: StockOutButtonEnum.ProductionPreparationDetailExport,
           name: 'resetReCheck',
           title: '导出明细',
