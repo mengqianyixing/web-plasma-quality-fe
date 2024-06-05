@@ -4,17 +4,17 @@ export const columns = [
   {
     field: 'nowBoxNo',
     title: '现存箱号',
-    width: 120,
+    width: 140,
   },
   {
     field: 'boxNo',
     title: '浆站箱号',
-    width: 120,
+    width: 140,
   },
   {
     title: '血浆编号',
     field: 'bagNo',
-    width: 140,
+    width: 160,
   },
   {
     title: '采集日期',

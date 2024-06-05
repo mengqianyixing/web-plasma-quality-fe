@@ -2378,4 +2378,44 @@ export interface GetApiSearchBatchDetailShortFallResponse {
   }[];
 }
 
+/**
+ * 接口 [PMS验收任务 下发↗](https://yapi.sharing8.cn/project/529/interface/api/35202) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/pms/verify/task/send/{batchNo}`
+ * @更新时间 `2024-06-05 16:51:36`
+ */
+export interface PostApiCoreBatchPlasmaPmsVerifyTaskSendBatchNoRequest {
+  batchNo: string;
+}
+
+/**
+ * 接口 [PMS验收任务 下发↗](https://yapi.sharing8.cn/project/529/interface/api/35202) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/pms/verify/task/send/{batchNo}`
+ * @更新时间 `2024-06-05 16:51:36`
+ */
+export interface PostApiCoreBatchPlasmaPmsVerifyTaskSendBatchNoResponse {}
+
+/**
+ * 接口 [PMS验收任务 撤销↗](https://yapi.sharing8.cn/project/529/interface/api/35208) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/pms/verify/task/revoke/{batchNo}`
+ * @更新时间 `2024-06-05 16:52:07`
+ */
+export interface PostApiCoreBatchPlasmaPmsVerifyTaskRevokeBatchNoRequest {
+  batchNo: string;
+}
+
+/**
+ * 接口 [PMS验收任务 撤销↗](https://yapi.sharing8.cn/project/529/interface/api/35208) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `POST /api/core/batch/plasma/pms/verify/task/revoke/{batchNo}`
+ * @更新时间 `2024-06-05 16:52:07`
+ */
+export interface PostApiCoreBatchPlasmaPmsVerifyTaskRevokeBatchNoResponse {}
+
 /* prettier-ignore-end */

@@ -1082,4 +1082,31 @@ export interface GetApiProductOrderBoxResponse {
   }[];
 }
 
+/**
+ * 接口 [PMS 分拣任务↗](https://yapi.sharing8.cn/project/529/interface/api/35214) 的 **请求类型**
+ *
+ * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
+ * @请求头 `POST /api/product/prepare/sorting/task`
+ * @更新时间 `2024-06-05 16:55:39`
+ */
+export interface PostApiProductPrepareSortingTaskRequest {
+  /**
+   * 准备号
+   */
+  prepareNo: string;
+  /**
+   * 操作类型（SEND-发送，CANCEL-取消）
+   */
+  taskType: string;
+}
+
+/**
+ * 接口 [PMS 分拣任务↗](https://yapi.sharing8.cn/project/529/interface/api/35214) 的 **返回类型**
+ *
+ * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
+ * @请求头 `POST /api/product/prepare/sorting/task`
+ * @更新时间 `2024-06-05 16:55:39`
+ */
+export interface PostApiProductPrepareSortingTaskResponse {}
+
 /* prettier-ignore-end */

@@ -27,6 +27,8 @@ export enum ReCheckButtonEnum {
   VisualInspectionList = 'E_98003005',
   MaterialPreRegistrationUpdateDateCheck = 'E_9600300010',
   ResultReRegistCheck = 'E_9600100010',
+  PMSAccept = 'E_910040012',
+  PMSAcceptCancel = 'E_910040013',
 }
 
 export enum BaseSettingButtonEnum {
@@ -181,6 +183,7 @@ export enum StockOutButtonEnum {
   ProductionPreparationReCheck = 'E_91001007',
   ProductionPreparationResetReCheck = 'E_91001008',
   ProductionPreparationDetailExport = 'E_91001009',
+  ProductionPreparationSortTask = 'E_91001010',
 
   ProductionOrderAdd = 'E_91003001',
   ProductionOrderEdit = 'E_91003002',

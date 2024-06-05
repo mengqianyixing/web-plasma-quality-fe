@@ -9,6 +9,8 @@ import {
   GetApiProductPrepareTrayOutResponse,
   PostApiProductOutStoreBatchRequest,
   PostApiProductOutStoreBoxRequest,
+  PostApiProductPrepareSortingTaskRequest,
+  PostApiProductPrepareSortingTaskResponse,
 } from '@/api/type/productionSortingMangeMain';
 
 import {
@@ -32,6 +34,7 @@ enum Api {
   PRODUCTION_OUT_STORE = '/api/product/out-store/box',
   PRODUCTION_TRAY_OUT_STORE = '/api/product/prepare/tray/out',
   PRODUCTION_BOX_NUM_DETAIL = '/api/product/order/box',
+  PMS_SORT_TASK = '/api/product/prepare/sorting/task',
 }
 
 export const productionStockOutByBatch = (params: PostApiProductOutStoreBatchRequest) =>
@@ -86,3 +89,9 @@ export const getBoxNumDetailList = (params: GetApiProductOrderBoxRequest) =>
     { url: Api.PRODUCTION_BOX_NUM_DETAIL, params },
     { joinParamsToUrl: true },
   );
+
+export const productionPMSTask = (params: PostApiProductPrepareSortingTaskRequest) =>
+  defHttp.post<PostApiProductPrepareSortingTaskResponse>({
+    url: Api.PMS_SORT_TASK,
+    params,
+  });

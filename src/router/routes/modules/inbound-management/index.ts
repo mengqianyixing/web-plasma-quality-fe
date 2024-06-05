@@ -91,6 +91,16 @@ const inboundmanagement: AppRouteModule = {
       component: () => import('@/views/inbound-management/plasma-inbound-record/index.vue'),
       authElements: [
         {
+          id: ReCheckButtonEnum.PMSAccept,
+          name: 'pmsAccept',
+          title: 'PMS验收',
+        },
+        {
+          id: ReCheckButtonEnum.PMSAcceptCancel,
+          name: 'pmsAcceptCancel',
+          title: 'PMS验收撤销',
+        },
+        {
           id: ReCheckButtonEnum.PlasmaInboundRecordCheck,
           name: 'reCheckRecordLogin',
           title: '不合格暂存复核人登录',
