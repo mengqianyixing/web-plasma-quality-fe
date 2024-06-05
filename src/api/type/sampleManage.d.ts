@@ -1996,6 +1996,29 @@ export interface GetApiCoreBatchSampleAcceptKeepPackBatchNoResponse {
 }
 
 /**
+ * 接口 [保留样本接收：接收完成↗](https://yapi.sharing8.cn/project/529/interface/api/35196) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `PUT /api/core/batch/sample/accept/keep-pack/finish`
+ * @更新时间 `2024-06-05 16:45:06`
+ */
+export interface PutApiCoreBatchSampleAcceptKeepPackFinishRequest {
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+}
+
+/**
+ * 接口 [保留样本接收：接收完成↗](https://yapi.sharing8.cn/project/529/interface/api/35196) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `PUT /api/core/batch/sample/accept/keep-pack/finish`
+ * @更新时间 `2024-06-05 16:45:06`
+ */
+export type PutApiCoreBatchSampleAcceptKeepPackFinishResponse = string;
+
+/**
  * 接口 [新增预检项↗](https://yapi.sharing8.cn/project/529/interface/api/34944) 的 **请求类型**
  *
  * @分类 [预检登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5938)

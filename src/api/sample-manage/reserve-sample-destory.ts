@@ -42,6 +42,7 @@ import {
   PutApiCoreBankDeliverSampleProcessDlvNoResponse,
   PutApiCoreBankDeliverSampleReadyDlvNoRequest,
   PutApiCoreBankDeliverSampleReadyDlvNoResponse,
+  PutApiCoreBatchSampleAcceptKeepPackFinishRequest,
   PutApiCoreBatchSampleAcceptKeepPackRevokeRequest,
   PutApiCoreBatchSampleAcceptKeepPackRevokeResponse,
   PutApiCoreBatchSampleAcceptKeepPackSealRequest,
@@ -65,6 +66,7 @@ enum Api {
   ACCEPT_SEAR = '/api/core/batch/sample/accept/keep-pack/seal',
   REVOKE_KEEP_PACK = '/api/core/batch/sample/accept/keep-pack/revoke',
   BATCH_KEEP_PACK = '/api/core/batch/sample/accept/keep-pack/batches',
+  ACCEPT_FINISH = '/api/core/batch/sample/accept/keep-pack/finish',
 }
 
 export const getReserveSampleList = (params: GetApiCoreBankDeliverSampleRequest) =>
@@ -249,4 +251,10 @@ export const getKeepPackDetail = (
 ) =>
   defHttp.get<GetApiCoreBatchSampleAcceptKeepPackBatchNoResponse>({
     url: Api.SAMPLE_ACCEPT + '/' + params,
+  });
+
+export const acceptComplete = (params: PutApiCoreBatchSampleAcceptKeepPackFinishRequest) =>
+  defHttp.put<PutApiCoreBatchSampleAcceptKeepPackFinishRequest>({
+    url: Api.ACCEPT_FINISH,
+    params,
   });
