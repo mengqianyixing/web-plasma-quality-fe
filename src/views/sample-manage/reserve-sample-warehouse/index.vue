@@ -349,6 +349,8 @@
   async function initTableData() {
     tableLoading.value = true;
     originKeepPackData.value = await getKeepPackDetail(batchValue.value);
+    trayValue.value = originKeepPackData.value.trayNo || '';
+    boxNoValue.value = originKeepPackData.value.boxNo || '';
     tableLoading.value = false;
   }
 
