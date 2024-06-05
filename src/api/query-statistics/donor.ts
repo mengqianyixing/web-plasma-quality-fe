@@ -7,8 +7,8 @@ import {
   PostApiCoreDonorPlasmaResponse,
   PostApiCoreDonorCallbacksRequest,
   PostApiCoreDonorCallbacksResponse,
-  GetApiCoreDonorChartDonorNoRequest,
-  GetApiCoreDonorChartDonorNoResponse,
+  GetApiCoreDonorChartCardNoRequest,
+  GetApiCoreDonorChartCardNoResponse,
 } from '@/api/type/donorQuery';
 
 enum Api {
@@ -31,5 +31,5 @@ export const batchInfoListApi = (params: PostApiCoreDonorPlasmaRequest) =>
 export const callbacksInfoListApi = (params: PostApiCoreDonorCallbacksRequest) =>
   defHttp.post<PostApiCoreDonorCallbacksResponse>({ url: Api.CALLBACKS_INFO, params });
 
-export const donorChartApi = (params: GetApiCoreDonorChartDonorNoRequest['donorNo']) =>
-  defHttp.get<GetApiCoreDonorChartDonorNoResponse>({ url: Api.DONOR_CHART + '/' + params });
+export const donorChartApi = (params: GetApiCoreDonorChartCardNoRequest['cardNo']) =>
+  defHttp.get<GetApiCoreDonorChartCardNoResponse>({ url: Api.DONOR_CHART + '/' + params });
