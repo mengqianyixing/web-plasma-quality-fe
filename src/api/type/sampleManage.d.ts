@@ -1781,7 +1781,7 @@ export interface PutApiCoreBatchSampleAcceptKeepPackRevokeResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `PUT /api/core/batch/sample/accept/keep-pack/seal`
- * @更新时间 `2024-05-27 14:53:35`
+ * @更新时间 `2024-06-06 09:29:26`
  */
 export interface PutApiCoreBatchSampleAcceptKeepPackSealRequest {
   /**
@@ -1792,6 +1792,10 @@ export interface PutApiCoreBatchSampleAcceptKeepPackSealRequest {
    * 托盘编号
    */
   trayNo: string;
+  /**
+   * 样本批号
+   */
+  batchNo: string;
 }
 
 /**
@@ -1799,7 +1803,7 @@ export interface PutApiCoreBatchSampleAcceptKeepPackSealRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `PUT /api/core/batch/sample/accept/keep-pack/seal`
- * @更新时间 `2024-05-27 14:53:35`
+ * @更新时间 `2024-06-06 09:29:26`
  */
 export type PutApiCoreBatchSampleAcceptKeepPackSealResponse = string;
 
