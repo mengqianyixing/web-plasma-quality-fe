@@ -2023,6 +2023,33 @@ export interface PutApiCoreBatchSampleAcceptKeepPackFinishRequest {
 export type PutApiCoreBatchSampleAcceptKeepPackFinishResponse = string;
 
 /**
+ * 接口 [保留样本出库单更新↗](https://yapi.sharing8.cn/project/529/interface/api/35244) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `PUT /api/core/bank/deliver/sample`
+ * @更新时间 `2024-06-06 20:00:46`
+ */
+export interface PutApiCoreBankDeliverSampleRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+  /**
+   * 备注
+   */
+  remark?: string;
+}
+
+/**
+ * 接口 [保留样本出库单更新↗](https://yapi.sharing8.cn/project/529/interface/api/35244) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `PUT /api/core/bank/deliver/sample`
+ * @更新时间 `2024-06-06 20:00:46`
+ */
+export interface PutApiCoreBankDeliverSampleResponse {}
+
+/**
  * 接口 [新增预检项↗](https://yapi.sharing8.cn/project/529/interface/api/34944) 的 **请求类型**
  *
  * @分类 [预检登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5938)

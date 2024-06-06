@@ -41,12 +41,13 @@
 <script lang="ts" setup>
   import { BasicForm, useForm } from '@/components/Form';
   import { BasicModal, useModal, useModalInner } from '@/components/Modal';
-  import { computed, reactive, ref } from 'vue';
+  import { computed, reactive, ref, unref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import {
     deleteDeliverSample,
     getDeliverSampleDetail,
     saveDeliverSample,
+    updateDeliverSample,
   } from '@/api/sample-manage/reserve-sample-destory';
   import { VxeGridProps, VxeTableInstance } from 'vxe-table';
   import {
@@ -65,29 +66,30 @@
 
   const [registerModal, { openModal }] = useModal();
 
-  const [registerForm, { validate, getFieldsValue, resetFields, setFieldsValue }] = useForm({
-    showActionButtonGroup: false,
-    labelWidth: 80,
-    schemas: [
-      {
-        field: 'dlvNo',
-        component: 'Input',
-        label: '申请单号',
-        required: true,
-      },
-      {
-        label: '备注',
-        field: 'remark',
-        component: 'InputTextArea',
-        componentProps: {
-          rows: 1,
+  const [registerForm, { validate, getFieldsValue, resetFields, setFieldsValue, updateSchema }] =
+    useForm({
+      showActionButtonGroup: false,
+      labelWidth: 80,
+      schemas: [
+        {
+          field: 'dlvNo',
+          component: 'Input',
+          label: '申请单号',
+          required: true,
         },
-        colProps: {
-          span: 7,
+        {
+          label: '备注',
+          field: 'remark',
+          component: 'InputTextArea',
+          componentProps: {
+            rows: 1,
+          },
+          colProps: {
+            span: 7,
+          },
         },
-      },
-    ],
-  });
+      ],
+    });
 
   const tableLoading = ref(false);
 
@@ -129,12 +131,20 @@
     autoResize: true,
   });
 
+  const isAdd = ref(false);
   const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
     tableData.value = [];
 
     setModalProps({
       maskClosable: false,
       destroyOnClose: true,
+    });
+    isAdd.value = data.isAdd;
+    await updateSchema({
+      field: 'dlvNo',
+      componentProps: {
+        disabled: !data.isAdd,
+      },
     });
 
     if (data.isAdd) {
@@ -152,7 +162,11 @@
     loading.value = true;
     try {
       const values = await validate();
-      await saveDeliverSample(values as PostApiCoreBankDeliverSampleRequest);
+      if (unref(isAdd)) {
+        await saveDeliverSample(values as PostApiCoreBankDeliverSampleRequest);
+      } else {
+        await updateDeliverSample(values as PostApiCoreBankDeliverSampleRequest);
+      }
       success('保存申请单成功');
     } finally {
       loading.value = false;
