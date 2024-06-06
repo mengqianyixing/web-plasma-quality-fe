@@ -736,7 +736,7 @@
   async function openPrint(bagNo) {
     // 获取标签相关样式
     const res = await getPrintRecord({
-      labelType: 'PLAIN_BOX',
+      labelType: 'VERIFY_BOX',
       bissNo: bagNo, // 业务主键号
     });
     const { times } = res;
