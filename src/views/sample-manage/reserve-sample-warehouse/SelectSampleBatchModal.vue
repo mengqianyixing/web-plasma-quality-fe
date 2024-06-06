@@ -29,7 +29,7 @@
   const { createMessage } = useMessage();
   const { stationOptions } = useStation();
 
-  const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
+  const [registerTable, { reload, clearSelectedRowKeys, getForm }] = useTable({
     api: getKeepPackBatchList,
     columns: [
       {
@@ -115,6 +115,8 @@
   });
 
   const [register, { closeModal }] = useModalInner((data) => {
+    getForm()?.resetFields();
+
     if (data.reload) reload();
   });
 
