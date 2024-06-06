@@ -34,6 +34,7 @@
         trayNo: trayNo.value,
       };
     },
+    pagination: false,
     inset: true,
     isCanResizeParent: true,
     fetchSetting: {
