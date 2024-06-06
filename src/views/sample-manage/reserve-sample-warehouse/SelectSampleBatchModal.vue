@@ -81,7 +81,7 @@
           },
         },
         {
-          field: '[acceptBeginAt, acceptEndAt]',
+          field: '[acceptBeginDate, acceptEndDate]',
           label: '接收日期',
           component: 'RangePicker',
         },
