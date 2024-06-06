@@ -130,6 +130,8 @@
   });
 
   const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
+    tableData.value = [];
+
     setModalProps({
       maskClosable: false,
       destroyOnClose: true,
