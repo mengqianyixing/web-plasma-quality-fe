@@ -196,6 +196,7 @@ export const searchSchema: FormSchema[] = [
     field: 'materialState',
     component: 'Select',
     label: '状态',
+    defaultValue: '启用',
     componentProps: {
       options: [
         { label: '停用', value: '停用' },
