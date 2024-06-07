@@ -162,14 +162,25 @@
       row[dataIndex as string] = 0;
       return row;
     }, {});
+    const bagCountMap = new Map();
     data.forEach((it) => {
       for (const key in it) {
         const data = it[key];
         row[key] += data || 0;
       }
+      bagCountMap.set(it['stationName'] + it['rawImm'], it['bagCount']);
     });
     row[ratioKey] = row['titerCount'] / (row[bagCountKey] || 1);
-    return { ...row, titerTypes: '--', rawImm: '--', stationName: '合计' };
+    return {
+      ...row,
+      titerTypes: '--',
+      rawImm: '--',
+      stationName: '合计',
+      bagCount: [...bagCountMap.values()].reduce((t, c) => {
+        t += c;
+        return t;
+      }, 0),
+    };
   }
   function getCheckCountRow(data: Recordable[]) {
     const row = CheckColumns.reduce((row, { dataIndex, children = [] }) => {
