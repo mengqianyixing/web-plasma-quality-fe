@@ -29,7 +29,7 @@
   const { createMessage } = useMessage();
   const { stationOptions } = useStation();
 
-  const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
+  const [registerTable, { reload, clearSelectedRowKeys, getForm }] = useTable({
     api: getKeepPackBatchList,
     columns: [
       {
@@ -81,7 +81,7 @@
           },
         },
         {
-          field: '[acceptBeginAt, acceptEndAt]',
+          field: '[acceptBeginDate, acceptEndDate]',
           label: '接收日期',
           component: 'RangePicker',
         },
@@ -115,6 +115,8 @@
   });
 
   const [register, { closeModal }] = useModalInner((data) => {
+    getForm()?.resetFields();
+
     if (data.reload) reload();
   });
 

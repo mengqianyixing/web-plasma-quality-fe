@@ -36,6 +36,7 @@
     },
     inset: true,
     isCanResizeParent: true,
+    pagination: false,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',

@@ -33,7 +33,9 @@
           </div>
           <div class="flex gap-2">
             <a-button type="primary" @click="handleTrayInBand"> 入库 </a-button>
-            <a-button type="primary" @click="handleAcceptComplete"> 接收完成 </a-button>
+            <a-button :disabled="cancelDisabled" type="primary" @click="handleAcceptComplete">
+              接收完成
+            </a-button>
           </div>
         </div>
       </template>
@@ -402,12 +404,17 @@
 
   async function handleSeal() {
     try {
-      await acceptSeal({
+      const resBoxNo = await acceptSeal({
+        batchNo: batchValue.value,
         boxNo: boxNoValue.value,
         trayNo: trayValue.value,
       });
 
-      boxNoValue.value = '';
+      if (!resBoxNo) {
+        boxNoValue.value = '';
+      } else {
+        boxNoValue.value = resBoxNo;
+      }
 
       createMessage.success('封箱成功，正在打印标签');
     } finally {

@@ -1781,7 +1781,7 @@ export interface PutApiCoreBatchSampleAcceptKeepPackRevokeResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `PUT /api/core/batch/sample/accept/keep-pack/seal`
- * @更新时间 `2024-05-27 14:53:35`
+ * @更新时间 `2024-06-06 09:29:26`
  */
 export interface PutApiCoreBatchSampleAcceptKeepPackSealRequest {
   /**
@@ -1792,6 +1792,10 @@ export interface PutApiCoreBatchSampleAcceptKeepPackSealRequest {
    * 托盘编号
    */
   trayNo: string;
+  /**
+   * 样本批号
+   */
+  batchNo: string;
 }
 
 /**
@@ -1799,7 +1803,7 @@ export interface PutApiCoreBatchSampleAcceptKeepPackSealRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `PUT /api/core/batch/sample/accept/keep-pack/seal`
- * @更新时间 `2024-05-27 14:53:35`
+ * @更新时间 `2024-06-06 09:29:26`
  */
 export type PutApiCoreBatchSampleAcceptKeepPackSealResponse = string;
 
@@ -2017,6 +2021,33 @@ export interface PutApiCoreBatchSampleAcceptKeepPackFinishRequest {
  * @更新时间 `2024-06-05 16:45:06`
  */
 export type PutApiCoreBatchSampleAcceptKeepPackFinishResponse = string;
+
+/**
+ * 接口 [保留样本出库单更新↗](https://yapi.sharing8.cn/project/529/interface/api/35244) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `PUT /api/core/bank/deliver/sample`
+ * @更新时间 `2024-06-06 20:00:46`
+ */
+export interface PutApiCoreBankDeliverSampleRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+  /**
+   * 备注
+   */
+  remark?: string;
+}
+
+/**
+ * 接口 [保留样本出库单更新↗](https://yapi.sharing8.cn/project/529/interface/api/35244) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `PUT /api/core/bank/deliver/sample`
+ * @更新时间 `2024-06-06 20:00:46`
+ */
+export interface PutApiCoreBankDeliverSampleResponse {}
 
 /**
  * 接口 [新增预检项↗](https://yapi.sharing8.cn/project/529/interface/api/34944) 的 **请求类型**

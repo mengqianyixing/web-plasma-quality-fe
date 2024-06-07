@@ -44,7 +44,7 @@
   const hisNo = ref('');
 
   const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
-  const emit = defineEmits(['success']);
+  const emit = defineEmits(['success', 'register']);
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: false });

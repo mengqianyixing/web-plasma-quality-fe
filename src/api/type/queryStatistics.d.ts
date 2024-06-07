@@ -1894,10 +1894,10 @@ export interface GetApiSearchPlasmaTrackResponse {
  * 接口 [回访统计↗](https://yapi.sharing8.cn/project/529/interface/api/33587) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/donor/callback/statistic-station`
- * @更新时间 `2024-02-29 14:40:18`
+ * @请求头 `GET /api/search/donor/callback-count`
+ * @更新时间 `2024-06-06 11:16:42`
  */
-export interface GetApiCoreDonorCallbackStatisticStationRequest {
+export interface GetApiSearchDonorCallbackCountRequest {
   /**
    * 采浆公司
    */
@@ -1934,10 +1934,10 @@ export interface GetApiCoreDonorCallbackStatisticStationRequest {
  * 接口 [回访统计↗](https://yapi.sharing8.cn/project/529/interface/api/33587) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/donor/callback/statistic-station`
- * @更新时间 `2024-02-29 14:40:18`
+ * @请求头 `GET /api/search/donor/callback-count`
+ * @更新时间 `2024-06-06 11:16:42`
  */
-export interface GetApiCoreDonorCallbackStatisticStationResponse {
+export interface GetApiSearchDonorCallbackCountResponse {
   totalCount?: number;
   pageSize?: number;
   totalPage?: number;

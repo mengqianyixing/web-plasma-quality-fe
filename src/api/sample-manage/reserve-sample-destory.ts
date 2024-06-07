@@ -42,6 +42,8 @@ import {
   PutApiCoreBankDeliverSampleProcessDlvNoResponse,
   PutApiCoreBankDeliverSampleReadyDlvNoRequest,
   PutApiCoreBankDeliverSampleReadyDlvNoResponse,
+  PutApiCoreBankDeliverSampleRequest,
+  PutApiCoreBankDeliverSampleResponse,
   PutApiCoreBatchSampleAcceptKeepPackFinishRequest,
   PutApiCoreBatchSampleAcceptKeepPackRevokeRequest,
   PutApiCoreBatchSampleAcceptKeepPackRevokeResponse,
@@ -77,6 +79,12 @@ export const getReserveSampleList = (params: GetApiCoreBankDeliverSampleRequest)
 
 export const saveDeliverSample = (params: PostApiCoreBankDeliverSampleRequest) =>
   defHttp.post<PostApiCoreBankDeliverSampleResponse>({
+    url: Api.RESERVE_SAMPLE_DESTROY_LIST,
+    params,
+  });
+
+export const updateDeliverSample = (params: PutApiCoreBankDeliverSampleRequest) =>
+  defHttp.put<PutApiCoreBankDeliverSampleResponse>({
     url: Api.RESERVE_SAMPLE_DESTROY_LIST,
     params,
   });

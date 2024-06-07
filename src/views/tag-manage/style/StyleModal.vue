@@ -7,7 +7,7 @@
     width="80%"
     @ok="handleSubmit"
   >
-    <a-tabs v-model:activeKey="activeKey">
+    <a-tabs v-model:activeKey="activeKey" @change="handleTabChange">
       <a-tab-pane key="1" tab="编辑">
         <BasicForm @register="registerForm" />
 
@@ -38,15 +38,15 @@
             </template>
           </BasicTable>
           <div>
-            <img :src="previewUrl" alt="" />
+            <img class="w-full" :src="previewUrl" alt="" />
           </div>
         </div>
       </a-tab-pane>
-      <a-tab-pane key="2" tab="编辑JSON" force-render>
+      <a-tab-pane key="2" tab="编辑JSON">
         <div class="flex">
-          <CodeEditor class="w-8/10" v-model:value="JsonValue" :mode="modeValue" />
+          <CodeEditor class="w-1/2 flex-shrink-1" v-model:value="JsonValue" :mode="modeValue" />
           <div>
-            <img :src="previewUrl" alt="" />
+            <img class="w-1/2" :src="previewUrl" alt="" />
           </div>
         </div>
       </a-tab-pane>
@@ -72,6 +72,7 @@
   import { CodeEditor, MODE } from '@/components/CodeEditor';
   import { tagStatusValueEnum } from '@/enums/tagManageEnum';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { Key } from 'ant-design-vue/lib/table/interface';
 
   const ATabs = Tabs;
   const ATabPane = TabPane;
@@ -141,7 +142,6 @@
       state.value = data.record.state;
 
       originDetailData.value = await getTagDetail(tagNo.value);
-      JsonValue.value = JSON.stringify(originDetailData.value, null, 2);
 
       previewStyle.value = await getStylePreview({
         ...originDetailData.value,
@@ -273,6 +273,13 @@
       updateTableDataRecord(rowKey.value, rowRecord);
     } else {
       insertTableDataRecord(rowRecord);
+    }
+  }
+
+  function handleTabChange(key: Key) {
+    if (key === '2') {
+      JsonValue.value = JSON.stringify(originDetailData.value, null, 2);
+      modeValue.value = MODE.JSON;
     }
   }
 </script>
