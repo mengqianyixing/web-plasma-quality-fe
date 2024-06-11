@@ -9,6 +9,44 @@
           {{ record?.planNo }}
         </span>
       </template>
+      <template #okNum="{ record }">
+        <span
+          :class="!record?.okNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'"
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.SUCCESS)"
+        >
+          {{ record?.okNum }}
+        </span>
+      </template>
+      <template #failedNum="{ record }">
+        <span
+          :class="
+            !record?.failedNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.FAIL)"
+        >
+          {{ record?.failedNum }}
+        </span>
+      </template>
+      <template #recoverNum="{ record }">
+        <span
+          :class="
+            !record?.recoverNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.RESUME)"
+        >
+          {{ record?.recoverNum }}
+        </span>
+      </template>
+      <template #noVisitNum="{ record }">
+        <span
+          :class="
+            !record?.noVisitNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.NOVISIT)"
+        >
+          {{ record?.noVisitNum }}
+        </span>
+      </template>
       <template #toolbar>
         <div class="flex gap-2">
           <a-button type="primary" @click="handleAdd" v-auth="CallbackButtonEnum.ListGeneAdd">
@@ -35,6 +73,7 @@
     <SelectStationNameModal @register="registerSelectModal" @success="handleSelectSuccess" />
     <CallbackGenerationModal @register="registerGenerationModal" @success="handleSuccess" />
     <CallbackDetailModal @register="registerCallbackDetailModal" />
+    <CustomDetailRenderModal @register="registerCallbackCustomDetailModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -46,6 +85,7 @@
   import CallbackGenerationModal from '@/views/callback/list-generation/CallbackGenerationModal.vue';
   import CallbackDetailModal from '@/views/callback/list-generation/CallbackDetailModal.vue';
   import SelectStationNameModal from '@/views/callback/list-generation/SelectStationNameModal.vue';
+  import CustomDetailRenderModal from '@/views/callback/list-generation/CustomDetailRenderModal.vue';
 
   import { ref, onMounted, computed } from 'vue';
 
@@ -58,6 +98,7 @@
     getCallbackListApi,
   } from '@/api/callback/list-generation';
   import {
+    CallBackDetailState,
     callbackModalEnum,
     CallbackStateEnum,
     QuarantineBatchControlEnum,
@@ -115,6 +156,8 @@
 
   const [registerGenerationModal, { openModal: openGenerationModal }] = useModal();
   const [registerCallbackDetailModal, { openModal: openCallbackDetailModal }] = useModal();
+  const [registerCallbackCustomDetailModal, { openModal: openCallbackCustomDetailModal }] =
+    useModal();
 
   const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
     api: getCallbackListApi,
@@ -258,6 +301,12 @@
         });
         await reload();
       },
+    });
+  }
+
+  function handleGoCustomModal(state: CallBackDetailState) {
+    openCallbackCustomDetailModal(true, {
+      state,
     });
   }
 </script>

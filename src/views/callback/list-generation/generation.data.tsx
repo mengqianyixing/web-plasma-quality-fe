@@ -40,28 +40,27 @@ export const columns: BasicColumn[] = [
     width: 130,
   },
   {
-    title: '自主回访',
-    dataIndex: 'selfBackNum',
-    width: 75,
-  },
-  {
     title: '回访成功',
     dataIndex: 'okNum',
+    slots: { customRender: 'okNum' },
     width: 75,
   },
   {
-    title: '回访失败',
+    title: '回访终止',
     dataIndex: 'failedNum',
+    slots: { customRender: 'failedNum' },
     width: 75,
   },
   {
     title: '恢复采浆',
     dataIndex: 'recoverNum',
+    slots: { customRender: 'recoverNum' },
     width: 75,
   },
   {
     title: '未回访',
     dataIndex: 'noVisitNum',
+    slots: { customRender: 'noVisitNum' },
     width: 60,
   },
   {
@@ -87,6 +86,7 @@ export const columns: BasicColumn[] = [
   {
     title: '确认人',
     dataIndex: 'checker',
+    width: 80,
   },
   {
     title: '确认日期',
@@ -99,6 +99,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return serverEnumStore.getServerEnumText(SERVER_ENUM.CallbackPlanState)(text);
     },
+    width: 100,
   },
 ];
 
@@ -411,5 +412,83 @@ export const callbackDetailFormSchema: FormSchema[] = [
     label: '最早待回访日期',
     component: 'RangePicker',
     colProps: { span: 7 },
+  },
+];
+
+export const callbackCustomFormSchema: FormSchema[] = [
+  {
+    field: '[startBatchNo, endBatchNo]',
+    component: 'InputRange',
+    label: '血浆批号',
+    componentProps: {
+      isBetween: false,
+    },
+  },
+  {
+    field: 'plasmaStatus',
+    label: '血浆状态',
+    component: 'Select',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BagTrack),
+    },
+  },
+  {
+    field: 'donorNo',
+    label: '浆员编号',
+    component: 'Input',
+  },
+];
+
+export const callbackDetailCustomColumns: BasicColumn[] = [
+  {
+    dataIndex: 'donorNo',
+    title: '浆员编号',
+    width: 100,
+  },
+  {
+    dataIndex: 'name',
+    title: '姓名',
+    width: 80,
+  },
+  {
+    dataIndex: 'callbackDate',
+    title: '回访日期',
+    width: 100,
+  },
+  {
+    dataIndex: 'sampleNo',
+    title: '样品编号',
+    width: 130,
+  },
+  {
+    dataIndex: 'bloodType',
+    title: '血型',
+    width: 60,
+  },
+  {
+    dataIndex: 'liveAddress',
+    title: '现居地址',
+    width: 150,
+  },
+  {
+    dataIndex: 'collDate',
+    title: '采集日期',
+    width: 100,
+  },
+  {
+    dataIndex: 'plasmaStatus',
+    title: '血浆状态',
+    width: 80,
+  },
+  {
+    dataIndex: 'lastCollDate',
+    title: '最后采浆日期',
+    width: 100,
+  },
+  {
+    dataIndex: 'bagNum',
+    title: '血浆数量（袋）',
+    slots: { customRender: 'bagNum' },
+    width: 100,
   },
 ];

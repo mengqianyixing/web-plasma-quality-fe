@@ -42,3 +42,10 @@ export enum QuarantineBatchControlEnum {
   OPEN = 'open',
   CLOSE = 'close',
 }
+
+export enum CallBackDetailState {
+  NOVISIT = 'WIT',
+  RESUME = 'SCP',
+  SUCCESS = 'SCS',
+  FAIL = 'END',
+}

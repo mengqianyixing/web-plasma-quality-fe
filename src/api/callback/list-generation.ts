@@ -4,6 +4,10 @@ import {
   DeleteApiCoreDonorCallbackRequest,
   GetApiCoreDonorCallbackDetailRequest,
   GetApiCoreDonorCallbackDetailResponse,
+  GetApiCoreDonorCallbackDetailStateRequest,
+  GetApiCoreDonorCallbackDetailStateResponse,
+  GetApiCoreDonorCallbackDonorBagRequest,
+  GetApiCoreDonorCallbackDonorBagResponse,
   GetApiCoreDonorCallbackNeedRequest,
   GetApiCoreDonorCallbackNeedResponse,
   GetApiCoreDonorCallbackRequest,
@@ -20,6 +24,8 @@ enum Api {
   STATION_NAME = '/api/sys/station/form',
   GENERATE_CALLBACK = '/api/core/donor/callback/need',
   CREATE_CALLBACK_BATCH = '/api/core/donor/callback/batch',
+  DETAIL_BY_STATE = '/api/core/donor/callback/detail-state',
+  DONOR_BAG_DETAIL = '/api/core/donor/callback/donor-bag',
 }
 
 export const getCallbackListApi = (params: GetApiCoreDonorCallbackRequest) =>
@@ -63,3 +69,25 @@ export const createCallbackBatch = (params: PostApiCoreDonorCallbackBatchRequest
 
 export const revokeCallback = (params: DeleteApiCoreDonorCallbackDetailRequest) =>
   defHttp.delete({ url: Api.CALLBACK_RESTFUL, params });
+
+export const getDetailByState = (params: GetApiCoreDonorCallbackDetailStateRequest) =>
+  defHttp.get<GetApiCoreDonorCallbackDetailStateResponse>(
+    {
+      url: Api.DETAIL_BY_STATE,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+export const getDonorBagDetail = (params: GetApiCoreDonorCallbackDonorBagRequest) =>
+  defHttp.get<GetApiCoreDonorCallbackDonorBagResponse>(
+    {
+      url: Api.DONOR_BAG_DETAIL,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );
