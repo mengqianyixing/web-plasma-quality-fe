@@ -3,7 +3,14 @@
     <div class="h-2/3 mb-50px">
       <BasicTable @register="registerTable">
         <template #toolbar>
-          <a-button type="primary" v-auth="SearchManager.PlasmaRawInStoragePrint"> 打印 </a-button>
+          <a-button
+            type="primary"
+            v-auth="SearchManager.PlasmaRawInStoragePrint"
+            @click="handlePrint"
+            :loading="reportLoading"
+          >
+            打印
+          </a-button>
         </template>
       </BasicTable>
     </div>
@@ -23,6 +30,8 @@
       </BasicTable>
     </div>
   </div>
+
+  <ReportModal @register="registerReportModal" />
 </template>
 <script lang="ts" setup>
   import { BasicColumn, BasicTable, useTable } from '@/components/Table';
@@ -32,12 +41,18 @@
   import { getPlasmaRawInStorage } from '@/api/query-statistics/plasma';
   import { GetApiCoreBagOutInStorageStatisticResponse } from '@/api/type/queryStatistics';
   import { SearchManager } from '@/enums/authCodeEnum';
+  import { getReportApi } from '@/api/report';
+  import dayjs from 'dayjs';
+  import { useModal } from '@/components/Modal';
+  import ReportModal from '@/components/ReportModal/index.vue';
 
   defineOptions({ name: 'PlasmaRawInStorage' });
 
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
+
   const footerTableData = ref<any[]>([]);
   const formatFooterColumns = ref<BasicColumn[]>([]);
-  const [registerTable, { getRawDataSource }] = useTable({
+  const [registerTable, { getRawDataSource, getForm }] = useTable({
     api: getPlasmaRawInStorage,
     afterFetch: (data) => {
       const _data: GetApiCoreBagOutInStorageStatisticResponse = getRawDataSource();
@@ -103,6 +118,25 @@
         inOfYear,
       },
     ];
+  }
+
+  const reportLoading = ref(false);
+  async function handlePrint() {
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({
+        reportKey: 'PLASMA_RECEPTION',
+        contentKey: dayjs().valueOf().toString(),
+        params: encodeURIComponent(
+          JSON.stringify({
+            ...getForm().getFieldsValue(),
+          }),
+        ),
+      } as any);
+      openReportModal(true, window.URL.createObjectURL(res));
+    } finally {
+      reportLoading.value = false;
+    }
   }
 </script>
 <style scoped lang="less">
