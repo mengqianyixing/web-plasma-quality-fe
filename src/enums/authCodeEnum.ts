@@ -104,6 +104,7 @@ export enum InspectButtonEnum {
   ResultRegistrationMaterialRegist = 'E_960010011',
   ResultRegistrationMaterialReRegist = 'E_960010012',
   ResultRegistrationSqImport = 'E_960010013',
+  ResultRegistrationTiterDelete = 'E_960010014',
 
   ReportReleaseCreate = 'E_96002001',
   ReportReleaseUnCreate = 'E_96002002',

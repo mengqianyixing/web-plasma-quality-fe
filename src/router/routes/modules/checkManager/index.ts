@@ -90,7 +90,7 @@ const checkManager: AppRouteModule = {
         },
         {
           id: InspectButtonEnum.ResultRegistrationItemDelete,
-          title: '删除检测项目',
+          title: '撤销检测项目',
         },
         {
           id: InspectButtonEnum.ResultRegistrationItemUnq,
@@ -107,6 +107,10 @@ const checkManager: AppRouteModule = {
         {
           id: InspectButtonEnum.ResultRegistrationTiterImport,
           title: '效价导入',
+        },
+        {
+          id: InspectButtonEnum.ResultRegistrationItemDelete,
+          title: '撤销效价项目',
         },
         {
           id: InspectButtonEnum.ResultRegistrationTiterRegist,
