@@ -182,6 +182,9 @@
     labelWidth: 100,
     baseColProps: { flex: '0 1 360px' },
     actionColOptions: { flex: '0 1 200px' },
+    transformDateFunc(date) {
+      return date ? date.format('YYYY-MM-DD') : '';
+    },
     submitFunc: reloadTable,
     submitOnReset: true,
     compact: true,
