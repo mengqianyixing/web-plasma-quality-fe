@@ -86,7 +86,7 @@
             ...row[exteriorKey].projects,
           },
         }));
-
+        setProps({ loading: false });
         const row = getCheckCountRow(formatData);
         return [...formatData, row];
       },
@@ -97,6 +97,7 @@
       key: '1',
       columns: titerColumns,
       afterFetch: (res: Recordable[]) => {
+        setProps({ loading: false });
         const row = getTiterCountRow(res);
         return [...res, row];
       },
@@ -107,6 +108,7 @@
       key: '2',
       columns: followUpColumns,
       afterFetch: (res: Recordable[]) => {
+        setProps({ loading: false });
         const row = getFollowUpCountRow(res);
         return [...res, row];
       },
@@ -128,7 +130,7 @@
     }),
   );
 
-  const [registerTable, { getForm }] = useTable({
+  const [registerTable, { getForm, setProps }] = useTable({
     immediate: false,
     api: () => Promise.resolve([]),
     emptyDataIsShowTable: false,
@@ -150,8 +152,10 @@
     return Promise.reject();
   }
   function reload() {
+    setProps({ loading: false });
     if (getFormDateIsNotNull()) {
       nextTick(() => {
+        setProps({ loading: true });
         tableList[activeKey.value][1].reload();
       });
     }
@@ -170,16 +174,16 @@
       }
       bagCountMap.set(it['stationName'] + it['rawImm'], it['bagCount']);
     });
+    row[bagCountKey] = [...bagCountMap.values()].reduce((t, c) => {
+      t += c;
+      return t;
+    }, 0);
     row[ratioKey] = row['titerCount'] / (row[bagCountKey] || 1);
     return {
       ...row,
       titerTypes: '--',
       rawImm: '--',
       stationName: '合计',
-      bagCount: [...bagCountMap.values()].reduce((t, c) => {
-        t += c;
-        return t;
-      }, 0),
     };
   }
   function getCheckCountRow(data: Recordable[]) {
