@@ -198,9 +198,16 @@
           ...it,
           batchNo: item.batchNo,
           rowSpan: i === 0 ? item.typeList.length : 0,
+          quarantineSpan:
+            i === 0
+              ? item.typeList.filter((it) => it.quarantineType === '检疫期合格血浆').length
+              : it.quarantineType === '检疫期合格血浆'
+                ? 0
+                : 1,
         });
       });
     });
+    console.log(res, 'res');
     return res;
   }
   const [
