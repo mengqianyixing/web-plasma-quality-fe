@@ -41,7 +41,7 @@
   import { message } from 'ant-design-vue';
   import { printRecord } from '@/api/tag/printRecord';
 
-  const state = reactive({ batchNo: '', planDate: '', mixType: '' });
+  const state = reactive({ planDate: '', mixType: '' });
   const labelLoading = ref(false);
   const [
     registerTable,
@@ -69,7 +69,6 @@
     },
   });
   const [registerModal] = useModalInner((data) => {
-    state.batchNo = data.batchNo;
     state.planDate = data.planDate;
     state.mixType = data.mixType;
     setPagination({ current: 1 });
