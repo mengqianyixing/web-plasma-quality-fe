@@ -12,7 +12,7 @@
       <template #okNum="{ record }">
         <span
           :class="!record?.okNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'"
-          @click.stop.self="handleGoCustomModal(CallBackDetailState.SUCCESS)"
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.SUCCESS, record?.planNo)"
         >
           {{ record?.okNum }}
         </span>
@@ -22,7 +22,7 @@
           :class="
             !record?.failedNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
           "
-          @click.stop.self="handleGoCustomModal(CallBackDetailState.FAIL)"
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.FAIL, record?.planNo)"
         >
           {{ record?.failedNum }}
         </span>
@@ -32,7 +32,7 @@
           :class="
             !record?.recoverNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
           "
-          @click.stop.self="handleGoCustomModal(CallBackDetailState.RESUME)"
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.RESUME, record?.planNo)"
         >
           {{ record?.recoverNum }}
         </span>
@@ -42,7 +42,7 @@
           :class="
             !record?.noVisitNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
           "
-          @click.stop.self="handleGoCustomModal(CallBackDetailState.NOVISIT)"
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.NOVISIT, record?.planNo)"
         >
           {{ record?.noVisitNum }}
         </span>
@@ -304,9 +304,10 @@
     });
   }
 
-  function handleGoCustomModal(state: CallBackDetailState) {
+  function handleGoCustomModal(state: CallBackDetailState, planNo: string) {
     openCallbackCustomDetailModal(true, {
       state,
+      planNo,
     });
   }
 </script>

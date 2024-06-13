@@ -62,6 +62,7 @@
       return {
         ...params,
         state: state.value,
+        planNo: planNo.value,
       };
     },
     rowKey: 'donorNo',
@@ -80,9 +81,11 @@
   });
 
   const state = ref<CallBackDetailState>(CallBackDetailState.SUCCESS);
+  const planNo = ref('');
 
   const [register] = useModalInner((data) => {
     state.value = data.state;
+    planNo.value = data.planNo;
 
     reload();
   });

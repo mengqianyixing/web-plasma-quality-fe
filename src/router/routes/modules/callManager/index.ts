@@ -72,7 +72,7 @@ const callManager: AppRouteModule = {
       path: 'callback-failure',
       name: 'CallbackFailure',
       meta: {
-        title: '回访名单失败',
+        title: '回访终止查询',
       },
       id: 930030,
       component: () => import('@/views/callback/callback-failure/index.vue'),
