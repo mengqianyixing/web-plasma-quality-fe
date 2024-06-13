@@ -61,7 +61,7 @@
     return count;
   };
 
-  const [registerForm, { updateSchema, getFieldsValue }] = useForm({
+  const [registerForm, { updateSchema, getFieldsValue, setProps }] = useForm({
     labelWidth: 140,
     actionColOptions: { style: 'right: 40px; top: 80px;  position: absolute;' },
     schemas: formSchema,
@@ -151,7 +151,7 @@
 
       delete searchParams.dateKey;
       delete searchParams.date;
-
+      setProps({ submitButtonOptions: { loading: true } });
       const originListData = await inventoryDetailApi(searchParams as GetApiCoreBankStockRequest);
 
       tableData.value = originListData.map((it) => ({
@@ -159,6 +159,8 @@
         stationNo: getStationNameById(it.stationNo),
       }));
     } finally {
+      setProps({ submitButtonOptions: { loading: false } });
+
       tableLoading.value = false;
     }
   }

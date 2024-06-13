@@ -1,5 +1,5 @@
 <template>
-  <div class="root p-3">
+  <div class="p-3 root">
     <div class="pt-5 bg-white mb-16px">
       <BasicForm @register="registerBasicForm" />
     </div>
@@ -178,11 +178,11 @@
     },
   ];
 
-  const [registerBasicForm, { getFieldsValue }] = useForm({
+  const [registerBasicForm, { getFieldsValue, setProps }] = useForm({
     schemas: searchFormSchema,
-    labelWidth: 100,
-    baseColProps: { flex: '0 1 360px' },
-    actionColOptions: { flex: '0 1 200px' },
+    labelWidth: 140,
+    baseColProps: { flex: '0 0 373px' },
+    actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
     transformDateFunc(date) {
       return date ? date.format('YYYY-MM-DD') : '';
     },
@@ -216,12 +216,16 @@
       return;
     }
 
-    setLoading(true);
-
-    originData.value = await getInventoryList({
-      ...getFieldsValue(),
-    });
-    setLoading(false);
+    try {
+      setLoading(true);
+      setProps({ submitButtonOptions: { loading: true } });
+      originData.value = await getInventoryList({
+        ...getFieldsValue(),
+      });
+    } finally {
+      setLoading(false);
+      setProps({ submitButtonOptions: { loading: false } });
+    }
   }
 
   onMounted(async () => {

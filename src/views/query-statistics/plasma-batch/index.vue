@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <div class="root p-3">
+    <div class="p-3 root">
       <div class="pt-5 bg-white mb-16px">
         <BasicForm @register="registerBasicForm" />
       </div>
@@ -20,7 +20,7 @@
             </BasicTable>
           </div>
           <div
-            class="flex justify-end mx-5 mt-3 bg-white sticky bottom-0 right-0"
+            class="sticky bottom-0 right-0 flex justify-end mx-5 mt-3 bg-white"
             v-if="pagerLeft.total > 0"
           >
             <span class="mr-2">共{{ pagerLeft.total }}条数据</span>
@@ -45,7 +45,7 @@
               </BasicTable>
             </div>
             <div
-              class="flex justify-end mx-5 mt-3 bg-white sticky bottom-0 right-0"
+              class="sticky bottom-0 right-0 flex justify-end mx-5 mt-3 bg-white"
               v-if="pagerRight.total > 0"
             >
               <span class="mr-2">共{{ pagerRight.total }}条数据</span>
@@ -122,7 +122,7 @@
   }
 
   const _reloadTable = debounce(reloadTable, 300) as () => Promise<void>;
-  const [registerBasicForm, { getFieldsValue }] = useForm({
+  const [registerBasicForm, { getFieldsValue, setProps }] = useForm({
     schemas: searchFormSchema,
     labelWidth: 100,
     actionColOptions: { style: 'max-width:unset; position: absolute; right: 10px;' },
@@ -144,10 +144,16 @@
   }
 
   async function reloadTable() {
-    if (currentKey.value === 'come') {
-      await reloadLeft();
-    } else {
-      await reloadRight();
+    try {
+      setProps({ submitButtonOptions: { loading: true } });
+
+      if (currentKey.value === 'come') {
+        await reloadLeft();
+      } else {
+        await reloadRight();
+      }
+    } finally {
+      setProps({ submitButtonOptions: { loading: false } });
     }
   }
 
