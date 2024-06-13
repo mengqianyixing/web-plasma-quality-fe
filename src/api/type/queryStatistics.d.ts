@@ -2478,7 +2478,7 @@ export interface GetApiCoreBagUnqualifiedStatisticStationResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/lab/sample/detail`
- * @更新时间 `2024-03-02 11:18:58`
+ * @更新时间 `2024-06-12 19:36:22`
  */
 export interface PostApiCoreLabSampleDetailRequest {
   /**
@@ -2512,7 +2512,7 @@ export interface PostApiCoreLabSampleDetailRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `POST /api/core/lab/sample/detail`
- * @更新时间 `2024-03-02 11:18:58`
+ * @更新时间 `2024-06-12 19:36:22`
  */
 export type PostApiCoreLabSampleDetailResponse = {
   /**
@@ -3324,19 +3324,13 @@ export interface GetApiReportPlasmaSummaryResponse {
  * 接口 [检测结果查询-检验样本查询↗](https://yapi.sharing8.cn/project/529/interface/api/33811) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/samples/lab/item`
- * @更新时间 `2024-03-08 18:20:13`
+ * @请求头 `GET /api/search/sample/lab/item`
+ * @更新时间 `2024-06-12 13:54:01`
  */
-export interface PostApiCoreLabSamplesLabItemRequest {
+export interface GetApiSearchSampleLabItemRequest {
   pageSize: string;
   currPage: string;
-  /**
-   * 样本采集日期
-   */
   batchNo: string;
-  /**
-   * 样本类型
-   */
   sampleType: string;
   conclusion?: string;
 }
@@ -3345,10 +3339,10 @@ export interface PostApiCoreLabSamplesLabItemRequest {
  * 接口 [检测结果查询-检验样本查询↗](https://yapi.sharing8.cn/project/529/interface/api/33811) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `POST /api/core/lab/samples/lab/item`
- * @更新时间 `2024-03-08 18:20:13`
+ * @请求头 `GET /api/search/sample/lab/item`
+ * @更新时间 `2024-06-12 13:54:01`
  */
-export interface PostApiCoreLabSamplesLabItemResponse {
+export interface GetApiSearchSampleLabItemResponse {
   totalCount: number;
   pageSize: null;
   totalPage: null;
@@ -3811,10 +3805,10 @@ export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailResponse {
  * 接口 [库存合格血浆查询↗](https://yapi.sharing8.cn/project/529/interface/api/33888) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/bag/qualified-inventory/statistic/{queryDate}`
- * @更新时间 `2024-03-14 17:03:30`
+ * @请求头 `GET /api/search/bank/qualified-inventory/statistic/{queryDate}`
+ * @更新时间 `2024-06-12 20:34:15`
  */
-export interface GetApiCoreBagQualifiedInventoryStatisticQueryDateRequest {
+export interface GetApiSearchBankQualifiedInventoryStatisticQueryDateRequest {
   /**
    * 库存汇总日期
    */
@@ -3825,10 +3819,10 @@ export interface GetApiCoreBagQualifiedInventoryStatisticQueryDateRequest {
  * 接口 [库存合格血浆查询↗](https://yapi.sharing8.cn/project/529/interface/api/33888) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/bag/qualified-inventory/statistic/{queryDate}`
- * @更新时间 `2024-03-14 17:03:30`
+ * @请求头 `GET /api/search/bank/qualified-inventory/statistic/{queryDate}`
+ * @更新时间 `2024-06-12 20:34:15`
  */
-export type GetApiCoreBagQualifiedInventoryStatisticQueryDateResponse = {
+export type GetApiSearchBankQualifiedInventoryStatisticQueryDateResponse = {
   /**
    * 效价类型
    */
@@ -4258,16 +4252,23 @@ export interface GetApiCoreLabSamplesLabUnqualifiedItemResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/sample/lab`
- * @更新时间 `2024-04-25 14:58:52`
+ * @更新时间 `2024-06-12 17:52:36`
  */
-export interface GetApiSearchSampleLabRequest {}
+export interface GetApiSearchSampleLabRequest {
+  stationNo?: string;
+  collectionBegin?: string;
+  collectionEnd?: string;
+  sampleType?: string;
+  issueBegin?: string;
+  issueEnd?: string;
+}
 
 /**
  * 接口 [样本检测2↗](https://yapi.sharing8.cn/project/529/interface/api/34386) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/sample/lab`
- * @更新时间 `2024-04-25 14:58:52`
+ * @更新时间 `2024-06-12 17:52:36`
  */
 export type GetApiSearchSampleLabResponse = {
   /**
@@ -4286,6 +4287,10 @@ export type GetApiSearchSampleLabResponse = {
    * 已接收未检测
    */
   acceptCount: string;
+  /**
+   * 已验收未检测
+   */
+  verifiyCount: string;
   /**
    * 检测样本
    */
@@ -4697,5 +4702,134 @@ export interface GetApiSearchBatchCountTotalResponse {
    */
   expnum?: number;
 }
+
+/**
+ * 接口 [样本统计：样本详情列表↗](https://yapi.sharing8.cn/project/529/interface/api/35280) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/sample/statistics/detail`
+ * @更新时间 `2024-06-12 16:15:32`
+ */
+export interface GetApiCoreSampleStatisticsDetailRequest {
+  /**
+   * 当前页码
+   */
+  currPage: string;
+  /**
+   * 页数大小
+   */
+  pageSize: string;
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+  /**
+   * 样本类型
+   */
+  sampleType: string;
+  /**
+   * 样本数据类型，UNQ-不合格，HT-高效价，LT-低效价，NT-无效价
+   */
+  sampleSubType: string;
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+  /**
+   * 浆员编号
+   */
+  donorNo?: string;
+}
+
+/**
+ * 接口 [样本统计：样本详情列表↗](https://yapi.sharing8.cn/project/529/interface/api/35280) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/core/sample/statistics/detail`
+ * @更新时间 `2024-06-12 16:15:32`
+ */
+export interface GetApiCoreSampleStatisticsDetailResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 样本编号
+     */
+    sampleNo?: string;
+    /**
+     * 浆员编号
+     */
+    donorNo?: string;
+    /**
+     * 浆员姓名
+     */
+    donorName?: string;
+    /**
+     * 采集日期
+     */
+    collectAt?: string;
+  }[];
+}
+
+/**
+ * 接口 [样本检测-合计详情↗](https://yapi.sharing8.cn/project/529/interface/api/35316) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/sample/lab/count/detail`
+ * @更新时间 `2024-06-12 20:05:14`
+ */
+export interface GetApiSearchSampleLabCountDetailRequest {
+  /**
+   * a:已接收血浆未验收；b:血浆已验收未检测；
+   */
+  type: string;
+  currPage: string;
+  pageSize: string;
+  stationNo?: string;
+  collectionBegin?: string;
+  collectionEnd?: string;
+  sampleType?: string;
+  issueBegin?: string;
+  issueEnd?: string;
+}
+
+/**
+ * 接口 [样本检测-合计详情↗](https://yapi.sharing8.cn/project/529/interface/api/35316) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/sample/lab/count/detail`
+ * @更新时间 `2024-06-12 20:05:14`
+ */
+export type GetApiSearchSampleLabCountDetailResponse = {
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+  /**
+   * 总数
+   */
+  count?: string;
+  /**
+   * 狂免
+   */
+  r?: string;
+  /**
+   * 乙免
+   */
+  b?: string;
+  /**
+   * 巨细胞
+   */
+  c?: string;
+  /**
+   * 破免
+   */
+  h?: string;
+  /**
+   * 样本接收日期
+   */
+  acceptAt?: string;
+}[];
 
 /* prettier-ignore-end */
