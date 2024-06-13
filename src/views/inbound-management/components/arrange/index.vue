@@ -62,7 +62,7 @@
     useSearchForm: true,
     showTableSetting: false,
     bordered: true,
-    rowSelection: { type: 'radio' },
+    rowSelection: { type: 'checkbox' },
     showIndexColumn: false,
     isCanResizeParent: true,
     inset: true,
