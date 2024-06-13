@@ -381,10 +381,10 @@ export interface GetApiCoreBankLocationsResponse {
  * 接口 [库存查询↗](https://yapi.sharing8.cn/project/529/interface/api/31671) 的 **请求类型**
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
- * @请求头 `GET /api/core/bank/stock`
- * @更新时间 `2024-02-05 17:00:04`
+ * @请求头 `GET /api/search/bank/stock`
+ * @更新时间 `2024-06-13 19:42:15`
  */
-export interface GetApiCoreBankStockRequest {
+export interface GetApiSearchBankStockRequest {
   /**
    * 采浆公司
    */
@@ -450,10 +450,10 @@ export interface GetApiCoreBankStockRequest {
  * 接口 [库存查询↗](https://yapi.sharing8.cn/project/529/interface/api/31671) 的 **返回类型**
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
- * @请求头 `GET /api/core/bank/stock`
- * @更新时间 `2024-02-05 17:00:04`
+ * @请求头 `GET /api/search/bank/stock`
+ * @更新时间 `2024-06-13 19:42:15`
  */
-export type GetApiCoreBankStockResponse = {
+export type GetApiSearchBankStockResponse = {
   /**
    * 采浆公司
    */

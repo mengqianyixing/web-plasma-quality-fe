@@ -4777,21 +4777,19 @@ export interface GetApiCoreSampleStatisticsDetailResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/sample/lab/count/detail`
- * @更新时间 `2024-06-12 20:05:14`
+ * @更新时间 `2024-06-13 20:50:43`
  */
 export interface GetApiSearchSampleLabCountDetailRequest {
-  /**
-   * a:已接收血浆未验收；b:血浆已验收未检测；
-   */
   type: string;
-  currPage: string;
-  pageSize: string;
+  failedCode?: string;
   stationNo?: string;
   collectionBegin?: string;
   collectionEnd?: string;
   sampleType?: string;
   issueBegin?: string;
   issueEnd?: string;
+  currPage: string;
+  pageSize: string;
 }
 
 /**
@@ -4799,37 +4797,22 @@ export interface GetApiSearchSampleLabCountDetailRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/sample/lab/count/detail`
- * @更新时间 `2024-06-12 20:05:14`
+ * @更新时间 `2024-06-13 20:50:43`
  */
-export type GetApiSearchSampleLabCountDetailResponse = {
-  /**
-   * 样本批号
-   */
-  batchNo: string;
-  /**
-   * 总数
-   */
-  count?: string;
-  /**
-   * 狂免
-   */
-  r?: string;
-  /**
-   * 乙免
-   */
-  b?: string;
-  /**
-   * 巨细胞
-   */
-  c?: string;
-  /**
-   * 破免
-   */
-  h?: string;
-  /**
-   * 样本接收日期
-   */
-  acceptAt?: string;
-}[];
+export interface GetApiSearchSampleLabCountDetailResponse {
+  totalCount: number;
+  pageSize: number;
+  totalPage: number;
+  currPage: number;
+  result: {
+    batchNo?: string;
+    count?: number;
+    r?: number;
+    b?: number;
+    c?: number;
+    t?: number;
+    acceptAt?: string;
+  }[];
+}
 
 /* prettier-ignore-end */

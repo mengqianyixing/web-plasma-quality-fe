@@ -735,7 +735,7 @@ export type GetApiCoreSamplePlanMixListResponse = {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/sample/plan/mixTube/detail`
- * @更新时间 `2024-05-16 00:01:55`
+ * @更新时间 `2024-06-13 16:10:41`
  */
 export interface GetApiCoreSamplePlanMixTubeDetailRequest {
   /**
@@ -750,6 +750,10 @@ export interface GetApiCoreSamplePlanMixTubeDetailRequest {
    * 混样方式
    */
   mixType: string;
+  /**
+   * 样本批号
+   */
+  batchNo: string;
 }
 
 /**
@@ -757,7 +761,7 @@ export interface GetApiCoreSamplePlanMixTubeDetailRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/sample/plan/mixTube/detail`
- * @更新时间 `2024-05-16 00:01:55`
+ * @更新时间 `2024-06-13 16:10:41`
  */
 export type GetApiCoreSamplePlanMixTubeDetailResponse = {
   /**

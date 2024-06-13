@@ -1,6 +1,7 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable" class="tableHeight" />
+    <TabelModal @register="registerModal" />
   </PageWrapper>
 </template>
 <script lang="tsx" setup>
@@ -14,12 +15,15 @@
     DictionaryReasonEnum,
     getSysSecondaryDictionary,
   } from '@/api/_dictionary';
+  import { useModal } from '@/components/Modal';
+  import TabelModal from './tabelModal.vue';
 
   defineOptions({ name: 'SampleCheck' });
 
-  const [registerTable, { setColumns, reload }] = useTable({
+  const [registerModal, { openModal }] = useModal();
+  const [registerTable, { setColumns, reload, getColumns, getForm }] = useTable({
     api: getListApi,
-    columns,
+    columns: columns(),
     formConfig: {
       schemas: searchFormSchema,
     },
@@ -39,21 +43,47 @@
     dataKey: DictionaryReasonEnum.PlasmaFailedReason as any,
     dictItemTypes: [DictionaryItemKeyEnum.Test],
   }).then((res1) => {
-    columns[7].children?.unshift(
+    const _columns = columns(({ record, column, value }) => {
+      if (!record.isCount) return value || 0;
+      return (
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          onClick={() => cellClick(column.dataIndex, column.title, null)}
+        >
+          {value || 0}
+        </span>
+      );
+    });
+    _columns[7].children?.unshift(
       ...(res1 || []).map((it) => ({
         dataIndex: ['failed', it.dictItemId],
         title: it.label,
         width: it.label.length * 18,
         ellipsis: false,
-        format: (v) => v || 0,
+        customRender: ({ record, value }) => {
+          if (!record.isCount) return value || 0;
+          return (
+            <span
+              class="text-blue-500 underline cursor-pointer"
+              onClick={() => cellClick('failed', it.label, it.dictItemId)}
+            >
+              {value || 0}
+            </span>
+          );
+        },
       })),
     );
-    setColumns(columns);
+    setColumns(_columns);
     reload();
   });
 
+  function cellClick(key: Array<string> | string, title: string, failedCode: string | null) {
+    const type = isArray(key) ? key[0] + key[1].slice(0, 1).toUpperCase() + key[1].slice(1) : key;
+    const values = getForm().getFieldsValue();
+    openModal(true, { type, title, failedCode, ...values });
+  }
   function getCountRow(data: Recordable[]) {
-    const row = columns.reduce((row, { dataIndex, children = [] }) => {
+    const row = getColumns().reduce((row, { dataIndex, children = [] }) => {
       row[dataIndex as string] = 0;
       children.forEach(({ dataIndex: ci }) => {
         if (isArray(ci)) {
@@ -68,6 +98,7 @@
     data.forEach((it) => {
       for (const key in it) {
         const data = it[key];
+        console.log(row);
         if (isObject(data)) {
           for (const ck in data) {
             row[key][ck] += data[ck] || 0;
@@ -80,7 +111,7 @@
     ['check', 'verification'].forEach((key) => {
       row[key]['ratio'] = row[key]['count'] / (row['sampleCount'] || 1);
     });
-    return { ...row, stationName: '合计', sampleType: '--' };
+    return { ...row, stationName: '合计', sampleType: '--', isCount: true };
   }
 </script>
 <style scoped lang="less">
