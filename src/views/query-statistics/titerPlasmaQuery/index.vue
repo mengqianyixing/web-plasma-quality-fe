@@ -157,9 +157,9 @@
     row['R']['reagentBatch'] = '--';
     row['T']['reagentBatch'] = '--';
     ['B', 'R', 'T', 'N', 'G'].map((it) => {
-      row[it]['hRatio'] = row[it]['hTiter'] / row['bagCount'];
-      row[it]['lRatio'] = row[it]['lTiter'] / row['bagCount'];
-      row[it]['nRatio'] = row[it]['nTiter'] / row['bagCount'];
+      row[it]['hRatio'] = row[it]['hTiter'] / row[it]['bagCount'];
+      row[it]['lRatio'] = row[it]['lTiter'] / row[it]['bagCount'];
+      row[it]['nRatio'] = row[it]['nTiter'] / row[it]['bagCount'];
     });
 
     return { ...row, stationName: '合计', batchNo: '批次数：' + data.length + '批', isCount: true };
