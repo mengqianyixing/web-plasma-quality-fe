@@ -207,7 +207,6 @@
         });
       });
     });
-    console.log(res, 'res');
     return res;
   }
   const [

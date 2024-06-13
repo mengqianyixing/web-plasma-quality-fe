@@ -32,6 +32,7 @@
   import { GetApiCoreBatchStockStatisticsResponse } from '@/api/type/queryStatistics';
   import { getSysParamsByParamKey } from '@/api/systemServer/params';
   import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const ATabs = Tabs;
   const ATabPane = Tabs.TabPane;
@@ -201,8 +202,22 @@
     immediate: false,
   });
 
+  const { createMessage } = useMessage();
+
   async function reloadTable() {
+    const searchParams = getFieldsValue();
+
+    if (
+      !searchParams.acceptBeginAt &&
+      !searchParams.verifyBeginAt &&
+      !searchParams.publishBeginAt
+    ) {
+      createMessage.warn('请至少选择一个时间条件');
+      return;
+    }
+
     setLoading(true);
+
     originData.value = await getInventoryList({
       ...getFieldsValue(),
     });
@@ -213,7 +228,6 @@
     quarantineBatchControlRes.value = await getSysParamsByParamKey(
       SysParamsEnum.QuarantineBatchControl,
     );
-    // await reloadTable();
   });
 </script>
 <style scoped>
