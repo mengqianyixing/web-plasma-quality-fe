@@ -23,7 +23,7 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { reactive } from 'vue';
 
-  const state = reactive({ mixTubeNo: '', planDate: '', mixType: '' });
+  const state = reactive({ mixTubeNo: '', planDate: '', mixType: '', batchNo: '' });
   const [registerTable, { reload, redoHeight, setPagination }] = useTable({
     api: getMixDtListApi,
     pagination: false,
@@ -45,6 +45,7 @@
     state.mixTubeNo = data.mixTubeNo;
     state.planDate = data.planDate;
     state.mixType = data.mixType;
+    state.batchNo = data.batchNo;
     setPagination({ current: 1 });
     reload();
   });

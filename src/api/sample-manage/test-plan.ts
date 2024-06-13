@@ -24,6 +24,7 @@ enum Api {
   BATCH_LIST = '/api/core/sample/unplans',
   MIX_LIST = '/api/core/sample/plan/mixList',
   MIX_DT = '/api/core/sample/plan/mixTube/detail',
+  LABEL = '',
 }
 
 export const getListApi = (params: GetApiCoreSamplePlansRequest) =>
@@ -46,3 +47,5 @@ export const getMixListApi = (params: GetApiCoreSamplePlanMixListRequest) =>
 
 export const getMixDtListApi = (params: GetApiCoreSamplePlanMixTubeDetailRequest) =>
   defHttp.get<GetApiCoreSamplePlanMixTubeDetailResponse>({ url: Api.MIX_DT, params });
+
+export const printPipeLabelApi = (params: any) => defHttp.get<any>({ url: Api.LABEL, params });

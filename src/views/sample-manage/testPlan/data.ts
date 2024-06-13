@@ -173,7 +173,7 @@ export const mixColumns: BasicColumn[] = [
   {
     title: '样本批号',
     dataIndex: 'batchNo',
-    width: 100,
+    width: 120,
   },
 
   {
@@ -233,7 +233,7 @@ export const mixDtColumns: BasicColumn[] = [
   {
     title: '样本批号',
     dataIndex: 'batchNo',
-    width: 80,
+    width: 120,
   },
 
   {
