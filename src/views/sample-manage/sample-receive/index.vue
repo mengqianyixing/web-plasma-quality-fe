@@ -99,7 +99,10 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1" ref="bagRef">
+          <div
+            class="flex items-center justify-center gap-2 w-[300px] max-w-full	 -mt-1"
+            ref="bagRef"
+          >
             <a-input
               ref={(el) => (bagRef.value = el)}
               placeholder="扫描袋号条码"
@@ -121,7 +124,7 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
+          <div class="flex items-center justify-center gap-2 w-[300px] max-w-full	 -mt-1">
             <a-input-search
               readonly
               placeholder="请点击选择"
