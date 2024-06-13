@@ -145,7 +145,7 @@
 
   async function reloadTable() {
     try {
-      setProps({ submitButtonOptions: { loading: true } });
+      await setProps({ submitButtonOptions: { loading: true } });
 
       if (currentKey.value === 'come') {
         await reloadLeft();
@@ -153,48 +153,46 @@
         await reloadRight();
       }
     } finally {
-      setProps({ submitButtonOptions: { loading: false } });
+      await setProps({ submitButtonOptions: { loading: false } });
     }
   }
 
-  const [
-    registerTableLeft,
-    { getForm: getFormLeft, getRawDataSource: getRawDataSourceLeft, reload: reloadLeft },
-  ] = useTable({
-    api: getPlasmaBatchList,
-    beforeFetch: (params) => {
-      return {
-        ...params,
-        ...getFieldsValue(),
-        currPage: pagerLeft.current ? pagerLeft.current : 1,
-        pageSize: pagerLeft.pageSize,
-      };
-    },
-    afterFetch: (data) => {
-      const _data = getRawDataSourceLeft();
+  const [registerTableLeft, { getRawDataSource: getRawDataSourceLeft, reload: reloadLeft }] =
+    useTable({
+      api: getPlasmaBatchList,
+      beforeFetch: (params) => {
+        return {
+          ...params,
+          ...getFieldsValue(),
+          currPage: pagerLeft.current ? pagerLeft.current : 1,
+          pageSize: pagerLeft.pageSize,
+        };
+      },
+      afterFetch: (data) => {
+        const _data = getRawDataSourceLeft();
 
-      pagerLeft.total = _data.totalCount;
-      pagerLeft.pageSize = _data.pageSize;
-      pagerLeft.current = _data.currPage;
-      return leftFormat(data);
-    },
-    pagination: false,
-    columns,
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    clickToRowSelect: false,
-    size: 'small',
-    striped: false,
-    useSearchForm: false,
-    bordered: true,
-    showIndexColumn: false,
-    canResize: true,
-    immediate: false,
-  });
+        pagerLeft.total = _data.totalCount;
+        pagerLeft.pageSize = _data.pageSize;
+        pagerLeft.current = _data.currPage;
+        return leftFormat(data);
+      },
+      pagination: false,
+      columns,
+      fetchSetting: {
+        pageField: 'currPage',
+        sizeField: 'pageSize',
+        totalField: 'totalCount',
+        listField: 'result',
+      },
+      clickToRowSelect: false,
+      size: 'small',
+      striped: false,
+      useSearchForm: false,
+      bordered: true,
+      showIndexColumn: false,
+      canResize: true,
+      immediate: false,
+    });
 
   function rightFormat(data) {
     const res: any[] = [];
@@ -215,44 +213,42 @@
     });
     return res;
   }
-  const [
-    registerTableRight,
-    { getForm: getFormRight, getRawDataSource: getRawDataSourceRight, reload: reloadRight },
-  ] = useTable({
-    api: getPlasmaBatchListByQuarantine,
-    beforeFetch: (params) => {
-      return {
-        ...params,
-        ...getFieldsValue(),
-        currPage: pagerRight.current ? pagerRight.current : 1,
-        pageSize: pagerRight.pageSize,
-      };
-    },
-    afterFetch: (data) => {
-      const _data = getRawDataSourceRight();
+  const [registerTableRight, { getRawDataSource: getRawDataSourceRight, reload: reloadRight }] =
+    useTable({
+      api: getPlasmaBatchListByQuarantine,
+      beforeFetch: (params) => {
+        return {
+          ...params,
+          ...getFieldsValue(),
+          currPage: pagerRight.current ? pagerRight.current : 1,
+          pageSize: pagerRight.pageSize,
+        };
+      },
+      afterFetch: (data) => {
+        const _data = getRawDataSourceRight();
 
-      pagerRight.total = _data.totalCount;
-      pagerRight.pageSize = _data.pageSize;
-      pagerRight.current = _data.currPage;
-      return rightFormat(data);
-    },
-    pagination: false,
-    columns: columnsByQuarantine,
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    clickToRowSelect: false,
-    size: 'small',
-    striped: false,
-    useSearchForm: false,
-    bordered: true,
-    showIndexColumn: false,
-    canResize: true,
-    immediate: false,
-  });
+        pagerRight.total = _data.totalCount;
+        pagerRight.pageSize = _data.pageSize;
+        pagerRight.current = _data.currPage;
+        return rightFormat(data);
+      },
+      pagination: false,
+      columns: columnsByQuarantine,
+      fetchSetting: {
+        pageField: 'currPage',
+        sizeField: 'pageSize',
+        totalField: 'totalCount',
+        listField: 'result',
+      },
+      clickToRowSelect: false,
+      size: 'small',
+      striped: false,
+      useSearchForm: false,
+      bordered: true,
+      showIndexColumn: false,
+      canResize: true,
+      immediate: false,
+    });
   async function handlePageChange(e) {
     if (currentKey.value === 'come') {
       pagerLeft.current = e;
@@ -275,7 +271,7 @@
   async function handleExportComeData() {
     const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
     const data = await getPlasmaBatchList({
-      ...getFormLeft().getFieldsValue(),
+      ...getFieldsValue(),
       currPage: '1',
       pageSize,
     });
@@ -299,7 +295,7 @@
   async function handleExportQuarantineData() {
     const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
     const data = await getPlasmaBatchListByQuarantine({
-      ...getFormRight().getFieldsValue(),
+      ...getFieldsValue(),
       currPage: '1',
       pageSize,
     });
