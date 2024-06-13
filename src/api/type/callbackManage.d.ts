@@ -837,7 +837,7 @@ export type GetApiCoreDonorCallbackStatusDetailPackResponse = {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail-state`
- * @更新时间 `2024-06-07 17:05:12`
+ * @更新时间 `2024-06-11 15:11:37`
  */
 export interface GetApiCoreDonorCallbackDetailStateRequest {
   pageSize: string;
@@ -866,7 +866,7 @@ export interface GetApiCoreDonorCallbackDetailStateRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/detail-state`
- * @更新时间 `2024-06-07 17:05:12`
+ * @更新时间 `2024-06-11 15:11:37`
  */
 export interface GetApiCoreDonorCallbackDetailStateResponse {
   totalCount?: number;

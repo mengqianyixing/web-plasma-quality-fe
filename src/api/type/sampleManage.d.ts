@@ -832,7 +832,7 @@ export interface GetApiCoreSamplePlanDetailResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample`
- * @更新时间 `2024-05-28 11:38:08`
+ * @更新时间 `2024-06-12 20:15:38`
  */
 export interface GetApiCoreBankDeliverSampleRequest {
   /**
@@ -860,7 +860,7 @@ export interface GetApiCoreBankDeliverSampleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample`
- * @更新时间 `2024-05-28 11:38:08`
+ * @更新时间 `2024-06-12 20:15:38`
  */
 export interface GetApiCoreBankDeliverSampleResponse {
   /**
@@ -868,11 +868,11 @@ export interface GetApiCoreBankDeliverSampleResponse {
    */
   dlvNo: string;
   /**
-   * 批次数量
+   * 批次数量  （按批隐藏）
    */
   batchNum: number;
   /**
-   * 样本袋数
+   * 样本袋数   （按批隐藏）
    */
   sampleNum: string;
   /**
@@ -880,7 +880,7 @@ export interface GetApiCoreBankDeliverSampleResponse {
    */
   totalNum: string;
   /**
-   * 血浆最晚投产日期
+   * 血浆最晚投产日期   （按批隐藏）
    */
   bagLatestProdDate: string;
   /**
@@ -911,7 +911,7 @@ export interface GetApiCoreBankDeliverSampleResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `POST /api/core/bank/deliver/sample`
- * @更新时间 `2024-05-22 17:24:50`
+ * @更新时间 `2024-06-12 20:26:05`
  */
 export interface PostApiCoreBankDeliverSampleRequest {
   /**
@@ -929,7 +929,7 @@ export interface PostApiCoreBankDeliverSampleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `POST /api/core/bank/deliver/sample`
- * @更新时间 `2024-05-22 17:24:50`
+ * @更新时间 `2024-06-12 20:26:05`
  */
 export interface PostApiCoreBankDeliverSampleResponse {}
 
@@ -1483,24 +1483,6 @@ export interface PostApiCoreBatchSampleAcceptKeepPackResponse {
 }
 
 /**
- * 接口 [保留样本托盘出库↗](https://yapi.sharing8.cn/project/529/interface/api/34932) 的 **请求类型**
- *
- * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
- * @请求头 `GET /api/core/bank/deliver/sample/tray-out`
- * @更新时间 `2024-05-23 16:00:02`
- */
-export interface GetApiCoreBankDeliverSampleTrayOutRequest {}
-
-/**
- * 接口 [保留样本托盘出库↗](https://yapi.sharing8.cn/project/529/interface/api/34932) 的 **返回类型**
- *
- * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
- * @请求头 `GET /api/core/bank/deliver/sample/tray-out`
- * @更新时间 `2024-05-23 16:00:02`
- */
-export interface GetApiCoreBankDeliverSampleTrayOutResponse {}
-
-/**
  * 接口 [保留样本接收：点击样本袋号超链接查看样本明细↗](https://yapi.sharing8.cn/project/529/interface/api/34956) 的 **请求类型**
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
@@ -2048,6 +2030,289 @@ export interface PutApiCoreBankDeliverSampleRequest {
  * @更新时间 `2024-06-06 20:00:46`
  */
 export interface PutApiCoreBankDeliverSampleResponse {}
+
+/**
+ * 接口 [批量挑选保留样本批次列表-单个挑选↗](https://yapi.sharing8.cn/project/529/interface/api/35346) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample-pick-single`
+ * @更新时间 `2024-06-12 20:21:48`
+ */
+export interface GetApiCoreBankDeliverSamplePickSingleRequest {
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+  /**
+   * 浆员编号
+   */
+  donorNo?: string;
+  /**
+   * 血浆状态
+   */
+  plasmaType?: string;
+  /**
+   * 血浆不合格原因， 血浆不合格原因字典，传code
+   */
+  unqReason?: string;
+}
+
+/**
+ * 接口 [批量挑选保留样本批次列表-单个挑选↗](https://yapi.sharing8.cn/project/529/interface/api/35346) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample-pick-single`
+ * @更新时间 `2024-06-12 20:21:48`
+ */
+export type GetApiCoreBankDeliverSamplePickSingleResponse = {
+  /**
+   * 采浆公司
+   */
+  stationName: string;
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+  /**
+   * 样本编号
+   */
+  sampleNo: string;
+  /**
+   * 采集日期
+   */
+  collectDate: string;
+  /**
+   * 浆员姓名
+   */
+  donorName: string;
+  /**
+   * 浆员编号
+   */
+  donorNo: string;
+  /**
+   * 血型
+   */
+  bloodType: string;
+  /**
+   * 血浆状态
+   */
+  plasmaType: string;
+  /**
+   * 血浆不合格原因
+   */
+  unqReason: string;
+}[];
+
+/**
+ * 接口 [保留样本出库申请单详情-单个↗](https://yapi.sharing8.cn/project/529/interface/api/35352) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample-detail-single`
+ * @更新时间 `2024-06-12 20:25:33`
+ */
+export interface GetApiCoreBankDeliverSampleDetailSingleRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo?: string;
+}
+
+/**
+ * 接口 [保留样本出库申请单详情-单个↗](https://yapi.sharing8.cn/project/529/interface/api/35352) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample-detail-single`
+ * @更新时间 `2024-06-12 20:25:33`
+ */
+export type GetApiCoreBankDeliverSampleDetailSingleResponse = {
+  /**
+   * 采浆公司
+   */
+  stationName: string;
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+  /**
+   * 样本编号
+   */
+  sampleNo: string;
+  /**
+   * 采集日期
+   */
+  collectDate: string;
+  /**
+   * 浆员姓名
+   */
+  donorName: string;
+  /**
+   * 浆员编号
+   */
+  donorNo: string;
+  /**
+   * 血型
+   */
+  bloodType: string;
+  /**
+   * 血浆状态
+   */
+  plasmaType: string;
+  /**
+   * 血浆不合格原因
+   */
+  unqReason: string;
+}[];
+
+/**
+ * 接口 [保留样本挑选-单个挑选↗](https://yapi.sharing8.cn/project/529/interface/api/35358) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/bank/deliver/sample-pick-single`
+ * @更新时间 `2024-06-12 20:29:11`
+ */
+export interface PostApiCoreBankDeliverSamplePickSingleRequest {
+  /**
+   * 单号
+   */
+  dlvNo: string;
+  /**
+   * 样本编号
+   */
+  sampleNos: string[];
+}
+
+/**
+ * 接口 [保留样本挑选-单个挑选↗](https://yapi.sharing8.cn/project/529/interface/api/35358) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `POST /api/core/bank/deliver/sample-pick-single`
+ * @更新时间 `2024-06-12 20:29:11`
+ */
+export interface PostApiCoreBankDeliverSamplePickSingleResponse {}
+
+/**
+ * 接口 [保留样本扫描列表-单个↗](https://yapi.sharing8.cn/project/529/interface/api/35364) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/scan-single`
+ * @更新时间 `2024-06-12 20:35:00`
+ */
+export interface GetApiCoreBankDeliverSampleScanSingleRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+}
+
+/**
+ * 接口 [保留样本扫描列表-单个↗](https://yapi.sharing8.cn/project/529/interface/api/35364) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/scan-single`
+ * @更新时间 `2024-06-12 20:35:00`
+ */
+export interface GetApiCoreBankDeliverSampleScanSingleResponse {
+  /**
+   * 未出库袋数
+   */
+  waitOutNum: string;
+  /**
+   * 已出库袋数
+   */
+  outedNum: string;
+  waitList: {
+    /**
+     * 样本编号
+     */
+    sampleNo: string;
+    /**
+     * 浆员编号
+     */
+    donorNo?: string;
+  }[];
+  outedList: {
+    /**
+     * 样本编号
+     */
+    sampleNo: string;
+    /**
+     * 出库日期
+     */
+    outDate: string;
+    /**
+     * 出库人
+     */
+    scanBy: string;
+    /**
+     * 浆员编号
+     */
+    donorNo: string;
+  }[];
+}
+
+/**
+ * 接口 [保留样本托盘出库列表-单个↗](https://yapi.sharing8.cn/project/529/interface/api/35370) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/tray-single`
+ * @更新时间 `2024-06-12 20:38:37`
+ */
+export interface GetApiCoreBankDeliverSampleTraySingleRequest {
+  /**
+   * 申请单号
+   */
+  dlvNo: string;
+  /**
+   * 托盘编号
+   */
+  trayNo?: string;
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+}
+
+/**
+ * 接口 [保留样本托盘出库列表-单个↗](https://yapi.sharing8.cn/project/529/interface/api/35370) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/tray-single`
+ * @更新时间 `2024-06-12 20:38:37`
+ */
+export interface GetApiCoreBankDeliverSampleTraySingleResponse {
+  /**
+   * 托盘号
+   */
+  trayNo: string;
+  /**
+   * 样本编号
+   */
+  sampleNo: string;
+  /**
+   * 样本袋号
+   */
+  sampleBagNo: string;
+  /**
+   * 浆员姓名
+   */
+  donorName: string;
+  /**
+   * 箱号
+   */
+  boxNo: string;
+  /**
+   * 存放位置
+   */
+  location: string;
+}
 
 /**
  * 接口 [新增预检项↗](https://yapi.sharing8.cn/project/529/interface/api/34944) 的 **请求类型**
