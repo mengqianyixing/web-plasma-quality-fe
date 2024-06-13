@@ -75,6 +75,7 @@
       key: '0',
       columns: CheckColumns,
       afterFetch: (res: Recordable[]) => {
+        setProps({ loading: false });
         const formatData = res.map((row) => ({
           ...row,
           [checkUnKey]: {
@@ -86,7 +87,6 @@
             ...row[exteriorKey].projects,
           },
         }));
-        setProps({ loading: false });
         const row = getCheckCountRow(formatData);
         return [...formatData, row];
       },

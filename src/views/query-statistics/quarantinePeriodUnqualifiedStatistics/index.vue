@@ -161,7 +161,8 @@
       }
     });
     [checkUnqKey, quarantineUnqKey, trackUnqKey].forEach((key) => {
-      row[key][ratioKey] = row[key][numKey] / (row[bagNumKey] || 1);
+      if (!row[bagNumKey]) return 0;
+      row[key][ratioKey] = row[key][numKey] / row[bagNumKey];
     });
     return {
       ...row,
@@ -249,7 +250,7 @@
       failedCode,
       title,
       ...formData,
-      stationNo: record.stationNo,
+      stationNo: record.stationNo || formData.stationNo,
       unqBagQuaType,
     });
   }
