@@ -9,7 +9,7 @@
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
-        <BasicTable @register="registerTable">
+        <BasicTable @register="registerTable" :columns="columnsComputed">
           <template #bagNum="{ record }">
             <span
               :class="
@@ -29,7 +29,7 @@
 </template>
 <script lang="tsx" setup>
   import { BasicModal, useModal, useModalInner } from '@/components/Modal';
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
 
   import {
@@ -51,7 +51,6 @@
         return date ? date.format('YYYY-MM-DD') : '';
       },
     },
-    columns: callbackDetailCustomColumns,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -65,7 +64,6 @@
         planNo: planNo.value,
       };
     },
-    rowKey: 'donorNo',
     clickToRowSelect: false,
     size: 'small',
     striped: false,
@@ -81,6 +79,31 @@
   });
 
   const state = ref<CallBackDetailState>(CallBackDetailState.SUCCESS);
+
+  const columnsComputed = computed(() => {
+    if (state.value === CallBackDetailState.FAIL || state.value === CallBackDetailState.NOVISIT) {
+      return callbackDetailCustomColumns.filter(
+        (it) => !['callbackDate', 'collDate'].includes(it.dataIndex as string),
+      );
+    } else if (state.value === CallBackDetailState.RESUME) {
+      return callbackDetailCustomColumns
+        .filter((it) => !['callbackDate'].includes(it.dataIndex as string))
+        .map((it) => {
+          if (it.dataIndex === 'collData') {
+            return {
+              ...it,
+              title: '恢复采浆日期',
+            };
+          } else {
+            return {
+              ...it,
+            };
+          }
+        });
+    } else {
+      return callbackDetailCustomColumns;
+    }
+  });
   const planNo = ref('');
 
   const [register] = useModalInner((data) => {

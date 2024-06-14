@@ -1,5 +1,12 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="register" :title="getTitle" width="85%" :min-height="700">
+  <BasicModal
+    v-bind="$attrs"
+    @register="register"
+    :title="getTitle"
+    width="85%"
+    :min-height="700"
+    :showOkBtn="false"
+  >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
         <Description @register="registerDescription" :data="descriptionData" />
@@ -98,13 +105,12 @@
         batchNo: batchNo.value,
       };
     },
-    rowKey: 'donorNo',
     clickToRowSelect: false,
     size: 'small',
     striped: false,
     useSearchForm: true,
     bordered: true,
-    showIndexColumn: false,
+    showIndexColumn: true,
     scroll: {
       x: 0,
     },
