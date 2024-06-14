@@ -57,7 +57,7 @@
       : callbackModalColumns.filter((it) => it.field !== 'trackType'),
   );
 
-  const [registerForm, { updateSchema, getFieldsValue }] = useForm({
+  const [registerForm, { updateSchema, getFieldsValue, removeSchemaByField }] = useForm({
     showAdvancedButton: false,
     schemas: addCallbackModalSearchFromSchema,
     transformDateFunc(date) {
@@ -154,6 +154,8 @@
         },
       },
     });
+
+    !isShowTrackType.value && (await removeSchemaByField('trackType'));
   }
 
   async function submitFunc() {

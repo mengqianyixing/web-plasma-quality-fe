@@ -73,7 +73,7 @@
 
   const { createConfirm } = useMessage();
 
-  const [registerForm, { getFieldsValue }] = useForm({
+  const [registerForm, { getFieldsValue, removeSchemaByField }] = useForm({
     showAdvancedButton: false,
     schemas: callbackModalSearchFromSchema,
     transformDateFunc(date) {
@@ -144,6 +144,8 @@
     stationNo.value = data.record.stationNo;
     batchNo.value = data.record.batchNo;
     isShowTrackType.value = data.record.isShowTrackType;
+
+    !isShowTrackType.value && removeSchemaByField('trackType');
 
     initTableData();
   });
