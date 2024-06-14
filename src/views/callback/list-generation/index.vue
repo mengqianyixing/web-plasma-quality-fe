@@ -106,8 +106,6 @@
   import { callbackConfirm } from '@/api/callback/list-confirm';
   import { CallbackButtonEnum } from '@/enums/authCodeEnum';
   import { useStation } from '@/hooks/common/useStation';
-  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-  import { SERVER_ENUM } from '@/enums/serverEnum';
   import { getSysParamsByParamKey } from '@/api/systemServer/params';
   import { SysParamsEnum } from '@/enums/sysParamsEnum';
   import { formatData, getHeader } from '@/components/Excel/src/Export2Excel';
@@ -127,8 +125,6 @@
       ? columns
       : columns.filter((it) => !(it.title as string).includes('样本'));
   });
-
-  const serverEnumStore = useServerEnumStoreWithOut();
 
   const { createConfirm, createMessage } = useMessage();
 
@@ -280,7 +276,7 @@
       ...record,
       isPreview: true,
       stationName: getStationNameById(record.stationNo),
-      state: serverEnumStore.getServerEnumText(SERVER_ENUM.CallbackPlanState)(record.state),
+      state: record.state,
       model: callbackModel.value,
       isShowTrackType: callbackModel.value && quarantineBatchControlModal.value,
     });
