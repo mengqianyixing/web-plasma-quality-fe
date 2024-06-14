@@ -28,9 +28,8 @@
         </template>
       </BasicTable>
     </div>
+    <ReportModal @register="registerReportModal" />
   </div>
-
-  <ReportModal @register="registerReportModal" />
 </template>
 <script lang="ts" setup>
   import { BasicColumn, BasicTable, useTable } from '@/components/Table';
