@@ -23,7 +23,6 @@
       >
         <template #summary>
           <div class="w-85vw">
-            备注；
             {{ footerTableData[0]?.remark }}
           </div>
         </template>
