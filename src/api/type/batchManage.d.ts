@@ -2418,4 +2418,38 @@ export interface PostApiCoreBatchPmsVerifyTaskRevokeBatchNoRequest {
  */
 export interface PostApiCoreBatchPmsVerifyTaskRevokeBatchNoResponse {}
 
+/**
+ * 接口 [撤销样本整批验收↗](https://yapi.sharing8.cn/project/529/interface/api/35376) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `PUT /api/core/batch/sample/verify/revoke/all`
+ * @更新时间 `2024-06-14 16:50:23`
+ */
+export interface PutApiCoreBatchSampleVerifyRevokeAllRequest {
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+  /**
+   * 复核人
+   */
+  checker: string;
+  /**
+   * 撤销原因
+   */
+  revokeReason: string;
+}
+
+/**
+ * 接口 [撤销样本整批验收↗](https://yapi.sharing8.cn/project/529/interface/api/35376) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `PUT /api/core/batch/sample/verify/revoke/all`
+ * @更新时间 `2024-06-14 16:50:23`
+ */
+export interface PutApiCoreBatchSampleVerifyRevokeAllResponse {
+  code: string;
+  msg: string;
+}
+
 /* prettier-ignore-end */

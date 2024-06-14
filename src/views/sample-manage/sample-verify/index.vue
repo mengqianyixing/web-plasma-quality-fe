@@ -24,6 +24,15 @@
                 完成验收
               </a-button>
               <a-button
+                v-if="!isReceiveByBag"
+                type="primary"
+                @click="handleCancelVerify"
+                class="mr-2"
+                :disabled="!inputValue"
+              >
+                撤销验收
+              </a-button>
+              <a-button
                 type="primary"
                 @click="openArrangeModel(true, { batchNo: inputValue })"
                 :disabled="!sampleBatchData.verifyedList?.length"
@@ -54,11 +63,12 @@
     <StationMissingNumberModal @register="registerMissingModal" />
     <PlasmaVerifyNonconformityModal @register="registerPlasmaVerifyModal" />
     <ArrangeModel @register="registerArrangeModel" />
+    <CancelVerifyModal @register="registerCancelVerifyModal" @success="handleNRSuccess" />
   </PageWrapper>
 </template>
 
 <script setup lang="tsx">
-  import { reactive, ref, computed, unref } from 'vue';
+  import { reactive, ref, computed, unref, shallowRef } from 'vue';
   import { isEmpty } from 'lodash-es';
   import { ActionItem, TableAction } from '@/components/Table';
 
@@ -73,12 +83,15 @@
   import PlasmaVerifyNonconformityModal from '@/views/sample-manage/sample-verify/PlasmaVerifyNonconformityModal.vue';
   import NonconformityModal from './NonconformityModal.vue';
   import RevokeVerifySampleModal from './RevokeVerifySampleModal.vue';
+  import CancelVerifyModal from './CancelVerifyModal.vue';
+
   import {
     GetApiCoreBatchSampleVerifyBatchSampleNoResponse,
     GetApiCoreBatchSampleVerifyNonConformanceBatchSampleNoResponse,
   } from '@/api/type/batchManage';
   import {
     nonconformityReasonEnum,
+    sampleReceiveModalEnum,
     sampleTypeEnum,
     sampleVerifyResultMap,
     sampleVerifyResultValueEnum,
@@ -96,11 +109,19 @@
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
   import ArrangeModel from '@/views/inbound-management/components/arrange/index.vue';
+  import { getSysParamsByParamKey } from '@/api/systemServer/params';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
 
   defineOptions({ name: 'SampleVerify' });
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
+
+  const receiveModal = shallowRef<sampleReceiveModalEnum>();
+  const isReceiveByBag = computed(() => receiveModal.value === sampleReceiveModalEnum.BAG);
+  getSysParamsByParamKey(SysParamsEnum.BatchSampleVerifyPattern).then((res) => {
+    receiveModal.value = res;
+  });
 
   const sampleBatchData = ref<GetApiCoreBatchSampleVerifyBatchSampleNoResponse>({});
   const verifyNonconformityData =
@@ -217,6 +238,7 @@
   const [registerMissingModal, { openModal: openMissingModal }] = useModal();
   const [registerPlasmaVerifyModal, { openModal: openPlasmaVerifyModal }] = useModal();
   const [registerArrangeModel, { openModal: openArrangeModel }] = useModal();
+  const [registerCancelVerifyModal, { openModal: openCancelVerifyModal }] = useModal();
 
   const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
     border: true,
@@ -450,5 +472,13 @@
 
   function handleNRSuccess() {
     updateTableData();
+  }
+
+  async function handleCancelVerify() {
+    openCancelVerifyModal(true, {
+      record: {
+        batchNo: inputValue.value,
+      },
+    });
   }
 </script>

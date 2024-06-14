@@ -14,6 +14,7 @@ import {
   PostApiCoreBatchSampleVerifyNonConformanceRequest,
   PostApiCoreBatchSampleVerifyRequest,
   PutApiCoreBatchSampleVerifyRequest,
+  PutApiCoreBatchSampleVerifyRevokeAllRequest,
   PutApiCoreBatchSampleVerifyRevokeRequest,
 } from '@/api/type/batchManage';
 import {
@@ -27,6 +28,7 @@ import {
 
 enum Api {
   SAMPLE_VERIFY_RESTFUL = '/api/core/batch/sample/verify',
+  CANCEL_VERIFY_BY_BATCH = '/api/core/batch/sample/verify/revoke/all',
   CONFIRM_NONCONFORMITY = '/api/core/batch/sample/verify/non-conformance',
   REVOKE_SAMPLE_VERIFY = '/api/core/batch/sample/verify/revoke',
   MISSING_NUMBER = '/api/core/batch/sample/verify/lack/',
@@ -52,6 +54,9 @@ export const getSampleVerifyDetail = (
 
 export const receiveSample = (params: PutApiCoreBatchSampleVerifyRequest) =>
   defHttp.put({ url: Api.SAMPLE_VERIFY_RESTFUL, params });
+
+export const cancelVerifyByBatch = (params: PutApiCoreBatchSampleVerifyRevokeAllRequest) =>
+  defHttp.put({ url: Api.CANCEL_VERIFY_BY_BATCH, params });
 
 export const confirmNonconformity = (params: PostApiCoreBatchSampleVerifyNonConformanceRequest) =>
   defHttp.post({ url: Api.CONFIRM_NONCONFORMITY, params });
