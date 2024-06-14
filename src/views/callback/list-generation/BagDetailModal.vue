@@ -51,7 +51,7 @@
       },
       {
         dataIndex: 'collDate',
-        title: '浆员信息',
+        title: '采集日期',
         width: 150,
       },
     ],
