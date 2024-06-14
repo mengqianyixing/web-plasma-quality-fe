@@ -75,7 +75,6 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import dayjs from 'dayjs';
   import { VxeGridProps } from 'vxe-table';
-  import { GetApiCoreBankStockRequest } from '@/api/type/plasmaStoreManage';
   import { sampleReceiveStatusValueEnum } from '@/enums/sampleEnum';
   import { debounce, cloneDeep } from 'lodash-es';
   import {
@@ -241,7 +240,7 @@
       (originKeepPackData.value as PostApiCoreBatchSampleAcceptKeepPackResponse)?.acceptedList ??
       [],
   );
-  const gridOptionsUnaccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
+  const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
     border: true,
     height: '750px',
     showOverflow: true,
@@ -281,7 +280,7 @@
     showFooter: false,
   });
 
-  const gridOptionsAccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
+  const gridOptionsAccept = reactive<VxeGridProps<any>>({
     border: true,
     height: '750px',
     showOverflow: true,

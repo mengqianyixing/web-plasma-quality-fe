@@ -4777,19 +4777,18 @@ export interface GetApiCoreSampleStatisticsDetailResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/sample/lab/count/detail`
- * @更新时间 `2024-06-13 20:50:43`
+ * @更新时间 `2024-06-13 21:15:12`
  */
 export interface GetApiSearchSampleLabCountDetailRequest {
   type: string;
-  failedCode?: string;
+  currPage: string;
+  pageSize: string;
   stationNo?: string;
   collectionBegin?: string;
   collectionEnd?: string;
   sampleType?: string;
   issueBegin?: string;
   issueEnd?: string;
-  currPage: string;
-  pageSize: string;
 }
 
 /**
@@ -4797,22 +4796,37 @@ export interface GetApiSearchSampleLabCountDetailRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/sample/lab/count/detail`
- * @更新时间 `2024-06-13 20:50:43`
+ * @更新时间 `2024-06-13 21:15:12`
  */
-export interface GetApiSearchSampleLabCountDetailResponse {
-  totalCount: number;
-  pageSize: number;
-  totalPage: number;
-  currPage: number;
-  result: {
-    batchNo?: string;
-    count?: number;
-    r?: number;
-    b?: number;
-    c?: number;
-    t?: number;
-    acceptAt?: string;
-  }[];
-}
+export type GetApiSearchSampleLabCountDetailResponse = {
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+  /**
+   * 总数
+   */
+  count?: string;
+  /**
+   * 狂免
+   */
+  r?: string;
+  /**
+   * 乙免
+   */
+  b?: string;
+  /**
+   * 巨细胞
+   */
+  c?: string;
+  /**
+   * 破免
+   */
+  t?: string;
+  /**
+   * 样本接收日期
+   */
+  acceptAt?: string;
+}[];
 
 /* prettier-ignore-end */

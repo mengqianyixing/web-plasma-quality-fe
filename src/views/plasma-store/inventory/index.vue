@@ -29,7 +29,7 @@
   import { useStation } from '@/hooks/common/useStation';
   import { VxeGridProps } from 'vxe-table';
   import { vxeTableColumns, formSchema } from './inventory.data';
-  import { GetApiCoreBankStockRequest } from '@/api/type/plasmaStoreManage';
+  import { GetApiSearchBankStockRequest } from '@/api/type/plasmaStoreManage';
   import dayjs from 'dayjs';
   import { useMessage } from '@/hooks/web/useMessage';
 
@@ -87,7 +87,7 @@
     return (arg1 * m + arg2 * m) / m;
   }
 
-  const gridOptions = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
+  const gridOptions = reactive<VxeGridProps<GetApiSearchBankStockRequest>>({
     border: true,
     showOverflow: true,
     height: 810,
@@ -152,7 +152,7 @@
       delete searchParams.dateKey;
       delete searchParams.date;
       setProps({ submitButtonOptions: { loading: true } });
-      const originListData = await inventoryDetailApi(searchParams as GetApiCoreBankStockRequest);
+      const originListData = await inventoryDetailApi(searchParams as GetApiSearchBankStockRequest);
 
       tableData.value = originListData.map((it) => ({
         ...it,
@@ -197,7 +197,7 @@
     delete searchParams.date;
 
     loading.value = true;
-    const originExportData = await inventoryDetailApi(searchParams as GetApiCoreBankStockRequest);
+    const originExportData = await inventoryDetailApi(searchParams as GetApiSearchBankStockRequest);
 
     if (originExportData.length === 0) {
       return createMessage.warning('暂无数据');

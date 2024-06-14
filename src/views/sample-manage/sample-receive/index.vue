@@ -60,7 +60,6 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import dayjs from 'dayjs';
   import { VxeGridProps } from 'vxe-table';
-  import { GetApiCoreBankStockRequest } from '@/api/type/plasmaStoreManage';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
   import { sampleReceiveModalEnum, sampleReceiveStatusValueEnum } from '@/enums/sampleEnum';
@@ -195,7 +194,7 @@
       (sampleBatchData.value as GetApiCoreBatchSampleAcceptBatchSampleNoResponse)?.acceptedList ??
       [],
   );
-  const gridOptionsUnaccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
+  const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
     border: true,
     height: '760px',
     showOverflow: true,
@@ -232,7 +231,7 @@
     showFooter: false,
   });
 
-  const gridOptionsAccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
+  const gridOptionsAccept = reactive<VxeGridProps<any>>({
     border: true,
     height: '760px',
     showOverflow: true,

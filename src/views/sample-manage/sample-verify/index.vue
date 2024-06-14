@@ -92,7 +92,6 @@
     receiveSample,
   } from '@/api/inbound-management/sample-verify';
   import { VxeGridProps } from 'vxe-table';
-  import { GetApiCoreBankStockRequest } from '@/api/type/plasmaStoreManage';
   import dayjs from 'dayjs';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
@@ -219,7 +218,7 @@
   const [registerPlasmaVerifyModal, { openModal: openPlasmaVerifyModal }] = useModal();
   const [registerArrangeModel, { openModal: openArrangeModel }] = useModal();
 
-  const gridOptionsUnaccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
+  const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
     border: true,
     height: '100%',
     showOverflow: true,
@@ -244,7 +243,7 @@
     showFooter: false,
   });
 
-  const gridOptionsAccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
+  const gridOptionsAccept = reactive<VxeGridProps<any>>({
     border: true,
     height: '100%',
     showOverflow: true,

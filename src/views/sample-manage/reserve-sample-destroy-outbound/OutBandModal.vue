@@ -55,7 +55,6 @@
   import TrayModal from './TrayModal.vue';
   import dayjs from 'dayjs';
   import { VxeGridProps } from 'vxe-table';
-  import { GetApiCoreBankStockRequest } from '@/api/type/plasmaStoreManage';
   import { useScanHelper } from '@/hooks/common/useScanHelper';
   import { debounce } from 'lodash-es';
   import { keepPackOutBandList, keepPackScan } from '@/api/sample-manage/reserve-sample-destory';
@@ -151,7 +150,7 @@
   const acceptList = computed(
     () => (originTableData.value as GetApiCoreBankDeliverSampleScanResponse)?.outedList ?? [],
   );
-  const gridOptionsUnaccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
+  const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
     border: true,
     height: '600px',
     showOverflow: true,
@@ -188,7 +187,7 @@
     showFooter: false,
   });
 
-  const gridOptionsAccept = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
+  const gridOptionsAccept = reactive<VxeGridProps<any>>({
     border: true,
     height: '600px',
     showOverflow: true,
