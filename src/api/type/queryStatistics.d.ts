@@ -2403,10 +2403,10 @@ export type GetApiSearchPlasmaPrivilegeCountResponse = {
  * 接口 [不合格血浆按浆站统计↗](https://yapi.sharing8.cn/project/529/interface/api/33657) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/bag/unqualified/statistic-station`
- * @更新时间 `2024-03-01 15:42:25`
+ * @请求头 `GET /api/search/batch/unqualified/statistic-station`
+ * @更新时间 `2024-06-14 16:42:34`
  */
-export interface GetApiCoreBagUnqualifiedStatisticStationRequest {
+export interface GetApiSearchBatchUnqualifiedStatisticStationRequest {
   pageSize: string;
   currPage: string;
   stationNo?: string;
@@ -2424,10 +2424,10 @@ export interface GetApiCoreBagUnqualifiedStatisticStationRequest {
  * 接口 [不合格血浆按浆站统计↗](https://yapi.sharing8.cn/project/529/interface/api/33657) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/bag/unqualified/statistic-station`
- * @更新时间 `2024-03-01 15:42:25`
+ * @请求头 `GET /api/search/batch/unqualified/statistic-station`
+ * @更新时间 `2024-06-14 16:42:34`
  */
-export interface GetApiCoreBagUnqualifiedStatisticStationResponse {
+export interface GetApiSearchBatchUnqualifiedStatisticStationResponse {
   totalCount?: number;
   pageSize?: number;
   totalPage?: number;
@@ -2751,10 +2751,10 @@ export interface GetApiSearchProdPrepareResponse {
  * 接口 [不合格血浆按批次统计↗](https://yapi.sharing8.cn/project/529/interface/api/33699) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/bag/unqualified/statistic-batch`
- * @更新时间 `2024-05-13 15:51:55`
+ * @请求头 `GET /api/search/batch/unqualified/statistic-batch`
+ * @更新时间 `2024-06-14 16:42:09`
  */
-export interface GetApiCoreBagUnqualifiedStatisticBatchRequest {
+export interface GetApiSearchBatchUnqualifiedStatisticBatchRequest {
   pageSize: string;
   currPage: string;
   /**
@@ -2791,10 +2791,10 @@ export interface GetApiCoreBagUnqualifiedStatisticBatchRequest {
  * 接口 [不合格血浆按批次统计↗](https://yapi.sharing8.cn/project/529/interface/api/33699) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/bag/unqualified/statistic-batch`
- * @更新时间 `2024-05-13 15:51:55`
+ * @请求头 `GET /api/search/batch/unqualified/statistic-batch`
+ * @更新时间 `2024-06-14 16:42:09`
  */
-export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
+export interface GetApiSearchBatchUnqualifiedStatisticBatchResponse {
   totalCount?: number;
   pageSize?: number;
   totalPage?: number;
@@ -2829,38 +2829,47 @@ export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
      * 验收(献血浆者符合性)
      */
     plasmaDonorBlockNum?: number;
+    plasmaDonorBlockCode?: string;
     /**
      * 血浆验收(无样本)
      */
     plasmaMissSampleNum?: number;
+    field_2plasmaMissSampleCode?: string;
     /**
      * 验收(破袋)
      */
     plasmaDamagedNum?: number;
+    plasmaDamagedCode: string;
     /**
      * 验收(无标签)
      */
     tagMissNum?: number;
+    tagMissCode: string;
     /**
      * 验收(血浆标签内容缺失)
      */
     tagContentMissNum?: number;
+    tagContentMissCode: string;
     /**
      * 验收(颜色异常)
      */
     plasmaColorErrNum?: number;
+    plasmaColorErrCode: string;
     /**
      * 验收(脂血)
      */
     plasmaLipemia?: number;
+    plasmaLipemiaCode: string;
     /**
      * 验收(溶血)
      */
     plasmaHemolysisNum?: number;
+    plasmaHemolysisCode: string;
     /**
      * 验收(其他)
      */
     plasmaOtherNum?: string;
+    plasmaOtherCode: string;
     /**
      * 验收不合格合计
      */
@@ -2873,38 +2882,47 @@ export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
      * 检测不合格ALT
      */
     altNum?: number;
+    altCode: string;
     /**
      * 检测不合格HBV-DNA
      */
     natHBsAgNum?: number;
+    natHBsAgCode: string;
     /**
      * 检测不合格HBsAg
      */
     hbsAgNum?: number;
+    hbsAgCode: string;
     /**
      * 检测不合格HCV-RNA
      */
     natHCVNum?: number;
+    natHCVCode: string;
     /**
      * 检测不合格HCV抗体
      */
     hcvNum?: number;
+    hcvCode: string;
     /**
      * 检测不合格HIV-1/HIV-2抗体
      */
     hivNum?: number;
+    hivCode: string;
     /**
      * 检测不合格HIV-RNA
      */
     natHIVNum?: number;
+    natHIVCode: string;
     /**
      * 检测不合格TP
      */
     tpNum?: number;
+    tpCode: string;
     /**
      * 检测不合格TP抗体
      */
     tpTNum?: number;
+    tpTCode: string;
     /**
      * 检测不合格合计
      */
@@ -2917,30 +2935,37 @@ export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
      * 检疫期献血浆者符合性
      */
     quarantineDonorBlockNum?: number;
+    quarantineDonorBlockCode: string;
     /**
      * 检疫期不合格HBV-DNA
      */
     quarantineNatHBsAgNum?: number;
+    quarantineNatHBsAgCode: string;
     /**
      * 检疫期不合格HBsAg
      */
     quarantineHBsAgNum?: number;
+    quarantineHBsAgCode: string;
     /**
      * 检疫期不合格HCV-RNA
      */
     quarantineNatHCVNum?: number;
+    quarantineNatHCVCode: string;
     /**
      * 检疫期不合格HCV抗体
      */
     quarantineHCVNum?: number;
+    quarantineHCVCode: string;
     /**
      * 检疫期不合格HIV-1/HIV-2抗体
      */
     quarantineHIVNum?: number;
+    quarantineHIVCode: string;
     /**
      * 检疫期不合格HIV-RNA
      */
     quarantineNatHIVNum?: number;
+    quarantineNatHIVCode: string;
     /**
      * 检疫期不合格合计
      */
@@ -2953,30 +2978,37 @@ export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
      * 续追踪不合格HBV-DNA
      */
     trackNatHBsAgNum?: number;
+    trackNatHBsAgCode: string;
     /**
      * 续追踪不合格HBsAg
      */
     trackHBsAgNum?: number;
+    trackHBsAgCode: string;
     /**
      * 续追踪不合格HCV-RNA
      */
     trackNatHCVNum?: number;
+    trackNatHCVCode: string;
     /**
      * 续追踪不合格HCV抗体
      */
     trackHCVNum?: number;
+    trackHCVCode: string;
     /**
      * 续追踪不合格HIV-1/HIV-2抗体
      */
     trackHIVNum?: number;
+    trackHIVCode: string;
     /**
      * 续追踪不合格HIV-RNA
      */
     trackNatHIVNum?: number;
+    trackNatHIVCode: string;
     /**
      * 续追踪不合格超一年
      */
     EXPNum?: number;
+    EXPCode: string;
     /**
      * 续追踪不合格合计
      */
@@ -2989,14 +3021,17 @@ export interface GetApiCoreBagUnqualifiedStatisticBatchResponse {
      * 其他
      */
     otherNum?: string;
+    otherCode: string;
     /**
      * 其他（破袋）
      */
     damagedNum?: string;
+    damagedCode: string;
     /**
      * 其他（外部告知追溯）
      */
     externalTraceNum?: string;
+    externalTraceCode: string;
     /**
      * 其他不合格合计
      */
@@ -4828,5 +4863,99 @@ export type GetApiSearchSampleLabCountDetailResponse = {
    */
   acceptAt?: string;
 }[];
+
+/**
+ * 接口 [不合格血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/35388) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/plasma/unqualified`
+ * @更新时间 `2024-06-14 18:06:24`
+ */
+export interface GetApiSearchPlasmaUnqualifiedRequest {
+  /**
+   * 验收发布日期起止
+   */
+  verifyPubStartDate?: string;
+  verifyPubEndDate?: string;
+  /**
+   * 入库日期起止
+   */
+  inStoreStartDate?: string;
+  inStoreEndDate?: string;
+  /**
+   * 检测发布日期起止
+   */
+  issueStartDate?: string;
+  issueEndDate?: string;
+  /**
+   * 不合格入库日期起止
+   */
+  unqInStoreStartDate?: string;
+  unqInStoreEndDate?: string;
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 不合格code
+   */
+  unqualifiedCode?: string;
+  currPage: string;
+  pageSize: string;
+}
+
+/**
+ * 接口 [不合格血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/35388) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/plasma/unqualified`
+ * @更新时间 `2024-06-14 18:06:24`
+ */
+export interface GetApiSearchPlasmaUnqualifiedResponse {
+  /**
+   * 采浆公司
+   */
+  stationName?: string;
+  /**
+   * 浆员姓名
+   */
+  donorName: string;
+  /**
+   * 献血浆者编号
+   */
+  donorNo: string;
+  /**
+   * 血浆编号
+   */
+  bagNo: string;
+  /**
+   * 采集日期
+   */
+  collectionAt: string;
+  /**
+   * 血浆批号
+   */
+  batchNo: string;
+  /**
+   * 样本编号
+   */
+  sampleNo: string;
+  /**
+   * 效价类型
+   */
+  immType: string;
+  /**
+   * 不合格原因
+   */
+  unqualifiedReason: string;
+  /**
+   * 入不合格库日期
+   */
+  inUnqualifiedStoreDate: string;
+}
 
 /* prettier-ignore-end */

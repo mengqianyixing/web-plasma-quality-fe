@@ -2208,7 +2208,7 @@ export interface PostApiCoreLabReportsResponse {
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/report/unqualified`
- * @更新时间 `2024-05-31 14:06:45`
+ * @更新时间 `2024-06-14 16:11:58`
  */
 export interface PostApiCoreLabReportUnqualifiedRequest {
   reportNo: string;
@@ -2228,7 +2228,7 @@ export interface PostApiCoreLabReportUnqualifiedRequest {
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)
  * @请求头 `POST /api/core/lab/report/unqualified`
- * @更新时间 `2024-05-31 14:06:45`
+ * @更新时间 `2024-06-14 16:11:58`
  */
 export interface PostApiCoreLabReportUnqualifiedResponse {
   totalCount: number;
@@ -2278,6 +2278,10 @@ export interface PostApiCoreLabReportUnqualifiedResponse {
      * 检测方法
      */
     methodName: string;
+    /**
+     * 效价类型
+     */
+    titerType: string;
   }[];
 }
 

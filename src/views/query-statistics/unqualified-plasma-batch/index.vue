@@ -4,6 +4,20 @@
       <template #toolbar>
         <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
       </template>
+      <template
+        v-for="(slotName, index) in columnsCustomTemplate"
+        :key="index"
+        #[slotName]="{ record }"
+      >
+        <span
+          :class="
+            !record[slotName] ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleDetail(record, slotName)"
+        >
+          {{ record[slotName] }}
+        </span>
+      </template>
     </BasicTable>
     <div
       class="flex justify-end items-center bg-white absolute bottom-0 right-6 mt-2"
@@ -21,6 +35,8 @@
         :total="pagerLeft.total"
       />
     </div>
+
+    <DetailModal @register="registerModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -34,7 +50,9 @@
   } from '@/api/query-statistics/batch-statistics';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
 
-  import { reactive, ref, watch } from 'vue';
+  import DetailModal from './DetailModal.vue';
+
+  import { computed, reactive, ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import {
@@ -43,12 +61,33 @@
   } from '@/api/type/queryStatistics';
   import { PositionType } from 'ant-design-vue/es/image/style';
   import { debounce } from 'lodash-es';
+  import { useModal } from '@/components/Modal';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'UnqualifiedPlasmaByBatch' });
 
+  const [registerModal, { openModal }] = useModal();
+
   const { currentRoute } = useRouter();
   const columnsRef = ref<BasicColumn[]>(columns);
+  const columnsCustomTemplate = computed(() => {
+    const res: string[] = [];
+    columnsRef.value.map((it: any) => {
+      if (it.children) {
+        it.children.map((child) => {
+          if (
+            child.slots &&
+            child.slots.customRender &&
+            !['合计', '比率'].some((it) => child.title.includes(it))
+          ) {
+            res.push(child.slots.customRender as unknown as string);
+          }
+        });
+      }
+    });
+
+    return res;
+  });
   const totalData = ref<GetApiSearchBatchCountTotalResponse>({});
 
   const pagerLeft = reactive({
@@ -126,9 +165,16 @@
         if (it.children) {
           return {
             ...it,
-            children: it.children.filter(
-              (child) => !nullCols.includes(child.dataIndex as unknown as string),
-            ) as any,
+            children: (
+              it.children.filter(
+                (child) => !nullCols.includes(child.dataIndex as unknown as string),
+              ) as any
+            ).map((it) => ({
+              ...it,
+              slots: {
+                customRender: it.dataIndex,
+              },
+            })),
           };
         }
         return it;
@@ -215,6 +261,18 @@
     pagerLeft.pageSize = size;
 
     await reload();
+  }
+
+  function handleDetail(record: Recordable, flag: string) {
+    const field = flag.replace(new RegExp(`Num$`), '');
+    const unqualifiedCode = record?.[field + 'Code'];
+
+    openModal(true, {
+      unqualifiedCode,
+      batchNo: record?.batchNo,
+      stationNo: record?.stationNo,
+      ...getForm().getFieldsValue(),
+    });
   }
 </script>
 <style scoped>
