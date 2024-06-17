@@ -162,22 +162,8 @@ export const columnsMap: Record<number, BasicColumn[]> = {
     {
       dataIndex: 'projectName',
       title: '不合格项目',
-    },
-    {
-      dataIndex: 'od',
-      title: 'OD值',
-    },
-    {
-      dataIndex: 'cutoff',
-      title: 'Cutoff值',
-    },
-    {
-      dataIndex: 'ct',
-      title: 'CT值',
-    },
-    {
-      dataIndex: 'unqualified',
-      title: '不合格',
+      ellipsis: false,
+      width: 260,
     },
   ],
 };
@@ -197,10 +183,14 @@ export const totalUnqualifiedColumns: BasicColumn[] = [
   {
     dataIndex: 'projectName',
     title: '检测项目',
+    width: 260,
+    ellipsis: false,
   },
   {
-    dataIndex: 'methodName',
-    title: '检测方法',
+    dataIndex: 'titerType',
+    title: '效价类型',
+    width: 260,
+    ellipsis: false,
   },
 ];
 
