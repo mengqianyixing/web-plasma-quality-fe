@@ -35,6 +35,7 @@
         show-size-changer
         show-quick-jumper
         v-model:current="pager.current"
+        v-model:pageSize="pager.pageSize"
         :total="pager.total"
       />
     </div>
@@ -63,7 +64,7 @@
 
   const pager = reactive({
     current: 1,
-    pageSize: 10,
+    pageSize: 30,
     total: 0,
   });
 
