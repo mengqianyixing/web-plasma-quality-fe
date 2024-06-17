@@ -89,7 +89,7 @@
       return callbackDetailCustomColumns
         .filter((it) => !['callbackDate'].includes(it.dataIndex as string))
         .map((it) => {
-          if (it.dataIndex === 'collData') {
+          if (it.dataIndex === 'collDate') {
             return {
               ...it,
               title: '恢复采浆日期',
