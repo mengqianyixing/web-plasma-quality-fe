@@ -2116,7 +2116,7 @@ export type GetApiCoreBankDeliverSamplePickSingleResponse = {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample-detail-single`
- * @更新时间 `2024-06-12 20:25:33`
+ * @更新时间 `2024-06-17 09:10:54`
  */
 export interface GetApiCoreBankDeliverSampleDetailSingleRequest {
   /**
@@ -2130,7 +2130,7 @@ export interface GetApiCoreBankDeliverSampleDetailSingleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample-detail-single`
- * @更新时间 `2024-06-12 20:25:33`
+ * @更新时间 `2024-06-17 09:10:54`
  */
 export type GetApiCoreBankDeliverSampleDetailSingleResponse = {
   /**
@@ -2157,6 +2157,10 @@ export type GetApiCoreBankDeliverSampleDetailSingleResponse = {
    * 浆员编号
    */
   donorNo: string;
+  /**
+   * 类别
+   */
+  source: string;
   /**
    * 血型
    */
@@ -2203,7 +2207,7 @@ export interface PostApiCoreBankDeliverSamplePickSingleResponse {}
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/scan-single`
- * @更新时间 `2024-06-12 20:35:00`
+ * @更新时间 `2024-06-17 09:12:07`
  */
 export interface GetApiCoreBankDeliverSampleScanSingleRequest {
   /**
@@ -2217,7 +2221,7 @@ export interface GetApiCoreBankDeliverSampleScanSingleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/scan-single`
- * @更新时间 `2024-06-12 20:35:00`
+ * @更新时间 `2024-06-17 09:12:07`
  */
 export interface GetApiCoreBankDeliverSampleScanSingleResponse {
   /**
@@ -2234,6 +2238,10 @@ export interface GetApiCoreBankDeliverSampleScanSingleResponse {
      */
     sampleNo: string;
     /**
+     * 类别
+     */
+    source: string;
+    /**
      * 浆员编号
      */
     donorNo?: string;
@@ -2243,6 +2251,10 @@ export interface GetApiCoreBankDeliverSampleScanSingleResponse {
      * 样本编号
      */
     sampleNo: string;
+    /**
+     * 类别
+     */
+    source: string;
     /**
      * 出库日期
      */
@@ -2263,7 +2275,7 @@ export interface GetApiCoreBankDeliverSampleScanSingleResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/tray-single`
- * @更新时间 `2024-06-12 20:38:37`
+ * @更新时间 `2024-06-17 09:12:36`
  */
 export interface GetApiCoreBankDeliverSampleTraySingleRequest {
   /**
@@ -2289,7 +2301,7 @@ export interface GetApiCoreBankDeliverSampleTraySingleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/tray-single`
- * @更新时间 `2024-06-12 20:38:37`
+ * @更新时间 `2024-06-17 09:12:36`
  */
 export interface GetApiCoreBankDeliverSampleTraySingleResponse {
   /**
@@ -2300,6 +2312,10 @@ export interface GetApiCoreBankDeliverSampleTraySingleResponse {
    * 样本编号
    */
   sampleNo: string;
+  /**
+   * 类别
+   */
+  source: string;
   /**
    * 样本袋号
    */
