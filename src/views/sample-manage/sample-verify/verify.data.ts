@@ -1,6 +1,10 @@
 import { BasicColumn } from '@/components/Table';
 import { FormSchema } from '@/components/Form';
-import { sampleVerifyStatusMap, sampleVerifyStatusValueEnum } from '@/enums/sampleEnum';
+import {
+  sampleTransferStateMap,
+  sampleVerifyStatusMap,
+  sampleVerifyStatusValueEnum,
+} from '@/enums/sampleEnum';
 import dayjs from 'dayjs';
 
 export const sampleVerifyColumns: BasicColumn[] = [
@@ -43,6 +47,19 @@ export const searchFormSchema: FormSchema[] = [
     label: '样本批号',
     component: 'Input',
     colProps: { span: 8 },
+  },
+  {
+    field: 'verifyState',
+    label: '状态',
+    component: 'Select',
+    componentProps: {
+      mode: 'multiple',
+      options: [...sampleTransferStateMap.entries()].map(([key, value]) => ({
+        value: key,
+        label: value,
+      })),
+    },
+    defaultValue: ['W', 'R'],
   },
 ];
 

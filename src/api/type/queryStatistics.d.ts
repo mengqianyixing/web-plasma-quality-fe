@@ -3512,7 +3512,7 @@ export interface GetApiSearchPlasmaCheckDetailsResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege/details`
- * @更新时间 `2024-05-31 16:53:02`
+ * @更新时间 `2024-06-17 11:48:34`
  */
 export interface GetApiSearchPlasmaPrivilegeDetailsRequest {
   /**
@@ -3533,6 +3533,10 @@ export interface GetApiSearchPlasmaPrivilegeDetailsRequest {
   titerLevel: string;
   currPage: string;
   pageSize: string;
+  /**
+   * 血浆类型
+   */
+  immunity?: string;
 }
 
 /**
@@ -3540,7 +3544,7 @@ export interface GetApiSearchPlasmaPrivilegeDetailsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege/details`
- * @更新时间 `2024-05-31 16:53:02`
+ * @更新时间 `2024-06-17 11:48:34`
  */
 export interface GetApiSearchPlasmaPrivilegeDetailsResponse {
   totalCount: number;

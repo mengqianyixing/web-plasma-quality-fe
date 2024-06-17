@@ -1314,7 +1314,7 @@ export interface PostApiCoreBatchPlasmaVerifyBatchPauseResponse {}
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/verify`
- * @更新时间 `2024-03-29 17:24:17`
+ * @更新时间 `2024-06-17 11:32:35`
  */
 export interface GetApiCoreBatchSampleVerifyRequest {
   /**
@@ -1328,7 +1328,11 @@ export interface GetApiCoreBatchSampleVerifyRequest {
   /**
    * 样本批次号
    */
-  batchSampleNo: string;
+  batchSampleNo?: string;
+  /**
+   * 状态：W-未验收，R-验收中，S-待发布，H-已发布，默认查询未验收和验收中
+   */
+  verifyState?: string;
 }
 
 /**
@@ -1336,7 +1340,7 @@ export interface GetApiCoreBatchSampleVerifyRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/verify`
- * @更新时间 `2024-03-29 17:24:17`
+ * @更新时间 `2024-06-17 11:32:35`
  */
 export interface GetApiCoreBatchSampleVerifyResponse {
   /**

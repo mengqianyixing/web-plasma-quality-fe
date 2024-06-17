@@ -51,6 +51,27 @@ sampleVerifyStatusMap.set(sampleVerifyStatusValueEnum.R, sampleVerifyStatusEnum.
 sampleVerifyStatusMap.set(sampleVerifyStatusValueEnum.S, sampleVerifyStatusEnum.S);
 sampleVerifyStatusMap.set(sampleVerifyStatusValueEnum.H, sampleVerifyStatusEnum.H);
 
+export enum sampleTransferStateEnum {
+  W = '未验收',
+  R = '验收中',
+  S = '待发布',
+  F = '已发布',
+}
+
+export enum sampleTransferStateValueEnum {
+  W = 'W',
+  R = 'R',
+  S = 'S',
+  F = 'F',
+}
+
+export const sampleTransferStateMap = new Map<sampleTransferStateValueEnum, string>();
+
+sampleTransferStateMap.set(sampleTransferStateValueEnum.W, sampleTransferStateEnum.W);
+sampleTransferStateMap.set(sampleTransferStateValueEnum.R, sampleTransferStateEnum.R);
+sampleTransferStateMap.set(sampleTransferStateValueEnum.S, sampleTransferStateEnum.S);
+sampleTransferStateMap.set(sampleTransferStateValueEnum.F, sampleTransferStateEnum.F);
+
 export enum sampleVerifyResultEnum {
   Unqualified = '不合格',
   Qualified = '合格',
