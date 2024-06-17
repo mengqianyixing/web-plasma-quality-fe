@@ -125,7 +125,9 @@
   function cellClick(slotName: string, data: Recordable) {
     const [rawImm, titerLevel] = slotName.split('');
     const { batchNo, stationNo } = data;
-    openModal(true, { rawImm, titerLevel, batchNo, stationNo });
+    const values = getForm().getFieldsValue();
+
+    openModal(true, { rawImm, titerLevel, batchNo, stationNo, immunity: values.immunity });
   }
   function getCountRow(data: Recordable[]) {
     const row = columns.reduce((row, { field, children = [] }) => {
