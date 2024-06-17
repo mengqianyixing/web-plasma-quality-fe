@@ -29,10 +29,10 @@ export type GetApiCoreBagQuarantineResponse = null;
  * 接口 [超一年期确认查询↗](https://yapi.sharing8.cn/project/529/interface/api/32947) 的 **请求类型**
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
- * @请求头 `GET /api/core/bag/plasma/expired`
- * @更新时间 `2024-05-31 15:15:44`
+ * @请求头 `GET /api/search/plasma/expired`
+ * @更新时间 `2024-06-17 09:21:17`
  */
-export interface GetApiCoreBagPlasmaExpiredRequest {
+export interface GetApiSearchPlasmaExpiredRequest {
   /**
    * 批次编码
    */
@@ -67,10 +67,10 @@ export interface GetApiCoreBagPlasmaExpiredRequest {
  * 接口 [超一年期确认查询↗](https://yapi.sharing8.cn/project/529/interface/api/32947) 的 **返回类型**
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
- * @请求头 `GET /api/core/bag/plasma/expired`
- * @更新时间 `2024-05-31 15:15:44`
+ * @请求头 `GET /api/search/plasma/expired`
+ * @更新时间 `2024-06-17 09:21:17`
  */
-export interface GetApiCoreBagPlasmaExpiredResponse {
+export interface GetApiSearchPlasmaExpiredResponse {
   totalCount?: number;
   pageSize?: number;
   totalPage?: number;
