@@ -1,10 +1,6 @@
 import { BasicColumn } from '@/components/Table';
 import { FormSchema } from '@/components/Form';
-import {
-  sampleTransferStateMap,
-  sampleVerifyStatusMap,
-  sampleVerifyStatusValueEnum,
-} from '@/enums/sampleEnum';
+import { sampleTransferStateMap, sampleTransferStateValueEnum } from '@/enums/sampleEnum';
 import dayjs from 'dayjs';
 
 export const sampleVerifyColumns: BasicColumn[] = [
@@ -36,7 +32,7 @@ export const sampleVerifyColumns: BasicColumn[] = [
     title: '状态',
     dataIndex: 'verifyState',
     format: (text) => {
-      return sampleVerifyStatusMap.get(<sampleVerifyStatusValueEnum>text) as string;
+      return sampleTransferStateMap.get(<sampleTransferStateValueEnum>text) as string;
     },
   },
 ];
