@@ -133,10 +133,13 @@
 
   defineOptions({ name: 'UnqualifiedPlasmaByStation' });
 
+  let _reloadTable: () => Promise<void>;
+
   const [registerTable, { getForm, getDataSource, getRawDataSource, reload }] = useTable({
     api: getUnqualifiedPlasmaStation,
     formConfig: {
       schemas: searchFormSchema,
+      submitFunc: () => _reloadTable(),
       resetFunc: resetFunc,
       submitOnReset: true,
     },
@@ -210,7 +213,7 @@
     pagination: false,
   });
 
-  const _reloadTable = debounce(reload, 300) as () => Promise<void>;
+  _reloadTable = debounce(reload, 300) as () => Promise<void>;
   async function resetFunc() {
     pagerLeft.current = 1;
 
