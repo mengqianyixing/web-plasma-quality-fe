@@ -39,11 +39,11 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchForm } from './data';
   import { message } from 'ant-design-vue';
-  import { getArrangeListApi, printArrangeLabelApi } from '@/api/inbound-management/sample-verify';
+  import { getArrangeListApi } from '@/api/inbound-management/sample-verify';
   import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { reactive, ref } from 'vue';
   import DetailsModel from './details.vue';
-  import { printRecord } from '@/api/tag/printRecord';
+  import { printRecord, getPrintRecord } from '@/api/tag/printRecord';
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
 
@@ -90,21 +90,18 @@
       return false;
     }
     labelLoading.value = true;
-    const res = await printArrangeLabelApi({
-      rackList: rows.map((it) => ({
-        sampleNoRange: it.sampleNoRange,
-        batchNo: it.batchNo,
-        rackId: it.rackId,
-      })),
-    });
     let n = 0;
     try {
-      for (const key in res) {
-        const jsonData = JSON.parse(res[key]);
+      for (const key in rows) {
+        const row = rows[key];
+        const res = await getPrintRecord({
+          labelType: 'SAMPLE_RACK',
+          bissNo: [row.rackId, row.sampleNoRange, row.batchNo].join('_'),
+        });
         await printRecord({
-          ...jsonData,
+          ...res,
           resolution: void 0,
-          dpi: jsonData.resolution,
+          dpi: res.resolution,
         });
         n++;
       }

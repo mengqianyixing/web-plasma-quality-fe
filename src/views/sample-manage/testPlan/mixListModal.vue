@@ -36,10 +36,10 @@
   import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { reactive, ref } from 'vue';
   import { mixColumns, mixSearchForm } from './data';
-  import { getMixListApi, printPipeLabelApi } from '@/api/sample-manage/test-plan';
+  import { getMixListApi } from '@/api/sample-manage/test-plan';
   import MixDetailsModal from './mixDetailsModal.vue';
   import { message } from 'ant-design-vue';
-  import { printRecord } from '@/api/tag/printRecord';
+  import { printRecord, getPrintRecord } from '@/api/tag/printRecord';
 
   const state = reactive({ planDate: '', mixType: '' });
   const labelLoading = ref(false);
@@ -79,20 +79,19 @@
     if (rows.length === 0) {
       message.warning('请选择一条数据');
       return false;
-    } else if (rows.length !== 0) {
-      message.warning('等待接口开发！！！');
-      return;
     }
     labelLoading.value = true;
-    const res = await printPipeLabelApi(rows);
+
     let n = 0;
     try {
-      for (const key in res) {
-        const jsonData = JSON.parse(res[key]);
+      for (const key in rows) {
+        const res = await getPrintRecord({
+          labelType: 'SAMPLE_MIX',
+          bissNo: rows[key]['mixTubeNo'],
+        });
         await printRecord({
-          ...jsonData,
-          resolution: void 0,
-          dpi: jsonData.resolution,
+          ...res,
+          dpi: res.resolution,
         });
         n++;
       }
