@@ -106,7 +106,11 @@
   });
   const planNo = ref('');
 
-  const [register] = useModalInner((data) => {
+  const [register, { setModalProps }] = useModalInner((data) => {
+    setModalProps({
+      maskClosable: false,
+      destroyOnClose: true,
+    });
     state.value = data.state;
     planNo.value = data.planNo;
 
