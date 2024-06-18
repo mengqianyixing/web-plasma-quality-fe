@@ -22,7 +22,7 @@
       </vxe-grid>
     </div>
 
-    <outModal @register="registerOutModal" />
+    <outModal @register="registerOutModal" dlvType="RSO" />
   </BasicModal>
 </template>
 <script lang="ts" setup>

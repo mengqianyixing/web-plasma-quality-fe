@@ -22,7 +22,7 @@
       </vxe-grid>
     </div>
 
-    <outModal @register="registerOutModal" />
+    <outModal @register="registerOutModal" dlvType="RSD" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -36,7 +36,7 @@
   import { keepPackOutBandTrayList } from '@/api/sample-manage/reserve-sample-destory-single';
   import {
     GetApiCoreBankDeliverSamplePickResponse,
-    GetApiCoreBankDeliverSampleTraySingleRequest,
+    GetApiSearchBankSampleTraySingleRequest,
   } from '@/api/type/sampleManage';
   import dayjs from 'dayjs';
 
@@ -123,7 +123,7 @@
       tableData.value = (await keepPackOutBandTrayList({
         dlvNo: dlvNo.value,
         ...values,
-      } as GetApiCoreBankDeliverSampleTraySingleRequest)) as unknown as any;
+      } as GetApiSearchBankSampleTraySingleRequest)) as unknown as any;
     } finally {
       tableLoading.value = false;
     }
