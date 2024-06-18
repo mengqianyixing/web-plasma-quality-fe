@@ -8,8 +8,8 @@ import {
   GetApiCoreBankDeliverSamplePickSingleResponse,
   GetApiCoreBankDeliverSampleScanSingleRequest,
   GetApiCoreBankDeliverSampleScanSingleResponse,
-  GetApiCoreBankDeliverSampleTraySingleRequest,
-  GetApiCoreBankDeliverSampleTraySingleResponse,
+  GetApiSearchBankSampleTraySingleRequest,
+  GetApiSearchBankSampleTraySingleResponse,
   PostApiCoreBankDeliverSamplePickSingleRequest,
   PostApiCoreBankDeliverSamplePickSingleResponse,
   PostApiCoreBankDeliverSampleScanSingleRequest,
@@ -20,7 +20,7 @@ enum Api {
   DELIVER_SAMPLE_DETAIL = '/api/core/bank/deliver/sample/detail-single',
   PICK_SAMPLE_LIST = '/api/core/bank/deliver/sample-pick-single',
   SCAN_LIST = '/api/core/bank/deliver/sample/scan-single',
-  KEEP_PACK_OUT_BAND_TRAY_LIST = '/api/core/bank/deliver/sample/tray-single',
+  KEEP_PACK_OUT_BAND_TRAY_LIST = '/api/search/bank/sample/tray-single',
 }
 
 export const getDeliverSampleSingleDetail = (
@@ -73,8 +73,8 @@ export const keepPackSingleScan = (params: PostApiCoreBankDeliverSampleScanSingl
     params,
   });
 
-export const keepPackOutBandTrayList = (params: GetApiCoreBankDeliverSampleTraySingleRequest) =>
-  defHttp.get<GetApiCoreBankDeliverSampleTraySingleResponse>(
+export const keepPackOutBandTrayList = (params: GetApiSearchBankSampleTraySingleRequest) =>
+  defHttp.get<GetApiSearchBankSampleTraySingleResponse>(
     {
       url: Api.KEEP_PACK_OUT_BAND_TRAY_LIST,
       params,

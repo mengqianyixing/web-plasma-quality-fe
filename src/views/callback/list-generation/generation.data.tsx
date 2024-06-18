@@ -523,7 +523,7 @@ export const callbackDetailCustomColumns: BasicColumn[] = [
     width: 100,
   },
   {
-    dataIndex: 'plasmaStatus',
+    dataIndex: 'trackType',
     title: '血浆状态',
     width: 80,
   },
