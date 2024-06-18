@@ -915,7 +915,7 @@ export interface GetApiCoreBankDeliverSampleResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `POST /api/core/bank/deliver/sample`
- * @更新时间 `2024-06-18 10:52:31`
+ * @更新时间 `2024-06-18 11:16:43`
  */
 export interface PostApiCoreBankDeliverSampleRequest {
   /**
@@ -937,7 +937,7 @@ export interface PostApiCoreBankDeliverSampleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `POST /api/core/bank/deliver/sample`
- * @更新时间 `2024-06-18 10:52:31`
+ * @更新时间 `2024-06-18 11:16:43`
  */
 export interface PostApiCoreBankDeliverSampleResponse {}
 
@@ -2298,10 +2298,10 @@ export interface GetApiCoreBankDeliverSampleScanSingleResponse {
  * 接口 [保留样本托盘出库列表-单个↗](https://yapi.sharing8.cn/project/529/interface/api/35370) 的 **请求类型**
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
- * @请求头 `GET /api/core/bank/deliver/sample/tray-single`
- * @更新时间 `2024-06-17 20:20:18`
+ * @请求头 `GET /api/search/bank/sample/tray-single`
+ * @更新时间 `2024-06-18 11:17:44`
  */
-export interface GetApiCoreBankDeliverSampleTraySingleRequest {
+export interface GetApiSearchBankSampleTraySingleRequest {
   /**
    * 申请单号
    */
@@ -2324,10 +2324,10 @@ export interface GetApiCoreBankDeliverSampleTraySingleRequest {
  * 接口 [保留样本托盘出库列表-单个↗](https://yapi.sharing8.cn/project/529/interface/api/35370) 的 **返回类型**
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
- * @请求头 `GET /api/core/bank/deliver/sample/tray-single`
- * @更新时间 `2024-06-17 20:20:18`
+ * @请求头 `GET /api/search/bank/sample/tray-single`
+ * @更新时间 `2024-06-18 11:17:44`
  */
-export interface GetApiCoreBankDeliverSampleTraySingleResponse {
+export interface GetApiSearchBankSampleTraySingleResponse {
   /**
    * 托盘号
    */

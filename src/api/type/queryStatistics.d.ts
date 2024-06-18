@@ -4295,7 +4295,7 @@ export interface GetApiCoreLabSamplesLabUnqualifiedItemResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/sample/lab`
- * @更新时间 `2024-06-12 17:52:36`
+ * @更新时间 `2024-06-18 11:01:34`
  */
 export interface GetApiSearchSampleLabRequest {
   stationNo?: string;
@@ -4311,7 +4311,7 @@ export interface GetApiSearchSampleLabRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/sample/lab`
- * @更新时间 `2024-06-12 17:52:36`
+ * @更新时间 `2024-06-18 11:01:34`
  */
 export type GetApiSearchSampleLabResponse = {
   /**
