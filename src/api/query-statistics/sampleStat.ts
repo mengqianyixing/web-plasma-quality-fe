@@ -9,7 +9,7 @@ import {
 
 enum Api {
   LIST = '/api/core/sample/statistics',
-  DT = '/api/core/sample/statistics/detail',
+  DT = '/api/search/sample/statistics-detail',
 }
 
 export const getListApi = (params: GetApiCoreSampleStatisticsRequest) =>
