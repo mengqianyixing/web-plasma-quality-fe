@@ -80,8 +80,18 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     component: 'Input',
-    field: 'sampleNo',
+    field: 'batchSampleNo',
     label: '样本批号',
+  },
+  {
+    component: 'Input',
+    field: 'bagNo',
+    label: '血浆编号',
+  },
+  {
+    component: 'Input',
+    field: 'sampleNo',
+    label: '样本编号',
   },
   {
     component: 'Input',
@@ -90,8 +100,8 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     component: 'Input',
-    field: 'bagNo',
-    label: '浆袋编号',
+    field: 'packNo',
+    label: '样品袋号',
   },
   {
     component: 'Input',
@@ -133,6 +143,12 @@ export const trayDtSearchSchema: FormSchema[] = [
 ];
 
 export const trayBoxColumns: BasicColumn[] = [{ title: '血浆箱号', dataIndex: 'boxNo' }];
+export const traySampleBoxColumns: BasicColumn[] = [
+  { title: '样本批号', dataIndex: 'batchNo' },
+  { title: '样本袋号', dataIndex: 'packNo' },
+  { title: '样本数量', dataIndex: 'sampleCount' },
+  { title: '样本箱号', dataIndex: 'boxNo' },
+];
 
 export const trayBagColumns: BasicColumn[] = [
   { title: '血浆批号', dataIndex: 'batchNo' },
@@ -140,6 +156,16 @@ export const trayBagColumns: BasicColumn[] = [
   { title: '浆员编号', dataIndex: 'cardNo' },
   { title: '浆员姓名', dataIndex: 'donorName' },
   { title: '现存箱号', dataIndex: 'currBoxNo' },
+];
+export const traySampleBagColumns: BasicColumn[] = [
+  { title: '样本批号', dataIndex: 'batchNo' },
+  { title: '样本袋号', dataIndex: 'packNo' },
+  { title: '样本编号', dataIndex: 'sampleNo' },
+  { title: '类别', dataIndex: 'keepBy' },
+  { title: '浆员编号', dataIndex: 'cardNo' },
+  { title: '浆员姓名', dataIndex: 'donorName' },
+  { title: '采集日期', dataIndex: 'collectAt' },
+  { title: '样本箱号', dataIndex: 'boxNo' },
 ];
 
 export const trayBagSearch: FormSchema[] = [
