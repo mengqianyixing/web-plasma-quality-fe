@@ -39,23 +39,13 @@ export const formSchema: FormSchema[] = [
     label: '托盘编号',
   },
   {
-    field: '',
+    field: 'prepareNo',
     component: 'Input',
-    label: '库房',
+    label: '投产准备号',
   },
   {
-    field: '',
+    field: 'batchNo',
     component: 'Input',
-    label: '货位号',
-  },
-  {
-    field: '',
-    component: 'Input',
-    label: '区域',
-  },
-  {
-    field: '',
-    component: 'Input',
-    label: '血浆批次',
+    label: '血浆批号',
   },
 ];
