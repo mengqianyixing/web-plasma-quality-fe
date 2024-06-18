@@ -4,7 +4,7 @@
     @register="registerModal"
     showFooter
     title="明细"
-    :minHeight="520"
+    :minHeight="650"
     width="85%"
     :showOkBtn="false"
     cancelText="关闭"
