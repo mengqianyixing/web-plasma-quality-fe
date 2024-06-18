@@ -915,13 +915,17 @@ export interface GetApiCoreBankDeliverSampleResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `POST /api/core/bank/deliver/sample`
- * @更新时间 `2024-06-12 20:26:05`
+ * @更新时间 `2024-06-18 10:52:31`
  */
 export interface PostApiCoreBankDeliverSampleRequest {
   /**
    * 申请单号
    */
   dlvNo: string;
+  /**
+   * 单个出库传RSD   批量传RSO
+   */
+  dlvType: string;
   /**
    * 备注
    */
@@ -933,7 +937,7 @@ export interface PostApiCoreBankDeliverSampleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `POST /api/core/bank/deliver/sample`
- * @更新时间 `2024-06-12 20:26:05`
+ * @更新时间 `2024-06-18 10:52:31`
  */
 export interface PostApiCoreBankDeliverSampleResponse {}
 

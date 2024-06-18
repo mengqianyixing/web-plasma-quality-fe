@@ -88,6 +88,13 @@
             span: 7,
           },
         },
+        {
+          label: '类型',
+          field: 'dlvType',
+          defaultValue: 'RSO',
+          component: 'Input',
+          show: false,
+        },
       ],
     });
 
