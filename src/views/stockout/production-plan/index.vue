@@ -97,7 +97,20 @@
             </Menu>
           </template>
         </a-dropdown>
-        <a-button @click="handleDownloadAbstract" type="primary" :loading="loading">
+        <a-button
+          @click="handleDownloadAbstract(PrintServerEnum.PLASMA_ABSTRACT)"
+          type="primary"
+          :loading="loading"
+          v-auth="StockOutButtonEnum.ProductionPlanSummary"
+        >
+          下载原料血浆摘要
+        </a-button>
+        <a-button
+          @click="handleDownloadAbstract(PrintServerEnum.KM_PLASMA_ABSTRACT)"
+          type="primary"
+          :loading="loading"
+          v-auth="StockOutButtonEnum.ProductionPlanSummaryKunMing"
+        >
           下载原料血浆摘要
         </a-button>
       </template>
@@ -154,6 +167,7 @@
   import { downloadReport } from '@/api/stockout/plasma-summary';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { PrintServerEnum } from '@/enums/printServerEnum';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'ProductionPlan' });
@@ -363,14 +377,14 @@
   }
 
   const loading = ref(false);
-  async function handleDownloadAbstract() {
+  async function handleDownloadAbstract(key: PrintServerEnum) {
     const [row] = getSelections(true);
     if (!row) return;
 
     try {
       loading.value = true;
       const res = await downloadReport({
-        ReportKey: 'PLASMA_ABSTRACT',
+        ReportKey: key,
         contentKey: row.mesId,
       });
       const blob = new Blob([res.data], {

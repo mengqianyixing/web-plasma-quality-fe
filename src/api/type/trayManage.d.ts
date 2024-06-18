@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2024-05-06 18:36:10`
+ * @更新时间 `2024-06-17 19:45:11`
  */
 export interface GetApiCoreBankTraiesRequest {
   /**
@@ -79,6 +79,10 @@ export interface GetApiCoreBankTraiesRequest {
    * 负载状态，0-空载，1-负载
    */
   useStatus?: string;
+  /**
+   * 样本袋号
+   */
+  packNo?: string;
 }
 
 /**
@@ -86,7 +90,7 @@ export interface GetApiCoreBankTraiesRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2024-05-06 18:36:10`
+ * @更新时间 `2024-06-17 19:45:11`
  */
 export interface GetApiCoreBankTraiesResponse {
   /**

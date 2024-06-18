@@ -207,6 +207,14 @@ const nonconformity: AppRouteModule = {
           id: StockOutButtonEnum.ProductionPlanPlasmaReport,
           title: '原料血浆投产计划',
         },
+        {
+          id: StockOutButtonEnum.ProductionPlanSummary,
+          title: '下载原料血浆摘要',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPlanSummaryKunMing,
+          title: '下载原料血浆摘要-昆明',
+        },
       ],
       component: () => import('@/views/stockout/production-plan/index.vue'),
     },

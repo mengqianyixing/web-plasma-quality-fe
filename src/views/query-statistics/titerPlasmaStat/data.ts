@@ -164,6 +164,14 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
+    field: 'immunity',
+    component: 'Select',
+    label: '血浆类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
+    },
+  },
+  {
     field: '[collectionBegin,collectionEnd]',
     component: 'RangePicker',
     label: '采集日期',

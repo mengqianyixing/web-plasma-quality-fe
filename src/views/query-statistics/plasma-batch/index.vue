@@ -31,6 +31,7 @@
               show-size-changer
               show-quick-jumper
               v-model:current="pagerLeft.current"
+              v-model:pageSize="pagerLeft.pageSize"
               :total="pagerLeft.total"
             />
           </div>
@@ -56,6 +57,7 @@
                 show-size-changer
                 show-quick-jumper
                 v-model:current="pagerRight.current"
+                v-model:pageSize="pagerRight.pageSize"
                 :total="pagerRight.total"
               />
             </div>
@@ -97,13 +99,13 @@
 
   const pagerLeft = reactive({
     current: 1,
-    pageSize: 10,
+    pageSize: 30,
     total: 0,
   });
 
   const pagerRight = reactive({
     current: 1,
-    pageSize: 10,
+    pageSize: 30,
     total: 0,
   });
 
