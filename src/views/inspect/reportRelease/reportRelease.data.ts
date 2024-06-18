@@ -142,20 +142,54 @@ export const searchFormschema: FormSchema[] = [
 export const columnsMap: Record<number, BasicColumn[]> = {
   1: [
     {
+      dataIndex: 'projectName',
+      title: '检测项目',
+      width: 120,
+      ellipsis: false,
+      align: 'left',
+    },
+    {
       dataIndex: 'titerValue',
       title: '效价值',
+      width: 100,
     },
   ],
   2: [
     {
+      dataIndex: 'projectName',
+      title: '检测项目',
+      width: 120,
+      ellipsis: false,
+      align: 'left',
+    },
+    {
       dataIndex: 'titerValue',
       title: '效价值',
+      width: 100,
+    },
+  ],
+  4: [
+    {
+      dataIndex: 'projectName',
+      title: '检测项目',
+      width: 900,
+      ellipsis: false,
+      align: 'left',
     },
   ],
   5: [
     {
+      dataIndex: 'projectName',
+      title: '检测项目',
+      width: 120,
+
+      ellipsis: false,
+      align: 'left',
+    },
+    {
       dataIndex: 'titerValue',
       title: '效价值',
+      width: 100,
     },
   ],
   3: [
@@ -163,7 +197,8 @@ export const columnsMap: Record<number, BasicColumn[]> = {
       dataIndex: 'projectName',
       title: '不合格项目',
       ellipsis: false,
-      width: 260,
+      width: 900,
+      align: 'left',
     },
   ],
 };
@@ -171,25 +206,22 @@ export const totalUnqualifiedColumns: BasicColumn[] = [
   {
     dataIndex: 'sampleNo',
     title: '样品编号',
+    width: 100,
   },
   {
     dataIndex: 'cardNo',
     title: '浆员编号',
+    width: 100,
   },
   {
     dataIndex: 'donorName',
     title: '浆员姓名',
-  },
-  {
-    dataIndex: 'projectName',
-    title: '检测项目',
-    width: 260,
-    ellipsis: false,
+    width: 100,
   },
   {
     dataIndex: 'titerType',
     title: '效价类型',
-    width: 260,
+    width: 120,
     ellipsis: false,
   },
 ];
