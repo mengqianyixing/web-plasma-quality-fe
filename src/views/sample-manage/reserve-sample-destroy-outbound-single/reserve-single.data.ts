@@ -15,7 +15,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '样本数量',
-    dataIndex: 'batchNum',
+    dataIndex: 'totalNum',
     width: 80,
   },
   {
