@@ -25,6 +25,11 @@ export const columns: BasicColumn[] = [
     width: 80,
   },
   {
+    title: '样本数量',
+    dataIndex: 'totalNum',
+    width: 80,
+  },
+  {
     title: '血浆最晚投产日期',
     dataIndex: 'bagLatestProdDate',
     width: 100,
