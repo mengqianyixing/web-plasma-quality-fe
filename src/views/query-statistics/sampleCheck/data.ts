@@ -7,7 +7,7 @@ import { useStation } from '@/hooks/common/useStation';
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
 const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
-export const columns: (customRender?: customRender) => BasicColumn[] = (customRender) => [
+export const columns: (customRender: any) => BasicColumn[] = (customRender) => [
   {
     width: 80,
     title: '采浆公司',
@@ -43,6 +43,13 @@ export const columns: (customRender?: customRender) => BasicColumn[] = (customRe
   },
   {
     width: 80,
+    title: '检测样本',
+    dataIndex: 'checkCount',
+    format: (v) => v || 0,
+    customRender,
+  },
+  {
+    width: 80,
     title: '检测中',
     dataIndex: 'checkingCount',
     format: (v) => v || 0,
@@ -54,7 +61,7 @@ export const columns: (customRender?: customRender) => BasicColumn[] = (customRe
       {
         width: 80,
         title: '合格',
-        dataIndex: ['check', 'count'],
+        dataIndex: ['check', 'num'],
         format: (v) => v || 0,
         customRender,
       },

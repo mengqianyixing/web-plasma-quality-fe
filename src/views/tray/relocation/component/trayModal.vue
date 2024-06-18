@@ -47,7 +47,7 @@
       totalField: 'totalCount',
     },
     formConfig: {
-      schemas: formSchema.slice(0, 1),
+      schemas: formSchema,
     },
     immediate: false,
     rowKey: 'trayNo',
