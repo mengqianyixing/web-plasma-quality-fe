@@ -2315,7 +2315,7 @@ export interface GetApiCoreBatchStatisticResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege/count`
- * @更新时间 `2024-06-17 19:09:55`
+ * @更新时间 `2024-06-17 20:30:46`
  */
 export interface GetApiSearchPlasmaPrivilegeCountRequest {
   /**
@@ -2353,7 +2353,7 @@ export interface GetApiSearchPlasmaPrivilegeCountRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege/count`
- * @更新时间 `2024-06-17 19:09:55`
+ * @更新时间 `2024-06-17 20:30:46`
  */
 export type GetApiSearchPlasmaPrivilegeCountResponse = {
   /**

@@ -207,6 +207,8 @@ export enum StockOutButtonEnum {
   ProductionPlanMaterialReport = 'E_910040010',
   ProductionPlanPlasmaReport = 'E_910040011',
   ProductionPlanPMS = 'E_910040012',
+  ProductionPlanSummary = 'E_910040013',
+  ProductionPlanSummaryKunMing = 'E_910040014',
 
   PutIntoTrayStockOut = 'E_91005001',
   PutIntoBoxStockOut = 'E_91005002',

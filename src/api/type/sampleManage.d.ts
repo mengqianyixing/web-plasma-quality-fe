@@ -2295,7 +2295,7 @@ export interface GetApiCoreBankDeliverSampleScanSingleResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/tray-single`
- * @更新时间 `2024-06-17 09:12:36`
+ * @更新时间 `2024-06-17 20:20:18`
  */
 export interface GetApiCoreBankDeliverSampleTraySingleRequest {
   /**
@@ -2321,7 +2321,7 @@ export interface GetApiCoreBankDeliverSampleTraySingleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/tray-single`
- * @更新时间 `2024-06-17 09:12:36`
+ * @更新时间 `2024-06-17 20:20:18`
  */
 export interface GetApiCoreBankDeliverSampleTraySingleResponse {
   /**
@@ -2344,6 +2344,10 @@ export interface GetApiCoreBankDeliverSampleTraySingleResponse {
    * 浆员姓名
    */
   donorName: string;
+  /**
+   * 浆员编号
+   */
+  donorNo: string;
   /**
    * 箱号
    */
