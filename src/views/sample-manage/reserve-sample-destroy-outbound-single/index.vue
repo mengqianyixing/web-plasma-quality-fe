@@ -9,7 +9,7 @@
         <a-button type="primary" @click="handleCheck">审核</a-button>
         <a-button type="primary" @click="handleCancelCheck">撤销审核</a-button>
         <a-button type="primary" @click="handleOutBound">出库</a-button>
-        <a-button type="primary" @click="handlePrint">打印</a-button>
+        <a-button type="primary" @click="handleExport" :loading="loading">导出</a-button>
       </template>
       <template #dlvNo="{ record }">
         <span
@@ -30,7 +30,7 @@
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
-  import { columns, searchFormSchema } from './reserve-single.data';
+  import { columns, requisitionDetail, searchFormSchema } from './reserve-single.data';
 
   import { useModal } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
@@ -45,9 +45,17 @@
   import RequisitionSingleModal from '@/views/sample-manage/reserve-sample-destroy-outbound-single/RequisitionSingleModal.vue';
   import DlvDetailSingleModal from '@/views/sample-manage/reserve-sample-destroy-outbound-single/DlvDetailSingleModal.vue';
   import OutBandSingleModal from '@/views/sample-manage/reserve-sample-destroy-outbound-single/OutBandSingleModal.vue';
+  import { ref } from 'vue';
+  import { message } from 'ant-design-vue';
+  import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { getDeliverSampleSingleDetail } from '@/api/sample-manage/reserve-sample-destory-single';
+  import { GetApiCoreBankDeliverSampleDetailSingleRequest } from '@/api/type/sampleManage';
 
   const { createConfirm, createMessage } = useMessage();
   defineOptions({ name: 'ReserveSampleDestroyOutbound' });
+
+  const globalApiStore = useGlobalApiStoreWithOut();
 
   const [registerRequisitionSingleModal, { openModal: openRequisitionSingleModal }] = useModal();
   const [registerDlvDetailSingleModal, { openModal: openDlvDetailSingleModal }] = useModal();
@@ -184,7 +192,42 @@
     });
   }
 
-  function handlePrint() {}
+  const loading = ref(false);
+  async function handleExport() {
+    if (getSelectRows().length === 0) {
+      createMessage.warn('请选择出库申请单号');
+      return;
+    }
+
+    try {
+      loading.value = true;
+      const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
+
+      const data = await getDeliverSampleSingleDetail({
+        currPage: '1',
+        pageSize,
+        dlvNo: getSelectRows()[0]?.dlvNo as string,
+      } as GetApiCoreBankDeliverSampleDetailSingleRequest);
+      console.log(data, 'data');
+      if ((data.totalCount || 0) > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
+
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(requisitionDetail);
+      const { result, merge: bodyMerge } = formatData(
+        lastLevelCols,
+        data.result || [],
+        rows.length,
+      );
+      jsonToSheetXlsx({
+        data: [...rows, ...result],
+        json2sheetOpts: { skipHeader: true },
+        merges: [...headerMerge, ...bodyMerge],
+        filename: `申请单号-${getSelectRows()[0]?.dlvNo}` + '.xlsx',
+      });
+    } finally {
+      loading.value = false;
+    }
+  }
 
   function handleOpenDlvDetail(record) {
     openDlvDetailSingleModal(true, {
