@@ -2315,7 +2315,7 @@ export interface GetApiCoreBatchStatisticResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege/count`
- * @更新时间 `2024-05-30 09:59:12`
+ * @更新时间 `2024-06-17 15:07:09`
  */
 export interface GetApiSearchPlasmaPrivilegeCountRequest {
   /**
@@ -2342,6 +2342,10 @@ export interface GetApiSearchPlasmaPrivilegeCountRequest {
    * 检测发布日期结束
    */
   issueEnd: string;
+  /**
+   * 血浆类型
+   */
+  immunity?: string;
 }
 
 /**
@@ -2349,7 +2353,7 @@ export interface GetApiSearchPlasmaPrivilegeCountRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege/count`
- * @更新时间 `2024-05-30 09:59:12`
+ * @更新时间 `2024-06-17 15:07:09`
  */
 export type GetApiSearchPlasmaPrivilegeCountResponse = {
   /**
@@ -3512,7 +3516,7 @@ export interface GetApiSearchPlasmaCheckDetailsResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege/details`
- * @更新时间 `2024-06-17 11:48:34`
+ * @更新时间 `2024-06-17 13:50:54`
  */
 export interface GetApiSearchPlasmaPrivilegeDetailsRequest {
   /**
@@ -3544,7 +3548,7 @@ export interface GetApiSearchPlasmaPrivilegeDetailsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege/details`
- * @更新时间 `2024-06-17 11:48:34`
+ * @更新时间 `2024-06-17 13:50:54`
  */
 export interface GetApiSearchPlasmaPrivilegeDetailsResponse {
   totalCount: number;

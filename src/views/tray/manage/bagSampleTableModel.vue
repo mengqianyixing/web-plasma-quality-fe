@@ -3,7 +3,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    title="托盘存放血浆列表"
+    title="样本编号明细"
     width="1000px"
     :minHeight="520"
     @fullscreen="redoHeight"
@@ -18,28 +18,33 @@
 <script setup lang="ts">
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
-  import { trayBagListApi } from '@/api/tray/list';
-  import { trayBagColumns, trayBagSearch } from './manage.data';
+  import { traySampleBagListApi } from '@/api/tray/list';
+  import { traySampleBagColumns } from './manage.data';
   import { reactive } from 'vue';
 
-  defineOptions({ name: 'BagTableModal' });
   const state = reactive({
     trayNo: '',
   });
-  const [registerTable, { reload, redoHeight, setPagination, getForm }] = useTable({
+  const [registerTable, { redoHeight, setPagination, getForm }] = useTable({
     immediate: false,
     isCanResizeParent: true,
     size: 'small',
-    api: trayBagListApi,
-    inset: true,
-    formConfig: { schemas: trayBagSearch },
+    api: traySampleBagListApi,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
       totalField: 'totalCount',
       listField: 'result',
     },
-    columns: trayBagColumns,
+    inset: true,
+    formConfig: {
+      schemas: [
+        { field: 'batchNo', component: 'Input', label: '样本批号' },
+        { field: 'packNo', component: 'Input', label: '样本袋号' },
+        { field: 'sampleNo', component: 'Input', label: '样本编号' },
+      ],
+    },
+    columns: traySampleBagColumns,
     useSearchForm: true,
     bordered: true,
     beforeFetch: (params) => {
@@ -49,8 +54,7 @@
   const [registerModal] = useModalInner(({ trayNo }) => {
     state.trayNo = trayNo;
     const { resetFields } = getForm();
-    resetFields();
     setPagination({ current: 1 });
-    reload();
+    resetFields();
   });
 </script>

@@ -37,6 +37,8 @@
     <TableModal @register="registerTableModal" />
     <BoxTableModal @register="registerBoxTableModal" />
     <BagTableModal @register="registerBagTableModal" />
+    <BagSampleTableModel @register="registerSampleBagTableModal" />
+    <BoxSampleTableModel @register="registerSampleBoxTableModal" />
     <Login
       @register="registerLoginModal"
       @success="login"
@@ -63,6 +65,8 @@
   import TableModal from './tableDrawer.vue';
   import BoxTableModal from './boxTableDrawer.vue';
   import BagTableModal from './bagTableDrawer.vue';
+  import BagSampleTableModel from './bagSampleTableModel.vue';
+  import BoxSampleTableModel from './boxSampleTableModel.vue';
   import { ReCheckButtonEnum, StoreButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'TrayList' });
@@ -72,6 +76,8 @@
   const [registerTableModal, { openModal: openTableModal }] = useModal();
   const [registerBoxTableModal, { openModal: openBoxTableModal }] = useModal();
   const [registerBagTableModal, { openModal: openBagTableModal }] = useModal();
+  const [registerSampleBagTableModal, { openModal: openSampleBagTableModal }] = useModal();
+  const [registerSampleBoxTableModal, { openModal: openSampleBoxTableModal }] = useModal();
   const [registerForm, { validate }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
@@ -165,9 +171,17 @@
     openTableModal(true, { trayNo: row.trayNo });
   }
   function handleBox(row: Recordable) {
-    openBoxTableModal(true, { trayNo: row.trayNo });
+    if (row.trayType === 'PER') {
+      openSampleBoxTableModal(true, { trayNo: row.trayNo });
+    } else {
+      openBoxTableModal(true, { trayNo: row.trayNo });
+    }
   }
   function handleBag(row: Recordable) {
-    openBagTableModal(true, { trayNo: row.trayNo });
+    if (row.trayType === 'PER') {
+      openSampleBagTableModal(true, { trayNo: row.trayNo });
+    } else {
+      openBagTableModal(true, { trayNo: row.trayNo });
+    }
   }
 </script>

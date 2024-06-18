@@ -921,4 +921,140 @@ export interface GetApiCoreBankTrayBagDetailResponse {
   }[];
 }
 
+/**
+ * 接口 [查询托盘上的保留样本袋列表↗](https://yapi.sharing8.cn/project/529/interface/api/35400) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keeppacks`
+ * @更新时间 `2024-06-17 16:45:01`
+ */
+export interface GetApiCoreBankTrayKeeppacksRequest {
+  /**
+   * 当前页码
+   */
+  currPage: string;
+  /**
+   * 页数量
+   */
+  pageSize: string;
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+  /**
+   * 样本袋号
+   */
+  packNo?: string;
+}
+
+/**
+ * 接口 [查询托盘上的保留样本袋列表↗](https://yapi.sharing8.cn/project/529/interface/api/35400) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keeppacks`
+ * @更新时间 `2024-06-17 16:45:01`
+ */
+export interface GetApiCoreBankTrayKeeppacksResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 样本批号
+     */
+    batchNo?: string;
+    /**
+     * 样本袋号
+     */
+    packNo?: string;
+    /**
+     * 样本数量
+     */
+    sampleCount?: number;
+    /**
+     * 样本箱号
+     */
+    boxNo?: string;
+  }[];
+}
+
+/**
+ * 接口 [查询指定托盘上的样本列表↗](https://yapi.sharing8.cn/project/529/interface/api/35406) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keepsamples`
+ * @更新时间 `2024-06-17 17:09:10`
+ */
+export interface GetApiCoreBankTrayKeepsamplesRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+  /**
+   * 样本袋号
+   */
+  packNo?: string;
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+}
+
+/**
+ * 接口 [查询指定托盘上的样本列表↗](https://yapi.sharing8.cn/project/529/interface/api/35406) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keepsamples`
+ * @更新时间 `2024-06-17 17:09:10`
+ */
+export interface GetApiCoreBankTrayKeepsamplesResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 样本批号
+     */
+    batchNo?: string;
+    /**
+     * 样本袋号
+     */
+    packNo?: string;
+    /**
+     * 样本编号
+     */
+    sampleNo?: string;
+    /**
+     * 类别
+     */
+    keepBy?: string;
+    /**
+     * 浆员编号
+     */
+    cardNo?: string;
+    /**
+     * 浆员姓名
+     */
+    donorName?: string;
+    /**
+     * 采浆日期
+     */
+    collectAt?: string;
+    /**
+     * 样本箱号
+     */
+    boxNo?: string;
+  }[];
+}
+
 /* prettier-ignore-end */

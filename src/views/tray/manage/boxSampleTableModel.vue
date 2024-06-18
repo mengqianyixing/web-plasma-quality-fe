@@ -1,11 +1,19 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: zcc
+ * @Date: 2023-12-23 16:49:51
+ * @LastEditors: zcc
+ * @LastEditTime: 2024-01-12 17:08:12
+-->
 <template>
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    title="托盘存放血浆列表"
+    title="样本袋号明细"
     width="1000px"
-    :minHeight="520"
+    :minHeight="400"
     @fullscreen="redoHeight"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -18,28 +26,32 @@
 <script setup lang="ts">
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
-  import { trayBagListApi } from '@/api/tray/list';
-  import { trayBagColumns, trayBagSearch } from './manage.data';
+  import { traySampleBoxListApi } from '@/api/tray/list';
+  import { traySampleBoxColumns } from './manage.data';
   import { reactive } from 'vue';
 
-  defineOptions({ name: 'BagTableModal' });
   const state = reactive({
     trayNo: '',
   });
-  const [registerTable, { reload, redoHeight, setPagination, getForm }] = useTable({
+  const [registerTable, { redoHeight, setPagination, getForm }] = useTable({
     immediate: false,
     isCanResizeParent: true,
     size: 'small',
-    api: trayBagListApi,
-    inset: true,
-    formConfig: { schemas: trayBagSearch },
+    api: traySampleBoxListApi,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
       totalField: 'totalCount',
       listField: 'result',
     },
-    columns: trayBagColumns,
+    inset: true,
+    formConfig: {
+      schemas: [
+        { field: 'batchNo', component: 'Input', label: '样本批号' },
+        { field: 'packNo', component: 'Input', label: '样本袋号' },
+      ],
+    },
+    columns: traySampleBoxColumns,
     useSearchForm: true,
     bordered: true,
     beforeFetch: (params) => {
@@ -49,8 +61,7 @@
   const [registerModal] = useModalInner(({ trayNo }) => {
     state.trayNo = trayNo;
     const { resetFields } = getForm();
-    resetFields();
     setPagination({ current: 1 });
-    reload();
+    resetFields();
   });
 </script>
