@@ -17,8 +17,9 @@ export const columns: BasicColumn[] = [
     dataIndex: 'bagNum',
   },
   {
-    title: '申请原因',
+    title: '原因',
     dataIndex: 'reason',
+    ellipsis: false,
     width: 200,
   },
   {
