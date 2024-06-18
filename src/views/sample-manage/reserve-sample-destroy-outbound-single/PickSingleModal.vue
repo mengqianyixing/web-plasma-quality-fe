@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="register"
-    title="批量挑选保留样本批次"
+    title="批量挑选保留样本"
     width="80%"
     :min-height="710"
     showFooter
@@ -45,8 +45,6 @@
   } from '@/api/type/sampleManage';
   import dayjs from 'dayjs';
   import { Pagination as APagination } from 'ant-design-vue';
-  import { SERVER_ENUM } from '@/enums/serverEnum';
-  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
   import {
     DictionaryItemKeyEnum,
     DictionaryReasonEnum,
@@ -65,8 +63,6 @@
     pageSize: 30,
     total: 0,
   });
-
-  const serverEnumStore = useServerEnumStoreWithOut();
 
   const [registerForm, { getFieldsValue }] = useForm({
     showAdvancedButton: false,
@@ -102,7 +98,16 @@
         field: 'plasmaType',
         component: 'Select',
         componentProps: {
-          options: serverEnumStore.getServerEnum(SERVER_ENUM.BagTrack),
+          options: [
+            {
+              label: '合格',
+              value: 1,
+            },
+            {
+              label: '不合格',
+              value: 0,
+            },
+          ],
         },
         colProps: {
           span: 6,

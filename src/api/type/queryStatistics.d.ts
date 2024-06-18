@@ -4966,4 +4966,38 @@ export interface GetApiSearchPlasmaUnqualifiedResponse {
   inUnqualifiedStoreDate: string;
 }
 
+/**
+ * 接口 [样本检测-检测样本详情↗](https://yapi.sharing8.cn/project/529/interface/api/35442) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/sample/lab/check/detail`
+ * @更新时间 `2024-06-18 14:02:42`
+ */
+export interface GetApiSearchSampleLabCheckDetailRequest {
+  currPage: string;
+  pageSize: string;
+}
+
+/**
+ * 接口 [样本检测-检测样本详情↗](https://yapi.sharing8.cn/project/529/interface/api/35442) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/sample/lab/check/detail`
+ * @更新时间 `2024-06-18 14:02:42`
+ */
+export type GetApiSearchSampleLabCheckDetailResponse = {
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+  /**
+   * 总数
+   */
+  count: string;
+  /**
+   * 来样日期
+   */
+  comeAt?: string;
+}[];
+
 /* prettier-ignore-end */

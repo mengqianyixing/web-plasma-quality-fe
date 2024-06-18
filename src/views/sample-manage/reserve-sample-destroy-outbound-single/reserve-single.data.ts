@@ -15,7 +15,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '样本数量',
-    dataIndex: 'batchNum',
+    dataIndex: 'totalNum',
     width: 80,
   },
   {
@@ -69,6 +69,12 @@ export const searchFormSchema: FormSchema[] = [
       options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleDeliverType),
     },
     label: '状态',
+  },
+  {
+    field: 'dlvType',
+    component: 'Input',
+    defaultValue: 'RSD',
+    show: false,
   },
 ];
 

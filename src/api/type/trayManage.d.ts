@@ -402,7 +402,7 @@ export interface PutApiCoreBankTrayWarehouseReceptionResponse {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/warehouse/deliver`
- * @更新时间 `2023-12-22 16:59:08`
+ * @更新时间 `2024-06-18 11:33:35`
  */
 export interface PostApiCoreBankTrayWarehouseDeliverRequest {
   /**
@@ -421,6 +421,10 @@ export interface PostApiCoreBankTrayWarehouseDeliverRequest {
    * 站点id，如果是高架库出库的时候必填
    */
   siteId?: string;
+  /**
+   * 保留样本单个出库RSD，批量出库RSO
+   */
+  dlvType?: string;
 }
 
 /**
@@ -428,7 +432,7 @@ export interface PostApiCoreBankTrayWarehouseDeliverRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/warehouse/deliver`
- * @更新时间 `2023-12-22 16:59:08`
+ * @更新时间 `2024-06-18 11:33:35`
  */
 export interface PostApiCoreBankTrayWarehouseDeliverResponse {
   /**

@@ -81,6 +81,12 @@ export const searchFormSchema: FormSchema[] = [
     },
     label: '状态',
   },
+  {
+    field: 'dlvType',
+    component: 'Input',
+    defaultValue: 'RSO',
+    show: false,
+  },
 ];
 
 export const requisitionColumns: VxeGridPropTypes.Columns = [
