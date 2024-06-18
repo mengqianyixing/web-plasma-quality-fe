@@ -193,7 +193,7 @@
 
     createConfirm({
       title: '确认',
-      content: `共有${vxeRef.value?.getCheckboxRecords().length}个批次，确认添加吗？`,
+      content: `共有${vxeRef.value?.getCheckboxRecords().length}个批次，确认删除吗？`,
       iconType: 'warning',
       onOk: async () => {
         await deleteDeliverSample({
