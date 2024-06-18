@@ -7,7 +7,11 @@ import { useStation } from '@/hooks/common/useStation';
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
 const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
-export const columns: (customRender: any) => BasicColumn[] = (customRender) => [
+export const columns: (
+  customRender: any,
+  customRender2: any,
+  customRender3: any,
+) => BasicColumn[] = (customRender, customRender2, customRender3) => [
   {
     width: 80,
     title: '采浆公司',
@@ -46,7 +50,7 @@ export const columns: (customRender: any) => BasicColumn[] = (customRender) => [
     title: '检测样本',
     dataIndex: 'checkCount',
     format: (v) => v || 0,
-    customRender,
+    customRender: customRender3,
   },
   {
     width: 80,
@@ -86,14 +90,14 @@ export const columns: (customRender: any) => BasicColumn[] = (customRender) => [
         title: '血浆验收不合格',
         dataIndex: ['verification', 'bag'],
         format: (v) => v || 0,
-        customRender,
+        customRender: customRender2,
       },
       {
         width: 120,
         title: '样本验收不合格',
         dataIndex: ['verification', 'sample'],
         format: (v) => v || 0,
-        customRender,
+        customRender: customRender2,
       },
       {
         width: 80,
@@ -115,7 +119,7 @@ export const columns: (customRender: any) => BasicColumn[] = (customRender) => [
     title: '其他不合格',
     dataIndex: 'other',
     format: (v) => v || 0,
-    customRender,
+    customRender: customRender2,
   },
 ];
 
@@ -189,6 +193,51 @@ export const dtColumns: BasicColumn[] = [
   {
     width: 80,
     title: '样本接收日期',
+    dataIndex: 'acceptAt',
+  },
+];
+
+export const dtColumns2: BasicColumn[] = [
+  {
+    width: 80,
+    title: '样本编号',
+    dataIndex: 'sampleNo',
+  },
+  {
+    width: 80,
+    title: '采集日期',
+    dataIndex: 'collectAt',
+  },
+  {
+    width: 80,
+    title: '浆员编号',
+    dataIndex: 'cardNo',
+  },
+  {
+    width: 80,
+    title: '浆员姓名',
+    dataIndex: 'name',
+  },
+  {
+    width: 80,
+    title: '不合格原因',
+    dataIndex: 'failed',
+  },
+];
+export const dtColumns3: BasicColumn[] = [
+  {
+    width: 80,
+    title: '样本批号',
+    dataIndex: 'batchNo',
+  },
+  {
+    width: 80,
+    title: '总数',
+    dataIndex: 'count',
+  },
+  {
+    width: 80,
+    title: '来样日期',
     dataIndex: 'acceptAt',
   },
 ];
