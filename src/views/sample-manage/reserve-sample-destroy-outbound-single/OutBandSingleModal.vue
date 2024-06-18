@@ -17,7 +17,7 @@
     >
       <template #toolbar>
         <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
-          <span>未出库袋数：</span>
+          <span>未出库数量：</span>
           <span>{{ unAcceptList?.length }}</span>
         </div>
       </template>
@@ -31,7 +31,7 @@
       <template #toolbar>
         <div class="flex items-center justify-between bg-[#ffffff]">
           <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
-            <span>已出库袋数：</span>
+            <span>已出库数量：</span>
             <span>{{ acceptList?.length }}</span>
           </div>
           <div>
@@ -72,13 +72,13 @@
   const schema: DescItem[] = [
     {
       field: 'bagNo',
-      label: '样本袋号',
+      label: '样本编号',
       contentMinWidth: 100,
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[300px]" ref="bagRef">
             <a-input
-              placeholder="扫描袋号条码"
+              placeholder="扫描样本条码"
               enter-button="接收"
               value={sampleNo}
               onChange={(e) => (sampleNo.value = e.target.value)}
@@ -87,26 +87,6 @@
           </div>
         );
       },
-    },
-    {
-      field: 'dlvNo',
-      label: '申请单号',
-    },
-    {
-      field: 'remark',
-      label: '备注',
-    },
-    {
-      field: 'batchNum',
-      label: '批次数量',
-    },
-    {
-      field: 'sampleBagNum',
-      label: '样本袋数',
-    },
-    {
-      field: 'sampleNum',
-      label: '样本数量',
     },
   ];
   const [register] = useDescription({
@@ -175,16 +155,16 @@
     },
     columns: [
       {
-        field: 'sampleBagNo',
-        title: '样本袋号',
+        field: 'sampleNo',
+        title: '样本编号',
       },
       {
         field: 'source',
         title: '类别',
       },
       {
-        field: 'sampleNum',
-        title: '样本数量',
+        field: 'donorNo',
+        title: '浆员编号',
       },
     ],
     showFooter: false,
@@ -215,8 +195,8 @@
     },
     columns: [
       {
-        field: 'sampleBagNo',
-        title: '样本袋号',
+        field: 'sampleNo',
+        title: '样本编号',
         width: 200,
       },
       {
@@ -224,8 +204,8 @@
         title: '类别',
       },
       {
-        field: 'sampleNum',
-        title: '样本数量',
+        field: 'donorNo',
+        title: '浆员编号',
       },
       {
         title: '出库人',

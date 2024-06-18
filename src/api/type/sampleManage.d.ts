@@ -836,7 +836,7 @@ export interface GetApiCoreSamplePlanDetailResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample`
- * @更新时间 `2024-06-17 17:33:47`
+ * @更新时间 `2024-06-18 11:44:36`
  */
 export interface GetApiCoreBankDeliverSampleRequest {
   /**
@@ -857,6 +857,10 @@ export interface GetApiCoreBankDeliverSampleRequest {
   state?: string;
   pageSize: string;
   currPage: string;
+  /**
+   * 保留样本单个出库RSD，批量出库RSO
+   */
+  dlyType: string;
 }
 
 /**
@@ -864,7 +868,7 @@ export interface GetApiCoreBankDeliverSampleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample`
- * @更新时间 `2024-06-17 17:33:47`
+ * @更新时间 `2024-06-18 11:44:36`
  */
 export interface GetApiCoreBankDeliverSampleResponse {
   /**
