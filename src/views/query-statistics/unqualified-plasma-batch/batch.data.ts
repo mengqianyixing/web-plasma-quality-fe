@@ -1,6 +1,7 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
 import { useStation } from '@/hooks/common/useStation';
+import dayjs from 'dayjs';
 
 const { stationOptions } = useStation();
 export const columns: BasicColumn[] = [
@@ -381,6 +382,9 @@ export const detailColumns: BasicColumn[] = [
   {
     title: '采集日期',
     dataIndex: 'collectionAt',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
     width: 100,
   },
   {
@@ -401,6 +405,9 @@ export const detailColumns: BasicColumn[] = [
   {
     title: '不合格入库日期',
     dataIndex: 'inUnqualifiedStoreDate',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
     width: 100,
   },
 ];
