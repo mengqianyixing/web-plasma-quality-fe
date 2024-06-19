@@ -282,3 +282,8 @@ export enum TagManageButtonEnum {
   TagStyleOpen = 'E_89001007',
   TagStyleClose = 'E_89001008',
 }
+
+export enum NonconformityInStoreButtonEnum {
+  NonconformityInStoreCheck = 'E_92005001',
+  NonconformityInStoreCancelCheck = 'E_92005002',
+}
