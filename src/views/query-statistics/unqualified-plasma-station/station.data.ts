@@ -284,7 +284,7 @@ export const columns: BasicColumn[] = [
       },
       {
         title: '续追踪不合格超一年',
-        dataIndex: 'expnum',
+        dataIndex: 'expNum',
         width: 150,
       },
       {
