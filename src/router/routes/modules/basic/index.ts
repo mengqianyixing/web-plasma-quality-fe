@@ -166,7 +166,6 @@ const callManager: AppRouteModule = {
       },
       id: 890020,
       component: () => import('@/views/tag-manage/encoding/index.vue'),
-      authElements: [],
     },
     {
       path: 'params',
