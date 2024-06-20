@@ -85,7 +85,7 @@ const sampleManager: AppRouteModule = {
     {
       path: 'reserve-sample-destroy-outbound-single',
       name: 'ReserveSampleDestroyOutboundSingle',
-      id: 970100,
+      id: 970200,
       meta: {
         title: '保留样本单个出库',
       },
