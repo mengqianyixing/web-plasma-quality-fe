@@ -105,6 +105,7 @@
     }
   });
   const planNo = ref('');
+  const record = ref({ planNo: '' });
 
   const [register, { setModalProps }] = useModalInner((data) => {
     setModalProps({
@@ -112,14 +113,16 @@
       destroyOnClose: true,
     });
     state.value = data.state;
-    planNo.value = data.planNo;
+    planNo.value = data.record?.planNo;
+    record.value = data.record;
 
     reload();
   });
 
-  function handleBagDetail(record: Recordable) {
+  function handleBagDetail(_record: Recordable) {
     openModal(true, {
-      cardNo: record?.cardNo,
+      cardNo: _record.cardNo,
+      planNo: record.value.planNo,
     });
   }
 </script>

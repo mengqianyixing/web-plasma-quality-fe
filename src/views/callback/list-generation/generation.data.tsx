@@ -281,6 +281,7 @@ export const callbackDetailModalColumns: BasicColumn[] = [
   {
     title: '待追踪袋数',
     dataIndex: 'plasmaCount',
+    slots: { customRender: 'plasmaCount' },
     width: 80,
   },
   {

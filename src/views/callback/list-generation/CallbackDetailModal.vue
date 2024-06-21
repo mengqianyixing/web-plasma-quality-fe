@@ -10,13 +10,28 @@
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
         <Description @register="registerDescription" :data="descriptionData" />
-        <BasicTable @register="registerTable" :columns="columnsComputed" />
+        <BasicTable @register="registerTable" :columns="columnsComputed">
+          <template #plasmaCount="{ record }">
+            <span
+              :class="
+                !record?.plasmaCount
+                  ? 'pointer-events-none'
+                  : 'text-blue-500 underline cursor-pointer'
+              "
+              @click.stop.self="handleBagDetail(record)"
+            >
+              {{ record?.plasmaCount }}
+            </span>
+          </template>
+        </BasicTable>
       </div>
     </div>
+
+    <BagDetailModal @register="registerModal" />
   </BasicModal>
 </template>
 <script lang="tsx" setup>
-  import { BasicModal, useModalInner } from '@/components/Modal';
+  import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { computed, ref, unref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
 
@@ -28,6 +43,10 @@
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
   import { callbackModalEnum } from '@/enums/callbackEnum';
+
+  import BagDetailModal from '@/views/callback/list-generation/BagDetailModal.vue';
+
+  const [registerModal, { openModal }] = useModal();
 
   const isUpdate = ref(false);
   const isPreview = ref(false);
@@ -133,4 +152,11 @@
     descriptionData.value = data;
     reload();
   });
+
+  function handleBagDetail(_record: Recordable) {
+    openModal(true, {
+      cardNo: _record.cardNo,
+      planNo: batchNo.value,
+    });
+  }
 </script>

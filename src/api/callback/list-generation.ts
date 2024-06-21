@@ -2,16 +2,16 @@ import { defHttp } from '@/utils/http/axios';
 import {
   DeleteApiCoreDonorCallbackDetailRequest,
   DeleteApiCoreDonorCallbackRequest,
-  GetApiCoreDonorCallbackDetailRequest,
-  GetApiCoreDonorCallbackDetailResponse,
   GetApiCoreDonorCallbackDetailStateRequest,
   GetApiCoreDonorCallbackDetailStateResponse,
-  GetApiCoreDonorCallbackDonorBagRequest,
-  GetApiCoreDonorCallbackDonorBagResponse,
   GetApiCoreDonorCallbackNeedRequest,
   GetApiCoreDonorCallbackNeedResponse,
   GetApiCoreDonorCallbackRequest,
   GetApiCoreDonorCallbackResponse,
+  GetApiSearchDonorCallbackDetailBagRequest,
+  GetApiSearchDonorCallbackDetailBagResponse,
+  GetApiSearchDonorCallbackDetailRequest,
+  GetApiSearchDonorCallbackDetailResponse,
   PostApiCoreDonorCallbackBatchRequest,
   PostApiCoreDonorCallbackBatchResponse,
   PostApiCoreDonorCallbackNeedRequest,
@@ -21,11 +21,12 @@ import { GetApiSysStationFormResponse } from '@/api/type/stationManage';
 enum Api {
   CALLBACK_LIST = '/api/core/donor/callback',
   CALLBACK_RESTFUL = '/api/core/donor/callback/detail',
+  CALLBACK_DETAIL = '/api/search/donor/callback/detail',
   STATION_NAME = '/api/sys/station/form',
   GENERATE_CALLBACK = '/api/core/donor/callback/need',
   CREATE_CALLBACK_BATCH = '/api/core/donor/callback/batch',
   DETAIL_BY_STATE = '/api/core/donor/callback/detail-state',
-  DONOR_BAG_DETAIL = '/api/core/donor/callback/donor-bag',
+  DONOR_BAG_DETAIL = '/api/search/donor/callback/detail/bag',
 }
 
 export const getCallbackListApi = (params: GetApiCoreDonorCallbackRequest) =>
@@ -36,10 +37,10 @@ export const getCallbackListApi = (params: GetApiCoreDonorCallbackRequest) =>
     },
   );
 
-export const getCallbackDetail = (params: GetApiCoreDonorCallbackDetailRequest) =>
-  defHttp.get<GetApiCoreDonorCallbackDetailResponse>(
+export const getCallbackDetail = (params: GetApiSearchDonorCallbackDetailRequest) =>
+  defHttp.get<GetApiSearchDonorCallbackDetailResponse>(
     {
-      url: Api.CALLBACK_RESTFUL,
+      url: Api.CALLBACK_DETAIL,
       params,
     },
     {
@@ -81,8 +82,8 @@ export const getDetailByState = (params: GetApiCoreDonorCallbackDetailStateReque
     },
   );
 
-export const getDonorBagDetail = (params: GetApiCoreDonorCallbackDonorBagRequest) =>
-  defHttp.get<GetApiCoreDonorCallbackDonorBagResponse>(
+export const getDonorBagDetail = (params: GetApiSearchDonorCallbackDetailBagRequest) =>
+  defHttp.get<GetApiSearchDonorCallbackDetailBagResponse>(
     {
       url: Api.DONOR_BAG_DETAIL,
       params,

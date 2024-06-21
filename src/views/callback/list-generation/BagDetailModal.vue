@@ -35,6 +35,11 @@
         width: 80,
       },
       {
+        dataIndex: 'flow',
+        title: '血浆流程',
+        width: 100,
+      },
+      {
         dataIndex: 'batchNo',
         title: '血浆批号',
         width: 120,
@@ -64,7 +69,8 @@
     beforeFetch(params) {
       return {
         ...params,
-        cardNo: cardNo.value,
+        planNo: planNo.value,
+        donorNo: donorNo.value,
       };
     },
     rowKey: 'donorNo',
@@ -82,10 +88,12 @@
     immediate: false,
   });
 
-  const cardNo = ref('');
+  const planNo = ref('');
+  const donorNo = ref('');
 
   const [register] = useModalInner((data) => {
-    cardNo.value = data.cardNo;
+    donorNo.value = data.cardNo;
+    planNo.value = data.planNo;
 
     reload();
   });

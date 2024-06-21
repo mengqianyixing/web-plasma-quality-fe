@@ -12,7 +12,7 @@
       <template #okNum="{ record }">
         <span
           :class="!record?.okNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'"
-          @click.stop.self="handleGoCustomModal(CallBackDetailState.SUCCESS, record?.planNo)"
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.SUCCESS, record)"
         >
           {{ record?.okNum }}
         </span>
@@ -22,7 +22,7 @@
           :class="
             !record?.failedNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
           "
-          @click.stop.self="handleGoCustomModal(CallBackDetailState.FAIL, record?.planNo)"
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.FAIL, record)"
         >
           {{ record?.failedNum }}
         </span>
@@ -32,7 +32,7 @@
           :class="
             !record?.recoverNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
           "
-          @click.stop.self="handleGoCustomModal(CallBackDetailState.RESUME, record?.planNo)"
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.RESUME, record)"
         >
           {{ record?.recoverNum }}
         </span>
@@ -42,7 +42,7 @@
           :class="
             !record?.noVisitNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
           "
-          @click.stop.self="handleGoCustomModal(CallBackDetailState.NOVISIT, record?.planNo)"
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.NOVISIT, record)"
         >
           {{ record?.noVisitNum }}
         </span>
@@ -109,8 +109,11 @@
   import { getSysParamsByParamKey } from '@/api/systemServer/params';
   import { SysParamsEnum } from '@/enums/sysParamsEnum';
   import { formatData, getHeader } from '@/components/Excel/src/Export2Excel';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
 
   const { stationOptions, getStationNameById } = useStation();
+  const globalApiStore = useGlobalApiStoreWithOut();
+
   defineOptions({ name: 'CallbackGeneration' });
 
   const selectedRow = ref<Recordable>([]);
@@ -227,12 +230,20 @@
 
     exportLoading.value = true;
     try {
+      const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
+
       const OriginData = await getCallbackDetail({
         batchNo: selectedRow.value[0]?.planNo,
+        currPage: '1',
+        pageSize,
       });
       exportLoading.value = false;
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(callbackDetailModalColumns);
-      const { result, merge: bodyMerge } = formatData(lastLevelCols, OriginData || [], rows.length);
+      const { result, merge: bodyMerge } = formatData(
+        lastLevelCols,
+        OriginData.result || [],
+        rows.length,
+      );
       jsonToSheetXlsx({
         data: [...rows, ...result],
         json2sheetOpts: { skipHeader: true },
@@ -300,10 +311,10 @@
     });
   }
 
-  function handleGoCustomModal(state: CallBackDetailState, planNo: string) {
+  function handleGoCustomModal(state: CallBackDetailState, record: Recordable) {
     openCallbackCustomDetailModal(true, {
       state,
-      planNo,
+      record,
     });
   }
 </script>
