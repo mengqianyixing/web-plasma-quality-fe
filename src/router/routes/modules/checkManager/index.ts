@@ -109,7 +109,7 @@ const checkManager: AppRouteModule = {
           title: '效价导入',
         },
         {
-          id: InspectButtonEnum.ResultRegistrationItemDelete,
+          id: InspectButtonEnum.ResultRegistrationTiterDelete,
           title: '撤销效价项目',
         },
         {
