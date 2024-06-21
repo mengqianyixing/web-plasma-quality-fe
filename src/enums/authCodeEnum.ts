@@ -128,6 +128,7 @@ export enum QuarantineButtonEnum {
   PrintQuarantine = 'E_95003004',
 
   NonconformityTrackingReport = 'E_95004001',
+  StationDetectionNonconformityReport = 'E_95004002',
 
   StationRefuseExport = 'E_900022001',
 

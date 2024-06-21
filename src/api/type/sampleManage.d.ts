@@ -2048,7 +2048,7 @@ export interface PutApiCoreBankDeliverSampleResponse {}
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample-pick-single`
- * @更新时间 `2024-06-17 19:49:29`
+ * @更新时间 `2024-06-18 14:29:01`
  */
 export interface GetApiCoreBankDeliverSamplePickSingleRequest {
   /**
@@ -2064,7 +2064,7 @@ export interface GetApiCoreBankDeliverSamplePickSingleRequest {
    */
   donorNo?: string;
   /**
-   * 血浆状态
+   * 血浆状态 合格传1 不合格传0
    */
   plasmaType?: string;
   /**
@@ -2080,7 +2080,7 @@ export interface GetApiCoreBankDeliverSamplePickSingleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample-pick-single`
- * @更新时间 `2024-06-17 19:49:29`
+ * @更新时间 `2024-06-18 14:29:01`
  */
 export interface GetApiCoreBankDeliverSamplePickSingleResponse {
   totalCount?: number;

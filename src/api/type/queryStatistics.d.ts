@@ -4467,7 +4467,7 @@ export type GetApiCoreLabErpTestReportUnqualifiedResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/batch/count-total`
- * @更新时间 `2024-05-31 15:52:28`
+ * @更新时间 `2024-06-19 14:45:03`
  */
 export interface GetApiSearchBatchCountTotalRequest {
   /**
@@ -4505,7 +4505,7 @@ export interface GetApiSearchBatchCountTotalRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/batch/count-total`
- * @更新时间 `2024-05-31 15:52:28`
+ * @更新时间 `2024-06-19 14:45:03`
  */
 export interface GetApiSearchBatchCountTotalResponse {
   /**
@@ -4743,7 +4743,7 @@ export interface GetApiSearchBatchCountTotalResponse {
   /**
    * 续追踪不合格超一年
    */
-  expnum?: number;
+  expNum?: number;
 }
 
 /**
@@ -4971,11 +4971,17 @@ export interface GetApiSearchPlasmaUnqualifiedResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/sample/lab/check/detail`
- * @更新时间 `2024-06-18 14:02:42`
+ * @更新时间 `2024-06-18 14:36:23`
  */
 export interface GetApiSearchSampleLabCheckDetailRequest {
   currPage: string;
   pageSize: string;
+  stationNo?: string;
+  collectionBegin?: string;
+  collectionEnd?: string;
+  sampleType?: string;
+  issueBegin?: string;
+  issueEnd?: string;
 }
 
 /**
@@ -4983,7 +4989,7 @@ export interface GetApiSearchSampleLabCheckDetailRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/sample/lab/check/detail`
- * @更新时间 `2024-06-18 14:02:42`
+ * @更新时间 `2024-06-18 14:36:23`
  */
 export type GetApiSearchSampleLabCheckDetailResponse = {
   /**
@@ -4997,7 +5003,57 @@ export type GetApiSearchSampleLabCheckDetailResponse = {
   /**
    * 来样日期
    */
-  comeAt?: string;
+  acceptAt: string;
+}[];
+
+/**
+ * 接口 [样本检测-检测不合格样本详情↗](https://yapi.sharing8.cn/project/529/interface/api/35454) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/sample/lab/check/failed/detail`
+ * @更新时间 `2024-06-18 14:44:16`
+ */
+export interface GetApiSearchSampleLabCheckFailedDetailRequest {
+  currPage: string;
+  pageSize: string;
+  stationNo?: string;
+  collectionBegin?: string;
+  collectionEnd?: string;
+  sampleType?: string;
+  issueBegin?: string;
+  issueEnd?: string;
+  type: string;
+  failedCode?: string;
+}
+
+/**
+ * 接口 [样本检测-检测不合格样本详情↗](https://yapi.sharing8.cn/project/529/interface/api/35454) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/sample/lab/check/failed/detail`
+ * @更新时间 `2024-06-18 14:44:16`
+ */
+export type GetApiSearchSampleLabCheckFailedDetailResponse = {
+  /**
+   * 样本编号
+   */
+  sampleNo: string;
+  /**
+   * 采集日期
+   */
+  collectAt: string;
+  /**
+   * 浆员编号
+   */
+  cardNo: string;
+  /**
+   * 浆员姓名
+   */
+  name: string;
+  /**
+   * 不合格原因
+   */
+  failed: string;
 }[];
 
 /* prettier-ignore-end */
