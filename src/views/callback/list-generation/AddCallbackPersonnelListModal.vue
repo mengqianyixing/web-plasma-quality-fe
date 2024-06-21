@@ -17,6 +17,7 @@
         :loading="tableLoading"
         :data="tableData"
         :columns="columnsComputed"
+        @scroll="tableScroll"
       />
     </div>
   </BasicModal>
@@ -45,8 +46,9 @@
 
   const isUpdate = ref(false);
   const stationNo = ref('');
-  const tableData = ref<GetApiCoreDonorCallbackNeedResponse>([]);
-  const vxeRef = ref<VxeTableInstance<GetApiCoreDonorCallbackNeedResponse[number]>>();
+  const tableData = ref<GetApiCoreDonorCallbackNeedResponse['result']>([]);
+  const vxeRef =
+    ref<VxeTableInstance<NonNullable<GetApiCoreDonorCallbackNeedResponse['result']>[number]>>();
   const gapDays = ref(0);
 
   const isShowTrackType = ref(false);
@@ -117,6 +119,11 @@
   const { createConfirm, createMessage } = useMessage();
 
   const tableLoading = ref(false);
+  const pager = reactive({
+    pageSize: 30,
+    currPage: 1,
+    totalPage: 0,
+  });
   async function initTableData() {
     try {
       tableLoading.value = true;
@@ -124,11 +131,15 @@
       if (!values.minCollectTime) {
         await updateSchemaFunc();
       }
-      tableData.value = await getNeedCallbackList({
+      const originRes = await getNeedCallbackList({
         ...getFieldsValue(),
         stationNo: stationNo.value,
         batchNo: batchNo.value,
-      } as GetApiCoreDonorCallbackNeedRequest);
+        pageSize: pager.pageSize,
+        currPage: pager.currPage,
+      } as unknown as GetApiCoreDonorCallbackNeedRequest);
+      tableData.value = tableData.value!.concat(originRes.result as any);
+      pager.totalPage = Number(originRes.totalPage);
 
       await nextTick(() => {
         vxeRef.value?.setAllCheckboxRow(true);
@@ -183,5 +194,19 @@
         closeModal();
       },
     });
+  }
+
+  function tableScroll(e) {
+    const { scrollHeight, clientHeight } = e.$event.srcElement;
+
+    if (clientHeight + e.scrollTop + 1 >= scrollHeight) {
+      pager.currPage++;
+
+      if (pager.currPage > pager.totalPage) {
+        return;
+      }
+
+      initTableData();
+    }
   }
 </script>
