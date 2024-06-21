@@ -108,7 +108,7 @@ const inboundmanagement: AppRouteModule = {
         {
           id: ReCheckButtonEnum.RegisterWeightCheck,
           name: 'registerWeight',
-          title: '登记称重复核人',
+          title: '重量登记复核人登录',
         },
         {
           id: ReCheckButtonEnum.UnqualifiedStage,

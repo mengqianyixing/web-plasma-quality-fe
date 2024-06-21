@@ -17,6 +17,7 @@
         :loading="tableLoading"
         :data="tableData"
         :columns="columnsComputed"
+        @scroll="tableScroll"
       >
         <template #toolbar>
           <div class="h-40px bg-#ffffff mt-2 flex items-center">
@@ -50,8 +51,8 @@
   import dayjs from 'dayjs';
   import { BasicForm, useForm } from '@/components/Form';
   import {
-    GetApiCoreDonorCallbackDetailRequest,
-    GetApiCoreDonorCallbackDetailResponse,
+    GetApiSearchDonorCallbackDetailRequest,
+    GetApiSearchDonorCallbackDetailResponse,
   } from '@/api/type/callbackManage';
   import { VxeGridProps, VxeTableInstance } from 'vxe-table';
 
@@ -67,9 +68,10 @@
   );
   const stationNo = ref('');
   const batchNo = ref('');
-  const vxeRef = ref<VxeTableInstance<GetApiCoreDonorCallbackDetailResponse[number]>>();
+  const vxeRef =
+    ref<VxeTableInstance<NonNullable<GetApiSearchDonorCallbackDetailResponse['result']>[number]>>();
 
-  const tableData = ref<GetApiCoreDonorCallbackDetailResponse>([]);
+  const tableData = ref<GetApiSearchDonorCallbackDetailResponse['result']>([]);
 
   const { createConfirm } = useMessage();
 
@@ -112,13 +114,22 @@
   });
 
   const tableLoading = ref(false);
+  const pager = reactive({
+    pageSize: 30,
+    currPage: 1,
+    totalPage: 0,
+  });
   async function initTableData() {
     try {
       tableLoading.value = true;
-      tableData.value = await getCallbackDetail({
+      const originRes = await getCallbackDetail({
         ...getFieldsValue(),
+        currPage: pager.currPage,
+        pageSize: pager.pageSize,
         batchNo: batchNo.value,
-      } as GetApiCoreDonorCallbackDetailRequest);
+      } as unknown as GetApiSearchDonorCallbackDetailRequest);
+      tableData.value = tableData.value!.concat(originRes.result as any);
+      pager.totalPage = Number(originRes.totalPage);
 
       await nextTick(() => {
         vxeRef.value?.setAllCheckboxRow(true);
@@ -187,5 +198,19 @@
   function handleCancel() {
     emit('success');
     closeModal();
+  }
+
+  function tableScroll(e) {
+    const { scrollHeight, clientHeight } = e.$event.srcElement;
+
+    if (clientHeight + e.scrollTop + 1 >= scrollHeight) {
+      pager.currPage++;
+
+      if (pager.currPage > pager.totalPage) {
+        return;
+      }
+
+      initTableData();
+    }
   }
 </script>
