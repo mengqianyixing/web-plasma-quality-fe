@@ -2456,4 +2456,85 @@ export interface PutApiCoreBatchSampleVerifyRevokeAllResponse {
   msg: string;
 }
 
+/**
+ * 接口 [血浆验收：托盘出库\/入库列表↗](https://yapi.sharing8.cn/project/529/interface/api/35496) 的 **请求类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/bank/tray/plasma-verify`
+ * @更新时间 `2024-06-18 20:18:17`
+ */
+export interface GetApiCoreBankTrayPlasmaVerifyRequest {
+  /**
+   * 血浆批号
+   */
+  batchNo: string;
+  /**
+   * 标识出库列表还是入库列表，out表示出库列表，in表示入库列表
+   */
+  inOut: string;
+  /**
+   * 是否在库，0表示不在库，1表示在库
+   */
+  inBank?: string;
+  /**
+   * 托盘编号
+   */
+  trayNo?: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+  /**
+   * 当前页码
+   */
+  currPage: string;
+  /**
+   * 页数大小
+   */
+  pageSize: string;
+}
+
+/**
+ * 接口 [血浆验收：托盘出库\/入库列表↗](https://yapi.sharing8.cn/project/529/interface/api/35496) 的 **返回类型**
+ *
+ * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
+ * @请求头 `GET /api/core/bank/tray/plasma-verify`
+ * @更新时间 `2024-06-18 20:18:17`
+ */
+export interface GetApiCoreBankTrayPlasmaVerifyResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 托盘编号
+     */
+    trayNo?: string;
+    /**
+     * 箱数量
+     */
+    boxCount?: number;
+    /**
+     * 血浆数量
+     */
+    bagCount?: number;
+    /**
+     * 库房名称
+     */
+    houseName?: string;
+    /**
+     * 货位号
+     */
+    locationNo?: string;
+    /**
+     * 托盘位置状态
+     */
+    trayStatus?: string;
+    /**
+     * 库房类型
+     */
+    houseType?: string;
+  }[];
+}
+
 /* prettier-ignore-end */

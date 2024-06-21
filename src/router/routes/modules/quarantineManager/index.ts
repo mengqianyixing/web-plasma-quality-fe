@@ -72,6 +72,10 @@ const quarantineManager: AppRouteModule = {
           id: QuarantineButtonEnum.NonconformityTrackingReport,
           title: '追踪记录/报告',
         },
+        {
+          id: QuarantineButtonEnum.StationDetectionNonconformityReport,
+          title: '浆站检测不合格血浆追溯-昆明',
+        },
       ],
       component: () => import('@/views/query-statistics/nonconformityTracking/index.vue'),
     },

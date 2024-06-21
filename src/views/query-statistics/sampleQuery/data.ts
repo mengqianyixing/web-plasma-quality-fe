@@ -111,7 +111,9 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '样本类型',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+      options: serverEnumStore
+        .getServerEnum(SERVER_ENUM.SampleType)
+        .filter((item) => ['CAB', 'NOR', 'CMV'].includes(item.value)),
     },
   },
   {

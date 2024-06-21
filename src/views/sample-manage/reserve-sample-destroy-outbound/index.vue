@@ -9,7 +9,7 @@
         <a-button type="primary" @click="handleCheck">审核</a-button>
         <a-button type="primary" @click="handleCancelCheck">撤销审核</a-button>
         <a-button type="primary" @click="handleOutBound">出库</a-button>
-        <a-button type="primary" @click="handlePrint">打印</a-button>
+        <a-button type="primary" @click="handlePrint" :loading="reportLoading">打印</a-button>
       </template>
       <template #dlvNo="{ record }">
         <span
@@ -24,6 +24,7 @@
     <RequisitionModal @register="registerRequisitionModal" @success="handleSuccess" />
     <DlvDetailModal @register="registerDlvDetailModal" />
     <OutBandModal @register="registerOutBandModal" />
+    <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
 
@@ -31,6 +32,7 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { columns, searchFormSchema } from './reserve.data';
+  import { ref } from 'vue';
 
   import { useModal } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
@@ -45,6 +47,9 @@
   import RequisitionModal from '@/views/sample-manage/reserve-sample-destroy-outbound/RequisitionModal.vue';
   import DlvDetailModal from '@/views/sample-manage/reserve-sample-destroy-outbound/DlvDetailModal.vue';
   import OutBandModal from '@/views/sample-manage/reserve-sample-destroy-outbound/OutBandModal.vue';
+  import { getReportApi } from '@/api/report';
+  import ReportModal from '@/components/ReportModal/index.vue';
+  import { PrintServerEnum } from '@/enums/printServerEnum';
 
   const { createConfirm, createMessage } = useMessage();
   defineOptions({ name: 'ReserveSampleDestroyOutbound' });
@@ -52,6 +57,7 @@
   const [registerRequisitionModal, { openModal: openRequisitionModal }] = useModal();
   const [registerDlvDetailModal, { openModal: openDlvDetailModal }] = useModal();
   const [registerOutBandModal, { openModal: openOutBandModal }] = useModal();
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
 
   const [registerTable, { reload, getSelectRows, clearSelectedRowKeys }] = useTable({
     api: getReserveSampleList,
@@ -184,7 +190,25 @@
     });
   }
 
-  function handlePrint() {}
+  const reportLoading = ref(false);
+  async function handlePrint() {
+    if (getSelectRows().length === 0) {
+      createMessage.warn('请选择出库申请单号');
+      return;
+    }
+
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({
+        reportKey: PrintServerEnum.RETAIN_SAMPLE_DESTROYED,
+        contentKey: getSelectRows()[0]?.dlvNo,
+      });
+      openReportModal(true, window.URL.createObjectURL(res));
+      clearSelectedRowKeys();
+    } finally {
+      reportLoading.value = false;
+    }
+  }
 
   function handleOpenDlvDetail(record) {
     openDlvDetailModal(true, {

@@ -128,6 +128,7 @@ export enum QuarantineButtonEnum {
   PrintQuarantine = 'E_95003004',
 
   NonconformityTrackingReport = 'E_95004001',
+  StationDetectionNonconformityReport = 'E_95004002',
 
   StationRefuseExport = 'E_900022001',
 
@@ -281,4 +282,9 @@ export enum TagManageButtonEnum {
   TagStylePreview = 'E_89001006',
   TagStyleOpen = 'E_89001007',
   TagStyleClose = 'E_89001008',
+}
+
+export enum NonconformityInStoreButtonEnum {
+  NonconformityInStoreCheck = 'E_92005001',
+  NonconformityInStoreCancelCheck = 'E_92005002',
 }

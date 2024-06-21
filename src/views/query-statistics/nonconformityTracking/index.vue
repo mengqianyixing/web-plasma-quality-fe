@@ -10,6 +10,14 @@
         >
           追踪记录/报告
         </a-button>
+        <a-button
+          type="primary"
+          @click="handlePrint"
+          :loading="reportLoading"
+          v-auth="QuarantineButtonEnum.StationDetectionNonconformityReport"
+        >
+          浆站检测不合格血浆追溯
+        </a-button>
       </template>
       <template #donorNo="{ record }: { record: Recordable }">
         <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleJump(record)">
@@ -32,6 +40,7 @@
   import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
   import { message } from 'ant-design-vue';
   import { useRouter } from 'vue-router';
+  import { PrintServerEnum } from '@/enums/printServerEnum';
 
   defineOptions({ name: 'NonconformityTracking' });
   const reportLoading = ref(false);
@@ -73,5 +82,21 @@
   }
   function handleJump(row: Recordable) {
     push({ name: 'DonorQuery', query: { cardNo: row.cardNo } });
+  }
+
+  async function handlePrint() {
+    try {
+      const rows = getSelectRows();
+      if (!rows.length) return message.warning('请选择数据');
+      const [record] = rows;
+      reportLoading.value = true;
+      const res = await getReportApi({
+        reportKey: PrintServerEnum.STATION_BAG_UNQUALIFIED_TRACK,
+        contentKey: record?.sampleNo,
+      });
+      openReportModal(true, window.URL.createObjectURL(res));
+    } finally {
+      reportLoading.value = false;
+    }
   }
 </script>
