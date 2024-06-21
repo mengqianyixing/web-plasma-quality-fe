@@ -149,6 +149,7 @@
   const [register, { setModalProps, closeModal }] = useModalInner((data) => {
     setModalProps({
       maskClosable: false,
+      destroyOnClose: true,
     });
 
     isUpdate.value = data.isUpdate;
@@ -197,6 +198,8 @@
 
   function handleCancel() {
     emit('success');
+    pager.currPage = 1;
+    tableData.value = [];
     closeModal();
   }
 

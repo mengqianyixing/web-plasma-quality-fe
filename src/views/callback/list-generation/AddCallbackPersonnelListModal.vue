@@ -7,6 +7,7 @@
     :min-height="680"
     showFooter
     @ok="handleOk"
+    @cancel="handleCancel"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
@@ -102,6 +103,7 @@
   const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
     setModalProps({
       maskClosable: false,
+      destroyOnClose: true,
     });
 
     isUpdate.value = data.isUpdate;
@@ -208,5 +210,11 @@
 
       initTableData();
     }
+  }
+
+  function handleCancel() {
+    pager.currPage = 1;
+    tableData.value = [];
+    closeModal();
   }
 </script>
