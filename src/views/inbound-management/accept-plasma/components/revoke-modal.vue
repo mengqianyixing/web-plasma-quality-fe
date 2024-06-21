@@ -30,7 +30,7 @@
     <LoginModal
       @register="registerLoginModal"
       @success="handleSuccess"
-      :auth-code="ReCheckButtonEnum.RevokeCheck"
+      :auth-code="ReCheckButtonEnum.RevokeVerifyCheck"
     />
   </Modal>
 </template>
