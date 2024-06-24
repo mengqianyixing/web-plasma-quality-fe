@@ -119,9 +119,14 @@
     currPage: 1,
     totalPage: 0,
   });
-  async function initTableData() {
+  async function initTableData(flag?: Boolean) {
     try {
       tableLoading.value = true;
+      if (flag) {
+        pager.currPage = 1;
+        tableData.value = [];
+      }
+
       const originRes = await getCallbackDetail({
         ...getFieldsValue(),
         currPage: pager.currPage,
@@ -140,7 +145,10 @@
   }
 
   async function submitFunc() {
-    await initTableData();
+    vxeRef.value?.clearScroll();
+    setTimeout(async () => {
+      await initTableData(true);
+    }, 0);
   }
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '生成名单'));

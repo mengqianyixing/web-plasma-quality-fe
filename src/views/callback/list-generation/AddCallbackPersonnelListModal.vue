@@ -126,9 +126,14 @@
     currPage: 1,
     totalPage: 0,
   });
-  async function initTableData() {
+  async function initTableData(flag?: Boolean) {
     try {
       tableLoading.value = true;
+      if (flag) {
+        pager.currPage = 1;
+        tableData.value = [];
+      }
+
       const values = getFieldsValue();
       if (!values.minCollectTime) {
         await updateSchemaFunc();
@@ -172,7 +177,10 @@
   }
 
   async function submitFunc() {
-    await initTableData();
+    vxeRef.value?.clearScroll();
+    setTimeout(async () => {
+      await initTableData(true);
+    }, 0);
   }
 
   async function handleOk() {
