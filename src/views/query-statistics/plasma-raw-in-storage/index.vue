@@ -106,25 +106,10 @@
     showIndexColumn: false,
   });
 
-  function accAdd(arg1: number, arg2: number) {
-    let r1: number, r2: number, m: number;
-    try {
-      r1 = arg1.toString().split('.')[1].length;
-    } catch (e) {
-      r1 = 0;
-    }
-    try {
-      r2 = arg2.toString().split('.')[1].length;
-    } catch (e) {
-      r2 = 0;
-    }
-    m = Math.pow(10, Math.max(r1, r2));
-    return (arg1 * m + arg2 * m) / m;
-  }
-
-  function handleSummary(tableData: any[]) {
-    const inOfMonth = tableData.reduce((prev, curr) => accAdd(prev, curr.inOfMonth), 0);
-    const inOfYear = tableData.reduce((prev, curr) => accAdd(prev, curr.inOfYear), 0);
+  function handleSummary() {
+    const origin = getRawDataSource();
+    const inOfMonth = origin.allInOfMonth;
+    const inOfYear = origin.allInOfYear;
     return [
       {
         stationName: '总计',
