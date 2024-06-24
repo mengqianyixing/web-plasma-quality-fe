@@ -6,7 +6,7 @@
     showFooter
     width="85%"
     :min-height="680"
-    @close="handleCancel"
+    @cancel="handleCancel"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
@@ -192,7 +192,7 @@
           donorNos: vxeRef.value!.getCheckboxRecords().map((it) => it?.donorNo)!,
         });
 
-        await initTableData();
+        await submitFunc();
 
         emit('success');
       },
