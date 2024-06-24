@@ -127,7 +127,11 @@ const checkManager: AppRouteModule = {
         },
         {
           id: QualityButtonEnum.BatchReleasePrint,
-          title: '打印',
+          title: '原料血浆投产批放行单',
+        },
+        {
+          id: QualityButtonEnum.BatchQuarantinePeriod,
+          title: '原料血浆检疫期筛选情况-昆明',
         },
       ],
       meta: {
