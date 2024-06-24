@@ -201,7 +201,7 @@
         });
 
         emit('success');
-        closeModal();
+        handleCancel();
       },
     });
   }

@@ -35,11 +35,6 @@
         width: 80,
       },
       {
-        dataIndex: 'flow',
-        title: '血浆流程',
-        width: 100,
-      },
-      {
         dataIndex: 'batchNo',
         title: '血浆批号',
         width: 120,

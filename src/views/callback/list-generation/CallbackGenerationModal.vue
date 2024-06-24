@@ -34,7 +34,7 @@
       <a-button type="primary" @click="handleOk">确定</a-button>
     </template>
 
-    <AddCallbackPersonnelListModal @register="registerAddModal" @success="initTableData" />
+    <AddCallbackPersonnelListModal @register="registerAddModal" @success="submitFunc" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -200,7 +200,6 @@
   }
 
   function handleOk() {
-    emit('success');
     closeModal();
   }
 
