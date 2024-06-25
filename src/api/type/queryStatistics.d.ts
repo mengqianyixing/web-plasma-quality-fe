@@ -2756,7 +2756,7 @@ export interface GetApiSearchProdPrepareResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/batch/unqualified/statistic-batch`
- * @更新时间 `2024-06-14 16:42:09`
+ * @更新时间 `2024-06-25 11:28:53`
  */
 export interface GetApiSearchBatchUnqualifiedStatisticBatchRequest {
   pageSize: string;
@@ -2796,7 +2796,7 @@ export interface GetApiSearchBatchUnqualifiedStatisticBatchRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/batch/unqualified/statistic-batch`
- * @更新时间 `2024-06-14 16:42:09`
+ * @更新时间 `2024-06-25 11:28:53`
  */
 export interface GetApiSearchBatchUnqualifiedStatisticBatchResponse {
   totalCount?: number;
@@ -3026,6 +3026,11 @@ export interface GetApiSearchBatchUnqualifiedStatisticBatchResponse {
      */
     otherNum?: string;
     otherCode: string;
+    /**
+     * 样本量不足   ps:放在其他不合格下
+     */
+    insufficientSampleSizeNum?: string;
+    insufficientSampleSizeCode: string;
     /**
      * 其他（破袋）
      */
