@@ -44,7 +44,11 @@
       return { ...p, ...params.value };
     },
   });
-  const [registerModal] = useModalInner(async (data) => {
+  const [registerModal, { setModalProps }] = useModalInner(async (data) => {
+    setModalProps({
+      maskClosable: false,
+      destroyOnClose: true,
+    });
     params.value = data;
 
     await reload();
