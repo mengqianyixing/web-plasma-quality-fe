@@ -511,10 +511,10 @@ export type GetApiCoreDonorCallbackResultResponse = {
  * 接口 [回访失败(终止回访)查询↗](https://yapi.sharing8.cn/project/529/interface/api/32882) 的 **请求类型**
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
- * @请求头 `GET /api/core/donor/callback/defeat`
- * @更新时间 `2024-05-31 10:43:25`
+ * @请求头 `GET /api/search/donor/callback-ended`
+ * @更新时间 `2024-06-25 16:13:35`
  */
-export interface GetApiCoreDonorCallbackDefeatRequest {
+export interface GetApiSearchDonorCallbackEndedRequest {
   pageSize: string;
   currPage: string;
   /**
@@ -539,20 +539,24 @@ export interface GetApiCoreDonorCallbackDefeatRequest {
  * 接口 [回访失败(终止回访)查询↗](https://yapi.sharing8.cn/project/529/interface/api/32882) 的 **返回类型**
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
- * @请求头 `GET /api/core/donor/callback/defeat`
- * @更新时间 `2024-05-31 10:43:25`
+ * @请求头 `GET /api/search/donor/callback-ended`
+ * @更新时间 `2024-06-25 16:13:35`
  */
-export type GetApiCoreDonorCallbackDefeatResponse = {
+export type GetApiSearchDonorCallbackEndedResponse = {
   /**
    * 采浆公司编号
    */
   stationNo: string;
   /**
+   * 采浆公司名称
+   */
+  stationName: string;
+  /**
    * 浆员编号
    */
   donorNo: string;
   /**
-   * 浆员卡号
+   * 浆员卡号 显示
    */
   cardNo: string;
   /**

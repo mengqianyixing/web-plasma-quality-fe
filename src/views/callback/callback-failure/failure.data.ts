@@ -5,8 +5,7 @@ import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: 'stationNo',
-    slots: { customRender: 'stationNo' },
+    dataIndex: 'stationName',
   },
   {
     title: '浆员编号',

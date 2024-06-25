@@ -1,15 +1,15 @@
 import { defHttp } from '@/utils/http/axios';
 import {
-  GetApiCoreDonorCallbackDefeatRequest,
-  GetApiCoreDonorCallbackDefeatResponse,
+  GetApiSearchDonorCallbackEndedRequest,
+  GetApiSearchDonorCallbackEndedResponse,
 } from '@/api/type/callbackManage';
 
 enum Api {
-  CALLBACK_FAILURE_LIST = '/api/core/donor/callback/defeat',
+  CALLBACK_FAILURE_LIST = '/api/search/donor/callback-ended',
 }
 
-export const getCallbackFailureList = (params: GetApiCoreDonorCallbackDefeatRequest) =>
-  defHttp.get<GetApiCoreDonorCallbackDefeatResponse>(
+export const getCallbackFailureList = (params: GetApiSearchDonorCallbackEndedRequest) =>
+  defHttp.get<GetApiSearchDonorCallbackEndedResponse>(
     { url: Api.CALLBACK_FAILURE_LIST, params },
     {
       joinParamsToUrl: true,
