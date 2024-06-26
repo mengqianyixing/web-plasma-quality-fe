@@ -60,23 +60,23 @@ const system: AppRouteModule = {
       ],
       component: () => import('@/views/system/users/index.vue'),
     },
-
-    {
-      path: 'policies',
-      name: 'Policies',
-      id: 101030,
-      meta: {
-        title: '资源管理',
-      },
-      authElements: [
-        {
-          id: 'E_110',
-          name: 'editPolicies',
-          title: '编辑策略',
-        },
-      ],
-      component: () => import('@/views/system/policies/index.vue'),
-    },
+    //
+    // {
+    //   path: 'policies',
+    //   name: 'Policies',
+    //   id: 101030,
+    //   meta: {
+    //     title: '资源管理',
+    //   },
+    //   authElements: [
+    //     {
+    //       id: 'E_110',
+    //       name: 'editPolicies',
+    //       title: '编辑策略',
+    //     },
+    //   ],
+    //   component: () => import('@/views/system/policies/index.vue'),
+    // },
     {
       path: 'logs',
       name: 'Logs',
