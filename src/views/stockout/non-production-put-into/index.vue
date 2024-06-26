@@ -163,9 +163,6 @@
         selectedRow.value = selectedRows;
       },
     },
-    scroll: {
-      x: 100,
-    },
     size: 'small',
     striped: false,
     useSearchForm: true,

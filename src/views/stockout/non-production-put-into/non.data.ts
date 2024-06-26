@@ -15,6 +15,7 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆数量',
     dataIndex: 'bagNum',
+    width: 100,
   },
   {
     title: '原因',
@@ -25,10 +26,13 @@ export const columns: BasicColumn[] = [
   {
     title: '转移部门',
     dataIndex: 'transferDepartment',
+    width: 120,
   },
   {
     title: '转移申请人',
     dataIndex: 'applicant',
+    ellipsis: false,
+    width: 120,
   },
   {
     title: '申请日期',
@@ -41,6 +45,8 @@ export const columns: BasicColumn[] = [
   {
     title: '记录人',
     dataIndex: 'creator',
+    ellipsis: false,
+    width: 120,
   },
   {
     title: '记录日期',
@@ -53,6 +59,8 @@ export const columns: BasicColumn[] = [
   {
     title: '准备人',
     dataIndex: 'preparedBy',
+    ellipsis: false,
+    width: 120,
   },
   {
     title: '准备日期',
@@ -65,6 +73,8 @@ export const columns: BasicColumn[] = [
   {
     title: '复核人',
     dataIndex: 'reviewer',
+    ellipsis: false,
+    width: 120,
   },
   {
     title: '复核日期',
@@ -77,7 +87,8 @@ export const columns: BasicColumn[] = [
   {
     title: '审核人',
     dataIndex: 'checker',
-    width: 80,
+    ellipsis: false,
+    width: 120,
   },
   {
     title: '审核日期',
@@ -98,6 +109,7 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'status',
+    width: 100,
   },
 ];
 
