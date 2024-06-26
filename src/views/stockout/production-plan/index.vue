@@ -94,6 +94,15 @@
                   原料血浆投产计划
                 </a-button>
               </MenuItem>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint('PLASMA_PRODUCTION_APPLICATION')"
+                  v-auth="StockOutButtonEnum.PlasmaProductionApplication"
+                >
+                  原料血浆投产申报表
+                </a-button>
+              </MenuItem>
             </Menu>
           </template>
         </a-dropdown>

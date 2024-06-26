@@ -208,6 +208,10 @@ const nonconformity: AppRouteModule = {
           title: '原料血浆投产计划',
         },
         {
+          id: StockOutButtonEnum.PlasmaProductionApplication,
+          title: '原料血浆投产申报表-昆明',
+        },
+        {
           id: StockOutButtonEnum.ProductionPlanSummary,
           title: '下载原料血浆摘要',
         },
