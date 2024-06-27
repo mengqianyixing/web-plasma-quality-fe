@@ -26,7 +26,7 @@
         </a-button>
         <a-button
           type="primary"
-          @click="handleOption('C', '撤销')"
+          @click="handleDelete"
           v-auth="QuarantineButtonEnum.ResetQuarantine"
         >
           撤销
@@ -51,6 +51,7 @@
     <PlasmaBatchDetailModal @register="registerDetailModal" />
     <PlasmaBatchModal @register="registerModal" @success="handleSuccess" />
     <ReportModal @register="registerReportModal" />
+    <DeleteModal @register="registerDeleteModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -61,6 +62,7 @@
   import { useModal } from '@/components/Modal';
   import PlasmaBatchModal from './PlasmaBatchModal.vue';
   import PlasmaBatchDetailModal from './PlasmaBatchDetailModal.vue';
+  import DeleteModal from './DeleteModal.vue';
 
   import { columns, searchFormSchema } from './plasma-batch.data';
   import { useStation } from '@/hooks/common/useStation';
@@ -91,6 +93,8 @@
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
   const [registerModal, { openModal }] = useModal();
   const [registerReportModal, { openModal: openReportModal }] = useModal();
+  const [registerDeleteModal, { openModal: openDeleteModal }] = useModal();
+
   const [registerTable, { reload, getForm, clearSelectedRowKeys, getSelectRows }] = useTable({
     api: getPlasmaBatchReleases,
     fetchSetting: {
@@ -133,7 +137,6 @@
     return rows;
   }
   function handleDetailClick(record: Recordable, type: string, title: any) {
-    console.log(record, type, title);
     openDetailModal(true, {
       record,
       type,
@@ -167,6 +170,14 @@
               reload();
             });
         },
+      });
+    });
+  }
+
+  function handleDelete() {
+    getSelections(true, ([row]) => {
+      openDeleteModal(true, {
+        record: row,
       });
     });
   }
