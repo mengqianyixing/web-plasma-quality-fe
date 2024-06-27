@@ -18,6 +18,16 @@
         :data="tableData"
         :columns="columnsComputed"
       >
+        <template #plasmaCount="{ row }">
+          <span
+            :class="
+              !row?.plasmaCount ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+            "
+            @click.stop.self="handleBagDetail(row)"
+          >
+            {{ row?.plasmaCount }}
+          </span>
+        </template>
         <template #toolbar>
           <div class="h-40px bg-#ffffff mt-2 flex items-center">
             <a-button type="primary" @click="handleAdd" class="absolute right-20"> 新增 </a-button>
@@ -47,6 +57,7 @@
     </template>
 
     <AddCallbackPersonnelListModal @register="registerAddModal" @success="submitFunc" />
+    <BagDetailModal @register="registerBagDetailModal" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -54,7 +65,6 @@
   import { computed, nextTick, reactive, ref, unref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
 
-  import AddCallbackPersonnelListModal from '@/views/callback/list-generation/AddCallbackPersonnelListModal.vue';
   import {
     callbackModalSearchFromSchema,
     callbackModalColumns,
@@ -68,6 +78,9 @@
   } from '@/api/type/callbackManage';
   import { VxeGridProps, VxeTableInstance } from 'vxe-table';
   import { Pagination as APagination } from 'ant-design-vue';
+
+  import AddCallbackPersonnelListModal from '@/views/callback/list-generation/AddCallbackPersonnelListModal.vue';
+  import BagDetailModal from '@/views/callback/list-generation/BagDetailModal.vue';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -162,6 +175,7 @@
   const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '生成名单'));
 
   const [registerAddModal, { openModal }] = useModal();
+  const [registerBagDetailModal, { openModal: openBagDetailModal }] = useModal();
   const [register, { setModalProps, closeModal }] = useModalInner((data) => {
     setModalProps({
       maskClosable: false,
@@ -228,5 +242,12 @@
     pager.pageSize = size;
 
     await initTableData();
+  }
+
+  function handleBagDetail(_record: Recordable) {
+    openBagDetailModal(true, {
+      cardNo: _record.cardNo,
+      planNo: batchNo.value,
+    });
   }
 </script>

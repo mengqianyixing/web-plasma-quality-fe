@@ -217,6 +217,7 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
   {
     title: '待追踪袋数',
     field: 'plasmaCount',
+    slots: { default: 'plasmaCount' },
   },
 ];
 
