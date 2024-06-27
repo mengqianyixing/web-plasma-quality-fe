@@ -18,7 +18,19 @@
         :loading="tableLoading"
         :data="tableData"
         :columns="columnsComputed"
-        @scroll="tableScroll"
+      />
+
+      <a-pagination
+        class="float-right mt-2"
+        @change="handlePageChange"
+        @show-size-change="handleSizeChange"
+        size="small"
+        show-size-changer
+        show-quick-jumper
+        v-model:current="pager.currPage"
+        v-model:pageSize="pager.pageSize"
+        :total="pager.total"
+        :show-total="(total) => `共 ${total} 条数据`"
       />
     </div>
   </BasicModal>
@@ -41,6 +53,7 @@
     GetApiCoreDonorCallbackNeedRequest,
     GetApiCoreDonorCallbackNeedResponse,
   } from '@/api/type/callbackManage';
+  import { Pagination as APagination } from 'ant-design-vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   const emit = defineEmits(['success', 'register']);
@@ -122,17 +135,13 @@
 
   const tableLoading = ref(false);
   const pager = reactive({
-    pageSize: 30,
+    pageSize: 100,
     currPage: 1,
-    totalPage: 0,
+    total: 0,
   });
-  async function initTableData(flag?: Boolean) {
+  async function initTableData() {
     try {
       tableLoading.value = true;
-      if (flag) {
-        pager.currPage = 1;
-        tableData.value = [];
-      }
 
       const values = getFieldsValue();
       if (!values.minCollectTime) {
@@ -145,8 +154,8 @@
         pageSize: pager.pageSize,
         currPage: pager.currPage,
       } as unknown as GetApiCoreDonorCallbackNeedRequest);
-      tableData.value = tableData.value!.concat(originRes.result as any);
-      pager.totalPage = Number(originRes.totalPage);
+      tableData.value = originRes.result!;
+      pager.total = originRes.totalCount!;
 
       await nextTick(() => {
         vxeRef.value?.setAllCheckboxRow(true);
@@ -178,9 +187,8 @@
 
   async function submitFunc() {
     vxeRef.value?.clearScroll();
-    setTimeout(async () => {
-      await initTableData(true);
-    }, 0);
+
+    await initTableData();
   }
 
   async function handleOk() {
@@ -200,29 +208,34 @@
           donorNos: vxeRef.value!.getCheckboxRecords().map((it) => it?.donorNo)!,
         });
 
-        emit('success');
-        handleCancel();
+        createMessage.warn(
+          `名单添加成功，剩余${
+            pager.total - Number(vxeRef.value?.getCheckboxRecords().length)
+          }位浆员`,
+        );
+
+        pager.currPage = 1;
+        await initTableData();
       },
     });
   }
 
-  function tableScroll(e) {
-    const { scrollHeight, clientHeight } = e.$event.srcElement;
-
-    if (clientHeight + e.scrollTop + 1 >= scrollHeight) {
-      pager.currPage++;
-
-      if (pager.currPage > pager.totalPage) {
-        return;
-      }
-
-      initTableData();
-    }
-  }
-
   function handleCancel() {
+    emit('success');
     pager.currPage = 1;
     tableData.value = [];
     closeModal();
+  }
+
+  async function handlePageChange(e) {
+    pager.currPage = e;
+
+    await initTableData();
+  }
+
+  async function handleSizeChange(_, size) {
+    pager.pageSize = size;
+
+    await initTableData();
   }
 </script>

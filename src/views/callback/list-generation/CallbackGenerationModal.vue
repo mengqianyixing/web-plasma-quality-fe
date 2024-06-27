@@ -17,7 +17,6 @@
         :loading="tableLoading"
         :data="tableData"
         :columns="columnsComputed"
-        @scroll="tableScroll"
       >
         <template #toolbar>
           <div class="h-40px bg-#ffffff mt-2 flex items-center">
@@ -28,6 +27,19 @@
           </div>
         </template>
       </vxe-grid>
+
+      <a-pagination
+        class="float-right mt-2"
+        @change="handlePageChange"
+        @show-size-change="handleSizeChange"
+        size="small"
+        show-size-changer
+        show-quick-jumper
+        v-model:current="pager.currPage"
+        v-model:pageSize="pager.pageSize"
+        :total="pager.total"
+        :show-total="(total) => `共 ${total} 条数据`"
+      />
     </div>
 
     <template #footer>
@@ -55,6 +67,7 @@
     GetApiSearchDonorCallbackDetailResponse,
   } from '@/api/type/callbackManage';
   import { VxeGridProps, VxeTableInstance } from 'vxe-table';
+  import { Pagination as APagination } from 'ant-design-vue';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -115,17 +128,13 @@
 
   const tableLoading = ref(false);
   const pager = reactive({
-    pageSize: 30,
+    pageSize: 100,
     currPage: 1,
-    totalPage: 0,
+    total: 0,
   });
-  async function initTableData(flag?: Boolean) {
+  async function initTableData() {
     try {
       tableLoading.value = true;
-      if (flag) {
-        pager.currPage = 1;
-        tableData.value = [];
-      }
 
       const originRes = await getCallbackDetail({
         ...getFieldsValue(),
@@ -133,8 +142,8 @@
         pageSize: pager.pageSize,
         batchNo: batchNo.value,
       } as unknown as GetApiSearchDonorCallbackDetailRequest);
-      tableData.value = tableData.value!.concat(originRes.result as any);
-      pager.totalPage = Number(originRes.totalPage);
+      tableData.value = originRes.result!;
+      pager.total = originRes.totalCount!;
 
       await nextTick(() => {
         vxeRef.value?.setAllCheckboxRow(true);
@@ -146,9 +155,8 @@
 
   async function submitFunc() {
     vxeRef.value?.clearScroll();
-    setTimeout(async () => {
-      await initTableData(true);
-    }, 0);
+    pager.currPage = 1;
+    await initTableData();
   }
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '生成名单'));
@@ -200,7 +208,7 @@
   }
 
   function handleOk() {
-    closeModal();
+    handleCancel();
   }
 
   function handleCancel() {
@@ -210,17 +218,15 @@
     closeModal();
   }
 
-  function tableScroll(e) {
-    const { scrollHeight, clientHeight } = e.$event.srcElement;
+  async function handlePageChange(e) {
+    pager.currPage = e;
 
-    if (clientHeight + e.scrollTop + 1 >= scrollHeight) {
-      pager.currPage++;
+    await initTableData();
+  }
 
-      if (pager.currPage > pager.totalPage) {
-        return;
-      }
+  async function handleSizeChange(_, size) {
+    pager.pageSize = size;
 
-      initTableData();
-    }
+    await initTableData();
   }
 </script>
