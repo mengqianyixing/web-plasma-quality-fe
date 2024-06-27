@@ -5,7 +5,7 @@
     title="挑浆"
     @ok="handleSubmit"
     @cancel="handelCancel"
-    width="430px"
+    width="550px"
   >
     <BasicForm @register="registerForm" />
 
@@ -51,6 +51,7 @@
   const [registerLoginModal, { openModal }] = useModal();
 
   const [registerForm, { resetFields, validate, setFieldsValue, updateSchema }] = useForm({
+    size: 'large',
     labelWidth: 130,
     baseColProps: { span: 48 },
     schemas: pickSchema,
@@ -69,7 +70,7 @@
       { field: 'bagNo', componentProps: { onPressEnter: handleSubmit } },
     ]);
     resetFields();
-    setModalProps({ confirmLoading: false });
+    setModalProps({ confirmLoading: false, maskClosable: false });
   });
 
   async function handleSubmit() {
