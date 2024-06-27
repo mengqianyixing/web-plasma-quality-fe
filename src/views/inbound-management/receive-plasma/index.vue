@@ -10,6 +10,8 @@
   import { plasmaReceiveModeEnum } from '@/enums/plasmaEnum';
   import { ref, onMounted } from 'vue';
 
+  defineOptions({ name: 'ReceivePlasma' });
+
   const mode = ref('BOX');
   const currentComponent = ref<typeof Box | typeof Batch | null>(null);
   onMounted(async () => {
