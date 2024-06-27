@@ -32,6 +32,10 @@ const checkManager: AppRouteModule = {
           title: '登记使用截止日期',
         },
         {
+          id: ReCheckButtonEnum.MaterialPreRegistrationUpdateDateCheck,
+          title: '登记日期复核人权限',
+        },
+        {
           id: InspectButtonEnum.MaterialPreRegistrationAdd,
           title: '新增',
         },
@@ -127,6 +131,10 @@ const checkManager: AppRouteModule = {
         {
           id: InspectButtonEnum.ResultRegistrationMaterialReRegist,
           title: '物料撤销',
+        },
+        {
+          id: ReCheckButtonEnum.ResultReRegistCheck,
+          title: '撤销检测结果登记复核人权限',
         },
       ],
     },

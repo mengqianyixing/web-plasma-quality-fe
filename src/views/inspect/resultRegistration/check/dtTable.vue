@@ -2,9 +2,9 @@
   <div class="h-full">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleRemove" v-if="props.checkType"
-          >撤销检测结果</a-button
-        >
+        <a-button type="primary" @click="handleRemove" v-if="props.checkType">
+          撤销检测结果
+        </a-button>
       </template>
     </BasicTable>
     <BasicModal
