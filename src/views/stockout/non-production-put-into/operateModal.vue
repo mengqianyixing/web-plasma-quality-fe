@@ -7,33 +7,44 @@
     :showOkBtn="false"
     :showCancelBtn="false"
     @cancel="handleClose"
+    :min-height="650"
     width="80%"
   >
-    <div>
-      <BasicForm @register="registerForm" />
-      <div class="flex justify-end">
-        <a-button type="primary" @click="handleSave" :loading="btnLoading" :disabled="isPreview">
-          保存申请单
-        </a-button>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute flex flex-col w-full h-full">
+        <BasicForm @register="registerForm" />
+        <div class="flex justify-end">
+          <a-button type="primary" @click="handleSave" :loading="btnLoading" :disabled="isPreview">
+            保存申请单
+          </a-button>
+        </div>
+        <div class="flex-1 w-full">
+          <a-tabs
+            default-active-key="detail"
+            v-model:activeKey="currentKey"
+            class="h-full bg-white tabs"
+          >
+            <a-tab-pane key="batch" tab="血浆批号" force-render>
+              <BasicTable @register="registerBatchTable" />
+            </a-tab-pane>
+            <a-tab-pane key="box" tab="血浆箱号" force-render>
+              <BasicTable @register="registerBoxTable" />
+            </a-tab-pane>
+            <a-tab-pane key="detail" tab="血浆明细" force-render>
+              <BasicTable @register="registerDetailTable">
+                <template #toolbar>
+                  <a-button type="primary" @click="handlePickPlasma" :disabled="isPreview">
+                    挑选血浆
+                  </a-button>
+                  <a-button type="primary" @click="handleDelete" :disabled="isPreview">
+                    移除
+                  </a-button>
+                </template>
+              </BasicTable>
+            </a-tab-pane>
+          </a-tabs>
+        </div>
       </div>
-      <a-tabs default-active-key="detail" v-model:activeKey="currentKey">
-        <a-tab-pane key="batch" tab="血浆批号" force-render>
-          <BasicTable @register="registerBatchTable" />
-        </a-tab-pane>
-        <a-tab-pane key="box" tab="血浆箱号" force-render>
-          <BasicTable @register="registerBoxTable" />
-        </a-tab-pane>
-        <a-tab-pane key="detail" tab="血浆明细" force-render>
-          <BasicTable @register="registerDetailTable">
-            <template #toolbar>
-              <a-button type="primary" @click="handlePickPlasma" :disabled="isPreview">
-                挑选血浆
-              </a-button>
-              <a-button type="primary" @click="handleDelete" :disabled="isPreview"> 移除 </a-button>
-            </template>
-          </BasicTable>
-        </a-tab-pane>
-      </a-tabs>
     </div>
 
     <PickPlasmaModal @register="registerPickModal" @success="handleSuccess" />
@@ -165,7 +176,8 @@
       showTableSetting: false,
       bordered: true,
       showIndexColumn: false,
-      canResize: true,
+      inset: true,
+      isCanResizeParent: true,
       immediate: false,
     });
 
@@ -191,8 +203,9 @@
     showTableSetting: false,
     bordered: true,
     showIndexColumn: false,
-    canResize: true,
     immediate: false,
+    inset: true,
+    isCanResizeParent: true,
   });
 
   const [registerDetailTable, { reload: reloadDetailTable, setTableData: setDetailTableData }] =
@@ -225,7 +238,8 @@
       showTableSetting: false,
       bordered: true,
       showIndexColumn: false,
-      canResize: true,
+      inset: true,
+      isCanResizeParent: true,
       immediate: false,
     });
 
@@ -348,3 +362,8 @@
     });
   }
 </script>
+<style scoped>
+  .tabs :deep(.ant-tabs-content) {
+    height: 100%;
+  }
+</style>

@@ -1422,7 +1422,7 @@ export interface PutApiCoreBankDeliverNonproductiveResponse {}
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive/pick-plasma`
- * @更新时间 `2024-05-31 18:00:25`
+ * @更新时间 `2024-06-27 09:24:58`
  */
 export interface GetApiCoreBankDeliverNonproductivePickPlasmaRequest {
   pageSize: string;
@@ -1456,7 +1456,7 @@ export interface GetApiCoreBankDeliverNonproductivePickPlasmaRequest {
    */
   titerType?: string;
   /**
-   * 血浆类型
+   * 血浆类型   检测合格 ：UTRK  检疫期合格：PASS
    */
   plasmaStatus?: string;
   /**
@@ -1470,7 +1470,7 @@ export interface GetApiCoreBankDeliverNonproductivePickPlasmaRequest {
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive/pick-plasma`
- * @更新时间 `2024-05-31 18:00:25`
+ * @更新时间 `2024-06-27 09:24:58`
  */
 export interface GetApiCoreBankDeliverNonproductivePickPlasmaResponse {
   totalCount?: number;

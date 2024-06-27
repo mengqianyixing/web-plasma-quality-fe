@@ -1985,7 +1985,7 @@ export interface GetApiSearchDonorCallbackCountResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege`
- * @更新时间 `2024-05-21 14:19:05`
+ * @更新时间 `2024-06-26 17:26:46`
  */
 export interface GetApiSearchPlasmaPrivilegeRequest {
   /**
@@ -2044,6 +2044,8 @@ export interface GetApiSearchPlasmaPrivilegeRequest {
    * 检测发布日期结束
    */
   issueEnd?: string;
+  pageSize: string;
+  currPage: string;
 }
 
 /**
@@ -2051,71 +2053,32 @@ export interface GetApiSearchPlasmaPrivilegeRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege`
- * @更新时间 `2024-05-21 14:19:05`
+ * @更新时间 `2024-06-26 17:26:46`
  */
-export type GetApiSearchPlasmaPrivilegeResponse = {
-  /**
-   * 采浆公司
-   */
-  stationName: string;
-  /**
-   * 血浆批号
-   */
-  batchNo: string;
-  /**
-   * 采浆量
-   */
-  weight: string;
-  /**
-   * 血浆数量（袋）
-   */
-  bagCount: string;
-  /**
-   * 血浆类型
-   */
-  titers: {
-    /**
-     * 来浆数量
-     */
+export interface GetApiSearchPlasmaPrivilegeResponse {
+  totalCount: number;
+  pageSize: number;
+  totalPage: number;
+  currPage: number;
+  result: {
+    stationName: string;
+    titers: {
+      bagCount: string;
+      count: string;
+      hTiter: string;
+      hRatio: string;
+      lTiter: string;
+      lRatio: string;
+      nTiter: string;
+      nRatio: string;
+      rawImm: string;
+      reagentBatch: string;
+    }[];
     bagCount: string;
-    /**
-     * 剂批号
-     */
-    reagentBatch?: string;
-    /**
-     * 合计
-     */
-    count: string;
-    /**
-     * 高效价
-     */
-    hTiter: string;
-    /**
-     * 比率%
-     */
-    hRatio: string;
-    /**
-     * 低效价
-     */
-    lTiter: string;
-    /**
-     * 比率%
-     */
-    lRatio: string;
-    /**
-     * 普通
-     */
-    nTiter: string;
-    /**
-     * 比率%
-     */
-    nRatio: string;
-    /**
-     * 来浆类型
-     */
-    rawImm: string;
+    weight: string;
+    batchNo: string;
   }[];
-}[];
+}
 
 /**
  * 接口 [回访批号查询↗](https://yapi.sharing8.cn/project/529/interface/api/33601) 的 **请求类型**
@@ -3521,7 +3484,7 @@ export interface GetApiSearchPlasmaCheckDetailsResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege/details`
- * @更新时间 `2024-06-17 13:50:54`
+ * @更新时间 `2024-06-26 15:27:31`
  */
 export interface GetApiSearchPlasmaPrivilegeDetailsRequest {
   /**
@@ -3546,6 +3509,42 @@ export interface GetApiSearchPlasmaPrivilegeDetailsRequest {
    * 血浆类型
    */
   immunity?: string;
+  /**
+   * 验收发布日开始
+   */
+  verificationBegin?: string;
+  /**
+   * 验收发布日结束
+   */
+  verificationEnd?: string;
+  /**
+   * 采集日期开始
+   */
+  collectionBegin?: string;
+  /**
+   * 采集日期结束
+   */
+  collectionEnd?: string;
+  /**
+   * 试剂批号
+   */
+  reagentBatch?: string;
+  /**
+   * 效价值开始
+   */
+  titerBegin: string;
+  /**
+   * 检测发布日期开始
+   */
+  issueBegin: string;
+  /**
+   * 检测发布日期结束
+   */
+  issueEnd: string;
+  /**
+   * 效价值结束
+   */
+  titerEnd: string;
 }
 
 /**
@@ -3553,7 +3552,7 @@ export interface GetApiSearchPlasmaPrivilegeDetailsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/privilege/details`
- * @更新时间 `2024-06-17 13:50:54`
+ * @更新时间 `2024-06-26 15:27:31`
  */
 export interface GetApiSearchPlasmaPrivilegeDetailsResponse {
   totalCount: number;
@@ -5060,5 +5059,169 @@ export type GetApiSearchSampleLabCheckFailedDetailResponse = {
    */
   failed: string;
 }[];
+
+/**
+ * 接口 [特免血浆查询-汇总↗](https://yapi.sharing8.cn/project/529/interface/api/35544) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/plasma/privilege/total`
+ * @更新时间 `2024-06-26 17:23:39`
+ */
+export interface GetApiSearchPlasmaPrivilegeTotalRequest {
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 血浆批号开始
+   */
+  batchBegin?: string;
+  /**
+   * 血浆批号结束
+   */
+  batchEnd?: string;
+  /**
+   * 验收发布日开始
+   */
+  verificationBegin?: string;
+  /**
+   * 验收发布日结束
+   */
+  verificationEnd?: string;
+  /**
+   * 采集日期开始
+   */
+  collectionBegin?: string;
+  /**
+   * 采集日期结束
+   */
+  collectionEnd?: string;
+  /**
+   * 试剂批号
+   */
+  reagentBatch?: string;
+  /**
+   * 来浆类型
+   */
+  rawImm?: string;
+  /**
+   * 血浆类型
+   */
+  immunity?: string;
+  /**
+   * 效价值开始
+   */
+  titerBegin?: string;
+  /**
+   * 效价值结束
+   */
+  titerEnd?: string;
+  /**
+   * 检测发布日期开始
+   */
+  issueBegin?: string;
+  /**
+   * 检测发布日期结束
+   */
+  issueEnd?: string;
+  pageSize: string;
+  currPage: string;
+}
+
+/**
+ * 接口 [特免血浆查询-汇总↗](https://yapi.sharing8.cn/project/529/interface/api/35544) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/plasma/privilege/total`
+ * @更新时间 `2024-06-26 17:23:39`
+ */
+export interface GetApiSearchPlasmaPrivilegeTotalResponse {
+  /**
+   * 批次数
+   */
+  batchCount: string;
+  /**
+   * 血浆数
+   */
+  bagCount: string;
+  /**
+   * 普通来浆数量
+   */
+  nCount: string;
+  /**
+   * 乙免
+   */
+  bCount: string;
+  /**
+   * 破免
+   */
+  tCount: string;
+  /**
+   * 巨细胞
+   */
+  cCount: string;
+  /**
+   * 狂免
+   */
+  rCount: string;
+  /**
+   * 普通-高效价
+   */
+  nHight: string;
+  /**
+   * 普通-低效价
+   */
+  nLow: string;
+  /**
+   * 普通-普通
+   */
+  nNormal: string;
+  /**
+   * 乙免
+   */
+  bHight: string;
+  bLow: string;
+  bNormal: string;
+  /**
+   * 破免-高效价
+   */
+  tHight: string;
+  tLow: string;
+  tNormal: string;
+  /**
+   * 巨细胞-高效价
+   */
+  cHight: string;
+  cLow: string;
+  cNormal: string;
+  /**
+   * 狂免-高效价
+   */
+  rHight: string;
+  rLow: string;
+  rNormal: string;
+  /**
+   * 采浆量
+   */
+  weight: string;
+  /**
+   * 普通-高效价比率
+   */
+  nHightRadio: string;
+  nLowRadio: string;
+  nNormalRadio: string;
+  bHightRadio: string;
+  bLowRadio: string;
+  bNormalRadio: string;
+  tHightRadio: string;
+  tLowRadio: string;
+  tNormalRadio: string;
+  cHightRadio: string;
+  cLowRadio: string;
+  cNormalRadio: string;
+  rHightRadio: string;
+  rLowRadio: string;
+  rNormalRadio: string;
+}
 
 /* prettier-ignore-end */

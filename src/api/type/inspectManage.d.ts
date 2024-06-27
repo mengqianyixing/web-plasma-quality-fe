@@ -1987,6 +1987,29 @@ export type PostApiCoreLabRegistrationLabItemBsNoRequest = {
 export interface PostApiCoreLabRegistrationLabItemBsNoResponse {}
 
 /**
+ * 接口 [不合格样本登记↗](https://yapi.sharing8.cn/project/529/interface/api/35556) 的 **请求类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `PUT /api/core/lab/unqualified/sample`
+ * @更新时间 `2024-06-27 10:07:59`
+ */
+export interface PutApiCoreLabUnqualifiedSampleRequest {
+  sampleNo: string;
+  bsNo: string;
+  projectIds: string[];
+  failedCode: string;
+}
+
+/**
+ * 接口 [不合格样本登记↗](https://yapi.sharing8.cn/project/529/interface/api/35556) 的 **返回类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `PUT /api/core/lab/unqualified/sample`
+ * @更新时间 `2024-06-27 10:07:59`
+ */
+export type PutApiCoreLabUnqualifiedSampleResponse = string;
+
+/**
  * 接口 [检验报告审核↗](https://yapi.sharing8.cn/project/529/interface/api/32022) 的 **请求类型**
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)

@@ -673,10 +673,10 @@ export interface GetApiCoreDonorBlockResponse {
  * 接口 [回访状态明细↗](https://yapi.sharing8.cn/project/529/interface/api/34185) 的 **请求类型**
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
- * @请求头 `GET /api/core/donor/callback/status/detail`
- * @更新时间 `2024-04-02 17:02:08`
+ * @请求头 `GET /api/search/donor/callback/detail-state`
+ * @更新时间 `2024-06-26 11:29:05`
  */
-export interface GetApiCoreDonorCallbackStatusDetailRequest {
+export interface GetApiSearchDonorCallbackDetailStateRequest {
   pageSize: string;
   currPage: string;
   /**
@@ -701,29 +701,25 @@ export interface GetApiCoreDonorCallbackStatusDetailRequest {
   /**
    * 血浆状态  首次反复
    */
-  plasmaStatus?: string;
-  /**
-   * 血浆类型
-   */
-  plasmaType?: string;
+  trackType?: string;
   /**
    * 浆员编号
    */
-  donorNo?: string;
+  cardNo?: string;
 }
 
 /**
  * 接口 [回访状态明细↗](https://yapi.sharing8.cn/project/529/interface/api/34185) 的 **返回类型**
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
- * @请求头 `GET /api/core/donor/callback/status/detail`
- * @更新时间 `2024-04-02 17:02:08`
+ * @请求头 `GET /api/search/donor/callback/detail-state`
+ * @更新时间 `2024-06-26 11:29:05`
  */
-export type GetApiCoreDonorCallbackStatusDetailResponse = {
+export type GetApiSearchDonorCallbackDetailStateResponse = {
   /**
    * 浆员编号
    */
-  donorNo: string;
+  cardNo: string;
   /**
    * 浆员姓名
    */
@@ -731,11 +727,15 @@ export type GetApiCoreDonorCallbackStatusDetailResponse = {
   /**
    * 最后采浆日期
    */
-  lastCollectTime: string;
+  minCollTime: string;
   /**
    * 血浆状态
    */
-  plasmaStatus?: string;
+  trackType?: string;
+  /**
+   * 现居地址
+   */
+  liveAddress: string;
   /**
    * 血浆袋数（袋）
    */
@@ -747,11 +747,7 @@ export type GetApiCoreDonorCallbackStatusDetailResponse = {
   /**
    * 样本采集日期
    */
-  sampleCollectDate?: string;
-  /**
-   * 回访发布日期
-   */
-  callbackPubDate: string;
+  sampleCollectTime?: string;
   /**
    * 样本编号
    */
