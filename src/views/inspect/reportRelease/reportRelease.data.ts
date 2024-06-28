@@ -142,6 +142,12 @@ export const searchFormschema: FormSchema[] = [
 export const columnsMap: Record<number, BasicColumn[]> = {
   1: [
     {
+      dataIndex: 'titerType',
+      title: '效价类型',
+      width: 120,
+      ellipsis: false,
+    },
+    {
       dataIndex: 'projectName',
       title: '检测项目',
       width: 120,
@@ -155,6 +161,12 @@ export const columnsMap: Record<number, BasicColumn[]> = {
     },
   ],
   2: [
+    {
+      dataIndex: 'titerType',
+      title: '效价类型',
+      width: 120,
+      ellipsis: false,
+    },
     {
       dataIndex: 'projectName',
       title: '检测项目',
@@ -170,6 +182,12 @@ export const columnsMap: Record<number, BasicColumn[]> = {
   ],
   4: [
     {
+      dataIndex: 'titerType',
+      title: '效价类型',
+      width: 120,
+      ellipsis: false,
+    },
+    {
       dataIndex: 'projectName',
       title: '检测项目',
       width: 900,
@@ -182,9 +200,14 @@ export const columnsMap: Record<number, BasicColumn[]> = {
       dataIndex: 'projectName',
       title: '检测项目',
       width: 120,
-
       ellipsis: false,
       align: 'left',
+    },
+    {
+      dataIndex: 'titerType',
+      title: '效价类型',
+      width: 120,
+      ellipsis: false,
     },
     {
       dataIndex: 'titerValue',
@@ -193,6 +216,12 @@ export const columnsMap: Record<number, BasicColumn[]> = {
     },
   ],
   3: [
+    {
+      dataIndex: 'titerType',
+      title: '效价类型',
+      width: 120,
+      ellipsis: false,
+    },
     {
       dataIndex: 'projectName',
       title: '不合格项目',
@@ -217,12 +246,6 @@ export const totalUnqualifiedColumns: BasicColumn[] = [
     dataIndex: 'donorName',
     title: '浆员姓名',
     width: 100,
-  },
-  {
-    dataIndex: 'titerType',
-    title: '效价类型',
-    width: 120,
-    ellipsis: false,
   },
 ];
 
