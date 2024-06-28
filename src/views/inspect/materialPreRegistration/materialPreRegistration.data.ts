@@ -66,6 +66,7 @@ export const columns: BasicColumn[] = [
   {
     title: '创建日期',
     dataIndex: 'createAt',
+    sorter: true,
     width: 100,
     format: (text) => text?.slice(0, 10),
   },
@@ -144,7 +145,6 @@ export const formListSchema: FormSchema[] = [
     field: 'releaseNo',
     component: 'Input',
     label: '放行单号',
-    required: true,
   },
   {
     field: 'expireDate',

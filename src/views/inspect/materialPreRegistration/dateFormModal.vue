@@ -21,7 +21,7 @@
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { getDtApi, updateDateApi } from '@/api/inspect/materialPreRegistration';
   import { message } from 'ant-design-vue';
-  import dayjs from 'dayjs';
+  import dayjs, { Dayjs } from 'dayjs';
   import Login from '@/__components/ReviewLoginModal/index.vue';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
@@ -44,7 +44,7 @@
           required: true,
           componentProps: {
             class: 'w-full',
-            disabled: true,
+            disabledDate: (date: Dayjs) => date && date > dayjs(dayjs().format('YYYY-MM-DD')),
           },
         },
         {

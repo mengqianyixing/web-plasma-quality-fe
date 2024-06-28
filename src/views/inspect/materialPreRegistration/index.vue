@@ -95,7 +95,7 @@
   const [registerModal, { openModal }] = useModal();
   const [registerDateModal, { openModal: openDateModal }] = useModal();
 
-  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
+  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, setProps }] = useTable({
     api: getListApi,
     fetchSetting: {
       pageField: 'currPage',
@@ -111,6 +111,9 @@
     showTableSetting: false,
     bordered: true,
     rowSelection: { type: 'radio' },
+    sortFn: (e) => {
+      setProps({ searchInfo: { orderBy: e.order && e.field, sort: e?.order?.slice(0, -3) } });
+    },
     afterFetch: (res) => {
       clearSelectedRowKeys();
       return res;
