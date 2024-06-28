@@ -98,7 +98,7 @@
   const bsNo = ref('');
   const registrationLoading = ref(false);
   const unregistrationLoading = ref(false);
-  const rowData = ref({});
+  const rowData = ref({ status: '' });
   const countData = ref({});
   const plasmaCellList = ref<Cell[]>([]);
   const reloadMap = ref<Map<string, Function>>(new Map());
@@ -127,7 +127,7 @@
     openModal(true, {});
   }
 
-  async function confirm(row: Recordable) {
+  async function confirm(row) {
     bsNo.value = row.bsNo;
     rowData.value = row;
     openModal(false);
@@ -151,6 +151,7 @@
       .then(() => {
         openCancelModal(false);
         message.success('登记成功');
+        rowData.value.status = '登记完成';
       })
       .finally(() => {
         setModalProps({ confirmLoading: false });
@@ -172,6 +173,7 @@
         try {
           unregistrationLoading.value = true;
           await sumbitRevokeRegistrationApi({ bsNo: bsNo.value });
+          rowData.value.status = '登记中';
           confirm(rowData.value);
         } finally {
           unregistrationLoading.value = false;
