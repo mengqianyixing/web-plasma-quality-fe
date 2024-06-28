@@ -272,6 +272,13 @@ const trayManager: AppRouteModule = {
       meta: {
         title: '样本查询',
       },
+      authElements: [
+        {
+          id: SearchManager.SampleQueryExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
       id: 9000130,
       component: () => import('@/views/query-statistics/sampleQuery/index.vue'),
     },

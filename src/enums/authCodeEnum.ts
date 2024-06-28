@@ -271,6 +271,8 @@ export enum SearchManager {
   PlasmaBagCollectExport = 'E_900034001',
 
   PlasmaRawInStoragePrint = 'E_900035001',
+
+  SampleQueryExport = 'E_900013001',
 }
 
 export enum TagManageButtonEnum {

@@ -31,6 +31,8 @@ export const columns: BasicColumn[] = [
   {
     title: '样本编号',
     dataIndex: 'sampleNo',
+    defaultSortOrder: 'descend',
+    sorter: true,
     width: 120,
   },
   {

@@ -6,6 +6,16 @@
           {{ record.cardNo }}
         </span>
       </template>
+      <template #toolbar>
+        <a-button
+          type="primary"
+          @click="handleExport"
+          v-auth="SearchManager.SampleQueryExport"
+          :loading="loading"
+        >
+          导出
+        </a-button>
+      </template>
     </BasicTable>
   </PageWrapper>
 </template>
@@ -16,11 +26,19 @@
   import { getListApi } from '@/api/query-statistics/sampleQuery';
   import { message } from 'ant-design-vue';
   import { useRouter } from 'vue-router';
+  import { jsonToSheetXlsx, formatData, getHeader } from '@/components/Excel/src/Export2Excel';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { ref } from 'vue';
+  import { SearchManager } from '@/enums/authCodeEnum';
+
+  const globalApiStore = useGlobalApiStoreWithOut();
+  const { currentRoute } = useRouter();
+  const loading = ref(false);
 
   defineOptions({ name: 'SampleQuery' });
   const { push } = useRouter();
 
-  const [registerTable, { getForm, reload, setPagination }] = useTable({
+  const [registerTable, { getForm, reload, setPagination, setProps }] = useTable({
     immediate: false,
     api: getListApi,
     columns,
@@ -50,8 +68,37 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
+    sortFn: (e) => {
+      setProps({ searchInfo: { orderBy: e.order && e.field, sort: e?.order?.slice(0, -3) } });
+    },
   });
   function handleJump(row: Recordable) {
     push({ name: 'DonorQuery', query: { cardNo: row.cardNo } });
+  }
+  async function handleExport() {
+    try {
+      loading.value = true;
+      const { getFieldsValue } = getForm();
+      const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
+
+      const data = await getListApi({ ...getFieldsValue(), currPage: 1, pageSize } as any);
+      if ((data.totalCount || 0) > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
+
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+      const { result, merge: bodyMerge } = formatData(
+        lastLevelCols,
+        data.result || [],
+        rows.length,
+      );
+      jsonToSheetXlsx({
+        data: [...rows, ...result],
+        json2sheetOpts: { skipHeader: true },
+        merges: [...headerMerge, ...bodyMerge],
+        filename: currentRoute.value.meta.title + '.xlsx',
+      });
+    } finally {
+      loading.value = false;
+    }
   }
 </script>
