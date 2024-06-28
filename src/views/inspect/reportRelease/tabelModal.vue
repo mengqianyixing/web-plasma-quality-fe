@@ -50,12 +50,12 @@
   });
   const [registerModal] = useModalInner(async ({ reportNo, type, title }) => {
     await nextTick();
-    const { setFieldsValue, getFieldsValue } = getForm();
-    const nullFormObject = Object.keys(getFieldsValue()).reduce((t, c) => ((t[c] = void 0), t), {});
-    setFieldsValue(nullFormObject);
+    const { updateSchema, resetFields } = getForm();
+    resetFields();
     state.reportNo = reportNo;
     state.type = type;
     state.title = title;
+    updateSchema({ field: 'conclusion', ifShow: !(type === 3 || type === 4) });
     const columns = [...totalUnqualifiedColumns, ...(columnsMap[type] || [])];
     setColumns(columns);
     reload();

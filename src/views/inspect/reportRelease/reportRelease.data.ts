@@ -182,12 +182,6 @@ export const columnsMap: Record<number, BasicColumn[]> = {
   ],
   4: [
     {
-      dataIndex: 'titerType',
-      title: '效价类型',
-      width: 120,
-      ellipsis: false,
-    },
-    {
       dataIndex: 'projectName',
       title: '检测项目',
       width: 900,
@@ -216,12 +210,6 @@ export const columnsMap: Record<number, BasicColumn[]> = {
     },
   ],
   3: [
-    {
-      dataIndex: 'titerType',
-      title: '效价类型',
-      width: 120,
-      ellipsis: false,
-    },
     {
       dataIndex: 'projectName',
       title: '不合格项目',
