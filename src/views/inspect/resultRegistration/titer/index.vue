@@ -179,6 +179,7 @@
   function handleRemove() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
+    if (rows[0].check === true) return message.warning('必检项不能撤销');
     if (rows.length > 1) return message.warning('只能选择一条数据');
     open.value = true;
     resetFields();

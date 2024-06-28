@@ -92,10 +92,7 @@ const checkManager: AppRouteModule = {
           id: InspectButtonEnum.ResultRegistrationReRegist,
           title: '撤销登记',
         },
-        {
-          id: InspectButtonEnum.ResultRegistrationItemDelete,
-          title: '撤销检测项目',
-        },
+
         {
           id: InspectButtonEnum.ResultRegistrationItemUnq,
           title: '检测不合格登记',
