@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback`
- * @更新时间 `2024-05-07 15:49:41`
+ * @更新时间 `2024-06-28 14:59:59`
  */
 export interface GetApiCoreDonorCallbackRequest {
   pageSize: string;
@@ -52,11 +52,15 @@ export interface GetApiCoreDonorCallbackRequest {
   /**
    * 回访样本发布日期
    */
-  samplePublishStartDate: string;
+  samplePublishStartDate?: string;
   /**
    * 回访样本发布日期
    */
-  samplePublishEndDate: string;
+  samplePublishEndDate?: string;
+  /**
+   * WIT  COF
+   */
+  states?: string;
 }
 
 /**
@@ -64,7 +68,7 @@ export interface GetApiCoreDonorCallbackRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback`
- * @更新时间 `2024-05-07 15:49:41`
+ * @更新时间 `2024-06-28 14:59:59`
  */
 export interface GetApiCoreDonorCallbackResponse {
   totalCount?: number;
