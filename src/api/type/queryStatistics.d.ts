@@ -5224,4 +5224,113 @@ export interface GetApiSearchPlasmaPrivilegeTotalResponse {
   rNormalRadio: string;
 }
 
+/**
+ * 接口 [血浆批号查询库存table↗](https://yapi.sharing8.cn/project/529/interface/api/35646) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/bank/plasma/statistic/stock`
+ * @更新时间 `2024-06-28 16:43:12`
+ */
+export interface GetApiSearchBankPlasmaStatisticStockRequest {
+  /**
+   * 批号起
+   */
+  batchStartNo: string;
+  /**
+   * 批号止
+   */
+  batchEndNo: string;
+  currPage: string;
+  pageSize: string;
+}
+
+/**
+ * 接口 [血浆批号查询库存table↗](https://yapi.sharing8.cn/project/529/interface/api/35646) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/bank/plasma/statistic/stock`
+ * @更新时间 `2024-06-28 16:43:12`
+ */
+export interface GetApiSearchBankPlasmaStatisticStockResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 血浆批号
+     */
+    batchNo: string;
+    /**
+     * 项目
+     */
+    mesId: string;
+    /**
+     * 在库类型
+     */
+    state: string;
+    thNum: number;
+    tlNum: number;
+    bhNum: number;
+    blNum: number;
+    rhNum: number;
+    rlNum: number;
+    chNum: number;
+    clNum: number;
+    ahNum: number;
+    alNum: number;
+    normalNum: number;
+    total: number;
+    /**
+     * 验收净重
+     */
+    verifyWeight: string;
+    /**
+     * 出库日期
+     */
+    outDate: string;
+  }[];
+}
+
+/**
+ * 接口 [血浆批号查询库存table合计↗](https://yapi.sharing8.cn/project/529/interface/api/35652) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/bank/plasma/statistic/stock-total`
+ * @更新时间 `2024-06-28 17:59:25`
+ */
+export interface GetApiSearchBankPlasmaStatisticStockTotalRequest {
+  /**
+   * 批号起
+   */
+  batchStartNo: string;
+  /**
+   * 批号止
+   */
+  batchEndNo: string;
+}
+
+/**
+ * 接口 [血浆批号查询库存table合计↗](https://yapi.sharing8.cn/project/529/interface/api/35652) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/bank/plasma/statistic/stock-total`
+ * @更新时间 `2024-06-28 17:59:25`
+ */
+export interface GetApiSearchBankPlasmaStatisticStockTotalResponse {
+  thNum?: number;
+  tlNum?: number;
+  bhNum?: number;
+  blNum?: number;
+  rhNum?: number;
+  rlNum?: number;
+  chNum?: number;
+  clNum?: number;
+  ahNum?: number;
+  alNum?: number;
+  normalNum?: number;
+  total?: number;
+  verifyWeight?: number;
+}
+
 /* prettier-ignore-end */

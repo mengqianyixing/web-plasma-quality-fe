@@ -2,6 +2,7 @@ import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
 import { FormItem, FormItemRest } from 'ant-design-vue';
 import { useStation } from '@/hooks/common/useStation';
+import dayjs from 'dayjs';
 
 const { stationOptions } = useStation();
 
@@ -121,6 +122,90 @@ export const columnsByQuarantine: BasicColumn[] = [
   },
 ];
 
+export const columnsByInventory: BasicColumn[] = [
+  {
+    title: '血浆批号',
+    dataIndex: 'batchNo',
+  },
+  {
+    title: '项目',
+    dataIndex: 'mesId',
+  },
+  {
+    title: '在库类型',
+    dataIndex: 'state',
+  },
+  {
+    title: '效价类型',
+    children: [
+      {
+        title: 'TH',
+        dataIndex: 'thNum',
+      },
+      {
+        title: 'TL',
+        dataIndex: 'tlNum',
+      },
+      {
+        title: 'BH',
+        dataIndex: 'bhNum',
+      },
+      {
+        title: 'BL',
+        dataIndex: 'blNum',
+      },
+      {
+        title: 'RH',
+        dataIndex: 'rhNum',
+      },
+      {
+        title: 'RL',
+        dataIndex: 'rlNum',
+      },
+      {
+        title: 'CH',
+        dataIndex: 'chNum',
+      },
+      {
+        title: 'CL',
+        dataIndex: 'clNum',
+      },
+      {
+        title: 'AH',
+        dataIndex: 'ahNum',
+      },
+      {
+        title: 'AL',
+        dataIndex: 'alNum',
+      },
+      {
+        title: 'N',
+        dataIndex: 'nnum',
+      },
+    ],
+  },
+  {
+    title: '合计',
+    children: [
+      {
+        title: '数量（袋）',
+        dataIndex: 'total',
+      },
+      {
+        title: '验收净重(kg)',
+        dataIndex: 'verifyWeight',
+      },
+    ],
+  },
+  {
+    title: '出库日期',
+    dataIndex: 'outDate',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
+    },
+  },
+];
+
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'stationNo',
@@ -132,6 +217,7 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       options: stationOptions,
     },
+    show: true,
   },
   {
     field: 'batchStartNo',
