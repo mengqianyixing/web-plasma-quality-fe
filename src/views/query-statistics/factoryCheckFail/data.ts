@@ -10,7 +10,7 @@ export const columns: BasicColumn[] = [
     width: 70,
   },
   {
-    title: '血浆批号',
+    title: '样本批号',
     dataIndex: 'batchNo',
     width: 120,
   },
@@ -80,7 +80,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     component: 'Input',
     field: 'batchNo',
-    label: '血浆批号',
+    label: '样本批号',
   },
   {
     component: 'RangePicker',
