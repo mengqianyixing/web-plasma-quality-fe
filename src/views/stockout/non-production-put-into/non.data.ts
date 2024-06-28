@@ -175,7 +175,7 @@ export const plasmaDetailColumns: BasicColumn[] = [
     dataIndex: 'titerNum',
   },
   {
-    title: '血浆状态',
+    title: '血浆过程状态',
     dataIndex: 'plasmaStatus',
   },
 ];
