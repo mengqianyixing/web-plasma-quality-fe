@@ -6,6 +6,7 @@
     width="1200px"
     :minHeight="520"
     @fullscreen="redoHeight"
+    cancelText="关闭"
     @cancel="emit('close')"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
@@ -23,9 +24,11 @@
         </div>
         <div class="flex-1 shrink-1" style="height: calc(100% - 170px)">
           <BasicTable @register="registerTable">
-            <template #toolbar v-if="state.title !== '查看'">
-              <a-button type="primary" @click="methods.addClick">添加</a-button>
-              <a-button type="primary" @click="methods.removeClick">移除</a-button>
+            <template #toolbar>
+              <template v-if="state.title !== '查看'">
+                <a-button type="primary" @click="methods.addClick">添加</a-button>
+                <a-button type="primary" @click="methods.removeClick">移除</a-button>
+              </template>
             </template>
           </BasicTable>
         </div>
@@ -64,7 +67,15 @@
     });
   const [
     registerTable,
-    { getSelectRows, clearSelectedRowKeys, reload, setPagination, setTableData, redoHeight },
+    {
+      getSelectRows,
+      clearSelectedRowKeys,
+      reload,
+      setPagination,
+      setTableData,
+      redoHeight,
+      setProps,
+    },
   ] = useTable({
     api: dtTableApi,
     immediate: false,
@@ -89,7 +100,7 @@
       return res;
     },
   });
-  const [registerModal] = useModalInner(async ({ disabled, dlvNo }) => {
+  const [registerModal, { setModalProps }] = useModalInner(async ({ disabled, dlvNo }) => {
     state.dlvNo = dlvNo;
     updateSchema(
       formSchema.slice(1).map((_) => ({ ..._, componentProps: { disabled: !!disabled } })),
@@ -108,7 +119,11 @@
       setTableData([]);
       state.title = '新增';
     }
-    if (disabled) state.title = '查看';
+    if (disabled) {
+      setProps({ rowSelection: void 0 });
+      setModalProps({ showOkBtn: false });
+      state.title = '查看';
+    }
 
     resetFields();
     clearValidate();
