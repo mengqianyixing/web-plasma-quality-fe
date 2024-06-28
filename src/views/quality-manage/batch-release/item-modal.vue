@@ -58,6 +58,7 @@
     setModalProps({ confirmLoading: false });
     closeModal();
     if (saveRow) {
+      saveRow.rawName = saveRow.appName;
       for (const key in values) {
         saveRow[key] = values[key];
       }

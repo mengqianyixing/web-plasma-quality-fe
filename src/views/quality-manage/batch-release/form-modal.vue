@@ -112,12 +112,14 @@
     state.tableData.push(row);
     reload();
     clearValidate('releaseDetail');
+    console.log('ssssssssssssssssssss');
   }
-  function close(row: GetApiProductReleasePrNoResponse['releaseDetail'][0]) {
-    const index = state.tableData.findIndex((_) => _.appName === row.appName);
+  function close(row: GetApiProductReleasePrNoResponse['releaseDetail'][0] & { rawName: string }) {
+    const index = state.tableData.findIndex((_) => _.appName === row.rawName);
     state.tableData.splice(index, 1, row);
     reload();
     clearSelectedRowKeys();
+    console.log('惆怅长岑长惆怅长岑长擦擦擦擦擦擦', index);
   }
   function handleCreate() {
     openItemModal(true, { isUpdate: false, appNames: appNames.value });
