@@ -162,6 +162,7 @@
       } as unknown as GetApiCoreDonorCallbackNeedRequest);
       tableData.value = originRes.result!;
       pager.total = originRes.totalCount!;
+      createMessage.warn(`共${originRes.totalCount}位浆员待回访`);
 
       await nextTick(() => {
         vxeRef.value?.setAllCheckboxRow(true);
@@ -206,7 +207,7 @@
 
     createConfirm({
       title: '确认',
-      content: `名单共有${vxeRef.value?.getCheckboxRecords().length}位浆员待回访，确认添加吗？`,
+      content: `已选择${vxeRef.value?.getCheckboxRecords().length}位浆员待回访，确认添加吗？`,
       iconType: 'warning',
       onOk: async () => {
         await generateCallback({
