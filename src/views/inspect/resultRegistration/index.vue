@@ -88,6 +88,7 @@
   import { BasicForm, useForm } from '@/components/Form';
   import dayjs, { Dayjs } from 'dayjs';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { sampleTypeEnum } from '@/enums/sampleEnum';
 
   defineOptions({ name: 'ResultRegistration' });
 
@@ -137,7 +138,11 @@
       data: {},
     };
     const { list, data } = res.reduce((t, row, i) => {
-      t.list.push({ field: i.toString(), label: PlasmaType(row.plasmaType) });
+      t.list.push({
+        field: i.toString(),
+        label:
+          row.plasmaType === sampleTypeEnum.CallbackSample ? '样本数' : PlasmaType(row.plasmaType),
+      });
       t.data[i] = row.count;
       return t;
     }, initValue);
