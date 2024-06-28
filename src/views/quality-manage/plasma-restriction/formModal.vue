@@ -38,32 +38,31 @@
   const emit = defineEmits(['success', 'register']);
   defineOptions({ name: 'FormModel' });
 
-  const [
-    registerTable,
-    { getSelectRows, clearSelectedRowKeys, reload, setPagination, redoHeight },
-  ] = useTable({
-    api: getBoxListApi,
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    inset: true,
-    isCanResizeParent: true,
-    columns: boxColumns,
-    size: 'small',
-    useSearchForm: true,
-    bordered: true,
-    rowSelection: { type: 'checkbox' },
-    afterFetch: (res) => {
-      clearSelectedRowKeys();
-      return res;
-    },
-    formConfig: {
-      schemas: [{ label: '血浆批次', component: 'Input', field: 'batchNo' }],
-    },
-  });
+  const [registerTable, { getSelectRows, clearSelectedRowKeys, setPagination, redoHeight }] =
+    useTable({
+      immediate: false,
+      api: getBoxListApi,
+      fetchSetting: {
+        pageField: 'currPage',
+        sizeField: 'pageSize',
+        totalField: 'totalCount',
+        listField: 'result',
+      },
+      inset: true,
+      isCanResizeParent: true,
+      columns: boxColumns,
+      size: 'small',
+      useSearchForm: true,
+      bordered: true,
+      rowSelection: { type: 'checkbox' },
+      afterFetch: (res) => {
+        clearSelectedRowKeys();
+        return res;
+      },
+      formConfig: {
+        schemas: [{ label: '血浆批号', component: 'Input', field: 'batchNo', required: true }],
+      },
+    });
   const [registerForm, { validate, clearValidate, resetFields }] = useForm({
     labelWidth: 120,
     baseColProps: { span: 24 },
@@ -73,8 +72,7 @@
   const [registerModal, { setModalProps, closeModal }] = useModalInner(() => {
     clearValidate();
     resetFields();
-    setPagination({ current: 1 });
-    reload();
+    setPagination({ current: 1, pageSize: 100 });
   });
   async function handleSubmit() {
     try {
