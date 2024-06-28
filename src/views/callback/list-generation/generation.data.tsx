@@ -127,7 +127,9 @@ export const searchFormSchema: FormSchema[] = [
     field: 'state',
     label: '状态',
     component: 'Select',
+    defaultValue: ['WIT', 'COF'],
     componentProps: {
+      mode: 'multiple',
       options: serverEnumStore.getServerEnum(SERVER_ENUM.CallbackPlanState),
     },
   },
