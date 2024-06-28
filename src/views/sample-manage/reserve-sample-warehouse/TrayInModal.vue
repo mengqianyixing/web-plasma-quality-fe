@@ -43,7 +43,7 @@
 
     <BoxDetailModal @register="registerBox" />
     <BagDetailModal @register="registerBag" />
-    <InModal @register="registerInModal" />
+    <InModal @register="registerInModal" @success="handleSuccess" />
     <ReBindModal @register="registerReBindModal" />
   </BasicModal>
 </template>
@@ -181,5 +181,10 @@
     openBagModal(true, {
       ...record,
     });
+  }
+
+  function handleSuccess() {
+    clearSelectedRowKeys();
+    reload();
   }
 </script>

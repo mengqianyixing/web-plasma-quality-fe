@@ -6,7 +6,7 @@
     showFooter
     width="85%"
     :min-height="680"
-    @close="handleCancel"
+    @cancel="handleCancel"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
@@ -17,8 +17,17 @@
         :loading="tableLoading"
         :data="tableData"
         :columns="columnsComputed"
-        @scroll="tableScroll"
       >
+        <template #plasmaCount="{ row }">
+          <span
+            :class="
+              !row?.plasmaCount ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+            "
+            @click.stop.self="handleBagDetail(row)"
+          >
+            {{ row?.plasmaCount }}
+          </span>
+        </template>
         <template #toolbar>
           <div class="h-40px bg-#ffffff mt-2 flex items-center">
             <a-button type="primary" @click="handleAdd" class="absolute right-20"> 新增 </a-button>
@@ -28,13 +37,27 @@
           </div>
         </template>
       </vxe-grid>
+
+      <a-pagination
+        class="float-right mt-2"
+        @change="handlePageChange"
+        @show-size-change="handleSizeChange"
+        size="small"
+        show-size-changer
+        show-quick-jumper
+        v-model:current="pager.currPage"
+        v-model:pageSize="pager.pageSize"
+        :total="pager.total"
+        :show-total="(total) => `共 ${total} 条数据`"
+      />
     </div>
 
     <template #footer>
       <a-button type="primary" @click="handleOk">确定</a-button>
     </template>
 
-    <AddCallbackPersonnelListModal @register="registerAddModal" @success="initTableData" />
+    <AddCallbackPersonnelListModal @register="registerAddModal" @success="submitFunc" />
+    <BagDetailModal @register="registerBagDetailModal" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -42,7 +65,6 @@
   import { computed, nextTick, reactive, ref, unref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
 
-  import AddCallbackPersonnelListModal from '@/views/callback/list-generation/AddCallbackPersonnelListModal.vue';
   import {
     callbackModalSearchFromSchema,
     callbackModalColumns,
@@ -55,6 +77,10 @@
     GetApiSearchDonorCallbackDetailResponse,
   } from '@/api/type/callbackManage';
   import { VxeGridProps, VxeTableInstance } from 'vxe-table';
+  import { Pagination as APagination } from 'ant-design-vue';
+
+  import AddCallbackPersonnelListModal from '@/views/callback/list-generation/AddCallbackPersonnelListModal.vue';
+  import BagDetailModal from '@/views/callback/list-generation/BagDetailModal.vue';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -115,21 +141,22 @@
 
   const tableLoading = ref(false);
   const pager = reactive({
-    pageSize: 30,
+    pageSize: 100,
     currPage: 1,
-    totalPage: 0,
+    total: 0,
   });
   async function initTableData() {
     try {
       tableLoading.value = true;
+
       const originRes = await getCallbackDetail({
         ...getFieldsValue(),
         currPage: pager.currPage,
         pageSize: pager.pageSize,
         batchNo: batchNo.value,
       } as unknown as GetApiSearchDonorCallbackDetailRequest);
-      tableData.value = tableData.value!.concat(originRes.result as any);
-      pager.totalPage = Number(originRes.totalPage);
+      tableData.value = originRes.result!;
+      pager.total = originRes.totalCount!;
 
       await nextTick(() => {
         vxeRef.value?.setAllCheckboxRow(true);
@@ -140,15 +167,19 @@
   }
 
   async function submitFunc() {
+    vxeRef.value?.clearScroll();
+    pager.currPage = 1;
     await initTableData();
   }
 
   const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '生成名单'));
 
   const [registerAddModal, { openModal }] = useModal();
+  const [registerBagDetailModal, { openModal: openBagDetailModal }] = useModal();
   const [register, { setModalProps, closeModal }] = useModalInner((data) => {
     setModalProps({
       maskClosable: false,
+      destroyOnClose: true,
     });
 
     isUpdate.value = data.isUpdate;
@@ -183,7 +214,7 @@
           donorNos: vxeRef.value!.getCheckboxRecords().map((it) => it?.donorNo)!,
         });
 
-        await initTableData();
+        await submitFunc();
 
         emit('success');
       },
@@ -191,26 +222,32 @@
   }
 
   function handleOk() {
-    emit('success');
-    closeModal();
+    handleCancel();
   }
 
   function handleCancel() {
     emit('success');
+    pager.currPage = 1;
+    tableData.value = [];
     closeModal();
   }
 
-  function tableScroll(e) {
-    const { scrollHeight, clientHeight } = e.$event.srcElement;
+  async function handlePageChange(e) {
+    pager.currPage = e;
 
-    if (clientHeight + e.scrollTop + 1 >= scrollHeight) {
-      pager.currPage++;
+    await initTableData();
+  }
 
-      if (pager.currPage > pager.totalPage) {
-        return;
-      }
+  async function handleSizeChange(_, size) {
+    pager.pageSize = size;
 
-      initTableData();
-    }
+    await initTableData();
+  }
+
+  function handleBagDetail(_record: Recordable) {
+    openBagDetailModal(true, {
+      cardNo: _record.cardNo,
+      planNo: batchNo.value,
+    });
   }
 </script>

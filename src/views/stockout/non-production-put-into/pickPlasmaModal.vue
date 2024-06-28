@@ -4,10 +4,13 @@
     @register="registerModal"
     title="挑选血浆"
     @ok="handleSubmit"
+    :min-height="700"
     width="1200px"
   >
-    <div>
-      <BasicTable @register="registerTable" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute flex flex-col w-full h-full">
+        <BasicTable @register="registerTable" />
+      </div>
     </div>
   </BasicModal>
 </template>
@@ -66,11 +69,8 @@
         dataIndex: 'collDate',
       },
       {
-        title: '血浆状态',
+        title: '血浆过程状态',
         dataIndex: 'plasmaStatus',
-        format(text) {
-          return serverEnumStore.getServerEnumText(SERVER_ENUM.BagFlow)(text);
-        },
       },
       {
         title: '效价类型',
@@ -96,10 +96,19 @@
         },
         {
           field: 'plasmaType',
-          label: '血浆状态',
+          label: '血浆过程状态',
           component: 'Select',
           componentProps: {
-            options: serverEnumStore.getServerEnum(SERVER_ENUM.BagTrack),
+            options: [
+              {
+                label: '检测合格',
+                value: 'UTRK',
+              },
+              {
+                label: '检疫期合格',
+                value: 'PASS',
+              },
+            ],
           },
         },
         {
@@ -145,7 +154,8 @@
     showTableSetting: false,
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    inset: true,
+    isCanResizeParent: true,
   });
 
   const dlvNo = ref('');

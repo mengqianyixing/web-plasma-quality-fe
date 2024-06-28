@@ -106,9 +106,10 @@
     showIndexColumn: false,
   });
 
-  function handleSummary(tableData: any[]) {
-    const inOfMonth = tableData.reduce((prev, curr) => prev + curr.inOfMonth, 0);
-    const inOfYear = tableData.reduce((prev, curr) => prev + curr.inOfYear, 0);
+  function handleSummary() {
+    const origin = getRawDataSource();
+    const inOfMonth = origin.allInOfMonth;
+    const inOfYear = origin.allInOfYear;
     return [
       {
         stationName: '总计',

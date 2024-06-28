@@ -5,7 +5,7 @@
     title="入库"
     @ok="handleSubmit"
     @cancel="handelCancel"
-    width="430px"
+    width="550px"
   >
     <BasicForm @register="registerForm" />
 
@@ -43,11 +43,19 @@
       const { boxNo, bagNo } = getFieldsValue();
 
       if (val[0] && val[1]) {
-        if (boxNo && !inputBlur.value) {
-          setFieldsValue({ bagNo: val[0] });
-        } else if (bagNo && !inputBlur.value) {
-          setFieldsValue({ boxNo: val[0] });
-        } else if (!boxNo && !bagNo && !inputBlur.value) {
+        if (boxNo) {
+          if (!boxInputBlur.value) {
+            setFieldsValue({ bagNo: val[0] });
+          } else {
+            setFieldsValue({ boxNo: val[0] });
+          }
+        } else if (bagNo) {
+          if (!bagInputBlur.value) {
+            setFieldsValue({ boxNo: val[0] });
+          } else {
+            setFieldsValue({ bagNo: val[0] });
+          }
+        } else if (!boxInputBlur.value && !bagInputBlur.value) {
           setFieldsValue({ boxNo: val[0] });
         }
 
@@ -60,6 +68,7 @@
 
   const [registerForm, { resetFields, validate, setFieldsValue, updateSchema, getFieldsValue }] =
     useForm({
+      size: 'large',
       labelWidth: 130,
       baseColProps: { span: 48 },
       schemas: inStoreSchema,
@@ -70,7 +79,8 @@
     });
 
   let _removeEvent: RemoveEventFn = () => {};
-  const inputBlur = ref(false);
+  const boxInputBlur = ref(false);
+  const bagInputBlur = ref(false);
   const [registerModal, { setModalProps }] = useModalInner(() => {
     const { removeEvent } = startEvent();
     _removeEvent = removeEvent;
@@ -80,10 +90,10 @@
         field: 'boxNo',
         componentProps: {
           onBlur: () => {
-            inputBlur.value = false;
+            boxInputBlur.value = false;
           },
           onFocus: () => {
-            inputBlur.value = true;
+            boxInputBlur.value = true;
           },
         },
       },
@@ -91,16 +101,16 @@
         field: 'bagNo',
         componentProps: {
           onBlur: () => {
-            inputBlur.value = false;
+            bagInputBlur.value = false;
           },
           onFocus: () => {
-            inputBlur.value = true;
+            bagInputBlur.value = true;
           },
         },
       },
     ]);
     resetFields();
-    setModalProps({ confirmLoading: false });
+    setModalProps({ confirmLoading: false, maskClosable: false });
   });
 
   async function handleSubmit() {
@@ -109,7 +119,7 @@
       setModalProps({ confirmLoading: true });
       await nonconformityInStore(values as PostApiCoreBagUnqualifiedInStoreRequest);
       createMessage.success('入库成功');
-      await setFieldsValue({ bagNo: '', boxNo: '' });
+      await setFieldsValue({ bagNo: '' });
     } catch (e) {
       enterFlag.value = false;
       throw e;

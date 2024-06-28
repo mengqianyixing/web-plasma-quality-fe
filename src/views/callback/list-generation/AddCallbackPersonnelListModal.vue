@@ -7,6 +7,7 @@
     :min-height="680"
     showFooter
     @ok="handleOk"
+    @cancel="handleCancel"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
@@ -17,13 +18,38 @@
         :loading="tableLoading"
         :data="tableData"
         :columns="columnsComputed"
-        @scroll="tableScroll"
+      >
+        <template #plasmaCount="{ row }">
+          <span
+            :class="
+              !row?.plasmaCount ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+            "
+            @click.stop.self="handleBagDetail(row)"
+          >
+            {{ row?.plasmaCount }}
+          </span>
+        </template>
+      </vxe-grid>
+
+      <a-pagination
+        class="float-right mt-2"
+        @change="handlePageChange"
+        @show-size-change="handleSizeChange"
+        size="small"
+        show-size-changer
+        show-quick-jumper
+        v-model:current="pager.currPage"
+        v-model:pageSize="pager.pageSize"
+        :total="pager.total"
+        :show-total="(total) => `共 ${total} 条数据`"
       />
     </div>
+
+    <BagDetailModal @register="registerBagDetailModal" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { BasicModal, useModalInner } from '@/components/Modal';
+  import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { computed, nextTick, reactive, ref, unref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
@@ -40,6 +66,9 @@
     GetApiCoreDonorCallbackNeedRequest,
     GetApiCoreDonorCallbackNeedResponse,
   } from '@/api/type/callbackManage';
+  import { Pagination as APagination } from 'ant-design-vue';
+
+  import BagDetailModal from '@/views/callback/list-generation/BagDetailModal.vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   const emit = defineEmits(['success', 'register']);
@@ -59,6 +88,7 @@
       : callbackModalColumns.filter((it) => it.field !== 'trackType'),
   );
 
+  const [registerBagDetailModal, { openModal: openBagDetailModal }] = useModal();
   const [registerForm, { updateSchema, getFieldsValue, removeSchemaByField }] = useForm({
     showAdvancedButton: false,
     schemas: addCallbackModalSearchFromSchema,
@@ -102,6 +132,7 @@
   const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
     setModalProps({
       maskClosable: false,
+      destroyOnClose: true,
     });
 
     isUpdate.value = data.isUpdate;
@@ -120,13 +151,14 @@
 
   const tableLoading = ref(false);
   const pager = reactive({
-    pageSize: 30,
+    pageSize: 100,
     currPage: 1,
-    totalPage: 0,
+    total: 0,
   });
   async function initTableData() {
     try {
       tableLoading.value = true;
+
       const values = getFieldsValue();
       if (!values.minCollectTime) {
         await updateSchemaFunc();
@@ -138,8 +170,8 @@
         pageSize: pager.pageSize,
         currPage: pager.currPage,
       } as unknown as GetApiCoreDonorCallbackNeedRequest);
-      tableData.value = tableData.value!.concat(originRes.result as any);
-      pager.totalPage = Number(originRes.totalPage);
+      tableData.value = originRes.result!;
+      pager.total = originRes.totalCount!;
 
       await nextTick(() => {
         vxeRef.value?.setAllCheckboxRow(true);
@@ -170,6 +202,8 @@
   }
 
   async function submitFunc() {
+    vxeRef.value?.clearScroll();
+
     await initTableData();
   }
 
@@ -190,23 +224,41 @@
           donorNos: vxeRef.value!.getCheckboxRecords().map((it) => it?.donorNo)!,
         });
 
-        emit('success');
-        closeModal();
+        createMessage.warn(
+          `名单添加成功，剩余${
+            pager.total - Number(vxeRef.value?.getCheckboxRecords().length)
+          }位浆员`,
+        );
+
+        pager.currPage = 1;
+        await initTableData();
       },
     });
   }
 
-  function tableScroll(e) {
-    const { scrollHeight, clientHeight } = e.$event.srcElement;
+  function handleCancel() {
+    emit('success');
+    pager.currPage = 1;
+    tableData.value = [];
+    closeModal();
+  }
 
-    if (clientHeight + e.scrollTop + 1 >= scrollHeight) {
-      pager.currPage++;
+  async function handlePageChange(e) {
+    pager.currPage = e;
 
-      if (pager.currPage > pager.totalPage) {
-        return;
-      }
+    await initTableData();
+  }
 
-      initTableData();
-    }
+  async function handleSizeChange(_, size) {
+    pager.pageSize = size;
+
+    await initTableData();
+  }
+
+  function handleBagDetail(_record: Recordable) {
+    openBagDetailModal(true, {
+      cardNo: _record.cardNo,
+      planNo: batchNo.value,
+    });
   }
 </script>

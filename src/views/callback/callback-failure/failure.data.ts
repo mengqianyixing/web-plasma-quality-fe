@@ -1,12 +1,14 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import dayjs from 'dayjs';
 import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
+import { useStation } from '@/hooks/common/useStation';
+
+const { stationOptions } = useStation();
 
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
-    dataIndex: 'stationNo',
-    slots: { customRender: 'stationNo' },
+    dataIndex: 'stationName',
   },
   {
     title: '浆员编号',
@@ -68,6 +70,9 @@ export const searchFormSchema: FormSchema[] = [
     field: 'stationNo',
     label: '采浆公司',
     component: 'Select',
+    componentProps: {
+      options: stationOptions,
+    },
   },
   {
     field: '[callBackStartDate, callBackEndDate]',

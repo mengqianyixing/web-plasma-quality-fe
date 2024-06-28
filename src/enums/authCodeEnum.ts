@@ -156,6 +156,7 @@ export enum QualityButtonEnum {
   BatchReleasePrint = 'E_94003006',
   BatchReleaseCancelAdd = 'E_94003007',
   BatchReleaseCancelReview = 'E_94003008',
+  BatchQuarantinePeriod = 'E_94003009',
 }
 
 export enum NonconformityButtonEnum {
@@ -210,6 +211,7 @@ export enum StockOutButtonEnum {
   ProductionPlanPMS = 'E_910040012',
   ProductionPlanSummary = 'E_910040013',
   ProductionPlanSummaryKunMing = 'E_910040014',
+  PlasmaProductionApplication = 'E_910040015',
 
   PutIntoTrayStockOut = 'E_91005001',
   PutIntoBoxStockOut = 'E_91005002',

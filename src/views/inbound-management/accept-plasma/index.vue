@@ -87,7 +87,7 @@
     <BatchDetail @register="registerBatchDetail" @close="handleBatchDetailClose" />
     <BoxDetail @register="registerBoxDetail" @success="handleGoDetail" />
     <suspendOrResumeModal
-      v-if="suspendModalVisible"
+      @register="registerSuspendOrResumeModal"
       ref="suspendOrResumeRef"
       @close="closeSuspend"
       @clear-info="clearInfo"
@@ -320,6 +320,7 @@
   const [registerSampleUnqualifiedModal, { openModal: openSampleUnqualifiedModal }] = useModal();
   const [registerMissNumModal, { openModal: openMissNumModal }] = useModal();
   const [registerReprintModal, { openModal: openReprintModal }] = useModal();
+  const [registerSuspendOrResumeModal, { openModal: openSuspendOrResumeModal }] = useModal();
 
   // 表格数据
   const unAcceptList = computed(() => filterForm.value?.unVerifyBag ?? []);
@@ -588,16 +589,12 @@
         return;
       }
     }
-    suspendModalVisible.value = true;
-    nextTick(() => {
-      suspendOrResumeRef.value.searchForm.batchNo = filterForm.value.batchNo;
-      suspendOrResumeRef.value.searchForm.boxNo = filterForm.value.boxNo;
-      // 箱暂停使用已登录的复核人，批暂停需要单独登录
-      if (pattern === 'BOX') {
-        suspendOrResumeRef.value.searchForm.checker = checker.value;
-      }
-      suspendOrResumeRef.value.searchForm.pattern = pattern;
-      suspendOrResumeRef.value.getList();
+
+    openSuspendOrResumeModal(true, {
+      batchNo: filterForm.value.batchNo,
+      boxNo: filterForm.value.boxNo,
+      checker: pattern === 'BOX' ? checker.value : '',
+      pattern,
     });
   };
   const closeSuspend = () => {

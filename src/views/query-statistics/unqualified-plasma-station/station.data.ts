@@ -328,6 +328,11 @@ export const columns: BasicColumn[] = [
         dataIndex: 'otherUnqRate',
         width: 130,
       },
+      {
+        title: '样本量不足',
+        dataIndex: 'insufficientSampleSizeNum',
+        width: 130,
+      },
     ],
   },
   {

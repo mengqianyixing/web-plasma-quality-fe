@@ -35,6 +35,16 @@ export const columns: BasicColumn[] = [
     width: 100,
   },
   {
+    title: '确认人',
+    dataIndex: 'checker',
+    width: 80,
+  },
+  {
+    title: '确认日期',
+    dataIndex: 'checkAt',
+    width: 100,
+  },
+  {
     title: '样本批号',
     dataIndex: 'sampleBatchNo',
     width: 130,
@@ -82,16 +92,6 @@ export const columns: BasicColumn[] = [
     title: '样本发布日期',
     dataIndex: 'samplePublishAt',
     width: 105,
-  },
-  {
-    title: '确认人',
-    dataIndex: 'checker',
-    width: 80,
-  },
-  {
-    title: '确认日期',
-    dataIndex: 'checkAt',
-    width: 100,
   },
   {
     title: '状态',
@@ -217,6 +217,7 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
   {
     title: '待追踪袋数',
     field: 'plasmaCount',
+    slots: { default: 'plasmaCount' },
   },
 ];
 

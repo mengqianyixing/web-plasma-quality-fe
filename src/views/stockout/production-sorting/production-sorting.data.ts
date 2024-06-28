@@ -177,8 +177,8 @@ export const trayOutStoreFormSchema: FormSchema[] = [
     component: 'Select',
     componentProps: {
       options: [
-        { value: 'S', label: '已出库' },
-        { value: 'W', label: '未出库' },
+        { value: 'S', label: '未入库' },
+        { value: 'W', label: '已入库' },
         { value: 'R', label: '出库中' },
       ],
     },

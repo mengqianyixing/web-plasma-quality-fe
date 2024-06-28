@@ -47,13 +47,33 @@
           v-auth="QualityButtonEnum.BatchReleaseUnRelease"
           >撤销放行</a-button
         >
-        <a-button
-          type="primary"
-          @click="handlePrint"
-          :loading="reportLoading"
-          v-auth="QualityButtonEnum.BatchReleasePrint"
-          >打印</a-button
+        <a-dropdown
+          v-auth="[QualityButtonEnum.BatchReleasePrint, QualityButtonEnum.BatchQuarantinePeriod]"
         >
+          <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
+          <template #overlay>
+            <Menu>
+              <MenuItem @click="handlePrint">
+                <a-button
+                  type="link"
+                  :loading="reportLoading"
+                  v-auth="QualityButtonEnum.BatchReleasePrint"
+                >
+                  原料血浆投产批放行单
+                </a-button>
+              </MenuItem>
+              <MenuItem @click="handlePrintQuarantine">
+                <a-button
+                  type="link"
+                  :loading="reportLoading"
+                  v-auth="QualityButtonEnum.BatchQuarantinePeriod"
+                >
+                  原料血浆检疫期筛选情况
+                </a-button>
+              </MenuItem>
+            </Menu>
+          </template>
+        </a-dropdown>
       </template>
       <template #mesId="{ record }: { record: Recordable }">
         <span
@@ -93,7 +113,7 @@
   import PlasmaRestrictionModal from './plasma-restriction-modal.vue';
   import FormModal from './form-modal.vue';
   import { useModal } from '@/components/Modal';
-  import { message, Modal } from 'ant-design-vue';
+  import { message, Modal, Dropdown as ADropdown, MenuItem, Menu } from 'ant-design-vue';
   import { ref, reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import {
@@ -341,6 +361,22 @@
       const res = await getReportApi({
         reportKey: 'PLASMA_PRODUCTION_RELEASE',
         contentKey: row.prNo,
+      });
+      openReportModal(true, window.URL.createObjectURL(res));
+      clearSelectedRowKeys();
+    } finally {
+      reportLoading.value = false;
+    }
+  }
+
+  async function handlePrintQuarantine() {
+    const [row] = getSelections(true);
+    if (!row) return;
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({
+        reportKey: 'KM_PLASMA_QUARANINE_FILTER',
+        contentKey: row.orderNo,
       });
       openReportModal(true, window.URL.createObjectURL(res));
       clearSelectedRowKeys();

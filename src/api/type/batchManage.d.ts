@@ -2019,11 +2019,12 @@ export interface GetApiCoreBatchPlasmaReleaseResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `PUT /api/core/batch/plasma/release`
- * @更新时间 `2024-01-16 18:00:34`
+ * @更新时间 `2024-06-27 13:40:51`
  */
 export interface PutApiCoreBatchPlasmaReleaseRequest {
   brNo?: string;
   state?: string;
+  cancelReason?: string;
 }
 
 /**
@@ -2031,7 +2032,7 @@ export interface PutApiCoreBatchPlasmaReleaseRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `PUT /api/core/batch/plasma/release`
- * @更新时间 `2024-01-16 18:00:34`
+ * @更新时间 `2024-06-27 13:40:51`
  */
 export type PutApiCoreBatchPlasmaReleaseResponse = null;
 
