@@ -221,6 +221,21 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
+    field: 'cardNo',
+    label: '浆员编号',
+    component: 'Input',
+  },
+  {
+    field: 'bagNo',
+    label: '血浆编号',
+    component: 'Input',
+  },
+  {
+    field: 'batchNo',
+    label: '血浆批号',
+    component: 'Input',
+  },
+  {
     field: 'stationOutboundStatus',
     label: '浆站出库状态',
     component: 'Select',
@@ -241,11 +256,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '现存箱号',
     component: 'Input',
   },
-  {
-    field: 'cardNo',
-    label: '浆员编号',
-    component: 'Input',
-  },
+
   {
     field: 'donorName',
     label: '浆员姓名',
@@ -267,11 +278,7 @@ export const searchFormSchema: FormSchema[] = [
       options: serverEnumStore.getServerEnum(SERVER_ENUM.BloodType),
     },
   },
-  {
-    field: 'bagNo',
-    label: '血浆编号',
-    component: 'Input',
-  },
+
   {
     field: 'plasmaTypeFromStation',
     label: '来浆类型',
@@ -290,11 +297,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '参考样本采集日期',
     component: 'RangePicker',
   },
-  {
-    field: 'batchNo',
-    label: '血浆批号',
-    component: 'Input',
-  },
+
   {
     field: 'warehousingStatus',
     label: '入库状态',
