@@ -20,12 +20,7 @@
         :columns="columnsComputed"
       >
         <template #plasmaCount="{ row }">
-          <span
-            :class="
-              !row?.plasmaCount ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
-            "
-            @click.stop.self="handleBagDetail(row)"
-          >
+          <span>
             {{ row?.plasmaCount }}
           </span>
         </template>
@@ -44,12 +39,10 @@
         :show-total="(total) => `共 ${total} 条数据`"
       />
     </div>
-
-    <BagDetailModal @register="registerBagDetailModal" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { BasicModal, useModal, useModalInner } from '@/components/Modal';
+  import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import { computed, nextTick, reactive, ref, unref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
@@ -67,8 +60,6 @@
     GetApiCoreDonorCallbackNeedResponse,
   } from '@/api/type/callbackManage';
   import { Pagination as APagination } from 'ant-design-vue';
-
-  import BagDetailModal from '@/views/callback/list-generation/BagDetailModal.vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   const emit = defineEmits(['success', 'register']);
@@ -88,7 +79,6 @@
       : callbackModalColumns.filter((it) => it.field !== 'trackType'),
   );
 
-  const [registerBagDetailModal, { openModal: openBagDetailModal }] = useModal();
   const [registerForm, { updateSchema, getFieldsValue, removeSchemaByField }] = useForm({
     showAdvancedButton: false,
     schemas: addCallbackModalSearchFromSchema,
@@ -253,12 +243,5 @@
     pager.pageSize = size;
 
     await initTableData();
-  }
-
-  function handleBagDetail(_record: Recordable) {
-    openBagDetailModal(true, {
-      cardNo: _record.cardNo,
-      planNo: batchNo.value,
-    });
   }
 </script>
