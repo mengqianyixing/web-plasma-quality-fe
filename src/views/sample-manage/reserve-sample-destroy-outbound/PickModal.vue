@@ -102,7 +102,7 @@
     });
     dlvNo.value = data.dlvNo;
 
-    await initTableData();
+    // await initTableData();
   });
 
   const { createConfirm, createMessage } = useMessage();
