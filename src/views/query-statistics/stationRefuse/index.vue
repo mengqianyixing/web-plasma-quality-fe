@@ -27,6 +27,7 @@
         </a-button>
       </template>
     </BasicTable>
+    <DonorModel @register="registerDonorModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -41,10 +42,12 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { message } from 'ant-design-vue';
   import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
+  import { useModal } from '@/components/Modal';
+  import DonorModel from '@/__components/donor/donorModel.vue';
 
+  const [registerDonorModal, { openModal }] = useModal();
   const { currentRoute } = useRouter();
   const globalApiStore = useGlobalApiStoreWithOut();
-  const router = useRouter();
 
   defineOptions({ name: 'StationRefuse' });
 
@@ -83,7 +86,7 @@
   });
 
   function clickDonorNo(record) {
-    router.push({ path: '/search/donor', query: { cardNo: record.cardNo } });
+    openModal(true, { cardNo: record.cardNo });
   }
 
   const loading = ref(false);

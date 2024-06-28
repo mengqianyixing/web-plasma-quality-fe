@@ -193,6 +193,7 @@ const trackedColumns: BasicColumn[] = [
     title: '浆员编号',
     dataIndex: 'cardNo',
     width: 100,
+    slots: { customRender: 'cardNo' },
   },
   {
     title: '浆员姓名',
@@ -221,6 +222,7 @@ const otherColumns: BasicColumn[] = [
     title: '浆员编号',
     dataIndex: 'cardNo',
     width: 100,
+    slots: { customRender: 'cardNo' },
   },
   {
     title: '浆员姓名',
@@ -256,6 +258,7 @@ export const colMap: Record<string, BasicColumn[]> = {
       title: '浆员编号',
       dataIndex: 'cardNo',
       width: 100,
+      slots: { customRender: 'cardNo' },
     },
     {
       title: '浆员姓名',

@@ -26,6 +26,7 @@
       </template>
     </BasicTable>
     <ReportModal @register="registerReportModal" />
+    <DonorModel @register="registerDonorModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -39,12 +40,12 @@
   import { useModal } from '@/components/Modal';
   import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
   import { message } from 'ant-design-vue';
-  import { useRouter } from 'vue-router';
   import { PrintServerEnum } from '@/enums/printServerEnum';
+  import DonorModel from '@/__components/donor/donorModel.vue';
 
+  const [registerDonorModal, { openModal }] = useModal();
   defineOptions({ name: 'NonconformityTracking' });
   const reportLoading = ref(false);
-  const { push } = useRouter();
 
   const [registerReportModal, { openModal: openReportModal }] = useModal();
   const [registerTable, { getSelectRows }] = useTable({
@@ -81,7 +82,7 @@
     }
   }
   function handleJump(row: Recordable) {
-    push({ name: 'DonorQuery', query: { cardNo: row.cardNo } });
+    openModal(true, { cardNo: row.cardNo });
   }
 
   async function handlePrint() {

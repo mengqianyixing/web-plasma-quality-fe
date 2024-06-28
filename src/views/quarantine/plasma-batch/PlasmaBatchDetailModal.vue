@@ -5,7 +5,7 @@
     @register="registerModal"
     :title="modalTitle"
     :showOkBtn="false"
-    cancelText="关闭"
+    cancelText="关闭22"
     width="1000px"
   >
     <BasicTable :columns="modalColumns" @register="registerTable">
@@ -15,17 +15,28 @@
       <template #prodReason="{ record }">
         {{ formatProdReason(record?.fkUnProdCode) }}
       </template>
+      <template #cardNo="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="openModal(true, record)"
+        >
+          {{ record.cardNo }}
+        </span>
+      </template>
     </BasicTable>
+    <DonorModel @register="registerDonorModal" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
   import { ref, onMounted } from 'vue';
-  import { BasicModal, useModalInner } from '@/components/Modal';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { useTable, BasicTable, BasicColumn } from '@/components/Table';
   import { modalCommonColumns, colMap, stateMap } from './plasma-batch.data';
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
   import { getPlasmaBatchReleaseBags } from '@/api/quarantine/plasma-batch';
+  import DonorModel from '@/__components/donor/donorModel.vue';
 
+  const [registerDonorModal, { openModal }] = useModal();
   interface ParamsObj {
     state: string;
     ImmType?: string | null;

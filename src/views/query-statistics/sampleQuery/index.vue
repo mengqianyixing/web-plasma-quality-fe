@@ -17,6 +17,7 @@
         </a-button>
       </template>
     </BasicTable>
+    <DonorModel @register="registerDonorModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -30,13 +31,15 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { ref } from 'vue';
   import { SearchManager } from '@/enums/authCodeEnum';
+  import DonorModel from '@/__components/donor/donorModel.vue';
+  import { useModal } from '@/components/Modal';
 
+  const [registerDonorModal, { openModal }] = useModal();
   const globalApiStore = useGlobalApiStoreWithOut();
   const { currentRoute } = useRouter();
   const loading = ref(false);
 
   defineOptions({ name: 'SampleQuery' });
-  const { push } = useRouter();
 
   const [registerTable, { getForm, reload, setPagination, setProps }] = useTable({
     immediate: false,
@@ -73,7 +76,7 @@
     },
   });
   function handleJump(row: Recordable) {
-    push({ name: 'DonorQuery', query: { cardNo: row.cardNo } });
+    openModal(true, { cardNo: row.cardNo });
   }
   async function handleExport() {
     try {
