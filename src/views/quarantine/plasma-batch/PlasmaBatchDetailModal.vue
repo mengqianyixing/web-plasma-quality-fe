@@ -5,7 +5,7 @@
     @register="registerModal"
     :title="modalTitle"
     :showOkBtn="false"
-    cancelText="关闭22"
+    cancelText="关闭"
     width="1000px"
   >
     <BasicTable :columns="modalColumns" @register="registerTable">
@@ -85,10 +85,11 @@
     maxHeight: 350,
     clickToRowSelect: false,
     rowKey: 'batchNo',
-    useSearchForm: false,
+    useSearchForm: true,
     showTableSetting: false,
     bordered: true,
     showIndexColumn: true,
+    formConfig: { schemas: [{ field: 'bagNo', component: 'Input', label: '血浆编号' }] },
     canResize: true,
     fetchSetting: {
       pageField: 'currPage',
