@@ -132,6 +132,7 @@ export const searchFormSchema: FormSchema[] = [
     field: 'state',
     component: 'Select',
     label: '放行状态',
+    defaultValue: 'TBR',
     componentProps: {
       options: statusList,
     },
