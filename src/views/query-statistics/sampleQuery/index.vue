@@ -72,7 +72,12 @@
     useSearchForm: true,
     bordered: true,
     sortFn: (e) => {
-      setProps({ searchInfo: { orderBy: e.order && e.field, sort: e?.order?.slice(0, -3) } });
+      setProps({
+        searchInfo: {
+          sortIdx: e.order && e.field,
+          sortOrder: e?.order?.slice(0, -3).toUpperCase(),
+        },
+      });
     },
   });
   function handleJump(row: Recordable) {

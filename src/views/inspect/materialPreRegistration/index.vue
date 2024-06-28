@@ -112,7 +112,12 @@
     bordered: true,
     rowSelection: { type: 'radio' },
     sortFn: (e) => {
-      setProps({ searchInfo: { orderBy: e.order && e.field, sort: e?.order?.slice(0, -3) } });
+      setProps({
+        searchInfo: {
+          sortIdx: e.order && e.field,
+          sortOrder: e?.order?.slice(0, -3).toUpperCase(),
+        },
+      });
     },
     afterFetch: (res) => {
       clearSelectedRowKeys();
