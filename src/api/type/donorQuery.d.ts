@@ -346,4 +346,52 @@ export interface GetAbcRequest {}
  */
 export interface GetAbcResponse {}
 
+/**
+ * 接口 [浆员信息查询New↗](https://yapi.sharing8.cn/project/529/interface/api/35706) 的 **请求类型**
+ *
+ * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
+ * @请求头 `GET /api/search/donor/info/{cardNo}`
+ * @更新时间 `2024-07-01 15:36:55`
+ */
+export interface GetApiSearchDonorInfoCardNoRequest {
+  /**
+   * 献浆员卡号
+   */
+  cardNo: string;
+}
+
+/**
+ * 接口 [浆员信息查询New↗](https://yapi.sharing8.cn/project/529/interface/api/35706) 的 **返回类型**
+ *
+ * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
+ * @请求头 `GET /api/search/donor/info/{cardNo}`
+ * @更新时间 `2024-07-01 15:36:55`
+ */
+export interface GetApiSearchDonorInfoCardNoResponse {
+  donorNo?: string;
+  cardNo?: string;
+  idcardId?: string;
+  idcardAddress?: string;
+  /**
+   * 拒绝发布时间
+   */
+  blockCreateAt?: string;
+  createAt?: string;
+  nation?: string;
+  profession?: null;
+  donorStatus?: string;
+  age?: null;
+  gender?: string;
+  bloodType?: string;
+  name?: string;
+  stationName?: string;
+  failedCause?: string;
+  currentAddress?: null;
+  blockSys?: string;
+  /**
+   * 不合格参考时间
+   */
+  blockByDate?: string;
+}
+
 /* prettier-ignore-end */

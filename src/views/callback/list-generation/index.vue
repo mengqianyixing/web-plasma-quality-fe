@@ -161,6 +161,9 @@
   const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
     api: getCallbackListApi,
     formConfig: {
+      baseColProps: {
+        span: 24,
+      },
       schemas: searchFormSchema,
       transformDateFunc(date) {
         return date ? date.format('YYYY-MM-DD') : '';

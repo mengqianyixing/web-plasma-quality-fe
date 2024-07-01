@@ -1109,12 +1109,13 @@ export type PutApiCoreLabRegistrationLabItemResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem/notCheck`
- * @更新时间 `2024-01-03 20:10:34`
+ * @更新时间 `2024-07-01 09:30:15`
  */
 export interface PutApiCoreLabRegistrationLabItemNotCheckRequest {
   sampleNo: string;
   bsNo: string;
   projectIds: string[];
+  failedCode: string;
 }
 
 /**
@@ -1122,7 +1123,7 @@ export interface PutApiCoreLabRegistrationLabItemNotCheckRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `PUT /api/core/lab/registration/labItem/notCheck`
- * @更新时间 `2024-01-03 20:10:34`
+ * @更新时间 `2024-07-01 09:30:15`
  */
 export type PutApiCoreLabRegistrationLabItemNotCheckResponse = string;
 
@@ -1384,7 +1385,7 @@ export type PostApiCoreLabRegistrationSampleResponse = {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload`
- * @更新时间 `2024-05-31 13:59:46`
+ * @更新时间 `2024-07-01 10:02:07`
  */
 export interface PostApiCoreLabRegistrationTiterUploadRequest {
   file: FileData;
@@ -1397,7 +1398,7 @@ export interface PostApiCoreLabRegistrationTiterUploadRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload`
- * @更新时间 `2024-05-31 13:59:46`
+ * @更新时间 `2024-07-01 10:02:07`
  */
 export interface PostApiCoreLabRegistrationTiterUploadResponse {
   /**
@@ -1428,6 +1429,18 @@ export interface PostApiCoreLabRegistrationTiterUploadResponse {
      * 保存失败总数
      */
     faildCount: string;
+    /**
+     * 高效价数
+     */
+    heightNum: string;
+    /**
+     * 低效价数
+     */
+    lowNum: string;
+    /**
+     * 无效价数
+     */
+    normalNum: string;
   };
   dataSaved: {
     /**
@@ -1470,6 +1483,7 @@ export interface PostApiCoreLabRegistrationTiterUploadResponse {
      * 检测日期
      */
     checkAt: string;
+    projectId: string;
   }[];
   dataFaild: {
     unsavedData: string;
@@ -2018,98 +2032,23 @@ export type PutApiCoreLabUnqualifiedSampleResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload/update`
- * @更新时间 `2024-06-28 17:59:12`
+ * @更新时间 `2024-06-28 18:01:31`
  */
-export interface PostApiCoreLabRegistrationTiterUploadUpdateRequest {
-  file: FileData;
+export type PostApiCoreLabRegistrationTiterUploadUpdateRequest = {
+  sampleNo: string;
+  conclusion: string;
+  titerResult: string;
   projectId: string;
-  bsNo: string;
-}
+}[];
 
 /**
  * 接口 [效价导入后更新↗](https://yapi.sharing8.cn/project/529/interface/api/35694) 的 **返回类型**
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload/update`
- * @更新时间 `2024-06-28 17:59:12`
+ * @更新时间 `2024-06-28 18:01:31`
  */
-export interface PostApiCoreLabRegistrationTiterUploadUpdateResponse {
-  /**
-   * 汇总
-   */
-  summary: {
-    /**
-     * 文件名称
-     */
-    filename: string;
-    /**
-     * 上传日期
-     */
-    uploadAt: string;
-    /**
-     * 上传用户
-     */
-    username: string;
-    /**
-     * 数据总数
-     */
-    count: string;
-    /**
-     * 保存成功总数
-     */
-    successCount: string;
-    /**
-     * 保存失败总数
-     */
-    faildCount: string;
-  };
-  dataSaved: {
-    /**
-     * 样本id
-     */
-    sampleId: string;
-    /**
-     * 浆员编号
-     */
-    donorNo: string;
-    /**
-     * 姓名
-     */
-    name: string;
-    /**
-     * 浆员卡号
-     */
-    cardNo: string;
-    /**
-     * 血浆类型
-     */
-    plasmaType: string;
-    /**
-     * 效价类型
-     */
-    titerType: string;
-    /**
-     * 结论
-     */
-    conclusion: string;
-    /**
-     * od值
-     */
-    od: string;
-    /**
-     * 效价结果值
-     */
-    titerResult: string;
-    /**
-     * 检测日期
-     */
-    checkAt: string;
-  }[];
-  dataFaild: {
-    unsavedData: string;
-    notes: string;
-  }[];
-}
+export interface PostApiCoreLabRegistrationTiterUploadUpdateResponse {}
 
 /**
  * 接口 [检验报告审核↗](https://yapi.sharing8.cn/project/529/interface/api/32022) 的 **请求类型**

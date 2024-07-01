@@ -2,8 +2,6 @@ import { defHttp } from '@/utils/http/axios';
 import {
   DeleteApiCoreDonorCallbackDetailRequest,
   DeleteApiCoreDonorCallbackRequest,
-  GetApiCoreDonorCallbackDetailStateRequest,
-  GetApiCoreDonorCallbackDetailStateResponse,
   GetApiCoreDonorCallbackNeedRequest,
   GetApiCoreDonorCallbackNeedResponse,
   GetApiCoreDonorCallbackRequest,
@@ -12,6 +10,8 @@ import {
   GetApiSearchDonorCallbackDetailBagResponse,
   GetApiSearchDonorCallbackDetailRequest,
   GetApiSearchDonorCallbackDetailResponse,
+  GetApiSearchDonorCallbackDetailStateRequest,
+  GetApiSearchDonorCallbackDetailStateResponse,
   PostApiCoreDonorCallbackBatchRequest,
   PostApiCoreDonorCallbackBatchResponse,
   PostApiCoreDonorCallbackNeedRequest,
@@ -25,7 +25,7 @@ enum Api {
   STATION_NAME = '/api/sys/station/form',
   GENERATE_CALLBACK = '/api/core/donor/callback/need',
   CREATE_CALLBACK_BATCH = '/api/core/donor/callback/batch',
-  DETAIL_BY_STATE = '/api/core/donor/callback/detail-state',
+  DETAIL_BY_STATE = '/api/search/donor/callback/detail-state',
   DONOR_BAG_DETAIL = '/api/search/donor/callback/detail/bag',
 }
 
@@ -71,8 +71,8 @@ export const createCallbackBatch = (params: PostApiCoreDonorCallbackBatchRequest
 export const revokeCallback = (params: DeleteApiCoreDonorCallbackDetailRequest) =>
   defHttp.delete({ url: Api.CALLBACK_RESTFUL, params });
 
-export const getDetailByState = (params: GetApiCoreDonorCallbackDetailStateRequest) =>
-  defHttp.get<GetApiCoreDonorCallbackDetailStateResponse>(
+export const getDetailByState = (params: GetApiSearchDonorCallbackDetailStateRequest) =>
+  defHttp.get<GetApiSearchDonorCallbackDetailStateResponse>(
     {
       url: Api.DETAIL_BY_STATE,
       params,
