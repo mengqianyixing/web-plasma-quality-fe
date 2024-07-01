@@ -13,7 +13,7 @@
     showFooter
     title="新增血浆限制记录"
     width="800px"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="redoHeight"
     @ok="handleSubmit"
   >

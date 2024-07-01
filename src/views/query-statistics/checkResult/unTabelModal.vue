@@ -4,7 +4,7 @@
     @register="registerModal"
     showFooter
     :title="state.title"
-    :minHeight="520"
+    :minHeight="600"
     width="1000px"
     :showOkBtn="false"
     cancelText="关闭"

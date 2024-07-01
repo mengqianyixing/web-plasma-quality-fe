@@ -15,7 +15,7 @@
     width="1000px"
     :show-ok-btn="false"
     cancelText="关闭"
-    :min-height="520"
+    :min-height="600"
     @ok="handleSubmit"
     @cancel="close"
   >

@@ -5,7 +5,7 @@
     showFooter
     title="区域列表"
     width="860px"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="redoHeight"
     @cancel="emit('close')"
   >

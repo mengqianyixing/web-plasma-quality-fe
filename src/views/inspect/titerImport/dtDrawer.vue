@@ -12,7 +12,7 @@
     @register="registerModal"
     title="详情"
     width="1000px"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="
       redoHeight();
       redoHeight2();

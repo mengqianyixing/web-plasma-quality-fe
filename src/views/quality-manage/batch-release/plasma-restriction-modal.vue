@@ -13,7 +13,7 @@
     showFooter
     title="血浆限制明细"
     width="1000px"
-    :minHeight="520"
+    :minHeight="600"
     cancelText="关闭"
     @ok="okFun"
     @fullscreen="redoHeight"

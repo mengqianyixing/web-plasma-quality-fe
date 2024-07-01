@@ -4,7 +4,7 @@
     @register="registerModal"
     :title="state.title"
     width="1200px"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="redoHeight"
     cancelText="关闭"
     @cancel="emit('close')"

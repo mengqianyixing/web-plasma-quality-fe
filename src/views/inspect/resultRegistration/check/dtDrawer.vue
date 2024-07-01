@@ -14,7 +14,7 @@
     :title="projectName + '详情'"
     width="800px"
     @cancel="close"
-    :min-height="520"
+    :min-height="600"
     cancelText="关闭"
     :show-ok-btn="false"
   >

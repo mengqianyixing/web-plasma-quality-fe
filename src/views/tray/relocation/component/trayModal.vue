@@ -14,7 +14,7 @@
     title="托盘选择"
     width="1200px"
     @ok="handleSubmit"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="redoHeight"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">

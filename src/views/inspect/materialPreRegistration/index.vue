@@ -52,7 +52,7 @@
       okText="提交"
       width="300px"
       :confirmLoading="confirmLoading"
-      title="撤销原因'"
+      title="撤销原因"
     >
       <div class="m-20px">
         <BasicForm @register="registerForm" />

@@ -5,7 +5,7 @@
     title="箱数详情"
     showFooter
     width="60%"
-    :min-height="520"
+    :min-height="600"
     :showOkBtn="false"
     @cancel="handelCancel"
   >

@@ -41,7 +41,7 @@
       showFooter
       :title="`批次【${batchNo}】限制血浆箱列表`"
       width="800px"
-      :minHeight="520"
+      :minHeight="600"
       @fullscreen="redoHeight"
     >
       <div class="relative h-inherit max-h-inherit min-h-inherit">

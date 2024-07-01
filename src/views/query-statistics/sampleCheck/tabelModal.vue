@@ -4,7 +4,7 @@
     @register="registerModal"
     showFooter
     :title="title + `合计详情`"
-    :minHeight="520"
+    :minHeight="600"
     width="1000px"
     :showOkBtn="false"
     cancelText="关闭"

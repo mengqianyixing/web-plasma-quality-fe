@@ -4,7 +4,7 @@
     @register="registerModal"
     showFooter
     :title="`检测样本详情`"
-    :minHeight="520"
+    :minHeight="600"
     width="600px"
     :showOkBtn="false"
     cancelText="关闭"

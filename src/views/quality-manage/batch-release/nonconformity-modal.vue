@@ -13,7 +13,7 @@
     showFooter
     title="下列血浆需挑出及入不合格库后才可进行新增放行！"
     width="800px"
-    :minHeight="520"
+    :minHeight="600"
     :showOkBtn="false"
     cancelText="关闭"
     @fullscreen="redoHeight"

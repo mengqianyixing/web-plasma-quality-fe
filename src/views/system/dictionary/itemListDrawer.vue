@@ -12,7 +12,7 @@
     @register="registerModal"
     :title="dictName"
     width="1200px"
-    :minHeight="520"
+    :minHeight="600"
     cancelText="关闭"
     :showOkBtn="false"
     @cancel="emit('close')"

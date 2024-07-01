@@ -13,7 +13,7 @@
     showFooter
     title="货位选择"
     width="800px"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="redoHeight"
     @ok="handleSubmit"
   >

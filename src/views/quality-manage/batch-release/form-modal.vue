@@ -13,7 +13,7 @@
     cancelText="关闭"
     :title="state.title"
     width="880px"
-    :minHeight="520"
+    :minHeight="600"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm">

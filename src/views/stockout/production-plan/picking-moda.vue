@@ -14,7 +14,7 @@
     :title="pick[activeKey].title"
     width="1170px"
     cancelText="关闭"
-    :min-height="520"
+    :min-height="600"
     @ok="handleSubmit"
     @fullscreen="redoHeight"
   >

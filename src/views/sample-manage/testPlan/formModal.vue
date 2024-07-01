@@ -8,7 +8,7 @@
     :showActionButtonGroup="false"
     width="1050px"
     @ok="handleSubmit"
-    :minHeight="520"
+    :minHeight="600"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">
       <div class="w-4/5 h-inherit max-h-inherit min-h-inherit">

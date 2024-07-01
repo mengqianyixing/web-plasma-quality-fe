@@ -5,7 +5,7 @@
     showFooter
     title="托盘存放血浆列表"
     width="1000px"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="redoHeight"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">

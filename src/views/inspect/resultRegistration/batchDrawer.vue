@@ -15,7 +15,7 @@
     width="1140px"
     cancelText="关闭"
     @ok="handleSubmit"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="redoHeight"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">

@@ -13,7 +13,7 @@
     :title="'血浆批号【' + state.batchNo + '】托盘入库'"
     width="1060px"
     @cancel="emit('close')"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="redoHeight"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">

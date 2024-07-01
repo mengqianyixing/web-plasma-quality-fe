@@ -8,7 +8,7 @@
     width="1100px"
     :isDetail="true"
     :showDetailBack="false"
-    :minHeight="520"
+    :minHeight="600"
     @cancel="close"
     @fullscreen="redoHeight"
   >
