@@ -1314,7 +1314,7 @@ export interface PostApiCoreBatchPlasmaVerifyBatchPauseResponse {}
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/verify`
- * @更新时间 `2024-06-17 13:47:27`
+ * @更新时间 `2024-07-02 13:10:18`
  */
 export interface GetApiCoreBatchSampleVerifyRequest {
   /**
@@ -1333,6 +1333,10 @@ export interface GetApiCoreBatchSampleVerifyRequest {
    * 状态：W-未验收，R-验收中，S-待发布，F-已发布，默认查询未验收和验收中
    */
   verifyState?: string;
+  /**
+   * 样本类型，NOR-血浆样本，CAB-回访样本
+   */
+  sampleType?: string;
 }
 
 /**
@@ -1340,7 +1344,7 @@ export interface GetApiCoreBatchSampleVerifyRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/sample/verify`
- * @更新时间 `2024-06-17 13:47:27`
+ * @更新时间 `2024-07-02 13:10:18`
  */
 export interface GetApiCoreBatchSampleVerifyResponse {
   /**

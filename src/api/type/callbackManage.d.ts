@@ -678,7 +678,7 @@ export interface GetApiCoreDonorBlockResponse {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/search/donor/callback/detail-state`
- * @更新时间 `2024-06-26 11:29:05`
+ * @更新时间 `2024-07-02 15:50:08`
  */
 export interface GetApiSearchDonorCallbackDetailStateRequest {
   pageSize: string;
@@ -717,7 +717,7 @@ export interface GetApiSearchDonorCallbackDetailStateRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/search/donor/callback/detail-state`
- * @更新时间 `2024-06-26 11:29:05`
+ * @更新时间 `2024-07-02 15:50:08`
  */
 export type GetApiSearchDonorCallbackDetailStateResponse = {
   /**
@@ -731,7 +731,7 @@ export type GetApiSearchDonorCallbackDetailStateResponse = {
   /**
    * 最后采浆日期
    */
-  minCollTime: string;
+  maxCollTime: string;
   /**
    * 血浆状态
    */
