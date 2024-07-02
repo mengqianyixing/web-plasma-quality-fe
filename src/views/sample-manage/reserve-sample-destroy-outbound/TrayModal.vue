@@ -14,9 +14,7 @@
       <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData">
         <template #toolbar>
           <div class="flex items-center justify-end bg-[#ffffff]">
-            <div>
-              <a-button type="primary" @click="handleTrayOut"> 出库 </a-button>
-            </div>
+            <a-button class="mb-8px" type="primary" @click="handleTrayOut"> 出库 </a-button>
           </div>
         </template>
       </vxe-grid>
@@ -77,7 +75,7 @@
   const gridOptions = reactive<VxeGridProps<any>>({
     border: true,
     showOverflow: true,
-    height: 550,
+    height: 580,
     align: 'center',
     size: 'small',
     exportConfig: {},

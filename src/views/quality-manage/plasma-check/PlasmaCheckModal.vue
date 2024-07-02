@@ -6,6 +6,7 @@
     showFooter
     width="85%"
     @ok="handleOk"
+    :minHeight="600"
     @cancel="handleClose"
     :showOkBtn="unref(flag) !== 'preview'"
   >
@@ -65,7 +66,6 @@
     bordered: true,
     column: 4,
     size: 'middle',
-    title: '血浆批次详情',
     schema: PlasmaBatchSchema,
   });
   const [registerConclusionDetail] = useDescription({

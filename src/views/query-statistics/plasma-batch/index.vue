@@ -243,11 +243,13 @@
   const _reloadTable = debounce(reloadTable, 300) as () => Promise<void>;
   const [registerBasicForm, { getFieldsValue, setProps, updateSchema }] = useForm({
     schemas: searchFormSchema,
-    labelWidth: 100,
-    actionColOptions: { style: 'max-width:unset; position: absolute; right: 10px;' },
     submitFunc: _reloadTable,
     resetFunc: resetFunc,
     submitOnReset: true,
+    labelWidth: 140,
+    showAdvancedButton: false,
+    baseColProps: { flex: '0 0 373px' },
+    actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
     compact: true,
   });
 
@@ -571,5 +573,10 @@
     top: v-bind('totalStyle.top');
     bottom: v-bind('totalStyle.bottom');
     background-color: v-bind('totalStyle.backgroundColor');
+  }
+
+  :deep(.ant-form-item-control-input-content > .ant-btn) {
+    margin-left: 5px;
+    float: right;
   }
 </style>

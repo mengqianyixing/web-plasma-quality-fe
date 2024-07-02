@@ -5,30 +5,39 @@
     title="扫描出库"
     showFooter
     width="85%"
+    :min-height="600"
     :showOkBtn="false"
   >
-    <div class="flex items-center gap-2 w-[300px]">
-      <span class="w-[120px] ml-4">血浆编号：</span>
-      <a-input
-        ref="inputRef"
-        size="large"
-        @press-enter="handleEnter"
-        placeholder="请扫描血浆编号"
-        :disabled="inputDisabled"
-        v-model:value="inputValue"
-      />
-    </div>
-    <div class="flex mt-3">
-      <BasicTable
-        @register="registerNoOutTable"
-        :title="'未出库袋数: ' + noOutTableData?.length"
-        :dataSource="noOutTableData"
-      />
-      <BasicTable
-        @register="registerOutStoreTable"
-        :title="'已出库袋数: ' + outTableData?.length"
-        :dataSource="outTableData"
-      />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <div class="flex items-center gap-2 w-[300px]">
+          <span class="w-[120px] ml-4">血浆编号：</span>
+          <a-input
+            ref="inputRef"
+            size="large"
+            @press-enter="handleEnter"
+            placeholder="请扫描血浆编号"
+            :disabled="inputDisabled"
+            v-model:value="inputValue"
+          />
+        </div>
+        <div class="flex" style="height: calc(100% - 40px)">
+          <div class="flex-1 shrink-1">
+            <BasicTable
+              @register="registerNoOutTable"
+              :title="'未出库袋数: ' + noOutTableData?.length"
+              :dataSource="noOutTableData"
+            />
+          </div>
+          <div class="flex-1 shrink-1">
+            <BasicTable
+              @register="registerOutStoreTable"
+              :title="'已出库袋数: ' + outTableData?.length"
+              :dataSource="outTableData"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </BasicModal>
 </template>

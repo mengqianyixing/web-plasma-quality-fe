@@ -24,6 +24,7 @@ export const columns: BasicColumn[] = [
     title: '存放不合格血浆原因',
     dataIndex: 'unqReason',
     ellipsis: false,
+    align: 'left',
   },
   {
     title: '库房名称',

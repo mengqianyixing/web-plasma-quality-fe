@@ -7,16 +7,23 @@
     :maskClosable="false"
     :destroyOnClose="true"
     width="85%"
+    :min-height="600"
     :footer="null"
   >
-    <BasicTable @register="registerTable">
-      <template #toolbar>
-        <div class="flex gap-2">
-          <a-button @click="suspend"> 暂停 </a-button>
-          <a-button @click="resume"> 继续 </a-button>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <div class="flex-1 h-full shrink-1">
+          <BasicTable @register="registerTable">
+            <template #toolbar>
+              <div class="flex gap-2">
+                <a-button @click="suspend"> 暂停 </a-button>
+                <a-button @click="resume"> 继续 </a-button>
+              </div>
+            </template>
+          </BasicTable>
         </div>
-      </template>
-    </BasicTable>
+      </div>
+    </div>
   </BasicModal>
 </template>
 
@@ -108,7 +115,6 @@
         disabled: record.freedBy,
       }),
     },
-    clickToRowSelect: false,
     size: 'small',
     immediate: false,
     striped: false,
@@ -117,7 +123,7 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    isCanResizeParent: true,
   });
 
   const { createConfirm } = useMessage();

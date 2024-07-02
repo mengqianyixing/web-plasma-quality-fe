@@ -9,14 +9,18 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 80,
   },
   {
     title: '浆员编号',
     dataIndex: 'cardNo',
+    width: 110,
   },
   {
     title: '浆员姓名',
     dataIndex: 'name',
+    width: 100,
+    ellipsis: false,
   },
   {
     title: '浆员性别',
@@ -29,6 +33,7 @@ export const columns: BasicColumn[] = [
       }
       return '';
     },
+    width: 80,
   },
   {
     title: '浆员状态',
@@ -36,6 +41,7 @@ export const columns: BasicColumn[] = [
     format: (text) => {
       return donorStatusMap.get(text as donorStatusValueEnum) as string;
     },
+    width: 100,
   },
   {
     title: '拒绝日期',
@@ -43,10 +49,13 @@ export const columns: BasicColumn[] = [
     format: (text) => {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
+    width: 100,
   },
   {
     title: '拒绝原因',
     dataIndex: 'refuseReason',
+    width: 140,
+    ellipsis: false,
   },
   {
     title: '最后采浆日期',
@@ -54,14 +63,19 @@ export const columns: BasicColumn[] = [
     format: (text) => {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
+    width: 100,
   },
   {
     title: '回访日期',
     dataIndex: 'callBackDate',
+    width: 100,
   },
+
   {
     title: '失败原因',
     dataIndex: 'failureReason',
+    width: 140,
+    ellipsis: false,
   },
 ];
 

@@ -4,7 +4,7 @@
     @register="register"
     title="回访明细"
     width="85%"
-    :min-height="700"
+    :min-height="600"
     :showOkBtn="false"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">

@@ -4,7 +4,7 @@
     @register="registerModal"
     title="排架列表"
     width="1000px"
-    :minHeight="480"
+    :minHeight="600"
     @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">

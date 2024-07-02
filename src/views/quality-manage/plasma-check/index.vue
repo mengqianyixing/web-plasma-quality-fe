@@ -139,9 +139,6 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-    scroll: {
-      x: 0,
-    },
     bordered: true,
     showIndexColumn: false,
     canResize: true,

@@ -20,7 +20,7 @@
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
         <BasicForm @register="registerForm" />
-        <div class="flex-1 shrink-1" style="height: calc(100% - 56px)">
+        <div class="flex-1 shrink-1" style="height: calc(100% - 76px)">
           <BasicTable @register="registerTable" />
         </div>
       </div>

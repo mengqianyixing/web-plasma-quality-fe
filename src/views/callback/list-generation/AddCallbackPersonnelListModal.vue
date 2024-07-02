@@ -4,7 +4,7 @@
     @register="register"
     :title="getTitle"
     width="85%"
-    :min-height="680"
+    :min-height="600"
     showFooter
     @ok="handleOk"
     @cancel="handleCancel"

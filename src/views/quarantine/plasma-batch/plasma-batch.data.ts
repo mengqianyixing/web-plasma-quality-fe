@@ -110,6 +110,7 @@ export const columns: BasicColumn[] = [
     title: '报告生成人',
     dataIndex: 'creator',
     width: 100,
+    ellipsis: false,
   },
   {
     title: '报告生成日期',
@@ -120,6 +121,7 @@ export const columns: BasicColumn[] = [
   {
     title: '复核人',
     dataIndex: 'reviewer',
+    ellipsis: false,
     width: 100,
   },
   {

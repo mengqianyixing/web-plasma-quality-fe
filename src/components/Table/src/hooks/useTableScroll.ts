@@ -148,6 +148,8 @@ export function useTableScroll(
       let formHeight = unref(formRef)?.$el.offsetHeight ?? 0;
       if (formHeight) {
         formHeight += formMargin;
+      } else {
+        formHeight += 20;
       }
       if (isBoolean(pagination) && !pagination) {
         paginationMargin = 0;

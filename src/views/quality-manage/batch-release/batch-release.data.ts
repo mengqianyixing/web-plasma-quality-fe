@@ -16,7 +16,7 @@ export const columns: BasicColumn[] = [
     title: '制造批号',
     dataIndex: 'mesId',
     slots: { customRender: 'mesId' },
-    width: 120,
+    width: 200,
   },
   {
     title: '投产类型',
@@ -246,14 +246,23 @@ export const formColumns: BasicColumn[] = [
   {
     title: '审核项目',
     dataIndex: 'appName',
+    ellipsis: false,
+    width: 120,
+    align: 'left',
   },
   {
     title: '审核内容',
     dataIndex: 'appContent',
+    ellipsis: false,
+    width: 360,
+    align: 'left',
   },
   {
     title: '审核结果',
     dataIndex: 'appResult',
+    ellipsis: false,
+    width: 200,
+    align: 'left',
   },
 ];
 

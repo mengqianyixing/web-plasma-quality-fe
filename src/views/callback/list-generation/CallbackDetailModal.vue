@@ -4,7 +4,7 @@
     @register="register"
     :title="getTitle"
     width="85%"
-    :min-height="700"
+    :min-height="600"
     :showOkBtn="false"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
@@ -90,7 +90,6 @@
     contentStyle: {
       width: '25%',
     },
-    title: '名单信息',
     schema: descriptionSchema,
   });
 
@@ -130,9 +129,7 @@
     useSearchForm: true,
     bordered: true,
     showIndexColumn: true,
-    scroll: {
-      x: 0,
-    },
+
     isCanResizeParent: true,
     inset: true,
     immediate: true,

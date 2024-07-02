@@ -4,7 +4,7 @@
     @register="registerModal"
     width="800px"
     title="混样详情"
-    :minHeight="480"
+    :minHeight="600"
     @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit mixdt-table">

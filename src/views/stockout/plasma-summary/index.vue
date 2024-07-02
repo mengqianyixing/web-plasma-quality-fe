@@ -40,27 +40,34 @@
     {
       title: '血浆批号',
       dataIndex: 'batchNo',
+      width: 110,
     },
     {
       title: '采浆公司',
       dataIndex: 'stationName',
+      width: 80,
     },
     {
       title: '血浆总数',
       dataIndex: 'bagCount',
+      width: 80,
+
       // slots: { customRender: 'boxCount' },
     },
     {
-      title: '投产出库数量（袋）',
+      title: '投产出库数量(袋)',
       dataIndex: 'proOutCount',
+      width: 140,
     },
     {
-      title: '非投产出库数量（袋）',
+      title: '非投产出库数量(袋)',
       dataIndex: 'unProOutCount',
+      width: 140,
     },
     {
       title: '不合格数量',
       dataIndex: 'unqualifiedCount',
+      width: 100,
     },
     {
       title: '状态',
@@ -73,20 +80,25 @@
         }
         return '';
       },
+      width: 80,
     },
     {
       title: '汇总日期',
       dataIndex: 'createAt',
       format: (text) => (text ? dayjs(text).format('YYYY-MM-DD') : '-'),
+      width: 100,
     },
     {
       title: '打印人',
       dataIndex: 'printor',
+      width: 100,
+      ellipsis: false,
     },
     {
       title: '打印日期',
       dataIndex: 'printAt',
       format: (text) => (text ? dayjs(text).format('YYYY-MM-DD') : '-'),
+      width: 100,
     },
   ];
 

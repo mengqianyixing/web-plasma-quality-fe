@@ -49,6 +49,7 @@
     formConfig: {
       schemas: formSchema,
     },
+    size: 'small',
     immediate: false,
     rowKey: 'trayNo',
     columns: columns,

@@ -19,13 +19,13 @@ export const columns: BasicColumn[] = [
   {
     title: '样本批号',
     dataIndex: 'sampleBatchNo',
-    width: 110,
+    width: 130,
   },
 
   {
     title: '样本编号',
     dataIndex: 'sampleNo',
-    width: 110,
+    width: 140,
   },
   {
     title: '采集日期',
@@ -71,6 +71,7 @@ export const columns: BasicColumn[] = [
     title: '打印人',
     dataIndex: 'printer',
     width: 100,
+    ellipsis: false,
   },
   {
     title: '打印时间',

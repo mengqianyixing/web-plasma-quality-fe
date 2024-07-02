@@ -4,7 +4,7 @@
     @register="register"
     title="样本批次列表"
     width="80%"
-    :minHeight="740"
+    :minHeight="600"
     @ok="handleSelect"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
@@ -14,10 +14,10 @@
             {{ formatSampleType(record?.sampleType) }}
           </template>
         </BasicTable>
-        <div class="flex gap-2 ml-4">
-          <div>未验收批次数: {{ waitVerifyBatchCount }}</div>
-          <div>未验收样本数: {{ waitVerifySampleCount }}</div>
-        </div>
+      </div>
+      <div class="absolute bottom-5px flex gap-2 ml-4">
+        <div>未验收批次数: {{ waitVerifyBatchCount }}</div>
+        <div>未验收样本数: {{ waitVerifySampleCount }}</div>
       </div>
     </div>
   </BasicModal>
@@ -87,7 +87,7 @@
       bordered: true,
       showIndexColumn: false,
       isCanResizeParent: true,
-      inset: true,
+      inset: false,
       immediate: false,
     });
 

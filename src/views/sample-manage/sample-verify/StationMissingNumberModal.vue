@@ -1,7 +1,18 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="register" title="缺号列表" width="80%" :showOkBtn="false">
-    <div>
-      <BasicTable @register="registerTable" />
+  <BasicModal
+    v-bind="$attrs"
+    @register="register"
+    title="缺号列表"
+    width="80%"
+    :min-height="600"
+    :showOkBtn="false"
+  >
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <div class="flex-1 h-full shrink-1">
+          <BasicTable @register="registerTable" />
+        </div>
+      </div>
     </div>
   </BasicModal>
 </template>
@@ -32,7 +43,7 @@
     useSearchForm: false,
 
     bordered: true,
-    canResize: false,
+    isCanResizeParent: true,
     immediate: false,
   });
 

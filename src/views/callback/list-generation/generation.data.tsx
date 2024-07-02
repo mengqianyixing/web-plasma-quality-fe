@@ -251,7 +251,8 @@ export const callbackDetailModalColumns: BasicColumn[] = [
   {
     title: '浆员姓名',
     dataIndex: 'donorName',
-    width: 70,
+    width: 80,
+    ellipsis: false,
   },
   {
     title: '血浆状态',
@@ -274,7 +275,7 @@ export const callbackDetailModalColumns: BasicColumn[] = [
     format: (text) => {
       return donorStatusMap.get(text as donorStatusValueEnum) as string;
     },
-    width: 65,
+    width: 80,
   },
   {
     title: '拒绝日期',
@@ -282,15 +283,18 @@ export const callbackDetailModalColumns: BasicColumn[] = [
     format: (text) => {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
+    width: 100,
   },
   {
     title: '拒绝原因',
     dataIndex: 'refuseReason',
+    width: 140,
+    ellipsis: false,
   },
   {
     title: '最早采浆血浆编号',
     dataIndex: 'minPlasmaNo',
-    width: 150,
+    width: 140,
   },
   {
     title: '最早待回访采浆日期',
@@ -304,7 +308,7 @@ export const callbackDetailModalColumns: BasicColumn[] = [
     title: '待追踪袋数',
     dataIndex: 'plasmaCount',
     slots: { customRender: 'plasmaCount' },
-    width: 80,
+    width: 100,
   },
   {
     title: '最后采浆日期',
@@ -312,6 +316,7 @@ export const callbackDetailModalColumns: BasicColumn[] = [
     format: (text) => {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
+    width: 100,
   },
   {
     title: '回访日期',
@@ -342,6 +347,7 @@ export const callbackDetailModalColumns: BasicColumn[] = [
   {
     title: '剩余天数',
     dataIndex: 'deadline',
+    width: 80,
   },
 ];
 
@@ -451,7 +457,6 @@ export const callbackDetailFormSchema: FormSchema[] = [
     field: 'immType',
     label: '血浆类型',
     component: 'Select',
-    colProps: { span: 4 },
     componentProps: {
       options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
@@ -460,19 +465,16 @@ export const callbackDetailFormSchema: FormSchema[] = [
     field: 'gapDays',
     label: '距今未采浆天数',
     component: 'InputNumber',
-    colProps: { span: 4 },
   },
   {
     field: 'cardNo',
     label: '浆员编号',
     component: 'Input',
-    colProps: { span: 5 },
   },
   {
     field: '[minCollectTime, maxCollectTime]',
     label: '最早待回访日期',
     component: 'RangePicker',
-    colProps: { span: 7 },
   },
 ];
 

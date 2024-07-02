@@ -14,7 +14,7 @@
     width="1000px"
     show-footer
     @ok="okFun"
-    :minHeight="480"
+    :minHeight="600"
     @fullscreen="redoHeight"
     @cancel="emit('close')"
   >

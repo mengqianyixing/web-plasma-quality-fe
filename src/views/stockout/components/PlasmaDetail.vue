@@ -9,8 +9,12 @@
     defaultFullscreen
     :destroyOnClose="true"
     :canFullscreen="false"
+    :min-height="600"
   >
-    <BasicTable @register="registerTable" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <div class="flex-1 h-full shrink-1"> <BasicTable @register="registerTable" /> </div></div
+    ></div>
   </BasicModal>
 </template>
 
@@ -214,5 +218,6 @@
     immediate: false,
     bordered: true,
     showIndexColumn: false,
+    isCanResizeParent: true,
   });
 </script>

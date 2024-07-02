@@ -20,7 +20,7 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
-    width: 120,
+    width: 135,
   },
   {
     title: '浆员编号',

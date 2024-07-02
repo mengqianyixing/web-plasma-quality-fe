@@ -164,9 +164,7 @@
         selectedRowsRef.value = selectedRows;
       },
     },
-    scroll: {
-      x: 0,
-    },
+
     size: 'small',
     striped: false,
     useSearchForm: true,

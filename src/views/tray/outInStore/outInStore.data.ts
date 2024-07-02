@@ -21,19 +21,19 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationNames',
-    width: 130,
+    width: 100,
     ellipsis: false,
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNoes',
-    width: 130,
+    width: 150,
     ellipsis: false,
   },
   {
     title: '箱号类型',
     dataIndex: 'boxTypes',
-    width: 130,
+    width: 100,
     ellipsis: false,
   },
   {
@@ -67,11 +67,12 @@ export const columns: BasicColumn[] = [
     title: '打印人',
     dataIndex: 'creater',
     width: 90,
+    ellipsis: false,
   },
   {
     title: '打印时间',
     dataIndex: 'createAt',
-    width: 150,
+    width: 160,
   },
   {
     title: '托盘状态',

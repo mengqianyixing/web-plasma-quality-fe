@@ -12,12 +12,7 @@
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
-        <BasicTable
-          @register="registerTable"
-          class="my-table"
-          :searchInfo="searchInfo"
-          :scroll="{ y: 420 }"
-        >
+        <BasicTable @register="registerTable" :searchInfo="searchInfo">
           <template #bodyCell="{ column, text }">
             <template v-if="column.dataIndex === 'acceptState'">
               {{ optsTransMap(receiveOpts, 'value', 'label')[text] }}
@@ -176,7 +171,6 @@
       field: 'stationNo',
       label: '采浆公司',
       component: 'Select',
-      colProps: { span: 4 },
       componentProps: {
         options: stationOptions,
       },
@@ -185,13 +179,11 @@
       field: 'batchNo',
       label: '血浆批次',
       component: 'Input',
-      colProps: { span: 4 },
     },
     {
       field: 'acceptState',
       label: '接收状态',
       component: 'Select',
-      colProps: { span: 5 },
       defaultValue: [],
       componentProps: {
         mode: 'multiple',
@@ -202,7 +194,6 @@
       field: 'verifyState',
       label: '验收状态',
       component: 'Select',
-      colProps: { span: 5 },
       defaultValue: [],
       componentProps: {
         mode: 'multiple',
@@ -218,7 +209,6 @@
     api: getBatchSummary,
     columns,
     formConfig: {
-      labelWidth: 75,
       schemas: searchFormSchema,
     },
     immediate: true,
@@ -251,7 +241,8 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    isCanResizeParent: true,
+    inset: false,
   });
 
   // 确认选择批号

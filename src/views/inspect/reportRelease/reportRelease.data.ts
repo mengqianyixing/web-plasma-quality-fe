@@ -152,7 +152,6 @@ export const columnsMap: Record<number, BasicColumn[]> = {
       title: '检测项目',
       width: 120,
       ellipsis: false,
-      align: 'left',
     },
     {
       dataIndex: 'titerValue',
@@ -172,7 +171,6 @@ export const columnsMap: Record<number, BasicColumn[]> = {
       title: '检测项目',
       width: 120,
       ellipsis: false,
-      align: 'left',
     },
     {
       dataIndex: 'titerValue',
@@ -195,7 +193,6 @@ export const columnsMap: Record<number, BasicColumn[]> = {
       title: '检测项目',
       width: 120,
       ellipsis: false,
-      align: 'left',
     },
     {
       dataIndex: 'titerType',
@@ -214,7 +211,7 @@ export const columnsMap: Record<number, BasicColumn[]> = {
       dataIndex: 'projectName',
       title: '不合格项目',
       ellipsis: false,
-      width: 900,
+      width: 300,
       align: 'left',
     },
   ],
@@ -223,7 +220,7 @@ export const totalUnqualifiedColumns: BasicColumn[] = [
   {
     dataIndex: 'sampleNo',
     title: '样品编号',
-    width: 100,
+    width: 140,
   },
   {
     dataIndex: 'cardNo',

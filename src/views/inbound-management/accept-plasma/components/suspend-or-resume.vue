@@ -10,17 +10,14 @@
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
         <BasicForm @register="registerForm" />
-      </div>
-      <div class="float-right mr-[420px] mb-5">
-        <a-button type="primary" @click="confirm" :loading="submitLoading"> 暂停 </a-button>
-      </div>
-
-      <div class="flex-1 shrink-1" style="height: calc(100% - 170px)">
-        <BasicTable @register="registerTable" :columns="columns">
-          <template #toolbar>
-            <a-button type="primary" @click="clickResume" :loading="resumeLoading">继续</a-button>
-          </template>
-        </BasicTable>
+        <div style="height: calc(100% - 70px)">
+          <BasicTable @register="registerTable" :columns="columns">
+            <template #toolbar>
+              <a-button type="primary" @click="confirm" :loading="submitLoading"> 暂停 </a-button>
+              <a-button type="primary" @click="clickResume" :loading="resumeLoading">继续</a-button>
+            </template>
+          </BasicTable>
+        </div>
       </div>
     </div>
     <LoginModal
@@ -403,5 +400,6 @@
   // 登录成功事件
   function handleSuccess(nickname: string) {
     searchForm.value.checker = nickname;
+    setFieldsValue({ checker: nickname });
   }
 </script>

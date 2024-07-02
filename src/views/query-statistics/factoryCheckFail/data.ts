@@ -24,7 +24,7 @@ export const columns: BasicColumn[] = [
   {
     title: '样本编号',
     dataIndex: 'sampleNo',
-    width: 120,
+    width: 140,
   },
   {
     title: '浆员编号',
@@ -57,7 +57,7 @@ export const columns: BasicColumn[] = [
   {
     title: '已销毁血浆编号',
     dataIndex: 'destroyedBagNo',
-    width: 120,
+    width: 125,
     ellipsis: false,
   },
   {

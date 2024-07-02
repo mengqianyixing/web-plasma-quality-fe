@@ -8,6 +8,7 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 80,
   },
   {
     title: '血浆批号',
@@ -17,6 +18,7 @@ export const columns: BasicColumn[] = [
   {
     title: '验收数量',
     dataIndex: 'verifyCount',
+    width: 80,
   },
   {
     title: '验收日期',
@@ -24,6 +26,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '合格血浆数量',
@@ -38,6 +41,8 @@ export const columns: BasicColumn[] = [
   {
     title: '检测结果发布人',
     dataIndex: 'testIssuer',
+    width: 80,
+    ellipsis: false,
   },
   {
     title: '检测结果发布日期',
@@ -45,16 +50,19 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
-    width: 110,
+    width: 100,
   },
   {
     title: '审核单号',
     dataIndex: 'auditId',
     slots: { customRender: 'auditId' },
+    width: 80,
   },
   {
     title: '审核人',
     dataIndex: 'auditer',
+    width: 80,
+    ellipsis: false,
   },
   {
     title: '审核日期',
@@ -62,10 +70,13 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '复核人',
     dataIndex: 'rechecker',
+    width: 80,
+    ellipsis: false,
   },
   {
     title: '复核日期',
@@ -73,10 +84,13 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '批准人',
     dataIndex: 'approver',
+    width: 80,
+    ellipsis: false,
   },
   {
     title: '批准日期',
@@ -84,6 +98,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '状态',
@@ -91,6 +106,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return PlasmaCheckStateMap.get(text as PlasmaCheckStateValueEnum) as string;
     },
+    width: 80,
   },
 ];
 

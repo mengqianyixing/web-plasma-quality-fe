@@ -98,6 +98,7 @@ export const columns: BasicColumn[] = [
     title: '计划人',
     dataIndex: 'planner',
     width: 100,
+    ellipsis: false,
   },
   {
     title: '计划日期',
@@ -109,6 +110,7 @@ export const columns: BasicColumn[] = [
     title: '复核人',
     dataIndex: 'planReviewer',
     width: 100,
+    ellipsis: false,
   },
   {
     title: '复核日期',

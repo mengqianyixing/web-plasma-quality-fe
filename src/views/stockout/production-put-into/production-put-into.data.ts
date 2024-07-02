@@ -18,12 +18,14 @@ export const columns: BasicColumn[] = [
     title: '制造批号',
     dataIndex: 'mesId',
     align: 'left',
+    width: 120,
+    ellipsis: false,
     slots: { customRender: 'mesId' },
   },
   {
     title: '投产类型',
     dataIndex: 'orderType',
-    width: 100,
+    width: 80,
     format(text) {
       return `${PlasmaType(text)}`;
     },
@@ -31,7 +33,7 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆效期',
     dataIndex: 'expiration',
-    width: 100,
+    width: 80,
     format(text) {
       return expirationMap.get(<expirationValueEnum>text) as string;
     },
@@ -61,14 +63,18 @@ export const columns: BasicColumn[] = [
     title: '投浆箱数',
     dataIndex: 'boxNum',
     slots: { customRender: 'boxNum' },
+    width: 80,
   },
   {
     title: '投浆数量',
     dataIndex: 'totalNum',
+    width: 80,
   },
   {
     title: '投浆净重(kg)',
     dataIndex: 'totalWeight',
+    width: 120,
+
     format(text) {
       return Number(text) / 1000;
     },
@@ -76,6 +82,8 @@ export const columns: BasicColumn[] = [
   {
     title: '出库人',
     dataIndex: 'outPerson',
+    width: 100,
+    ellipsis: false,
   },
   {
     title: '出库日期',
@@ -83,10 +91,13 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '接收人',
     dataIndex: 'receiver',
+    width: 100,
+    ellipsis: true,
   },
   {
     title: '接收日期',
@@ -94,6 +105,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '状态',

@@ -5,36 +5,38 @@
     title="逐箱出库列表"
     showFooter
     width="85%"
-    :min-height="650"
+    :min-height="600"
     :showOkBtn="false"
     :cancelText="'关闭'"
     @cancel="handleClose"
   >
-    <div class="flex items-center gap-1 w-[300px]">
-      <span class="w-[80px]">箱号：</span>
-      <a-input
-        size="large"
-        @press-enter="_handleEnter"
-        placeholder="请扫箱号"
-        :disabled="inputDisabled"
-        v-model:value="inputValue"
-      />
-    </div>
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <div class="absolute w-full flex h-full">
-        <div class="flex-1 shrink-1">
-          <BasicTable
-            @register="registerNoOutTable"
-            :title="'未出库箱数: ' + (noOutTableData?.length ?? 'N/A')"
-            :dataSource="noOutTableData"
+      <div class="absolute w-full h-full">
+        <div class="flex items-center gap-1 w-[300px]">
+          <span class="w-[80px]">箱号：</span>
+          <a-input
+            size="large"
+            @press-enter="_handleEnter"
+            placeholder="请扫箱号"
+            :disabled="inputDisabled"
+            v-model:value="inputValue"
           />
         </div>
-        <div class="flex-1 shrink-1">
-          <BasicTable
-            @register="registerOutStoreTable"
-            :title="'已出库箱数: ' + (outTableData?.length ?? 'N/A')"
-            :dataSource="outTableData"
-          />
+        <div class="flex" style="height: calc(100% - 40px)">
+          <div class="flex-1 shrink-1">
+            <BasicTable
+              @register="registerNoOutTable"
+              :title="'未出库箱数: ' + (noOutTableData?.length ?? 'N/A')"
+              :dataSource="noOutTableData"
+            />
+          </div>
+          <div class="flex-1 shrink-1">
+            <BasicTable
+              @register="registerOutStoreTable"
+              :title="'已出库箱数: ' + (outTableData?.length ?? 'N/A')"
+              :dataSource="outTableData"
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@
     @register="register"
     title="浆员血浆袋详情"
     width="85%"
-    :min-height="700"
+    :min-height="600"
     :showOkBtn="false"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">

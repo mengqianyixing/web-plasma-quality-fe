@@ -5,7 +5,7 @@
     :title="getTitle"
     showFooter
     width="85%"
-    :min-height="680"
+    :min-height="600"
     @cancel="handleCancel"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">

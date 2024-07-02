@@ -5,6 +5,8 @@
     showFooter
     title="托盘入库"
     width="80%"
+    :show-cancel-btn="false"
+    :show-ok-btn="false"
     :minHeight="650"
     @fullscreen="redoHeight"
   >

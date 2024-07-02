@@ -3,7 +3,7 @@
     v-bind="$attrs"
     @register="registerModal"
     width="800px"
-    :minHeight="480"
+    :minHeight="600"
     @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">

@@ -15,7 +15,7 @@
         <template #toolbar>
           <div class="flex items-center justify-end bg-[#ffffff]">
             <div>
-              <a-button type="primary" @click="handleTrayOut"> 出库 </a-button>
+              <a-button class="mb-8px" type="primary" @click="handleTrayOut"> 出库 </a-button>
             </div>
           </div>
         </template>
@@ -77,7 +77,7 @@
   const gridOptions = reactive<VxeGridProps<any>>({
     border: true,
     showOverflow: true,
-    height: 550,
+    height: 580,
     align: 'center',
     size: 'small',
     exportConfig: {},

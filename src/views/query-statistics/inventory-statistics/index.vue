@@ -4,7 +4,7 @@
       <BasicForm @register="registerBasicForm" />
     </div>
     <a-tabs
-      class="mt-2"
+      class="mt-2 bg-white"
       default-active-key="inStockSummary"
       v-model:activeKey="currentKey"
       type="card"

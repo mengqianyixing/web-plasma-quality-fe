@@ -4,7 +4,7 @@
     @register="registerModal"
     title="扫描出库"
     width="80%"
-    :min-height="650"
+    :min-height="600"
     :showOkBtn="false"
   >
     <Description @register="register" :data="originTableData" />
@@ -152,7 +152,7 @@
   );
   const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
     border: true,
-    height: '600px',
+    height: '520px',
     showOverflow: true,
     exportConfig: {},
     columnConfig: {
@@ -189,7 +189,7 @@
 
   const gridOptionsAccept = reactive<VxeGridProps<any>>({
     border: true,
-    height: '600px',
+    height: '520px',
     showOverflow: true,
     columnConfig: {
       resizable: true,

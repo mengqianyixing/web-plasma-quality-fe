@@ -1,6 +1,7 @@
 <template>
   <BasicModal v-bind="$attrs" @register="register" title="本批详情" width="1400px" :minHeight="600">
     <template #footer>
+      <div class="absolute bottom-10px text-right">血浆总箱数：{{ verifyCount }}</div>
       <a-button @click="closeModal">关闭</a-button>
     </template>
     <BasicTable @register="registerTable">
@@ -14,7 +15,6 @@
         </span>
       </template>
     </BasicTable>
-    <div class="absolute bottom-2 right-[35px] text-right">血浆总箱数：{{ verifyCount }}</div>
   </BasicModal>
 </template>
 <script lang="ts" setup>

@@ -14,6 +14,7 @@ export const columns: BasicColumn[] = [
     title: '用户',
     dataIndex: 'users',
     width: 280,
+    ellipsis: false,
     format: (arr: Array<string> & any) => arr.map((_) => _.split('/')[1]).join(','),
   },
   {

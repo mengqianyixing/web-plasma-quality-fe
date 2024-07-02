@@ -1,6 +1,5 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
-import { FormItem, FormItemRest } from 'ant-design-vue';
 import { useStation } from '@/hooks/common/useStation';
 import dayjs from 'dayjs';
 
@@ -211,40 +210,14 @@ export const searchFormSchema: FormSchema[] = [
     field: 'stationNo',
     label: '采浆公司',
     component: 'Select',
-    colProps: {
-      span: 5,
-    },
     componentProps: {
       options: stationOptions,
+      class: 'w-full',
     },
-    show: true,
   },
   {
-    field: 'batchStartNo',
-    fields: ['batchEndNo'],
-    component: 'Input',
-    label: '血浆批号起止',
-    labelWidth: 120,
-    colProps: {
-      span: 8,
-      push: 2,
-    },
-    render({ model, field }) {
-      return (
-        <div class="flex gap-2 items-center justify-center">
-          <FormItem name="batchEndNo">
-            <FormItemRest>
-              <a-input class="w-200px" v-model:value={model[field]} />
-            </FormItemRest>
-          </FormItem>
-          <span>-</span>
-          <FormItem name="batchEndNo">
-            <FormItemRest>
-              <a-input class="w-200px" v-model:value={model['batchEndNo']} />
-            </FormItemRest>
-          </FormItem>
-        </div>
-      );
-    },
+    field: '[batchStartNo,batchEndNo]',
+    component: 'InputRange',
+    label: '血浆批号',
   },
 ];

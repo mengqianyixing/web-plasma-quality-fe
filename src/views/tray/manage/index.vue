@@ -31,7 +31,14 @@
         </span>
       </template>
     </BasicTable>
-    <BasicModal @register="registerModal" @ok="submit" showFooter title="托盘打印">
+    <BasicModal
+      @register="registerModal"
+      @ok="submit"
+      width="300px"
+      :min-height="60"
+      showFooter
+      title="托盘打印"
+    >
       <BasicForm @register="registerForm" />
     </BasicModal>
     <TableModal @register="registerTableModal" />

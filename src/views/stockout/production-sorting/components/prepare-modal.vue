@@ -7,9 +7,16 @@
     @cancel="resetField"
     :destroyOnClose="true"
     :maskClosable="false"
+    :min-height="600"
     width="85%"
   >
-    <BasicTable @register="registerTable" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <div class="flex-1 h-full shrink-1">
+          <BasicTable @register="registerTable" />
+        </div>
+      </div>
+    </div>
   </BasicModal>
 </template>
 
@@ -46,12 +53,12 @@
     {
       title: '投产准备号',
       dataIndex: 'prepareNo',
-      width: 180,
+      width: 120,
     },
     {
       title: '投产类型',
       dataIndex: 'prodType',
-      width: 100,
+      width: 80,
       format(text) {
         return `${PlasmaType(text)}`;
       },
@@ -59,6 +66,7 @@
     {
       title: '挑浆模式',
       dataIndex: 'pickMode',
+      width: 120,
       format(text) {
         return `${pickModeMap.get(text as pickModeValueEnum)}`;
       },
@@ -66,6 +74,7 @@
     {
       title: '批次数量',
       dataIndex: 'batchCount',
+      width: 80,
       customRender: ({ record }) => {
         if (record.summary && record.summary.batchCount !== null) {
           return record.summary.batchCount;
@@ -82,6 +91,7 @@
         }
         return '';
       },
+      width: 110,
     },
     {
       title: '投产血浆数量',
@@ -92,6 +102,7 @@
         }
         return '';
       },
+      width: 110,
     },
     {
       title: '浆员数量',
@@ -102,10 +113,12 @@
         }
         return '';
       },
+      width: 80,
     },
     {
       title: '准备人',
       dataIndex: 'creator',
+      width: 100,
     },
     {
       title: '准备时间',
@@ -113,11 +126,12 @@
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
       },
+      width: 140,
     },
     {
       title: '状态',
       dataIndex: 'prepareState',
-      width: 100,
+      width: 80,
       format(text) {
         return `${prepareStateMap.get(text as prepareStateValueEnum)}`;
       },
@@ -189,7 +203,7 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    isCanResizeParent: true,
   });
 
   // 确认选择

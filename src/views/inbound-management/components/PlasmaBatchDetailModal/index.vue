@@ -8,6 +8,7 @@
     @cancel="handleClose"
   >
     <template #footer>
+      <div class="absolute text-right">血浆总袋数：{{ verifyCount }}</div>
       <a-button @click="handleClose">关闭</a-button>
     </template>
     <BasicForm
@@ -35,7 +36,6 @@
         <span>{{ PlasmaStateMap.get(row?.verifyState) }}</span>
       </template>
     </vxe-grid>
-    <div class="absolute -bottom-1 right-[35px] text-right">血浆总袋数：{{ verifyCount }}</div>
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -69,7 +69,7 @@
 
   const gridOptions = reactive<VxeGridProps<any>>({
     border: true,
-    height: '520px',
+    height: '500px',
     showOverflow: true,
     exportConfig: {},
     columnConfig: {

@@ -74,6 +74,11 @@
       field: 'bagNo',
       label: '样本编号',
       contentMinWidth: 100,
+      labelStyle: {
+        display: 'flex',
+        alignItems: 'center',
+        height: '100%',
+      },
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[300px]" ref="bagRef">
