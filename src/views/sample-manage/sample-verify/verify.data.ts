@@ -57,6 +57,17 @@ export const searchFormSchema: FormSchema[] = [
     },
     defaultValue: ['W', 'R'],
   },
+  {
+    field: 'sampleType',
+    label: '样本类型',
+    component: 'Select',
+    componentProps: {
+      options: [
+        { label: '血浆样本', value: 'NOR' },
+        { label: '回访样本', value: 'CAB' },
+      ],
+    },
+  },
 ];
 
 export const missingNumberListColumns: BasicColumn[] = [
