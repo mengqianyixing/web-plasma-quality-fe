@@ -160,6 +160,10 @@
 
   const dlvNo = ref('');
   const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
+    setModalProps({
+      maskClosable: false,
+      destroyOnClose: true,
+    });
     dlvNo.value = data.dlvNo;
   });
 
