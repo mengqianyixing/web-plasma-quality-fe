@@ -45,6 +45,7 @@ export enum SERVER_ENUM {
   DlvType = 'DlvType',
   BatchOperationSumState = 'BatchOperationSumState',
   BankDeliverstateType = 'BankDeliverstateType',
+  BankNonProdDeliverState = 'BankNonProdDeliverState',
   SampleDeliverType = 'SampleDeliverType',
   BlockSource = 'BlockSource',
   BagBlockSource = 'BagBlockSource',
