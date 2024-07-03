@@ -89,6 +89,7 @@
 
   const [register, { setModalProps, closeModal }] = useModalInner((data) => {
     resetFields();
+    tableSelected.value = [];
     columns.value = [
       {
         title: '验收人',
@@ -163,10 +164,7 @@
         },
         'batchNo',
       );
-      updateSchema({
-        field: 'remark',
-        required: true,
-      });
+      updateSchema({ field: 'remark', required: true });
       columns.value.splice(1, 0, {
         title: '复核人',
         dataIndex: 'reviewer',
@@ -197,7 +195,7 @@
 
   const [
     registerForm,
-    { validate, resetFields, setFieldsValue, updateSchema, appendSchemaByField },
+    { validate, resetFields, setFieldsValue, updateSchema, appendSchemaByField, clearValidate },
   ] = useForm({
     showActionButtonGroup: false,
     labelWidth: 80,
@@ -314,6 +312,8 @@
         await plasmaPauseBox(params as unknown as PostApiCoreBatchPlasmaVerifyBoxPauseRequest);
 
         success('提交成功!');
+        setFieldsValue({ remark: '' });
+        clearValidate();
 
         await reload();
         emit('close', false);
@@ -332,7 +332,8 @@
         submitLoading.value = true;
         await plasmaPauseBatch(params as PostApiCoreBatchPlasmaVerifyBoxPauseRequest);
         success('提交成功!');
-
+        setFieldsValue({ checker: '', remark: '' });
+        clearValidate();
         await reload();
         emit('close', false);
         emit('clearInfo');
@@ -349,11 +350,9 @@
       return;
     }
     const firstSelectedItem = tableSelected.value[0];
-
     if (searchForm.value.pattern === 'BOX') {
       try {
         const values = await validate();
-
         const params = {
           ...values,
           boxNo: firstSelectedItem?.boxNo,
@@ -365,10 +364,10 @@
 
         success('操作成功!');
         await reload();
-      } finally {
-        resumeLoading.value = false;
         emit('refresh-data');
         closeModal();
+      } finally {
+        resumeLoading.value = false;
       }
     } else if (searchForm.value.pattern === 'BCH') {
       try {
@@ -382,10 +381,10 @@
         await plasmaPauseBatch(params as PostApiCoreBatchPlasmaVerifyBatchPauseRequest);
         success('操作成功!');
         await reload();
-      } finally {
-        resumeLoading.value = false;
         emit('refresh-data');
         closeModal();
+      } finally {
+        resumeLoading.value = false;
       }
     }
   };
