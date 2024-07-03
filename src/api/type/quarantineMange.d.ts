@@ -136,11 +136,11 @@ export interface GetApiSearchPlasmaExpiredResponse {
 }
 
 /**
- * 接口 [超一年前二次确认↗](https://yapi.sharing8.cn/project/529/interface/api/32952) 的 **请求类型**
+ * 接口 [超一年期确认↗](https://yapi.sharing8.cn/project/529/interface/api/32952) 的 **请求类型**
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `POST /api/core/bag/plasma/expired`
- * @更新时间 `2024-07-03 14:36:15`
+ * @更新时间 `2024-07-03 17:36:38`
  */
 export interface PostApiCoreBagPlasmaExpiredRequest {
   /**
@@ -154,11 +154,11 @@ export interface PostApiCoreBagPlasmaExpiredRequest {
 }
 
 /**
- * 接口 [超一年前二次确认↗](https://yapi.sharing8.cn/project/529/interface/api/32952) 的 **返回类型**
+ * 接口 [超一年期确认↗](https://yapi.sharing8.cn/project/529/interface/api/32952) 的 **返回类型**
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `POST /api/core/bag/plasma/expired`
- * @更新时间 `2024-07-03 14:36:15`
+ * @更新时间 `2024-07-03 17:36:38`
  */
 export type PostApiCoreBagPlasmaExpiredResponse = null;
 

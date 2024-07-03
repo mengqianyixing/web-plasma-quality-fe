@@ -23,6 +23,7 @@
           type="primary"
           @click="handleImport"
           :disabled="!props.bsNo"
+          :loading="imLoading"
           v-auth="InspectButtonEnum.ResultRegistrationTiterImport"
         >
           效价导入
@@ -71,6 +72,7 @@
       "
     />
     <ImportModal @register="registerImportModal" @close="reload" />
+    <SqImportModal @register="registerSqImportModal" @close="reload" />
     <EnterRusult
       @register="registerEnterModal"
       @close="reload"
@@ -101,17 +103,20 @@
   import NotCheck from './notCheck.vue';
   import EnterRusult from './enterRusult.vue';
   import ImportModal from './importDrawer.vue';
+  import SqImportModal from './sqImportDrawer.vue';
   import { useModal } from '@/components/Modal';
   import {
     getTiterListApi,
     submitSqImportApi,
     removeCheckApi,
+    getNucleicUnqApi,
   } from '@/api/inspect/resultRegistration';
   import { watch, nextTick, onMounted, ref } from 'vue';
   import { message, Modal } from 'ant-design-vue';
   import { getInspectMethodListApi } from '@/api/inspect/inspectMethod';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
   import { BasicForm, useForm } from '@/components/Form';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const emit = defineEmits(['reload']);
   const props = defineProps({
@@ -123,6 +128,7 @@
   const options = ref<any[]>([]);
   const methodMap = ref(new Map());
   const sqLoading = ref(false);
+  const imLoading = ref(false);
 
   watch(
     () => props.bsNo,
@@ -134,10 +140,13 @@
       immediate: true,
     },
   );
+  const { createConfirm } = useMessage();
+
   const [registerDtModal, { openModal: openDtModal }] = useModal();
   const [registerNotCheckModal, { openModal: openNotCheckModal }] = useModal();
   const [registerEnterModal, { openModal: openEnterModal }] = useModal();
   const [registerImportModal, { openModal: openImportModal }] = useModal();
+  const [registerSqImportModal, { openModal: openSqImportModal }] = useModal();
   const [registerForm, { resetFields, clearValidate, validate }] = useForm({
     labelWidth: 60,
     baseColProps: { span: 24 },
@@ -203,19 +212,54 @@
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     if (rows.length > 1) return message.warning('只能选择一条数据');
+    sqLoading.value = true;
     try {
-      sqLoading.value = true;
-      await submitSqImportApi({ bsNo: props.bsNo, project: rows[0].projectId });
-      reload();
+      const res = await getNucleicUnqApi({ bsNo: props.bsNo });
+      if (res) {
+        createConfirm({
+          iconType: 'warning',
+          title: '提示',
+          content: '核酸不合格确认导入效价？',
+          onOk: async () => {
+            sqLoading.value = true;
+            try {
+              const res = await submitSqImportApi({ bsNo: props.bsNo, project: rows[0].projectId });
+              openSqImportModal(true, res);
+            } finally {
+              sqLoading.value = false;
+            }
+          },
+        });
+      } else {
+        const res = await submitSqImportApi({ bsNo: props.bsNo, project: rows[0].projectId });
+        openSqImportModal(true, res);
+      }
     } finally {
       sqLoading.value = false;
     }
   }
-  function handleImport() {
+  async function handleImport() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     if (rows.length > 1) return message.warning('只能选择一条数据');
-    openImportModal(true, { ...rows[0], bsNo: props.bsNo });
+    imLoading.value = true;
+    try {
+      const res = await getNucleicUnqApi({ bsNo: props.bsNo });
+      if (res) {
+        createConfirm({
+          iconType: 'warning',
+          title: '提示',
+          content: '核酸不合格确认导入效价？',
+          onOk: () => {
+            openImportModal(true, { ...rows[0], bsNo: props.bsNo });
+          },
+        });
+      } else {
+        openImportModal(true, { ...rows[0], bsNo: props.bsNo });
+      }
+    } finally {
+      imLoading.value = false;
+    }
   }
   function handleNotCheck() {
     const projectIds = getSelectRows().map((_) => _.projectId);

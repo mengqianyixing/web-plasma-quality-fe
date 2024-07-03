@@ -133,6 +133,14 @@ const checkManager: AppRouteModule = {
           id: ReCheckButtonEnum.ResultReRegistCheck,
           title: '撤销检测结果登记复核人权限',
         },
+        {
+          id: ReCheckButtonEnum.TiterImportConfirmationCheck,
+          title: '效价导入确认复核人权限',
+        },
+        {
+          id: ReCheckButtonEnum.TiterSqImportConfirmationCheck,
+          title: '思桥效价导入确认复核人权限',
+        },
       ],
     },
     {

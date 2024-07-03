@@ -57,6 +57,10 @@ import {
   PostApiCoreLabRegistrationLabItemBsNoResponse,
   GetApiCoreLabItemBasicInfoBsNoRequest,
   GetApiCoreLabItemBasicInfoBsNoResponse,
+  GetApiCoreLabRegistrationTiterBeforeUploadBsNoRequest,
+  GetApiCoreLabRegistrationTiterBeforeUploadBsNoResponse,
+  PostApiCoreLabRegistrationTiterUploadUpdateRequest,
+  PostApiCoreLabRegistrationTiterUploadUpdateResponse,
 } from '@/api/type/inspectManage';
 
 enum Api {
@@ -92,7 +96,21 @@ enum Api {
   SQ_IMPORT = '/api/core/lab/mbBanin',
 
   BATCH_INFO = '/api/core/lab/item/basicInfo/',
+
+  NUCLEIC_UNQ = '/api/core/lab/registration/titer/before/upload/',
+
+  UPDATE_IMPORT = '/api/core/lab/registration/titer/upload/update',
 }
+export const updateImportApi = (data: PostApiCoreLabRegistrationTiterUploadUpdateRequest) =>
+  defHttp.post<PostApiCoreLabRegistrationTiterUploadUpdateResponse>({
+    url: Api.UPDATE_IMPORT,
+    data,
+  });
+
+export const getNucleicUnqApi = ({ bsNo }: GetApiCoreLabRegistrationTiterBeforeUploadBsNoRequest) =>
+  defHttp.get<GetApiCoreLabRegistrationTiterBeforeUploadBsNoResponse>({
+    url: Api.NUCLEIC_UNQ + bsNo,
+  });
 
 export const getBatchInfoApi = ({ bsNo }: GetApiCoreLabItemBasicInfoBsNoRequest) =>
   defHttp.get<GetApiCoreLabItemBasicInfoBsNoResponse>({ url: Api.BATCH_INFO + bsNo });

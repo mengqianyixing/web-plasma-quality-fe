@@ -4,6 +4,7 @@ import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
+const ConclusionType = serverEnumStore.getServerEnumText(SERVER_ENUM.ConclusionType);
 
 export const columns: BasicColumn[] = [
   { title: '检测项目', dataIndex: 'projectAbbr', slots: { customRender: 'projectAbbr' } },
@@ -137,13 +138,28 @@ export const cellList = [
     field: 'faildCount',
     label: '保存失败总数',
   },
+  {
+    field: 'heightNum',
+    label: '高效价总数',
+  },
+  {
+    field: 'lowNum',
+    label: '低效价总数',
+  },
+  {
+    field: 'normalNum',
+    label: '无效价总数',
+  },
 ];
 export const importSuccessColumns = [
   { title: '样本编号', field: 'sampleNo' },
   { title: '浆员编号', field: 'cardNo' },
   { title: '浆员姓名', field: 'name' },
-
-  { title: '效价结果', field: 'conclusion' },
+  {
+    title: '效价结果',
+    field: 'conclusion',
+    formatter: ({ cellValue }) => ConclusionType(cellValue),
+  },
   { title: '检测日期', field: 'checkAt' },
   { title: '效价结果值', field: 'titerResult' },
 ];

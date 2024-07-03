@@ -1,11 +1,3 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: zcc
- * @Date: 2023-12-29 15:52:07
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-13 19:03:32
--->
 <template>
   <BasicModal
     v-bind="$attrs"
@@ -17,32 +9,8 @@
     @ok="openConfirmModal"
   >
     <div class="flex flex-col h-full">
-      <div class="title">
-        导入汇总
-        <div class="float-right">
-          <a-upload
-            :showUploadList="false"
-            :before-upload="beforeUpload"
-            :maxCount="1"
-            accept=".xlsx,.xls"
-            class="mr-10px"
-          >
-            <a-button> 选择文件 </a-button>
-          </a-upload>
-          <a-button
-            type="primary"
-            class="mr-10px"
-            @click="uploadClick"
-            :loading="loading"
-            :disabled="!hasFile"
-            >开始上传</a-button
-          >
-          <a-button type="primary" class="mr-10px" @click="downFile">
-            <a href="/manage/tmp/titer.xlsx" download>下载模板</a>
-          </a-button>
-        </div>
-      </div>
-      <CellWapper :data="cellData" cell-width="33%" :cell-list="cellList" :gap="0" />
+      <div class="title"> 导入汇总 </div>
+      <CellWapper :data="cellData" cell-width="33%" :cell-list="cellList.slice(3)" :gap="0" />
       <div class="flex-1 mt-8px">
         <div class="h-6/10">
           <vxe-grid v-bind="topTableOptions" :data="dataSource.dataSaved" />
@@ -54,7 +22,7 @@
     </div>
     <BasicModal
       @register="registerConfirmModal"
-      title="效价导入确认"
+      title="思桥效价导入确认"
       okText="提交"
       width="300px"
       @ok="handleSubmit"
@@ -65,7 +33,7 @@
     <Login
       @register="registerLoginModal"
       @success="login"
-      :auth-code="ReCheckButtonEnum.TiterImportConfirmationCheck"
+      :auth-code="ReCheckButtonEnum.TiterSqImportConfirmationCheck"
     />
   </BasicModal>
 </template>
@@ -74,23 +42,17 @@
   import { importSuccessColumns, importFailColumns, cellList } from './data';
   import { useModalInner, useModal, BasicModal } from '@/components/Modal';
   import { ref, reactive, markRaw } from 'vue';
-  import { Upload as AUpload, message } from 'ant-design-vue';
-  import { uploadItemTiter, updateImportApi } from '@/api/inspect/resultRegistration';
-  import { PostApiCoreLabRegistrationTiterUploadResponse } from '@/api/type/inspectManage';
+  import { message } from 'ant-design-vue';
+  import { updateImportApi } from '@/api/inspect/resultRegistration';
+  import { PostApiCoreLabMbBaninResponse } from '@/api/type/inspectManage';
   import { VxeGridProps } from 'vxe-table';
   import { BasicForm, useForm } from '@/components/Form';
   import Login from '@/__components/ReviewLoginModal/index.vue';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
-  const fileList = ref<File[]>([]);
-  const loading = ref(false);
-  const pid = ref('');
-  const bsno = ref('');
-  const hasFile = ref(false);
-
   const emit = defineEmits(['close']);
 
-  const cellData = ref<PostApiCoreLabRegistrationTiterUploadResponse['summary']>({
+  const cellData = ref<PostApiCoreLabMbBaninResponse['summary']>({
     filename: '',
     uploadAt: '',
     username: '',
@@ -102,15 +64,12 @@
     heightNum: '',
   });
   const dataSource = reactive<{
-    dataSaved: PostApiCoreLabRegistrationTiterUploadResponse['dataSaved'];
-    dataFaild: PostApiCoreLabRegistrationTiterUploadResponse['dataFaild'];
+    dataSaved: PostApiCoreLabMbBaninResponse['dataSaved'];
+    dataFaild: PostApiCoreLabMbBaninResponse['dataFaild'];
   }>({
     dataSaved: markRaw([]),
     dataFaild: markRaw([]),
   });
-
-  defineOptions({ name: 'ImportModal' });
-
   const topTableOptions = reactive<VxeGridProps<any>>({
     border: true,
     height: '280px',
@@ -213,47 +172,13 @@
   function login(userName, data) {
     setFieldsValue({ reviewer: data.username });
   }
-  const [registerModal] = useModalInner(({ projectId, bsNo }) => {
-    pid.value = projectId;
-    bsno.value = bsNo;
-    dataSource.dataFaild = [];
-    dataSource.dataSaved = [];
+  const [registerModal] = useModalInner(async (res: PostApiCoreLabMbBaninResponse) => {
+    dataSource.dataFaild = res.dataFaild;
+    dataSource.dataSaved = res.dataSaved;
     for (const key in cellData.value) {
-      cellData.value[key] = '';
+      cellData.value[key] = res.summary[key];
     }
   });
-
-  async function uploadClick() {
-    try {
-      loading.value = true;
-      const res = await uploadItemTiter({
-        file: fileList.value[0],
-        data: { projectId: pid.value, bsNo: bsno.value },
-      } as any);
-      const { summary, dataSaved, dataFaild } = res;
-      for (const key in cellData.value) {
-        if (key === 'filename') continue;
-        cellData.value[key] = summary[key];
-      }
-      dataSource.dataFaild = markRaw(dataFaild || []);
-      dataSource.dataSaved = markRaw(dataSaved || []);
-      message.success('导入成功');
-    } finally {
-      loading.value = false;
-      hasFile.value = false;
-    }
-  }
-  function downFile() {}
-
-  const beforeUpload: (file: File) => boolean = (file) => {
-    fileList.value = [file];
-    for (const key in cellData.value) {
-      cellData.value[key] = '';
-    }
-    cellData.value.filename = file.name;
-    hasFile.value = true;
-    return false;
-  };
 </script>
 <style scoped lang="less">
   .title {
