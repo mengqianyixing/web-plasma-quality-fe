@@ -5,7 +5,7 @@
         基本信息
         <div class="float-right">
           <a-button
-            class="mr-15px"
+            class="mr-10px"
             type="primary"
             @click="handleSelect"
             v-auth="InspectButtonEnum.ResultRegistrationSelect"
@@ -14,7 +14,7 @@
 
           <a-button
             v-auth="InspectButtonEnum.ResultRegistrationRegist"
-            class="mr-15px"
+            class="mr-10px"
             type="primary"
             @click="registrationClick"
             :disabled="!bsNo"
@@ -99,7 +99,7 @@
   const bsNo = ref('');
   const registrationLoading = ref(false);
   const unregistrationLoading = ref(false);
-  const rowData = ref({ status: '' });
+  const rowData = ref({ status: '', sampleType: '' });
   const countData = ref({});
   const plasmaCellList = ref<Cell[]>([]);
   const reloadMap = ref<Map<string, Function>>(new Map());
@@ -141,7 +141,9 @@
       t.list.push({
         field: i.toString(),
         label:
-          row.plasmaType === sampleTypeEnum.CallbackSample ? '样本数' : PlasmaType(row.plasmaType),
+          rowData.value.sampleType === sampleTypeEnum.CallbackSample
+            ? '样本数'
+            : PlasmaType(row.plasmaType),
       });
       t.data[i] = row.count;
       return t;

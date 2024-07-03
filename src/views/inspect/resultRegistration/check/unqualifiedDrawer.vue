@@ -76,7 +76,7 @@
         0,
         ...formSchemaMap[methodsMappding[methodAbbr]].map((it) => ({
           ...it,
-          componentProps: { ...it.componentProps, formatter },
+          rules: [{ validator: numValidator }],
         })),
       );
       fieldList = formSchemaList.map((_) => _.field);
@@ -94,11 +94,16 @@
       });
     },
   );
-  function formatter(n: string) {
-    const reg1 = new RegExp(`[.]{1,1}[0-9]{${pv + 1}}`);
-    const reg2 = new RegExp(`([0-9]+[.]{1,1}[0-9]{${pv},${pv}})[0-9]+`);
-    if (reg1.test(n)) return n.replace(reg2, '$1');
-    return n;
+  function isValidNumber(input: string) {
+    const regex = /^-?\d+(\.\d+)?$/;
+    return regex.test(input);
+  }
+  function numValidator(_, value: string) {
+    if (!value) return Promise.resolve();
+    if (!isValidNumber(value)) return Promise.reject('请输入正确的数值');
+    if (parseFloat(value) < 0) return Promise.reject('不能输入负数');
+    if ((value.split('.')[1] || '').length !== pv) return Promise.reject('请保留' + pv + '位小数');
+    return Promise.resolve();
   }
   function close() {
     removeSchemaByField(fieldList);
