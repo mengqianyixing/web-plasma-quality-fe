@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 const { stationOptions } = useStation();
 
 const serverEnumStore = useServerEnumStoreWithOut();
-const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 
 export const columns: BasicColumn[] = [
   {
@@ -25,7 +24,6 @@ export const columns: BasicColumn[] = [
   {
     title: '样本类型',
     dataIndex: 'sampleType',
-    format: (text) => SampleType(text),
     width: 80,
   },
   {
@@ -33,7 +31,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'sampleNo',
     defaultSortOrder: 'descend',
     sorter: true,
-    width: 120,
+    width: 140,
   },
   {
     title: '采集日期',
