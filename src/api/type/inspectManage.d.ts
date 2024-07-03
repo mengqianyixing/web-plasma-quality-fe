@@ -2051,6 +2051,33 @@ export type PostApiCoreLabRegistrationTiterUploadUpdateRequest = {
 export interface PostApiCoreLabRegistrationTiterUploadUpdateResponse {}
 
 /**
+ * 接口 [查询结果登记的基本信息↗](https://yapi.sharing8.cn/project/529/interface/api/35724) 的 **请求类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `GET /api/core/lab/item/basicInfo/{bsNo}`
+ * @更新时间 `2024-07-03 09:46:16`
+ */
+export interface GetApiCoreLabItemBasicInfoBsNoRequest {
+  bsNo: string;
+}
+
+/**
+ * 接口 [查询结果登记的基本信息↗](https://yapi.sharing8.cn/project/529/interface/api/35724) 的 **返回类型**
+ *
+ * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
+ * @请求头 `GET /api/core/lab/item/basicInfo/{bsNo}`
+ * @更新时间 `2024-07-03 09:46:16`
+ */
+export interface GetApiCoreLabItemBasicInfoBsNoResponse {
+  stationName: string;
+  bsNo: string;
+  sampleType: string;
+  totalQualified: string;
+  totalUnqualified: string;
+  state: string;
+}
+
+/**
  * 接口 [检验报告审核↗](https://yapi.sharing8.cn/project/529/interface/api/32022) 的 **请求类型**
  *
  * @分类 [检验报告↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5362)

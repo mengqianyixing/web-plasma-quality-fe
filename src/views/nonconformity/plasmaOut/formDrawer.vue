@@ -139,13 +139,11 @@
     removeClick: () => {
       const rows = getSelectRows();
       if (rows.length === 0) return message.warning('请选择一条数据');
-      if (rows.length > 1) return message.warning('只能选择一条数据');
-      const [row] = rows;
       createConfirm({
         iconType: 'warning',
-        content: '确认删除' + row.bagNo + '?',
+        content: '确认移除?',
         onOk: async () => {
-          await removeTableApi({ bagNo: row.bagNo });
+          await removeTableApi(rows.map((it) => it.bagNo));
           await reload();
         },
       });
