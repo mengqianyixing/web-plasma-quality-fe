@@ -2169,11 +2169,11 @@ export interface GetApiCoreBatchSampleCallbackStatisticResponse {
 }
 
 /**
- * 接口 [批号统计↗](https://yapi.sharing8.cn/project/529/interface/api/33643) 的 **请求类型**
+ * 接口 [批号查询↗](https://yapi.sharing8.cn/project/529/interface/api/33643) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/statistic`
- * @更新时间 `2024-03-29 18:21:00`
+ * @更新时间 `2024-07-03 14:01:28`
  */
 export interface GetApiCoreBatchStatisticRequest {
   pageSize: string;
@@ -2198,14 +2198,22 @@ export interface GetApiCoreBatchStatisticRequest {
    * 血浆批号
    */
   bagBatchNo?: string;
+  /**
+   * 浆站station_no  批号bp_no
+   */
+  sortIdx?: string;
+  /**
+   * 升序ASC  降序 DESC
+   */
+  sortOrder?: string;
 }
 
 /**
- * 接口 [批号统计↗](https://yapi.sharing8.cn/project/529/interface/api/33643) 的 **返回类型**
+ * 接口 [批号查询↗](https://yapi.sharing8.cn/project/529/interface/api/33643) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/statistic`
- * @更新时间 `2024-03-29 18:21:00`
+ * @更新时间 `2024-07-03 14:01:28`
  */
 export interface GetApiCoreBatchStatisticResponse {
   totalCount?: number;
