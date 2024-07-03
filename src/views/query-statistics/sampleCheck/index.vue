@@ -27,7 +27,7 @@
   const [registerModal, { openModal }] = useModal();
   const [registerModal2, { openModal: openModal2 }] = useModal();
   const [registerModal3, { openModal: openModal3 }] = useModal();
-  const [registerTable, { setColumns, reload, getColumns, getForm }] = useTable({
+  const [registerTable, { setColumns, getColumns, getForm }] = useTable({
     api: getListApi,
     columns: columns(void 0, void 0, void 0),
     formConfig: {
@@ -125,7 +125,6 @@
       })),
     );
     setColumns(_columns);
-    reload();
   });
 
   function cellClick(key: Array<string> | string, title: string, failedCode: string | null) {

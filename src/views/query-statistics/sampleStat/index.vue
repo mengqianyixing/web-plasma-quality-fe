@@ -44,5 +44,6 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
+    immediate: false,
   });
 </script>
