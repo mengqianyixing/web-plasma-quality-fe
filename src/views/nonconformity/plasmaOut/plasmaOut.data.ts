@@ -112,6 +112,21 @@ export const columns: BasicColumn[] = [
 
 export const searchFormschema: FormSchema[] = [
   {
+    field: 'batchNo',
+    component: 'Input',
+    label: '血浆批号',
+  },
+  {
+    field: 'bagNo',
+    component: 'Input',
+    label: '血浆编号',
+  },
+  {
+    field: 'cardNo',
+    component: 'Input',
+    label: '浆员编号',
+  },
+  {
     field: '[begnDate, endDate]',
     component: 'RangePicker',
     label: '申请日期',
