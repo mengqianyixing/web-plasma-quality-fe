@@ -155,6 +155,9 @@
         }, 0);
       }
     },
+    {
+      immediate: true,
+    },
   );
 </script>
 <style scoped lang="less">

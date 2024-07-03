@@ -10,7 +10,7 @@
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
-        <Donor :cardNo="state.cardNo" />
+        <Donor :cardNoValue="state.cardNo" />
       </div>
     </div>
   </BasicModal>

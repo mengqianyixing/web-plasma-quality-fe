@@ -68,7 +68,7 @@ export const donorSchema: DescItem[] = [
   },
   {
     label: '不合格依据日期',
-    field: 'blockCreateAt',
+    field: 'blockByDate',
     render(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
@@ -95,22 +95,22 @@ export const batchColumns: BasicColumn[] = [
   {
     title: '血浆批号',
     dataIndex: 'fkBatchNo',
-    width: 100,
+    width: 120,
   },
   {
     title: '浆站箱号',
     dataIndex: 'stationBoxNo',
-    width: 100,
+    width: 120,
   },
   {
     title: '现存箱号',
     dataIndex: 'boxNo',
-    width: 100,
+    width: 120,
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
-    width: 120,
+    width: 130,
   },
   {
     title: '采集日期',
@@ -118,27 +118,28 @@ export const batchColumns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
-    width: 120,
+    width: 100,
   },
   {
     title: '来浆类型',
     dataIndex: 'rawImm',
-    width: 100,
+    width: 70,
   },
   {
     title: '浆站净重 g',
     dataIndex: 'rawWeight',
-    width: 90,
+    width: 80,
   },
   {
     title: '验收净重 g',
     dataIndex: 'netWeight',
-    width: 90,
+    width: 80,
   },
   {
     title: '效价类型',
     dataIndex: 'titerType',
-    width: 110,
+    width: 100,
+    ellipsis: false,
     format: (text) =>
       (text || '')
         .split(',')
@@ -148,12 +149,14 @@ export const batchColumns: BasicColumn[] = [
   {
     title: '血浆过程状态',
     dataIndex: 'processState',
-    width: 210,
+    width: 130,
+    ellipsis: false,
   },
   {
     title: '血浆不合格原因',
     dataIndex: 'failed',
-    width: 200,
+    ellipsis: false,
+    width: 220,
   },
   {
     title: '血浆复检信息',
@@ -164,7 +167,7 @@ export const batchColumns: BasicColumn[] = [
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
-        width: 150,
+        width: 120,
       },
       {
         title: '复检结果',
@@ -178,17 +181,18 @@ export const batchColumns: BasicColumn[] = [
             return '-';
           }
         },
-        width: 100,
+        width: 80,
       },
       {
         title: '不合格项目',
         dataIndex: ['reCheckInfo', 'unqualifiedItems'],
         width: 100,
+        ellipsis: false,
       },
       {
         title: '血浆类型',
         dataIndex: ['reCheckInfo', 'immunityType'],
-        width: 100,
+        width: 80,
         format: (text) =>
           (text || '')
             .split(',')
@@ -198,7 +202,7 @@ export const batchColumns: BasicColumn[] = [
       {
         title: '效价结果值',
         dataIndex: ['reCheckInfo', 'titer'],
-        width: 100,
+        width: 80,
       },
     ],
   },
@@ -212,7 +216,7 @@ export const batchColumns: BasicColumn[] = [
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
-        width: 120,
+        width: 100,
       },
       {
         title: '样本批号',
@@ -230,7 +234,7 @@ export const batchColumns: BasicColumn[] = [
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
-        width: 120,
+        width: 100,
       },
       {
         title: '厂家复检日期',
@@ -238,12 +242,12 @@ export const batchColumns: BasicColumn[] = [
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
-        width: 120,
+        width: 100,
       },
       {
         title: '样本结果',
         dataIndex: ['trackedSeeInfo', 'reCheckResult'],
-        width: 90,
+        width: 80,
         format(text: any) {
           if (text === 1) {
             return '合格';
@@ -258,6 +262,7 @@ export const batchColumns: BasicColumn[] = [
         title: '不合格项目',
         dataIndex: ['trackedSeeInfo', 'unqualifiedItems'],
         width: 100,
+        ellipsis: false,
       },
     ],
   },
