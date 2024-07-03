@@ -513,12 +513,12 @@ export const callbackCustomFormSchema: FormSchema[] = [
 
 export const callbackDetailCustomColumns: BasicColumn[] = [
   {
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     title: '浆员编号',
     width: 100,
   },
   {
-    dataIndex: 'name',
+    dataIndex: 'donorName',
     title: '姓名',
     width: 80,
   },
@@ -543,7 +543,7 @@ export const callbackDetailCustomColumns: BasicColumn[] = [
     width: 150,
   },
   {
-    dataIndex: 'collDate',
+    dataIndex: 'sampleCollectTime',
     title: '采集日期',
     width: 100,
   },
@@ -553,14 +553,14 @@ export const callbackDetailCustomColumns: BasicColumn[] = [
     width: 80,
   },
   {
-    dataIndex: 'lastCollDate',
+    dataIndex: 'maxCollTime',
     title: '最后采浆日期',
     width: 100,
   },
   {
-    dataIndex: 'bagNum',
+    dataIndex: 'plasmaCount',
     title: '血浆数量（袋）',
-    slots: { customRender: 'bagNum' },
+    slots: { customRender: 'plasmaCount' },
     width: 100,
   },
 ];

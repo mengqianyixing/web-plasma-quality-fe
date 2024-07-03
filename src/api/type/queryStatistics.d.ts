@@ -984,7 +984,7 @@ export interface GetApiCoreSampleStatisticsResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/blood-volume/statistics`
- * @更新时间 `2024-02-26 20:58:30`
+ * @更新时间 `2024-07-02 14:38:11`
  */
 export interface GetApiCoreBatchBloodVolumeStatisticsRequest {
   /**
@@ -1014,7 +1014,7 @@ export interface GetApiCoreBatchBloodVolumeStatisticsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/blood-volume/statistics`
- * @更新时间 `2024-02-26 20:58:30`
+ * @更新时间 `2024-07-02 14:38:11`
  */
 export interface GetApiCoreBatchBloodVolumeStatisticsResponse {
   currPage?: number;
@@ -1041,6 +1041,14 @@ export interface GetApiCoreBatchBloodVolumeStatisticsResponse {
      * 重量（g）
      */
     totalWeight?: number;
+    /**
+     * 合计数量
+     */
+    allBagCount?: number;
+    /**
+     * 合计重量（g）
+     */
+    allTotalWeight?: number;
   }[];
 }
 

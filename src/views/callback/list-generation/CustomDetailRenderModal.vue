@@ -10,14 +10,16 @@
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
         <BasicTable @register="registerTable" :columns="columnsComputed">
-          <template #bagNum="{ record }">
+          <template #plasmaCount="{ record }">
             <span
               :class="
-                !record?.bagNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+                !record?.plasmaCount
+                  ? 'pointer-events-none'
+                  : 'text-blue-500 underline cursor-pointer'
               "
               @click.stop.self="handleBagDetail(record)"
             >
-              {{ record?.bagNum }}
+              {{ record?.plasmaCount }}
             </span>
           </template>
         </BasicTable>

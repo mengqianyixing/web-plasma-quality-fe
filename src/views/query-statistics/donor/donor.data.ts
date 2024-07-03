@@ -68,7 +68,7 @@ export const donorSchema: DescItem[] = [
   },
   {
     label: '不合格依据日期',
-    field: 'blockCreateAt',
+    field: 'blockByDate',
     render(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },

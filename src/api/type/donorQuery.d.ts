@@ -351,7 +351,7 @@ export interface GetAbcResponse {}
  *
  * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
  * @请求头 `GET /api/search/donor/info/{cardNo}`
- * @更新时间 `2024-07-01 15:36:55`
+ * @更新时间 `2024-07-02 11:54:35`
  */
 export interface GetApiSearchDonorInfoCardNoRequest {
   /**
@@ -365,7 +365,7 @@ export interface GetApiSearchDonorInfoCardNoRequest {
  *
  * @分类 [浆员查询↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5730)
  * @请求头 `GET /api/search/donor/info/{cardNo}`
- * @更新时间 `2024-07-01 15:36:55`
+ * @更新时间 `2024-07-02 11:54:35`
  */
 export interface GetApiSearchDonorInfoCardNoResponse {
   donorNo?: string;
@@ -389,7 +389,7 @@ export interface GetApiSearchDonorInfoCardNoResponse {
   currentAddress?: null;
   blockSys?: string;
   /**
-   * 不合格参考时间
+   * 不合格依据时间
    */
   blockByDate?: string;
 }

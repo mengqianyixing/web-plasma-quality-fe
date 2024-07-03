@@ -1243,20 +1243,23 @@ export type PostApiCoreBankDeliverDetailResponse = string;
  * 接口 [移除不合格明细↗](https://yapi.sharing8.cn/project/529/interface/api/32157) 的 **请求类型**
  *
  * @分类 [不合格出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5369)
- * @请求头 `DELETE /api/core/bank/deliver/detail/{bagNo}`
- * @更新时间 `2024-01-06 17:11:09`
+ * @请求头 `DELETE /api/core/bank/deliver/detail`
+ * @更新时间 `2024-07-02 16:08:55`
  */
-export interface DeleteApiCoreBankDeliverDetailBagNoRequest {
-  bagNo: string;
+export interface DeleteApiCoreBankDeliverDetailRequest {
+  /**
+   * 不合格血浆编号
+   */
+  bagNos: string;
 }
 
 /**
  * 接口 [移除不合格明细↗](https://yapi.sharing8.cn/project/529/interface/api/32157) 的 **返回类型**
  *
  * @分类 [不合格出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5369)
- * @请求头 `DELETE /api/core/bank/deliver/detail/{bagNo}`
- * @更新时间 `2024-01-06 17:11:09`
+ * @请求头 `DELETE /api/core/bank/deliver/detail`
+ * @更新时间 `2024-07-02 16:08:55`
  */
-export type DeleteApiCoreBankDeliverDetailBagNoResponse = string;
+export type DeleteApiCoreBankDeliverDetailResponse = string;
 
 /* prettier-ignore-end */

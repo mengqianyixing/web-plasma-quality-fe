@@ -13,7 +13,7 @@ import {
 
 enum Api {
   // 浆员明细
-  DONOR_INFO = '/api/core/donor/list',
+  DONOR_INFO = '/api/search/donor/info',
   // 血浆明细
   BATCH_INFO = '/api/core/donor/plasma',
   // 回访明细
@@ -23,7 +23,7 @@ enum Api {
 }
 
 export const donorInfoListApi = (params: PostApiCoreDonorListRequest) =>
-  defHttp.post<PostApiCoreDonorListResponse>({ url: Api.DONOR_INFO, params });
+  defHttp.get<PostApiCoreDonorListResponse>({ url: Api.DONOR_INFO + '/' + params.cardNo });
 
 export const batchInfoListApi = (params: PostApiCoreDonorPlasmaRequest) =>
   defHttp.post<PostApiCoreDonorPlasmaResponse>({ url: Api.BATCH_INFO, params });
