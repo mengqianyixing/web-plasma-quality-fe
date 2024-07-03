@@ -231,7 +231,7 @@ export const dtSearchFormSchema: FormSchema[] = [
     label: '血浆编号',
   },
   {
-    field: 'fkDonorNo',
+    field: 'cardNo',
     component: 'Input',
     label: '浆员编号',
   },
