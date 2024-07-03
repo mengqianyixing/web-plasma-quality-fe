@@ -705,7 +705,7 @@ export type PostApiCoreBagUnqualifiedVerifyResponse = null;
  *
  * @分类 [不合格出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5369)
  * @请求头 `POST /api/core/bank/delivers`
- * @更新时间 `2024-01-06 10:48:48`
+ * @更新时间 `2024-07-03 11:01:58`
  */
 export interface PostApiCoreBankDeliversRequest {
   currPage: string;
@@ -730,6 +730,9 @@ export interface PostApiCoreBankDeliversRequest {
    * 状态 AUT("0","AUT","待审核"),     TBO("1","TBO","待出库"),     OTI("2","TBO","出库中"),     OBD("3","OBD","已出库");
    */
   state?: string;
+  batchNo?: string;
+  bagNo?: string;
+  cardNo?: string;
 }
 
 /**
@@ -737,7 +740,7 @@ export interface PostApiCoreBankDeliversRequest {
  *
  * @分类 [不合格出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5369)
  * @请求头 `POST /api/core/bank/delivers`
- * @更新时间 `2024-01-06 10:48:48`
+ * @更新时间 `2024-07-03 11:01:58`
  */
 export interface PostApiCoreBankDeliversResponse {
   totalCount: number;

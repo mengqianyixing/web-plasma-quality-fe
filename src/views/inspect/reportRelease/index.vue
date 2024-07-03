@@ -89,6 +89,14 @@
           {{ record.totalNormal }}
         </span>
       </template>
+      <template #bsNo="{ value }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="opeResultModal(true, { bsNo: value })"
+        >
+          {{ value }}
+        </span>
+      </template>
     </BasicTable>
     <Modal
       :open="open"
@@ -105,6 +113,7 @@
     </Modal>
     <TabelModal @register="registerModal" />
     <ReportModal @register="registerReportModal" />
+    <ResultRegistration @register="registeResultModal" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
@@ -128,10 +137,12 @@
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
+  import ResultRegistration from './resultRegistration/index.vue';
 
   defineOptions({ name: 'ReportRelease' });
 
   const [registerReportModal, { openModal: openReportModal }] = useModal();
+  const [registeResultModal, { openModal: opeResultModal }] = useModal();
   const reportLoading = ref(false);
   const open = ref(false);
   const confirmLoading = ref(false);

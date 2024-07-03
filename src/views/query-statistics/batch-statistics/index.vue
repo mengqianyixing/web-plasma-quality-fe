@@ -11,6 +11,11 @@
 
   defineOptions({ name: 'BatchStatistics' });
 
+  const sortMap = {
+    stationName: 'station_no',
+    batchNo: 'bp_no',
+  };
+
   const [registerTable] = useTable({
     api: getBatchList,
     columns,
@@ -27,6 +32,12 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
+    sortFn(sortInfo) {
+      return {
+        sortIdx: sortMap[sortInfo.field],
+        sortOrder: sortInfo.order === 'ascend' ? 'ASC' : 'DESC',
+      };
+    },
   });
 </script>
 <style scoped lang="less">

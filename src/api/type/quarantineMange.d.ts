@@ -140,10 +140,17 @@ export interface GetApiSearchPlasmaExpiredResponse {
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `POST /api/core/bag/plasma/expired`
- * @更新时间 `2024-01-30 11:42:43`
+ * @更新时间 `2024-07-03 14:36:15`
  */
 export interface PostApiCoreBagPlasmaExpiredRequest {
+  /**
+   * 浆袋号
+   */
   bagNo?: string;
+  /**
+   * 复核人username
+   */
+  reviewer?: string;
 }
 
 /**
@@ -151,7 +158,7 @@ export interface PostApiCoreBagPlasmaExpiredRequest {
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `POST /api/core/bag/plasma/expired`
- * @更新时间 `2024-01-30 11:42:43`
+ * @更新时间 `2024-07-03 14:36:15`
  */
 export type PostApiCoreBagPlasmaExpiredResponse = null;
 

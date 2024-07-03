@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight>
+  <PageWrapper dense contentFullHeight fixedHeight class="root">
     <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button
@@ -41,15 +41,29 @@
         return date ? date.format('YYYY-MM-DD') : '';
       },
     },
-    pagination: false,
     clickToRowSelect: false,
+    pagination: {
+      pageSize: 9999,
+    },
     size: 'small',
     striped: false,
     useSearchForm: true,
     bordered: true,
     showIndexColumn: true,
+    showSummary: true,
+    summaryFunc: handleSummary,
     canResize: true,
   });
+
+  function handleSummary(tableData: Recordable[]) {
+    return [
+      {
+        stationName: '合计',
+        bagCollectCount: tableData.reduce((prev, cur) => prev + Number(cur.bagCollectCount), 0),
+        bagAcceptCount: tableData.reduce((prev, cur) => prev + Number(cur.bagAcceptCount), 0),
+      },
+    ];
+  }
 
   const loading = ref(false);
   async function handleExport() {
@@ -103,3 +117,8 @@
     }
   }
 </script>
+<style scoped>
+  .root :deep(.ant-pagination) {
+    visibility: hidden;
+  }
+</style>

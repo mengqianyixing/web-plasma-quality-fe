@@ -55,6 +55,8 @@ import {
   PostApiCoreLabMbBaninRequest,
   PostApiCoreLabMbBaninResponse,
   PostApiCoreLabRegistrationLabItemBsNoResponse,
+  GetApiCoreLabItemBasicInfoBsNoRequest,
+  GetApiCoreLabItemBasicInfoBsNoResponse,
 } from '@/api/type/inspectManage';
 
 enum Api {
@@ -88,7 +90,12 @@ enum Api {
   REMOVE_UNQUA = '/api/core/lab/registration/labItem/unqualified',
 
   SQ_IMPORT = '/api/core/lab/mbBanin',
+
+  BATCH_INFO = '/api/core/lab/item/basicInfo/',
 }
+
+export const getBatchInfoApi = ({ bsNo }: GetApiCoreLabItemBasicInfoBsNoRequest) =>
+  defHttp.get<GetApiCoreLabItemBasicInfoBsNoResponse>({ url: Api.BATCH_INFO + bsNo });
 
 export const removeUnqualified = (data: DeleteApiCoreLabRegistrationLabItemUnqualifiedRequest) =>
   defHttp.delete<DeleteApiCoreLabRegistrationLabItemUnqualifiedResponse>({

@@ -21,6 +21,7 @@ export const columns: BasicColumn[] = [
     title: '样本批号',
     dataIndex: 'bsNo',
     width: 120,
+    slots: { customRender: 'bsNo' },
   },
   {
     title: '样本类型',

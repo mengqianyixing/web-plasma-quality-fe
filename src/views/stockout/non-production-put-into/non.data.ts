@@ -131,7 +131,7 @@ export const searchSchema: FormSchema[] = [
     field: 'state',
     component: 'Select',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankDeliverstateType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankNonProdDeliverState),
     },
     label: '状态',
   },
