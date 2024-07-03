@@ -7,7 +7,7 @@
  * @FilePath: \psms-fe\src\router\routes\modules\QuarantineManager\index.ts
  */
 import type { AppRouteModule } from '@/router/types';
-import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
+import { QuarantineButtonEnum, ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
 import { LAYOUT } from '@/router/constant';
 
@@ -117,6 +117,10 @@ const quarantineManager: AppRouteModule = {
         {
           id: QuarantineButtonEnum.OverdueConfirmationConfim,
           title: '确认',
+        },
+        {
+          id: ReCheckButtonEnum.OverdueConfirmationCheck,
+          title: '确认复核人',
         },
       ],
       meta: { title: '超一年期确认' },

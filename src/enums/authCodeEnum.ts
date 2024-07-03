@@ -29,6 +29,7 @@ export enum ReCheckButtonEnum {
   ResultReRegistCheck = 'E_9600100010',
   PMSAccept = 'E_910040012',
   PMSAcceptCancel = 'E_910040013',
+  OverdueConfirmationCheck = 'E_950020001',
 }
 
 export enum BaseSettingButtonEnum {
