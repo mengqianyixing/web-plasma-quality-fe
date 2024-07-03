@@ -32,6 +32,7 @@ export const columns: BasicColumn[] = [
     defaultSortOrder: 'descend',
     sorter: true,
     width: 140,
+    ellipsis: false,
   },
   {
     title: '采集日期',
