@@ -147,6 +147,7 @@
   function handleUpdateDate() {
     getSelections(true, ([row]) => {
       if (row.deadline) return message.warning('已登记使用截止日期');
+      if (!row.reviewAt) return message.warning('未复核不能登记');
       openDateModal(true, { data: row });
     });
   }
@@ -159,6 +160,7 @@
 
   function handleReview() {
     getSelections(true, ([row]) => {
+      if (row.deadline) return message.warning('已登记使用截止日期,不能复核');
       createConfirm({
         iconType: 'warning',
         content: '确认复核【' + row.projectName + row.testType + '】?',
