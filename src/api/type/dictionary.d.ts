@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dicts`
- * @更新时间 `2024-03-15 18:53:01`
+ * @更新时间 `2024-07-04 15:04:56`
  */
 export interface PostApiSysDictsRequest {
   /**
@@ -31,7 +31,7 @@ export interface PostApiSysDictsRequest {
    * 字典编号
    */
   dictNo?: string;
-  queryMenu?: string;
+  queryMenu?: boolean;
 }
 
 /**
@@ -39,7 +39,7 @@ export interface PostApiSysDictsRequest {
  *
  * @分类 [字典管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5250)
  * @请求头 `POST /api/sys/dicts`
- * @更新时间 `2024-03-15 18:53:01`
+ * @更新时间 `2024-07-04 15:04:56`
  */
 export interface PostApiSysDictsResponse {
   totalCount: number;
