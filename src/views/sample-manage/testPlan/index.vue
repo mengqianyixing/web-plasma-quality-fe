@@ -7,6 +7,7 @@
         >
         <a-button
           type="primary"
+          :loading="loading"
           @click="handleUpdate"
           v-auth="SampleManageButtonEnum.TestPlanUpdate"
           >编辑</a-button
@@ -43,13 +44,15 @@
   import { columns, searchFormschema } from './data';
   import { message } from 'ant-design-vue';
   import FormModal from './formModal.vue';
-  import { getListApi } from '@/api/sample-manage/test-plan';
+  import { getListApi, getFormDtApi } from '@/api/sample-manage/test-plan';
   import { SampleManageButtonEnum } from '@/enums/authCodeEnum';
   import ArrangeModel from '@/views/inbound-management/components/arrange/index.vue';
   import MixListModal from './mixListModal.vue';
+  import { ref } from 'vue';
 
   defineOptions({ name: 'TestPlan' });
 
+  const loading = ref(false);
   const [registerModal, { openModal }] = useModal();
   const [registerArrangeModel, { openModal: openArrangeModel }] = useModal();
   const [registerMixModel, { openModal: openMixModel }] = useModal();
@@ -90,10 +93,16 @@
   function handleCreate() {
     openModal(true, {});
   }
-  function handleUpdate() {
+  async function handleUpdate() {
     const [row] = getSelections(true);
     if (!row) return;
-    openModal(true, row);
+    loading.value = true;
+    try {
+      const res = await getFormDtApi({ planNo: row.planNo });
+      openModal(true, res);
+    } finally {
+      loading.value = false;
+    }
   }
   function success() {
     clearSelectedRowKeys();

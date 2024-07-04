@@ -107,12 +107,13 @@ export const batchColumns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    width: 80,
+    width: 70,
   },
   {
     title: '样本批号',
     dataIndex: 'batchNo',
-    width: 100,
+    width: 120,
+    ellipsis: false,
   },
   {
     title: '样本类型',
@@ -122,18 +123,19 @@ export const batchColumns: BasicColumn[] = [
   {
     title: '浆站出库日期',
     dataIndex: 'outStationDate',
-    width: 110,
+    width: 100,
     format: (v) => v?.slice(0, 10),
   },
   {
     title: '样本数量',
     dataIndex: 'sampleCount',
-    width: 80,
+    width: 70,
   },
   {
     title: '接收人',
     dataIndex: 'acceptor',
     width: 80,
+    ellipsis: false,
   },
   {
     title: '接收日期',

@@ -6,17 +6,17 @@
     :title="state.planNo ? '编辑' : '新增'"
     cancelText="关闭"
     :showActionButtonGroup="false"
-    width="1050px"
+    width="1000px"
     @ok="handleSubmit"
     :minHeight="600"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">
-      <div class="w-4/5 h-inherit max-h-inherit min-h-inherit">
+      <div class="w-700px h-inherit max-h-inherit min-h-inherit">
         <div class="h-full">
           <BasicTable @register="registerTable" />
         </div>
       </div>
-      <div class="h-inherit max-h-inherit min-h-inherit">
+      <div class="w-260px h-inherit max-h-inherit min-h-inherit">
         <BasicForm @register="registerForm">
           <template #batchList="{ field, model }">
             <div class="border h-200px overscroll-auto border-neutral-200 p-4px">
@@ -42,12 +42,7 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { formListSchema, batchColumns, batchSearchForm } from './data';
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import {
-    submitAddApi,
-    submitUpdateApi,
-    getBatchListApi,
-    getFormDtApi,
-  } from '@/api/sample-manage/test-plan';
+  import { submitAddApi, submitUpdateApi, getBatchListApi } from '@/api/sample-manage/test-plan';
   import { BasicTable, useTable } from '@/components/Table';
   import { Tag as ATag, Badge as ABadge } from 'ant-design-vue';
 
@@ -117,17 +112,16 @@
     state.batchMap.delete(batchNo);
     setSelectedRowKeys([...state.batchMap.keys()] as any);
   }
-  const [registerModal, { setModalProps, closeModal }] = useModalInner(async ({ planNo }) => {
-    state.planNo = planNo;
-    if (planNo) {
-      const res = await getFormDtApi({ planNo });
-      const values = res.batchList?.map((it) => it.batchNo);
-      setFieldsValue({ ...res, batchList: values });
-      res.batchList?.forEach((record) => state.batchMap.set(record.batchNo as string, record));
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
+    state.planNo = data.planNo;
+    state.batchMap.clear();
+    if (data.planNo) {
+      const values = data.batchList?.map((it) => it.batchNo);
+      setFieldsValue({ ...data, batchList: values });
+      data.batchList?.forEach((record) => state.batchMap.set(record.batchNo as string, record));
       setSelectedRowKeys(values as any);
     } else {
       setSelectedRowKeys([]);
-      state.batchMap.clear();
       resetFields();
     }
     getForm().resetFields();
