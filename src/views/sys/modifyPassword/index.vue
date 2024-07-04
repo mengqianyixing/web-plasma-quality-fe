@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <Card title="修改密码" class="w-1/3 mx-auto" :bordered="false">
+  <div class="flex justify-center">
+    <Card :title="props.isUserUpdate ? '' : '修改密码'" class="w-400px" :bordered="false">
       <BasicForm @register="registerForm">
         <template #resetBefore="{}">
           <Button @click="handleLogout" class="mr-1">取消</Button>
@@ -21,6 +21,13 @@
   const { createMessage } = useMessage();
   const userStore = useUserStoreWithOut();
 
+  const emit = defineEmits(['cancel']);
+  const props = defineProps({
+    isUserUpdate: {
+      default: false,
+      tyep: Boolean,
+    },
+  });
   const [registerForm, { setFieldsValue, validate, setProps }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
@@ -62,18 +69,21 @@
   }
 
   function handleLogout() {
-    createConfirm({
-      iconType: 'warning',
-      content: '取消修改密码将出系统，确认退出吗?',
-      onOk: async () => {
-        try {
-          await setProps({ resetButtonOptions: { loading: true } });
-          await userStore.logout(true);
-        } catch (error) {
-          await setProps({ resetButtonOptions: { loading: false } });
-        }
-      },
-      onCancel: () => {},
-    });
+    if (props.isUserUpdate) {
+      emit('cancel');
+    } else {
+      createConfirm({
+        iconType: 'warning',
+        content: '取消修改密码将出系统，确认退出吗?',
+        onOk: async () => {
+          try {
+            await setProps({ resetButtonOptions: { loading: true } });
+            await userStore.logout(true);
+          } catch (error) {
+            await setProps({ resetButtonOptions: { loading: false } });
+          }
+        },
+      });
+    }
   }
 </script>
