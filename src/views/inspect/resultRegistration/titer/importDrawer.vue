@@ -14,7 +14,7 @@
     width="1000px"
     cancelText="关闭"
     @cancel="emit('close')"
-    @ok="openConfirmModal"
+    @ok="checkNuc"
   >
     <div class="flex flex-col h-full">
       <div class="title">
@@ -54,7 +54,7 @@
     </div>
     <BasicModal
       @register="registerConfirmModal"
-      title="效价导入确认"
+      title="效价导入复核人确认"
       okText="提交"
       width="300px"
       @ok="handleSubmit"
@@ -81,6 +81,7 @@
   import { BasicForm, useForm } from '@/components/Form';
   import Login from '@/__components/ReviewLoginModal/index.vue';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const fileList = ref<File[]>([]);
   const loading = ref(false);
@@ -90,6 +91,7 @@
 
   const emit = defineEmits(['close']);
 
+  const { createConfirm } = useMessage();
   const cellData = ref<PostApiCoreLabRegistrationTiterUploadResponse['summary']>({
     filename: '',
     uploadAt: '',
@@ -99,6 +101,7 @@
     faildCount: '',
     normalNum: '',
     lowNum: '',
+    isNucleic: false,
     heightNum: '',
   });
   const dataSource = reactive<{
@@ -189,9 +192,23 @@
     ],
     showActionButtonGroup: false,
   });
+  async function checkNuc() {
+    if (dataSource.dataSaved.length === 0) return message.warning('没有导入成功的数据');
+    if (cellData.value.isNucleic) {
+      createConfirm({
+        iconType: 'warning',
+        title: '提示',
+        content: '核酸不合格确认导入效价？',
+        onOk: () => {
+          openConfirmModal();
+        },
+      });
+    } else {
+      openConfirmModal();
+    }
+  }
   async function handleSubmit() {
     const values = await validate();
-    if (dataSource.dataSaved.length === 0) return message.warning('没有导入成功的数据');
     setModalProps({ confirmLoading: true });
     try {
       await updateImportApi({

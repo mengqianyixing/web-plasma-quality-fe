@@ -109,14 +109,12 @@
     getTiterListApi,
     submitSqImportApi,
     removeCheckApi,
-    getNucleicUnqApi,
   } from '@/api/inspect/resultRegistration';
   import { watch, nextTick, onMounted, ref } from 'vue';
   import { message, Modal } from 'ant-design-vue';
   import { getInspectMethodListApi } from '@/api/inspect/inspectMethod';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
   import { BasicForm, useForm } from '@/components/Form';
-  import { useMessage } from '@/hooks/web/useMessage';
 
   const emit = defineEmits(['reload']);
   const props = defineProps({
@@ -140,7 +138,6 @@
       immediate: true,
     },
   );
-  const { createConfirm } = useMessage();
 
   const [registerDtModal, { openModal: openDtModal }] = useModal();
   const [registerNotCheckModal, { openModal: openNotCheckModal }] = useModal();
@@ -214,26 +211,8 @@
     if (rows.length > 1) return message.warning('只能选择一条数据');
     sqLoading.value = true;
     try {
-      const res = await getNucleicUnqApi({ bsNo: props.bsNo });
-      if (res) {
-        createConfirm({
-          iconType: 'warning',
-          title: '提示',
-          content: '核酸不合格确认导入效价？',
-          onOk: async () => {
-            sqLoading.value = true;
-            try {
-              const res = await submitSqImportApi({ bsNo: props.bsNo, project: rows[0].projectId });
-              openSqImportModal(true, res);
-            } finally {
-              sqLoading.value = false;
-            }
-          },
-        });
-      } else {
-        const res = await submitSqImportApi({ bsNo: props.bsNo, project: rows[0].projectId });
-        openSqImportModal(true, res);
-      }
+      const res = await submitSqImportApi({ bsNo: props.bsNo, project: rows[0].projectId });
+      openSqImportModal(true, res);
     } finally {
       sqLoading.value = false;
     }
@@ -242,24 +221,7 @@
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     if (rows.length > 1) return message.warning('只能选择一条数据');
-    imLoading.value = true;
-    try {
-      const res = await getNucleicUnqApi({ bsNo: props.bsNo });
-      if (res) {
-        createConfirm({
-          iconType: 'warning',
-          title: '提示',
-          content: '核酸不合格确认导入效价？',
-          onOk: () => {
-            openImportModal(true, { ...rows[0], bsNo: props.bsNo });
-          },
-        });
-      } else {
-        openImportModal(true, { ...rows[0], bsNo: props.bsNo });
-      }
-    } finally {
-      imLoading.value = false;
-    }
+    openImportModal(true, { ...rows[0], bsNo: props.bsNo });
   }
   function handleNotCheck() {
     const projectIds = getSelectRows().map((_) => _.projectId);

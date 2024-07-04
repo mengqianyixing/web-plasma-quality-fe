@@ -1385,7 +1385,7 @@ export type PostApiCoreLabRegistrationSampleResponse = {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload`
- * @更新时间 `2024-07-03 17:03:00`
+ * @更新时间 `2024-07-04 14:04:57`
  */
 export interface PostApiCoreLabRegistrationTiterUploadRequest {
   file: FileData;
@@ -1398,7 +1398,7 @@ export interface PostApiCoreLabRegistrationTiterUploadRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload`
- * @更新时间 `2024-07-03 17:03:00`
+ * @更新时间 `2024-07-04 14:04:57`
  */
 export interface PostApiCoreLabRegistrationTiterUploadResponse {
   /**
@@ -1441,12 +1441,16 @@ export interface PostApiCoreLabRegistrationTiterUploadResponse {
      * 无效价数
      */
     normalNum: string;
+    /**
+     * 是否有核酸不合格
+     */
+    isNucleic: boolean;
   };
   dataSaved: {
     /**
      * 样本id
      */
-    sampleNo: string;
+    sampleId: string;
     /**
      * 浆员编号
      */
@@ -1484,6 +1488,7 @@ export interface PostApiCoreLabRegistrationTiterUploadResponse {
      */
     checkAt: string;
     projectId: string;
+    sampleNo: string;
   }[];
   dataFaild: {
     unsavedData: string;
@@ -1917,7 +1922,7 @@ export type DeleteApiCoreLabRegistrationLabItemUnqualifiedResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/mbBanin`
- * @更新时间 `2024-07-03 17:50:57`
+ * @更新时间 `2024-07-04 14:04:47`
  */
 export interface PostApiCoreLabMbBaninRequest {
   /**
@@ -1935,7 +1940,7 @@ export interface PostApiCoreLabMbBaninRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/mbBanin`
- * @更新时间 `2024-07-03 17:50:57`
+ * @更新时间 `2024-07-04 14:04:47`
  */
 export interface PostApiCoreLabMbBaninResponse {
   summary: {
@@ -1948,6 +1953,7 @@ export interface PostApiCoreLabMbBaninResponse {
     heightNum?: string;
     lowNum?: string;
     normalNum?: string;
+    isNucleic: boolean;
   };
   dataSaved: {
     sampleNo: string;

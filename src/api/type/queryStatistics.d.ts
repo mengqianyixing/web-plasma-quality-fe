@@ -1146,7 +1146,7 @@ export interface GetApiCoreBatchErpInboundQueryResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/lab/erp/test-report/query`
- * @更新时间 `2024-03-02 15:54:21`
+ * @更新时间 `2024-07-04 10:01:05`
  */
 export interface GetApiCoreLabErpTestReportQueryRequest {
   /**
@@ -1180,7 +1180,7 @@ export interface GetApiCoreLabErpTestReportQueryRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/lab/erp/test-report/query`
- * @更新时间 `2024-03-02 15:54:21`
+ * @更新时间 `2024-07-04 10:01:05`
  */
 export interface GetApiCoreLabErpTestReportQueryResponse {
   currPage?: number;
@@ -1212,34 +1212,29 @@ export interface GetApiCoreLabErpTestReportQueryResponse {
      */
     materialNo?: string;
     /**
-     * 效价详情
+     * 效价类型
      */
-    titerDetailList?: {
-      /**
-       * 效价类型
-       */
-      titerType?: string;
-      /**
-       * 血浆类型
-       */
-      plasmaType?: string;
-      /**
-       * 合格血浆总数
-       */
-      totalQualified?: number;
-      /**
-       * 合格血浆验收净重（g）
-       */
-      qualifiedNetWeight?: number;
-      /**
-       * 不合格血浆总数
-       */
-      totalUnqualified?: number;
-      /**
-       * 不合格血浆验收净重 （g）
-       */
-      unqualifiedNetWeight?: number;
-    }[];
+    titerType?: string;
+    /**
+     * 血浆类型
+     */
+    plasmaType?: string;
+    /**
+     * 合格血浆总数
+     */
+    totalQualified?: number;
+    /**
+     * 合格血浆验收净重（g）
+     */
+    qualifiedNetWeight?: number;
+    /**
+     * 不合格血浆总数
+     */
+    totalUnqualified?: number;
+    /**
+     * 不合格血浆验收净重 （g）
+     */
+    unqualifiedNetWeight?: number;
   }[];
 }
 
