@@ -4,7 +4,16 @@
       <template #toolbar>
         <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
       </template>
+      <template #cardNo="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="openModal(true, record)"
+        >
+          {{ record.cardNo }}
+        </span>
+      </template>
     </BasicTable>
+    <DonorModel @register="registerDonorModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -20,8 +29,9 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { useMessage } from '@/hooks/web/useMessage';
   import { message } from 'ant-design-vue';
-
+  import DonorModel from '@/__components/donor/donorModel.vue';
   import { cloneDeep, isNull, isEqual } from 'lodash-es';
+  import { useModal } from '@/components/Modal';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -29,6 +39,7 @@
 
   const { currentRoute } = useRouter();
   const { createMessage } = useMessage();
+  const [registerDonorModal, { openModal }] = useModal();
 
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
   onMounted(async () => {

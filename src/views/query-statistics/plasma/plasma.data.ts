@@ -46,6 +46,7 @@ export const columns: BasicColumn[] = [
     title: '浆员编号',
     dataIndex: 'cardNo',
     width: 100,
+    slots: { customRender: 'cardNo' },
   },
   {
     title: '浆员姓名',
