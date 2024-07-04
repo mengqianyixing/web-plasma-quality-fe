@@ -105,6 +105,7 @@
     try {
       await submitConfirmApi({ bagNo: row.bagNo, reviewer: values.reviewer });
       message.success('确认成功');
+      openConfirmModal(false);
       clearSelectedRowKeys();
       await reload();
     } finally {
