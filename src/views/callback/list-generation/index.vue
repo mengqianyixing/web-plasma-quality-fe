@@ -47,6 +47,16 @@
           {{ record?.noVisitNum }}
         </span>
       </template>
+      <template #selfBackNum="{ record }">
+        <span
+          :class="
+            !record?.selfBackNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleGoSelfBack(record)"
+        >
+          {{ record?.selfBackNum }}
+        </span>
+      </template>
       <template #toolbar>
         <div class="flex gap-2">
           <a-button type="primary" @click="handleAdd" v-auth="CallbackButtonEnum.ListGeneAdd">
@@ -74,6 +84,7 @@
     <CallbackGenerationModal @register="registerGenerationModal" @success="handleSuccess" />
     <CallbackDetailModal @register="registerCallbackDetailModal" />
     <CustomDetailRenderModal @register="registerCallbackCustomDetailModal" />
+    <SelfBackModal @register="registerSelfBackModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -86,6 +97,7 @@
   import CallbackDetailModal from '@/views/callback/list-generation/CallbackDetailModal.vue';
   import SelectStationNameModal from '@/views/callback/list-generation/SelectStationNameModal.vue';
   import CustomDetailRenderModal from '@/views/callback/list-generation/CustomDetailRenderModal.vue';
+  import SelfBackModal from '@/views/callback/list-generation/SelfBackModal.vue';
 
   import { ref, onMounted, computed } from 'vue';
 
@@ -157,6 +169,7 @@
   const [registerCallbackDetailModal, { openModal: openCallbackDetailModal }] = useModal();
   const [registerCallbackCustomDetailModal, { openModal: openCallbackCustomDetailModal }] =
     useModal();
+  const [registerSelfBackModal, { openModal: openSelfBackModal }] = useModal();
 
   const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
     api: getCallbackListApi,
@@ -185,9 +198,6 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-    scroll: {
-      x: 0,
-    },
     bordered: true,
     showIndexColumn: false,
     canResize: true,
@@ -317,6 +327,12 @@
   function handleGoCustomModal(state: CallBackDetailState, record: Recordable) {
     openCallbackCustomDetailModal(true, {
       state,
+      record,
+    });
+  }
+
+  function handleGoSelfBack(record: Recordable) {
+    openSelfBackModal(true, {
       record,
     });
   }

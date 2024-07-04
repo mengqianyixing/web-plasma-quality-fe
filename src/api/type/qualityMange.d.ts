@@ -162,10 +162,11 @@ export interface PostApiCoreBagFlagsResponse {
  *
  * @分类 [血浆限制↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5460)
  * @请求头 `POST /api/core/bag/flagged/box`
- * @更新时间 `2024-01-19 19:12:02`
+ * @更新时间 `2024-07-04 18:03:57`
  */
 export interface PostApiCoreBagFlaggedBoxRequest {
   batchNo: string;
+  bfNo?: string;
   currPage: number;
   pageSize: number;
 }
@@ -175,7 +176,7 @@ export interface PostApiCoreBagFlaggedBoxRequest {
  *
  * @分类 [血浆限制↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5460)
  * @请求头 `POST /api/core/bag/flagged/box`
- * @更新时间 `2024-01-19 19:12:02`
+ * @更新时间 `2024-07-04 18:03:57`
  */
 export interface PostApiCoreBagFlaggedBoxResponse {
   totalCount: number;

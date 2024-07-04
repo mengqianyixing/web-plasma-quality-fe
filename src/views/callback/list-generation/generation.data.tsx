@@ -74,6 +74,12 @@ export const columns: BasicColumn[] = [
     width: 60,
   },
   {
+    title: '自主回访',
+    dataIndex: 'selfBackNum',
+    slots: { customRender: 'selfBackNum' },
+    width: 80,
+  },
+  {
     title: '样本接收人',
     dataIndex: 'sampleAcceptBy',
     width: 88,
@@ -562,5 +568,42 @@ export const callbackDetailCustomColumns: BasicColumn[] = [
     title: '血浆数量（袋）',
     slots: { customRender: 'plasmaCount' },
     width: 100,
+  },
+];
+
+export const selfBackColumns: BasicColumn[] = [
+  {
+    title: '浆员编号',
+    dataIndex: 'cardNo',
+    width: 100,
+  },
+  {
+    title: '浆员姓名',
+    dataIndex: 'name',
+    width: 80,
+  },
+  {
+    title: '回访日期',
+    dataIndex: 'callbackDate',
+    width: 100,
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
+    },
+  },
+  {
+    title: '样本编号',
+    dataIndex: 'sampleNo',
+    width: 100,
+  },
+  {
+    title: '血型',
+    dataIndex: 'bloodType',
+    width: 80,
+  },
+  {
+    title: '现居地址',
+    dataIndex: 'liveAddress',
+    width: 200,
+    ellipsis: false,
   },
 ];

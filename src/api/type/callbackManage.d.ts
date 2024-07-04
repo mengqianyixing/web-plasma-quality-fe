@@ -819,7 +819,7 @@ export type GetApiSearchDonorCallbackDetailBagResponse = {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/search/donor/callback/detail-self`
- * @更新时间 `2024-07-04 16:54:41`
+ * @更新时间 `2024-07-04 18:06:48`
  */
 export interface GetApiSearchDonorCallbackDetailSelfRequest {
   pageSize: string;
@@ -839,7 +839,7 @@ export interface GetApiSearchDonorCallbackDetailSelfRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/search/donor/callback/detail-self`
- * @更新时间 `2024-07-04 16:54:41`
+ * @更新时间 `2024-07-04 18:06:48`
  */
 export type GetApiSearchDonorCallbackDetailSelfResponse = {
   /**
@@ -857,11 +857,11 @@ export type GetApiSearchDonorCallbackDetailSelfResponse = {
   /**
    * 样本编号
    */
-  field_2: string;
+  sampleNo: string;
   /**
    * 血型
    */
-  field_3: string;
+  bloodType: string;
   /**
    * 现居地址
    */
