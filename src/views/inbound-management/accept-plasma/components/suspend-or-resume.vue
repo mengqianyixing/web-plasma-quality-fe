@@ -345,12 +345,12 @@
 
   // 继续
   const clickResume = async () => {
-    if (!tableSelected.value.length) {
-      warning('请先选择一条数据!');
-      return;
-    }
-    const firstSelectedItem = tableSelected.value[0];
     if (searchForm.value.pattern === 'BOX') {
+      if (!tableSelected.value.length) {
+        warning('请先选择一条数据!');
+        return;
+      }
+      const firstSelectedItem = tableSelected.value[0];
       try {
         const values = await validate();
         const params = {
