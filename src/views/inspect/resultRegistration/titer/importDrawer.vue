@@ -206,6 +206,7 @@
       message.success('效价导入已生效');
       openConfirmModal(false);
       resetFields();
+      closeModal();
     } finally {
       setModalProps({ confirmLoading: false });
     }
@@ -213,7 +214,7 @@
   function login(userName, data) {
     setFieldsValue({ reviewer: data.username });
   }
-  const [registerModal] = useModalInner(({ projectId, bsNo }) => {
+  const [registerModal, { closeModal }] = useModalInner(({ projectId, bsNo }) => {
     pid.value = projectId;
     bsno.value = bsNo;
     dataSource.dataFaild = [];

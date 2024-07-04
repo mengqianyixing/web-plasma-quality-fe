@@ -165,6 +165,7 @@
       message.success('效价导入已生效');
       openConfirmModal(false);
       resetFields();
+      closeModal();
     } finally {
       setModalProps({ confirmLoading: false });
     }
@@ -172,13 +173,15 @@
   function login(userName, data) {
     setFieldsValue({ reviewer: data.username });
   }
-  const [registerModal] = useModalInner(async (res: PostApiCoreLabMbBaninResponse) => {
-    dataSource.dataFaild = res.dataFaild;
-    dataSource.dataSaved = res.dataSaved;
-    for (const key in cellData.value) {
-      cellData.value[key] = res.summary[key];
-    }
-  });
+  const [registerModal, { closeModal }] = useModalInner(
+    async (res: PostApiCoreLabMbBaninResponse) => {
+      dataSource.dataFaild = res.dataFaild;
+      dataSource.dataSaved = res.dataSaved;
+      for (const key in cellData.value) {
+        cellData.value[key] = res.summary[key];
+      }
+    },
+  );
 </script>
 <style scoped lang="less">
   .title {
