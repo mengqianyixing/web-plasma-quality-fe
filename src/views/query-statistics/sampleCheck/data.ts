@@ -80,7 +80,21 @@ export const columns: (
   {
     width: 100,
     title: '检测不合格',
-    children: [],
+    children: [
+      {
+        width: 80,
+        title: '合计',
+        dataIndex: ['failed', 'count'],
+        format: (v) => v || 0,
+        customRender: customRender2,
+      },
+      {
+        width: 80,
+        title: '比率(%)',
+        dataIndex: ['failed', 'ratio'],
+        format: (t: any) => Number(((t || 0) * 100).toFixed(2)),
+      },
+    ],
   },
   {
     title: '验收不合格',

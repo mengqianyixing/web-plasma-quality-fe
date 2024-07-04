@@ -83,7 +83,7 @@
       ...(res1 || []).map((it) => ({
         dataIndex: ['failed', it.dictItemId],
         title: it.label,
-        width: it.label.length * 18,
+        width: it.label.length * 16,
         ellipsis: false,
         customRender: ({ record, value }) => {
           return (
@@ -157,6 +157,7 @@
       }
     });
     row['check']['ratio'] = row['check']['count'] / (row['checkCount'] || 1);
+    row['failed']['ratio'] = row['failed']['count'] / (row['checkCount'] || 1);
     row['verification']['ratio'] = row['verification']['count'] / (row['sampleCount'] || 1);
     return { ...row, stationName: '合计', sampleType: '--', isCount: true };
   }
