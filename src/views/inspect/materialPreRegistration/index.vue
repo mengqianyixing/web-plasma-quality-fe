@@ -173,7 +173,8 @@
     });
   }
   function handleCancelReview() {
-    getSelections(true, () => {
+    getSelections(true, ([row]) => {
+      if (row.deadline) return message.warning('已登记使用截止日期,不能撤销复核');
       open.value = true;
       resetFields();
       clearValidate();
