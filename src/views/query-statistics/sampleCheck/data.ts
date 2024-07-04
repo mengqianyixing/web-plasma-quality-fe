@@ -104,7 +104,7 @@ export const columns: (
         title: '合计',
         dataIndex: ['verification', 'count'],
         format: (v) => v || 0,
-        customRender,
+        customRender: customRender2,
       },
       {
         width: 80,

@@ -62,36 +62,18 @@
         );
       },
       ({ record, column, value }) => {
-        if (!record.isCount)
-          return (
-            <span
-              class="text-blue-500 underline cursor-pointer"
-              onClick={() => cellClick2(column.dataIndex, column.title, null, record)}
-            >
-              {value || 0}
-            </span>
-          );
         return (
           <span
             class="text-blue-500 underline cursor-pointer"
-            onClick={() => cellClick(column.dataIndex, column.title, null)}
+            onClick={() => cellClick2(column.dataIndex, column.title, null, record)}
           >
             {value || 0}
           </span>
         );
       },
-      ({ record, column, value }) => {
-        if (!record.isCount)
-          return (
-            <span class="text-blue-500 underline cursor-pointer" onClick={() => cellClick3(record)}>
-              {value || 0}
-            </span>
-          );
+      ({ record, value }) => {
         return (
-          <span
-            class="text-blue-500 underline cursor-pointer"
-            onClick={() => cellClick(column.dataIndex, column.title, null)}
-          >
+          <span class="text-blue-500 underline cursor-pointer" onClick={() => cellClick3(record)}>
             {value || 0}
           </span>
         );
@@ -104,19 +86,10 @@
         width: it.label.length * 18,
         ellipsis: false,
         customRender: ({ record, value }) => {
-          if (!record.isCount)
-            return (
-              <span
-                class="text-blue-500 underline cursor-pointer"
-                onClick={() => cellClick2('failed', it.label, it.dictItemId, record)}
-              >
-                {value || 0}
-              </span>
-            );
           return (
             <span
               class="text-blue-500 underline cursor-pointer"
-              onClick={() => cellClick('failed', it.label, it.dictItemId)}
+              onClick={() => cellClick2('failed', it.label, it.dictItemId, record)}
             >
               {value || 0}
             </span>
@@ -144,15 +117,19 @@
       type,
       title,
       failedCode,
+      sampleType: record.sampleType === '--' ? void 0 : record.sampleType,
+      stationNo: record.sampleType === '--' ? void 0 : record.stationNo,
       ...values,
-      sampleType: record.sampleType,
-      stationNo: record.stationNo,
     });
   }
   function cellClick3(record: Recordable) {
     const values = getForm().getFieldsValue();
 
-    openModal3(true, { sampleType: record.sampleType, stationNo: record.stationNo, ...values });
+    openModal3(true, {
+      sampleType: record.sampleType === '--' ? void 0 : record.sampleType,
+      stationNo: record.sampleType === '--' ? void 0 : record.stationNo,
+      ...values,
+    });
   }
   function getCountRow(data: Recordable[]) {
     const row = getColumns().reduce((row, { dataIndex, children = [] }) => {
@@ -170,7 +147,6 @@
     data.forEach((it) => {
       for (const key in it) {
         const data = it[key];
-        console.log(row);
         if (isObject(data)) {
           for (const ck in data) {
             row[key][ck] += data[ck] || 0;
