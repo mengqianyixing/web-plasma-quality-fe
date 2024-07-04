@@ -1,44 +1,30 @@
 <template>
-  <PageWrapper dense contentFullHeight>
-    <div class="flex-grow overflow-auto h-87vh">
-      <BasicTable @register="registerTable">
-        <template #totalUnqualified="{ record }">
-          <span
-            :class="
-              !record?.totalUnqualified
-                ? 'pointer-events-none'
-                : 'text-blue-500 underline cursor-pointer'
-            "
-            @click.stop.self="handleOpenDetail(record)"
-          >
-            {{ record?.totalUnqualified }}
-          </span>
-        </template>
-        <template #toolbar>
-          <a-button
-            type="primary"
-            @click="handleExport"
-            :loading="buttonLoading"
-            v-auth="SearchManager.ERPReportExport"
-          >
-            导出
-          </a-button>
-        </template>
-      </BasicTable>
-    </div>
+  <PageWrapper dense contentFullHeight fixedHeight>
+    <BasicTable @register="registerTable">
+      <template #totalUnqualified="{ record }">
+        <span
+          :class="
+            !record?.totalUnqualified
+              ? 'pointer-events-none'
+              : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleOpenDetail(record)"
+        >
+          {{ record?.totalUnqualified }}
+        </span>
+      </template>
+      <template #toolbar>
+        <a-button
+          type="primary"
+          @click="handleExport"
+          :loading="buttonLoading"
+          v-auth="SearchManager.ERPReportExport"
+        >
+          导出
+        </a-button>
+      </template>
+    </BasicTable>
 
-    <div class="flex justify-end mx-5 mt-3">
-      <a-pagination
-        @change="handlePageChange"
-        @show-size-change="handleSizeChange"
-        size="small"
-        show-size-changer
-        show-quick-jumper
-        v-model:current="pager.current"
-        v-model:pageSize="pager.pageSize"
-        :total="pager.total"
-      />
-    </div>
     <unqualified-modal @register="registerModal" />
   </PageWrapper>
 </template>
@@ -48,8 +34,8 @@
   import { columns, searchFormSchema } from './report.data';
   import { PageWrapper } from '@/components/Page';
   import { getERPInspectionReportList } from '@/api/query-statistics/ERP';
-  import { reactive, ref } from 'vue';
-  import { Pagination, message } from 'ant-design-vue';
+  import { ref } from 'vue';
+  import { message } from 'ant-design-vue';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
@@ -60,54 +46,14 @@
   defineOptions({ name: 'ERPInspectionReport' });
 
   const { currentRoute } = useRouter();
-  const APagination = Pagination;
-
-  const pager = reactive({
-    current: 1,
-    pageSize: 30,
-    total: 0,
-  });
 
   const [registerModal, { openModal }] = useModal();
 
-  function afterFetchDataFormat(data) {
-    const res: any[] = [];
-
-    data.forEach((item) => {
-      item.titerDetailList.forEach((it, i) => {
-        res.push({
-          ...item,
-          ...it,
-          rowSpan: i === 0 ? item.titerDetailList.length : 0,
-        });
-      });
-    });
-
-    return res;
-  }
-
-  const [registerTable, { reload, getRawDataSource, getForm }] = useTable({
+  const [registerTable, { getForm }] = useTable({
     api: getERPInspectionReportList,
-    beforeFetch: (params) => {
-      return {
-        ...params,
-        currPage: pager.current,
-        pageSize: pager.pageSize,
-      };
-    },
-    afterFetch: (data) => {
-      const _data = getRawDataSource();
-      pager.total = _data.totalCount;
-      pager.pageSize = _data.pageSize;
-      pager.current = _data.currPage;
-
-      return afterFetchDataFormat(data);
-    },
     columns,
     formConfig: {
       schemas: searchFormSchema,
-      submitFunc,
-      submitOnReset: true,
     },
     fetchSetting: {
       pageField: 'currPage',
@@ -115,25 +61,13 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    pagination: false,
-    showIndexColumn: false,
+    showIndexColumn: true,
     size: 'small',
     striped: false,
     useSearchForm: true,
     bordered: true,
+    immediate: false,
   });
-
-  function handlePageChange(e) {
-    pager.current = e;
-
-    reload();
-  }
-
-  function handleSizeChange(_, size) {
-    pager.pageSize = size;
-
-    reload();
-  }
 
   let buttonLoading = ref(false);
   async function handleExport() {
@@ -152,7 +86,7 @@
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(
         lastLevelCols,
-        afterFetchDataFormat(data.result || []),
+        data.result || [],
         rows.length,
       );
       jsonToSheetXlsx({
@@ -170,11 +104,5 @@
     openModal(true, {
       record,
     });
-  }
-
-  async function submitFunc() {
-    pager.current = 1;
-
-    await reload();
   }
 </script>

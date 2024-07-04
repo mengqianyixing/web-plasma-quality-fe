@@ -1385,7 +1385,11 @@ export type PostApiCoreLabRegistrationSampleResponse = {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload`
+<<<<<<< HEAD
  * @更新时间 `2024-07-04 14:05:15`
+=======
+ * @更新时间 `2024-07-04 13:32:49`
+>>>>>>> fd0d85316dcadac259e48c79860a408dc68c3769
  */
 export interface PostApiCoreLabRegistrationTiterUploadRequest {
   file: FileData;
@@ -1398,7 +1402,11 @@ export interface PostApiCoreLabRegistrationTiterUploadRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload`
+<<<<<<< HEAD
  * @更新时间 `2024-07-04 14:05:15`
+=======
+ * @更新时间 `2024-07-04 13:32:49`
+>>>>>>> fd0d85316dcadac259e48c79860a408dc68c3769
  */
 export interface PostApiCoreLabRegistrationTiterUploadResponse {
   /**

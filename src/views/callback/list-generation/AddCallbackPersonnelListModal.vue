@@ -160,9 +160,10 @@
         pageSize: pager.pageSize,
         currPage: pager.currPage,
       } as unknown as GetApiCoreDonorCallbackNeedRequest);
+      if (tableData.value!.length === 0)
+        createMessage.warn(`共${originRes.totalCount}位浆员待回访`);
       tableData.value = originRes.result!;
       pager.total = originRes.totalCount!;
-      createMessage.warn(`共${originRes.totalCount}位浆员待回访`);
 
       await nextTick(() => {
         vxeRef.value?.setAllCheckboxRow(true);

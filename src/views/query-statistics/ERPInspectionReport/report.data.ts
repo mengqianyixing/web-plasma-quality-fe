@@ -7,48 +7,23 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
-    customCell: (record) => {
-      return {
-        rowSpan: record.rowSpan,
-      };
-    },
   },
   {
     title: '血浆批号（ERP）',
     dataIndex: 'batchNoFromErp',
     width: 200,
-    customCell: (record) => {
-      return {
-        rowSpan: record.rowSpan,
-      };
-    },
   },
   {
     title: '血浆审核日期',
     dataIndex: 'recheckAt',
-    customCell: (record) => {
-      return {
-        rowSpan: record.rowSpan,
-      };
-    },
   },
   {
     title: '采集开始日期',
     dataIndex: 'collectBeginAt',
-    customCell: (record) => {
-      return {
-        rowSpan: record.rowSpan,
-      };
-    },
   },
   {
     title: '采集结束日期',
     dataIndex: 'collectEndAt',
-    customCell: (record) => {
-      return {
-        rowSpan: record.rowSpan,
-      };
-    },
   },
   {
     title: '物料编码',
