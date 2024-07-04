@@ -31,6 +31,7 @@
     ratioKey,
     checkKey,
     dateKey,
+    batchKey,
   } from './data';
   import { PageWrapper } from '@/components/Page';
   import { TabPane, Tabs, message } from 'ant-design-vue';
@@ -141,14 +142,14 @@
   function getFormDateIsNotNull() {
     const values = getForm().getFieldsValue();
     params = values;
-    return dateKey.some((key) => values[key]);
+    return [...dateKey, ...batchKey].some((key) => values[key]);
   }
   function submitFunc() {
     if (getFormDateIsNotNull()) {
       reload();
       return Promise.resolve();
     }
-    message.warning('请选择日期后进行查询');
+    message.warning('请至少选择日期或输入血浆批号');
     return Promise.reject();
   }
   function reload() {

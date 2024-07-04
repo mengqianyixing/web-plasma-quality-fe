@@ -24,6 +24,7 @@ export const dateKey = [
   'issueBegin',
   'issueEnd',
 ];
+export const batchKey = ['batchNoBegin', 'batchNoEnd'];
 
 export const checkColumns: (customRender: Function) => BasicColumn[] = (customRender) => [
   {
@@ -258,7 +259,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '[batchNoBegin, batchNoEnd]',
+    field: '[' + batchKey[0] + ',' + batchKey[1] + ']',
     component: 'InputRange',
     label: '血浆批号',
     componentProps: {

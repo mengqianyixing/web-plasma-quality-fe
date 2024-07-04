@@ -134,8 +134,8 @@
       const values = getFieldsValue();
       tableLoading.value = true;
 
-      if (!values.date) {
-        return createMessage.warning('请选择日期');
+      if (!values.date && !values.batchNo) {
+        return createMessage.warning('请至少选择日期或输入血浆批号');
       }
 
       if (values.dateKey === 'receipt' && values.date) {

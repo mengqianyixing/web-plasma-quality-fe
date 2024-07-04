@@ -210,9 +210,10 @@
     if (
       !searchParams.acceptBeginAt &&
       !searchParams.verifyBeginAt &&
-      !searchParams.publishBeginAt
+      !searchParams.publishBeginAt &&
+      !searchParams.batchNo
     ) {
-      createMessage.warn('请至少选择一个时间条件');
+      createMessage.warn('请至少选择日期或输入血浆批号');
       return;
     }
 
