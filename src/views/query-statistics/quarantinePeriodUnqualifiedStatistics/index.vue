@@ -62,6 +62,7 @@
   let formData: Recordable = {};
   const cloneColumns = cloneDeep(columns);
   const [registerModal, { openModal }] = useModal();
+  const dictMap = new Map();
 
   const [registerTable, { setColumns, getForm }] = useTable({
     immediate: false,
@@ -238,6 +239,9 @@
         },
       })),
     );
+    [...res1, ...res2, ...res3].forEach((it) => {
+      dictMap.set(it.dictItemId, it.label);
+    });
     setColumns(cloneColumns);
   });
   function cellClick(
@@ -252,6 +256,7 @@
       ...formData,
       stationNo: record.stationNo || formData.stationNo,
       unqBagQuaType,
+      dictMap,
     });
   }
 </script>

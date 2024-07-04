@@ -12,7 +12,13 @@
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
-        <BasicTable @register="registerTable" />
+        <BasicTable @register="registerTable">
+          <template #fkFailedCode="{ value }">
+            <span>
+              {{ dictMap.get(value) }}
+            </span>
+          </template>
+        </BasicTable>
       </div>
     </div>
   </BasicModal>
@@ -26,6 +32,7 @@
 
   const state = reactive({});
   const title = ref('');
+  const dictMap = ref(new Map());
   const [registerTable, { redoHeight, reload, setPagination }] = useTable({
     immediate: false,
     api: getDtListApi,
@@ -48,7 +55,8 @@
   const [registerModal] = useModalInner(async (data) => {
     title.value = data.title;
     setPagination({ current: 1 });
-    Object.assign(state, data, { title: void 0 });
+    dictMap.value = data.dictMap;
+    Object.assign(state, data, { title: void 0, dictMap: void 0 });
     reload();
   });
 </script>

@@ -43,6 +43,7 @@
 
   defineOptions({ name: 'FollowDisqualificationStatistics' });
   const cloneColumns = cloneDeep(columns);
+  const dictMap = new Map();
 
   const [registerModal, { openModal }] = useModal();
   let formData: Recordable = {};
@@ -163,6 +164,9 @@
         },
       })),
     );
+    res.forEach((it) => {
+      dictMap.set(it.dictItemId, it.label);
+    });
     setColumns(cloneColumns);
     reload();
   });
@@ -179,6 +183,7 @@
       ...formData,
       year: record.year,
       trackType,
+      dictMap,
     });
   }
 </script>
