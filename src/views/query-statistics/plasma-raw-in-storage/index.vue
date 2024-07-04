@@ -51,6 +51,7 @@
   const footerTableData = ref<any[]>([]);
   const formatFooterColumns = ref<BasicColumn[]>([]);
   const [registerTable, { getRawDataSource, getForm }] = useTable({
+    immediate: false,
     api: getPlasmaRawInStorage,
     afterFetch: (data) => {
       const _data: GetApiCoreBagOutInStorageStatisticResponse = getRawDataSource();
