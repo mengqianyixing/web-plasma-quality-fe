@@ -65,7 +65,7 @@ export const columns: (
       {
         width: 80,
         title: '合格',
-        dataIndex: ['check', 'num'],
+        dataIndex: ['check', 'count'],
         format: (v) => v || 0,
         customRender,
       },

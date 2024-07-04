@@ -180,9 +180,8 @@
         }
       }
     });
-    ['check', 'verification'].forEach((key) => {
-      row[key]['ratio'] = row[key]['count'] / (row['sampleCount'] || 1);
-    });
+    row['check']['ratio'] = row['check']['count'] / (row['checkCount'] || 1);
+    row['verification']['ratio'] = row['verification']['count'] / (row['sampleCount'] || 1);
     return { ...row, stationName: '合计', sampleType: '--', isCount: true };
   }
 </script>
