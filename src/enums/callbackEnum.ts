@@ -44,7 +44,7 @@ export enum QuarantineBatchControlEnum {
 }
 
 export enum CallBackDetailState {
-  NOVISIT = 'WIT',
+  NOVISIT = 'FIL',
   RESUME = 'SCP',
   SUCCESS = 'SCS',
   FAIL = 'END',

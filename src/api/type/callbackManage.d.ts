@@ -678,7 +678,7 @@ export interface GetApiCoreDonorBlockResponse {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/search/donor/callback/detail-state`
- * @更新时间 `2024-07-02 15:50:08`
+ * @更新时间 `2024-07-04 11:12:43`
  */
 export interface GetApiSearchDonorCallbackDetailStateRequest {
   pageSize: string;
@@ -686,8 +686,8 @@ export interface GetApiSearchDonorCallbackDetailStateRequest {
   /**
    * SCP("回访成功-采浆"),
    *     SCS("回访成功-采样"),
-   *     FIL("回访失败"),
-   * WIT("未回访"),
+   * 未回访传    FIL("回访失败"),
+   *
    */
   status: string;
   /**
@@ -717,7 +717,7 @@ export interface GetApiSearchDonorCallbackDetailStateRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/search/donor/callback/detail-state`
- * @更新时间 `2024-07-02 15:50:08`
+ * @更新时间 `2024-07-04 11:12:43`
  */
 export type GetApiSearchDonorCallbackDetailStateResponse = {
   /**
