@@ -99,7 +99,7 @@
   const bsNo = ref('');
   const registrationLoading = ref(false);
   const unregistrationLoading = ref(false);
-  const rowData = ref({ status: '', sampleType: '' });
+  const rowData = ref({ status: '', sampleType: '', sampleCode: '' });
   const countData = ref({});
   const plasmaCellList = ref<Cell[]>([]);
   const reloadMap = ref<Map<string, Function>>(new Map());
@@ -137,13 +137,12 @@
       list: [],
       data: {},
     };
+    const { sampleType, sampleCode } = rowData.value;
+    const isCAB = sampleType === sampleTypeEnum.CallbackSample || sampleCode === '回访样本';
     const { list, data } = res.reduce((t, row, i) => {
       t.list.push({
         field: i.toString(),
-        label:
-          rowData.value.sampleType === sampleTypeEnum.CallbackSample
-            ? '样本数'
-            : PlasmaType(row.plasmaType),
+        label: isCAB ? '样本数' : PlasmaType(row.plasmaType),
       });
       t.data[i] = row.count;
       return t;
