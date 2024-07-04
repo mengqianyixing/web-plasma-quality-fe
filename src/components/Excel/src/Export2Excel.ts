@@ -215,10 +215,10 @@ const getHeaderMerge = (
         e: { r: node.lv - 1, c: columnsIndex + getLeafNodeLength(node, lastLevelCols) - 1 },
       });
     } else if (node.lv !== rowCount) {
-      merge.push({
-        s: { r: node.lv - 1, c: columnsIndex },
-        e: { r: rowCount - 1, c: columnsIndex },
-      });
+      // merge.push({
+      //   s: { r: node.lv - 1, c: columnsIndex },
+      //   e: { r: rowCount - 1, c: columnsIndex },
+      // });
       columnsIndex++;
     } else {
       columnsIndex++;
@@ -235,12 +235,17 @@ const columnsToRows = (columns: LvColumns[], rowCount: number) => {
     list.unshift(...children.map((it) => ({ ...it, titleArr: [...node.titleArr, it.title] })));
     if (children.length === 0) lastLevelCols.push(node);
   }
+  console.log(lastLevelCols);
   return {
     rows: Array.from({ length: rowCount }, (_, index) => {
       const row = {};
       lastLevelCols.forEach((col) => {
-        const { titleArr } = col;
-        set(row, mergeDeepField(col.dataIndex as string), titleArr[index] || titleArr[0]);
+        const { titleArr, lv } = col;
+        let title = titleArr[index] || titleArr[0];
+        if (lv === 1 && index < rowCount - 1) {
+          title = '';
+        }
+        set(row, mergeDeepField(col.dataIndex as string), title);
       });
       return row;
     }),
