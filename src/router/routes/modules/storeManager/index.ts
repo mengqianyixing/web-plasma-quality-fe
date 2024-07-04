@@ -34,10 +34,7 @@ const storeManager: AppRouteModule = {
           id: StoreButtonEnum.StoreSettingAdd,
           title: '新增',
         },
-        {
-          id: StoreButtonEnum.StoreSettingUpdate,
-          title: '编辑',
-        },
+
         {
           id: StoreButtonEnum.StoreSettingEnable,
           title: '启用',
