@@ -3749,7 +3749,7 @@ export type GetApiCoreBagUnqualifiedStatisticQuarantineResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal/detail`
- * @更新时间 `2024-05-31 16:55:02`
+ * @更新时间 `2024-07-04 16:39:20`
  */
 export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailRequest {
   currPage: string;
@@ -3786,7 +3786,7 @@ export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-track-renewal/detail`
- * @更新时间 `2024-05-31 16:55:02`
+ * @更新时间 `2024-07-04 16:39:20`
  */
 export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailResponse {
   totalCount?: number;
@@ -3794,12 +3794,19 @@ export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailResponse {
   totalPage?: number;
   currPage?: number;
   result?: {
-    bagNo?: string;
-    batchNo?: string;
-    donorNo?: string;
-    cardNo?: string;
-    name?: string;
-    collectAt?: string;
+    bagNo: string;
+    batchNo: string;
+    donorNo: string;
+    cardNo: string;
+    name: string;
+    collectAt: string;
+    stationNo: string;
+    stationName: string;
+    netWeight: number;
+    titerJudge: string;
+    failedAt: string;
+    fkFailedCode: string;
+    inStoreAt: string;
   }[];
 }
 
@@ -3808,7 +3815,7 @@ export interface GetApiCoreBagUnqualifiedStatisticTrackRenewalDetailResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-quarantine/detail`
- * @更新时间 `2024-05-31 16:57:04`
+ * @更新时间 `2024-07-04 16:35:52`
  */
 export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailRequest {
   currPage: string;
@@ -3842,7 +3849,7 @@ export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/unqualified/statistic-quarantine/detail`
- * @更新时间 `2024-05-31 16:57:04`
+ * @更新时间 `2024-07-04 16:35:52`
  */
 export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailResponse {
   totalCount?: number;
@@ -3850,12 +3857,19 @@ export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailResponse {
   totalPage?: number;
   currPage?: number;
   result?: {
-    bagNo?: string;
-    batchNo?: string;
-    donorNo?: string;
-    cardNo?: string;
-    name?: string;
-    collectAt?: string;
+    bagNo: string;
+    batchNo: string;
+    donorNo: string;
+    cardNo: string;
+    name: string;
+    collectAt: string;
+    stationNo: string;
+    stationName: string;
+    netWeight: number;
+    titerJudge: string;
+    failedAt: string;
+    fkFailedCode: string;
+    inStoreAt: string;
   }[];
 }
 
@@ -3904,7 +3918,7 @@ export type GetApiSearchBankQualifiedInventoryStatisticQueryDateResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/collect/statistic`
- * @更新时间 `2024-03-14 17:07:17`
+ * @更新时间 `2024-07-04 15:17:50`
  */
 export interface GetApiCoreBagCollectStatisticRequest {
   /**
@@ -3919,6 +3933,10 @@ export interface GetApiCoreBagCollectStatisticRequest {
    * 采集结束日期
    */
   collectEndAt?: string;
+  /**
+   * 来浆类型，下拉框取枚举类ImmType
+   */
+  plasmaTypeFromStation?: string;
 }
 
 /**
@@ -3926,7 +3944,7 @@ export interface GetApiCoreBagCollectStatisticRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/collect/statistic`
- * @更新时间 `2024-03-14 17:07:17`
+ * @更新时间 `2024-07-04 15:17:50`
  */
 export type GetApiCoreBagCollectStatisticResponse = {
   /**

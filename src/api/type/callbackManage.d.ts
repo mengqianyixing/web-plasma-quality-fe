@@ -814,4 +814,58 @@ export type GetApiSearchDonorCallbackDetailBagResponse = {
   name: string;
 }[];
 
+/**
+ * 接口 [自主回访明细↗](https://yapi.sharing8.cn/project/529/interface/api/35796) 的 **请求类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `GET /api/search/donor/callback/detail-self`
+ * @更新时间 `2024-07-04 16:54:41`
+ */
+export interface GetApiSearchDonorCallbackDetailSelfRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 回访批号
+   */
+  planNo: string;
+  /**
+   * 浆员编号
+   */
+  cardNo?: string;
+}
+
+/**
+ * 接口 [自主回访明细↗](https://yapi.sharing8.cn/project/529/interface/api/35796) 的 **返回类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `GET /api/search/donor/callback/detail-self`
+ * @更新时间 `2024-07-04 16:54:41`
+ */
+export type GetApiSearchDonorCallbackDetailSelfResponse = {
+  /**
+   * 浆员编号
+   */
+  cardNo: string;
+  /**
+   * 浆员姓名
+   */
+  name: string;
+  /**
+   * 回访日期
+   */
+  callbackDate: string;
+  /**
+   * 样本编号
+   */
+  field_2: string;
+  /**
+   * 血型
+   */
+  field_3: string;
+  /**
+   * 现居地址
+   */
+  liveAddress: string;
+}[];
+
 /* prettier-ignore-end */
