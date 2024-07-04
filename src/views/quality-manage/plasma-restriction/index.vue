@@ -74,6 +74,7 @@
   defineOptions({ name: 'PlasmaRestriction' });
 
   const batchNo = ref('');
+  const bfNo = ref('');
   const [registerModal, { openModal }] = useModal();
   const [registerBindModal, { openModal: openBindModal }] = useModal();
 
@@ -117,7 +118,7 @@
     inset: true,
     columns: boxColumns.slice(1),
     size: 'small',
-    beforeFetch: (p) => ({ ...p, batchNo: batchNo.value }),
+    beforeFetch: (p) => ({ ...p, batchNo: batchNo.value, bfNo: bfNo.value }),
     bordered: true,
   });
   function getSelections(onlyOne: boolean) {
@@ -133,6 +134,7 @@
   }
   async function handleDt(row: Recordable) {
     batchNo.value = row.batchNo;
+    bfNo.value = row.bfNo;
     openBindModal(true);
     await nextTick();
     setPagination({ current: 1 });
