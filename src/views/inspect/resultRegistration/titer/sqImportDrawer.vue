@@ -41,7 +41,7 @@
   import { CellWapper } from '@/components/CellWapper';
   import { importSuccessColumns, importFailColumns, cellList } from './data';
   import { useModalInner, useModal, BasicModal } from '@/components/Modal';
-  import { ref, reactive, markRaw } from 'vue';
+  import { ref, reactive, markRaw, h } from 'vue';
   import { message } from 'ant-design-vue';
   import { updateImportApi } from '@/api/inspect/resultRegistration';
   import { PostApiCoreLabMbBaninResponse } from '@/api/type/inspectManage';
@@ -157,7 +157,16 @@
       createConfirm({
         iconType: 'warning',
         title: '提示',
-        content: '核酸不合格确认导入效价？',
+        content: () =>
+          h(
+            'div',
+            {
+              style: {
+                color: 'red',
+              },
+            },
+            '核酸不合格确认导入效价？',
+          ),
         onOk: () => {
           openConfirmModal();
         },

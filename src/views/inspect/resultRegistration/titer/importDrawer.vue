@@ -73,7 +73,7 @@
   import { CellWapper } from '@/components/CellWapper';
   import { importSuccessColumns, importFailColumns, cellList } from './data';
   import { useModalInner, useModal, BasicModal } from '@/components/Modal';
-  import { ref, reactive, markRaw } from 'vue';
+  import { ref, reactive, markRaw, h } from 'vue';
   import { Upload as AUpload, message } from 'ant-design-vue';
   import { uploadItemTiter, updateImportApi } from '@/api/inspect/resultRegistration';
   import { PostApiCoreLabRegistrationTiterUploadResponse } from '@/api/type/inspectManage';
@@ -194,11 +194,20 @@
   });
   async function checkNuc() {
     if (dataSource.dataSaved.length === 0) return message.warning('没有导入成功的数据');
-    if (cellData.value.isNucleic) {
+    if (!cellData.value.isNucleic) {
       createConfirm({
         iconType: 'warning',
         title: '提示',
-        content: '核酸不合格确认导入效价？',
+        content: () =>
+          h(
+            'div',
+            {
+              style: {
+                color: 'red',
+              },
+            },
+            '核酸不合格确认导入效价？',
+          ),
         onOk: () => {
           openConfirmModal();
         },
