@@ -194,7 +194,7 @@
   });
   async function checkNuc() {
     if (dataSource.dataSaved.length === 0) return message.warning('没有导入成功的数据');
-    if (!cellData.value.isNucleic) {
+    if (cellData.value.isNucleic) {
       createConfirm({
         iconType: 'warning',
         title: '提示',
