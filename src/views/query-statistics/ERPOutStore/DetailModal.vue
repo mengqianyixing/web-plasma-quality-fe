@@ -27,6 +27,7 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { useRouter } from 'vue-router';
   import { message } from 'ant-design-vue';
+  import dayjs from 'dayjs';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -41,6 +42,25 @@
     {
       title: '血浆批号',
       dataIndex: 'batchNo',
+    },
+    {
+      title: '血浆批号（ERP）',
+      dataIndex: 'erpBatchNo',
+    },
+    {
+      title: '出库日期',
+      dataIndex: 'outDate',
+      format: (text) => {
+        return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+      },
+    },
+    {
+      title: '血浆类型',
+      dataIndex: 'plasmaType',
+    },
+    {
+      title: '效价类型',
+      dataIndex: 'titerType',
     },
     {
       title: '验收净重（g）',

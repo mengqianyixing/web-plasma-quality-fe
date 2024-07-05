@@ -35,9 +35,12 @@
   import { getReportList, uploadReportApi } from '@/api/report';
   import { ref } from 'vue';
   import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
   defineOptions({ name: 'Report' });
 
+  const serverEnumStore = useServerEnumStoreWithOut();
   let uploadParams = ref({});
   const [registerFormModal, { openModal: openFormModal, closeModal }] = useModal();
   const basicUpload = ref<any>();
@@ -56,6 +59,15 @@
           field: 'ctrlTitle',
           component: 'Input',
           label: '报表名称',
+        },
+        {
+          field: 'state',
+          label: '状态',
+          component: 'Select',
+          defaultValue: 'OPEN',
+          componentProps: {
+            options: serverEnumStore.getServerEnum(SERVER_ENUM.ReportTemplateState),
+          },
         },
       ],
     },
