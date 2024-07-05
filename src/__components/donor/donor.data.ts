@@ -96,21 +96,25 @@ export const batchColumns: BasicColumn[] = [
     title: '血浆批号',
     dataIndex: 'fkBatchNo',
     width: 120,
+    fixed: 'left',
   },
   {
     title: '浆站箱号',
     dataIndex: 'stationBoxNo',
     width: 120,
+    fixed: 'left',
   },
   {
     title: '现存箱号',
     dataIndex: 'boxNo',
     width: 120,
+    fixed: 'left',
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
     width: 130,
+    fixed: 'left',
   },
   {
     title: '采集日期',
@@ -119,6 +123,7 @@ export const batchColumns: BasicColumn[] = [
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
     width: 100,
+    fixed: 'left',
   },
   {
     title: '来浆类型',

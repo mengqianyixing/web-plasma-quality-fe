@@ -9,12 +9,14 @@ export const columns: BasicColumn[] = [
     dataIndex: 'stationName',
     sorter: true,
     width: 100,
+    fixed: 'left',
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
     sorter: true,
     width: 120,
+    fixed: 'left',
   },
   {
     title: '采集开始日期',

@@ -12,17 +12,20 @@ export const columns: BasicColumn[] = [
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '浆员编号',
     dataIndex: 'cardNo',
     width: 120,
+    fixed: 'left',
   },
 
   {
     title: '浆员姓名',
     dataIndex: 'name',
     width: 100,
+    fixed: 'left',
   },
   {
     title: '血型',

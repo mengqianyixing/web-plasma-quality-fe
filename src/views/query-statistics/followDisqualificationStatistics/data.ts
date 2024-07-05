@@ -24,11 +24,13 @@ export const columns: BasicColumn[] = [
     title: '年份',
     dataIndex: 'year',
     width: 70,
+    fixed: 'left',
   },
   {
     title: '续追踪血浆数量(袋)',
     dataIndex: trackNumKey,
     width: 140,
+    fixed: 'left',
   },
   {
     title: '回访不合格追踪',

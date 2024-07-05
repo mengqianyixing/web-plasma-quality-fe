@@ -13,16 +13,19 @@ export const columns: BasicColumn[] = [
     dataIndex: 'planNo',
     slots: { customRender: 'planNo' },
     width: 110,
+    fixed: 'left',
   },
   {
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 75,
+    fixed: 'left',
   },
   {
     title: '浆员数量',
     dataIndex: 'donorNum',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '生成人',

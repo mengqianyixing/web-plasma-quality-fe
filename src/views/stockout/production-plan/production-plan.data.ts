@@ -33,6 +33,7 @@ export const columns: BasicColumn[] = [
     align: 'left',
     slots: { customRender: 'mesId' },
     width: 120,
+    fixed: 'left',
   },
   {
     title: '投产类型',
@@ -41,16 +42,18 @@ export const columns: BasicColumn[] = [
       return PlasmaType(record.orderType);
     },
     width: 80,
-  },
-  {
-    title: '血浆效期',
-    dataIndex: 'expiration',
-    width: 80,
+    fixed: 'left',
   },
   {
     title: '计划投浆重量(吨)',
     dataIndex: 'orderWeight',
     width: 120,
+    fixed: 'left',
+  },
+  {
+    title: '血浆效期',
+    dataIndex: 'expiration',
+    width: 80,
   },
   {
     title: '计划出库日期',

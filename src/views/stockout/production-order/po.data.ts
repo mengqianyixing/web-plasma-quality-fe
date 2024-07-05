@@ -20,6 +20,7 @@ export const columns: BasicColumn[] = [
     align: 'left',
     slots: { customRender: 'mesId' },
     width: 110,
+    fixed: 'left',
   },
   {
     title: '投产类型',
@@ -28,11 +29,13 @@ export const columns: BasicColumn[] = [
     format(text) {
       return `${PlasmaType(text)}`;
     },
+    fixed: 'left',
   },
   {
     title: '投浆重量(t)',
     dataIndex: 'orderWeight',
     width: 95,
+    fixed: 'left',
   },
   {
     title: '血浆效期',

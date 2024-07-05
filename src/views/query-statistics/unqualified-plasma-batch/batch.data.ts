@@ -9,21 +9,25 @@ export const columns: BasicColumn[] = [
     title: '序号',
     dataIndex: 'index',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '批次号',
     dataIndex: 'batchNo',
     width: 130,
+    fixed: 'left',
   },
   {
     title: '入库日期',
     dataIndex: 'inStoreDate',
     width: 100,
+    fixed: 'left',
   },
   {
     title: '入库数量（袋）',

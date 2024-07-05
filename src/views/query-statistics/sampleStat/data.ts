@@ -8,16 +8,18 @@ const { stationOptions } = useStation();
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
-export const columns: BasicColumn[] = [
+export const columns: (BasicColumn & { type?: string })[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '样本批号',
     dataIndex: 'sampleBatchNo',
     width: 120,
+    fixed: 'left',
   },
 
   {
@@ -25,12 +27,14 @@ export const columns: BasicColumn[] = [
     dataIndex: 'sampleType',
     format: (text) => SampleType(text),
     width: 80,
+    fixed: 'left',
   },
   {
     title: '样本总数',
     dataIndex: 'sampleCount',
     width: 80,
     format: (v) => v || 0,
+    fixed: 'left',
   },
   {
     title: '接收人',

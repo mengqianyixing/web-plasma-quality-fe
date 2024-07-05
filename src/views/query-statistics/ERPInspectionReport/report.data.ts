@@ -7,11 +7,13 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
+    fixed: 'left',
   },
   {
     title: '血浆批号（ERP）',
     dataIndex: 'batchNoFromErp',
     width: 200,
+    fixed: 'left',
   },
   {
     title: '血浆审核日期',

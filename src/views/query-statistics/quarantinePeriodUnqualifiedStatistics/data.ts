@@ -29,11 +29,13 @@ export const columns: BasicColumn[] = [
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 70,
+    fixed: 'left',
   },
   {
     title: '血浆数量（袋）',
     dataIndex: bagNumKey,
     width: 100,
+    fixed: 'left',
   },
 
   {

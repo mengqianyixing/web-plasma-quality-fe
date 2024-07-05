@@ -280,6 +280,7 @@
 <style scoped>
   .root :deep(.ant-table-tbody tr:last-child) {
     position: v-bind('totalStyle.position');
+    z-index: 99;
     top: v-bind('totalStyle.top');
     bottom: v-bind('totalStyle.bottom');
     background-color: #f5f5f5;

@@ -21,6 +21,7 @@ export const columns: BasicColumn[] = [
     width: 120,
     ellipsis: false,
     slots: { customRender: 'mesId' },
+    fixed: 'left',
   },
   {
     title: '投产类型',
@@ -29,6 +30,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return `${PlasmaType(text)}`;
     },
+    fixed: 'left',
   },
   {
     title: '血浆效期',

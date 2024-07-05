@@ -10,12 +10,14 @@ export const columns: BasicColumn[] = [
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 70,
+    fixed: 'left',
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
     slots: { customRender: 'batchNo' },
     width: 120,
+    fixed: 'left',
   },
   {
     title: '血浆箱数',

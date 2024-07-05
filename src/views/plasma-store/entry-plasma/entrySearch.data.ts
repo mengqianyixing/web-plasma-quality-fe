@@ -14,6 +14,7 @@ export const entryColumns: BasicColumn[] = [
     dataIndex: 'stationName',
     className: 'empty-value',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '血浆批号',
@@ -21,6 +22,7 @@ export const entryColumns: BasicColumn[] = [
     slots: { customRender: 'batchNo' },
     className: 'empty-value',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '血浆情况',

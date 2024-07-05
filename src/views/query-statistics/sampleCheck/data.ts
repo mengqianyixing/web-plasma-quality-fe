@@ -16,12 +16,14 @@ export const columns: (
     width: 80,
     title: '采浆公司',
     dataIndex: 'stationName',
+    fixed: 'left',
   },
   {
     width: 80,
     title: '样本类型',
     dataIndex: 'sampleType',
     format: (text) => SampleType(text),
+    fixed: 'left',
   },
 
   {
@@ -30,6 +32,7 @@ export const columns: (
     dataIndex: 'sampleCount',
     format: (v) => v || 0,
     customRender,
+    fixed: 'left',
   },
   {
     width: 120,

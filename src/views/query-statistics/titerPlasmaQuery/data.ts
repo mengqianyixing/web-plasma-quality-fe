@@ -21,12 +21,14 @@ export const columns = [
     align: 'center',
     field: 'stationName',
     slot: 'stationName',
+    fixed: 'left',
   },
   {
     width: 130,
     title: '血浆批号',
     align: 'center',
     field: 'batchNo',
+    fixed: 'left',
   },
 
   {
@@ -34,12 +36,14 @@ export const columns = [
     title: '采浆量(g)',
     align: 'center',
     field: 'weight',
+    fixed: 'left',
   },
   {
     width: 120,
     title: '血浆数量(袋)',
     align: 'center',
     field: 'bagCount',
+    fixed: 'left',
   },
   {
     title: '乙免血浆',

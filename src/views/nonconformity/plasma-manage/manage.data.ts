@@ -22,24 +22,28 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    width: 65,
+    width: 80,
+    fixed: 'left',
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
     ellipsis: false,
     width: 120,
+    fixed: 'left',
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
     slots: { customRender: 'bagNo' },
     width: 150,
+    fixed: 'left',
   },
   {
     title: '浆员编号',
     dataIndex: 'cardNo',
     width: 150,
+    fixed: 'left',
   },
   {
     title: '血型',

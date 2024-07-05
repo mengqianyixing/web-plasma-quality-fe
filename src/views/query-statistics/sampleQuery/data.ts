@@ -13,17 +13,20 @@ export const columns: BasicColumn[] = [
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '样本批号',
     dataIndex: 'sampleBatchNo',
     width: 120,
+    fixed: 'left',
   },
 
   {
     title: '样本类型',
     dataIndex: 'sampleType',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '样本编号',
@@ -32,6 +35,7 @@ export const columns: BasicColumn[] = [
     sorter: true,
     width: 140,
     ellipsis: false,
+    fixed: 'left',
   },
   {
     title: '采集日期',

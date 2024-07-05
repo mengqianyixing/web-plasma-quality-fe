@@ -9,11 +9,13 @@ export const columns: BasicColumn[] = [
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
     width: 120,
+    fixed: 'left',
   },
   {
     title: '验收数量',

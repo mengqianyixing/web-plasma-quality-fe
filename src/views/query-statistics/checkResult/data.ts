@@ -13,11 +13,13 @@ export const columns: (customRender: Function) => BasicColumn[] = (customRender)
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '样本批号',
     dataIndex: 'bsNo',
     width: 120,
+    fixed: 'left',
   },
 
   {
@@ -25,11 +27,13 @@ export const columns: (customRender: Function) => BasicColumn[] = (customRender)
     dataIndex: 'sampleType',
     width: 80,
     format: (text) => SampleType(text),
+    fixed: 'left',
   },
   {
     title: '样本数量',
     dataIndex: 'sampleCount',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '样本验收',

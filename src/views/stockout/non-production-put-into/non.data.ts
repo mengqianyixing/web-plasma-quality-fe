@@ -11,11 +11,13 @@ export const columns: BasicColumn[] = [
     dataIndex: 'dlvNo',
     slots: { customRender: 'dlvNo' },
     width: 150,
+    fixed: 'left',
   },
   {
     title: '血浆数量',
     dataIndex: 'bagNum',
     width: 100,
+    fixed: 'left',
   },
   {
     title: '原因',

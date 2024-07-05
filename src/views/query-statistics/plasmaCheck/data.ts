@@ -31,23 +31,27 @@ export const checkColumns: (customRender: Function) => BasicColumn[] = (customRe
     width: 70,
     title: '采浆公司',
     dataIndex: 'stationName',
+    fixed: 'left',
   },
   {
     width: 220,
     title: '血浆批号',
     dataIndex: 'batch',
+    fixed: 'left',
   },
 
   {
     width: 120,
     title: '批次数量(批)',
     dataIndex: 'batchCount',
+    fixed: 'left',
   },
   {
     width: 120,
     title: '血浆数量(袋)',
 
     dataIndex: bagCountKey,
+    fixed: 'left',
   },
   {
     title: '检测合格',

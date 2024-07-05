@@ -37,6 +37,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'dlvNo',
     slots: { customRender: 'dlvNo' },
     width: 120,
+    fixed: 'left',
   },
   {
     title: '用途',
@@ -45,11 +46,13 @@ export const columns: BasicColumn[] = [
       return USE_TO_TEXT[record.useTo];
     },
     width: 50,
+    fixed: 'left',
   },
   {
     title: '血浆总数',
     dataIndex: 'count',
     width: 70,
+    fixed: 'left',
   },
   {
     title: '申请原因',

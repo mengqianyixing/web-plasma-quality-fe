@@ -13,18 +13,21 @@ export const columns: BasicColumn[] = [
     width: 80,
     title: '采浆公司',
     dataIndex: 'stationName',
+    fixed: 'left',
   },
   {
     width: 80,
     title: '来浆类型',
     dataIndex: 'rawImm',
     format: (t) => ImmType(t),
+    fixed: 'left',
   },
 
   {
     width: 100,
     title: '血浆数量(袋)',
     dataIndex: 'bagCount',
+    fixed: 'left',
   },
   {
     width: 80,
