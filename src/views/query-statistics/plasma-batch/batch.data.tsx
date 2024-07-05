@@ -219,5 +219,8 @@ export const searchFormSchema: FormSchema[] = [
     field: '[batchStartNo,batchEndNo]',
     component: 'InputRange',
     label: '血浆批号',
+    componentProps: {
+      isBetween: false,
+    },
   },
 ];
