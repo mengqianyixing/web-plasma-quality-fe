@@ -33,6 +33,7 @@
   const { currentRoute } = useRouter();
 
   const [registerTable, { getForm }] = useTable({
+    immediate: false,
     api: getPlasmaBagCollect,
     columns,
     formConfig: {
