@@ -58,8 +58,8 @@
         <template #calculateAt="{ row }">
           <span>{{ row.calculateAt ? dayjs(row.calculateAt).format('YYYY-MM-DD') : '-' }}</span>
         </template>
-        <template #tracked="{ row }">
-          <span>{{ row?.tracked ? BagTrackMap.get(row?.tracked) : '' }}</span>
+        <template #plasmaStatus="{ row }">
+          <span>{{ row?.plasmaStatus ? BagTrackMap.get(row?.plasmaStatus) : '' }}</span>
         </template>
       </vxe-grid>
     </PageWrapper>
@@ -427,8 +427,8 @@
     },
     {
       title: '血浆流程状态',
-      field: 'tracked',
-      slots: { default: 'tracked' },
+      field: 'plasmaStatus',
+      slots: { default: 'plasmaStatus' },
       // format(text) {
       //   const val = text ? BagTrackMap.get(text as BagTrackValueEnum) : '';
       //   return val;
@@ -625,7 +625,9 @@
           immunity: it.immunity,
           titer: it.titer,
           calculateAt: it.calculateAt ? dayjs(it.calculateAt).format('YYYY-MM-DD') : '',
-          tracked: it.tracked ? BagTrackMap.get(it.tracked as BagTrackValueEnum) : '',
+          plasmaStatus: it.plasmaStatus
+            ? BagTrackMap.get(it.plasmaStatus as BagTrackValueEnum)
+            : '',
         };
       });
 
@@ -642,7 +644,7 @@
           immunity: '效价类型',
           titer: '效价值',
           calculateAt: '检疫期满足日期',
-          tracked: '血浆流程状态	',
+          plasmaStatus: '血浆流程状态	',
         },
         filename: `投产准备号:${prepareDetail.value.prepareNo}-血浆明细.xlsx`,
         data: _exportData,
