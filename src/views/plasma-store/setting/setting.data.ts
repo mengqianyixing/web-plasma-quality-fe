@@ -128,7 +128,7 @@ export const initFormSchema: (opt: {
   },
   {
     field: 'autoFlag',
-    label: '是否自动库',
+    label: '是否立体库',
     component: 'Select',
     colProps: { span: 12 },
     required: true,
@@ -263,7 +263,7 @@ export const cellSchema: (locationCell: Cell[]) => Cell[] = (locationCell) => [
   },
   {
     field: 'houseType',
-    label: '是否自动库',
+    label: '是否立体库',
     format: (data) => AUTO_FLAG_TEXT[data.houseType[2]],
   },
   ...locationCell,
