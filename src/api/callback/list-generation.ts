@@ -10,6 +10,8 @@ import {
   GetApiSearchDonorCallbackDetailBagResponse,
   GetApiSearchDonorCallbackDetailRequest,
   GetApiSearchDonorCallbackDetailResponse,
+  GetApiSearchDonorCallbackDetailSelfRequest,
+  GetApiSearchDonorCallbackDetailSelfResponse,
   GetApiSearchDonorCallbackDetailStateRequest,
   GetApiSearchDonorCallbackDetailStateResponse,
   PostApiCoreDonorCallbackBatchRequest,
@@ -27,6 +29,7 @@ enum Api {
   CREATE_CALLBACK_BATCH = '/api/core/donor/callback/batch',
   DETAIL_BY_STATE = '/api/search/donor/callback/detail-state',
   DONOR_BAG_DETAIL = '/api/search/donor/callback/detail/bag',
+  SELF_BACK_DETAIL = '/api/search/donor/callback/detail-self',
 }
 
 export const getCallbackListApi = (params: GetApiCoreDonorCallbackRequest) =>
@@ -86,6 +89,17 @@ export const getDonorBagDetail = (params: GetApiSearchDonorCallbackDetailBagRequ
   defHttp.get<GetApiSearchDonorCallbackDetailBagResponse>(
     {
       url: Api.DONOR_BAG_DETAIL,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+export const getSelfBackDetail = (params: GetApiSearchDonorCallbackDetailSelfRequest) =>
+  defHttp.get<GetApiSearchDonorCallbackDetailSelfResponse>(
+    {
+      url: Api.SELF_BACK_DETAIL,
       params,
     },
     {
