@@ -4225,7 +4225,7 @@ export interface GetApiCoreBankErpOutNonProdResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bank/erp-out/detail`
- * @更新时间 `2024-03-26 14:56:59`
+ * @更新时间 `2024-07-05 15:02:18`
  */
 export interface GetApiCoreBankErpOutDetailRequest {
   pageSize: string;
@@ -4241,7 +4241,7 @@ export interface GetApiCoreBankErpOutDetailRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bank/erp-out/detail`
- * @更新时间 `2024-03-26 14:56:59`
+ * @更新时间 `2024-07-05 15:02:18`
  */
 export interface GetApiCoreBankErpOutDetailResponse {
   totalCount?: number;
@@ -4257,6 +4257,22 @@ export interface GetApiCoreBankErpOutDetailResponse {
      * 血浆批号
      */
     batchNo: string;
+    /**
+     * 血浆批号（ERP）
+     */
+    erpBatchNo: string;
+    /**
+     * 出库日期
+     */
+    outDate: string;
+    /**
+     * 血浆类型
+     */
+    plasmaType: string;
+    /**
+     * 效价类型
+     */
+    titerType: string;
     /**
      * 验收净重
      */

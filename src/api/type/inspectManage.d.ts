@@ -2067,14 +2067,14 @@ export type PutApiCoreLabUnqualifiedSampleResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload/update`
- * @更新时间 `2024-07-03 13:15:02`
+ * @更新时间 `2024-07-05 15:22:49`
  */
 export interface PostApiCoreLabRegistrationTiterUploadUpdateRequest {
   dataSavedList: {
     sampleNo: string;
     conclusion: string;
     titerResult: string;
-    projectld: string;
+    projectId: string;
   }[];
   /**
    * 复核人姓名
@@ -2087,7 +2087,7 @@ export interface PostApiCoreLabRegistrationTiterUploadUpdateRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload/update`
- * @更新时间 `2024-07-03 13:15:02`
+ * @更新时间 `2024-07-05 15:22:49`
  */
 export interface PostApiCoreLabRegistrationTiterUploadUpdateResponse {}
 

@@ -226,7 +226,7 @@
           sampleNo: it.sampleNo,
           conclusion: it.conclusion,
           titerResult: it.titerResult,
-          projectld: it.projectId,
+          projectId: it.projectId,
         })),
       });
       message.success('效价导入已生效');

@@ -567,7 +567,7 @@ export interface GetApiProductPrepareSummaryBoxPrepareNoResponse {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/summary/bag/{prepareNo}`
- * @更新时间 `2024-05-31 14:40:15`
+ * @更新时间 `2024-07-05 10:51:18`
  */
 export interface GetApiProductPrepareSummaryBagPrepareNoRequest {
   /**
@@ -581,7 +581,7 @@ export interface GetApiProductPrepareSummaryBagPrepareNoRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/summary/bag/{prepareNo}`
- * @更新时间 `2024-05-31 14:40:15`
+ * @更新时间 `2024-07-05 10:51:18`
  */
 export interface GetApiProductPrepareSummaryBagPrepareNoResponse {
   field_1: {
@@ -632,7 +632,7 @@ export interface GetApiProductPrepareSummaryBagPrepareNoResponse {
     /**
      * 血浆状态
      */
-    tracked: string;
+    plasmaStatus: string;
   }[];
 }
 
