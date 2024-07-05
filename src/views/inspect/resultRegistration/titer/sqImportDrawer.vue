@@ -183,6 +183,7 @@
       openConfirmModal(false);
       resetFields();
       closeModal();
+      emit('close');
     } finally {
       setModalProps({ confirmLoading: false });
     }
