@@ -48,7 +48,7 @@
   const [registerModal, { openModal }] = useModal();
   let formData: Recordable = {};
 
-  const [registerTable, { getForm, reload, setColumns }] = useTable({
+  const [registerTable, { getForm, setColumns }] = useTable({
     immediate: false,
     api: getListApi,
     columns: cloneColumns,
@@ -168,7 +168,6 @@
       dictMap.set(it.dictItemId, it.label);
     });
     setColumns(cloneColumns);
-    reload();
   });
 
   function cellClick(
