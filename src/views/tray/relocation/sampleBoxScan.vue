@@ -8,13 +8,15 @@
 -->
 <template>
   <div class="h-full">
-    <div style="box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%)" class="flex pt-12px m-24px mt-8px">
-      <BasicForm @register="registerForm" class="flex-1" @submit="handleSubmit" />
-      <div class="flex w-200px">
-        <div class="w-100px text-[20px] text-red-400">箱数：{{ count }}</div>
-        <a-button class="mr-20px" type="warning" v-show="props.isBinding">封箱</a-button>
+    <Spin :spinning="spinning">
+      <div style="box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%)" class="flex pt-12px m-24px mt-8px">
+        <BasicForm @register="registerForm" class="flex-1" @submit="handleSubmit" />
+        <div class="flex w-200px">
+          <div class="w-100px text-[20px] text-red-400">箱数：{{ count }}</div>
+          <a-button class="mr-20px" type="warning" v-show="props.isBinding">封箱</a-button>
+        </div>
       </div>
-    </div>
+    </Spin>
     <BasicTable @register="registerTable" />
   </div>
 </template>
@@ -27,13 +29,13 @@
     sampleBoxScanColumns,
   } from './relocation.data';
   import { bindBoxApi } from '@/api/tray/relocation';
-  import { message } from 'ant-design-vue';
+  import { message, Spin } from 'ant-design-vue';
   import { trayBoxListApi } from '@/api/tray/list';
 
   import { ref } from 'vue';
-  import { useMessage } from '@/hooks/web/useMessage';
 
   const count = ref(0);
+  const spinning = ref(false);
 
   const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
     labelWidth: 90,
@@ -71,9 +73,10 @@
     await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: [boxId] });
     await setFieldsValue({ boxId: '' });
     message.success('操作成功');
+    trayBoxListApi({ trayNo }).then((res) => {
+      count.value = res.length;
+    });
   }
-
-  const { createConfirm } = useMessage();
 
   async function handleSubmit() {
     const { boxId, trayNo } = getFieldsValue();
@@ -83,16 +86,11 @@
       count.value = list.length;
     }
     if (!boxId || !trayNo) return;
-    if (count.value >= 24 && props.isBinding) {
-      createConfirm({
-        iconType: 'warning',
-        content: '托盘绑定已满24箱，继续绑定?',
-        onOk: async () => {
-          await submit();
-        },
-      });
-    } else {
+    try {
+      spinning.value = true;
       await submit();
+    } finally {
+      spinning.value = false;
     }
   }
 </script>

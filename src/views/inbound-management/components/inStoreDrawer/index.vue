@@ -44,12 +44,11 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchForm } from './data';
   import { message } from 'ant-design-vue';
-  import { getListApi, trayBoxListApi } from '@/api/tray/list';
+  import { getListApi } from '@/api/tray/list';
   import InModal from '@/views/tray/outInStore/inModal.vue';
   import { nextTick, ref, reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { bindVerifyBoxApi } from '@/api/tray/relocation';
-  import { useMessage } from '@/hooks/web/useMessage';
 
   const emit = defineEmits(['register', 'close']);
   defineOptions({ name: 'InStoreModal' });
@@ -61,17 +60,16 @@
   });
   const bizScen = ref('');
 
-  const [registerForm, { validate, clearValidate, setFieldsValue, getFieldsValue, resetFields }] =
-    useForm({
-      labelWidth: 90,
-      baseColProps: { span: 24 },
-      schemas: [
-        { label: '托盘编号', component: 'Input', field: 'trayNo', required: true },
-        { label: '箱号', component: 'Input', field: 'boxId', required: true },
-      ],
-      showActionButtonGroup: false,
-      autoSubmitOnEnter: true,
-    });
+  const [registerForm, { clearValidate, setFieldsValue, getFieldsValue, resetFields }] = useForm({
+    labelWidth: 90,
+    baseColProps: { span: 24 },
+    schemas: [
+      { label: '托盘编号', component: 'Input', field: 'trayNo', required: true },
+      { label: '箱号', component: 'Input', field: 'boxId', required: true },
+    ],
+    showActionButtonGroup: false,
+    autoSubmitOnEnter: true,
+  });
 
   const [registerInModal, { openModal: openInModal }] = useModal();
   const [registerBindModal, { openModal }] = useModal();
@@ -135,23 +133,9 @@
     resetFields();
     clearValidate();
   }
-  const { createConfirm } = useMessage();
 
   async function okFunction() {
-    const values = await validate();
-    const list = await trayBoxListApi({ trayNo: values.trayNo });
-
-    if (list.length >= 24) {
-      createConfirm({
-        iconType: 'warning',
-        content: '托盘绑定已满24箱，继续绑定?',
-        onOk: async () => {
-          await submit();
-        },
-      });
-    } else {
-      await submit();
-    }
+    await submit();
   }
   async function submit() {
     const { boxId, trayNo } = getFieldsValue();

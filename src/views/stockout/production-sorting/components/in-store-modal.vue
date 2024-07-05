@@ -28,7 +28,9 @@
           size="small"
         >
           <TabPane tab="分拣血浆箱" key="1">
-            <BasicForm @register="registerForm" />
+            <Spin :spinning="state.spinning">
+              <BasicForm @register="registerForm" />
+            </Spin>
             <div class="border border-slate-100"></div>
             <div style="height: calc(100% - 60px)">
               <BasicTable @register="registerBindTable">
@@ -55,7 +57,7 @@
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form';
-  import { message, TabPane, Tabs } from 'ant-design-vue';
+  import { message, TabPane, Tabs, Spin } from 'ant-design-vue';
   import { nextTick, reactive } from 'vue';
   import {
     trayInStoreColumns,
@@ -66,7 +68,6 @@
   } from '../production-sorting.data';
   import InModal from '@/views/tray/outInStore/inModal.vue';
   import { bindBoxApi } from '@/api/tray/relocation';
-  import { trayBoxListApi } from '@/api/tray/list';
   import { getInStoreListApi, getSortingBoxListApi } from '@/api/stockout/production-sorting';
   import { TRAY_STORE_STATE } from '@/enums/stockoutEnum';
   import { SERVER_ENUM } from '@/enums/serverEnum';
@@ -78,6 +79,7 @@
   const state = reactive({
     activeKey: '1',
     prepareNo: '',
+    spinning: false,
   });
   const emit = defineEmits(['close']);
   const [registerModal] = useModalInner(async ({ prepareNo }) => {
@@ -213,22 +215,12 @@
     if (e.code !== 'Enter' && e.code !== 'NumpadEnter') return;
     const { boxId, trayNo } = getFieldsValue();
     if (boxId && !trayNo) message.warning('请扫描托盘编号');
-    let count = 0;
-    if (trayNo) {
-      const list = await trayBoxListApi({ trayNo });
-      count = list.length;
-    }
     if (!boxId || !trayNo) return;
-    if (count >= 24) {
-      createConfirm({
-        iconType: 'warning',
-        content: '托盘绑定已满24箱，继续绑定?',
-        onOk: async () => {
-          await submit();
-        },
-      });
-    } else {
+    try {
+      state.spinning = true;
       await submit();
+    } finally {
+      state.spinning = false;
     }
   }
 </script>
