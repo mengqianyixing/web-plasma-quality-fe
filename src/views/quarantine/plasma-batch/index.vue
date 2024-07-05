@@ -46,6 +46,14 @@
         >
           打印
         </a-button>
+        <a-button
+          type="primary"
+          @click="handleExport"
+          :loading="loading"
+          v-auth="QuarantineButtonEnum.ExportQuarantine"
+        >
+          导出
+        </a-button>
       </template>
     </BasicTable>
     <PlasmaBatchDetailModal @register="registerDetailModal" />
@@ -72,10 +80,16 @@
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { jsonToSheetXlsx, formatData, getHeader } from '@/components/Excel/src/Export2Excel';
+  import { useRouter } from 'vue-router';
 
   defineOptions({ name: 'PlasmaBatchReport' });
 
   const reportLoading = ref(false);
+  const loading = ref(false);
+  const { currentRoute } = useRouter();
+  const globalApiStore = useGlobalApiStoreWithOut();
   const { stationOptions, getStationNameById } = useStation();
   const slots = columns.filter((col) => col.slots);
 
@@ -200,5 +214,35 @@
 
   function handleSuccess() {
     reload();
+  }
+  async function handleExport() {
+    try {
+      loading.value = true;
+      const { getFieldsValue } = getForm();
+      const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
+
+      const data = await getPlasmaBatchReleases({
+        ...getFieldsValue(),
+        currPage: 1,
+        pageSize,
+      } as any);
+      if ((data.totalCount || 0) > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
+
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+      const { result, merge: bodyMerge } = formatData(
+        lastLevelCols,
+        data.result || [],
+        rows.length,
+      );
+      jsonToSheetXlsx({
+        data: [...rows, ...result],
+        json2sheetOpts: { skipHeader: true },
+        merges: [...headerMerge, ...bodyMerge],
+        filename: currentRoute.value.meta.title + '.xlsx',
+      });
+    } finally {
+      loading.value = false;
+    }
   }
 </script>

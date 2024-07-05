@@ -58,6 +58,11 @@ const quarantineManager: AppRouteModule = {
           name: 'print',
           title: '打印',
         },
+        {
+          id: QuarantineButtonEnum.ExportQuarantine,
+          name: 'print',
+          title: '导出',
+        },
       ],
     },
     {
