@@ -559,7 +559,7 @@ export const callbackDetailCustomColumns: BasicColumn[] = [
     width: 80,
   },
   {
-    dataIndex: 'maxCollTime',
+    dataIndex: 'maxCollectTime',
     title: '最后采浆日期',
     width: 100,
   },
