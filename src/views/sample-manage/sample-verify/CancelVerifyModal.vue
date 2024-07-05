@@ -64,6 +64,7 @@
         label: '撤销原因',
         component: 'InputTextArea',
         colProps: { span: 20 },
+        required: true,
         componentProps: {
           rows: 6,
         },
