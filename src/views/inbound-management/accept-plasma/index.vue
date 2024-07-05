@@ -136,8 +136,8 @@
   import BoxDetail from '../components/PlasmaBoxDetailModal/index.vue';
   import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal.vue';
   import revokeModal from './components/revoke-modal.vue';
-  import InStoreDrawer from '../components/inStoreDrawer/index.vue';
-  import OutStoreDrawer from '../components/outStoreDrawer/index.vue';
+  import InStoreDrawer from './components/inStoreDrawer/index.vue';
+  import OutStoreDrawer from './components/outStoreDrawer/index.vue';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import ReprintModal from './components/reprint-modal.vue';

@@ -27,9 +27,19 @@ import {
   GetApiCoreBankTrayKeepsamplesRequest,
   GetApiCoreBankTrayKeepsamplesResponse,
 } from '@/api/type/trayManage';
+import {
+  GetApiCoreBankTrayPlasmaVerifyRequest,
+  GetApiCoreBankTrayPlasmaVerifyResponse,
+} from '@/api/type/batchManage';
 
 export const getListApi = (params: GetApiCoreBankTraiesRequest) =>
   defHttp.get<GetApiCoreBankTraiesResponse>({ url: '/api/core/bank/traies', params });
+
+export const getAcceptPlasmaListApi = (params: GetApiCoreBankTrayPlasmaVerifyRequest) =>
+  defHttp.get<GetApiCoreBankTrayPlasmaVerifyResponse>({
+    url: '/api/core/bank/tray/plasma-verify',
+    params,
+  });
 
 export const disableTrayApi = (data: PutApiCoreBankTrayUselessRequest) =>
   defHttp.put<PutApiCoreBankTrayUselessResponse>({ url: `/api/core/bank/tray/useless`, data });
