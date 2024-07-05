@@ -298,21 +298,43 @@ export const dtColumns: BasicColumn[] = [
   {
     dataIndex: 'cardNo',
     title: '浆员编号',
+    width: 100,
+    ellipsis: false,
   },
   {
     dataIndex: 'name',
     title: '浆员姓名',
+    width: 100,
+    ellipsis: false,
   },
   {
     dataIndex: 'batchNo',
     title: '血浆批号',
+    width: 120,
+    ellipsis: false,
   },
   {
     dataIndex: 'bagNo',
     title: '血浆编号',
+    width: 140,
+    ellipsis: false,
   },
   {
     dataIndex: 'collectionAt',
     title: '血浆采集日期',
+    width: 100,
+    ellipsis: false,
+  },
+  {
+    dataIndex: 'inputAt',
+    title: '入不合格库日期	',
+    width: 120,
+    ellipsis: false,
+  },
+  {
+    dataIndex: 'failed',
+    title: '不合格原因',
+    width: 160,
+    ellipsis: false,
   },
 ];

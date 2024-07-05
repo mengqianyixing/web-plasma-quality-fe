@@ -254,14 +254,14 @@
         dataIndex: [exteriorKey, it.dictItemId],
         title: it.label,
         width: it.label.length * 18,
-        customRender: ({ record }) => {
-          if (record.isCount) return record[exteriorKey]?.[it.dictItemId];
+        customRender: ({ record, value }) => {
+          if (record.isCount) return value || 0;
           return (
             <span
               class="text-blue-500 underline cursor-pointer"
               onClick={() => cellClick(it.dictItemId, it.label, record)}
             >
-              {record[exteriorKey]?.[it.dictItemId]}
+              {value || 0}
             </span>
           );
         },
@@ -272,14 +272,14 @@
         dataIndex: [checkUnKey, it.dictItemId],
         title: it.label,
         width: it.label.length * 18,
-        customRender: ({ record }) => {
-          if (record.isCount) return record[checkUnKey]?.[it.dictItemId];
+        customRender: ({ record, value }) => {
+          if (record.isCount) return value || 0;
           return (
             <span
               class="text-blue-500 underline cursor-pointer"
               onClick={() => cellClick(it.dictItemId, it.label, record)}
             >
-              {record[checkUnKey]?.[it.dictItemId]}
+              {value || 0}
             </span>
           );
         },
