@@ -23,7 +23,7 @@ export const columns = [
     slot: 'stationName',
   },
   {
-    width: 120,
+    width: 130,
     title: '血浆批号',
     align: 'center',
     field: 'batchNo',

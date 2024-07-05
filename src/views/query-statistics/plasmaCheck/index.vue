@@ -11,7 +11,7 @@
       @change="reload"
     >
       <TabPane v-for="(tab, i) in tabList" :key="tab.key" :tab="tab.title">
-        <BasicTable @register="tableList[i][0]" />
+        <BasicTable @register="tableList[i][0]" class="root" />
       </TabPane>
     </Tabs>
     <TabelModal @register="registerModal" />
@@ -297,3 +297,15 @@
     });
   }
 </script>
+<style scoped>
+  .root :deep(.ant-table-body) {
+    position: static;
+  }
+
+  .root :deep(.ant-table-body tr:last-child) {
+    position: sticky;
+    top: 0;
+    bottom: 0;
+    background-color: #f5f5f5;
+  }
+</style>
