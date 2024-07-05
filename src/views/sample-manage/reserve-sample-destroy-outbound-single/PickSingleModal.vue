@@ -199,8 +199,10 @@
         pageSize: String(pager.pageSize),
       } as GetApiCoreBankDeliverSamplePickSingleRequest);
 
-      tableData.value = originRes?.result;
-
+      tableData.value = originRes?.result?.map((it, i) => ({
+        ...it,
+        index: i + 1 + (pager.current - 1) * pager.pageSize,
+      }));
       pager.current = originRes.currPage!;
       pager.pageSize = originRes.pageSize!;
       pager.total = originRes.totalCount!;

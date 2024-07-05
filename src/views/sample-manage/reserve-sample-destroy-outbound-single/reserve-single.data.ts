@@ -84,7 +84,7 @@ export const requisitionColumns: VxeGridPropTypes.Columns = [
     width: 50,
   },
   {
-    type: 'seq',
+    field: 'index',
     title: '序号',
     width: 80,
   },
