@@ -90,7 +90,7 @@
         ...values,
       } as PutApiCoreBatchSampleVerifyRevokeAllRequest);
 
-      createMessage.success('登记成功');
+      createMessage.success('撤销成功');
       emit('success');
       await resetFields();
       closeModal();
