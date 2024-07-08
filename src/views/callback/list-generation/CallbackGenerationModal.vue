@@ -104,6 +104,8 @@
   const [registerForm, { getFieldsValue, removeSchemaByField }] = useForm({
     showAdvancedButton: false,
     schemas: callbackModalSearchFromSchema,
+    baseColProps: { flex: '0 0 370px' },
+
     transformDateFunc(date) {
       return dayjs(date).format('YYYY-MM-DD');
     },
@@ -172,7 +174,7 @@
     await initTableData();
   }
 
-  const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '生成名单'));
+  const getTitle = computed(() => (unref(isUpdate) ? '编辑名单44' : '生成名单'));
 
   const [registerAddModal, { openModal }] = useModal();
   const [registerBagDetailModal, { openModal: openBagDetailModal }] = useModal();

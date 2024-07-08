@@ -347,8 +347,6 @@ export const addCallbackModalSearchFromSchema: FormSchema[] = [
     field: 'immType',
     label: '血浆类型',
     component: 'Select',
-    labelWidth: 90,
-    colProps: { span: 3 },
     componentProps: {
       options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
@@ -357,7 +355,6 @@ export const addCallbackModalSearchFromSchema: FormSchema[] = [
     field: 'trackType',
     label: '血浆状态',
     component: 'Select',
-    labelWidth: 90,
     componentProps: {
       options: [
         {
@@ -375,19 +372,16 @@ export const addCallbackModalSearchFromSchema: FormSchema[] = [
     field: 'gapDays',
     label: '距今未采浆天数',
     component: 'InputNumber',
-    colProps: { span: 3 },
   },
   {
     field: 'cardNo',
     label: '浆员编号',
     component: 'Input',
-    colProps: { span: 4 },
   },
   {
     field: '[minCollectTime, maxCollectTime]',
     label: '最早待回访日期',
     component: 'RangePicker',
-    colProps: { span: 7, push: 1 },
     helpMessage() {
       return '采集日期在区间：大于（当前日期 - 1年），小于等于（当前日期 - “回访间隔天数”)，默认间隔天数180天';
     },
@@ -399,8 +393,6 @@ export const callbackModalSearchFromSchema: FormSchema[] = [
     field: 'immType',
     label: '血浆类型',
     component: 'Select',
-    labelWidth: 90,
-    colProps: { span: 3 },
     componentProps: {
       options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
@@ -409,7 +401,6 @@ export const callbackModalSearchFromSchema: FormSchema[] = [
     field: 'trackType',
     label: '血浆状态',
     component: 'Select',
-    labelWidth: 90,
     componentProps: {
       options: [
         {
@@ -427,19 +418,16 @@ export const callbackModalSearchFromSchema: FormSchema[] = [
     field: 'gapDays',
     label: '距今未采浆天数',
     component: 'InputNumber',
-    colProps: { span: 3 },
   },
   {
     field: 'cardNo',
     label: '浆员编号',
     component: 'Input',
-    colProps: { span: 4 },
   },
   {
     field: '[minCollectTime, maxCollectTime]',
     label: '最早待回访日期',
     component: 'RangePicker',
-    colProps: { span: 7, push: 1 },
   },
 ];
 

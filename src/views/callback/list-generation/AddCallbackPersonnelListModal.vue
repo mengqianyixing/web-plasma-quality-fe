@@ -81,6 +81,7 @@
 
   const [registerForm, { updateSchema, getFieldsValue, removeSchemaByField }] = useForm({
     showAdvancedButton: false,
+    baseColProps: { flex: '0 0 370px' },
     schemas: addCallbackModalSearchFromSchema,
     transformDateFunc(date) {
       return dayjs(date).format('YYYY-MM-DD');
@@ -116,7 +117,7 @@
     showFooter: true,
   });
 
-  const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '选择名单'));
+  const getTitle = computed(() => (unref(isUpdate) ? '编辑名单2' : '选择名单2'));
 
   const batchNo = ref('');
   const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
