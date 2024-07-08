@@ -41,9 +41,6 @@ export const searchFormSchema: FormSchema[] = [
     field: 'stationNo',
     label: '采浆公司',
     component: 'Select',
-    colProps: {
-      span: 5,
-    },
   },
   {
     field: 'createAt',
