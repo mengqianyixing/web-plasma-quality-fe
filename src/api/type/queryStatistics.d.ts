@@ -3407,7 +3407,7 @@ export interface GetApiSearchSampleLabItemResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/check/details`
- * @更新时间 `2024-05-31 16:50:30`
+ * @更新时间 `2024-07-05 16:08:46`
  */
 export interface GetApiSearchPlasmaCheckDetailsRequest {
   /**
@@ -3472,7 +3472,7 @@ export interface GetApiSearchPlasmaCheckDetailsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/check/details`
- * @更新时间 `2024-05-31 16:50:30`
+ * @更新时间 `2024-07-05 16:08:46`
  */
 export interface GetApiSearchPlasmaCheckDetailsResponse {
   totalCount: number;
@@ -3487,6 +3487,14 @@ export interface GetApiSearchPlasmaCheckDetailsResponse {
     name?: string;
     batchNo?: string;
     collectionAt?: string;
+    /**
+     * 不合格原因
+     */
+    failed?: string;
+    /**
+     * 入不合格库日期
+     */
+    inputAt?: string;
   }[];
 }
 

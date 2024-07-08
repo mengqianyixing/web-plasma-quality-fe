@@ -129,6 +129,7 @@
     {
       title: '分拣时间',
       dataIndex: 'operateAt',
+      sorter: true,
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
       },
@@ -197,6 +198,12 @@
         valueField: 'value',
       },
     },
+    {
+      field: 'bagNo',
+      label: '血浆编号',
+      component: 'Input',
+      colProps: { span: 4 },
+    },
   ];
   const [registerTable, { getForm, reload }] = useTable({
     api: getSortBags,
@@ -219,5 +226,10 @@
     bordered: true,
     showIndexColumn: false,
     isCanResizeParent: true,
+    sortFn(sortInfo) {
+      return {
+        orderByOperateAt: sortInfo.order ? (sortInfo.order === 'ascend' ? 'ASC' : 'DESC') : null,
+      };
+    },
   });
 </script>
