@@ -103,7 +103,8 @@
       {
         field: 'failedCode',
         component: 'ApiSelect',
-        label: '未检测原因',
+        label: '原因',
+        required: true,
         componentProps: {
           api: getSysSecondaryDictionary,
           params: {
