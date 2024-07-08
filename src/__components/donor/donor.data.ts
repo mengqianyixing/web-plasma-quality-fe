@@ -6,7 +6,6 @@ import { SERVER_ENUM } from '@/enums/serverEnum';
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const ConclusionType = serverEnumStore.getServerEnumText(SERVER_ENUM.ConclusionType);
-const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 // 查询条件：浆员编号
 export const searchFormSchema: FormSchema[] = [
@@ -198,11 +197,6 @@ export const batchColumns: BasicColumn[] = [
         title: '血浆类型',
         dataIndex: ['reCheckInfo', 'immunityType'],
         width: 80,
-        format: (text) =>
-          (text || '')
-            .split(',')
-            .map((it) => PlasmaType(it))
-            .join(',') || text,
       },
       {
         title: '效价结果值',
