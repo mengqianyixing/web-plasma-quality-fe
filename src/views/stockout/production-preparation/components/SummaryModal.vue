@@ -12,12 +12,12 @@
   >
     <!-- <PageWrapper contentFullHeight fixedHeight> -->
     <PageWrapper>
-      <Row v-if="!readOnly">
-        <Col :span="3" :offset="21" style="margin-bottom: 12px">
+      <div class="flex justify-end" v-if="!readOnly">
+        <div style="margin-bottom: 12px">
           <a-button @click="goPick(true)" style="margin-right: 12px"> 按批挑选 </a-button>
           <a-button @click="goPick(false)"> 按箱挑选 </a-button>
-        </Col>
-      </Row>
+        </div>
+      </div>
       <Description @register="register" :data="prepareDetail" />
       <Tabs v-model:activeKey="activeKey" @change="changeTabs" style="margin-top: 12px" type="card">
         <TabPane key="columnsImmunity" tab="效价类型" force-render />
@@ -70,7 +70,7 @@
 <script lang="tsx" setup>
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
-  import { Row, Col, Tabs, TabPane } from 'ant-design-vue';
+  import { Tabs, TabPane } from 'ant-design-vue';
   import { VxeGridProps } from 'vxe-table';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
