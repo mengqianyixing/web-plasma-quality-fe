@@ -13,7 +13,7 @@ import { LAYOUT } from '@/router/constant';
 const system: AppRouteModule = {
   path: '/system',
   name: 'System',
-  menuWeight: 1010,
+  menuWeight: 880,
   id: 101,
   component: LAYOUT,
   redirect: '/system/account',
@@ -28,7 +28,7 @@ const system: AppRouteModule = {
       name: 'AuthMenus',
       id: 101010,
       meta: {
-        title: '权限管理',
+        title: '角色管理',
       },
       component: () => import('@/views/system/auth/index.vue'),
       authElements: [
@@ -86,15 +86,15 @@ const system: AppRouteModule = {
       },
       component: () => import('@/views/system/logs/index.vue'),
     },
-    {
-      path: 'thirdSysLogs',
-      name: 'ThirdSysLogs',
-      id: 101050,
-      meta: {
-        title: '交互日志',
-      },
-      component: () => import('@/views/system/thirdSysLogs/index.vue'),
-    },
+    // {
+    //   path: 'thirdSysLogs',
+    //   name: 'ThirdSysLogs',
+    //   id: 101050,
+    //   meta: {
+    //     title: '交互日志',
+    //   },
+    //   component: () => import('@/views/system/thirdSysLogs/index.vue'),
+    // },
   ],
 };
 

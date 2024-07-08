@@ -85,7 +85,7 @@ const callManager: AppRouteModule = {
       path: 'ItemSetting',
       name: 'ItemSetting',
       meta: {
-        title: '检验项目设置',
+        title: '检测项目',
       },
       authElements: [
         {
@@ -210,7 +210,7 @@ const callManager: AppRouteModule = {
       name: 'RequiredItem',
       id: 100080,
       meta: {
-        title: '必检项',
+        title: '必检项目设置',
       },
       authElements: [
         {
