@@ -165,6 +165,7 @@
       align: 'left',
       width: 120,
       resizable: true,
+      fixed: 'left',
       slots: { customRender: 'prepareNo' },
     },
     {

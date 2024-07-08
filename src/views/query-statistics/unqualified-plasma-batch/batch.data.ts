@@ -33,6 +33,7 @@ export const columns: BasicColumn[] = [
     title: '入库数量（袋）',
     dataIndex: 'inStoreNum',
     width: 100,
+    fixed: 'left',
   },
   {
     title: '验收数量（袋）',
