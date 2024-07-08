@@ -378,14 +378,7 @@ export const searchFormSchema: FormSchema[] = [
       options: stationOptions,
     },
   },
-  {
-    field: '[batchBegin,batchEnd]',
-    component: 'InputRange',
-    label: '血浆批号',
-    componentProps: {
-      isBetween: false,
-    },
-  },
+
   {
     field: '[' + dateKey[0] + ',' + dateKey[1] + ']',
     component: 'RangePicker',
@@ -438,6 +431,16 @@ export const searchFormSchema: FormSchema[] = [
       class: 'w-full',
       valueFormat: 'YYYY-MM-DD',
     },
+  },
+  {
+    field: '[batchBegin,batchEnd]',
+    component: 'InputRange',
+    label: '血浆批号',
+    componentProps: {
+      isBetween: false,
+      allowClear: false,
+    },
+    colProps: { flex: '0 0 440px' },
   },
 ];
 

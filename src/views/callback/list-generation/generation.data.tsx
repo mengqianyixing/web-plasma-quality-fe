@@ -117,18 +117,13 @@ export const searchFormSchema: FormSchema[] = [
     field: 'stationNo',
     label: '采浆公司',
     component: 'Select',
-    colProps: {
-      span: 6,
-    },
   },
   {
     field: '[createStartDate, createEndDate]',
     label: '生成日期',
     defaultValue: [dayjs().subtract(1, 'month'), dayjs()],
     component: 'RangePicker',
-    colProps: {
-      span: 6,
-    },
+
     componentProps: {
       format: 'YYYY-MM-DD',
     },
@@ -137,18 +132,11 @@ export const searchFormSchema: FormSchema[] = [
     field: 'batchNo',
     label: '名单编号',
     component: 'Input',
-    colProps: {
-      span: 6,
-    },
   },
   {
     field: 'states',
     label: '状态',
     component: 'Select',
-    colProps: {
-      span: 6,
-      pull: 1,
-    },
     defaultValue: ['WIT', 'COF'],
     componentProps: {
       mode: 'multiple',
@@ -159,9 +147,6 @@ export const searchFormSchema: FormSchema[] = [
     field: '[sampleAcceptStartDate, sampleAcceptEndDate]',
     label: '样本接收日期',
     component: 'RangePicker',
-    colProps: {
-      span: 6,
-    },
     componentProps: {
       format: 'YYYY-MM-DD',
     },
@@ -170,9 +155,6 @@ export const searchFormSchema: FormSchema[] = [
     field: '[samplePublishStartDate, samplePublishEndDate]',
     label: '样本发布日期',
     component: 'RangePicker',
-    colProps: {
-      span: 6,
-    },
     componentProps: {
       format: 'YYYY-MM-DD',
     },
@@ -489,14 +471,6 @@ export const callbackDetailFormSchema: FormSchema[] = [
 
 export const callbackCustomFormSchema: FormSchema[] = [
   {
-    field: '[startBatchNo, endBatchNo]',
-    component: 'InputRange',
-    label: '血浆批号',
-    componentProps: {
-      isBetween: false,
-    },
-  },
-  {
     field: 'trackType',
     label: '血浆状态',
     component: 'Select',
@@ -517,6 +491,16 @@ export const callbackCustomFormSchema: FormSchema[] = [
     field: 'donorNo',
     label: '浆员编号',
     component: 'Input',
+  },
+  {
+    field: '[startBatchNo, endBatchNo]',
+    component: 'InputRange',
+    label: '血浆批号',
+    componentProps: {
+      isBetween: false,
+      allowClear: false,
+    },
+    colProps: { flex: '0 0 440px' },
   },
 ];
 

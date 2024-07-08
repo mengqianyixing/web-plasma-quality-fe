@@ -262,14 +262,7 @@ export const searchFormSchema: FormSchema[] = [
       valueFormat: 'YYYY-MM-DD',
     },
   },
-  {
-    field: '[' + batchKey[0] + ',' + batchKey[1] + ']',
-    component: 'InputRange',
-    label: '血浆批号',
-    componentProps: {
-      isBetween: false,
-    },
-  },
+
   {
     field: 'rawImm',
     component: 'Select',
@@ -295,6 +288,16 @@ export const searchFormSchema: FormSchema[] = [
       labelField: 'key',
       valueField: 'value',
     },
+  },
+  {
+    field: '[' + batchKey[0] + ',' + batchKey[1] + ']',
+    component: 'InputRange',
+    label: '血浆批号',
+    componentProps: {
+      isBetween: false,
+      allowClear: false,
+    },
+    colProps: { flex: '0 0 440px' },
   },
 ];
 

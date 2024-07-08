@@ -47,14 +47,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '采浆公司',
     component: 'Select',
   },
-  {
-    field: '[batchStartNo, batchEndNo]',
-    component: 'InputRange',
-    label: '血浆批号',
-    componentProps: {
-      isBetween: false,
-    },
-  },
+
   {
     field: 'boxNo',
     component: 'Input',
@@ -67,5 +60,15 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
     },
+  },
+  {
+    field: '[batchStartNo, batchEndNo]',
+    component: 'InputRange',
+    label: '血浆批号',
+    componentProps: {
+      isBetween: false,
+      allowClear: false,
+    },
+    colProps: { flex: '0 0 440px' },
   },
 ];
