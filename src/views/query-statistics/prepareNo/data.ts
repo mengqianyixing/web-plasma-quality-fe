@@ -17,7 +17,7 @@ export const columns: BasicColumn[] = [
     title: '投产类型',
     dataIndex: 'prodType',
     format(text) {
-      return `${PlasmaType(text)}`;
+      return `${PlasmaType(text) ?? '-'} `;
     },
   },
   {
@@ -52,9 +52,9 @@ export const columns: BasicColumn[] = [
         title: '出库日期',
         dataIndex: 'outAt',
         width: 150,
-        // format(text) {
-        //   return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-        // },
+        format(text) {
+          return text ? text : '-';
+        },
       },
     ],
   },
