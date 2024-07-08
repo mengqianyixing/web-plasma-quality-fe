@@ -30,18 +30,18 @@
           :text="t('layout.header.dropdownChangeApi')"
           icon="ant-design:swap-outlined"
         />
-        <MenuItem
+        <!-- <MenuItem
           v-if="getUseLockPage"
           key="lock"
           :text="t('layout.header.tooltipLock')"
           icon="ion:lock-closed-outline"
-        />
+        /> -->
+        <MenuItem key="updatePassword" text="修改密码" icon="ant-design:key-outlined" />
         <MenuItem
           key="logout"
           :text="t('layout.header.dropdownItemLoginOut')"
           icon="ion:power-outline"
         />
-        <MenuItem key="updatePassword" text="修改密码" icon="ant-design:key-outlined" />
       </Menu>
     </template>
   </Dropdown>
@@ -89,7 +89,7 @@
   const [registerModal, { openModal: openPasswordModal }] = useModal();
   const { prefixCls } = useDesign('header-user-dropdown');
   const { t } = useI18n();
-  const { getShowDoc, getUseLockPage, getShowApi, getShowPrintApi } = useHeaderSetting();
+  const { getShowDoc, getShowApi, getShowPrintApi } = useHeaderSetting();
   const userStore = useUserStore();
 
   const getUserInfo = computed(() => {
