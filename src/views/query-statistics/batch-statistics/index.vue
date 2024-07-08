@@ -35,7 +35,7 @@
     sortFn(sortInfo) {
       return {
         sortIdx: sortMap[sortInfo.field],
-        sortOrder: sortInfo.order === 'ascend' ? 'ASC' : 'DESC',
+        sortOrder: sortInfo.order ? (sortInfo.order === 'ascend' ? 'ASC' : 'DESC') : null,
       };
     },
   });
