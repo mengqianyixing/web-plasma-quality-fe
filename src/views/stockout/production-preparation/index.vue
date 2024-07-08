@@ -295,13 +295,11 @@
       field: 'prepareNo',
       label: '投产准备号',
       component: 'Input',
-      colProps: { span: 6 },
     },
     {
       field: 'prodType',
       label: '投产类型',
       component: 'Select',
-      colProps: { span: 6 },
       componentProps: {
         options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
       },
@@ -310,7 +308,6 @@
       field: 'pickMode',
       label: '挑浆模式',
       component: 'Select',
-      colProps: { span: 6 },
       componentProps: {
         options: [...pickModeMap.entries()].map(([key, value]) => ({
           value: key,
@@ -322,7 +319,6 @@
       field: 'bagFlag',
       label: '是否限制血浆',
       component: 'Select',
-      colProps: { span: 6 },
       componentProps: {
         options: [...bagFlagMap.entries()].map(([key, value]) => ({
           value: key,
@@ -334,7 +330,6 @@
       field: 'prepareStates',
       label: '状态',
       component: 'Select',
-      colProps: { span: 6 },
       componentProps: {
         options: [...prepareStateMap.entries()].map(([key, value]) => ({
           value: key,
@@ -345,7 +340,6 @@
     {
       field: '[sortingAtBegin, sortingAtEnd]',
       component: 'RangePicker',
-      colProps: { span: 6 },
       label: '分拣完成日期',
     },
   ];
@@ -354,7 +348,6 @@
     api: getPrepareList,
     columns,
     formConfig: {
-      labelWidth: 120,
       schemas: searchFormSchema,
       showAdvancedButton: false,
       transformDateFunc(date) {
