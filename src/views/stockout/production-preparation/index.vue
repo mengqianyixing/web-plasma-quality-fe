@@ -173,6 +173,7 @@
       dataIndex: 'prodType',
       width: 100,
       resizable: true,
+      fixed: 'left',
       format(text) {
         return `${PlasmaType(text)}`;
       },
