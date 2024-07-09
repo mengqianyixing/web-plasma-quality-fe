@@ -58,9 +58,6 @@
         <template #calculateAt="{ row }">
           <span>{{ row.calculateAt ? dayjs(row.calculateAt).format('YYYY-MM-DD') : '-' }}</span>
         </template>
-        <template #plasmaStatus="{ row }">
-          <span>{{ row?.plasmaStatus ? BagTrackMap.get(row?.plasmaStatus) : '' }}</span>
-        </template>
       </vxe-grid>
     </PageWrapper>
   </BasicModal>
@@ -428,7 +425,6 @@
     {
       title: '血浆流程状态',
       field: 'plasmaStatus',
-      slots: { default: 'plasmaStatus' },
       // format(text) {
       //   const val = text ? BagTrackMap.get(text as BagTrackValueEnum) : '';
       //   return val;

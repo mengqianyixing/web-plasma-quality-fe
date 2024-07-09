@@ -12,9 +12,8 @@
           })
         "
         mode="out-in"
-        appear
       >
-        <keep-alive v-if="openCache" :include="[...getCaches, 'RouterViewContainer']">
+        <keep-alive v-if="openCache">
           <component :is="Component" :key="route.fullPath" />
         </keep-alive>
         <component v-else :is="Component" :key="route.fullPath" />
@@ -37,7 +36,7 @@
 
   import { useMultipleTabStore } from '@/store/modules/multipleTab';
 
-  defineOptions({ name: 'PageLayout' });
+  defineOptions({ name: 'RouterViewContainer' });
 
   const { getShowMultipleTab } = useMultipleTabSetting();
   const tabStore = useMultipleTabStore();

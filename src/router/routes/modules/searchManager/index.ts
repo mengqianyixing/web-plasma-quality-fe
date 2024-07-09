@@ -10,8 +10,6 @@ import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
 import { SearchManager } from '@/enums/authCodeEnum';
-import { RouterView } from 'vue-router';
-import { h } from 'vue';
 
 const trayManager: AppRouteModule = {
   path: '/search',
@@ -28,7 +26,7 @@ const trayManager: AppRouteModule = {
       path: 'plasma',
       name: 'Plasma',
       id: 901,
-      component: () => h(RouterView),
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
       meta: { title: '血浆' },
       children: [
         {
@@ -127,8 +125,8 @@ const trayManager: AppRouteModule = {
     {
       path: 'donor',
       name: 'Donor',
-      id: 90,
-      component: () => h(RouterView),
+      id: 902,
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
       meta: { title: '浆员' },
       children: [
         {
@@ -162,7 +160,7 @@ const trayManager: AppRouteModule = {
       path: 'sample',
       name: 'Sample',
       id: 903,
-      component: () => h(RouterView),
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
       meta: { title: '样本' },
       children: [
         {
@@ -214,7 +212,7 @@ const trayManager: AppRouteModule = {
       path: 'unqualified',
       name: 'Unqualified',
       id: 904,
-      component: () => h(RouterView),
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
       meta: { title: '不合格' },
       children: [
         {
@@ -261,7 +259,7 @@ const trayManager: AppRouteModule = {
       path: 'store',
       name: 'Store',
       id: 905,
-      component: () => h(RouterView),
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
       meta: { title: '库存' },
       children: [
         {
@@ -354,7 +352,7 @@ const trayManager: AppRouteModule = {
       path: 'product',
       name: 'Product',
       id: 906,
-      component: () => h(RouterView),
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
       meta: { title: '投产' },
       children: [
         {
@@ -381,7 +379,7 @@ const trayManager: AppRouteModule = {
       path: 'erp',
       name: 'ERP',
       id: 907,
-      component: () => h(RouterView),
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
       meta: { title: 'ERP' },
       children: [
         {
