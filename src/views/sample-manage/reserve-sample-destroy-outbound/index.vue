@@ -2,14 +2,55 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleAddRequisition">新增</a-button>
-        <a-button type="primary" @click="handleEditRequisition">编辑</a-button>
-        <a-button type="primary" @click="handleSubmitApplication">提交申请</a-button>
-        <a-button type="primary" @click="handleCancelApplication">撤销申请</a-button>
-        <a-button type="primary" @click="handleCheck">审核</a-button>
-        <a-button type="primary" @click="handleCancelCheck">撤销审核</a-button>
-        <a-button type="primary" @click="handleOutBound">出库</a-button>
-        <a-button type="primary" @click="handlePrint" :loading="reportLoading">打印</a-button>
+        <a-button
+          type="primary"
+          @click="handleAddRequisition"
+          v-auth="SampleManageButtonEnum.SampleDestroyAdd"
+          >新增
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleEditRequisition"
+          v-auth="SampleManageButtonEnum.SampleDestroyEdit"
+          >编辑
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleSubmitApplication"
+          v-auth="SampleManageButtonEnum.SampleDestroySubmit"
+          >提交申请
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleCancelApplication"
+          v-auth="SampleManageButtonEnum.SampleDestroyCancelApply"
+          >撤销申请
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleCheck"
+          v-auth="SampleManageButtonEnum.SampleDestroyCheck"
+          >审核
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleCancelCheck"
+          v-auth="SampleManageButtonEnum.SampleDestroyCancelCheck"
+          >撤销审核
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleOutBound"
+          v-auth="SampleManageButtonEnum.SampleDestroyOutBand"
+          >出库
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handlePrint"
+          :loading="reportLoading"
+          v-auth="SampleManageButtonEnum.SampleDestroyPrint"
+          >打印
+        </a-button>
       </template>
       <template #dlvNo="{ record }">
         <span
@@ -50,6 +91,7 @@
   import { getReportApi } from '@/api/report';
   import ReportModal from '@/components/ReportModal/index.vue';
   import { PrintServerEnum } from '@/enums/printServerEnum';
+  import { SampleManageButtonEnum } from '@/enums/authCodeEnum';
 
   const { createConfirm, createMessage } = useMessage();
   defineOptions({ name: 'ReserveSampleDestroyOutbound' });

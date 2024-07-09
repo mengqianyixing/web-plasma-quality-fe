@@ -1,25 +1,20 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
+import dayjs from 'dayjs';
 
 export const columns: BasicColumn[] = [
   {
     title: '部门名称',
-    dataIndex: 'deptName',
+    dataIndex: 'title',
     width: 160,
     align: 'left',
   },
   {
-    title: '排序',
-    dataIndex: 'deptOrder',
-    width: 50,
-  },
-  {
     title: '创建时间',
-    dataIndex: 'createTime',
+    dataIndex: 'createdTime',
+    format: (text) => {
+      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
+    },
     width: 180,
-  },
-  {
-    title: '备注',
-    dataIndex: 'remark',
   },
 ];
 
@@ -33,7 +28,7 @@ export const searchFormSchema: FormSchema[] = [
 
 export const formSchema: FormSchema[] = [
   {
-    field: 'deptName',
+    field: 'title',
     label: '部门名称',
     component: 'Input',
     required: true,
@@ -42,29 +37,13 @@ export const formSchema: FormSchema[] = [
     field: 'parentId',
     label: '上级部门',
     component: 'TreeSelect',
-    ifShow({ values }) {
-      const { deptName, parentDept } = values;
-      // Hide without a parentDept when editing
-      return parentDept || (!deptName && !parentDept);
-    },
     componentProps: {
       fieldNames: {
-        label: 'deptName',
-        key: 'deptId',
-        value: 'deptId',
+        label: 'title',
+        key: 'key',
+        value: 'key',
       },
       getPopupContainer: () => document.body,
     },
-  },
-  {
-    field: 'deptOrder',
-    label: '排序',
-    component: 'InputNumber',
-    required: true,
-  },
-  {
-    label: '备注',
-    field: 'remark',
-    component: 'InputTextArea',
   },
 ];

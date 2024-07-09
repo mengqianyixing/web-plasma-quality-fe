@@ -80,6 +80,40 @@ const sampleManager: AppRouteModule = {
       meta: {
         title: '保留样本销毁出库',
       },
+      authElements: [
+        {
+          id: SampleManageButtonEnum.SampleDestroyAdd,
+          title: '新增',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyEdit,
+          title: '编辑',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroySubmit,
+          title: '提交申请',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyCancelApply,
+          title: '撤销申请',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyCheck,
+          title: '审核',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyCancelCheck,
+          title: '撤销审核',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyOutBand,
+          title: '出库',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyPrint,
+          title: '打印',
+        },
+      ],
       component: () => import('@/views/sample-manage/reserve-sample-destroy-outbound/index.vue'),
     },
     {
@@ -89,6 +123,40 @@ const sampleManager: AppRouteModule = {
       meta: {
         title: '保留样本单个出库',
       },
+      authElements: [
+        {
+          id: SampleManageButtonEnum.SampleWarehouseAdd,
+          title: '新增',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseEdit,
+          title: '编辑',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseSubmit,
+          title: '提交申请',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseCancelApply,
+          title: '撤销申请',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseCheck,
+          title: '审核',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseCancelCheck,
+          title: '撤销审核',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseOutBand,
+          title: '出库',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseExport,
+          title: '导出',
+        },
+      ],
       component: () =>
         import('@/views/sample-manage/reserve-sample-destroy-outbound-single/index.vue'),
     },

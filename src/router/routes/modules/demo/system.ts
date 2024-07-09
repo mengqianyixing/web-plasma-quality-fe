@@ -1,11 +1,3 @@
-/*
- * @Author: HxB
- * @Date: 2023-12-25 16:00:06
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-02-22 10:09:13
- * @Description: 系统管理
- * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
- */
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
@@ -59,6 +51,15 @@ const system: AppRouteModule = {
         },
       ],
       component: () => import('@/views/system/users/index.vue'),
+    },
+    {
+      path: 'dept',
+      name: 'Department',
+      id: 101021,
+      meta: {
+        title: '部门管理',
+      },
+      component: () => import('@/views/system/dept/index.vue'),
     },
     //
     // {
