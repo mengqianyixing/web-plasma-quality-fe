@@ -71,7 +71,7 @@
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     resetFields();
-    setModalProps({ confirmLoading: false });
+    setModalProps({ confirmLoading: false, destroyOnClose: true });
     isUpdate.value = !!data?.isUpdate;
     isPassword.value = !!data?.isPassword;
     if (unref(isUpdate) || unref(isPassword)) {

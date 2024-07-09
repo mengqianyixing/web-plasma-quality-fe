@@ -10,6 +10,7 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Select, Tag } from 'ant-design-vue';
 import { customRenderDate } from '@/utils/tableHelpRender';
+import { getDeptList } from '@/api/systemServer/system';
 
 function containsThreeOfFour(str: string) {
   const hasDigit = /\d/.test(str);
@@ -111,6 +112,17 @@ export const addFormSchema: FormSchema[] = [
     label: '角色',
     slot: 'users',
     component: 'Select',
+  },
+  {
+    field: 'groups',
+    label: '部门',
+    component: 'ApiSelect',
+    componentProps: {
+      mode: 'multiple',
+      api: getDeptList,
+      labelField: 'displayName',
+      valueField: 'name',
+    },
   },
   ...formSchema,
 ];
@@ -220,6 +232,17 @@ export const updateFormSchema: FormSchema[] = [
     label: '角色',
     slot: 'users',
     component: 'Select',
+  },
+  {
+    field: 'groups',
+    label: '部门',
+    component: 'ApiSelect',
+    componentProps: {
+      mode: 'multiple',
+      api: getDeptList,
+      labelField: 'displayName',
+      valueField: 'name',
+    },
   },
   ...formSchema,
 ];
