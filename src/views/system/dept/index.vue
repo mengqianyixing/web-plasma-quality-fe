@@ -1,36 +1,17 @@
 <template>
-  <div>
+  <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> 新增部门 </a-button>
-      </template>
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'action'">
-          <TableAction
-            :actions="[
-              {
-                icon: 'clarity:note-edit-line',
-                onClick: handleEdit.bind(null, record),
-              },
-              {
-                icon: 'ant-design:delete-outlined',
-                color: 'error',
-                popConfirm: {
-                  title: '是否确认删除',
-                  placement: 'left',
-                  confirm: handleDelete.bind(null, record),
-                },
-              },
-            ]"
-          />
-        </template>
+        <a-button type="primary" @click="handleEdit"> 编辑部门 </a-button>
+        <a-button type="primary" @click="handleDelete"> 删除部门 </a-button>
       </template>
     </BasicTable>
     <DeptModal @register="registerModal" @success="handleSuccess" />
-  </div>
+  </PageWrapper>
 </template>
 <script lang="ts" setup>
-  import { BasicTable, useTable, TableAction } from '@/components/Table';
+  import { BasicTable, useTable } from '@/components/Table';
 
   import { deleteDept, getDeptList } from '@/api/systemServer/system';
 
@@ -38,31 +19,51 @@
   import DeptModal from './DeptModal.vue';
 
   import { columns, searchFormSchema } from './dept.data';
+  import { PageWrapper } from '@/components/Page';
+  import { ref } from 'vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
-  defineOptions({ name: 'DeptManagement' });
+  defineOptions({ name: 'Department' });
+  const selectedRow = ref<Recordable>([]);
+  const { createMessage } = useMessage();
 
   const [registerModal, { openModal }] = useModal();
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
+    beforeFetch: (params) => {
+      return {
+        ...params,
+        withTree: true,
+      };
+    },
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
     api: getDeptList,
     columns,
     formConfig: {
       schemas: searchFormSchema,
     },
-    pagination: false,
-    striped: false,
     useSearchForm: true,
-
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
-    actionColumn: {
-      width: 80,
-      title: '操作',
-      dataIndex: 'action',
-      // slots: { customRender: 'action' },
-      fixed: undefined,
+    canResize: true,
+    rowSelection: {
+      type: 'radio',
+      onChange: (_, selectedRows: any) => {
+        selectedRow.value = selectedRows;
+      },
     },
   });
+
+  function checkSelectedRows() {
+    if (!selectedRow.value.length) {
+      createMessage.warn('请选择一条记录');
+      return false;
+    }
+
+    return true;
+  }
 
   function handleCreate() {
     openModal(true, {
@@ -70,15 +71,21 @@
     });
   }
 
-  function handleEdit(record: Recordable) {
+  function handleEdit() {
+    if (!checkSelectedRows()) return;
+
     openModal(true, {
-      record,
+      record: selectedRow.value[0],
       isUpdate: true,
     });
   }
 
-  async function handleDelete(record: Recordable) {
-    await deleteDept(record.deptId);
+  async function handleDelete() {
+    if (!checkSelectedRows()) return;
+
+    await deleteDept({
+      name: selectedRow.value[0]?.key,
+    });
     handleSuccess();
   }
 

@@ -9,16 +9,7 @@ import {
   PutApiSysMenuRequest,
   PutApiSysMenuResponse,
 } from '@/api/type/menuManage';
-import {
-  DeleteApiSysDeptIdRequest,
-  DeleteApiSysDeptIdResponse,
-  PostApiSysDeptRequest,
-  PostApiSysDeptResponse,
-  PostApiSysDeptsRequest,
-  PostApiSysDeptsResponse,
-  PutApiSysDeptRequest,
-  PutApiSysDeptResponse,
-} from '@/api/type/deptManage';
+import { DeleteApiSysDeptIdResponse } from '@/api/type/deptManage';
 import {
   DeleteApiSysRoleIdRequest,
   GetApiSysRoleIdRequest,
@@ -49,12 +40,20 @@ import {
   PutApiSysResourceRequest,
   PutApiSysResourceResponse,
 } from '@/api/type/resourcesManage';
+import {
+  DeleteApiSysCasdoorGroupRequest,
+  GetApiSysCasdoorAllGroupsResponse,
+  PostApiSysCasdoorGroupRequest,
+  PostApiSysCasdoorGroupResponse,
+  PutApiSysCasdoorGroupRequest,
+  PutApiSysCasdoorGroupResponse,
+} from '@/api/type/departmentManagement';
 
 enum Api {
   AccountList = '/api/sys/users',
   IsAccountExist = '/api/system/accountExist',
-  DeptList = '/api/sys/depts',
-  RestfulDeptUrl = '/api/sys/dept',
+  DeptList = '/api/sys/casdoor/all-groups',
+  RestfulDeptUrl = '/api/sys/casdoor/group',
   MenuList = '/api/sys/menus',
   MenuTree = '/api/sys/menu/tree',
   RestfulMenuUrl = '/api/sys/menu',
@@ -68,17 +67,17 @@ enum Api {
 export const getAccountList = (params: PostApiSysUsersRequest) =>
   defHttp.post<PostApiSysUsersResponse>({ url: Api.AccountList, params });
 
-export const getDeptList = (params: PostApiSysDeptsRequest) =>
-  defHttp.post<PostApiSysDeptsResponse>({ url: Api.DeptList, params });
+export const getDeptList = (params: { withTree: boolean }) =>
+  defHttp.get<GetApiSysCasdoorAllGroupsResponse>({ url: Api.DeptList, params });
 
-export const addDept = (params: PostApiSysDeptRequest) =>
-  defHttp.post<PostApiSysDeptResponse>({ url: Api.RestfulDeptUrl, params });
+export const addDept = (params: PostApiSysCasdoorGroupRequest) =>
+  defHttp.post<PostApiSysCasdoorGroupResponse>({ url: Api.RestfulDeptUrl, params });
 
-export const editDept = (params: PutApiSysDeptRequest) =>
-  defHttp.put<PutApiSysDeptResponse>({ url: Api.RestfulDeptUrl, params });
+export const editDept = (params: PutApiSysCasdoorGroupRequest) =>
+  defHttp.put<PutApiSysCasdoorGroupResponse>({ url: Api.RestfulDeptUrl, params });
 
-export const deleteDept = (params: DeleteApiSysDeptIdRequest['id']) =>
-  defHttp.delete<DeleteApiSysDeptIdResponse>({ url: Api.RestfulDeptUrl + `/${params}` });
+export const deleteDept = (params: DeleteApiSysCasdoorGroupRequest) =>
+  defHttp.delete<DeleteApiSysDeptIdResponse>({ url: Api.RestfulDeptUrl, params });
 
 export const getMenuList = (params?: PostApiSysMenusRequest) =>
   defHttp.post<PostApiSysMenusResponse>({ url: Api.MenuList, params });

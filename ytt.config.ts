@@ -113,6 +113,13 @@ export default defineConfig([
             },
             outputFilePath: 'src/api/type/logsMange.d.ts',
           },
+          {
+            id: 6085,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/departmentManagement.d.ts',
+          },
         ],
       },
       {
