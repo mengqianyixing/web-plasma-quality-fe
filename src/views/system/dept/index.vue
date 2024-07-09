@@ -25,7 +25,7 @@
 
   defineOptions({ name: 'Department' });
   const selectedRow = ref<Recordable>([]);
-  const { createMessage } = useMessage();
+  const { createMessage, createConfirm } = useMessage();
 
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
@@ -83,10 +83,19 @@
   async function handleDelete() {
     if (!checkSelectedRows()) return;
 
-    await deleteDept({
-      name: selectedRow.value[0]?.key,
+    createConfirm({
+      title: '确认',
+      content: '确定要删除该部门吗？',
+      iconType: 'warning',
+      onOk: async () => {
+        await deleteDept({
+          name: selectedRow.value[0]?.key,
+        });
+        handleSuccess();
+
+        createMessage.success('删除成功');
+      },
     });
-    handleSuccess();
   }
 
   function handleSuccess() {
