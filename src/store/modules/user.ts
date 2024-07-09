@@ -134,6 +134,7 @@ export const useUserStore = defineStore({
           userAccount,
           needUpdatePassword,
         } = data;
+        const currentPath = window.location.hash.split('#')[1];
         this.userInfo = {
           needUpdatePassword,
           userId: userId,
@@ -143,7 +144,7 @@ export const useUserStore = defineStore({
             const _tempId = Number(i);
             return isNaN(_tempId) ? i : _tempId;
           }),
-          homePath: '/404',
+          homePath: currentPath === '/login' ? '/404' : currentPath || '/404',
         };
         this.setUserInfo(this.userInfo);
         // save token
