@@ -82,6 +82,7 @@
   const [registerForm, { updateSchema, getFieldsValue, removeSchemaByField }] = useForm({
     showAdvancedButton: false,
     baseColProps: { flex: '0 0 370px' },
+    actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
     schemas: addCallbackModalSearchFromSchema,
     transformDateFunc(date) {
       return dayjs(date).format('YYYY-MM-DD');
@@ -248,3 +249,10 @@
     await initTableData();
   }
 </script>
+<style scoped>
+  ::v-deep(.ant-form-item-control-input-content button) {
+    margin-right: 8px;
+    margin-left: 4px;
+    float: right;
+  }
+</style>

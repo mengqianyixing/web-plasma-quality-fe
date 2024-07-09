@@ -9,7 +9,7 @@
         <div class="h-40px bg-#ffffff mt-2 flex items-center">
           <a-button
             type="primary"
-            class="absolute right-8"
+            class="absolute right-8px"
             :loading="loading"
             @click="handleExport"
             v-auth="SearchManager.InventoryExport"
@@ -62,8 +62,8 @@
   };
 
   const [registerForm, { updateSchema, getFieldsValue, setProps }] = useForm({
-    labelWidth: 140,
-    actionColOptions: { style: 'right: 40px; top: 80px;  position: absolute;' },
+    baseColProps: { flex: '0 0 373px' },
+    actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
     schemas: formSchema,
     transformDateFunc(date) {
       return dayjs(date).format('YYYY-MM-DD');
@@ -223,6 +223,12 @@
 </script>
 
 <style scoped lang="less">
+  ::v-deep(.ant-form-item-control-input-content button) {
+    margin-right: 8px;
+    margin-left: 4px;
+    float: right;
+  }
+
   .root :deep(.vxe-pager) {
     display: none;
   }
