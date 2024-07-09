@@ -2,14 +2,55 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleAddRequisition">新增</a-button>
-        <a-button type="primary" @click="handleEditRequisition">编辑</a-button>
-        <a-button type="primary" @click="handleSubmitApplication">提交申请</a-button>
-        <a-button type="primary" @click="handleCancelApplication">撤销申请</a-button>
-        <a-button type="primary" @click="handleCheck">审核</a-button>
-        <a-button type="primary" @click="handleCancelCheck">撤销审核</a-button>
-        <a-button type="primary" @click="handleOutBound">出库</a-button>
-        <a-button type="primary" @click="handleExport" :loading="loading">导出</a-button>
+        <a-button
+          type="primary"
+          @click="handleAddRequisition"
+          v-auth="SampleManageButtonEnum.SampleWarehouseAdd"
+          >新增
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleEditRequisition"
+          v-auth="SampleManageButtonEnum.SampleWarehouseEdit"
+          >编辑
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleSubmitApplication"
+          v-auth="SampleManageButtonEnum.SampleWarehouseSubmit"
+          >提交申请
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleCancelApplication"
+          v-auth="SampleManageButtonEnum.SampleWarehouseCancelApply"
+          >撤销申请
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleCheck"
+          v-auth="SampleManageButtonEnum.SampleWarehouseCheck"
+          >审核
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleCancelCheck"
+          v-auth="SampleManageButtonEnum.SampleWarehouseCancelCheck"
+          >撤销审核
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleOutBound"
+          v-auth="SampleManageButtonEnum.SampleWarehouseOutBand"
+          >出库
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleExport"
+          :loading="loading"
+          v-auth="SampleManageButtonEnum.SampleWarehouseExport"
+          >导出
+        </a-button>
       </template>
       <template #dlvNo="{ record }">
         <span
@@ -51,6 +92,7 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { getDeliverSampleSingleDetail } from '@/api/sample-manage/reserve-sample-destory-single';
   import { GetApiCoreBankDeliverSampleDetailSingleRequest } from '@/api/type/sampleManage';
+  import { SampleManageButtonEnum } from '@/enums/authCodeEnum';
 
   const { createConfirm, createMessage } = useMessage();
   defineOptions({ name: 'ReserveSampleDestroyOutbound' });

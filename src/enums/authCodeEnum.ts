@@ -246,6 +246,24 @@ export enum SampleManageButtonEnum {
   SampleArrange = 'E_97003002',
   TestPlanAdd = 'E_97004001',
   TestPlanUpdate = 'E_97004002',
+
+  SampleDestroyAdd = 'E_97004003',
+  SampleDestroyEdit = 'E_97004004',
+  SampleDestroySubmit = 'E_97004005',
+  SampleDestroyCancelApply = 'E_97004006',
+  SampleDestroyCheck = 'E_97004007',
+  SampleDestroyCancelCheck = 'E_97004008',
+  SampleDestroyOutBand = 'E_97004009',
+  SampleDestroyPrint = 'E_97004010',
+
+  SampleWarehouseAdd = 'E_97004011',
+  SampleWarehouseEdit = 'E_97004012',
+  SampleWarehouseSubmit = 'E_97004013',
+  SampleWarehouseCancelApply = 'E_97004014',
+  SampleWarehouseCheck = 'E_97004015',
+  SampleWarehouseCancelCheck = 'E_97004016',
+  SampleWarehouseOutBand = 'E_97004017',
+  SampleWarehouseExport = 'E_97004018',
 }
 
 export enum CallbackButtonEnum {
