@@ -117,7 +117,7 @@
     showFooter: true,
   });
 
-  const getTitle = computed(() => (unref(isUpdate) ? '编辑名单2' : '选择名单2'));
+  const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '选择名单'));
 
   const batchNo = ref('');
   const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {

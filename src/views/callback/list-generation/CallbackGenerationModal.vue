@@ -174,7 +174,7 @@
     await initTableData();
   }
 
-  const getTitle = computed(() => (unref(isUpdate) ? '编辑名单44' : '生成名单'));
+  const getTitle = computed(() => (unref(isUpdate) ? '编辑名单' : '生成名单'));
 
   const [registerAddModal, { openModal }] = useModal();
   const [registerBagDetailModal, { openModal: openBagDetailModal }] = useModal();
