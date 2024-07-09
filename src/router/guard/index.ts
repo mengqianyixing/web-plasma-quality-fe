@@ -15,6 +15,10 @@ import projectSetting from '@/settings/projectSetting';
 import { createParamMenuGuard } from './paramMenuGuard';
 import { PAGE_NOT_FOUND_NAME } from '@/router/constant';
 import { closeGlobalLoading } from '@/utils/domUtils';
+import { usePageTimeout } from '@/hooks/web/usePageTimeout';
+import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
+const globalApiStore = useGlobalApiStoreWithOut();
 
 // Don't change the order of creation
 export function setupRouterGuard(router: Router) {
@@ -129,6 +133,9 @@ async function createServerEnumsGuard(router: Router) {
       return true;
     }
     await serverEnumStore.setServerEnum();
+    const validLoginDuration = await globalApiStore.getSysParamsValue('validLoginDuration');
+    const { startTimer } = usePageTimeout(validLoginDuration as string);
+    startTimer();
     return true;
   });
   router.afterEach((to) => {

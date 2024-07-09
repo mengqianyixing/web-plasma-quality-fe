@@ -196,6 +196,24 @@ export const useUserStore = defineStore({
       this.setUserInfo(null);
       goLogin && router.push(PageEnum.BASE_LOGIN);
     },
+    async pageTimeOutLogout() {
+      const useInfo = this.getUserInfo;
+      await pushLog({
+        usrName: useInfo.username,
+        usrId: useInfo.userAccount,
+        moduleType: 1,
+        optName: '系统',
+        optContent: `用户长时间未操作，系统在【${formatDate(new Date())}】 自动登出`,
+        path: 'POST /api/sys/user/logout',
+        time: getRandNum(10, 50),
+        reqData: JSON.stringify(useInfo),
+        respData: JSON.stringify({ code: 0, msg: 'ok', data: null }),
+      });
+      this.setRefreshToken(undefined);
+      this.setToken(undefined);
+      this.setSessionTimeout(false);
+      this.setUserInfo(null);
+    },
 
     /**
      * @description: Confirm before logging out
