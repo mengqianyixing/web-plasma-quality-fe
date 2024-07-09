@@ -84,9 +84,9 @@
   function handleOut() {
     const rows = getSelections(false);
     if (!rows.length) return false;
-    if (!rows.every((_) => _.wareHouseName)) return message.warning('所选托盘存在未入库!');
+    if (!rows.every((_) => _.houseName)) return message.warning('所选托盘存在未入库!');
     const [firstRow] = rows;
-    const notAlike = rows.some((_) => _.wareHouseName !== firstRow.wareHouseName);
+    const notAlike = rows.some((_) => _.houseName !== firstRow.houseName);
     if (notAlike) return message.warning('所选托盘不属于同一库房!');
     if (firstRow.houseType[1] === STORE_FLAG.S) {
       openOutModal(true, { data: rows, showSite: true });
