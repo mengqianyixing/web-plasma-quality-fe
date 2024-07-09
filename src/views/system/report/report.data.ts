@@ -91,19 +91,16 @@ export const formSchema: FormSchema[] = [
     field: 'ctrlEngTitle',
     component: 'Input',
     label: '报表英文名称',
-    required: true,
   },
   {
     field: 'ctrlVersion',
     component: 'Input',
     label: '版本号',
-    required: true,
   },
   {
     field: 'effectiveDate',
     component: 'DatePicker',
     label: '生效日期',
-    required: true,
     componentProps: {
       class: 'w-full',
       valueFormat: 'YYYY-MM-DD',
@@ -113,7 +110,6 @@ export const formSchema: FormSchema[] = [
     field: 'expiredDate',
     component: 'DatePicker',
     label: '有效期至',
-    required: true,
     componentProps: {
       class: 'w-full',
       valueFormat: 'YYYY-MM-DD',
