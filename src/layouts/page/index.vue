@@ -14,7 +14,7 @@
         mode="out-in"
         appear
       >
-        <keep-alive v-if="openCache" :include="[...getCaches, 'RouterViewContainer']">
+        <keep-alive v-if="openCache" :include="getCaches">
           <component :is="Component" :key="route.fullPath" />
         </keep-alive>
         <component v-else :is="Component" :key="route.fullPath" />
