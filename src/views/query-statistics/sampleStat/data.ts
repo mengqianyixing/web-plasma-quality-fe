@@ -8,6 +8,12 @@ const { stationOptions } = useStation();
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
+const typeMap = {
+  UNQ: '3',
+  HT: '1',
+  LT: '2',
+  NT: '5',
+};
 export const columns: (BasicColumn & { type?: string })[] = [
   {
     title: '采浆公司',
@@ -67,28 +73,28 @@ export const columns: (BasicColumn & { type?: string })[] = [
     dataIndex: 'unqualifiedCount',
     width: 100,
     slots: { customRender: 'unqualifiedCount' },
-    type: 'UNQ',
+    type: typeMap.UNQ,
   },
   {
     title: '高效价总数',
     dataIndex: 'totalHighTiter',
     width: 100,
     slots: { customRender: 'totalHighTiter' },
-    type: 'HT',
+    type: typeMap.HT,
   },
   {
     title: '低效价总数',
     dataIndex: 'totalLowTiter',
     width: 100,
     slots: { customRender: 'totalLowTiter' },
-    type: 'LT',
+    type: typeMap.LT,
   },
   {
     title: '无效价总数',
     dataIndex: 'totalNoTiter',
     width: 100,
     slots: { customRender: 'totalNoTiter' },
-    type: 'NT',
+    type: typeMap.NT,
   },
   {
     title: '试剂批号',
@@ -148,5 +154,123 @@ export const dtColumns: BasicColumn[] = [
     dataIndex: 'collectAt',
     title: '采集日期',
     format: (v) => v?.slice(0, 10),
+  },
+];
+export const columnsMap: Record<string, BasicColumn[]> = {
+  [typeMap.HT]: [
+    {
+      dataIndex: 'titerType',
+      title: '效价类型',
+      width: 120,
+      ellipsis: false,
+    },
+    {
+      dataIndex: 'projectName',
+      title: '检测项目',
+      width: 120,
+      ellipsis: false,
+    },
+    {
+      dataIndex: 'titerValue',
+      title: '效价值',
+      width: 100,
+    },
+    {
+      dataIndex: 'collectAt',
+      title: '采集日期',
+      width: 100,
+    },
+  ],
+  [typeMap.LT]: [
+    {
+      dataIndex: 'titerType',
+      title: '效价类型',
+      width: 120,
+      ellipsis: false,
+    },
+    {
+      dataIndex: 'projectName',
+      title: '检测项目',
+      width: 120,
+      ellipsis: false,
+    },
+    {
+      dataIndex: 'titerValue',
+      title: '效价值',
+      width: 100,
+    },
+    {
+      dataIndex: 'collectAt',
+      title: '采集日期',
+      width: 100,
+    },
+  ],
+  [typeMap.NT]: [
+    {
+      dataIndex: 'projectName',
+      title: '检测项目',
+      width: 120,
+      ellipsis: false,
+    },
+    {
+      dataIndex: 'titerType',
+      title: '效价类型',
+      width: 120,
+      ellipsis: false,
+    },
+    {
+      dataIndex: 'titerValue',
+      title: '效价值',
+      width: 100,
+    },
+    {
+      dataIndex: 'collectAt',
+      title: '采集日期',
+      width: 100,
+    },
+  ],
+  [typeMap.UNQ]: [
+    {
+      dataIndex: 'projectName',
+      title: '不合格项目',
+      ellipsis: false,
+      width: 300,
+      align: 'left',
+    },
+    {
+      dataIndex: 'collectAt',
+      title: '采集日期',
+      width: 100,
+    },
+  ],
+};
+export const totalUnqualifiedColumns: BasicColumn[] = [
+  {
+    dataIndex: 'sampleNo',
+    title: '样品编号',
+    width: 140,
+  },
+  {
+    dataIndex: 'cardNo',
+    title: '浆员编号',
+    width: 100,
+  },
+  {
+    dataIndex: 'donorName',
+    title: '浆员姓名',
+    width: 100,
+  },
+];
+
+export const totalUnqualifiedSearch: FormSchema[] = [
+  {
+    field: 'sampleNo',
+    label: '样品编号',
+    component: 'Input',
+  },
+  {
+    field: 'cardNo',
+    label: '浆员编号',
+    component: 'Input',
   },
 ];

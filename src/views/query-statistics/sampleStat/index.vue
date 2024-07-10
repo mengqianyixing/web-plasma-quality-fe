@@ -4,7 +4,7 @@
       <template v-for="slot in slots" :key="slot.name" #[slot.name]="{ value, record }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="openModal(true, { record, slot })"
+          @click.stop.self="openModal(true, { ...record, ...slot })"
         >
           {{ value || 0 }}
         </span>
