@@ -127,6 +127,7 @@ export const searchFormSchema: FormSchema[] = [
     field: 'auditState',
     label: '状态',
     component: 'Select',
+    defaultValue: 'WC',
     componentProps: {
       options: [...PlasmaCheckStateMap].map(([value, label]) => ({ value, label })),
     },
