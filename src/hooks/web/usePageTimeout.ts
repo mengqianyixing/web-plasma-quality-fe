@@ -1,5 +1,5 @@
 import { onUnmounted } from 'vue';
-import { debounce } from 'lodash-es';
+import { throttle } from 'lodash-es';
 import { useMessage } from '@/hooks/web/useMessage';
 import { useUserStoreWithOut } from '@/store/modules/user';
 import oauth from '@/api/oauth/oauth';
@@ -49,7 +49,7 @@ export function usePageTimeout(time: string | number, delay: number) {
       confirmModel();
     }, timer - getTimeDiff());
   }
-  const fn = debounce(restartTimer, 1000);
+  const fn = throttle(restartTimer, 1000);
   document.addEventListener('mousemove', fn, true);
   document.addEventListener('mousedown', fn, true);
   document.addEventListener('keypress', fn, true);
