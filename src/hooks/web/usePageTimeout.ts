@@ -2,8 +2,8 @@ import { onUnmounted } from 'vue';
 import { debounce } from 'lodash-es';
 import { useMessage } from '@/hooks/web/useMessage';
 import { useUserStoreWithOut } from '@/store/modules/user';
-import { router } from '@/router';
-import { PageEnum } from '@/enums/pageEnum';
+import oauth from '@/api/oauth/oauth';
+import dayjs from 'dayjs';
 
 const TIMEOUT = 10 * 60;
 let timerId;
@@ -11,17 +11,7 @@ let isTrigger = false;
 const { createConfirm } = useMessage();
 const userStore = useUserStoreWithOut();
 
-export function usePageTimeout(time: string | number) {
-  function checkToken() {
-    if (isTrigger) return;
-    setInterval(() => {
-      if (userStore.getToken) {
-        checkToken();
-      } else {
-        confirmModel();
-      }
-    }, 10 * 1000);
-  }
+export function usePageTimeout(time: string | number, delay: number) {
   function confirmModel() {
     if (isTrigger) return;
     isTrigger = true;
@@ -30,21 +20,36 @@ export function usePageTimeout(time: string | number) {
       content: '长时间未操作，系统自动登出，是否回到登录页面？',
       iconType: 'warning',
       onOk: () => {
-        router.push(PageEnum.BASE_LOGIN);
+        oauth.goToCasDoorLogin().then((res) => {
+          return (window.location.href = res.data ?? window.location.href);
+        });
       },
     });
   }
+  function restartTimer() {
+    localStorage.setItem('timeout', dayjs().valueOf().toString());
+    startTimer();
+  }
+  function getTimeDiff() {
+    const beforeTime = localStorage.getItem('timeout') || dayjs().valueOf().toString();
+    const currentTime = dayjs().valueOf();
+    return currentTime - parseInt(beforeTime);
+  }
   async function startTimer() {
     if (timerId) clearTimeout(timerId);
-    console.log((parseInt(time) || TIMEOUT) * 1000);
+    const timer = ((parseInt(time) || TIMEOUT) - delay) * 1000;
+    console.log((parseInt(time) || TIMEOUT) * 1000, getTimeDiff());
     timerId = setTimeout(async () => {
+      if (getTimeDiff() - timer < 99) {
+        startTimer();
+        return;
+      }
       clearEvent();
       await userStore.pageTimeOutLogout();
       confirmModel();
-    }, TIMEOUT * 1000);
+    }, timer - getTimeDiff());
   }
-  checkToken();
-  const fn = debounce(startTimer, 1000);
+  const fn = debounce(restartTimer, 1000);
   document.addEventListener('mousemove', fn, true);
   document.addEventListener('mousedown', fn, true);
   document.addEventListener('keypress', fn, true);
@@ -59,6 +64,6 @@ export function usePageTimeout(time: string | number) {
     clearEvent();
   });
   return {
-    startTimer,
+    restartTimer,
   };
 }
