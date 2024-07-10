@@ -19,12 +19,9 @@
         </span>
       </template>
     </BasicTable>
-    <div
-      class="flex justify-end items-center bg-white absolute bottom-0 right-6 mt-2"
-      v-if="pagerLeft.total > 0"
-    >
-      <span class="mr-2">共{{ pagerLeft.total }}条数据</span>
+    <div class="flex justify-end h-46px bg-white pr-16px p-4px" v-if="pagerLeft.total > 0">
       <a-pagination
+        class="mt-2"
         @change="handlePageChange"
         @show-size-change="handleSizeChange"
         size="small"
@@ -33,6 +30,7 @@
         v-model:current="pagerLeft.current"
         v-model:pageSize="pagerLeft.pageSize"
         :total="pagerLeft.total"
+        :show-total="(total) => `共 ${total} 条数据`"
       />
     </div>
 
@@ -210,6 +208,7 @@
     bordered: true,
     immediate: false,
     pagination: false,
+    resizeHeightOffset: 46,
   });
 
   _reloadTable = debounce(reload, 300) as () => Promise<void>;
