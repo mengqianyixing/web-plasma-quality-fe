@@ -79,6 +79,15 @@ const system: AppRouteModule = {
     //   component: () => import('@/views/system/policies/index.vue'),
     // },
     {
+      path: 'casconfig',
+      name: 'CasConfig',
+      id: 101050,
+      meta: {
+        title: '系统设置',
+      },
+      component: () => import('@/views/system/settings/index.vue'),
+    },
+    {
       path: 'logs',
       name: 'Logs',
       id: 101040,
