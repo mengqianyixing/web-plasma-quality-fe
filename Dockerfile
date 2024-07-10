@@ -1,7 +1,6 @@
 # node 构建
-FROM node:16.20.0-alpine as build-stage
-# 署名
-MAINTAINER Adoin 'adoin@qq.com'
+FROM docker.sharing8.cn/plasma/node:18.12.0-alpine as build-stage
+
 WORKDIR /app
 COPY . ./
 # 设置 node 阿里镜像
