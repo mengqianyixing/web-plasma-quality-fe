@@ -280,7 +280,8 @@ export const usePermissionStore = defineStore({
               : '/404',
           });
           this.setBackMenuList(transformRouteToMenu(tempRoutes));
-          routes = [PAGE_NOT_FOUND_ROUTE, ...tempRoutes];
+
+          routes = [PAGE_NOT_FOUND_ROUTE, ...flatMultiLevelRoutes(tempRoutes)];
           break;
       }
 

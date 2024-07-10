@@ -134,6 +134,7 @@ export const useUserStore = defineStore({
           userAccount,
           needUpdatePassword,
         } = data;
+        const currentPath = window.location.hash.split('#')[1];
         this.userInfo = {
           needUpdatePassword,
           userId: userId,
@@ -143,7 +144,7 @@ export const useUserStore = defineStore({
             const _tempId = Number(i);
             return isNaN(_tempId) ? i : _tempId;
           }),
-          homePath: '/404',
+          homePath: currentPath === '/login' ? '/404' : currentPath || '/404',
         };
         this.setUserInfo(this.userInfo);
         // save token
@@ -194,6 +195,24 @@ export const useUserStore = defineStore({
       this.setSessionTimeout(false);
       this.setUserInfo(null);
       goLogin && router.push(PageEnum.BASE_LOGIN);
+    },
+    async pageTimeOutLogout() {
+      const useInfo = this.getUserInfo;
+      await pushLog({
+        usrName: useInfo.username,
+        usrId: useInfo.userAccount,
+        moduleType: 1,
+        optName: '系统',
+        optContent: `用户长时间未操作，系统在【${formatDate(new Date())}】 自动登出`,
+        path: 'POST /api/sys/user/logout',
+        time: getRandNum(10, 50),
+        reqData: JSON.stringify(useInfo),
+        respData: JSON.stringify({ code: 0, msg: 'ok', data: null }),
+      });
+      this.setRefreshToken(undefined);
+      this.setToken(undefined);
+      this.setSessionTimeout(false);
+      this.setUserInfo(null);
     },
 
     /**

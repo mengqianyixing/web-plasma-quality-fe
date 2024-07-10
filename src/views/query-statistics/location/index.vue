@@ -47,6 +47,7 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
+    immediate: false,
   });
   async function handleExport() {
     try {

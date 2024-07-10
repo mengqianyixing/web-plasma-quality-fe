@@ -187,6 +187,12 @@ export const passwordFormSchema: FormSchema[] = [
     },
   },
   {
+    field: 'oldPassword',
+    label: '旧密码',
+    component: 'InputPassword',
+    required: true,
+  },
+  {
     field: 'newPassword',
     label: '密码',
     component: 'InputPassword',

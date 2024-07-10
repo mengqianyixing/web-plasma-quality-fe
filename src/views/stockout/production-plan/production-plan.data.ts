@@ -125,6 +125,7 @@ export const columns: BasicColumn[] = [
     title: '审核人',
     dataIndex: 'planChecker',
     width: 100,
+    ellipsis: false,
   },
   {
     title: '审核日期',

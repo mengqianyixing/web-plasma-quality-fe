@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    title="效价导入"
+    title="思桥效价导入"
     width="1000px"
     cancelText="关闭"
     @cancel="emit('close')"

@@ -14,8 +14,11 @@
 
   import { useDarkModeTheme } from '@/hooks/setting/useDarkModeTheme';
   import 'dayjs/locale/zh-cn';
-  import { computed } from 'vue';
+  import { computed, onMounted } from 'vue';
+  import { usePageTimeout } from '@/hooks/web/usePageTimeout';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
   // support Multi-language
   const { getAntdLocale } = useLocale();
 
@@ -35,6 +38,14 @@
       isDark.value ? darkTheme : {},
     ),
   );
+  onMounted(() => {
+    const delay = 10;
+    setTimeout(async () => {
+      const validLoginDuration = await globalApiStore.getSysParamsValue('validLoginDuration');
+      const { restartTimer } = usePageTimeout((validLoginDuration as string) || 0, delay);
+      restartTimer();
+    }, delay * 1000);
+  });
   // Listening to page changes and dynamically changing site titles
   useTitle();
 </script>
