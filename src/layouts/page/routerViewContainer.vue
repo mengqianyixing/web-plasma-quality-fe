@@ -13,7 +13,7 @@
             })
           "
         >
-          <KeepAlive>
+          <KeepAlive :include="getCaches">
             <component :is="Component" :key="route.fullPath" />
           </KeepAlive>
         </transition>
