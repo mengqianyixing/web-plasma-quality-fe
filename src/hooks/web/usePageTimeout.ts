@@ -8,17 +8,17 @@ import dayjs from 'dayjs';
 const TIMEOUT = 10 * 60;
 let timerId;
 let isTrigger = false;
-const { createConfirm } = useMessage();
+const { createErrorModal } = useMessage();
 const userStore = useUserStoreWithOut();
 
 export function usePageTimeout(time: string | number, delay: number) {
   function confirmModel() {
     if (isTrigger) return;
     isTrigger = true;
-    createConfirm({
+    createErrorModal({
       title: '提示',
       content: '长时间未操作，系统自动登出，是否回到登录页面？',
-      iconType: 'warning',
+      cancelButtonProps: {},
       onOk: () => {
         oauth.goToCasDoorLogin().then((res) => {
           return (window.location.href = res.data ?? window.location.href);
