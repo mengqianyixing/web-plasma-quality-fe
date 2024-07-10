@@ -406,7 +406,7 @@ export type GetApiProductPlanBatchOrderNoResponse = {
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/bag`
- * @更新时间 `2024-01-23 17:11:42`
+ * @更新时间 `2024-05-31 14:35:40`
  */
 export interface PostApiProductPlanBagRequest {
   orderNo: string;
@@ -425,7 +425,7 @@ export interface PostApiProductPlanBagRequest {
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/bag`
- * @更新时间 `2024-01-23 17:11:42`
+ * @更新时间 `2024-05-31 14:35:40`
  */
 export interface PostApiProductPlanBagResponse {
   totalCount: number;
@@ -461,6 +461,10 @@ export interface PostApiProductPlanBagResponse {
      * 浆员姓名
      */
     donorName: number;
+    /**
+     * 浆员卡号
+     */
+    cardNo: string;
     /**
      * 血浆类型
      */
@@ -818,5 +822,66 @@ export interface PutApiProductPlanReviewCancelRequest {
  * @更新时间 `2024-01-18 16:29:59`
  */
 export interface PutApiProductPlanReviewCancelResponse {}
+
+/**
+ * 接口 [组垛垛号详情↗](https://yapi.sharing8.cn/project/529/interface/api/34800) 的 **请求类型**
+ *
+ * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
+ * @请求头 `GET /api/product/plan/stack/{orderNo}`
+ * @更新时间 `2024-05-16 18:03:00`
+ */
+export interface GetApiProductPlanStackOrderNoRequest {
+  orderNo: string;
+}
+
+/**
+ * 接口 [组垛垛号详情↗](https://yapi.sharing8.cn/project/529/interface/api/34800) 的 **返回类型**
+ *
+ * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
+ * @请求头 `GET /api/product/plan/stack/{orderNo}`
+ * @更新时间 `2024-05-16 18:03:00`
+ */
+export type GetApiProductPlanStackOrderNoResponse = {
+  /**
+   * 垛号
+   */
+  stackNo?: string;
+  /**
+   * 托盘数
+   */
+  trayNum?: number;
+  /**
+   * 血浆数
+   */
+  bagNum?: number;
+  /**
+   * 总净重
+   */
+  totalWeight?: number;
+  /**
+   * 效价类型
+   */
+  titerType?: string;
+}[];
+
+/**
+ * 接口 [pms组垛任务创建↗](https://yapi.sharing8.cn/project/529/interface/api/34830) 的 **请求类型**
+ *
+ * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
+ * @请求头 `GET /api/product/plan/bag-out/{orderNo}`
+ * @更新时间 `2024-05-21 17:32:45`
+ */
+export interface GetApiProductPlanBagOutOrderNoRequest {
+  orderNo: string;
+}
+
+/**
+ * 接口 [pms组垛任务创建↗](https://yapi.sharing8.cn/project/529/interface/api/34830) 的 **返回类型**
+ *
+ * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
+ * @请求头 `GET /api/product/plan/bag-out/{orderNo}`
+ * @更新时间 `2024-05-21 17:32:45`
+ */
+export interface GetApiProductPlanBagOutOrderNoResponse {}
 
 /* prettier-ignore-end */

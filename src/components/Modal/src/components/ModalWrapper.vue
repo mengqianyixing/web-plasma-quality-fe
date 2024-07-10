@@ -19,9 +19,9 @@
   const props = defineProps({
     loading: { type: Boolean },
     useWrapper: { type: Boolean, default: true },
-    modalHeaderHeight: { type: Number, default: 57 },
-    modalFooterHeight: { type: Number, default: 74 },
-    minHeight: { type: Number, default: 200 },
+    modalHeaderHeight: { type: Number, default: 42 },
+    modalFooterHeight: { type: Number, default: 46 },
+    minHeight: { type: Number, default: 100 },
     height: { type: Number },
     footerOffset: { type: Number, default: 0 },
     open: { type: Boolean },
@@ -136,13 +136,13 @@
 
       if (props.fullScreen) {
         realHeightRef.value =
-          window.innerHeight - props.modalFooterHeight - props.modalHeaderHeight - 28;
+          window.innerHeight - props.modalFooterHeight - props.modalHeaderHeight - 10;
       } else {
         realHeightRef.value = props.height
           ? props.height
           : realHeight.value > maxHeight
-          ? maxHeight
-          : realHeight.value;
+            ? maxHeight
+            : realHeight.value;
       }
       emit('height-change', unref(realHeightRef));
     } catch (error) {

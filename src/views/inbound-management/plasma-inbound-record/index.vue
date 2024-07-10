@@ -48,6 +48,16 @@
         </span>
       </template>
       <template #toolbar>
+        <a-button type="primary" @click="handlePMSAccept" v-auth="ReCheckButtonEnum.PMSAccept">
+          PMS验收
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handlePMSAcceptCancel"
+          v-auth="ReCheckButtonEnum.PMSAcceptCancel"
+        >
+          PMS验收撤销
+        </a-button>
         <a-button
           type="primary"
           @click="handleUnqualifiedStage"
@@ -98,8 +108,10 @@
 
   import { PageWrapper } from '@/components/Page';
   import {
+    cancelPmsAcceptTask,
     getPlasmaInboundList,
     plasmaVerifyPublish,
+    sendPmsAcceptTask,
   } from '@/api/inbound-management/plasma-inbound-record';
   import BatchDetailModal from '../components/PlasmaBatchDetailModal/index.vue';
   import BoxDetailModal from '../components/PlasmaBoxDetailModal/index.vue';
@@ -152,9 +164,7 @@
         selectedRowsRef.value = selectedRows;
       },
     },
-    scroll: {
-      x: 0,
-    },
+
     size: 'small',
     striped: false,
     useSearchForm: true,
@@ -261,5 +271,41 @@
 
   function handleBatchDetailClose(record) {
     handleOpenBoxDetail(record);
+  }
+
+  async function handlePMSAccept() {
+    if (!selectedRowsRef.value.length) {
+      createMessage.warning('请选择一条数据');
+      return;
+    }
+
+    createConfirm({
+      title: '确认',
+      content: '下发PMS验收任务？',
+      iconType: 'warning',
+      onOk: async () => {
+        await sendPmsAcceptTask(selectedRowsRef.value[0]?.batchNo);
+
+        createMessage.success('下发PMS验收任务成功');
+      },
+    });
+  }
+
+  async function handlePMSAcceptCancel() {
+    if (!selectedRowsRef.value.length) {
+      createMessage.warning('请选择一条数据');
+      return;
+    }
+
+    createConfirm({
+      title: '确认',
+      content: '确定要撤销PMS验收任务吗？',
+      iconType: 'warning',
+      onOk: async () => {
+        await cancelPmsAcceptTask(selectedRowsRef.value[0]?.batchNo);
+
+        createMessage.success('撤销PMS验收任务成功');
+      },
+    });
   }
 </script>

@@ -1,4 +1,3 @@
-import { join } from 'node:path';
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
@@ -6,21 +5,16 @@ import { customRenderDate } from '@/utils/tableHelpRender';
 
 export const columns: BasicColumn[] = [
   {
-    title: '角色编码',
-    dataIndex: 'name',
-    width: 100,
-  },
-  {
     title: '角色名称',
     dataIndex: 'displayName',
     className: 'empty-value',
     width: 200,
   },
-
   {
     title: '用户',
     dataIndex: 'users',
     width: 280,
+    ellipsis: false,
     format: (arr: Array<string> & any) => arr.map((_) => _.split('/')[1]).join(','),
   },
   {
@@ -44,33 +38,13 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'name',
-    label: '角色编码',
-    component: 'Input',
-  },
-  {
     field: 'displayName',
     label: '角色名称',
     component: 'Input',
   },
-  // {
-  //   field: 'owner',
-  //   label: '归属',
-  //   component: 'Input',
-  //   colProps: { span: 4 },
-  // },
 ];
 
 export const formSchema: FormSchema[] = [
-  {
-    field: 'name',
-    label: '角色编码',
-    required: true,
-    component: 'Input',
-    colProps: {
-      span: 8,
-    },
-  },
   {
     label: '角色名称',
     required: true,

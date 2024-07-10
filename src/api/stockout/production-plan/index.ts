@@ -48,6 +48,8 @@ import {
   PutApiProductPlanCheckCancelResponse,
   PutApiProductPlanCheckOrderNoRequest,
   PutApiProductPlanCheckOrderNoResponse,
+  GetApiProductPlanStackOrderNoRequest,
+  GetApiProductPlanStackOrderNoResponse,
 } from '@/api/type/productionPlan';
 
 enum Api {
@@ -58,6 +60,7 @@ enum Api {
   BOX_SELECT_LIST = '/api/product/plan/box/',
   BOX_NOT_SELECT_LIST = '/api/product/plan/box',
   TITER_LIST = '/api/product/plan/immuneType/',
+  STACK_LIST = '/api/product/plan/stack/',
   STATION_LIST = '/api/product/plan/station/',
   BATCH_LIST = '/api/product/plan/batch/',
   PLASMA_LIST = '/api/product/plan/bag',
@@ -72,6 +75,7 @@ enum Api {
   CANCEL_REVIEW_PLAN = '/api/product/plan/review/cancel',
   CHECK_PLAN = '/api/product/plan/check/',
   CANCEL_CHECK_PLAN = '/api/product/plan/check/cancel',
+  PMS = '/api/product/plan/bag-out/',
 }
 
 export const getListApi = (data: PostApiProductPlanOrdersRequest) =>
@@ -88,6 +92,10 @@ export const getNotSelectPrepareListApi = (data: PostApiProductPlanPrepareReques
 export const getSelectPrepareListApi = (data: GetApiProductPlanPrepareOrderNoRequest) =>
   defHttp.get<GetApiProductPlanPrepareOrderNoResponse>({
     url: Api.PREPARE_SELECT_LIST + data.orderNo,
+  });
+export const getSelectStackerListApi = (data: GetApiProductPlanStackOrderNoRequest) =>
+  defHttp.get<GetApiProductPlanStackOrderNoResponse>({
+    url: Api.STACK_LIST + data.orderNo,
   });
 export const getNotSelectBoxListApi = (data: PostApiProductPlanBoxRequest) =>
   defHttp.post<PostApiProductPlanBoxResponse>({
@@ -169,4 +177,8 @@ export const submitCheckCancelApi = (data: PutApiProductPlanCheckCancelRequest) 
   defHttp.put<PutApiProductPlanCheckCancelResponse>({
     url: Api.CANCEL_CHECK_PLAN,
     data: data,
+  });
+export const submitPMSApi = (data: PutApiProductPlanReviewOrderNoRequest) =>
+  defHttp.get({
+    url: Api.PMS + data.orderNo,
   });

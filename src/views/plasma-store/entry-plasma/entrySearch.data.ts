@@ -1,8 +1,8 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { donorStatusMap, donorStatusValueEnum } from '@/enums/callbackEnum';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { useStation } from '@/hooks/common/useStation';
+import dayjs from 'dayjs';
 
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
@@ -12,12 +12,17 @@ export const entryColumns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    width: 150,
+    className: 'empty-value',
+    width: 80,
+    fixed: 'left',
   },
   {
     title: '血浆批号',
+    dataIndex: 'batchNo',
     slots: { customRender: 'batchNo' },
-    width: 120,
+    className: 'empty-value',
+    width: 80,
+    fixed: 'left',
   },
   {
     title: '血浆情况',
@@ -25,86 +30,100 @@ export const entryColumns: BasicColumn[] = [
       {
         title: '采集开始日期',
         dataIndex: 'collectStartDate',
-        width: 100,
+        className: 'empty-value',
+        width: 110,
       },
       {
         title: '采集结束日期',
         dataIndex: 'collectEndDate',
-        width: 120,
+        className: 'empty-value',
+        width: 110,
       },
       {
         title: '浆站出库日期',
         dataIndex: 'stationOutDate',
-        width: 100,
+        className: 'empty-value',
+        width: 110,
       },
       {
         title: '出库数量(袋)',
         dataIndex: 'outNum',
-        width: 100,
+        className: 'empty-value',
+        width: 90,
       },
       {
         title: '出库总净重(kg)',
         dataIndex: 'outWeight',
-        width: 120,
+        className: 'empty-value',
+        width: 80,
       },
     ],
   },
   {
     title: '入库情况',
-    width: 500,
     children: [
       {
         title: '接收日期',
         dataIndex: 'acceptDate',
-        width: 100,
+        className: 'empty-value',
+        width: 110,
       },
       {
         title: '验收发布人',
         dataIndex: 'verifyPublisher',
-        width: 100,
+        className: 'empty-value',
+        width: 80,
       },
       {
         title: '验收发布日期',
         dataIndex: 'verifyPubDate',
+        className: 'empty-value',
         width: 100,
       },
       {
         title: '验收数量(袋)',
-        dataIndex: '',
+        dataIndex: 'verifyNum',
         slots: { customRender: 'verifyNum' },
-        width: 100,
+        className: 'empty-value',
+        width: 80,
       },
       {
         title: '验收总净重(kg)',
         dataIndex: 'verifyWeight',
-        width: 120,
+        className: 'empty-value',
+        width: 80,
       },
       {
         title: '差异数量(袋)',
         dataIndex: 'diffNum',
+        className: 'empty-value',
         width: 100,
       },
       {
         title: '差异总净重(kg)',
         dataIndex: 'diffWeight',
-        width: 120,
+        className: 'empty-value',
+        width: 80,
       },
       {
         title: '验收合格数量(袋)',
         dataIndex: 'verifyPassNum',
-        width: 130,
+        className: 'empty-value',
+        width: 80,
       },
       {
         title: '验收不合格数量(袋)',
-        dataIndex: '',
+        dataIndex: 'verifyNoPassNum',
         slots: { customRender: 'verifyNoPassNum' },
-        width: 140,
+        className: 'empty-value',
+        width: 80,
       },
       {
         title: '不足量数量(袋)',
-        dataIndex: '',
-        slots: { customRender: 'hortFallNum' },
-        width: 130,
+        dataIndex: 'shortFallNum',
+        slots: { customRender: 'shortFallNum' },
+        className: 'empty-value',
+        width: 80,
       },
     ],
   },
@@ -145,31 +164,34 @@ export const entryDetailModalColumns: BasicColumn[] = [
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
-    width: 120,
+    width: 150,
   },
   {
     title: '浆站箱号',
-    dataIndex: 'boxNo',
+    dataIndex: 'stationBoxNo',
     width: 150,
   },
   {
     title: '现存箱号',
-    dataIndex: 'nowBoxNo',
+    dataIndex: 'currBoxNo',
     width: 150,
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
-    width: 100,
+    width: 150,
   },
   {
     title: '采集日期',
-    dataIndex: 'donorNo',
-    width: 100,
+    dataIndex: 'collectAt',
+    width: 150,
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     width: 100,
   },
   {
@@ -181,9 +203,6 @@ export const entryDetailModalColumns: BasicColumn[] = [
     title: '浆员状态',
     dataIndex: 'donorStatus',
     width: 100,
-    format: (text) => {
-      return donorStatusMap.get(text as donorStatusValueEnum) as string;
-    },
   },
   {
     title: '血型',
@@ -191,117 +210,151 @@ export const entryDetailModalColumns: BasicColumn[] = [
     width: 100,
   },
   {
-    title: '血浆类型',
-    dataIndex: 'immType',
-    format: (text) => {
-      return PlasmaType(text);
-    },
+    title: '来浆类型',
+    dataIndex: 'plasmaTypeFromStation',
     width: 100,
+    format: (text) => {
+      return `${text}, ${serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType)(text)}`;
+    },
+  },
+  {
+    title: '效价类型',
+    dataIndex: 'titerType',
+    width: 200,
+    format: (text) => {
+      return `${text ?? '--'}`;
+    },
   },
   {
     title: '浆站净重(g)',
-    dataIndex: 'stationWeight',
+    dataIndex: 'stationNetweight',
     width: 100,
   },
   {
     title: '验收净重(g)',
-    dataIndex: 'verifyWeight',
+    dataIndex: 'verifyNetweight',
     width: 100,
   },
   {
     title: '血浆过程状态',
-    dataIndex: '',
-    width: 100,
+    dataIndex: 'plasmaStatus',
+    width: 200,
   },
   {
     title: '检疫期类型',
-    dataIndex: '',
+    dataIndex: 'trackedType',
     width: 100,
   },
   {
     title: '血浆不合格原因',
-    dataIndex: '',
-    width: 120,
+    dataIndex: 'plasmaUnqualifiedReason',
+    width: 150,
   },
   {
     title: '血浆复检信息',
     children: [
       {
         title: '结果发布日期',
-        dataIndex: '',
-        width: 120,
+        dataIndex: ['reCheckInfo', 'issueAt'],
+        width: 150,
+        format(text) {
+          return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+        },
       },
       {
         title: '复检结果',
-        dataIndex: '',
-        width: 120,
+        dataIndex: ['reCheckInfo', 'reCheckResult'],
+        format(text: any) {
+          if (text === 1) {
+            return '合格';
+          } else if (text === 0) {
+            return '不合格';
+          } else {
+            return '-';
+          }
+        },
+        width: 150,
       },
       {
         title: '不合格项目',
-        dataIndex: '',
-        width: 120,
+        dataIndex: ['reCheckInfo', 'unqualifiedItems'],
+        width: 150,
       },
       {
         title: '血浆类型',
-        dataIndex: '',
-        width: 120,
+        dataIndex: ['reCheckInfo', 'immunityType'],
+        width: 150,
       },
       {
         title: '效价结果值',
-        dataIndex: '',
-        width: 120,
+        dataIndex: ['reCheckInfo', 'titer'],
+        width: 150,
       },
     ],
   },
   {
     title: '检疫期参考信息',
+    dataIndex: 'trackedSeeInfo',
     children: [
       {
         title: '满足日期',
-        dataIndex: '',
-        width: 120,
+        dataIndex: ['trackedSeeInfo', 'qualifiedDate'],
+        width: 150,
+        format(text) {
+          return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+        },
       },
       {
         title: '样本批号',
-        dataIndex: '',
-        width: 120,
+        dataIndex: ['trackedSeeInfo', 'batchSampleNo'],
+        width: 150,
       },
       {
         title: '样本编号',
-        dataIndex: '',
-        width: 120,
+        dataIndex: ['trackedSeeInfo', 'sampleNo'],
+        width: 150,
       },
       {
         title: '采集日期',
-        dataIndex: '',
-        width: 120,
-      },
-      {
-        title: '浆站检验日期',
-        dataIndex: '',
-        width: 120,
+        dataIndex: ['trackedSeeInfo', 'collectAt'],
+        width: 150,
+        format(text) {
+          return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+        },
       },
       {
         title: '厂家复检日期',
-        dataIndex: '',
-        width: 120,
+        dataIndex: ['trackedSeeInfo', 'reCheckDate'],
+        width: 150,
+        format(text) {
+          return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+        },
       },
       {
         title: '样本结果',
-        dataIndex: '',
-        width: 120,
+        dataIndex: ['trackedSeeInfo', 'reCheckResult'],
+        format(text: any) {
+          if (text === 1) {
+            return '合格';
+          } else if (text === 0) {
+            return '不合格';
+          } else {
+            return '-';
+          }
+        },
+        width: 150,
       },
       {
         title: '不合格项目',
-        dataIndex: '',
-        width: 120,
+        dataIndex: ['trackedSeeInfo', 'unqualifiedItems'],
+        width: 150,
       },
     ],
   },
   {
     title: '地址',
     dataIndex: 'address',
-    width: 180,
+    width: 200,
   },
 ];
 
@@ -377,7 +430,7 @@ export const noPassModalColumns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
   },
   {
     title: '浆员姓名',
@@ -393,49 +446,52 @@ export const noPassModalColumns: BasicColumn[] = [
   },
   {
     title: '验收人',
-    dataIndex: 'receiver',
+    dataIndex: 'verifyBy',
   },
   {
     title: '复核人',
-    dataIndex: '',
+    dataIndex: 'verifyReviewer',
   },
   {
     title: '验收日期',
-    dataIndex: '',
+    dataIndex: 'verifyAt',
   },
   {
-    title: '血浆净重(kg)',
-    dataIndex: 'plasmaWeight',
+    title: '血浆净重(g)',
+    dataIndex: 'verifyWeight',
   },
   {
     title: '不合格原因',
-    dataIndex: '',
+    dataIndex: 'unqReason',
   },
 ];
 
 export const hortFallNumModalColumns: BasicColumn[] = [
   {
     title: '血浆批号',
-    dataIndex: '',
+    dataIndex: 'batchNo',
   },
   {
     title: '血浆编号',
-    dataIndex: '',
+    dataIndex: 'bagNo',
   },
   {
     title: '浆员姓名',
-    dataIndex: '',
+    dataIndex: 'name',
   },
   {
-    title: '浆员批号',
-    dataIndex: '',
+    title: '浆员编号',
+    dataIndex: 'donorNo',
   },
   {
-    title: '采集日期',
-    dataIndex: '',
+    title: '来浆日期',
+    dataIndex: 'collectDate',
+    format(text) {
+      return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+    },
   },
   {
     title: '浆站净重',
-    dataIndex: '',
+    dataIndex: 'rawWeight',
   },
 ];

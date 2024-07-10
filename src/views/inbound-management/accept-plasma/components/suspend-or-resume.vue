@@ -1,87 +1,35 @@
 <template>
-  <Modal
+  <BasicModal
     v-bind="$attrs"
-    v-on="$attrs"
-    :open="true"
-    @ok="hideModal"
-    @cancel="hideModal"
-    width="1400px"
-    :footer="null"
+    @register="register"
+    width="85%"
+    :min-height="700"
+    :showOkBtn="false"
     :title="`暂停${searchForm.pattern === 'BOX' ? '箱' : '批'}记录`"
   >
-    <div class="content">
-      <Form
-        :model="searchForm"
-        layout="inline"
-        :labelCol="{ style: { width: '70px' } }"
-        ref="formRef"
-      >
-        <FormItem label="血浆批号" name="batchNo">
-          <Input v-model:value="searchForm.batchNo" readonly />
-        </FormItem>
-        <FormItem v-if="searchForm.pattern === 'BOX'" label="血浆箱号" name="boxNo">
-          <Input v-model:value="searchForm.boxNo" readonly />
-        </FormItem>
-        <FormItem v-if="searchForm.pattern === 'BCH'" label="复核人" name="checker">
-          <InputSearch
-            enterButton="登录"
-            placeholder="请点击登录"
-            readonly
-            @search="handleLogin"
-            v-model:value="searchForm.checker"
-            style="width: 180px"
-          />
-        </FormItem>
-        <!-- <FormItem label="复核人" v-if="searchForm.pattern === 'BOX'" name="checker">
-          <Input v-model:value="searchForm.checker" readonly />
-        </FormItem> -->
-        <FormItem label="备注" name="remark">
-          <Textarea v-model:value="searchForm.remark" :cols="50" />
-        </FormItem>
-        <FormItem>
-          <Button type="primary" @click="confirm" :loading="submitLoading">提交</Button>
-        </FormItem>
-      </Form>
-      <Table
-        :columns="columns"
-        :data-source="tableData"
-        bordered
-        :pagination="false"
-        :row-selection="rowSelection"
-        :loading="loading"
-        style="margin-top: 12px"
-        :scroll="{ y: 350 }"
-        row-key="bpId"
-      >
-        <template #title>
-          <div style="text-align: right">
-            <Button @click="clickResume" :loading="resumeLoading">继续</Button>
-          </div>
-        </template>
-      </Table>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <BasicForm @register="registerForm" />
+        <div style="height: calc(100% - 70px)">
+          <BasicTable @register="registerTable" :columns="columns">
+            <template #toolbar>
+              <a-button type="primary" @click="confirm" :loading="submitLoading"> 暂停 </a-button>
+              <a-button type="primary" @click="clickResume" :loading="resumeLoading">继续</a-button>
+            </template>
+          </BasicTable>
+        </div>
+      </div>
     </div>
     <LoginModal
       @register="registerLoginModal"
       @success="handleSuccess"
       :auth-code="ReCheckButtonEnum.PlasmaSuspendCheck"
     />
-  </Modal>
+  </BasicModal>
 </template>
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import {
-    Modal,
-    Form,
-    FormItem,
-    Input,
-    Table,
-    Textarea,
-    Button,
-    InputSearch,
-    // Select,
-    // SelectOption,
-  } from 'ant-design-vue';
   import dayjs from 'dayjs';
   import {
     plasmaPauseBox,
@@ -89,27 +37,21 @@
     plasmaPauseBatch,
   } from '@/api/inbound-management/accept-plasma';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
-  import { useModal } from '@/components/Modal';
+  import { useModal, BasicModal, useModalInner } from '@/components/Modal';
 
   import { useMessage } from '@/hooks/web/useMessage';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { BasicForm, useForm } from '@/components/Form';
+  import { useTable, BasicTable } from '@/components/Table';
+  import {
+    PostApiCoreBatchPlasmaVerifyBatchPauseRequest,
+    PostApiCoreBatchPlasmaVerifyBoxPauseRequest,
+  } from '@/api/type/batchManage';
 
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
 
-  const emit = defineEmits(['close', 'clearInfo', 'refresh-data']);
-  // const props = defineProps({
-  //   remark: String as PropType<any>,
-  // });
-
-  interface SearchForm {
-    batchNo: string;
-    boxNo?: string;
-    remark?: string;
-    checker?: string;
-    pattern: string; // BOX/BCH
-  }
-  // 表单数据
+  const emit = defineEmits(['close', 'clearInfo', 'refresh-data', 'register']);
   const searchForm = ref<SearchForm>({
     batchNo: '',
     boxNo: '',
@@ -123,10 +65,6 @@
       title: '验收人',
       dataIndex: 'creater',
     },
-    // {
-    //   title: '复核人',
-    //   dataIndex: 'reviewer',
-    // },
     {
       title: '暂停操作时间',
       dataIndex: 'createAt',
@@ -147,37 +85,52 @@
         return '';
       },
     },
-    // {
-    //   title: '当前状态',
-    //   dataIndex: 'state',
-    //   customRender: ({ text }) => {
-    //     return boxSuspendEnum[text];
-    //   },
-    // },
   ]);
 
-  let tableData = ref<any[]>([]);
+  const [register, { setModalProps, closeModal }] = useModalInner((data) => {
+    resetFields();
+    tableSelected.value = [];
+    columns.value = [
+      {
+        title: '验收人',
+        dataIndex: 'creater',
+      },
+      {
+        title: '暂停操作时间',
+        dataIndex: 'createAt',
+        customRender: ({ text }) => {
+          if (text) {
+            return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+          }
+          return '';
+        },
+      },
+      {
+        title: '继续操作时间',
+        dataIndex: 'freeAt',
+        customRender: ({ text }) => {
+          if (text) {
+            return dayjs(text).format('YYYY-MM-DD HH:mm:ss');
+          }
+          return '';
+        },
+      },
+    ];
+    setModalProps({
+      maskClosable: false,
+      destroyOnClose: true,
+    });
 
-  // 动态列
-  const addCols = () => {
-    if (searchForm.value.pattern === 'BCH') {
-      columns.value.splice(1, 0, {
-        title: '复核人',
-        dataIndex: 'reviewer',
-      });
-      columns.value.splice(
-        3,
-        0,
+    if (data.pattern === 'BOX') {
+      appendSchemaByField(
         {
-          title: '继续操作人',
-          dataIndex: 'freedBy',
+          label: '血浆箱号',
+          field: 'boxNo',
+          component: 'Input',
         },
-        {
-          title: '继续复核人',
-          dataIndex: 'reviewBy',
-        },
+        'batchNo',
       );
-    } else if (searchForm.value.pattern === 'BOX') {
+
       columns.value.unshift(
         {
           title: '托盘编号',
@@ -195,16 +148,147 @@
           },
         },
       );
+    } else if (data.pattern === 'BCH') {
+      appendSchemaByField(
+        {
+          field: 'checker',
+          label: '复核人',
+          component: 'InputSearch',
+          componentProps: {
+            'enter-button': '登录',
+            placeholder: '请点击登录按钮',
+            readonly: true,
+            onSearch: handleLogin,
+          },
+          required: true,
+        },
+        'batchNo',
+      );
+      updateSchema({ field: 'remark', required: true });
+      columns.value.splice(1, 0, {
+        title: '复核人',
+        dataIndex: 'reviewer',
+      });
+      columns.value.splice(
+        3,
+        0,
+        {
+          title: '继续操作人',
+          dataIndex: 'freedBy',
+        },
+        {
+          title: '继续复核人',
+          dataIndex: 'reviewBy',
+        },
+      );
     }
-  };
 
-  const formRef = ref();
-  const loading = ref(false);
+    searchForm.value = {
+      ...data,
+    };
+    setFieldsValue({
+      ...data,
+    });
+
+    reload();
+  });
+
+  const [
+    registerForm,
+    { validate, resetFields, setFieldsValue, updateSchema, appendSchemaByField, clearValidate },
+  ] = useForm({
+    showActionButtonGroup: false,
+    labelWidth: 80,
+    schemas: [
+      {
+        field: 'batchNo',
+        component: 'Input',
+        label: '血浆批号',
+        required: true,
+      },
+      {
+        label: '备注',
+        field: 'remark',
+        component: 'InputTextArea',
+        componentProps: {
+          rows: 1,
+        },
+        colProps: {
+          span: 7,
+        },
+      },
+      {
+        label: '类型',
+        field: 'type',
+        defaultValue: 'VER',
+        component: 'Input',
+        show: false,
+      },
+    ],
+  });
+
+  const tableSelected = ref<any[]>([]);
+  const [registerTable, { reload }] = useTable({
+    api: plasmaPauseBoxList,
+    beforeFetch: (params) => {
+      return {
+        ...params,
+        batchNo: searchForm.value.batchNo || null,
+        pattern: searchForm.value.pattern,
+        pauseType: 'VER',
+      };
+    },
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    rowClassName(record: Recordable) {
+      if (searchForm.value.pattern === 'BOX') {
+        return boxSuspendEnum[record?.state] !== '已暂停'
+          ? 'pointer-events-none cursor-not-allowed'
+          : '';
+      } else {
+        return record?.freedBy ? 'pointer-events-none cursor-not-allowed' : '';
+      }
+    },
+    rowSelection: {
+      type: 'radio',
+      onChange: (_, selectedRows: any[]) => {
+        tableSelected.value = selectedRows;
+      },
+      getCheckboxProps: (record: any) => ({
+        disabled:
+          searchForm.value.pattern == 'BCH'
+            ? !!record.freedBy
+            : searchForm.value.pattern == 'BOX'
+              ? boxSuspendEnum[record.state] != '已暂停'
+              : undefined,
+      }),
+    },
+    clickToRowSelect: true,
+    pagination: false,
+    size: 'small',
+    striped: false,
+    useSearchForm: false,
+    bordered: true,
+    showIndexColumn: false,
+    immediate: false,
+    inset: true,
+    isCanResizeParent: true,
+  });
+
+  interface SearchForm {
+    batchNo: string;
+    boxNo?: string;
+    remark?: string;
+    checker?: string;
+    pattern: string; // BOX/BCH
+  }
+
   const submitLoading = ref(false);
   const resumeLoading = ref(false);
-  const hideModal = () => {
-    emit('close', false);
-  };
 
   // 箱暂停状态枚举
   const boxSuspendEnum = {
@@ -218,144 +302,89 @@
   const confirm = async () => {
     if (searchForm.value.pattern === 'BOX') {
       try {
+        const values = await validate();
         const params = {
-          batchNo: searchForm.value.batchNo,
-          boxNo: searchForm.value.boxNo,
-          pattern: 'BOX',
+          ...values,
           state: 'PAUSE',
-          type: 'VER',
-          remark: searchForm.value.remark || null,
         };
+
         submitLoading.value = true;
-        const data = await plasmaPauseBox(params);
-        if (data === null) {
-          success('提交成功!');
-          emit('close', false);
-          emit('clearInfo');
-        }
+        await plasmaPauseBox(params as unknown as PostApiCoreBatchPlasmaVerifyBoxPauseRequest);
+
+        success('提交成功!');
+        setFieldsValue({ remark: '' });
+        clearValidate();
+
+        await reload();
+        emit('close', false);
+        emit('clearInfo');
       } finally {
         submitLoading.value = false;
       }
     } else if (searchForm.value.pattern === 'BCH') {
-      if (!searchForm.value.checker) {
-        warning('请登录复核人');
-        return;
-      }
-      if (!searchForm.value.remark) {
-        warning('请填写备注!');
-        return;
-      }
       try {
+        const values = await validate();
         const params = {
-          batchNo: searchForm.value.batchNo,
-          checker: searchForm.value.checker,
-          remark: searchForm.value.remark,
+          ...values,
           state: 'PAUSE',
-          type: 'VER',
         };
+
         submitLoading.value = true;
-        const data = await plasmaPauseBatch(params);
-        if (data === null) {
-          success('提交成功!');
-          emit('close', false);
-          emit('clearInfo');
-        }
+        await plasmaPauseBatch(params as PostApiCoreBatchPlasmaVerifyBoxPauseRequest);
+        success('提交成功!');
+        setFieldsValue({ checker: '', remark: '' });
+        clearValidate();
+        await reload();
+        emit('close', false);
+        emit('clearInfo');
       } finally {
         submitLoading.value = false;
       }
     }
   };
 
-  const getList = async () => {
-    try {
-      loading.value = true;
-      const params = {
-        batchNo: searchForm.value.batchNo || null,
-        pattern: searchForm.value.pattern,
-        pauseType: 'VER',
-      };
-      const data = await plasmaPauseBoxList(params);
-      if (data) {
-        tableData.value = data;
-        addCols();
-      }
-    } finally {
-      loading.value = false;
-    }
-  };
-
-  let tableSelected = ref<any[]>([]);
-  const rowSelection: any['rowSelection'] = {
-    type: 'radio',
-    onChange: (selectedRowKeys: any[], selectedRows: any[]) => {
-      tableSelected.value = selectedRows;
-    },
-    getCheckboxProps: (record: any) => ({
-      disabled:
-        searchForm.value.pattern == 'BCH'
-          ? !!record.freedBy
-          : searchForm.value.pattern == 'BOX'
-            ? boxSuspendEnum[record.state] != '已暂停'
-            : undefined,
-    }),
-  };
   // 继续
   const clickResume = async () => {
-    if (!tableSelected.value.length) {
-      warning('请先选择一条数据!');
-      return;
-    }
-    const firstSelectedItem = tableSelected.value[0];
     if (searchForm.value.pattern === 'BOX') {
+      if (!tableSelected.value.length) {
+        warning('请先选择一条数据!');
+        return;
+      }
+      const firstSelectedItem = tableSelected.value[0];
       try {
+        const values = await validate();
         const params = {
-          batchNo: searchForm.value.batchNo,
-          boxNo: firstSelectedItem.boxNo,
-          // checker: searchForm.value.checker, // 传登录的复核人
+          ...values,
+          boxNo: firstSelectedItem?.boxNo,
           state: 'RESTORE',
-          type: 'VER',
-          remark: searchForm.value.remark || null,
         };
+
         resumeLoading.value = true;
-        const data = await plasmaPauseBox(params);
-        if (data === null) {
-          success('操作成功!');
-          getList();
-          tableSelected.value = [];
-        }
+        await plasmaPauseBox(params as PostApiCoreBatchPlasmaVerifyBoxPauseRequest);
+
+        success('操作成功!');
+        await reload();
+        emit('refresh-data');
+        closeModal();
       } finally {
         resumeLoading.value = false;
-        emit('refresh-data');
-        hideModal();
       }
     } else if (searchForm.value.pattern === 'BCH') {
-      if (!searchForm.value.remark) {
-        warning('请填写备注!');
-        return;
-      }
-      if (!searchForm.value.checker) {
-        warning('请登录复核人');
-        return;
-      }
       try {
+        const values = await validate();
         const params = {
-          batchNo: searchForm.value.batchNo,
-          checker: searchForm.value.checker, // 传登录的复核人
-          remark: searchForm.value.remark,
+          ...values,
           state: 'RESTORE',
-          type: 'VER',
         };
+
         resumeLoading.value = true;
-        const data = await plasmaPauseBatch(params);
-        if (data === null) {
-          success('操作成功!');
-          getList();
-          tableSelected.value = [];
-        }
+        await plasmaPauseBatch(params as PostApiCoreBatchPlasmaVerifyBatchPauseRequest);
+        success('操作成功!');
+        await reload();
+        emit('refresh-data');
+        closeModal();
       } finally {
         resumeLoading.value = false;
-        emit('refresh-data');
-        hideModal();
       }
     }
   };
@@ -370,15 +399,6 @@
   // 登录成功事件
   function handleSuccess(nickname: string) {
     searchForm.value.checker = nickname;
+    setFieldsValue({ checker: nickname });
   }
-
-  defineExpose({
-    searchForm,
-    getList,
-  });
 </script>
-<style lang="less" scoped>
-  .content {
-    padding: 12px;
-  }
-</style>

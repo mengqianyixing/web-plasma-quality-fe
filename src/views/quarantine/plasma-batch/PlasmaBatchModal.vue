@@ -38,6 +38,9 @@
 
   const [registerTable, { reload, getForm, clearSelectedRowKeys }] = useTable({
     api: getPlasmaBatchUnReleases,
+    pagination: {
+      pageSize: 10,
+    },
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -65,7 +68,7 @@
     canResize: true,
   });
 
-  const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
+  const [registerModal, { setModalProps }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: false });
     isUpdate.value = !!data?.isUpdate;
   });
@@ -81,19 +84,14 @@
       // loading
       setModalProps({ confirmLoading: true });
       try {
-        if (unref(isUpdate)) {
-          //
-        } else {
-          await addPlasmaBatchRelease(selectedRow.value[0]);
-          clearSelectedRowKeys();
-        }
+        await addPlasmaBatchRelease(selectedRow.value[0]);
+        clearSelectedRowKeys();
+        reload();
       } catch (e) {
         return;
       }
-      closeModal();
       emit('success');
     } finally {
-      reload();
       setModalProps({ confirmLoading: false });
     }
   }

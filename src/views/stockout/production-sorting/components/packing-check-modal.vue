@@ -8,33 +8,40 @@
     :showCancelBtn="false"
     :showOkBtn="false"
     :closeFunc="handleCloseFunc"
+    :min-height="600"
     width="70%"
   >
-    <Form
-      :model="filterForm"
-      name="basic"
-      :label-col="{ span: 8 }"
-      :wrapper-col="{ span: 16 }"
-      autocomplete="off"
-      layout="inline"
-    >
-      <FormItem label="血浆箱号" name="boxNo">
-        <Input v-model:value="boxNo" readonly />
-      </FormItem>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <Form
+          :model="filterForm"
+          name="basic"
+          :label-col="{ span: 8 }"
+          :wrapper-col="{ span: 16 }"
+          autocomplete="off"
+          layout="inline"
+        >
+          <FormItem label="血浆箱号" name="boxNo">
+            <Input v-model:value="boxNo" readonly />
+          </FormItem>
 
-      <FormItem label="血浆编号" name="bagNo">
-        <Input
-          v-model:value="bagNo"
-          placeholder="请扫描"
-          @keyup="handlePressEnter"
-          ref="bagNoRef"
-        />
-      </FormItem>
-      <FormItem label="已核对">
-        <div class="w-30">{{ filterForm.checkedCount }}/{{ filterForm.totalCount }}</div>
-      </FormItem>
-    </Form>
-    <BasicTable @register="registerTable" />
+          <FormItem label="血浆编号" name="bagNo">
+            <Input
+              v-model:value="bagNo"
+              placeholder="请扫描"
+              @keyup="handlePressEnter"
+              ref="bagNoRef"
+            />
+          </FormItem>
+          <FormItem label="已核对">
+            <div class="w-30">{{ filterForm.checkedCount }}/{{ filterForm.totalCount }}</div>
+          </FormItem>
+        </Form>
+        <div style="height: calc(100% - 35px)">
+          <BasicTable @register="registerTable" />
+        </div>
+      </div>
+    </div>
   </BasicModal>
 </template>
 
@@ -118,7 +125,6 @@
       listField: 'list',
     },
     immediate: false,
-    clickToRowSelect: false,
     size: 'small',
     striped: false,
     useSearchForm: false,
@@ -126,7 +132,7 @@
 
     bordered: true,
     showIndexColumn: true,
-    canResize: false,
+    isCanResizeParent: true,
   });
 
   // 请求表格数据(获取核对进度)

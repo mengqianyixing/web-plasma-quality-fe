@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" />
+    <BasicTable @register="registerTable" class="tableHeight" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -10,6 +10,11 @@
   import { getBatchList } from '@/api/query-statistics/batch-statistics';
 
   defineOptions({ name: 'BatchStatistics' });
+
+  const sortMap = {
+    stationName: 'station_no',
+    batchNo: 'bp_no',
+  };
 
   const [registerTable] = useTable({
     api: getBatchList,
@@ -27,5 +32,16 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
+    sortFn(sortInfo) {
+      return {
+        sortIdx: sortMap[sortInfo.field],
+        sortOrder: sortInfo.order ? (sortInfo.order === 'ascend' ? 'ASC' : 'DESC') : null,
+      };
+    },
   });
 </script>
+<style scoped lang="less">
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
+  }
+</style>

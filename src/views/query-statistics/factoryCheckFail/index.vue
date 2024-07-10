@@ -2,7 +2,14 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
+        <a-button
+          type="primary"
+          @click="handleExport"
+          :loading="loading"
+          v-auth="QuarantineButtonEnum.FactoryCheckFailExcel"
+        >
+          导出
+        </a-button>
       </template>
     </BasicTable>
   </PageWrapper>
@@ -17,6 +24,7 @@
   import { ref } from 'vue';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { message } from 'ant-design-vue';
+  import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   const { currentRoute } = useRouter();

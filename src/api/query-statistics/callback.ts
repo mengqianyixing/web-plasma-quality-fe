@@ -3,17 +3,17 @@ import { defHttp } from '@/utils/http/axios';
 import {
   GetApiCoreBatchSampleCallbackStatisticRequest,
   GetApiCoreBatchSampleCallbackStatisticResponse,
-  GetApiCoreDonorCallbackStatisticStationRequest,
-  GetApiCoreDonorCallbackStatisticStationResponse,
+  GetApiSearchDonorCallbackCountRequest,
+  GetApiSearchDonorCallbackCountResponse,
 } from '@/api/type/queryStatistics';
 
 enum Api {
-  CALLBACK_STATISTIC = '/api/core/donor/callback/statistic-station',
+  CALLBACK_STATISTIC = '/api/search/donor/callback-count',
   CALLBACK_BATCH_STATISTICS = '/api/core/batch/sample/callback/statistic',
 }
 
-export const getCallbackStatisticList = (params: GetApiCoreDonorCallbackStatisticStationRequest) =>
-  defHttp.get<GetApiCoreDonorCallbackStatisticStationResponse>(
+export const getCallbackStatisticList = (params: GetApiSearchDonorCallbackCountRequest) =>
+  defHttp.get<GetApiSearchDonorCallbackCountResponse>(
     { url: Api.CALLBACK_STATISTIC, params },
     { joinParamsToUrl: true },
   );

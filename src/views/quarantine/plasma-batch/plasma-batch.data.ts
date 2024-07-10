@@ -28,7 +28,7 @@ export const STATE = {
   },
   C: {
     value: 'C',
-    label: '取消',
+    label: '撤销',
   },
   ALL: {
     value: '',
@@ -37,17 +37,28 @@ export const STATE = {
   },
 };
 
+export const stateMap = {
+  failedBag: 'FAIL',
+  trackedNormalBag: 'QUA',
+  trackedSpecialBag: 'QUA',
+  firstUnTrackedBag: 'FIRST_UNTRACKED',
+  reUnTrackedBag: 'RE_UNTRACKED',
+  unProductionBag: 'UNPRO',
+};
+
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 80,
+    fixed: 'left',
   },
 
   {
     title: '血浆批号',
     dataIndex: 'fkBpNo',
     width: 120,
+    fixed: 'left',
   },
 
   {
@@ -101,6 +112,7 @@ export const columns: BasicColumn[] = [
     title: '报告生成人',
     dataIndex: 'creator',
     width: 100,
+    ellipsis: false,
   },
   {
     title: '报告生成日期',
@@ -111,6 +123,7 @@ export const columns: BasicColumn[] = [
   {
     title: '复核人',
     dataIndex: 'reviewer',
+    ellipsis: false,
     width: 100,
   },
   {
@@ -182,8 +195,9 @@ export const modalColumns: BasicColumn[] = [
 const trackedColumns: BasicColumn[] = [
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     width: 100,
+    slots: { customRender: 'cardNo' },
   },
   {
     title: '浆员姓名',
@@ -210,8 +224,9 @@ const trackedColumns: BasicColumn[] = [
 const otherColumns: BasicColumn[] = [
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     width: 100,
+    slots: { customRender: 'cardNo' },
   },
   {
     title: '浆员姓名',
@@ -245,8 +260,9 @@ export const colMap: Record<string, BasicColumn[]> = {
     },
     {
       title: '浆员编号',
-      dataIndex: 'donorNo',
+      dataIndex: 'cardNo',
       width: 100,
+      slots: { customRender: 'cardNo' },
     },
     {
       title: '浆员姓名',

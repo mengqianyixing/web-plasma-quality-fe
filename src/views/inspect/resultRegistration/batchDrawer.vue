@@ -15,7 +15,7 @@
     width="1140px"
     cancelText="关闭"
     @ok="handleSubmit"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="redoHeight"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -30,7 +30,7 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { batchColumns, batchSearchScheam } from './resultRegistration.data';
   import { defineEmits } from 'vue';
-  import { getBatchListApi } from '@/api/inspect/resultRegistration';
+  import { getBatchListApi, submitItemDtApi } from '@/api/inspect/resultRegistration';
   import { message } from 'ant-design-vue';
 
   defineOptions({ name: 'LocationModel' });
@@ -64,15 +64,23 @@
       return res;
     },
   });
-  const [registerModal] = useModalInner(async () => {
+  const [registerModal, { setModalProps }] = useModalInner(async () => {
     setPagination({ current: 1 });
     reload();
   });
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     const [row] = rows;
+    if (row.status === '未登记') {
+      try {
+        setModalProps({ confirmLoading: true });
+        await submitItemDtApi({ bsNo: row.bsNo });
+      } finally {
+        setModalProps({ confirmLoading: false });
+      }
+    }
     emit('confirm', row);
   }
 </script>

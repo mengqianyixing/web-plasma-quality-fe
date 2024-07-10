@@ -17,11 +17,7 @@
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
                 tooltip: '删除此资源',
-                popConfirm: {
-                  title: '是否确认删除',
-                  placement: 'left',
-                  confirm: handleDelete.bind(null, record),
-                },
+                onClick: handleDelete.bind(null, record),
               },
             ]"
           />
@@ -33,11 +29,14 @@
 </template>
 
 <script setup lang="ts">
+  import { createVNode } from 'vue';
+  import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { deleteResource, getResourcesList } from '@/api/systemServer/system';
   import { columns, searchFormSchema } from './resource.data';
   import { useModal } from '@/components/Modal';
   import ResourceModel from '@/views/system/resource/ResourceModel.vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const [registerModal, { openModal }] = useModal();
 
@@ -66,7 +65,6 @@
       width: 120,
       title: '操作',
       dataIndex: 'action',
-      // slots: { customRender: 'action' },
     },
   });
 
@@ -83,8 +81,24 @@
     });
   }
 
+  const { createConfirm } = useMessage();
+
   async function handleDelete(record: Recordable) {
-    await deleteResource(record.resourceId);
+    createConfirm({
+      title: '是否确认删除?',
+      iconType: 'warning',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: '',
+      okText: '删除',
+      okType: 'danger',
+      cancelText: '取消',
+      async onOk() {
+        await deleteResource(record.resourceId);
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   }
 
   function handleSuccess() {

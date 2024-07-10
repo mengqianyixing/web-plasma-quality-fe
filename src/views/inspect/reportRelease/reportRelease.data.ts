@@ -1,6 +1,7 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
 
 import { useStation } from '@/hooks/common/useStation';
 
@@ -15,11 +16,14 @@ export const columns: BasicColumn[] = [
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '样本批号',
     dataIndex: 'bsNo',
     width: 120,
+    slots: { customRender: 'bsNo' },
+    fixed: 'left',
   },
   {
     title: '样本类型',
@@ -117,7 +121,7 @@ export const searchFormschema: FormSchema[] = [
     component: 'Select',
     label: '样本类型',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.RsLabSampleType),
     },
   },
 
@@ -141,42 +145,77 @@ export const searchFormschema: FormSchema[] = [
 export const columnsMap: Record<number, BasicColumn[]> = {
   1: [
     {
+      dataIndex: 'titerType',
+      title: '效价类型',
+      width: 120,
+      ellipsis: false,
+    },
+    {
+      dataIndex: 'projectName',
+      title: '检测项目',
+      width: 120,
+      ellipsis: false,
+    },
+    {
       dataIndex: 'titerValue',
       title: '效价值',
+      width: 100,
     },
   ],
   2: [
     {
+      dataIndex: 'titerType',
+      title: '效价类型',
+      width: 120,
+      ellipsis: false,
+    },
+    {
+      dataIndex: 'projectName',
+      title: '检测项目',
+      width: 120,
+      ellipsis: false,
+    },
+    {
       dataIndex: 'titerValue',
       title: '效价值',
+      width: 100,
+    },
+  ],
+  4: [
+    {
+      dataIndex: 'projectName',
+      title: '检测项目',
+      width: 900,
+      ellipsis: false,
+      align: 'left',
     },
   ],
   5: [
     {
+      dataIndex: 'projectName',
+      title: '检测项目',
+      width: 120,
+      ellipsis: false,
+    },
+    {
+      dataIndex: 'titerType',
+      title: '效价类型',
+      width: 120,
+      ellipsis: false,
+    },
+    {
       dataIndex: 'titerValue',
       title: '效价值',
+      width: 100,
     },
   ],
   3: [
     {
       dataIndex: 'projectName',
       title: '不合格项目',
-    },
-    {
-      dataIndex: 'od',
-      title: 'OD值',
-    },
-    {
-      dataIndex: 'cutoff',
-      title: 'Cutoff值',
-    },
-    {
-      dataIndex: 'ct',
-      title: 'CT值',
-    },
-    {
-      dataIndex: 'unqualified',
-      title: '不合格',
+      ellipsis: false,
+      width: 300,
+      align: 'left',
     },
   ],
 };
@@ -184,21 +223,39 @@ export const totalUnqualifiedColumns: BasicColumn[] = [
   {
     dataIndex: 'sampleNo',
     title: '样品编号',
+    width: 140,
   },
   {
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     title: '浆员编号',
+    width: 100,
   },
   {
     dataIndex: 'donorName',
     title: '浆员姓名',
+    width: 100,
+  },
+];
+
+export const totalUnqualifiedSearch: FormSchema[] = [
+  {
+    field: 'sampleNo',
+    label: '样品编号',
+    component: 'Input',
   },
   {
-    dataIndex: 'projectName',
-    title: '检测项目',
+    field: 'cardNo',
+    label: '浆员编号',
+    component: 'Input',
   },
   {
-    dataIndex: 'methodName',
-    title: '检测方法',
+    field: 'conclusion',
+    label: '效价类型',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getDilutionTypeApi,
+      labelField: 'key',
+      valueField: 'value',
+    },
   },
 ];

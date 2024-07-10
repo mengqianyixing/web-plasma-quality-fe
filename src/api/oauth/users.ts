@@ -69,3 +69,19 @@ export const addCasDoorUser = (data) => defHttp.post({ url: '/api/sys/casdoor/us
  * @returns
  */
 export const deleteCasDoorUser = (data) => defHttp.delete({ url: '/api/sys/casdoor/user', data });
+
+/**
+ * 重置用户密码
+ * @param data
+ * @returns
+ */
+export const resetCasDoorUserPwd = (data) =>
+  defHttp.put(
+    {
+      url: '/api/sys/casdoor/user-password-resetting',
+      data,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );

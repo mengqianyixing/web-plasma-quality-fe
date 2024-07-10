@@ -26,8 +26,8 @@ import {
   PostApiCoreBankDeliverPlasmaSelectedOutResponse,
   PostApiCoreBankDeliverDetailRequest,
   PostApiCoreBankDeliverDetailResponse,
-  DeleteApiCoreBankDeliverDetailBagNoRequest,
-  DeleteApiCoreBankDeliverDetailBagNoResponse,
+  DeleteApiCoreBankDeliverDetailRequest,
+  DeleteApiCoreBankDeliverDetailResponse,
 } from '@/api/type/nonconformityManage';
 
 enum Api {
@@ -37,7 +37,6 @@ enum Api {
   TABLE_DT = '/api/core/bank/deliver/plasma/selected',
 
   ADD_TABLE_DT = '/api/core/bank/deliver/detail',
-  REMOVE_TABLE_DT = '/api/core/bank/deliver/detail/',
 
   PLASMA_LIST = '/api/core/bank/deliver/plasma',
   PROCESS = '/api/core/bank/preview/review/',
@@ -68,9 +67,10 @@ export const dtTableApi = (data: PostApiCoreBankDeliverPlasmaSelectedRequest) =>
 export const addTableApi = (data: PostApiCoreBankDeliverDetailRequest) =>
   defHttp.post<PostApiCoreBankDeliverDetailResponse>({ url: Api.ADD_TABLE_DT, data });
 
-export const removeTableApi = (data: DeleteApiCoreBankDeliverDetailBagNoRequest) =>
-  defHttp.delete<DeleteApiCoreBankDeliverDetailBagNoResponse>({
-    url: Api.REMOVE_TABLE_DT + data.bagNo,
+export const removeTableApi = (data: DeleteApiCoreBankDeliverDetailRequest) =>
+  defHttp.delete<DeleteApiCoreBankDeliverDetailResponse>({
+    url: Api.ADD_TABLE_DT,
+    data,
   });
 
 export const getPlasmaListApi = (data: PostApiCoreBankDeliverPlasmaRequest) =>

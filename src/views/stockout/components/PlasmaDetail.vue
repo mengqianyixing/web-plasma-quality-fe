@@ -9,8 +9,12 @@
     defaultFullscreen
     :destroyOnClose="true"
     :canFullscreen="false"
+    :min-height="600"
   >
-    <BasicTable @register="registerTable" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <div class="flex-1 h-full shrink-1"> <BasicTable @register="registerTable" /> </div></div
+    ></div>
   </BasicModal>
 </template>
 
@@ -29,15 +33,10 @@
     prepareProduceMap,
     prepareProduceValueEnum,
   } from '@/enums/stockoutEnum';
-  import { SERVER_ENUM } from '@/enums/serverEnum';
-  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-
-  const serverEnumStore = useServerEnumStoreWithOut();
-  const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
+  import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
 
   let prepareNo = ''; // 准备号
   const [registerModal] = useModalInner(async (data) => {
-    console.log('血浆明细看看data', data);
     prepareNo = data.record.prepareNo;
     const sort = data.record.sort; // 分拣/待分拣
 
@@ -97,14 +96,11 @@
     },
     {
       title: '浆员编号',
-      dataIndex: 'donorNo',
+      dataIndex: 'cardNo',
     },
     {
       title: '效价类型',
-      dataIndex: 'immType',
-      format(text) {
-        return `${PlasmaType(text)}`;
-      },
+      dataIndex: 'immTypeLevel',
     },
     {
       title: '效价值',
@@ -133,6 +129,7 @@
     {
       title: '分拣时间',
       dataIndex: 'operateAt',
+      sorter: true,
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
       },
@@ -191,13 +188,21 @@
       },
     },
     {
-      field: 'immType',
+      field: 'immTypeLevel',
       label: '效价类型',
-      component: 'Select',
+      component: 'ApiSelect',
       colProps: { span: 4 },
       componentProps: {
-        options: serverEnumStore.getServerEnum(SERVER_ENUM.ImmType),
+        api: getDilutionTypeApi,
+        labelField: 'key',
+        valueField: 'value',
       },
+    },
+    {
+      field: 'bagNo',
+      label: '血浆编号',
+      component: 'Input',
+      colProps: { span: 4 },
     },
   ];
   const [registerTable, { getForm, reload }] = useTable({
@@ -220,5 +225,11 @@
     immediate: false,
     bordered: true,
     showIndexColumn: false,
+    isCanResizeParent: true,
+    sortFn(sortInfo) {
+      return {
+        orderByOperateAt: sortInfo.order ? (sortInfo.order === 'ascend' ? 'ASC' : 'DESC') : null,
+      };
+    },
   });
 </script>

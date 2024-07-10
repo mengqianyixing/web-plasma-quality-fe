@@ -5,24 +5,16 @@
         基本信息
         <div class="float-right">
           <a-button
-            class="mr-15px"
+            class="mr-10px"
             type="primary"
             @click="handleSelect"
             v-auth="InspectButtonEnum.ResultRegistrationSelect"
             >选择</a-button
           >
-          <a-button
-            class="mr-15px"
-            type="primary"
-            @click="handleAddItem"
-            :disabled="!bsNo"
-            v-auth="InspectButtonEnum.ResultRegistrationItemAdd"
-          >
-            新增检测项目
-          </a-button>
+
           <a-button
             v-auth="InspectButtonEnum.ResultRegistrationRegist"
-            class="mr-15px"
+            class="mr-10px"
             type="primary"
             @click="registrationClick"
             :disabled="!bsNo"
@@ -61,7 +53,6 @@
         </TabPane>
       </Tabs>
       <BatchModal @register="registerModal" @confirm="confirm" />
-      <CheckItemModal @register="registerCIModal" @confirm="confirm2" />
       <BasicModal
         @register="registerCancelModal"
         title="登记"
@@ -79,13 +70,12 @@
   import { PageWrapper } from '@/components/Page';
   import { CellWapper, Cell } from '@/components/CellWapper';
   import { cellList } from './resultRegistration.data';
-  import { TabPane, Tabs, Modal, message } from 'ant-design-vue';
-  import { ref, unref } from 'vue';
+  import { TabPane, Tabs, message } from 'ant-design-vue';
+  import { ref } from 'vue';
   import CheckPage from './check/index.vue';
   import TiterPage from './titer/index.vue';
   import MaterialRegistration from './materialRegistration/index.vue';
   import BatchModal from './batchDrawer.vue';
-  import CheckItemModal from './checkItemDrawer.vue';
   import { useModal, BasicModal } from '@/components/Modal';
   import {
     getPlasmaCountApi,
@@ -97,6 +87,8 @@
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
   import { BasicForm, useForm } from '@/components/Form';
   import dayjs, { Dayjs } from 'dayjs';
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { sampleTypeEnum } from '@/enums/sampleEnum';
 
   defineOptions({ name: 'ResultRegistration' });
 
@@ -107,7 +99,7 @@
   const bsNo = ref('');
   const registrationLoading = ref(false);
   const unregistrationLoading = ref(false);
-  const rowData = ref({});
+  const rowData = ref({ status: '', sampleType: '', sampleCode: '' });
   const countData = ref({});
   const plasmaCellList = ref<Cell[]>([]);
   const reloadMap = ref<Map<string, Function>>(new Map());
@@ -130,16 +122,13 @@
     showActionButtonGroup: false,
   });
   const [registerModal, { openModal: openModal }] = useModal();
-  const [registerCIModal, { openModal: openCIModal }] = useModal();
   const [registerCancelModal, { openModal: openCancelModal, setModalProps }] = useModal();
 
   function handleSelect() {
     openModal(true, {});
   }
-  function handleAddItem() {
-    openCIModal(true, { bsNo: unref(bsNo) });
-  }
-  async function confirm(row: Recordable) {
+
+  async function confirm(row) {
     bsNo.value = row.bsNo;
     rowData.value = row;
     openModal(false);
@@ -148,8 +137,13 @@
       list: [],
       data: {},
     };
+    const { sampleType, sampleCode } = rowData.value;
+    const isCAB = sampleType === sampleTypeEnum.CallbackSample || sampleCode === '回访样本';
     const { list, data } = res.reduce((t, row, i) => {
-      t.list.push({ field: i.toString(), label: PlasmaType(row.plasmaType) });
+      t.list.push({
+        field: i.toString(),
+        label: isCAB ? '样本数' : PlasmaType(row.plasmaType),
+      });
       t.data[i] = row.count;
       return t;
     }, initValue);
@@ -163,6 +157,7 @@
       .then(() => {
         openCancelModal(false);
         message.success('登记成功');
+        rowData.value.status = '登记完成';
       })
       .finally(() => {
         setModalProps({ confirmLoading: false });
@@ -174,25 +169,24 @@
     clearValidate();
   }
 
+  const { createConfirm } = useMessage();
+
   function unRegistration() {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认撤销' + bsNo.value + '?',
       onOk: async () => {
         try {
           unregistrationLoading.value = true;
           await sumbitRevokeRegistrationApi({ bsNo: bsNo.value });
+          rowData.value.status = '登记中';
           confirm(rowData.value);
         } finally {
           unregistrationLoading.value = false;
           reloadMap.value.forEach((fn) => fn());
         }
       },
-      onCancel: () => Modal.destroyAll(),
     });
-  }
-  function confirm2() {
-    openCIModal(false);
-    reloadMap.value.forEach((fn) => fn());
   }
   function saveReload(fn: Function, activeKey: string) {
     bsNo.value && fn();

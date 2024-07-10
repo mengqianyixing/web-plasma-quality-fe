@@ -13,26 +13,31 @@ export const columns: BasicColumn[] = [
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 150,
+    fixed: 'left',
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
     width: 150,
+    fixed: 'left',
   },
   {
     title: '浆站箱号',
     dataIndex: 'stationBoxNo',
     width: 150,
+    fixed: 'left',
   },
   {
     title: '现存箱号',
     dataIndex: 'currBoxNo',
     width: 150,
+    fixed: 'left',
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
     width: 150,
+    fixed: 'left',
   },
   {
     title: '采集日期',
@@ -41,11 +46,14 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    fixed: 'left',
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     width: 100,
+    slots: { customRender: 'cardNo' },
+    fixed: 'left',
   },
   {
     title: '浆员姓名',
@@ -176,14 +184,6 @@ export const columns: BasicColumn[] = [
         },
       },
       {
-        title: '浆站检验日期',
-        dataIndex: ['trackedSeeInfo', 'stationCheckDate'],
-        width: 150,
-        format(text) {
-          return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-        },
-      },
-      {
         title: '厂家复检日期',
         dataIndex: ['trackedSeeInfo', 'reCheckDate'],
         width: 150,
@@ -229,6 +229,21 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
+    field: 'cardNo',
+    label: '浆员编号',
+    component: 'Input',
+  },
+  {
+    field: 'bagNo',
+    label: '血浆编号',
+    component: 'Input',
+  },
+  {
+    field: 'batchNo',
+    label: '血浆批号',
+    component: 'Input',
+  },
+  {
     field: 'stationOutboundStatus',
     label: '浆站出库状态',
     component: 'Select',
@@ -249,11 +264,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '现存箱号',
     component: 'Input',
   },
-  {
-    field: 'donorNo',
-    label: '浆员编号',
-    component: 'Input',
-  },
+
   {
     field: 'donorName',
     label: '浆员姓名',
@@ -275,11 +286,7 @@ export const searchFormSchema: FormSchema[] = [
       options: serverEnumStore.getServerEnum(SERVER_ENUM.BloodType),
     },
   },
-  {
-    field: 'bagNo',
-    label: '血浆编号',
-    component: 'Input',
-  },
+
   {
     field: 'plasmaTypeFromStation',
     label: '来浆类型',
@@ -298,11 +305,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '参考样本采集日期',
     component: 'RangePicker',
   },
-  {
-    field: 'batchNo',
-    label: '血浆批号',
-    component: 'Input',
-  },
+
   {
     field: 'warehousingStatus',
     label: '入库状态',
@@ -347,7 +350,10 @@ export const searchFormSchema: FormSchema[] = [
     label: '参考样本类型',
     component: 'Select',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+      options: [
+        { label: '血浆样本', value: 'NOR' },
+        { label: '回访样本', value: 'CAB' },
+      ],
     },
   },
   {

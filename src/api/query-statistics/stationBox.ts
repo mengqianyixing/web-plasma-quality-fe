@@ -1,16 +1,16 @@
 import { defHttp } from '@/utils/http/axios';
 
 import {
-  GetApiCoreBatchStationBoxRequest,
-  GetApiCoreBatchStationBoxResponse,
+  GetApiSearchPlasmaStationBoxRequest,
+  GetApiSearchPlasmaStationBoxResponse,
 } from '@/api/type/queryStatistics';
 
 enum Api {
-  Station_Box = '/api/core/batch/station/box',
+  Station_Box = '/api/search/plasma/station/box',
 }
 
-export const getStationBoxList = (params: GetApiCoreBatchStationBoxRequest) =>
-  defHttp.get<GetApiCoreBatchStationBoxResponse>(
+export const getStationBoxList = (params: GetApiSearchPlasmaStationBoxRequest) =>
+  defHttp.get<GetApiSearchPlasmaStationBoxResponse>(
     { url: Api.Station_Box, params },
     { joinParamsToUrl: true },
   );

@@ -1,17 +1,17 @@
 <template>
-  <div class="root">
-    <PageWrapper dense class="bg-white p-2 mt-2">
+  <div class="p-3 root">
+    <div class="pt-5 bg-white mb-16px">
       <BasicForm @register="registerBasicForm" />
-    </PageWrapper>
+    </div>
     <a-tabs
-      class="mt-2"
+      class="mt-2 bg-white"
       default-active-key="inStockSummary"
       v-model:activeKey="currentKey"
       type="card"
     >
-      <a-tab-pane v-for="item in tabList" :key="item.key" :tab="item.label" />
+      <a-tab-pane v-for="item in tabListComputed" :key="item.key" :tab="item.label" />
     </a-tabs>
-    <PageWrapper dense contentFullHeight>
+    <PageWrapper dense contentFullHeight class="m-2">
       <BasicTable
         @register="registerTable"
         :columns="currentColumns"
@@ -30,19 +30,32 @@
   import { computed, onMounted, ref } from 'vue';
   import { getInventoryList } from '@/api/query-statistics/inventory';
   import { GetApiCoreBatchStockStatisticsResponse } from '@/api/type/queryStatistics';
-
-  defineOptions({ name: 'InventoryStatistics' });
+  import { getSysParamsByParamKey } from '@/api/systemServer/params';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const ATabs = Tabs;
   const ATabPane = Tabs.TabPane;
 
   const currentKey = ref('inStockSummary');
+  const quarantineBatchControlRes = ref('');
   const originData = ref<GetApiCoreBatchStockStatisticsResponse>({});
 
   const tableDataFields = computed(() => originData.value[currentKey.value] || []);
   const currentColumns = computed(
     () => tabList.find((item) => item.key === currentKey.value)?.columns || [],
   );
+  const tabListComputed = computed(() => {
+    if (quarantineBatchControlRes.value !== 'open') {
+      return (
+        tabList.filter(
+          (it) => !['unMeetQuarantineFirstTrace', 'unMeetQuarantineRepeateTrace'].includes(it.key),
+        ) || tabList
+      );
+    } else {
+      return tabList;
+    }
+  });
 
   const baseColumns: BasicColumn[] = [
     {
@@ -155,7 +168,7 @@
     },
     {
       key: 'testQualifiedSummary',
-      label: '检查合格汇总',
+      label: '检测合格汇总',
       columns: baseColumns,
     },
     {
@@ -165,12 +178,17 @@
     },
   ];
 
-  const [registerBasicForm, { getFieldsValue }] = useForm({
+  const [registerBasicForm, { getFieldsValue, setProps }] = useForm({
     schemas: searchFormSchema,
+    labelWidth: 140,
     baseColProps: { flex: '0 0 373px' },
     actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
+    transformDateFunc(date) {
+      return date ? date.format('YYYY-MM-DD') : '';
+    },
     submitFunc: reloadTable,
     submitOnReset: true,
+    compact: true,
   });
 
   const [registerTable, { setLoading }] = useTable({
@@ -184,16 +202,37 @@
     immediate: false,
   });
 
+  const { createMessage } = useMessage();
+
   async function reloadTable() {
-    setLoading(true);
-    originData.value = await getInventoryList({
-      ...getFieldsValue(),
-    });
-    setLoading(false);
+    const searchParams = getFieldsValue();
+
+    if (
+      !searchParams.acceptBeginAt &&
+      !searchParams.verifyBeginAt &&
+      !searchParams.publishBeginAt &&
+      !searchParams.batchNo
+    ) {
+      createMessage.warn('请至少选择日期或输入血浆批号');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setProps({ submitButtonOptions: { loading: true } });
+      originData.value = await getInventoryList({
+        ...getFieldsValue(),
+      });
+    } finally {
+      setLoading(false);
+      setProps({ submitButtonOptions: { loading: false } });
+    }
   }
 
-  onMounted(() => {
-    reloadTable();
+  onMounted(async () => {
+    quarantineBatchControlRes.value = await getSysParamsByParamKey(
+      SysParamsEnum.QuarantineBatchControl,
+    );
   });
 </script>
 <style scoped>

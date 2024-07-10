@@ -32,6 +32,10 @@ const checkManager: AppRouteModule = {
           title: '登记使用截止日期',
         },
         {
+          id: ReCheckButtonEnum.MaterialPreRegistrationUpdateDateCheck,
+          title: '登记日期复核人权限',
+        },
+        {
           id: InspectButtonEnum.MaterialPreRegistrationAdd,
           title: '新增',
         },
@@ -45,15 +49,7 @@ const checkManager: AppRouteModule = {
         },
         {
           id: InspectButtonEnum.MaterialPreRegistrationUnReview,
-          title: '取消复核',
-        },
-        {
-          id: InspectButtonEnum.MaterialPreRegistrationDisable,
-          title: '停用',
-        },
-        {
-          id: InspectButtonEnum.MaterialPreRegistrationEnable,
-          title: '启用',
+          title: '撤销复核',
         },
       ],
       meta: {
@@ -96,17 +92,14 @@ const checkManager: AppRouteModule = {
           id: InspectButtonEnum.ResultRegistrationReRegist,
           title: '撤销登记',
         },
-        {
-          id: InspectButtonEnum.ResultRegistrationItemDelete,
-          title: '删除检测项目',
-        },
+
         {
           id: InspectButtonEnum.ResultRegistrationItemUnq,
           title: '检测不合格登记',
         },
         {
           id: InspectButtonEnum.ResultRegistrationItemNotCheck,
-          title: '检测不合格未登记',
+          title: '检测未检测登记',
         },
         {
           id: InspectButtonEnum.ResultRegistrationSqImport,
@@ -115,6 +108,10 @@ const checkManager: AppRouteModule = {
         {
           id: InspectButtonEnum.ResultRegistrationTiterImport,
           title: '效价导入',
+        },
+        {
+          id: InspectButtonEnum.ResultRegistrationTiterDelete,
+          title: '撤销效价项目',
         },
         {
           id: InspectButtonEnum.ResultRegistrationTiterRegist,
@@ -131,6 +128,18 @@ const checkManager: AppRouteModule = {
         {
           id: InspectButtonEnum.ResultRegistrationMaterialReRegist,
           title: '物料撤销',
+        },
+        {
+          id: ReCheckButtonEnum.ResultReRegistCheck,
+          title: '撤销检测结果登记复核人权限',
+        },
+        {
+          id: ReCheckButtonEnum.TiterImportConfirmationCheck,
+          title: '效价导入确认复核人权限',
+        },
+        {
+          id: ReCheckButtonEnum.TiterSqImportConfirmationCheck,
+          title: '思桥效价导入确认复核人权限',
         },
       ],
     },

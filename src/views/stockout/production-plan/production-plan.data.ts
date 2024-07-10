@@ -10,6 +10,7 @@ import {
   getForPlasmaListApi,
   getNotSelectBoxListApi,
   getNotSelectPrepareListApi,
+  getSelectStackerListApi,
 } from '@/api/stockout/production-plan';
 
 import {
@@ -32,6 +33,7 @@ export const columns: BasicColumn[] = [
     align: 'left',
     slots: { customRender: 'mesId' },
     width: 120,
+    fixed: 'left',
   },
   {
     title: '投产类型',
@@ -40,16 +42,18 @@ export const columns: BasicColumn[] = [
       return PlasmaType(record.orderType);
     },
     width: 80,
-  },
-  {
-    title: '血浆效期',
-    dataIndex: 'expiration',
-    width: 80,
+    fixed: 'left',
   },
   {
     title: '计划投浆重量(吨)',
     dataIndex: 'orderWeight',
     width: 120,
+    fixed: 'left',
+  },
+  {
+    title: '血浆效期',
+    dataIndex: 'expiration',
+    width: 80,
   },
   {
     title: '计划出库日期',
@@ -97,6 +101,7 @@ export const columns: BasicColumn[] = [
     title: '计划人',
     dataIndex: 'planner',
     width: 100,
+    ellipsis: false,
   },
   {
     title: '计划日期',
@@ -108,6 +113,7 @@ export const columns: BasicColumn[] = [
     title: '复核人',
     dataIndex: 'planReviewer',
     width: 100,
+    ellipsis: false,
   },
   {
     title: '复核日期',
@@ -166,6 +172,7 @@ export enum TAB {
   STATION,
   BATCH,
   PLASMA,
+  STACKER,
 }
 function formatResp(api: any) {
   return (params: Recordable) =>
@@ -183,6 +190,11 @@ export const tabList = [
     label: '投产准备号',
     checkbox: true,
     api: formatResp(getSelectPrepareListApi),
+  },
+  {
+    key: TAB.STACKER,
+    label: '剁号明细',
+    api: formatResp(getSelectStackerListApi),
   },
   {
     key: TAB.BOX,
@@ -254,6 +266,35 @@ export const tableColumns: Record<string, BasicColumn[]> = {
     {
       title: '效价类型',
       dataIndex: 'immuneTypes',
+      width: 240,
+      ellipsis: false,
+    },
+  ],
+  [TAB.STACKER]: [
+    {
+      title: '垛号',
+      dataIndex: 'stackNo',
+      width: 80,
+    },
+    {
+      title: '托盘数量',
+      dataIndex: 'trayNum',
+      width: 80,
+    },
+    {
+      title: '血浆数量',
+      dataIndex: 'bagNum',
+      width: 80,
+    },
+    {
+      title: '血浆净重(kg)',
+      dataIndex: 'totalWeight',
+      width: 80,
+      format: formatKg,
+    },
+    {
+      title: '效价类型',
+      dataIndex: 'titerType',
       width: 240,
       ellipsis: false,
     },
@@ -406,7 +447,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
     },
     {
       title: '浆员编号',
-      dataIndex: 'fkDonorNo',
+      dataIndex: 'cardNo',
       width: 120,
     },
     {

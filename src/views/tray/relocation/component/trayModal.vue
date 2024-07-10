@@ -14,7 +14,7 @@
     title="托盘选择"
     width="1200px"
     @ok="handleSubmit"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="redoHeight"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -49,10 +49,11 @@
     formConfig: {
       schemas: formSchema,
     },
+    size: 'small',
     immediate: false,
     rowKey: 'trayNo',
     columns: columns,
-    useSearchForm: false,
+    useSearchForm: true,
     bordered: true,
     beforeFetch: (params) => {
       return { ...params, ...state.params };

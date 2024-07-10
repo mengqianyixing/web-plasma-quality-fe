@@ -27,11 +27,7 @@
               {
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
-                popConfirm: {
-                  title: '是否确认删除',
-                  placement: 'left',
-                  confirm: handleDelete.bind(null, record),
-                },
+                onClick: handleDelete.bind(null, record),
               },
             ]"
           />
@@ -43,14 +39,23 @@
   </div>
 </template>
 <script lang="ts" setup>
+  import { createVNode } from 'vue';
   import { BasicTable, useTable, TableAction } from '@/components/Table';
-  import { deleteCasDoorUser, getCasDoorUserDetail, getCasDoorUsers } from '@/api/oauth/users';
-
+  import {
+    deleteCasDoorUser,
+    getCasDoorUserDetail,
+    getCasDoorUsers,
+    resetCasDoorUserPwd,
+  } from '@/api/oauth/users';
+  import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+  import { useMessage } from '@/hooks/web/useMessage';
   import { useModal } from '@/components/Modal';
   import UsersModal from './UsersModal.vue';
   import UsersDetailModal from './UsersDetailModal.vue';
 
   import { columns, searchFormSchema } from './users.data';
+
+  const { createMessage } = useMessage();
 
   defineOptions({ name: 'Users' });
 
@@ -103,16 +108,37 @@
     });
   }
 
+  const { createConfirm } = useMessage();
+
   function handleSetPassword(record: Recordable) {
-    openModal(true, {
-      record,
-      isPassword: true,
+    createConfirm({
+      iconType: 'warning',
+      content: '确认重置账号【' + record.name + '】的密码?',
+      onOk: async () => {
+        await resetCasDoorUserPwd({ userName: record.name });
+        createMessage.success('重置密码成功！');
+        await reload();
+      },
     });
   }
 
   async function handleDelete(record: Recordable) {
-    await deleteCasDoorUser(record);
-    reload();
+    createConfirm({
+      iconType: 'error',
+      title: '是否确认删除?',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: '',
+      okText: '删除',
+      okType: 'danger',
+      cancelText: '取消',
+      async onOk() {
+        await deleteCasDoorUser(record);
+        await reload();
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   }
 
   function handleSuccess() {

@@ -12,12 +12,6 @@
       <template #toolbar>
         <a-button
           type="primary"
-          @click="handleUpdateDate"
-          v-auth="InspectButtonEnum.MaterialPreRegistrationUpdateDate"
-          >登记使用截止日期</a-button
-        >
-        <a-button
-          type="primary"
           @click="handleCreate"
           v-auth="InspectButtonEnum.MaterialPreRegistrationAdd"
           >新增</a-button
@@ -38,19 +32,14 @@
           type="primary"
           @click="handleCancelReview"
           v-auth="InspectButtonEnum.MaterialPreRegistrationUnReview"
-          >取消复核</a-button
+          >撤销复核</a-button
         >
+
         <a-button
           type="primary"
-          @click="handleCheckStatus(disableApi, '停用')"
-          v-auth="InspectButtonEnum.MaterialPreRegistrationDisable"
-          >停用</a-button
-        >
-        <a-button
-          type="primary"
-          @click="handleCheckStatus(enableApi, '启用')"
-          v-auth="InspectButtonEnum.MaterialPreRegistrationEnable"
-          >启用</a-button
+          @click="handleUpdateDate"
+          v-auth="InspectButtonEnum.MaterialPreRegistrationUpdateDate"
+          >登记使用截止日期</a-button
         >
       </template>
     </BasicTable>
@@ -63,7 +52,7 @@
       okText="提交"
       width="300px"
       :confirmLoading="confirmLoading"
-      title="撤销原因'"
+      title="撤销原因"
     >
       <div class="m-20px">
         <BasicForm @register="registerForm" />
@@ -75,20 +64,15 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { PageWrapper } from '@/components/Page';
   import { useModal } from '@/components/Modal';
-  import { columns } from './materialPreRegistration.data';
+  import { columns, searchSchema } from './materialPreRegistration.data';
   import { message, Modal } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import DateFormModal from './dateFormModal.vue';
   import { ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
-  import {
-    getListApi,
-    reviewApi,
-    cancelReviewApi,
-    enableApi,
-    disableApi,
-  } from '@/api/inspect/materialPreRegistration';
+  import { getListApi, reviewApi, cancelReviewApi } from '@/api/inspect/materialPreRegistration';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'MaterialPreRegistration' });
 
@@ -111,7 +95,7 @@
   const [registerModal, { openModal }] = useModal();
   const [registerDateModal, { openModal: openDateModal }] = useModal();
 
-  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
+  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, setProps }] = useTable({
     api: getListApi,
     fetchSetting: {
       pageField: 'currPage',
@@ -121,11 +105,20 @@
     },
     scroll: { x: 0 },
     columns: columns,
+    formConfig: { schemas: searchSchema },
+    useSearchForm: true,
     size: 'small',
-    useSearchForm: false,
     showTableSetting: false,
     bordered: true,
     rowSelection: { type: 'radio' },
+    sortFn: (e) => {
+      setProps({
+        searchInfo: {
+          sortIdx: e.order && e.field,
+          sortOrder: e?.order?.slice(0, -3).toUpperCase(),
+        },
+      });
+    },
     afterFetch: (res) => {
       clearSelectedRowKeys();
       return res;
@@ -153,6 +146,8 @@
   }
   function handleUpdateDate() {
     getSelections(true, ([row]) => {
+      if (row.deadline) return message.warning('已登记使用截止日期');
+      if (!row.reviewAt) return message.warning('未复核不能登记');
       openDateModal(true, { data: row });
     });
   }
@@ -160,21 +155,26 @@
     clearSelectedRowKeys();
     reload();
   }
+
+  const { createConfirm } = useMessage();
+
   function handleReview() {
     getSelections(true, ([row]) => {
-      Modal.confirm({
+      if (row.deadline) return message.warning('已登记使用截止日期,不能复核');
+      createConfirm({
+        iconType: 'warning',
         content: '确认复核【' + row.projectName + row.testType + '】?',
         onOk: async () => {
           await reviewApi({ id: row.id });
           clearSelectedRowKeys();
-          reload();
+          await reload();
         },
-        onCancel: () => Modal.destroyAll(),
       });
     });
   }
   function handleCancelReview() {
-    getSelections(true, () => {
+    getSelections(true, ([row]) => {
+      if (row.deadline) return message.warning('已登记使用截止日期,不能撤销复核');
       open.value = true;
       resetFields();
       clearValidate();
@@ -187,26 +187,10 @@
       confirmLoading.value = true;
       await cancelReviewApi({ id: row.id, cause });
       open.value = false;
-      message.success('取消复核成功');
-      reload();
+      message.success('撤销复核成功');
+      await reload();
     } finally {
       confirmLoading.value = false;
     }
-  }
-
-  function handleCheckStatus(api, text: string) {
-    getSelections(true, ([row]) => {
-      const { state } = row;
-      if (state === text) return message.warning('状态不需要变更');
-      Modal.confirm({
-        content: '确认' + text + '【' + row.projectName + row.testType + '】?',
-        onOk: async () => {
-          await api({ id: row.id });
-          clearSelectedRowKeys();
-          reload();
-        },
-        onCancel: () => Modal.destroyAll(),
-      });
-    });
   }
 </script>

@@ -1,25 +1,21 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="register" title="生产指令详情" width="65%">
+  <BasicModal
+    v-bind="$attrs"
+    @register="register"
+    title="生产指令详情"
+    width="65%"
+    :showOkBtn="false"
+    :cancelText="'关闭'"
+  >
     <PageWrapper>
       <Description :column="2" :data="detailData" :schema="schema" />
-      <a-timeline class="ml-3 mt-[40px]">
-        <a-timeline-item color="red">
+      <a-timeline class="ml-3 mt-[40px]" v-if="timeLineData.length">
+        <a-timeline-item v-for="(t, i) in timeLineData" :key="i">
           <template #dot><ClockCircleOutlined style="font-size: 16px" /></template>
-          <p>卢伟桐于2023年12月14号撤销审核</p>
-        </a-timeline-item>
-        <a-timeline-item color="red">
-          <template #dot><ClockCircleOutlined style="font-size: 16px" /></template>
-          <p>卢伟桐于2023年12月14号复核不通过</p>
-        </a-timeline-item>
-        <a-timeline-item color="red">
-          <template #dot><ClockCircleOutlined style="font-size: 16px" /></template>
-          <p>卢伟桐于2023年12月14号审核不通过</p>
-        </a-timeline-item>
-        <a-timeline-item color="green">
-          <template #dot><ClockCircleOutlined style="font-size: 16px" /></template>
-          <p>卢伟桐于2023年12月14号审核通过</p>
+          <p>{{ t.desc }}</p>
         </a-timeline-item>
       </a-timeline>
+      <div v-else class="mt-5">暂无审批流</div>
     </PageWrapper>
   </BasicModal>
 </template>
@@ -27,14 +23,15 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { PageWrapper } from '@/components/Page';
   import { DescItem, Description } from '@/components/Description';
-  import { ref, watch } from 'vue';
-  import { getProOrderDetail } from '@/api/stockout/production-order';
+  import { ref } from 'vue';
+  import { getProOrderDetail, getProOrderTasks } from '@/api/stockout/production-order';
   import { expirationMap } from '@/enums/stockoutEnum';
   import { Timeline, TimelineItem } from 'ant-design-vue';
   import dayjs from 'dayjs';
   import { ClockCircleOutlined } from '@ant-design/icons-vue';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { GetApiSysSnakerTasksOrderIdResponse } from '@/api/type/productionOrder';
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -43,19 +40,18 @@
   const ATimelineItem = TimelineItem;
 
   const detailData = ref({});
+  const timeLineData = ref<GetApiSysSnakerTasksOrderIdResponse>([]);
   const orderNo = ref('');
+  const orderId = ref('');
 
-  watch(
-    () => orderNo.value,
-    async (newVal) => {
-      if (newVal) {
-        detailData.value = await getProOrderDetail(orderNo.value);
-      }
-    },
-  );
-
-  const [register] = useModalInner((data) => {
+  const [register, { setModalProps }] = useModalInner(async (data) => {
+    setModalProps({
+      maskClosable: false,
+    });
     orderNo.value = data.orderNo;
+    orderId.value = data.orderId;
+
+    await reload();
   });
 
   const schema: DescItem[] = [
@@ -96,4 +92,22 @@
       },
     },
   ];
+
+  async function reload() {
+    setModalProps({
+      loading: true,
+    });
+    try {
+      detailData.value = await getProOrderDetail(orderNo.value);
+      if (orderId.value) {
+        timeLineData.value = await getProOrderTasks(orderId.value);
+      } else {
+        timeLineData.value = [];
+      }
+    } finally {
+      setModalProps({
+        loading: false,
+      });
+    }
+  }
 </script>

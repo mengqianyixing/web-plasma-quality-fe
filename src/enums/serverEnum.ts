@@ -45,6 +45,8 @@ export enum SERVER_ENUM {
   DlvType = 'DlvType',
   BatchOperationSumState = 'BatchOperationSumState',
   BankDeliverstateType = 'BankDeliverstateType',
+  BankNonProdDeliverState = 'BankNonProdDeliverState',
+  SampleDeliverType = 'SampleDeliverType',
   BlockSource = 'BlockSource',
   BagBlockSource = 'BagBlockSource',
   CallbackPlanState = 'CallbackPlanState',
@@ -53,4 +55,8 @@ export enum SERVER_ENUM {
   PrintState = 'PrintState',
   ReportTemplateState = 'ReportTemplateState',
   SampleStatusEnum = 'SampleStatusEnum',
+  BankTrayStatusEnum = 'BankTrayStatusEnum',
+  RsLabSampleType = 'RsLabSampleType',
+  SampleMixTypeEnum = 'SampleMixTypeEnum',
+  CallbackAdapterState = 'CallbackAdapterState',
 }

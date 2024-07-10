@@ -1,17 +1,10 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable">
-      <template #stationNo="{ record }">
-        {{ getStationNameById(record?.stationNo) }}
-      </template>
-    </BasicTable>
+    <BasicTable @register="registerTable" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
-  import { useStation } from '@/hooks/common/useStation';
-
-  import { onMounted } from 'vue';
 
   import { columns, searchFormSchema } from './failure.data';
 
@@ -20,17 +13,7 @@
 
   defineOptions({ name: 'CallbackFailure' });
 
-  const { stationOptions, getStationNameById } = useStation();
-  onMounted(() => {
-    getForm().updateSchema({
-      field: 'stationNo',
-      componentProps: {
-        options: stationOptions,
-      },
-    });
-  });
-
-  const [registerTable, { getForm }] = useTable({
+  const [registerTable] = useTable({
     api: getCallbackFailureList,
     columns,
     formConfig: {

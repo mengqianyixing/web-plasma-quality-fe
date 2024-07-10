@@ -37,6 +37,13 @@
         >
         <a-button
           type="primary"
+          @click="handleStacker"
+          v-if="isStacker"
+          v-auth="StockOutButtonEnum.ProductionPlanPMS"
+          >PMS组垛</a-button
+        >
+        <a-button
+          type="primary"
           @click="handleCancelCheck()"
           v-auth="StockOutButtonEnum.ProductionPlanReCheck"
           >撤销审核</a-button
@@ -87,10 +94,32 @@
                   原料血浆投产计划
                 </a-button>
               </MenuItem>
+              <MenuItem>
+                <a-button
+                  type="link"
+                  @click="handlePrint('PLASMA_PRODUCTION_APPLICATION')"
+                  v-auth="StockOutButtonEnum.PlasmaProductionApplication"
+                >
+                  原料血浆投产申报表
+                </a-button>
+              </MenuItem>
             </Menu>
           </template>
         </a-dropdown>
-        <a-button @click="handleDownloadAbstract" type="primary" :loading="loading">
+        <a-button
+          @click="handleDownloadAbstract(PrintServerEnum.PLASMA_ABSTRACT)"
+          type="primary"
+          :loading="loading"
+          v-auth="StockOutButtonEnum.ProductionPlanSummary"
+        >
+          下载原料血浆摘要
+        </a-button>
+        <a-button
+          @click="handleDownloadAbstract(PrintServerEnum.KM_PLASMA_ABSTRACT)"
+          type="primary"
+          :loading="loading"
+          v-auth="StockOutButtonEnum.ProductionPlanSummaryKunMing"
+        >
           下载原料血浆摘要
         </a-button>
       </template>
@@ -135,6 +164,7 @@
     submitReviewlApi,
     submitCheckCancelApi,
     submitChecklApi,
+    submitPMSApi,
   } from '@/api/stockout/production-plan';
   import { nextTick, ref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
@@ -144,7 +174,11 @@
   import { getReportApi } from '@/api/report';
   import { useModal } from '@/components/Modal';
   import { downloadReport } from '@/api/stockout/plasma-summary';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { PrintServerEnum } from '@/enums/printServerEnum';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'ProductionPlan' });
 
   const [registerReportModal, { openModal: openReportModal }] = useModal();
@@ -154,6 +188,7 @@
   const open = ref(false);
   const reportLoading = ref(false);
   const cancelText = ref('');
+  const isStacker = ref(false);
 
   let iterator: AsyncIterator<any>;
 
@@ -193,6 +228,9 @@
     },
   });
 
+  globalApiStore.getSysParamsValue('regroupModel').then((res) => {
+    isStacker.value = res === 'open';
+  });
   function getSelections(onlyOne: boolean) {
     const rows = getSelectRows();
     if (rows.length === 0) {
@@ -213,7 +251,7 @@
       ${STATUS_TEXT.get(STATUS.PLI)}
       】的数据`);
     }
-    openModal(true, row);
+    openModal(true, { ...row, isStacker: isStacker.value });
   }
 
   function success() {
@@ -221,6 +259,22 @@
     reload();
   }
 
+  const { createConfirm } = useMessage();
+
+  function handleStacker() {
+    const [row] = getSelections(true);
+    if (!row) return;
+    createConfirm({
+      iconType: 'warning',
+      content: '确认调用制造批号【' + row.mesId + '】的PMS组垛任务?',
+      onOk: async () => {
+        await submitPMSApi({ orderNo: row.orderNo });
+        message.success('调用组垛任务成功！');
+        clearSelectedRowKeys();
+        await reload();
+      },
+    });
+  }
   async function confirmCancel() {
     await validate();
     iterator.next();
@@ -290,15 +344,15 @@
     }
   }
   function handleConfirm({ api, text, row }) {
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + text + '制造批号' + row.mesId + '?',
       onOk: async () => {
         await api({ orderNo: row.orderNo, cause: '.' });
         clearSelectedRowKeys();
-        reload();
+        await reload();
         message.success(text + '成功');
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   async function handleCancelConfirm({ api, row }) {
@@ -316,7 +370,7 @@
   }
 
   function handleDetails(record: Recordable) {
-    openModal(true, { ...record, disabled: true });
+    openModal(true, { ...record, disabled: true, isStacker: isStacker.value });
   }
   async function handlePrint(reportType: string) {
     const [row] = getSelections(true);
@@ -332,24 +386,27 @@
   }
 
   const loading = ref(false);
-  async function handleDownloadAbstract() {
+  async function handleDownloadAbstract(key: PrintServerEnum) {
     const [row] = getSelections(true);
     if (!row) return;
 
-    loading.value = true;
-    const res = await downloadReport({
-      ReportKey: 'PLASMA_ABSTRACT',
-      contentKey: row.mesId,
-    });
-    const blob = new Blob([res.data], {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.download = `原料血浆摘要${row.mesId}.docx`;
-    a.href = url;
-    a.click();
-    window.URL.revokeObjectURL(url);
-    loading.value = false;
+    try {
+      loading.value = true;
+      const res = await downloadReport({
+        ReportKey: key,
+        contentKey: row.mesId,
+      });
+      const blob = new Blob([res.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.download = `原料血浆摘要${row.mesId}.doc`;
+      a.href = url;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } finally {
+      loading.value = false;
+    }
   }
 </script>

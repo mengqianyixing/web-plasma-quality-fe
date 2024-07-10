@@ -162,10 +162,11 @@ export interface PostApiCoreBagFlagsResponse {
  *
  * @分类 [血浆限制↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5460)
  * @请求头 `POST /api/core/bag/flagged/box`
- * @更新时间 `2024-01-19 19:12:02`
+ * @更新时间 `2024-07-04 18:03:57`
  */
 export interface PostApiCoreBagFlaggedBoxRequest {
   batchNo: string;
+  bfNo?: string;
   currPage: number;
   pageSize: number;
 }
@@ -175,7 +176,7 @@ export interface PostApiCoreBagFlaggedBoxRequest {
  *
  * @分类 [血浆限制↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5460)
  * @请求头 `POST /api/core/bag/flagged/box`
- * @更新时间 `2024-01-19 19:12:02`
+ * @更新时间 `2024-07-04 18:03:57`
  */
 export interface PostApiCoreBagFlaggedBoxResponse {
   totalCount: number;
@@ -632,24 +633,6 @@ export type GetApiProductReleaseDetailResponse = {
 }[];
 
 /**
- * 接口 [查询批检疫期报告中的不合格血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33853) 的 **请求类型**
- *
- * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
- * @请求头 `GET /api/core/batch/plasma/release/failed-bag`
- * @更新时间 `2024-03-11 20:23:39`
- */
-export interface GetApiCoreBatchPlasmaReleaseFailedBagRequest {}
-
-/**
- * 接口 [查询批检疫期报告中的不合格血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/33853) 的 **返回类型**
- *
- * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
- * @请求头 `GET /api/core/batch/plasma/release/failed-bag`
- * @更新时间 `2024-03-11 20:23:39`
- */
-export interface GetApiCoreBatchPlasmaReleaseFailedBagResponse {}
-
-/**
  * 接口 [取消审核↗](https://yapi.sharing8.cn/project/529/interface/api/33909) 的 **请求类型**
  *
  * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
@@ -690,5 +673,95 @@ export interface PutApiProductReleaseReviewCancelRequest {
  * @更新时间 `2024-03-14 16:29:26`
  */
 export interface PutApiProductReleaseReviewCancelResponse {}
+
+/**
+ * 接口 [查询血浆限制信息↗](https://yapi.sharing8.cn/project/529/interface/api/34314) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/product/release/bagFlags`
+ * @更新时间 `2024-04-17 15:45:48`
+ */
+export interface GetApiProductReleaseBagFlagsRequest {
+  orderNo: string;
+  currPage: string;
+  pageSize: string;
+}
+
+/**
+ * 接口 [查询血浆限制信息↗](https://yapi.sharing8.cn/project/529/interface/api/34314) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/product/release/bagFlags`
+ * @更新时间 `2024-04-17 15:45:48`
+ */
+export interface GetApiProductReleaseBagFlagsResponse {
+  totalCount: number;
+  currPage: null;
+  totalPage: null;
+  pageSize: null;
+  result?: {
+    boxNo: string;
+    batchNo: string;
+    bagCount: string;
+    bagNos: string;
+  }[];
+}
+
+/**
+ * 接口 [批检疫期报告新增弹窗血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/34362) 的 **请求类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/core/batch/plasma/release/bags`
+ * @更新时间 `2024-05-31 15:03:46`
+ */
+export interface GetApiCoreBatchPlasmaReleaseBagsRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * 批检疫期报告血浆状态不能为空  FIRST_UNTRACKED("首次续追踪"),
+   *     RE_UNTRACKED("反复续追踪"),
+   *     QUA("检疫期合格"),
+   *
+   *     FAIL("不合格"),
+   *     UNPRO("非生产出库");
+   */
+  state: string;
+  /**
+   * 普通传 N 特免 传 null
+   */
+  ImmType?: string;
+  /**
+   * 批报告单号
+   */
+  brNo: string;
+}
+
+/**
+ * 接口 [批检疫期报告新增弹窗血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/34362) 的 **返回类型**
+ *
+ * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
+ * @请求头 `GET /api/core/batch/plasma/release/bags`
+ * @更新时间 `2024-05-31 15:03:46`
+ */
+export interface GetApiCoreBatchPlasmaReleaseBagsResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    bagNo?: string;
+    donorNo?: string;
+    cardNo?: string;
+    donorName?: string;
+    collectAt?: string;
+    netWeight?: number;
+    titerJudge?: string;
+    failedAt?: string;
+    fkFailedCode?: string;
+    pickBy?: string;
+    reviewBy?: string;
+    pickAt?: null;
+  }[];
+}
 
 /* prettier-ignore-end */

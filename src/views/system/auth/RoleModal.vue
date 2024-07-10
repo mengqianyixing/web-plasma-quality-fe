@@ -17,7 +17,6 @@
               :treeData="treeData"
               :fieldNames="{ title: 'title', key: 'id' }"
               checkable
-              checkStrictly
               @check="handleTreeSelect"
               title="菜单/权限分配"
             />

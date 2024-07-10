@@ -22,6 +22,7 @@ export function setupRouterGuard(router: Router) {
   createPageLoadingGuard(router);
   createHttpGuard(router);
   createServerEnumsGuard(router);
+  createModifyPasswordGuard(router);
   createScrollGuard(router);
   createMessageGuard(router);
   createProgressGuard(router);
@@ -95,6 +96,24 @@ function createHttpGuard(router: Router) {
   router.beforeEach(async () => {
     // Switching the route will delete the previous request
     axiosCanceler?.removeAllPending();
+    return true;
+  });
+}
+
+function createModifyPasswordGuard(router: Router) {
+  const userStore = useUserStoreWithOut();
+  router.beforeEach((to) => {
+    if (userStore.getUserInfo.needUpdatePassword) {
+      if (to.name !== 'ModifyPassword') {
+        return { name: 'ModifyPassword' };
+      }
+      return true;
+    } else {
+      if (to.name === 'ModifyPassword') {
+        return false;
+      }
+    }
+
     return true;
   });
 }

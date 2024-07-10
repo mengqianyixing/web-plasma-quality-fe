@@ -4,7 +4,7 @@
     @register="registerModal"
     showFooter
     :title="title + `详情`"
-    :minHeight="520"
+    :minHeight="600"
     width="1000px"
     :showOkBtn="false"
     cancelText="关闭"
@@ -18,13 +18,13 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { reactive, ref } from 'vue';
+  import { ref } from 'vue';
   import { dtColumns } from './data';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { getDtApi } from '@/api/query-statistics/plasmaCheck';
 
-  const state = reactive({});
+  const state = ref({});
   const title = ref('');
   const [registerTable, { redoHeight, reload, setPagination }] = useTable({
     immediate: false,
@@ -42,13 +42,13 @@
     isCanResizeParent: true,
     inset: false,
     beforeFetch: (p) => {
-      return { ...p, ...state };
+      return { ...p, ...state.value };
     },
   });
   const [registerModal] = useModalInner(async (data) => {
     title.value = data.title;
     setPagination({ current: 1 });
-    Object.assign(state, data);
+    state.value = data;
     reload();
   });
 </script>

@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2024-03-05 17:59:26`
+ * @更新时间 `2024-06-17 19:45:11`
  */
 export interface GetApiCoreBankTraiesRequest {
   /**
@@ -51,6 +51,38 @@ export interface GetApiCoreBankTraiesRequest {
    * 血浆箱号
    */
   boxNo?: string;
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+  /**
+   * 是否在库，0表示不在库，1表示在库
+   */
+  inBank?: string;
+  /**
+   * 查询业务流程节点，plasmaVerify表示血浆验收阶段查询托盘列表
+   */
+  queryFlow?: string;
+  /**
+   * 标识出库列表还是入库列表，"out"表示查询待验收的血浆所在的出库托盘列表，"in"表示查询已验收的血浆所在的入库托盘列表
+   */
+  inOut?: string;
+  /**
+   * 存放类型，通过查询枚举类BankTrayTypeEnum
+   */
+  trayType?: string;
+  /**
+   * 入库状态，通过查询枚举类trayStatus
+   */
+  trayStatus?: string;
+  /**
+   * 负载状态，0-空载，1-负载
+   */
+  useStatus?: string;
+  /**
+   * 样本袋号
+   */
+  packNo?: string;
 }
 
 /**
@@ -58,7 +90,7 @@ export interface GetApiCoreBankTraiesRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `GET /api/core/bank/traies`
- * @更新时间 `2024-03-05 17:59:26`
+ * @更新时间 `2024-06-17 19:45:11`
  */
 export interface GetApiCoreBankTraiesResponse {
   /**
@@ -129,6 +161,18 @@ export interface GetApiCoreBankTraiesResponse {
      * DLV-出库中,REC-入库中,MVE-移库中,FRY-越库中,IN-在库,OUT-不在库
      */
     trayStatus?: string;
+    /**
+     * 采浆公司，例如：简阳,南江
+     */
+    stationNames?: string;
+    /**
+     * 血浆批号，例如：12120240407,12120240408,B101107
+     */
+    batchNoes?: string;
+    /**
+     * 箱号类型，例如：WTL,WTH,RTL,TL,T,N
+     */
+    boxTypes?: string;
   }[];
 }
 
@@ -358,7 +402,7 @@ export interface PutApiCoreBankTrayWarehouseReceptionResponse {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/warehouse/deliver`
- * @更新时间 `2023-12-22 16:59:08`
+ * @更新时间 `2024-06-18 11:33:35`
  */
 export interface PostApiCoreBankTrayWarehouseDeliverRequest {
   /**
@@ -377,6 +421,10 @@ export interface PostApiCoreBankTrayWarehouseDeliverRequest {
    * 站点id，如果是高架库出库的时候必填
    */
   siteId?: string;
+  /**
+   * 保留样本单个出库RSD，批量出库RSO
+   */
+  dlvType?: string;
 }
 
 /**
@@ -384,7 +432,7 @@ export interface PostApiCoreBankTrayWarehouseDeliverRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/warehouse/deliver`
- * @更新时间 `2023-12-22 16:59:08`
+ * @更新时间 `2024-06-18 11:33:35`
  */
 export interface PostApiCoreBankTrayWarehouseDeliverResponse {
   /**
@@ -813,6 +861,208 @@ export interface PutApiCoreBankTrayWarehouseFerryResponse {
    * 响应信息
    */
   msg: string;
+}
+
+/**
+ * 接口 [查询指定托盘下的所有血浆信息↗](https://yapi.sharing8.cn/project/529/interface/api/34560) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/bag/detail`
+ * @更新时间 `2024-06-03 10:10:33`
+ */
+export interface GetApiCoreBankTrayBagDetailRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 血浆编号
+   */
+  bagNo?: string;
+  /**
+   * 当前页码
+   */
+  currPage: string;
+  /**
+   * 页数大小
+   */
+  pageSize: string;
+}
+
+/**
+ * 接口 [查询指定托盘下的所有血浆信息↗](https://yapi.sharing8.cn/project/529/interface/api/34560) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/bag/detail`
+ * @更新时间 `2024-06-03 10:10:33`
+ */
+export interface GetApiCoreBankTrayBagDetailResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 血浆批号
+     */
+    batchNo?: string;
+    /**
+     * 血浆编号
+     */
+    bagNo?: string;
+    /**
+     * 浆员编号
+     */
+    donorNo?: string;
+    /**
+     * 浆员姓名
+     */
+    donorName?: string;
+    /**
+     * 现存箱号
+     */
+    currBoxNo?: string;
+    cardNo?: string;
+  }[];
+}
+
+/**
+ * 接口 [查询托盘上的保留样本袋列表↗](https://yapi.sharing8.cn/project/529/interface/api/35400) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keeppacks`
+ * @更新时间 `2024-06-17 16:45:01`
+ */
+export interface GetApiCoreBankTrayKeeppacksRequest {
+  /**
+   * 当前页码
+   */
+  currPage: string;
+  /**
+   * 页数量
+   */
+  pageSize: string;
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+  /**
+   * 样本袋号
+   */
+  packNo?: string;
+}
+
+/**
+ * 接口 [查询托盘上的保留样本袋列表↗](https://yapi.sharing8.cn/project/529/interface/api/35400) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keeppacks`
+ * @更新时间 `2024-06-17 16:45:01`
+ */
+export interface GetApiCoreBankTrayKeeppacksResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 样本批号
+     */
+    batchNo?: string;
+    /**
+     * 样本袋号
+     */
+    packNo?: string;
+    /**
+     * 样本数量
+     */
+    sampleCount?: number;
+    /**
+     * 样本箱号
+     */
+    boxNo?: string;
+  }[];
+}
+
+/**
+ * 接口 [查询指定托盘上的样本列表↗](https://yapi.sharing8.cn/project/529/interface/api/35406) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keepsamples`
+ * @更新时间 `2024-06-17 17:09:10`
+ */
+export interface GetApiCoreBankTrayKeepsamplesRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+  /**
+   * 样本袋号
+   */
+  packNo?: string;
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+}
+
+/**
+ * 接口 [查询指定托盘上的样本列表↗](https://yapi.sharing8.cn/project/529/interface/api/35406) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keepsamples`
+ * @更新时间 `2024-06-17 17:09:10`
+ */
+export interface GetApiCoreBankTrayKeepsamplesResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 样本批号
+     */
+    batchNo?: string;
+    /**
+     * 样本袋号
+     */
+    packNo?: string;
+    /**
+     * 样本编号
+     */
+    sampleNo?: string;
+    /**
+     * 类别
+     */
+    keepBy?: string;
+    /**
+     * 浆员编号
+     */
+    cardNo?: string;
+    /**
+     * 浆员姓名
+     */
+    donorName?: string;
+    /**
+     * 采浆日期
+     */
+    collectAt?: string;
+    /**
+     * 样本箱号
+     */
+    boxNo?: string;
+  }[];
 }
 
 /* prettier-ignore-end */

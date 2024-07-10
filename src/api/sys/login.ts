@@ -8,7 +8,7 @@ import {
 
 enum Api {
   GetSysVerifyCode = '/api/sys/captcha',
-  ReCheckLogin = '/api/sys/reviewer/casdoor-login',
+  ReCheckLogin = '/api/sys/casdoor/reviewer/casdoor-login',
 }
 
 /**

@@ -8,12 +8,16 @@ import {
   PostApiCoreBatchPlasmaVerifyPublishBatchNoRequest,
   PostApiCoreBatchPlasmaWeightRequest,
   PostApiCoreBatchPlasmaWeightResponse,
+  PostApiCoreBatchPmsVerifyTaskRevokeBatchNoRequest,
+  PostApiCoreBatchPmsVerifyTaskSendBatchNoRequest,
 } from '@/api/type/batchManage';
 
 enum Api {
   PLASMA_INBOUND_LIST = '/api/core/batch/plasma/in-store',
   PLASMA_WEIGHT = '/api/core/batch/plasma/weight',
   PLASMA_VERIFY_PUBLISH = '/api/core/batch/plasma/verify/publish',
+  PMS_ACCEPT = '/api/core/batch/pms/verify/task/send',
+  PMS_ACCEPT_CANCEL = '/api/core/batch/pms/verify/task/revoke',
 }
 
 export const getPlasmaInboundList = (params: GetApiCoreBatchPlasmaInStoreRequest) =>
@@ -28,3 +32,11 @@ export const registerPlasmaWeight = (params: PostApiCoreBatchPlasmaWeightRequest
 export const plasmaVerifyPublish = (
   params: PostApiCoreBatchPlasmaVerifyPublishBatchNoRequest['batchNo'],
 ) => defHttp.post({ url: Api.PLASMA_VERIFY_PUBLISH + '/' + params });
+
+export const sendPmsAcceptTask = (
+  params: PostApiCoreBatchPmsVerifyTaskSendBatchNoRequest['batchNo'],
+) => defHttp.post({ url: Api.PMS_ACCEPT + '/' + params });
+
+export const cancelPmsAcceptTask = (
+  params: PostApiCoreBatchPmsVerifyTaskRevokeBatchNoRequest['batchNo'],
+) => defHttp.post({ url: Api.PMS_ACCEPT_CANCEL + '/' + params });

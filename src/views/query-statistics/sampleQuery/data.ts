@@ -7,30 +7,35 @@ import { useStation } from '@/hooks/common/useStation';
 const { stationOptions } = useStation();
 
 const serverEnumStore = useServerEnumStoreWithOut();
-const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 
 export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '样本批号',
     dataIndex: 'sampleBatchNo',
     width: 120,
+    fixed: 'left',
   },
 
   {
     title: '样本类型',
     dataIndex: 'sampleType',
-    format: (text) => SampleType(text),
     width: 80,
+    fixed: 'left',
   },
   {
     title: '样本编号',
     dataIndex: 'sampleNo',
-    width: 120,
+    defaultSortOrder: 'descend',
+    sorter: true,
+    width: 140,
+    ellipsis: false,
+    fixed: 'left',
   },
   {
     title: '采集日期',
@@ -49,7 +54,8 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
+    slots: { customRender: 'donorNo' },
     width: 120,
   },
   {
@@ -109,7 +115,9 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '样本类型',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+      options: serverEnumStore
+        .getServerEnum(SERVER_ENUM.SampleType)
+        .filter((item) => ['CAB', 'NOR', 'CMV'].includes(item.value)),
     },
   },
   {
@@ -127,7 +135,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: 'donorNo',
+    field: 'cardNo',
     component: 'Input',
     label: '浆员编号',
   },

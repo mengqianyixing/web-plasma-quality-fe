@@ -252,21 +252,23 @@ export const usePermissionStore = defineStore({
         case PermissionModeEnum.CAS_DOOR:
           const menuIds: any[] = userStore.getUserInfo?.menuIds ?? [];
           const filterRoutes = (routes: any[]): any[] => {
-            const filteredRoutes: any[] = [];
+            return routes.reduce((filteredRoutes: any[], item: any) => {
+              const hasPermission = item.id && menuIds.includes(item.id);
+              let filteredChildren: any[] = [];
 
-            routes.forEach((item: any) => {
-              if (item.id && menuIds.includes(Number(item.id))) {
-                filteredRoutes.push(item);
-              } else if (item.children) {
-                const filteredChildren = filterRoutes(item.children);
-                if (filteredChildren.length > 0) {
-                  item.children = filteredChildren;
-                  filteredRoutes.push(item);
-                }
+              if (item.children) {
+                filteredChildren = filterRoutes(item.children);
               }
-            });
 
-            return filteredRoutes;
+              if (hasPermission || filteredChildren.length > 0) {
+                filteredRoutes.push({
+                  ...item,
+                  children: filteredChildren.length > 0 ? filteredChildren : undefined,
+                });
+              }
+
+              return filteredRoutes;
+            }, []);
           };
           const tempRoutes: any = filterRoutes(asyncRoutes).sort((a, b) => {
             return (b?.menuWeight || 0) - (a?.menuWeight || 0);

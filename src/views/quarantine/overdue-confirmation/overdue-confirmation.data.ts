@@ -20,11 +20,11 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
-    width: 120,
+    width: 135,
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     width: 120,
   },
   {
@@ -87,7 +87,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     label: '浆员编号',
     component: 'Input',
-    field: 'donorNo',
+    field: 'cardNo',
   },
   {
     label: '状态',
@@ -105,6 +105,22 @@ export const searchFormSchema: FormSchema[] = [
           value: false,
         },
       ],
+    },
+  },
+  {
+    field: '[confirmStartDate, confirmEndDate]',
+    component: 'RangePicker',
+    label: '确认日期',
+    componentProps: {
+      valueFormat: 'YYYY-MM-DD',
+    },
+  },
+  {
+    field: '[collectStartDate, collectEndDate]',
+    component: 'RangePicker',
+    label: '采浆日期',
+    componentProps: {
+      valueFormat: 'YYYY-MM-DD',
     },
   },
 ];

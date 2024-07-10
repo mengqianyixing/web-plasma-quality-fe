@@ -8,7 +8,7 @@
     width="1100px"
     :isDetail="true"
     :showDetailBack="false"
-    :minHeight="520"
+    :minHeight="600"
     @cancel="close"
     @fullscreen="redoHeight"
   >
@@ -37,9 +37,10 @@
     cellSchema,
     locationCell,
   } from './setting.data';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { reactive, defineEmits } from 'vue';
   import { CellWapper } from '@/components/CellWapper';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'LocationModel' });
   const emit = defineEmits(['close', 'register']);
@@ -107,20 +108,23 @@
       }
     });
   }
+
+  const { createConfirm } = useMessage();
+
   function handleCheckStatus(action: string) {
     const { selectedRowKeys } = getRowSelection() as { selectedRowKeys: string[] };
     if (selectedRowKeys.length === 0) return message.warning('请选择一条数据');
     else if (selectedRowKeys.length > 1) return message.warning('只能选择一条数据');
     const { closed, locationNo } = findTableDataRecord(selectedRowKeys[0]) as Recordable;
     if (closed === action) return message.warning('状态不需要变更');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + (action ? '禁用' : '启用') + locationNo + '?',
       onOk: async () => {
         await checkLoactionApi({ closed: action, locationNo });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function close() {

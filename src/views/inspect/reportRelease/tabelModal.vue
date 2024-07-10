@@ -3,8 +3,8 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    :title="`检验${state.title}样本详情`"
-    :minHeight="520"
+    :title="`${state.title}`"
+    :minHeight="600"
     width="1000px"
     :showOkBtn="false"
     cancelText="关闭"
@@ -16,18 +16,23 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { reactive } from 'vue';
-  import { totalUnqualifiedColumns, columnsMap } from './reportRelease.data';
+  import { nextTick, reactive } from 'vue';
+  import {
+    totalUnqualifiedColumns,
+    columnsMap,
+    totalUnqualifiedSearch,
+  } from './reportRelease.data';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { getUnqualifiedApi } from '@/api/inspect/reportRelease';
 
   const state = reactive({ reportNo: '', type: 1, title: '' });
 
-  const [registerTable, { redoHeight, reload, setColumns }] = useTable({
+  const [registerTable, { redoHeight, reload, setColumns, getForm }] = useTable({
     immediate: false,
     api: getUnqualifiedApi,
     columns: totalUnqualifiedColumns,
+    formConfig: { schemas: totalUnqualifiedSearch },
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -35,7 +40,7 @@
       listField: 'result',
     },
     size: 'small',
-    useSearchForm: false,
+    useSearchForm: true,
     bordered: true,
     isCanResizeParent: true,
     inset: false,
@@ -44,9 +49,13 @@
     },
   });
   const [registerModal] = useModalInner(async ({ reportNo, type, title }) => {
+    await nextTick();
+    const { updateSchema, resetFields } = getForm();
+    resetFields();
     state.reportNo = reportNo;
     state.type = type;
     state.title = title;
+    updateSchema({ field: 'conclusion', ifShow: !(type === 3 || type === 4) });
     const columns = [...totalUnqualifiedColumns, ...(columnsMap[type] || [])];
     setColumns(columns);
     reload();

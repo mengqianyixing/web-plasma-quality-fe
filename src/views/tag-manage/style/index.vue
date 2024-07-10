@@ -6,16 +6,48 @@
       </template>
       <template #toolbar>
         <div class="flex gap-2">
-          <a-button type="primary" @click="handleAdd"> 新增 </a-button>
-          <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
-          <a-button type="primary" @click="handleDelete"> 撤销 </a-button>
-          <a-button type="primary" @click="handleCopy"> 复制 </a-button>
-          <a-button type="primary" @click="handleHistory"> 历史 </a-button>
-          <a-button type="primary" @click="handleStylePreview"> 预览 </a-button>
-          <a-button type="primary" @click="handleCheckStatus(tagStatusValueEnum.EAB)">
+          <a-button type="primary" @click="handleAdd" v-auth="TagManageButtonEnum.TagStyleAdd">
+            新增
+          </a-button>
+          <a-button type="primary" @click="handleEdit" v-auth="TagManageButtonEnum.TagStyleEdit">
+            编辑
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleDelete"
+            v-auth="TagManageButtonEnum.TagStyleDelete"
+          >
+            撤销
+          </a-button>
+          <a-button type="primary" @click="handleCopy" v-auth="TagManageButtonEnum.TagStyleCopy">
+            复制
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleHistory"
+            v-auth="TagManageButtonEnum.TagStyleHistory"
+          >
+            历史
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleStylePreview"
+            v-auth="TagManageButtonEnum.TagStylePreview"
+          >
+            预览
+          </a-button>
+          <a-button
+            type="primary"
+            @click="handleCheckStatus(tagStatusValueEnum.EAB)"
+            v-auth="TagManageButtonEnum.TagStyleOpen"
+          >
             启用
           </a-button>
-          <a-button type="primary" @click="handleCheckStatus(tagStatusValueEnum.DSB)">
+          <a-button
+            type="primary"
+            @click="handleCheckStatus(tagStatusValueEnum.DSB)"
+            v-auth="TagManageButtonEnum.TagStyleClose"
+          >
             禁用
           </a-button>
         </div>
@@ -31,6 +63,7 @@
 
   import { columns, searchFormSchema } from './style.data';
   import { useModal } from '@/components/Modal';
+  import { TagManageButtonEnum } from '@/enums/authCodeEnum';
 
   import { onMounted, ref } from 'vue';
 
@@ -46,12 +79,13 @@
   import StyleModal from './StyleModal.vue';
   import StyleHistoryModal from './StyleHistoryModal.vue';
   import HistoryStylePreviewModal from './HistoryStylePreviewModal.vue';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
 
   import { getTagDictionary } from '@/api/tag/encoding';
   import { TagDictionaryType } from '@/enums/dictionaryEnum';
   import { PostApiSysTagPreviewRequest } from '@/api/type/tagManage';
   import { tagStatusValueEnum } from '@/enums/tagManageEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'TagStyle' });
 
@@ -89,7 +123,6 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-
     rowKey: 'tagNo',
     rowSelection: {
       type: 'radio',
@@ -127,15 +160,17 @@
     }
   }
 
+  const { createConfirm } = useMessage();
+
   function handleCheckStatus(action: string) {
     const [row] = getSelections(true);
     if (!row) return;
 
     const { tagName, state } = row;
     if (state === action) return message.warning('状态不需要变更');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + (action == tagStatusValueEnum.DSB ? '禁用' : '启用') + tagName + '?',
-
       onOk: async () => {
         if (action == tagStatusValueEnum.EAB) {
           await enableStyle(row.tagNo);
@@ -147,7 +182,6 @@
           await reload();
         }
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 
@@ -199,14 +233,14 @@
     if (action) return;
 
     const { tagName } = row;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认撤销' + tagName + '?',
       onOk: async () => {
         await deleteStyle(row.tagNo);
         clearSelectedRowKeys();
         await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 

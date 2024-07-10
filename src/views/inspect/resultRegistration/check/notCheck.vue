@@ -28,6 +28,11 @@
   import { ref, unref } from 'vue';
   import { submitNotCheckApi, getDonorApi } from '@/api/inspect/resultRegistration';
   import { message } from 'ant-design-vue';
+  import {
+    DictionaryItemKeyEnum,
+    DictionaryReasonEnum,
+    getSysSecondaryDictionary,
+  } from '@/api/_dictionary';
 
   const emit = defineEmits(['close', 'confirm']);
 
@@ -37,7 +42,7 @@
       label: '浆员姓名',
     },
     {
-      field: 'donorNo',
+      field: 'cardNo',
       label: '浆员编号',
     },
     {
@@ -70,7 +75,7 @@
     },
   );
   const [registerForm, { updateSchema, setFieldsValue, clearValidate, validate }] = useForm({
-    labelWidth: 80,
+    labelWidth: 90,
     baseColProps: { span: 24 },
     schemas: [
       {
@@ -96,6 +101,20 @@
         },
       },
       {
+        field: 'failedCode',
+        component: 'ApiSelect',
+        label: '原因',
+        required: true,
+        componentProps: {
+          api: getSysSecondaryDictionary,
+          params: {
+            dataKey: DictionaryReasonEnum.SampleFailedReason,
+            dictItemTypes: [DictionaryItemKeyEnum.SampleFailed],
+          },
+          valueField: 'dictItemId',
+        },
+      },
+      {
         required: true,
         field: 'projectIds',
         component: 'Select',
@@ -105,11 +124,11 @@
     showActionButtonGroup: false,
   });
   async function handleSubmit(close: boolean) {
-    const { sampleNo, projectIds } = await validate();
+    const { sampleNo, projectIds, failedCode } = await validate();
     try {
       setModalProps({ confirmLoading: true });
       loading.value = true;
-      await submitNotCheckApi({ sampleNo, bsNo: unref(bsno), projectIds });
+      await submitNotCheckApi({ sampleNo, bsNo: unref(bsno), projectIds, failedCode });
       message.success(sampleNo + '登记成功');
       if (close === false) {
         setFieldsValue({ sampleNo: '', account: '' });

@@ -7,42 +7,77 @@
  * @LastEditTime: 2024-01-13 10:28:20
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { TRAY_IN_STATE_TEXT } from '@/enums/stockoutEnum';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+const serverEnumStore = useServerEnumStoreWithOut();
+const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
 export const columns: BasicColumn[] = [
   {
     title: '托盘编号',
     dataIndex: 'trayNo',
+    width: 100,
+  },
+  {
+    title: '采浆公司',
+    dataIndex: 'stationNames',
+    width: 100,
+    ellipsis: false,
+  },
+  {
+    title: '血浆批号',
+    dataIndex: 'batchNoes',
+    width: 150,
+    ellipsis: false,
+  },
+  {
+    title: '箱号类型',
+    dataIndex: 'boxTypes',
+    width: 100,
+    ellipsis: false,
   },
   {
     title: '已存容量(箱)',
     dataIndex: 'totalNumber',
+    width: 110,
+  },
+  {
+    title: '已存容量(袋)',
+    dataIndex: 'totalBagNumber',
+    width: 110,
   },
   {
     title: '入库状态',
     dataIndex: 'trayStatus',
-    format: (text) => TRAY_IN_STATE_TEXT.get(text) as string,
+    format: BankTrayStatusEnum,
+    width: 80,
   },
   {
     title: '所在库房',
     dataIndex: 'wareHouseName',
+    width: 100,
   },
   {
     title: '所在货位',
     dataIndex: 'locationNo',
+    width: 80,
   },
 
   {
     title: '打印人',
     dataIndex: 'creater',
+    width: 90,
+    ellipsis: false,
   },
   {
     title: '打印时间',
     dataIndex: 'createAt',
+    width: 160,
   },
   {
     title: '托盘状态',
     dataIndex: '',
+    width: 80,
     customRender: ({ record }) => {
       return record.closed ? '停用' : '启用';
     },
@@ -74,12 +109,44 @@ export const searchFormSchema: FormSchema[] = [
   {
     label: '样本批次',
     component: 'Input',
+    field: 'batchSampleNo',
+  },
+  {
+    label: '样本编号',
+    component: 'Input',
     field: 'sampleNo',
   },
   {
     label: '投产准备号',
     component: 'Input',
     field: 'prepareNo',
+  },
+  {
+    component: 'Select',
+    field: 'trayType',
+    label: '存放类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankTrayTypeEnum),
+    },
+  },
+  {
+    component: 'Select',
+    field: 'trayStatus',
+    label: '入库状态',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankTrayStatusEnum),
+    },
+  },
+  {
+    component: 'Select',
+    field: 'useStatus',
+    label: '负载状态',
+    componentProps: {
+      options: [
+        { label: '空载', value: '0' },
+        { label: '负载', value: '1' },
+      ],
+    },
   },
 ];
 

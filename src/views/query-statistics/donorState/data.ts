@@ -12,17 +12,20 @@ export const columns: BasicColumn[] = [
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     width: 120,
+    fixed: 'left',
   },
 
   {
     title: '浆员姓名',
     dataIndex: 'name',
     width: 100,
+    fixed: 'left',
   },
   {
     title: '血型',
@@ -152,7 +155,7 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '回访状态',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.CallbackState),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.CallbackAdapterState),
     },
   },
   {

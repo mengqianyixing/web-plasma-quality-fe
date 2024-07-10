@@ -1,11 +1,3 @@
-/*
- * @Author: HxB
- * @Date: 2024-01-08 10:30:41
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-24 14:53:35
- * @Description: 字典
- * @FilePath: \psms-fe\src\api\_dictionary\index.ts
- */
 import { defHttp } from '@/utils/http/axios';
 import {
   PostApiSysDictionaryItemsResponse,
@@ -54,4 +46,5 @@ export const getSysDictionary = (params: DictionaryEnum[]) =>
 export const getSysSecondaryDictionary = (params: {
   dataKey: DictionaryReasonEnum;
   dictItemTypes: DictionaryItemKeyEnum[];
+  show?: Number;
 }) => defHttp.post<PostApiSysItemItemKeyResponse>({ url: Api.DICTIONARY_ITEM_KEY, params });

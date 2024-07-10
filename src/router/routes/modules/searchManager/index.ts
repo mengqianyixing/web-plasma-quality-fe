@@ -24,343 +24,399 @@ const trayManager: AppRouteModule = {
   children: [
     {
       path: 'plasma',
-      name: 'PlasmaQuery',
-      meta: {
-        title: '血浆查询',
-      },
-      id: 900020,
-      component: () => import('@/views/query-statistics/plasma/index.vue'),
-    },
-    {
-      path: 'PlasmaTest',
-      name: 'PlasmaTest',
-      meta: {
-        title: '血浆检测',
-      },
-      id: 9000190,
-      component: () => import('@/views/query-statistics/plasmaCheck/index.vue'),
-    },
-    {
-      path: 'inventory',
-      name: 'StoreInventory',
-      meta: {
-        title: '库存查询',
-      },
-      id: 900010,
-      component: () => import('@/views/plasma-store/inventory/index.vue'),
-    },
-    {
-      path: 'InventoryStatistics',
-      name: 'InventoryStatistics',
-      meta: {
-        title: '库存统计',
-      },
-      id: 9000310,
-      component: () => import('@/views/query-statistics/inventory-statistics/index.vue'),
-      authElements: [
+      name: 'Plasma',
+      id: 901,
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
+      meta: { title: '血浆' },
+      children: [
         {
-          id: SearchManager.InventoryExport,
-          name: 'export',
-          title: '导出',
+          path: 'plasma',
+          name: 'PlasmaQuery',
+          meta: {
+            title: '血浆查询',
+          },
+          id: 900020,
+          component: () => import('@/views/query-statistics/plasma/index.vue'),
+        },
+        {
+          path: 'plasmaBagCollect',
+          name: 'PlasmaBagCollect',
+          meta: {
+            title: '原料血浆采集情况统计',
+          },
+          id: 9000340,
+          component: () => import('@/views/query-statistics/plasma-bag-collect/index.vue'),
+          authElements: [
+            {
+              id: SearchManager.PlasmaBagCollectExport,
+              title: '导出',
+            },
+          ],
+        },
+        {
+          path: 'plasmaRawInStorage',
+          name: 'PlasmaRawInStorage',
+          meta: {
+            title: '原料血浆入库查询',
+          },
+          id: 9000350,
+          component: () => import('@/views/query-statistics/plasma-raw-in-storage/index.vue'),
+          authElements: [
+            {
+              id: SearchManager.PlasmaRawInStoragePrint,
+              title: '打印',
+            },
+          ],
+        },
+        {
+          path: 'PlasmaTest',
+          name: 'PlasmaTest',
+          meta: {
+            title: '血浆检测',
+          },
+          id: 9000190,
+          component: () => import('@/views/query-statistics/plasmaCheck/index.vue'),
+        },
+        {
+          path: 'BatchStatistics',
+          name: 'BatchStatistics',
+          meta: {
+            title: '批号查询',
+          },
+          id: 9000281,
+          component: () => import('@/views/query-statistics/batch-statistics/index.vue'),
+        },
+        {
+          path: 'PlasmaBatch',
+          name: 'PlasmaBatchQueryStatistics',
+          meta: {
+            title: '血浆批号查询',
+          },
+          id: 900030,
+          component: () => import('@/views/query-statistics/plasma-batch/index.vue'),
+          authElements: [
+            {
+              id: SearchManager.PlasmaBatchExport,
+              name: 'export',
+              title: '导出',
+            },
+          ],
+        },
+        {
+          path: 'titerPlasmaQuery',
+          name: 'TiterPlasmaQuery',
+          meta: {
+            title: '特免血浆查询',
+          },
+          id: 9000160,
+          component: () => import('@/views/query-statistics/titerPlasmaQuery/index.vue'),
+        },
+        {
+          path: 'titerPlasmaStat',
+          name: 'TiterPlasmaStat',
+          meta: {
+            title: '特免血浆统计',
+          },
+          id: 9000150,
+          component: () => import('@/views/query-statistics/titerPlasmaStat/index.vue'),
         },
       ],
-    },
-    {
-      path: 'stereoWarehouse',
-      name: 'StereoWarehouse',
-      meta: {
-        title: '立体库血浆量查询',
-      },
-      id: 9000180,
-      component: () => import('@/views/query-statistics/stereoWarehouse/index.vue'),
-    },
-    {
-      path: 'location',
-      name: 'Location',
-      meta: {
-        title: '货位查询',
-      },
-      id: 9000170,
-      component: () => import('@/views/query-statistics/location/index.vue'),
-      authElements: [
-        {
-          id: SearchManager.LocationExport,
-          name: 'export',
-          title: '导出',
-        },
-      ],
-    },
-    {
-      path: 'prepareNo',
-      name: 'PrepareNo',
-      meta: {
-        title: '投产准备号查询',
-      },
-      id: 9000210,
-      component: () => import('@/views/query-statistics/prepareNo/index.vue'),
-    },
-    {
-      path: 'quarantinePeriodUnqualifiedStatistics',
-      name: 'QuarantinePeriodUnqualifiedStatistics',
-      meta: {
-        title: '检疫期不合格统计',
-      },
-      id: 9000280,
-      component: () =>
-        import('@/views/query-statistics/quarantinePeriodUnqualifiedStatistics/index.vue'),
-    },
-    {
-      path: 'titerPlasmaQuery',
-      name: 'TiterPlasmaQuery',
-      meta: {
-        title: '特免血浆查询',
-      },
-      id: 9000160,
-      component: () => import('@/views/query-statistics/titerPlasmaQuery/index.vue'),
-    },
-    {
-      path: 'titerPlasmaStat',
-      name: 'TiterPlasmaStat',
-      meta: {
-        title: '特免血浆统计',
-      },
-      id: 9000150,
-      component: () => import('@/views/query-statistics/titerPlasmaStat/index.vue'),
-    },
-    {
-      path: 'UnqualifiedPlasmaByBatch',
-      name: 'UnqualifiedPlasmaByBatch',
-      meta: {
-        title: '不合格血浆按批查询',
-      },
-      id: 9000291,
-      component: () => import('@/views/query-statistics/unqualified-plasma-batch/index.vue'),
-    },
-    {
-      path: 'UnqualifiedPlasmaByStation',
-      name: 'UnqualifiedPlasmaByStation',
-      meta: {
-        title: '不合格血浆按站查询',
-      },
-      id: 9000290,
-      component: () => import('@/views/query-statistics/unqualified-plasma-station/index.vue'),
-    },
-    {
-      path: 'followDisqualificationStatistics',
-      name: 'FollowDisqualificationStatistics',
-      meta: {
-        title: '续追踪不合格统计',
-      },
-      id: 9000270,
-      component: () =>
-        import('@/views/query-statistics/followDisqualificationStatistics/index.vue'),
-    },
-    {
-      path: 'entry-plasma',
-      name: 'EntryPlasma',
-      meta: {
-        title: '入库查询',
-      },
-      id: 990060,
-      component: () => import('@/views/plasma-store/entry-plasma/index.vue'),
-    },
-    {
-      path: 'stationBox',
-      name: 'StationBox',
-      meta: {
-        title: '箱号查询',
-      },
-      id: 9000200,
-      component: () => import('@/views/query-statistics/stationBox/index.vue'),
-    },
-    {
-      path: 'BatchStatistics',
-      name: 'BatchStatistics',
-      meta: {
-        title: '批号查询',
-      },
-      id: 9000280,
-      component: () => import('@/views/query-statistics/batch-statistics/index.vue'),
-    },
-    {
-      path: 'PlasmaBatch',
-      name: 'PlasmaBatchQueryStatistics',
-      meta: {
-        title: '血浆批号查询',
-      },
-      id: 900030,
-      component: () => import('@/views/query-statistics/plasma-batch/index.vue'),
-      authElements: [
-        {
-          id: SearchManager.PlasmaBatchExport,
-          name: 'export',
-          title: '导出',
-        },
-      ],
-    },
-    {
-      path: 'ERPInspectionReport',
-      name: 'ERPInspectionReport',
-      meta: {
-        title: 'ERP-检验报告查询',
-      },
-      id: 9000240,
-      component: () => import('@/views/query-statistics/ERPInspectionReport/index.vue'),
-      authElements: [
-        {
-          id: SearchManager.ERPReportExport,
-          name: 'export',
-          title: '导出',
-        },
-      ],
-    },
-    {
-      path: 'ERPEntryStore',
-      name: 'ERPEntryStore',
-      meta: {
-        title: 'ERP-入库查询',
-      },
-      id: 9000230,
-      component: () => import('@/views/query-statistics/ERPEntryStore/index.vue'),
-    },
-    {
-      path: 'ERPOutStore',
-      name: 'ERPOutStore',
-      meta: {
-        title: 'ERP-出库查询',
-      },
-      id: 9000231,
-      component: () => import('@/views/query-statistics/ERPOutStore/index.vue'),
     },
     {
       path: 'donor',
-      name: 'DonorQuery',
-      meta: {
-        title: '浆员查询',
-      },
-      id: 9000270,
-      component: () => import('@/views/query-statistics/donor/index.vue'),
-    },
-    {
-      path: 'donorState',
-      name: 'DonorState',
-      meta: {
-        title: '浆员状态查询',
-      },
-      id: 9000140,
-      component: () => import('@/views/query-statistics/donorState/index.vue'),
-      authElements: [
+      name: 'Donor',
+      id: 902,
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
+      meta: { title: '浆员' },
+      children: [
         {
-          id: SearchManager.DonorStateExport,
-          name: 'export',
-          title: '导出',
+          path: 'donor',
+          name: 'DonorQuery',
+          meta: {
+            title: '浆员查询',
+          },
+          id: 9000271,
+          component: () => import('@/views/query-statistics/donor/index.vue'),
+        },
+        {
+          path: 'donorState',
+          name: 'DonorState',
+          meta: {
+            title: '浆员状态查询',
+          },
+          id: 9000140,
+          component: () => import('@/views/query-statistics/donorState/index.vue'),
+          authElements: [
+            {
+              id: SearchManager.DonorStateExport,
+              name: 'export',
+              title: '导出',
+            },
+          ],
         },
       ],
     },
     {
-      path: 'sampleStatistics',
-      name: 'SampleStatistics',
-      meta: {
-        title: '样本统计',
-      },
-      id: 9000100,
-      component: () => import('@/views/query-statistics/sampleStat/index.vue'),
-    },
-    {
-      path: 'SampleQuery',
-      name: 'SampleQuery',
-      meta: {
-        title: '样本查询',
-      },
-      id: 9000130,
-      component: () => import('@/views/query-statistics/sampleQuery/index.vue'),
-    },
-    {
-      path: 'sampleCheck',
-      name: 'SampleCheck',
-      meta: {
-        title: '样本检测',
-      },
-      id: 9000120,
-      component: () => import('@/views/query-statistics/sampleCheck/index.vue'),
-    },
-    {
-      path: 'ProductionInquiry',
-      name: 'ProductionInquiry',
-      meta: {
-        title: '投产查询',
-      },
-      id: 9000300,
-      component: () => import('@/views/query-statistics/production-inquiry/index.vue'),
-    },
-    {
-      path: 'CallbackStatistics',
-      name: 'CallbackStatistics',
-      meta: {
-        title: '回访统计',
-      },
-      id: 9000250,
-      component: () => import('@/views/query-statistics/callback/index.vue'),
-      authElements: [
+      path: 'sample',
+      name: 'Sample',
+      id: 903,
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
+      meta: { title: '样本' },
+      children: [
         {
-          id: SearchManager.CallbackExport,
-          name: 'export',
-          title: '导出',
+          path: 'sampleStatistics',
+          name: 'SampleStatistics',
+          meta: {
+            title: '样本统计',
+          },
+          id: 9000100,
+          component: () => import('@/views/query-statistics/sampleStat/index.vue'),
+        },
+        {
+          path: 'SampleQuery',
+          name: 'SampleQuery',
+          meta: {
+            title: '样本查询',
+          },
+          authElements: [
+            {
+              id: SearchManager.SampleQueryExport,
+              name: 'export',
+              title: '导出',
+            },
+          ],
+          id: 9000130,
+          component: () => import('@/views/query-statistics/sampleQuery/index.vue'),
+        },
+        {
+          path: 'sampleCheck',
+          name: 'SampleCheck',
+          meta: {
+            title: '样本检测',
+          },
+          id: 9000120,
+          component: () => import('@/views/query-statistics/sampleCheck/index.vue'),
+        },
+        {
+          path: 'checkResult',
+          name: 'CheckResult',
+          meta: {
+            title: '检测结果查询',
+          },
+          id: 9000101,
+          component: () => import('@/views/query-statistics/checkResult/index.vue'),
         },
       ],
     },
     {
-      path: 'CallbackBatchStatistics',
-      name: 'CallbackBatchStatistics',
-      meta: {
-        title: '回访批号查询',
-      },
-      id: 9000260,
-      component: () => import('@/views/query-statistics/callback-batch/index.vue'),
-      authElements: [
+      path: 'unqualified',
+      name: 'Unqualified',
+      id: 904,
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
+      meta: { title: '不合格' },
+      children: [
         {
-          id: SearchManager.CallbackBatchExport,
-          name: 'export',
-          title: '导出',
+          path: 'UnqualifiedPlasmaByBatch',
+          name: 'UnqualifiedPlasmaByBatch',
+          meta: {
+            title: '不合格血浆按批查询',
+          },
+          id: 9000291,
+          component: () => import('@/views/query-statistics/unqualified-plasma-batch/index.vue'),
+        },
+        {
+          path: 'UnqualifiedPlasmaByStation',
+          name: 'UnqualifiedPlasmaByStation',
+          meta: {
+            title: '不合格血浆按站查询',
+          },
+          id: 9000290,
+          component: () => import('@/views/query-statistics/unqualified-plasma-station/index.vue'),
+        },
+        {
+          path: 'quarantinePeriodUnqualifiedStatistics',
+          name: 'QuarantinePeriodUnqualifiedStatistics',
+          meta: {
+            title: '检疫期不合格统计',
+          },
+          id: 9000280,
+          component: () =>
+            import('@/views/query-statistics/quarantinePeriodUnqualifiedStatistics/index.vue'),
+        },
+        {
+          path: 'followDisqualificationStatistics',
+          name: 'FollowDisqualificationStatistics',
+          meta: {
+            title: '续追踪不合格统计',
+          },
+          id: 9000270,
+          component: () =>
+            import('@/views/query-statistics/followDisqualificationStatistics/index.vue'),
         },
       ],
     },
     {
-      path: 'checkResult',
-      name: 'CheckResult',
-      meta: {
-        title: '检测结果查询',
-      },
-      id: 9000100,
-      component: () => import('@/views/query-statistics/checkResult/index.vue'),
-    },
+      path: 'store',
+      name: 'Store',
+      id: 905,
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
+      meta: { title: '库存' },
+      children: [
+        {
+          path: 'entry-plasma',
+          name: 'EntryPlasma',
+          meta: {
+            title: '入库查询',
+          },
+          id: 9900600,
+          component: () => import('@/views/plasma-store/entry-plasma/index.vue'),
+        },
+        {
+          path: 'plasmaQualifiedInventory',
+          name: 'PlasmaQualifiedInventory',
+          meta: {
+            title: '库存合格血浆查询',
+          },
+          id: 9000330,
+          component: () => import('@/views/query-statistics/plasma-qualified-inventory/index.vue'),
+          authElements: [
+            {
+              id: SearchManager.PlasmaQualifiedInventoryExport,
+              title: '导出',
+            },
+          ],
+        },
+        {
+          path: 'inventory',
+          name: 'StoreInventory',
+          meta: {
+            title: '库存查询',
+          },
+          id: 900010,
+          component: () => import('@/views/plasma-store/inventory/index.vue'),
+        },
+        {
+          path: 'InventoryStatistics',
+          name: 'InventoryStatistics',
+          meta: {
+            title: '库存统计',
+          },
+          id: 9000310,
+          component: () => import('@/views/query-statistics/inventory-statistics/index.vue'),
+          authElements: [
+            {
+              id: SearchManager.InventoryExport,
+              name: 'export',
+              title: '导出',
+            },
+          ],
+        },
+        {
+          path: 'stereoWarehouse',
+          name: 'StereoWarehouse',
+          meta: {
+            title: '立体库血浆量查询',
+          },
+          id: 9000180,
+          component: () => import('@/views/query-statistics/stereoWarehouse/index.vue'),
+        },
+        {
+          path: 'location',
+          name: 'Location',
+          meta: {
+            title: '货位查询',
+          },
+          id: 9000170,
+          component: () => import('@/views/query-statistics/location/index.vue'),
+          authElements: [
+            {
+              id: SearchManager.LocationExport,
+              name: 'export',
+              title: '导出',
+            },
+          ],
+        },
 
-    {
-      path: 'plasmaQualifiedInventory',
-      name: 'PlasmaQualifiedInventory',
-      meta: {
-        title: '库存合格血浆查询',
-      },
-      id: 9000330,
-      component: () => import('@/views/query-statistics/plasma-qualified-inventory/index.vue'),
+        {
+          path: 'stationBox',
+          name: 'StationBox',
+          meta: {
+            title: '箱号查询',
+          },
+          id: 9000200,
+          component: () => import('@/views/query-statistics/stationBox/index.vue'),
+        },
+      ],
     },
     {
-      path: 'plasmaBagCollect',
-      name: 'PlasmaBagCollect',
-      meta: {
-        title: '原料血浆采集情况统计',
-      },
-      id: 9000340,
-      component: () => import('@/views/query-statistics/plasma-bag-collect/index.vue'),
+      path: 'product',
+      name: 'Product',
+      id: 906,
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
+      meta: { title: '投产' },
+      children: [
+        {
+          path: 'prepareNo',
+          name: 'PrepareNo',
+          meta: {
+            title: '投产准备号查询',
+          },
+          id: 9000210,
+          component: () => import('@/views/query-statistics/prepareNo/index.vue'),
+        },
+        {
+          path: 'ProductionInquiry',
+          name: 'ProductionInquiry',
+          meta: {
+            title: '投产查询',
+          },
+          id: 9000300,
+          component: () => import('@/views/query-statistics/production-inquiry/index.vue'),
+        },
+      ],
     },
     {
-      path: 'plasmaRawInStorage',
-      name: 'PlasmaRawInStorage',
-      meta: {
-        title: '原料血浆入库查询',
-      },
-      id: 9000350,
-      component: () => import('@/views/query-statistics/plasma-raw-in-storage/index.vue'),
+      path: 'erp',
+      name: 'ERP',
+      id: 907,
+      component: () => import('@/layouts/page/routerViewContainer.vue'),
+      meta: { title: 'ERP' },
+      children: [
+        {
+          path: 'ERPInspectionReport',
+          name: 'ERPInspectionReport',
+          meta: {
+            title: 'ERP-检验报告查询',
+          },
+          id: 9000240,
+          component: () => import('@/views/query-statistics/ERPInspectionReport/index.vue'),
+          authElements: [
+            {
+              id: SearchManager.ERPReportExport,
+              name: 'export',
+              title: '导出',
+            },
+          ],
+        },
+        {
+          path: 'ERPEntryStore',
+          name: 'ERPEntryStore',
+          meta: {
+            title: 'ERP-入库查询',
+          },
+          id: 9000230,
+          component: () => import('@/views/query-statistics/ERPEntryStore/index.vue'),
+        },
+        {
+          path: 'ERPOutStore',
+          name: 'ERPOutStore',
+          meta: {
+            title: 'ERP-出库查询',
+          },
+          id: 9000231,
+          component: () => import('@/views/query-statistics/ERPOutStore/index.vue'),
+        },
+      ],
     },
   ],
 };

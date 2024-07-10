@@ -73,8 +73,8 @@
         await updateFormApi({ ...values, id: state.id });
         message.success('编辑成功');
       } else {
-        message.success('新增成功');
         await addFormApi({ ...values } as any);
+        message.success('新增成功');
       }
       setModalProps({ confirmLoading: false });
       closeModal();

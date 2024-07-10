@@ -1,11 +1,3 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: zcc
- * @Date: 2023-12-26 17:41:03
- * @LastEditors: zcc
- * @LastEditTime: 2023-12-28 11:14:30
--->
 <template>
   <BasicModal
     v-bind="$attrs"
@@ -16,27 +8,60 @@
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
+    <Login
+      @register="registerLoginModal"
+      @success="login"
+      :auth-code="ReCheckButtonEnum.MaterialPreRegistrationUpdateDateCheck"
+    />
   </BasicModal>
 </template>
 <script lang="ts" setup>
   import { reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
-  import { formListSchema } from './materialPreRegistration.data';
-  import { BasicModal, useModalInner } from '@/components/Modal';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { getDtApi, updateDateApi } from '@/api/inspect/materialPreRegistration';
   import { message } from 'ant-design-vue';
-  import dayjs from 'dayjs';
+  import dayjs, { Dayjs } from 'dayjs';
+  import Login from '@/__components/ReviewLoginModal/index.vue';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const emit = defineEmits(['success', 'register']);
 
   defineOptions({ name: 'DateFormModel' });
   const state = reactive({ id: '', expireDate: '' });
 
+  const [registerLoginModal, { openModal: openLoginModal }] = useModal();
   const [registerForm, { validate, setFieldsValue, clearValidate, resetFields, updateSchema }] =
     useForm({
       labelWidth: 120,
       baseColProps: { span: 24 },
-      schemas: formListSchema.slice(-1).map((schema) => ({ ...schema, required: true })),
+      schemas: [
+        {
+          field: 'deadline',
+          component: 'DatePicker',
+          label: '使用截至日期',
+          defaultValue: dayjs().format('YYYY-MM-DD'),
+          required: true,
+          componentProps: {
+            class: 'w-full',
+            disabledDate: (date: Dayjs) => date && date > dayjs(dayjs().format('YYYY-MM-DD')),
+          },
+        },
+        {
+          field: 'deadlineReviewer',
+          component: 'InputSearch',
+          label: '复核人',
+          required: true,
+          componentProps: {
+            'enter-button': '登录',
+            placeholder: '请点击登录按钮',
+            readonly: true,
+            onSearch: () => {
+              openLoginModal(true, {});
+            },
+          },
+        },
+      ],
       showActionButtonGroup: false,
       transformDateFunc(date) {
         return date ? date.format('YYYY-MM-DD') : '';
@@ -44,12 +69,12 @@
     });
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async ({ data }) => {
     resetFields();
-    clearValidate();
     state.id = data.id;
     const res = await getDtApi({ id: data.id });
     setFieldsValue(res);
     state.expireDate = res.expireDate;
     updateSchema({ field: 'deadline', rules: [{ validator: validator }] });
+    clearValidate();
   });
   function validator(rule, value) {
     const { expireDate } = state;
@@ -61,9 +86,9 @@
   }
   async function handleSubmit() {
     try {
-      const { deadline } = await validate();
+      const { deadline, deadlineReviewer } = await validate();
       setModalProps({ confirmLoading: true });
-      await updateDateApi({ deadline, id: state.id });
+      await updateDateApi({ deadline, id: state.id, deadlineReviewer });
       message.success('编辑成功');
       setModalProps({ confirmLoading: false });
       closeModal();
@@ -71,5 +96,8 @@
     } finally {
       setModalProps({ confirmLoading: false });
     }
+  }
+  function login(userName, data) {
+    setFieldsValue({ deadlineReviewer: data.username });
   }
 </script>

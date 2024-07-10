@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" />
+    <BasicTable @register="registerTable" class="tableHeight" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -9,7 +9,7 @@
   import { PageWrapper } from '@/components/Page';
   import { getListApi } from '@/api/query-statistics/titerPlasmaStat';
   import { isArray, isObject } from '@/utils/is';
-  import { PostApiCoreBagTiterCountResponse } from '@/api/type/queryStatistics';
+  import { GetApiSearchPlasmaPrivilegeCountResponse } from '@/api/type/queryStatistics';
 
   defineOptions({ name: 'TiterPlasmaStat' });
 
@@ -25,7 +25,7 @@
     useSearchForm: true,
     bordered: true,
     showIndexColumn: false,
-    afterFetch: (res: PostApiCoreBagTiterCountResponse) => {
+    afterFetch: (res: GetApiSearchPlasmaPrivilegeCountResponse) => {
       const formatData = res.map((row) => {
         row['H'] = row.details.find((it) => it.level === '高效价') || {};
         row['L'] = row.details.find((it) => it.level === '低效价') || {};
@@ -35,6 +35,7 @@
       const row = getCountRow(formatData);
       return [...formatData, row];
     },
+    immediate: false,
   });
 
   function getCountRow(data: Recordable[]) {
@@ -69,3 +70,8 @@
     return { ...row, stationName: '合计', rawImm: '--' };
   }
 </script>
+<style scoped lang="less">
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
+  }
+</style>

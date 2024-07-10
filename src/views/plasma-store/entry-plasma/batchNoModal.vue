@@ -3,14 +3,16 @@
     wrapClassName="batch-num-modal"
     v-bind="$attrs"
     @register="register"
-    showFooter
     title="血浆批次详情"
-    width="1500px"
-    :isDetail="true"
-    :showDetailBack="false"
-    @ok="closeModal"
+    width="80%"
+    :min-height="650"
+    :showOkBtn="false"
   >
-    <BasicTable @register="registerTable" id="batchNoTable" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute flex flex-col w-full h-full">
+        <BasicTable @register="registerTable" id="batchNoTable" />
+      </div>
+    </div>
   </BasicModal>
 </template>
 <script setup lang="ts">
@@ -18,13 +20,13 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { useTable, BasicTable } from '@/components/Table';
   import { entryDetailModalColumns } from './entrySearch.data';
-  import { bagPlasmaDetailApi } from '@/api/plasmaStore/entryPlasma';
+  import { getPlasmaQueryList } from '@/api/query-statistics/plasma';
 
   defineEmits(['register']);
 
   const batchNo = ref('');
   const [registerTable, { reload }] = useTable({
-    api: bagPlasmaDetailApi,
+    api: getPlasmaQueryList,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -37,13 +39,14 @@
         batchNo: batchNo.value,
       };
     },
-    rowKey: 'batchNo',
     columns: entryDetailModalColumns,
     bordered: true,
     immediate: false,
+    inset: true,
+    isCanResizeParent: true,
   });
 
-  const [register, { closeModal, setModalProps }] = useModalInner((data) => {
+  const [register, { setModalProps }] = useModalInner((data) => {
     setModalProps({
       maskClosable: false,
     });

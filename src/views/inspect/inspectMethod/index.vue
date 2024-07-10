@@ -58,7 +58,7 @@
   import { PageWrapper } from '@/components/Page';
   import { useModal } from '@/components/Modal';
   import { columns, searchFormschema } from './inspectMethod.data';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import {
     getListApi,
@@ -66,6 +66,7 @@
     removeInspectMethodApi,
   } from '@/api/inspect/inspectMethod';
   import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'InspectMethod' });
 
@@ -117,18 +118,21 @@
     clearSelectedRowKeys();
     reload();
   }
+
+  const { createConfirm } = useMessage();
+
   function handleRemove() {
     const [row] = getSelections(true);
     if (!row) return;
     const { dictItemId, itemKey } = row;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'error',
       content: '确认删除' + itemKey + '?',
       onOk: async () => {
         await removeInspectMethodApi({ dictItemId: dictItemId });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function handleCheckStatus(action: boolean) {
@@ -136,14 +140,14 @@
     if (!row) return;
     const { itemKey, dictItemId, enable } = row;
     if (enable === action) return message.warning('状态不需要变更');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + (action ? '启用' : '禁用') + itemKey + '?',
       onOk: async () => {
         await updateInspectMethodApi({ dictItemId, enable: action });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 </script>

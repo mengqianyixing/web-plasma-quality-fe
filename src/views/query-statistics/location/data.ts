@@ -16,6 +16,7 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆(样本)批号',
     dataIndex: 'batchNo',
+    ellipsis: false,
   },
 
   {

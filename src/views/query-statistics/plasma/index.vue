@@ -1,10 +1,19 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" class="tableHeight">
       <template #toolbar>
         <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
       </template>
+      <template #cardNo="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="openModal(true, record)"
+        >
+          {{ record.cardNo }}
+        </span>
+      </template>
     </BasicTable>
+    <DonorModel @register="registerDonorModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -14,18 +23,15 @@
   import { PageWrapper } from '@/components/Page';
   import { getPlasmaQueryList } from '@/api/query-statistics/plasma';
   import { onMounted, ref } from 'vue';
-  import {
-    DictionaryItemKeyEnum,
-    DictionaryReasonEnum,
-    getSysSecondaryDictionary,
-  } from '@/api/_dictionary';
+  import { DictionaryReasonEnum, getSysSecondaryDictionary } from '@/api/_dictionary';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { useMessage } from '@/hooks/web/useMessage';
   import { message } from 'ant-design-vue';
-
-  import { cloneDeep, isEmpty } from 'lodash-es';
+  import DonorModel from '@/__components/donor/donorModel.vue';
+  import { cloneDeep, isNull, isEqual } from 'lodash-es';
+  import { useModal } from '@/components/Modal';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -33,19 +39,14 @@
 
   const { currentRoute } = useRouter();
   const { createMessage } = useMessage();
+  const [registerDonorModal, { openModal }] = useModal();
 
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
   onMounted(async () => {
     plasmaUnqualifiedDictionary.value = await getSysSecondaryDictionary({
       dataKey: DictionaryReasonEnum.PlasmaFailedReason,
-      dictItemTypes: [
-        DictionaryItemKeyEnum.PlasmaFailed,
-        DictionaryItemKeyEnum.Track,
-        DictionaryItemKeyEnum.Test,
-        DictionaryItemKeyEnum.Quarantine,
-        DictionaryItemKeyEnum.Sample,
-        DictionaryItemKeyEnum.Other,
-      ],
+      dictItemTypes: [],
+      show: 123,
     });
 
     await getForm().updateSchema({
@@ -90,6 +91,16 @@
     immediate: false,
   });
 
+  function isEmptyValue(value) {
+    return !(
+      isEqual(value, {}) || // 空对象
+      typeof value === 'undefined' || // undefined
+      isNull(value) || // null
+      value === '' || // 空字符串
+      (Array.isArray(value) && value.length === 0)
+    );
+  }
+
   function deleteInvalidProperties(obj, strict = true) {
     if (!obj) return obj;
     const copyObj = cloneDeep(obj);
@@ -98,7 +109,7 @@
         copyObj[key] = deleteInvalidProperties(value, strict);
         value = copyObj[key];
       }
-      if (isEmpty(value)) {
+      if (!isEmptyValue(value)) {
         delete copyObj[key];
       }
     });
@@ -147,3 +158,8 @@
     }
   }
 </script>
+<style scoped lang="less">
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
+  }
+</style>

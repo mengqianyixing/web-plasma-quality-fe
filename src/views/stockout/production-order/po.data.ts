@@ -19,19 +19,23 @@ export const columns: BasicColumn[] = [
     dataIndex: 'mesId',
     align: 'left',
     slots: { customRender: 'mesId' },
+    width: 110,
+    fixed: 'left',
   },
   {
     title: '投产类型',
     dataIndex: 'orderType',
-    width: 100,
+    width: 80,
     format(text) {
       return `${PlasmaType(text)}`;
     },
+    fixed: 'left',
   },
   {
     title: '投浆重量(t)',
     dataIndex: 'orderWeight',
-    width: 100,
+    width: 95,
+    fixed: 'left',
   },
   {
     title: '血浆效期',
@@ -68,11 +72,13 @@ export const columns: BasicColumn[] = [
   {
     title: '申请人',
     dataIndex: 'creator',
+    width: 100,
+    ellipsis: false,
   },
   {
     title: '申请日期',
     dataIndex: 'createAt',
-    width: 120,
+    width: 100,
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
@@ -80,11 +86,13 @@ export const columns: BasicColumn[] = [
   {
     title: '复核人',
     dataIndex: 'reviewer',
+    width: 100,
+    ellipsis: false,
   },
   {
     title: '复核日期',
     dataIndex: 'reviewAt',
-    width: 120,
+    width: 100,
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
@@ -92,11 +100,13 @@ export const columns: BasicColumn[] = [
   {
     title: '审核人',
     dataIndex: 'checker',
+    width: 100,
+    ellipsis: false,
   },
   {
     title: '审核日期',
     dataIndex: 'checkAt',
-    width: 120,
+    width: 100,
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
@@ -105,6 +115,7 @@ export const columns: BasicColumn[] = [
     title: '备注',
     dataIndex: 'remark',
     ellipsis: false,
+    width: 160,
   },
 ];
 

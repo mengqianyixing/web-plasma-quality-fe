@@ -9,7 +9,8 @@
         <div class="h-40px bg-#ffffff mt-2 flex items-center">
           <a-button
             type="primary"
-            class="absolute right-8"
+            class="absolute right-8px"
+            :loading="loading"
             @click="handleExport"
             v-auth="SearchManager.InventoryExport"
           >
@@ -28,7 +29,7 @@
   import { useStation } from '@/hooks/common/useStation';
   import { VxeGridProps } from 'vxe-table';
   import { vxeTableColumns, formSchema } from './inventory.data';
-  import { GetApiCoreBankStockRequest } from '@/api/type/plasmaStoreManage';
+  import { GetApiSearchBankStockRequest } from '@/api/type/plasmaStoreManage';
   import dayjs from 'dayjs';
   import { useMessage } from '@/hooks/web/useMessage';
 
@@ -41,8 +42,7 @@
   const { createMessage } = useMessage();
 
   const { stationOptions, getStationNameById } = useStation();
-  onMounted(async () => {
-    await initTableData();
+  onMounted(() => {
     watchEffect(() => {
       updateSchema({
         field: 'stationNo',
@@ -61,9 +61,9 @@
     return count;
   };
 
-  const [registerForm, { updateSchema, getFieldsValue }] = useForm({
-    labelWidth: 140,
-    actionColOptions: { style: 'right: 40px; top: 80px;  position: absolute;' },
+  const [registerForm, { updateSchema, getFieldsValue, setProps }] = useForm({
+    baseColProps: { flex: '0 0 373px' },
+    actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
     schemas: formSchema,
     transformDateFunc(date) {
       return dayjs(date).format('YYYY-MM-DD');
@@ -87,7 +87,7 @@
     return (arg1 * m + arg2 * m) / m;
   }
 
-  const gridOptions = reactive<VxeGridProps<GetApiCoreBankStockRequest>>({
+  const gridOptions = reactive<VxeGridProps<GetApiSearchBankStockRequest>>({
     border: true,
     showOverflow: true,
     height: 810,
@@ -128,11 +128,15 @@
   });
 
   const tableLoading = ref(false);
-  const tableData = ref<Recordable[]>([{}]);
+  const tableData = ref<Recordable[]>([]);
   async function initTableData() {
     try {
       const values = getFieldsValue();
       tableLoading.value = true;
+
+      if (!values.date && !values.batchNo) {
+        return createMessage.warning('请至少选择日期或输入血浆批号');
+      }
 
       if (values.dateKey === 'receipt' && values.date) {
         values.receiptStartDate = values.date[0];
@@ -141,21 +145,22 @@
         values.verifyPubStartDate = values.date[0];
         values.verifyPubEndDate = values.date[1];
       }
-
       const searchParams = {
         ...values,
       };
 
       delete searchParams.dateKey;
       delete searchParams.date;
-
-      const originListData = await inventoryDetailApi(searchParams as GetApiCoreBankStockRequest);
+      setProps({ submitButtonOptions: { loading: true } });
+      const originListData = await inventoryDetailApi(searchParams as GetApiSearchBankStockRequest);
 
       tableData.value = originListData.map((it) => ({
         ...it,
         stationNo: getStationNameById(it.stationNo),
       }));
     } finally {
+      setProps({ submitButtonOptions: { loading: false } });
+
       tableLoading.value = false;
     }
   }
@@ -168,6 +173,7 @@
     await initTableData();
   }
 
+  const loading = ref(false);
   async function handleExport() {
     const values = getFieldsValue();
 
@@ -190,7 +196,8 @@
     delete searchParams.dateKey;
     delete searchParams.date;
 
-    const originExportData = await inventoryDetailApi(searchParams as GetApiCoreBankStockRequest);
+    loading.value = true;
+    const originExportData = await inventoryDetailApi(searchParams as GetApiSearchBankStockRequest);
 
     if (originExportData.length === 0) {
       return createMessage.warning('暂无数据');
@@ -210,10 +217,18 @@
         return omit(it, ['inWeightG', 'outWeightG']);
       }),
     });
+
+    loading.value = false;
   }
 </script>
 
 <style scoped lang="less">
+  ::v-deep(.ant-form-item-control-input-content button) {
+    margin-right: 8px;
+    margin-left: 4px;
+    float: right;
+  }
+
   .root :deep(.vxe-pager) {
     display: none;
   }

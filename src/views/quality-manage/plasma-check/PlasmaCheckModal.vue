@@ -6,14 +6,15 @@
     showFooter
     width="85%"
     @ok="handleOk"
+    :minHeight="600"
     @cancel="handleClose"
-    :showOkBtn="!isPreview"
+    :showOkBtn="unref(flag) !== 'preview'"
   >
     <Description @register="registerPlasmaBatchDetail" :data="plasmaDetail" />
 
-    <div class="h-[300px]">
+    <div class="h-[350px] mb-4">
       <BasicTable @register="registerTable">
-        <template #toolbar v-if="!isPreview">
+        <template #toolbar v-if="unref(flag) !== 'preview'">
           <a-button type="primary" @click="handleAdd">新增</a-button>
           <a-button type="primary" @click="handleEdit">编辑</a-button>
           <a-button type="primary" @click="handleDelete">删除</a-button>
@@ -48,14 +49,13 @@
     PutApiCoreBatchPlasmaAuditRequest,
   } from '@/api/type/plasmaCheckManage';
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
+  import dayjs from 'dayjs';
 
   const plasmaDetail = ref<Recordable>({});
   const conclusionData = reactive<Recordable>({
     conclusion: '',
   });
   const selectedRow = ref<Recordable[]>([]);
-  const isUpdate = ref(false);
-  const isPreview = ref(false);
 
   const [registerAddModal, { openModal }] = useModal();
   const { createMessage } = useMessage();
@@ -66,7 +66,6 @@
     bordered: true,
     column: 4,
     size: 'middle',
-    title: '血浆批次详情',
     schema: PlasmaBatchSchema,
   });
   const [registerConclusionDetail] = useDescription({
@@ -96,18 +95,25 @@
       {
         title: '排序号',
         dataIndex: 'sort',
+        width: 80,
       },
       {
         title: '审核项目',
         dataIndex: 'auditItem',
+        align: 'left',
+        width: 200,
       },
       {
         title: '审核内容',
         dataIndex: 'auditContent',
+        align: 'left',
+        ellipsis: false,
       },
       {
         title: '审核结果',
         dataIndex: 'auditResult',
+        align: 'left',
+        width: 200,
       },
     ],
     rowSelection: {
@@ -151,19 +157,20 @@
     showActionButtonGroup: false,
   });
 
-  const getTitle = computed(() => (unref(isUpdate) ? '修改审核' : '新增审核'));
+  const flag = ref('');
+  const getTitle = computed(() =>
+    unref(flag) === 'add' ? '新增审核' : unref(flag) === 'edit' ? '编辑审核' : '审核详情',
+  );
   const [register, { setModalProps, closeModal }] = useModalInner(async (data) => {
     setModalProps({
       maskClosable: false,
     });
-    conclusionData.conclusion = await getCheckConclusionTemplate(data.record?.batchNo);
-    await setFieldsValue({
-      auditConclusion: conclusionData.conclusion,
-    });
 
-    plasmaDetail.value = data.record;
-    isUpdate.value = !!data.isUpdate;
-    isPreview.value = !!data.isPreview;
+    plasmaDetail.value = {
+      ...data.record,
+      testIssueAt: dayjs(data.record.testIssueAt).format('YYYY-MM-DD'),
+    };
+    flag.value = data.flag;
 
     await updateSchema([
       {
@@ -172,32 +179,41 @@
           disabled: true,
         },
       },
-      {
-        field: 'remark',
-        componentProps: {
-          disabled: unref(isPreview),
-        },
-      },
     ]);
 
-    if (unref(isPreview)) {
+    if (unref(flag) === 'preview') {
       const res = await getPlasmaCheckDetail(data.record.auditId);
+      conclusionData.conclusion = res.auditConclusion;
+      await setFieldsValue({
+        auditConclusion: res.auditConclusion,
+        remark: res.remark,
+      });
+
+      await updateSchema([
+        {
+          field: 'remark',
+          componentProps: {
+            disabled: unref(flag) === 'preview',
+          },
+        },
+      ]);
+
+      setTableData(res.itemList as any[]);
+    } else if (unref(flag) === 'edit') {
+      const res = await getPlasmaCheckDetail(data.record.auditId);
+      conclusionData.conclusion = res.auditConclusion;
       await setFieldsValue({
         auditConclusion: res.auditConclusion,
         remark: res.remark,
       });
 
       setTableData(res.itemList as any[]);
-    }
-
-    if (unref(isUpdate)) {
-      const res = await getPlasmaCheckDetail(data.record.auditId);
+    } else {
+      conclusionData.conclusion = await getCheckConclusionTemplate(data.record?.batchNo);
       await setFieldsValue({
-        remark: res.remark,
+        auditConclusion: conclusionData.conclusion,
       });
 
-      setTableData(res.itemList as any[]);
-    } else {
       const dictionaryArr = await getSysDictionary([DictionaryEnum.PlasmaRelease]);
       if (!dictionaryArr.length) return;
 
@@ -259,7 +275,7 @@
       setModalProps({ confirmLoading: true });
       const values = await validate();
 
-      if (!isUpdate.value) {
+      if (unref(flag) === 'add') {
         await addPlasmaCheck({
           ...values,
           auditList: getDataSource(),

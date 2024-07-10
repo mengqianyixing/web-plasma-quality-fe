@@ -44,7 +44,7 @@
             @click="handleCancelRecheck"
             v-auth="StockOutButtonEnum.ProductionOrderCancelRecheck"
           >
-            取消复核
+            撤销复核
           </a-button>
           <a-button
             type="primary"
@@ -58,7 +58,7 @@
             @click="handleCancelExamine"
             v-auth="StockOutButtonEnum.ProductionOrderCancelExamine"
           >
-            取消审核
+            撤销审核
           </a-button>
           <a-button
             type="primary"
@@ -135,9 +135,7 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-    scroll: {
-      x: 0,
-    },
+
     bordered: true,
     showIndexColumn: false,
     canResize: true,
@@ -157,7 +155,7 @@
 
   function handleMesClick(record: Recordable) {
     openDetailModal(true, {
-      orderNo: record?.orderNo,
+      ...record,
     });
   }
 
@@ -266,7 +264,7 @@
     if (!selectRowsCheck()) return;
 
     if (selectedRow.value[0]?.state !== statusValueEnum.TBP) {
-      warning('该指令不是待计划的状态，不可取消审核');
+      warning('该指令不是待计划的状态，不可撤销审核');
       return;
     }
 

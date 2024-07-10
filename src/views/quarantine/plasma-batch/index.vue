@@ -26,7 +26,7 @@
         </a-button>
         <a-button
           type="primary"
-          @click="handleOption('C', '撤销')"
+          @click="handleDelete"
           v-auth="QuarantineButtonEnum.ResetQuarantine"
         >
           撤销
@@ -46,25 +46,31 @@
         >
           打印
         </a-button>
+        <a-button
+          type="primary"
+          @click="handleExport"
+          :loading="loading"
+          v-auth="QuarantineButtonEnum.ExportQuarantine"
+        >
+          导出
+        </a-button>
       </template>
     </BasicTable>
     <PlasmaBatchDetailModal @register="registerDetailModal" />
     <PlasmaBatchModal @register="registerModal" @success="handleSuccess" />
     <ReportModal @register="registerReportModal" />
+    <DeleteModal @register="registerDeleteModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
-  import {
-    getPlasmaBatchReleases,
-    setPlasmaBatchRelease,
-    getPlasmaBatchRelease,
-  } from '@/api/quarantine/plasma-batch';
-  import { Modal, message } from 'ant-design-vue';
+  import { getPlasmaBatchReleases, setPlasmaBatchRelease } from '@/api/quarantine/plasma-batch';
+  import { message } from 'ant-design-vue';
 
   import { useModal } from '@/components/Modal';
   import PlasmaBatchModal from './PlasmaBatchModal.vue';
   import PlasmaBatchDetailModal from './PlasmaBatchDetailModal.vue';
+  import DeleteModal from './DeleteModal.vue';
 
   import { columns, searchFormSchema } from './plasma-batch.data';
   import { useStation } from '@/hooks/common/useStation';
@@ -73,10 +79,17 @@
   import { get } from 'lodash-es';
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { jsonToSheetXlsx, formatData, getHeader } from '@/components/Excel/src/Export2Excel';
+  import { useRouter } from 'vue-router';
 
   defineOptions({ name: 'PlasmaBatchReport' });
 
   const reportLoading = ref(false);
+  const loading = ref(false);
+  const { currentRoute } = useRouter();
+  const globalApiStore = useGlobalApiStoreWithOut();
   const { stationOptions, getStationNameById } = useStation();
   const slots = columns.filter((col) => col.slots);
 
@@ -94,6 +107,8 @@
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
   const [registerModal, { openModal }] = useModal();
   const [registerReportModal, { openModal: openReportModal }] = useModal();
+  const [registerDeleteModal, { openModal: openDeleteModal }] = useModal();
+
   const [registerTable, { reload, getForm, clearSelectedRowKeys, getSelectRows }] = useTable({
     api: getPlasmaBatchReleases,
     fetchSetting: {
@@ -136,13 +151,10 @@
     return rows;
   }
   function handleDetailClick(record: Recordable, type: string, title: any) {
-    getPlasmaBatchRelease({ batchNo: record?.fkBpNo }).then((res) => {
-      openDetailModal(true, {
-        record,
-        ...res,
-        type,
-        title,
-      });
+    openDetailModal(true, {
+      record,
+      type,
+      title,
     });
   }
 
@@ -152,9 +164,12 @@
     });
   }
 
+  const { createConfirm } = useMessage();
+
   function handleOption(state: string, title: string) {
     getSelections(true, ([row]) => {
-      Modal.confirm({
+      createConfirm({
+        iconType: 'warning',
         content: '确认' + title + '?',
         onOk: async () => {
           setPlasmaBatchRelease({
@@ -169,7 +184,14 @@
               reload();
             });
         },
-        onCancel: () => Modal.destroyAll(),
+      });
+    });
+  }
+
+  function handleDelete() {
+    getSelections(true, ([row]) => {
+      openDeleteModal(true, {
+        record: row,
       });
     });
   }
@@ -192,5 +214,35 @@
 
   function handleSuccess() {
     reload();
+  }
+  async function handleExport() {
+    try {
+      loading.value = true;
+      const { getFieldsValue } = getForm();
+      const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
+
+      const data = await getPlasmaBatchReleases({
+        ...getFieldsValue(),
+        currPage: 1,
+        pageSize,
+      } as any);
+      if ((data.totalCount || 0) > Number(pageSize))
+        return message.warning('最多只能导出【' + pageSize + '】条数据');
+
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
+      const { result, merge: bodyMerge } = formatData(
+        lastLevelCols,
+        data.result || [],
+        rows.length,
+      );
+      jsonToSheetXlsx({
+        data: [...rows, ...result],
+        json2sheetOpts: { skipHeader: true },
+        merges: [...headerMerge, ...bodyMerge],
+        filename: currentRoute.value.meta.title + '.xlsx',
+      });
+    } finally {
+      loading.value = false;
+    }
   }
 </script>

@@ -12,10 +12,6 @@
       overflow: hidden;
     }
   }
-
-  .ant-modal-footer {
-    margin-top: 0;
-  }
 }
 
 .ant-modal {
@@ -23,7 +19,7 @@
   padding-bottom: 0;
 
   .ant-modal-body > .scrollbar {
-    padding: 14px;
+    padding: 8px 8px 0;
   }
 
   &-title {
@@ -33,6 +29,11 @@
     .base-title {
       cursor: move !important;
     }
+  }
+
+  .ant-modal-footer {
+    margin-top: 0;
+    padding: 8px 16px;
   }
 
   .ant-modal-body {
@@ -52,7 +53,8 @@
   }
 
   &-header {
-    padding: 16px;
+    margin-bottom: 0 !important;
+    padding: 8px;
     border-bottom: 1px solid @border-color-base;
   }
 
@@ -62,7 +64,7 @@
   }
 
   &-footer {
-    padding: 10px 16px;
+    padding: 6px 14px !important;
     border-top: 1px solid @border-color-base;
 
     button + button {
@@ -82,8 +84,8 @@
   &-close-x {
     display: inline-block;
     width: 96px;
-    height: 56px;
-    line-height: 56px !important;
+    height: 40px;
+    line-height: 40px !important;
   }
 
   &-confirm-body {

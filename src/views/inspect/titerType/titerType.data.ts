@@ -126,30 +126,16 @@ export const formListSchema: FormSchema[] = [
     },
   },
   {
-    field: 'min',
-    component: 'InputNumber',
+    field: 'minShow',
+    component: 'Input',
     label: '效价最小值(大于等于)',
     defaultValue: null,
-    componentProps: {
-      min: 0,
-      formatter: (n: string) => {
-        if (/\.[0-9]{2}/.test(n)) return n.replace(/([0-9]+\.[0-9]{1,1})[0-9]+/, '$1');
-        return n;
-      },
-    },
   },
   {
-    field: 'max',
-    component: 'InputNumber',
+    field: 'maxShow',
+    component: 'Input',
     label: '效价最大值(小于)',
     defaultValue: null,
-    componentProps: {
-      min: 0,
-      formatter: (n: string) => {
-        if (/\.[0-9]{2}/.test(n)) return n.replace(/([0-9]+\.[0-9]{1,1})[0-9]+/, '$1');
-        return n;
-      },
-    },
   },
   {
     field: 'sort',

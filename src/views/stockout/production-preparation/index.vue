@@ -3,14 +3,14 @@
     <BasicTable @register="registerTable">
       <template #prepareNo="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="clickPrepareNo(record)">
+          <a-button type="link" @click.stop="clickPrepareNo(record)">
             {{ record?.prepareNo }}
           </a-button>
         </div>
       </template>
       <template #batchCount="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="goPickBatchDetail(record)">
+          <a-button type="link" @click.stop="goPickBatchDetail(record)">
             {{ record.summary?.batchCount }}
           </a-button>
           <!-- <span @click="goPickBatchDetail(record)">
@@ -30,7 +30,7 @@
       </template>
       <template #prodBagCount="{ record }">
         <div class="z-999">
-          <a-button type="link" @click="goPlasmaDetail(record, 'prepareProduce')">
+          <a-button type="link" @click.stop="goPlasmaDetail(record, 'prepareProduce')">
             {{ record.summary?.prodBagCount }}
           </a-button>
           <!-- <span>
@@ -96,6 +96,13 @@
           >
             撤销复核
           </a-button>
+          <a-button
+            @click="handleTask"
+            v-auth="StockOutButtonEnum.ProductionPreparationSortTask"
+            type="primary"
+          >
+            PMS分拣
+          </a-button>
         </div>
       </template>
     </BasicTable>
@@ -114,7 +121,6 @@
   import { useModal } from '@/components/Modal';
   import dayjs from 'dayjs';
   import { ref, createVNode } from 'vue';
-  import { Modal } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import SummaryModal from './components/SummaryModal.vue';
@@ -139,6 +145,7 @@
   import { useUserStore } from '@/store/modules/user';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { productionPMSTask } from '@/api/stockout/production-put-into';
 
   defineOptions({ name: 'ProductionPreparation' });
 
@@ -156,13 +163,16 @@
       title: '投产准备号',
       dataIndex: 'prepareNo',
       align: 'left',
-      width: 180,
+      width: 120,
+      resizable: true,
+      fixed: 'left',
       slots: { customRender: 'prepareNo' },
     },
     {
       title: '投产类型',
       dataIndex: 'prodType',
       width: 100,
+      resizable: true,
       format(text) {
         return `${PlasmaType(text)}`;
       },
@@ -170,6 +180,8 @@
     {
       title: '挑浆模式',
       dataIndex: 'pickMode',
+      resizable: true,
+      width: 130,
       format(text) {
         return `${pickModeMap.get(text as pickModeValueEnum)}`;
       },
@@ -177,7 +189,8 @@
     {
       title: '是否限制血浆',
       dataIndex: 'bagFlag',
-      width: 120,
+      resizable: true,
+      width: 100,
       format(text) {
         return `${bagFlagMap.get(text as bagFlagValueEnum)}`;
       },
@@ -185,24 +198,29 @@
     {
       title: '批次数量',
       dataIndex: 'batchCount',
-      width: 80,
+      resizable: true,
+      width: 75,
       slots: { customRender: 'batchCount' },
     },
     {
       title: '分拣血浆数量',
       dataIndex: 'pickBagCount',
-      width: 110,
+      resizable: true,
+      width: 105,
       slots: { customRender: 'pickBagCount' },
     },
     {
       title: '投产血浆数量',
       dataIndex: 'prodBagCount',
-      width: 110,
+      resizable: true,
+      width: 105,
       slots: { customRender: 'prodBagCount' },
     },
     {
       title: '投产血浆净重(kg)',
+      resizable: true,
       dataIndex: 'netWeight',
+      width: 150,
       customRender: ({ record }) => {
         if (record.summary && record.summary.netWeight !== null) {
           return record.summary.netWeight;
@@ -213,7 +231,8 @@
     {
       title: '浆员数量',
       dataIndex: 'donorCount',
-      width: 80,
+      width: 75,
+      resizable: true,
       customRender: ({ record }) => {
         if (record.summary && record.summary.donorCount !== null) {
           return record.summary.donorCount;
@@ -224,31 +243,38 @@
     {
       title: '准备人',
       dataIndex: 'creator',
+      width: 80,
+      resizable: true,
     },
     {
-      title: '准备时间',
+      title: '准备日期',
+      resizable: true,
+      width: 150,
       dataIndex: 'createAt',
       format(text) {
-        return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
+        return text ? dayjs(text).format('YYYY-MM-DD') : '-';
       },
     },
     {
       title: '复核人',
+      resizable: true,
       dataIndex: 'reviewer',
       width: 100,
     },
     {
-      title: '复核时间',
+      title: '复核日期',
       dataIndex: 'reviewerAt',
+      resizable: true,
       width: 100,
       format(text) {
-        return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
+        return text ? dayjs(text).format('YYYY-MM-DD') : '-';
       },
     },
     {
       title: '分拣完成日期',
       dataIndex: 'sortingAt',
       width: 100,
+      resizable: true,
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD') : '-';
       },
@@ -256,7 +282,8 @@
     {
       title: '状态',
       dataIndex: 'prepareState',
-      width: 100,
+      width: 80,
+      resizable: true,
       format(text) {
         return `${prepareStateMap.get(text as prepareStateValueEnum)}`;
       },
@@ -268,13 +295,11 @@
       field: 'prepareNo',
       label: '投产准备号',
       component: 'Input',
-      colProps: { span: 6 },
     },
     {
       field: 'prodType',
       label: '投产类型',
       component: 'Select',
-      colProps: { span: 6 },
       componentProps: {
         options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
       },
@@ -283,7 +308,6 @@
       field: 'pickMode',
       label: '挑浆模式',
       component: 'Select',
-      colProps: { span: 6 },
       componentProps: {
         options: [...pickModeMap.entries()].map(([key, value]) => ({
           value: key,
@@ -295,7 +319,6 @@
       field: 'bagFlag',
       label: '是否限制血浆',
       component: 'Select',
-      colProps: { span: 6 },
       componentProps: {
         options: [...bagFlagMap.entries()].map(([key, value]) => ({
           value: key,
@@ -307,7 +330,6 @@
       field: 'prepareStates',
       label: '状态',
       component: 'Select',
-      colProps: { span: 6 },
       componentProps: {
         options: [...prepareStateMap.entries()].map(([key, value]) => ({
           value: key,
@@ -318,16 +340,14 @@
     {
       field: '[sortingAtBegin, sortingAtEnd]',
       component: 'RangePicker',
-      colProps: { span: 6 },
       label: '分拣完成日期',
     },
   ];
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
     api: getPrepareList,
     columns,
     formConfig: {
-      labelWidth: 120,
       schemas: searchFormSchema,
       showAdvancedButton: false,
       transformDateFunc(date) {
@@ -343,7 +363,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    clickToRowSelect: false,
+    clickToRowSelect: true,
     rowSelection: {
       type: 'radio',
       onChange: (_, selectedRows: any) => {
@@ -353,7 +373,7 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-
+    canColDrag: true,
     bordered: true,
     showIndexColumn: false,
     canResize: true,
@@ -426,6 +446,8 @@
     });
   }
 
+  const { createConfirm } = useMessage();
+
   // 完成准备
   function completePreparation() {
     if (!selectedRow.value.length) {
@@ -445,14 +467,15 @@
       warning('当前账号无此权限!');
       return;
     }
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '确定要完成准备吗?',
       icon: createVNode(ExclamationCircleOutlined),
       content: createVNode('div', { style: 'color:red;' }, `投产准备号：${prepareNo}`),
       async onOk() {
         await completePrepare({ prepareNo });
         success('完成准备成功!');
-        reload();
+        await reload();
         selectedRow.value = [];
       },
       onCancel() {
@@ -500,7 +523,8 @@
       return;
     }
 
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '确定要通过复核吗?',
       icon: createVNode(ExclamationCircleOutlined),
       content: createVNode('div', { style: 'color:red;' }, `投产准备号：${prepareNo}`),
@@ -565,6 +589,28 @@
     openPlasmaDetailModal(true, {
       record,
       prepareProduce,
+    });
+  }
+
+  async function handleTask() {
+    if (!selectedRow.value.length) {
+      warning('请先选择投产准备号!');
+      return;
+    }
+
+    createConfirm({
+      title: '确认',
+      content: '请确认是否生成PMS分拣任务？',
+      iconType: 'warning',
+      onOk: async () => {
+        await productionPMSTask({
+          prepareNo: (selectedRow.value as any)[0]?.prepareNo,
+          taskType: 'SEND',
+        });
+        createMessage.success('生成PMS分拣任务成功');
+        await reload();
+        clearSelectedRowKeys();
+      },
     });
   }
 </script>

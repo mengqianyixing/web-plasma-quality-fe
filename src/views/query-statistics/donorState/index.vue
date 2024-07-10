@@ -34,7 +34,7 @@
 
   const loading = ref(false);
 
-  const [registerTable, { getForm, reload }] = useTable({
+  const [registerTable, { getForm, reload, setPagination }] = useTable({
     immediate: false,
     api: getListApi,
     columns,
@@ -46,6 +46,7 @@
           (key) => values[key] || values[key] === 0,
         );
         if (isNotEmptyObject) {
+          setPagination({ current: 1 });
           reload();
           return Promise.resolve();
         }

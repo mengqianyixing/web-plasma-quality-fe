@@ -24,7 +24,11 @@ function setColumnWidth(data, worksheet, min = 3) {
   data.forEach((item) => {
     Object.keys(item).forEach((key) => {
       const cur = item[key];
-      const length = (cur?.length ?? min) * 2;
+      //如果cur字符串包含数字，那么就取数字的长度想这样采集日期：2024-05-02-2024-06-30，不然就*2
+      const length = String(cur)
+        .split('')
+        .map((c) => (/\d/.test(c) ? 1 : 2))
+        .reduce((a, b) => a + b, 0);
       obj[key] = Math.max(length, obj[key] ?? min);
     });
   });
@@ -211,10 +215,10 @@ const getHeaderMerge = (
         e: { r: node.lv - 1, c: columnsIndex + getLeafNodeLength(node, lastLevelCols) - 1 },
       });
     } else if (node.lv !== rowCount) {
-      merge.push({
-        s: { r: node.lv - 1, c: columnsIndex },
-        e: { r: rowCount - 1, c: columnsIndex },
-      });
+      // merge.push({
+      //   s: { r: node.lv - 1, c: columnsIndex },
+      //   e: { r: rowCount - 1, c: columnsIndex },
+      // });
       columnsIndex++;
     } else {
       columnsIndex++;
@@ -231,12 +235,17 @@ const columnsToRows = (columns: LvColumns[], rowCount: number) => {
     list.unshift(...children.map((it) => ({ ...it, titleArr: [...node.titleArr, it.title] })));
     if (children.length === 0) lastLevelCols.push(node);
   }
+  console.log(lastLevelCols);
   return {
     rows: Array.from({ length: rowCount }, (_, index) => {
       const row = {};
       lastLevelCols.forEach((col) => {
-        const { titleArr } = col;
-        set(row, mergeDeepField(col.dataIndex as string), titleArr[index] || titleArr[0]);
+        const { titleArr, lv } = col;
+        let title = titleArr[index] || titleArr[0];
+        if (lv === 1 && index < rowCount - 1) {
+          title = '';
+        }
+        set(row, mergeDeepField(col.dataIndex as string), title);
       });
       return row;
     }),

@@ -1,15 +1,37 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="register" :title="getTitle" width="85%" :min-height="700">
+  <BasicModal
+    v-bind="$attrs"
+    @register="register"
+    :title="getTitle"
+    width="85%"
+    :min-height="600"
+    :showOkBtn="false"
+  >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
         <Description @register="registerDescription" :data="descriptionData" />
-        <BasicTable @register="registerTable" />
+        <BasicTable @register="registerTable" :columns="columnsComputed">
+          <template #plasmaCount="{ record }">
+            <span
+              :class="
+                !record?.plasmaCount
+                  ? 'pointer-events-none'
+                  : 'text-blue-500 underline cursor-pointer'
+              "
+              @click.stop.self="handleBagDetail(record)"
+            >
+              {{ record?.plasmaCount }}
+            </span>
+          </template>
+        </BasicTable>
       </div>
     </div>
+
+    <BagDetailModal @register="registerModal" />
   </BasicModal>
 </template>
 <script lang="tsx" setup>
-  import { BasicModal, useModalInner } from '@/components/Modal';
+  import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { computed, ref, unref } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
 
@@ -20,9 +42,15 @@
   import { getCallbackDetail } from '@/api/callback/list-generation';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
+  import { callbackModalEnum } from '@/enums/callbackEnum';
+
+  import BagDetailModal from '@/views/callback/list-generation/BagDetailModal.vue';
+
+  const [registerModal, { openModal }] = useModal();
 
   const isUpdate = ref(false);
   const isPreview = ref(false);
+  const isShowTrackType = ref(false);
   const batchNo = ref('');
 
   const descriptionData = ref({});
@@ -62,13 +90,21 @@
     contentStyle: {
       width: '25%',
     },
-    title: '名单信息',
     schema: descriptionSchema,
   });
 
+  const callbackModel = ref('');
+  const columnsComputed = computed(() => {
+    return callbackModel.value === callbackModalEnum.A
+      ? isShowTrackType.value
+        ? callbackDetailModalColumns.filter((it) => (it.dataIndex as string) !== 'minPlasmaNo')
+        : callbackDetailModalColumns.filter(
+            (it) => !['minPlasmaNo', 'trackType'].includes(it.dataIndex as string),
+          )
+      : callbackDetailModalColumns;
+  });
   const [registerTable, { reload }] = useTable({
     api: getCallbackDetail,
-    columns: callbackDetailModalColumns,
     formConfig: {
       schemas: callbackDetailFormSchema,
       transformDateFunc(date) {
@@ -87,16 +123,13 @@
         batchNo: batchNo.value,
       };
     },
-    rowKey: 'donorNo',
     clickToRowSelect: false,
     size: 'small',
     striped: false,
     useSearchForm: true,
     bordered: true,
-    showIndexColumn: false,
-    scroll: {
-      x: 0,
-    },
+    showIndexColumn: true,
+
     isCanResizeParent: true,
     inset: true,
     immediate: true,
@@ -110,7 +143,17 @@
     isUpdate.value = data.isUpdate;
     isPreview.value = data.isPreview;
     batchNo.value = data.planNo;
+    callbackModel.value = data.model;
+    isShowTrackType.value = data.isShowTrackType;
+
     descriptionData.value = data;
     reload();
   });
+
+  function handleBagDetail(_record: Recordable) {
+    openModal(true, {
+      cardNo: _record.cardNo,
+      planNo: batchNo.value,
+    });
+  }
 </script>

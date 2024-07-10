@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-29 10:43:03
  * @LastEditors: zcc
@@ -65,7 +65,7 @@
 <script setup lang="ts">
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { reactive, nextTick } from 'vue';
   import { bindBoxApi } from '@/api/tray/relocation';
   import {
@@ -74,10 +74,15 @@
     boxBindColumns,
   } from '../production-sorting.data';
   import OutModal from '@/views/tray/outInStore/outModal.vue';
-  import { getBoxListApi, getOutStoreListApi } from '@/api/stockout/production-sorting/index';
-  import { TRAY_STORE_STATE, TRAY_OUT_STATE_TEXT } from '@/enums/stockoutEnum';
+  import { getBoxListApi, getOutStoreListApi } from '@/api/stockout/production-sorting';
+  import { TRAY_STORE_STATE } from '@/enums/stockoutEnum';
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { useMessage } from '@/hooks/web/useMessage';
 
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
   const state = reactive({
     prepareNo: '',
     trayNo: '',
@@ -150,27 +155,26 @@
     if (rows.length === 0) return message.warning('请选择数据');
     const [row] = rows;
     if (rows.some((_) => _.state !== TRAY_STORE_STATE.IN)) {
-      return message.warning(
-        '请选择【' + TRAY_OUT_STATE_TEXT.get(TRAY_STORE_STATE.IN) + '】的数据',
-      );
+      return message.warning('请选择【' + BankTrayStatusEnum(TRAY_STORE_STATE.IN) + '】的数据');
     }
     if (rows.some((_) => _.wareHouseName !== row.wareHouseName)) {
       return message.warning('请选择相同库房的数据');
     }
     openOutModal(true, { data: rows, showSite: row.houseType[1] === STORE_FLAG.S });
   }
+
+  const { createConfirm } = useMessage();
+
   function handleUnbind() {
     const boxNos = getSelectRowKeys();
     if (boxNos.length === 0) return message.warning('请选择数据');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确定解绑箱号【' + boxNos.join('、') + '】?',
       onOk: async () => {
         await bindBoxApi({ trayNo: state.trayNo, type: 'unbind', boxes: boxNos as string[] });
         message.success('解绑成功');
-        reloadBind();
-      },
-      onCancel: () => {
-        Modal.destroyAll();
+        await reloadBind();
       },
     });
   }
@@ -178,6 +182,6 @@
     state.trayNo = row.trayNo;
     openBindModal(true);
     await nextTick();
-    reloadBind();
+    await reloadBind();
   }
 </script>

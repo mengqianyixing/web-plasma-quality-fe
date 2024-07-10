@@ -19,7 +19,7 @@
           type="primary"
           @click="handleCancelCreate"
           v-auth="QualityButtonEnum.BatchReleaseCancelAdd"
-          >取消审核</a-button
+          >撤销审核</a-button
         >
         <a-button
           type="primary"
@@ -32,7 +32,7 @@
           type="primary"
           @click="handleCancelReview"
           v-auth="QualityButtonEnum.BatchReleaseUpdate"
-          >取消复核</a-button
+          >撤销复核</a-button
         >
         <a-button
           type="primary"
@@ -45,15 +45,35 @@
           type="primary"
           @click="handleCancelRelease"
           v-auth="QualityButtonEnum.BatchReleaseUnRelease"
-          >取消放行</a-button
+          >撤销放行</a-button
         >
-        <a-button
-          type="primary"
-          @click="handlePrint"
-          :loading="reportLoading"
-          v-auth="QualityButtonEnum.BatchReleasePrint"
-          >打印</a-button
+        <a-dropdown
+          v-auth="[QualityButtonEnum.BatchReleasePrint, QualityButtonEnum.BatchQuarantinePeriod]"
         >
+          <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
+          <template #overlay>
+            <Menu>
+              <MenuItem @click="handlePrint">
+                <a-button
+                  type="link"
+                  :loading="reportLoading"
+                  v-auth="QualityButtonEnum.BatchReleasePrint"
+                >
+                  原料血浆投产批放行单
+                </a-button>
+              </MenuItem>
+              <MenuItem @click="handlePrintQuarantine">
+                <a-button
+                  type="link"
+                  :loading="reportLoading"
+                  v-auth="QualityButtonEnum.BatchQuarantinePeriod"
+                >
+                  原料血浆检疫期筛选情况
+                </a-button>
+              </MenuItem>
+            </Menu>
+          </template>
+        </a-dropdown>
       </template>
       <template #mesId="{ record }: { record: Recordable }">
         <span
@@ -76,7 +96,7 @@
       okText="提交"
       width="300px"
       :confirmLoading="confirmLoading"
-      :title="'取消原因'"
+      :title="'撤销原因'"
     >
       <div class="m-20px">
         <BasicForm @register="registerForm" />
@@ -93,7 +113,7 @@
   import PlasmaRestrictionModal from './plasma-restriction-modal.vue';
   import FormModal from './form-modal.vue';
   import { useModal } from '@/components/Modal';
-  import { message, Modal } from 'ant-design-vue';
+  import { message, Modal, Dropdown as ADropdown, MenuItem, Menu } from 'ant-design-vue';
   import { ref, reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import {
@@ -104,13 +124,14 @@
     getNonconformityListApi,
     submitCancelCreateApi,
     submitCancelReviewApi,
+    getPlasmaRestrictionListApi,
   } from '@/api/quality/batch-release';
   import { STATUS, STATUS_TEXT } from '@/enums/batchReleaseEnum';
-  import { getBindBoxsListApi } from '@/api/quality/plasma-restriction';
   import { QualityButtonEnum } from '@/enums/authCodeEnum';
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -220,8 +241,8 @@
     loading[type] = true;
     addLoading.value = true;
     try {
-      const res = await getBindBoxsListApi({
-        batchNos: row.batchNos,
+      const res = await getPlasmaRestrictionListApi({
+        orderNo: row.orderNo,
         currPage: '1',
         pageSize: '1',
       });
@@ -241,20 +262,23 @@
   function okFun() {
     iterator.next();
   }
+
+  const { createConfirm } = useMessage();
+
   function handleReview() {
     getSelections(true, ([row]) => {
       if (row.state !== STATUS.ROD) {
         return message.warning(`请选择【${STATUS_TEXT.get(STATUS.ROD)}】的数据`);
       }
       iterator = handleNext(row, 'review', () => {
-        Modal.confirm({
+        createConfirm({
+          iconType: 'warning',
           content: '确认复核制造批号【' + row.mesId + '】?',
           onOk: async () => {
             await submitReviewApi({ prNo: row.prNo });
             success();
             message.success('复核成功');
           },
-          onCancel: () => Modal.destroyAll(),
         });
       });
       iterator.next();
@@ -266,14 +290,14 @@
         return message.warning(`请选择【${STATUS_TEXT.get(STATUS.WAT)}】的数据`);
       }
       iterator = handleNext(row, 'release', () => {
-        Modal.confirm({
+        createConfirm({
+          iconType: 'warning',
           content: '确认放行制造批号【' + row.mesId + '】?',
           onOk: async () => {
             await submitReleaseApi({ prNo: row.prNo });
             success();
             message.success('放行成功');
           },
-          onCancel: () => Modal.destroyAll(),
         });
       });
       iterator.next();
@@ -319,7 +343,7 @@
       try {
         await dialogCallBackFn({ prNo: row.prNo, reason: values.reason });
         success();
-        message.success('取消成功');
+        message.success('撤销成功');
         open.value = false;
       } finally {
         confirmLoading.value = false;
@@ -337,6 +361,22 @@
       const res = await getReportApi({
         reportKey: 'PLASMA_PRODUCTION_RELEASE',
         contentKey: row.prNo,
+      });
+      openReportModal(true, window.URL.createObjectURL(res));
+      clearSelectedRowKeys();
+    } finally {
+      reportLoading.value = false;
+    }
+  }
+
+  async function handlePrintQuarantine() {
+    const [row] = getSelections(true);
+    if (!row) return;
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({
+        reportKey: 'KM_PLASMA_QUARANINE_FILTER',
+        contentKey: row.orderNo,
       });
       openReportModal(true, window.URL.createObjectURL(res));
       clearSelectedRowKeys();

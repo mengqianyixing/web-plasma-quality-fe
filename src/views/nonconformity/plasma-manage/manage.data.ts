@@ -22,23 +22,33 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    width: 65,
+    width: 80,
+    fixed: 'left',
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
     ellipsis: false,
+    width: 120,
+    fixed: 'left',
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
     slots: { customRender: 'bagNo' },
-    width: 120,
+    width: 150,
+    fixed: 'left',
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
-    width: 100,
+    dataIndex: 'cardNo',
+    width: 150,
+    fixed: 'left',
+  },
+  {
+    title: '血型',
+    dataIndex: 'bloodType',
+    width: 50,
   },
   {
     title: '浆员姓名',
@@ -48,26 +58,31 @@ export const columns: BasicColumn[] = [
   {
     title: '采集日期',
     dataIndex: 'collDate',
+    width: 100,
   },
   {
     title: '存放位置',
     dataIndex: 'stockLocation',
+    width: 150,
+    ellipsis: false,
   },
   {
     title: '箱号',
     dataIndex: 'boxNo',
     ellipsis: false,
+    width: 130,
   },
   {
     title: '不合格原因',
     dataIndex: 'unqReason',
     slots: { customRender: 'unqReason' },
     ellipsis: false,
-    width: 200,
+    width: 170,
   },
   {
     title: '不合格日期',
     dataIndex: 'unqDate',
+    width: 100,
   },
   {
     title: '不合格入库日期',
@@ -75,6 +90,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 110,
   },
   {
     title: '不合格出库日期',
@@ -82,6 +98,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 110,
   },
   {
     title: '状态',
@@ -89,12 +106,12 @@ export const columns: BasicColumn[] = [
     format(text) {
       return nonconformityPlasmaMap.get(<NonconformityPlasmaStatusValueEnum>text) as string;
     },
-    width: 120,
+    width: 105,
   },
   {
     title: '审核状态',
     dataIndex: 'checked',
-    width: 80,
+    width: 65,
   },
 ];
 
@@ -184,6 +201,7 @@ export const searchSchema: FormSchema[] = [
           DictionaryItemKeyEnum.Quarantine,
           DictionaryItemKeyEnum.Other,
         ],
+        show: 123,
       },
       valueField: 'dictItemId',
     },
@@ -266,7 +284,7 @@ export const detailSchema: DescItem[] = [
   { field: 'batchNo', label: '血浆批号' },
   { field: 'boxNo', label: '血浆箱号' },
   { field: 'stationName', label: '采浆公司' },
-  { field: 'donorNo', label: '浆员编号' },
+  { field: 'cardNo', label: '浆员编号' },
   { field: 'donorName', label: '浆员姓名' },
   { field: 'donorStatus', label: '浆员状态' },
   { field: 'gender', label: '性别' },

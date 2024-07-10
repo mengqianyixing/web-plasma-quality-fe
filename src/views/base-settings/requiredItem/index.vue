@@ -155,6 +155,7 @@
         sampleType: row.sampleTypeEnum,
       } as any);
       message.success('删除成功');
+      openCancelModal(false);
       reload();
     } finally {
       setModalProps({ confirmLoading: false });

@@ -1,12 +1,60 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" :columns="columnsComputed">
       <template #planNo="{ record }">
         <span
           class="text-blue-500 underline cursor-pointer"
           @click.stop.self="handlePlanNoClick(record)"
         >
           {{ record?.planNo }}
+        </span>
+      </template>
+      <template #okNum="{ record }">
+        <span
+          :class="!record?.okNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'"
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.SUCCESS, record)"
+        >
+          {{ record?.okNum }}
+        </span>
+      </template>
+      <template #failedNum="{ record }">
+        <span
+          :class="
+            !record?.failedNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.FAIL, record)"
+        >
+          {{ record?.failedNum }}
+        </span>
+      </template>
+      <template #recoverNum="{ record }">
+        <span
+          :class="
+            !record?.recoverNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.RESUME, record)"
+        >
+          {{ record?.recoverNum }}
+        </span>
+      </template>
+      <template #noVisitNum="{ record }">
+        <span
+          :class="
+            !record?.noVisitNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.NOVISIT, record)"
+        >
+          {{ record?.noVisitNum }}
+        </span>
+      </template>
+      <template #selfBackNum="{ record }">
+        <span
+          :class="
+            !record?.selfBackNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleGoSelfBack(record)"
+        >
+          {{ record?.selfBackNum }}
         </span>
       </template>
       <template #toolbar>
@@ -35,6 +83,8 @@
     <SelectStationNameModal @register="registerSelectModal" @success="handleSelectSuccess" />
     <CallbackGenerationModal @register="registerGenerationModal" @success="handleSuccess" />
     <CallbackDetailModal @register="registerCallbackDetailModal" />
+    <CustomDetailRenderModal @register="registerCallbackCustomDetailModal" />
+    <SelfBackModal @register="registerSelfBackModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -46,10 +96,12 @@
   import CallbackGenerationModal from '@/views/callback/list-generation/CallbackGenerationModal.vue';
   import CallbackDetailModal from '@/views/callback/list-generation/CallbackDetailModal.vue';
   import SelectStationNameModal from '@/views/callback/list-generation/SelectStationNameModal.vue';
+  import CustomDetailRenderModal from '@/views/callback/list-generation/CustomDetailRenderModal.vue';
+  import SelfBackModal from '@/views/callback/list-generation/SelfBackModal.vue';
 
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, computed } from 'vue';
 
-  import { columns, searchFormSchema } from './generation.data';
+  import { columns, searchFormSchema, callbackDetailModalColumns } from './generation.data';
 
   import { PageWrapper } from '@/components/Page';
   import {
@@ -58,43 +110,69 @@
     getCallbackListApi,
   } from '@/api/callback/list-generation';
   import {
-    CallbackStateValueEnum,
-    donorStatusMap,
-    donorStatusValueEnum,
+    CallBackDetailState,
+    callbackModalEnum,
+    CallbackStateEnum,
+    QuarantineBatchControlEnum,
   } from '@/enums/callbackEnum';
-  import dayjs from 'dayjs';
   import { callbackConfirm } from '@/api/callback/list-confirm';
   import { CallbackButtonEnum } from '@/enums/authCodeEnum';
   import { useStation } from '@/hooks/common/useStation';
-  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { getSysParamsByParamKey } from '@/api/systemServer/params';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { formatData, getHeader } from '@/components/Excel/src/Export2Excel';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
 
   const { stationOptions, getStationNameById } = useStation();
+  const globalApiStore = useGlobalApiStoreWithOut();
+
   defineOptions({ name: 'CallbackGeneration' });
 
   const selectedRow = ref<Recordable>([]);
-
-  const serverEnumStore = useServerEnumStoreWithOut();
+  const callbackModel = ref('');
+  const quarantineBatchControl = ref('');
+  const isAModel = computed(() => callbackModel.value === callbackModalEnum.A);
+  const quarantineBatchControlModal = computed(
+    () => quarantineBatchControl.value === QuarantineBatchControlEnum.OPEN,
+  );
+  const columnsComputed = computed(() => {
+    return isAModel.value
+      ? columns
+      : columns.filter((it) => !(it.title as string).includes('样本'));
+  });
 
   const { createConfirm, createMessage } = useMessage();
 
-  onMounted(() => {
-    getForm().updateSchema({
+  onMounted(async () => {
+    await getSysParamsByParamKey(SysParamsEnum.CallbackModel).then((res) => {
+      callbackModel.value = res;
+    });
+    await getSysParamsByParamKey(SysParamsEnum.QuarantineBatchControl).then((res) => {
+      quarantineBatchControl.value = res;
+    });
+    await getForm().updateSchema({
       field: 'stationNo',
       componentProps: {
         options: stationOptions,
       },
     });
+
+    !isAModel.value &&
+      (await getForm().removeSchemaByField('[sampleAcceptStartDate, sampleAcceptEndDate]'));
+    !isAModel.value &&
+      (await getForm().removeSchemaByField('[samplePublishStartDate, samplePublishEndDate]'));
   });
 
   const [registerSelectModal, { openModal }] = useModal();
 
   const [registerGenerationModal, { openModal: openGenerationModal }] = useModal();
   const [registerCallbackDetailModal, { openModal: openCallbackDetailModal }] = useModal();
+  const [registerCallbackCustomDetailModal, { openModal: openCallbackCustomDetailModal }] =
+    useModal();
+  const [registerSelfBackModal, { openModal: openSelfBackModal }] = useModal();
 
   const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
     api: getCallbackListApi,
-    columns,
     formConfig: {
       schemas: searchFormSchema,
       transformDateFunc(date) {
@@ -117,9 +195,6 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-    scroll: {
-      x: 0,
-    },
     bordered: true,
     showIndexColumn: false,
     canResize: true,
@@ -139,7 +214,7 @@
       return;
     }
 
-    if (selectedRow.value[0].state !== CallbackStateValueEnum.WIT) {
+    if (selectedRow.value[0].state !== CallbackStateEnum.WIT) {
       createMessage.warn('该状态不允许编辑');
       return;
     }
@@ -149,6 +224,7 @@
       record: {
         batchNo: selectedRow.value[0].planNo,
         stationNo: selectedRow.value[0].stationNo,
+        isShowTrackType: callbackModel.value && quarantineBatchControlModal.value,
       },
     });
 
@@ -164,50 +240,25 @@
 
     exportLoading.value = true;
     try {
-      const exportData = await getCallbackDetail({
-        batchNo: selectedRow.value[0].planNo,
-      });
+      const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
 
-      const _exportData = exportData!.map((it) => {
-        return {
-          donorNo: it.donorNo,
-          donorName: it.donorName,
-          gender: it.gender,
-          donatorStatus: donorStatusMap.get(it.donatorStatus as donorStatusValueEnum),
-          refuseDate: it.refuseDate ? dayjs(it.refuseDate).format('YYYY-MM-DD') : '',
-          refuseReason: it.refuseReason,
-          minPlasmaNo: it.minPlasmaNo,
-          minCollTime: it.minCollTime ? dayjs(it.minCollTime).format('YYYY-MM-DD') : '',
-          plasmaCount: it.plasmaCount,
-          maxCollectTime: it.maxCollectTime ? dayjs(it.maxCollectTime).format('YYYY-MM-DD') : '',
-          callbackDate: it.callbackDate,
-          callbackResult: it.callbackResult,
-          sampleNo: it.sampleNo,
-          sampleCollectTime: it.sampleCollectTime
-            ? dayjs(it.sampleCollectTime).format('YYYY-MM-DD')
-            : '',
-        };
+      const OriginData = await getCallbackDetail({
+        batchNo: selectedRow.value[0]?.planNo,
+        currPage: '1',
+        pageSize,
       });
-
-      jsonToSheetXlsx<any>({
-        header: {
-          donorNo: '浆员编号',
-          donorName: '浆员姓名',
-          gender: '性别',
-          donatorStatus: '浆员状态',
-          refuseDate: '拒绝日期',
-          refuseReason: '拒绝原因',
-          minPlasmaNo: '最早采浆血浆编号',
-          minCollTime: '最早待回访采浆日期',
-          plasmaCount: '待追踪袋数',
-          maxCollectTime: '最后采浆日期',
-          callbackDate: '回访日期',
-          callbackResult: '回访结果',
-          sampleNo: '样本编号',
-          sampleCollectTime: '样本采集日期',
-        },
-        filename: `${selectedRow.value[0].planNo}-回访名单.xlsx`,
-        data: _exportData,
+      exportLoading.value = false;
+      const { rows, merges: headerMerge, lastLevelCols } = getHeader(callbackDetailModalColumns);
+      const { result, merge: bodyMerge } = formatData(
+        lastLevelCols,
+        OriginData.result || [],
+        rows.length,
+      );
+      jsonToSheetXlsx({
+        data: [...rows, ...result],
+        json2sheetOpts: { skipHeader: true },
+        merges: [...headerMerge, ...bodyMerge],
+        filename: `${selectedRow.value[0]?.planNo}-回访名单.xlsx`,
       });
 
       createMessage.success('导出成功');
@@ -236,6 +287,7 @@
         options: stationOptions,
         stationNo: id,
         batchNo: batchNo.value,
+        isShowTrackType: callbackModel.value && quarantineBatchControlModal.value,
       },
     });
   }
@@ -245,7 +297,9 @@
       ...record,
       isPreview: true,
       stationName: getStationNameById(record.stationNo),
-      state: serverEnumStore.getServerEnumText(SERVER_ENUM.CallbackPlanState)(record.state),
+      state: record.state,
+      model: callbackModel.value,
+      isShowTrackType: callbackModel.value && quarantineBatchControlModal.value,
     });
   }
 
@@ -266,4 +320,22 @@
       },
     });
   }
+
+  function handleGoCustomModal(state: CallBackDetailState, record: Recordable) {
+    openCallbackCustomDetailModal(true, {
+      state,
+      record,
+    });
+  }
+
+  function handleGoSelfBack(record: Recordable) {
+    openSelfBackModal(true, {
+      record,
+    });
+  }
 </script>
+<style scoped>
+  :deep(.ant-table th) {
+    white-space: wrap;
+  }
+</style>

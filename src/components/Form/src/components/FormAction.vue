@@ -5,7 +5,6 @@
         <slot name="resetBefore"></slot>
         <Button
           type="default"
-          class="mr-2"
           v-bind="getResetBtnOptions"
           @click="resetAction"
           v-if="showResetButton"
@@ -16,7 +15,7 @@
 
         <Button
           type="primary"
-          class="mr-2"
+          class="ml-2"
           v-bind="getSubmitBtnOptions"
           @click="submitAction"
           v-if="showSubmitButton"
@@ -26,6 +25,7 @@
 
         <slot name="advanceBefore"></slot>
         <Button
+          class="ml-2"
           type="link"
           size="small"
           @click="toggleAdvanced"

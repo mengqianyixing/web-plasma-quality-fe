@@ -22,8 +22,8 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { useMessage } from '@/hooks/web/useMessage';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
-  import { nonconformityRegistration } from '@/api/nonconformity/box-manage';
-  import { PostApiCoreBagUnqualifiedRequest } from '@/api/type/nonconformityManage';
+  import { nonconformityRegistrationVerify } from '@/api/nonconformity/box-manage';
+  import { PostApiCoreBagUnqualifiedVerifyRequest } from '@/api/type/nonconformityManage';
   import {
     DictionaryItemKeyEnum,
     DictionaryReasonEnum,
@@ -108,7 +108,7 @@
     try {
       setModalProps({ confirmLoading: true });
       const values = await validate();
-      await nonconformityRegistration(values as PostApiCoreBagUnqualifiedRequest);
+      await nonconformityRegistrationVerify(values as PostApiCoreBagUnqualifiedVerifyRequest);
 
       createMessage.success('登记成功');
       emit('success');

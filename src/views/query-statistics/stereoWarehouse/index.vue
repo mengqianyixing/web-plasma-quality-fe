@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight>
+  <PageWrapper dense contentFullHeight fixedHeight class="root">
     <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
@@ -23,7 +23,7 @@
   defineOptions({ name: 'StereoWarehouse' });
   const loading = ref(false);
 
-  const [registerTable, { getForm }] = useTable({
+  const [registerTable, { getForm, getDataSource }] = useTable({
     api: getListApi,
     columns,
     formConfig: {
@@ -39,7 +39,22 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
+    immediate: false,
+    showSummary: true,
+    summaryFunc: handleSummary,
   });
+
+  function handleSummary() {
+    const origin = getDataSource();
+    return [
+      {
+        stationName: '合计',
+        bagCount: origin[0]?.allBagCount,
+        totalWeight: origin[0]?.allTotalWeight,
+      },
+    ];
+  }
+
   async function handleExport() {
     try {
       loading.value = true;

@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" class="tableHeight">
       <template #otherNum="{ record }: { record: Recordable }">
         <span v-if="record.isCount"> {{ record[otherNumUnqKey][numKey] }}</span>
         <span
@@ -43,10 +43,12 @@
 
   defineOptions({ name: 'FollowDisqualificationStatistics' });
   const cloneColumns = cloneDeep(columns);
+  const dictMap = new Map();
 
   const [registerModal, { openModal }] = useModal();
+  let formData: Recordable = {};
 
-  const [registerTable, { getForm, reload, setColumns }] = useTable({
+  const [registerTable, { getForm, setColumns }] = useTable({
     immediate: false,
     api: getListApi,
     columns: cloneColumns,
@@ -66,6 +68,7 @@
     pagination: false,
     showIndexColumn: false,
     afterFetch: (res: Recordable[]) => {
+      formData = getForm().getFieldsValue();
       const formatData = res.map((row) => ({
         ...row,
         [backTrackUnqKey]: { ...row[backTrackUnqKey], ...row[backTrackUnqKey][projectsKey] },
@@ -130,7 +133,7 @@
                 )
               }
             >
-              {record[backTrackUnqKey]?.[it.dictItemId]}
+              {record[backTrackUnqKey]?.[it.dictItemId] || 0}
             </span>
           );
         },
@@ -155,14 +158,16 @@
                 )
               }
             >
-              {record[followTrackNumUnqKey]?.[it.dictItemId]}
+              {record[followTrackNumUnqKey]?.[it.dictItemId] || 0}
             </span>
           );
         },
       })),
     );
+    res.forEach((it) => {
+      dictMap.set(it.dictItemId, it.label);
+    });
     setColumns(cloneColumns);
-    reload();
   });
 
   function cellClick(
@@ -171,13 +176,18 @@
     title: string,
     record: Recordable,
   ) {
-    const values = getForm().getFieldsValue();
     openModal(true, {
       failedCode,
       title,
-      ...values,
+      ...formData,
       year: record.year,
       trackType,
+      dictMap,
     });
   }
 </script>
+<style scoped lang="less">
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
+  }
+</style>

@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" class="tableHeight">
       <template #testCount="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
@@ -11,24 +11,37 @@
       </template>
     </BasicTable>
     <TabelModal @register="registerModal" />
+    <UnTabelModal @register="registerUnModal" />
   </PageWrapper>
 </template>
-<script lang="ts" setup>
+<script lang="tsx" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './data';
   import { PageWrapper } from '@/components/Page';
   import { getListApi } from '@/api/query-statistics/checkResult';
   import TabelModal from './tabelModal.vue';
-
+  import UnTabelModal from './unTabelModal.vue';
+  import { get } from 'lodash-es';
   import { useModal } from '@/components/Modal';
 
   defineOptions({ name: 'CheckResult' });
 
   const [registerModal, { openModal }] = useModal();
+  const [registerUnModal, { openModal: openUnModal }] = useModal();
 
   const [registerTable] = useTable({
     api: getListApi,
-    columns,
+    columns: columns(({ record, key, label }) => {
+      if (record.isCount) return get(record, key);
+      return (
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          onClick={() => cellClick(key.split('.')[1], label, record)}
+        >
+          {get(record, key)}
+        </span>
+      );
+    }),
     formConfig: {
       schemas: searchFormSchema,
     },
@@ -43,4 +56,17 @@
     useSearchForm: true,
     bordered: true,
   });
+
+  function cellClick(filedReason: string | null, title: string, record: Recordable) {
+    openUnModal(true, {
+      filedReason: filedReason === 'count' ? void 0 : filedReason,
+      title,
+      ...record,
+    });
+  }
 </script>
+<style scoped lang="less">
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
+  }
+</style>

@@ -9,6 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import { TagManageButtonEnum } from '@/enums/authCodeEnum';
 
 const labelManager: AppRouteModule = {
   path: '/tag-manage',
@@ -29,15 +30,40 @@ const labelManager: AppRouteModule = {
       },
       id: 890010,
       component: () => import('@/views/tag-manage/style/index.vue'),
-    },
-    {
-      path: 'encoding',
-      name: 'TagEncoding',
-      meta: {
-        title: '标签编码管理',
-      },
-      id: 890020,
-      component: () => import('@/views/tag-manage/encoding/index.vue'),
+      authElements: [
+        {
+          id: TagManageButtonEnum.TagStyleAdd,
+          title: '新增',
+        },
+        {
+          id: TagManageButtonEnum.TagStyleEdit,
+          title: '编辑',
+        },
+        {
+          id: TagManageButtonEnum.TagStyleDelete,
+          title: '撤销',
+        },
+        {
+          id: TagManageButtonEnum.TagStyleCopy,
+          title: '复制',
+        },
+        {
+          id: TagManageButtonEnum.TagStyleHistory,
+          title: '历史',
+        },
+        {
+          id: TagManageButtonEnum.TagStylePreview,
+          title: '预览',
+        },
+        {
+          id: TagManageButtonEnum.TagStyleOpen,
+          title: '启用',
+        },
+        {
+          id: TagManageButtonEnum.TagStyleClose,
+          title: '禁用',
+        },
+      ],
     },
     {
       path: 'print-record',
@@ -47,6 +73,15 @@ const labelManager: AppRouteModule = {
       },
       id: 890030,
       component: () => import('@/views/tag-manage/print-record/index.vue'),
+    },
+    {
+      path: 'replay',
+      name: 'TagReplay',
+      meta: {
+        title: '标签补打',
+      },
+      id: 890040,
+      component: () => import('@/views/tag-manage/replay/index.vue'),
     },
   ],
 };

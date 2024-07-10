@@ -31,7 +31,7 @@ const sampleManager: AppRouteModule = {
         title: '样本接收',
       },
       id: 970010,
-      component: () => import('@/views/inbound-management/sample-receive/index.vue'),
+      component: () => import('@/views/sample-manage/sample-receive/index.vue'),
     },
     {
       path: 'sample-verify',
@@ -40,7 +40,7 @@ const sampleManager: AppRouteModule = {
         title: '样本验收',
       },
       id: 970020,
-      component: () => import('@/views/inbound-management/sample-verify/index.vue'),
+      component: () => import('@/views/sample-manage/sample-verify/index.vue'),
       authElements: [
         {
           id: ReCheckButtonEnum.NonconformitySampleCheck,
@@ -65,8 +65,124 @@ const sampleManager: AppRouteModule = {
       authElements: [
         {
           id: SampleManageButtonEnum.SampleRelease,
-          name: 'sampleRelease',
           title: '发布',
+        },
+        {
+          id: SampleManageButtonEnum.SampleArrange,
+          title: '查看试管架',
+        },
+      ],
+    },
+    {
+      path: 'reserve-sample-destroy-outbound',
+      name: 'ReserveSampleDestroyOutbound',
+      id: 970100,
+      meta: {
+        title: '保留样本销毁出库',
+      },
+      authElements: [
+        {
+          id: SampleManageButtonEnum.SampleDestroyAdd,
+          title: '新增',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyEdit,
+          title: '编辑',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroySubmit,
+          title: '提交申请',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyCancelApply,
+          title: '撤销申请',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyCheck,
+          title: '审核',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyCancelCheck,
+          title: '撤销审核',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyOutBand,
+          title: '出库',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyPrint,
+          title: '打印',
+        },
+      ],
+      component: () => import('@/views/sample-manage/reserve-sample-destroy-outbound/index.vue'),
+    },
+    {
+      path: 'reserve-sample-destroy-outbound-single',
+      name: 'ReserveSampleDestroyOutboundSingle',
+      id: 970200,
+      meta: {
+        title: '保留样本单个出库',
+      },
+      authElements: [
+        {
+          id: SampleManageButtonEnum.SampleWarehouseAdd,
+          title: '新增',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseEdit,
+          title: '编辑',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseSubmit,
+          title: '提交申请',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseCancelApply,
+          title: '撤销申请',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseCheck,
+          title: '审核',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseCancelCheck,
+          title: '撤销审核',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseOutBand,
+          title: '出库',
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseExport,
+          title: '导出',
+        },
+      ],
+      component: () =>
+        import('@/views/sample-manage/reserve-sample-destroy-outbound-single/index.vue'),
+    },
+    {
+      path: 'reserve-sample-warehouse',
+      name: 'ReserveSampleWarehouse',
+      id: 970110,
+      meta: {
+        title: '保留样本入库',
+      },
+      component: () => import('@/views/sample-manage/reserve-sample-warehouse/index.vue'),
+    },
+    {
+      path: 'test-plan',
+      name: 'TestPlan',
+      id: 970040,
+      meta: { title: '检测计划' },
+      component: () => import('@/views/sample-manage/testPlan/index.vue'),
+      authElements: [
+        {
+          id: SampleManageButtonEnum.TestPlanAdd,
+          title: '新增',
+        },
+        {
+          id: SampleManageButtonEnum.TestPlanUpdate,
+          title: '编辑',
         },
       ],
     },

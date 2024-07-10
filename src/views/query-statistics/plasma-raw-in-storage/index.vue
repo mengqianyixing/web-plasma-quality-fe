@@ -3,7 +3,14 @@
     <div class="h-2/3 mb-50px">
       <BasicTable @register="registerTable">
         <template #toolbar>
-          <a-button type="primary">打印</a-button>
+          <a-button
+            type="primary"
+            v-auth="SearchManager.PlasmaRawInStoragePrint"
+            @click="handlePrint"
+            :loading="reportLoading"
+          >
+            打印
+          </a-button>
         </template>
       </BasicTable>
     </div>
@@ -12,15 +19,16 @@
         @register="registerFooterTable"
         :dataSource="footerTableData"
         :columns="formatFooterColumns"
+        class="tableHeight"
       >
         <template #summary>
           <div class="w-85vw">
-            备注；
             {{ footerTableData[0]?.remark }}
           </div>
         </template>
       </BasicTable>
     </div>
+    <ReportModal @register="registerReportModal" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -30,12 +38,20 @@
 
   import { getPlasmaRawInStorage } from '@/api/query-statistics/plasma';
   import { GetApiCoreBagOutInStorageStatisticResponse } from '@/api/type/queryStatistics';
+  import { SearchManager } from '@/enums/authCodeEnum';
+  import { getReportApi } from '@/api/report';
+  import dayjs from 'dayjs';
+  import { useModal } from '@/components/Modal';
+  import ReportModal from '@/components/ReportModal/index.vue';
 
   defineOptions({ name: 'PlasmaRawInStorage' });
 
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
+
   const footerTableData = ref<any[]>([]);
   const formatFooterColumns = ref<BasicColumn[]>([]);
-  const [registerTable, { getRawDataSource }] = useTable({
+  const [registerTable, { getRawDataSource, getForm }] = useTable({
+    immediate: false,
     api: getPlasmaRawInStorage,
     afterFetch: (data) => {
       const _data: GetApiCoreBagOutInStorageStatisticResponse = getRawDataSource();
@@ -91,9 +107,10 @@
     showIndexColumn: false,
   });
 
-  function handleSummary(tableData: any[]) {
-    const inOfMonth = tableData.reduce((prev, curr) => prev + curr.inOfMonth, 0);
-    const inOfYear = tableData.reduce((prev, curr) => prev + curr.inOfYear, 0);
+  function handleSummary() {
+    const origin = getRawDataSource();
+    const inOfMonth = origin.allInOfMonth;
+    const inOfYear = origin.allInOfYear;
     return [
       {
         stationName: '总计',
@@ -102,5 +119,28 @@
       },
     ];
   }
+
+  const reportLoading = ref(false);
+  async function handlePrint() {
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({
+        reportKey: 'PLASMA_RECEPTION',
+        contentKey: dayjs().valueOf().toString(),
+        params: encodeURIComponent(
+          JSON.stringify({
+            ...getForm().getFieldsValue(),
+          }),
+        ),
+      } as any);
+      openReportModal(true, window.URL.createObjectURL(res));
+    } finally {
+      reportLoading.value = false;
+    }
+  }
 </script>
-<style scoped></style>
+<style scoped lang="less">
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
+  }
+</style>

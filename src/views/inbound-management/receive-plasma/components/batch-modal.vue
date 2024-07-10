@@ -12,7 +12,7 @@
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
-        <BasicTable @register="registerTable" :searchInfo="searchInfo" :scroll="{ y: 420 }">
+        <BasicTable @register="registerTable" :searchInfo="searchInfo">
           <template #bodyCell="{ column, text }">
             <template v-if="column.dataIndex === 'acceptState'">
               {{ optsTransMap(receiveOpts, 'value', 'label')[text] }}
@@ -54,14 +54,16 @@
     if (data.isAccept) {
       mode.value = 'accept';
       // 设置接收状态默认值
-      await getForm().updateSchema({
-        field: 'acceptState',
-        defaultValue: ['S'],
-      });
-      await getForm().updateSchema({
-        field: 'verifyState',
-        defaultValue: ['R', 'W'],
-      });
+      await getForm().updateSchema([
+        {
+          field: 'acceptState',
+          defaultValue: ['S'],
+        },
+        {
+          field: 'verifyState',
+          defaultValue: ['R', 'W'],
+        },
+      ]);
     } else {
       // 接收页面打开
       await getForm().updateSchema({
@@ -169,7 +171,6 @@
       field: 'stationNo',
       label: '采浆公司',
       component: 'Select',
-      colProps: { span: 4 },
       componentProps: {
         options: stationOptions,
       },
@@ -178,13 +179,11 @@
       field: 'batchNo',
       label: '血浆批次',
       component: 'Input',
-      colProps: { span: 4 },
     },
     {
       field: 'acceptState',
       label: '接收状态',
       component: 'Select',
-      colProps: { span: 5 },
       defaultValue: [],
       componentProps: {
         mode: 'multiple',
@@ -195,7 +194,6 @@
       field: 'verifyState',
       label: '验收状态',
       component: 'Select',
-      colProps: { span: 5 },
       defaultValue: [],
       componentProps: {
         mode: 'multiple',
@@ -211,7 +209,6 @@
     api: getBatchSummary,
     columns,
     formConfig: {
-      labelWidth: 75,
       schemas: searchFormSchema,
     },
     immediate: true,
@@ -228,7 +225,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-    clickToRowSelect: false,
+    clickToRowSelect: true,
     rowSelection: {
       type: 'radio',
       onChange: (_, selectedRows: any) => {
@@ -244,7 +241,8 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    isCanResizeParent: true,
+    inset: false,
   });
 
   // 确认选择批号
@@ -278,3 +276,10 @@
     clearSelectedRowKeys();
   }
 </script>
+<style lang="scss" scoped>
+  .my-table {
+    ::v-deep(.ant-table) {
+      min-height: 460px;
+    }
+  }
+</style>

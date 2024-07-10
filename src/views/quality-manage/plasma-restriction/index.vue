@@ -41,7 +41,7 @@
       showFooter
       :title="`批次【${batchNo}】限制血浆箱列表`"
       width="800px"
-      :minHeight="520"
+      :minHeight="600"
       @fullscreen="redoHeight"
     >
       <div class="relative h-inherit max-h-inherit min-h-inherit">
@@ -59,7 +59,7 @@
   import { PageWrapper } from '@/components/Page';
   import { useModal, BasicModal } from '@/components/Modal';
   import { columns, searchFormschema, boxColumns } from './plasma-restriction.data';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import {
     getListApi,
@@ -69,10 +69,12 @@
   } from '@/api/quality/plasma-restriction';
   import { ref, nextTick } from 'vue';
   import { QualityButtonEnum } from '@/enums/authCodeEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'PlasmaRestriction' });
 
   const batchNo = ref('');
+  const bfNo = ref('');
   const [registerModal, { openModal }] = useModal();
   const [registerBindModal, { openModal: openBindModal }] = useModal();
 
@@ -116,7 +118,7 @@
     inset: true,
     columns: boxColumns.slice(1),
     size: 'small',
-    beforeFetch: (p) => ({ ...p, batchNo: batchNo.value }),
+    beforeFetch: (p) => ({ ...p, batchNo: batchNo.value, bfNo: bfNo.value }),
     bordered: true,
   });
   function getSelections(onlyOne: boolean) {
@@ -132,6 +134,7 @@
   }
   async function handleDt(row: Recordable) {
     batchNo.value = row.batchNo;
+    bfNo.value = row.bfNo;
     openBindModal(true);
     await nextTick();
     setPagination({ current: 1 });
@@ -140,16 +143,19 @@
   function handleCreate() {
     openModal(true, {});
   }
+
+  const { createConfirm } = useMessage();
+
   function handleCancel() {
     const [row] = getSelections(true);
     if (!row) return;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认撤销批号' + row.batchNo + '血浆限制?',
       onOk: async () => {
         await submitCancelApi({ bfNo: row.bfNo });
         success();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function success() {
@@ -159,13 +165,13 @@
   function handleReview() {
     const [row] = getSelections(true);
     if (!row) return;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认复核批号' + row.batchNo + '血浆限制?',
       onOk: async () => {
         await submitReviewApi({ bfNo: row.bfNo });
         success();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 </script>

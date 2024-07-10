@@ -9,7 +9,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     slots: { customRender: 'donorNo' },
   },
   {
@@ -41,9 +41,6 @@ export const searchFormSchema: FormSchema[] = [
     field: 'stationNo',
     label: '采浆公司',
     component: 'Select',
-    colProps: {
-      span: 5,
-    },
   },
   {
     field: 'createAt',

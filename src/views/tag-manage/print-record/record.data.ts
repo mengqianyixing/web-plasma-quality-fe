@@ -19,7 +19,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '标签编号',
-    dataIndex: 'prtNo',
+    dataIndex: 'bissNo',
   },
   {
     title: '打印份数',

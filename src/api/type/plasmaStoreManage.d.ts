@@ -381,10 +381,10 @@ export interface GetApiCoreBankLocationsResponse {
  * 接口 [库存查询↗](https://yapi.sharing8.cn/project/529/interface/api/31671) 的 **请求类型**
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
- * @请求头 `GET /api/core/bank/stock`
- * @更新时间 `2024-02-05 17:00:04`
+ * @请求头 `GET /api/search/bank/stock`
+ * @更新时间 `2024-06-13 19:42:15`
  */
-export interface GetApiCoreBankStockRequest {
+export interface GetApiSearchBankStockRequest {
   /**
    * 采浆公司
    */
@@ -450,10 +450,10 @@ export interface GetApiCoreBankStockRequest {
  * 接口 [库存查询↗](https://yapi.sharing8.cn/project/529/interface/api/31671) 的 **返回类型**
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
- * @请求头 `GET /api/core/bank/stock`
- * @更新时间 `2024-02-05 17:00:04`
+ * @请求头 `GET /api/search/bank/stock`
+ * @更新时间 `2024-06-13 19:42:15`
  */
-export type GetApiCoreBankStockResponse = {
+export type GetApiSearchBankStockResponse = {
   /**
    * 采浆公司
    */
@@ -923,6 +923,263 @@ export interface GetApiCoreBatchPlasmaInStoreResponse {
      */
     verifyState: string;
   }[];
+}
+
+/**
+ * 接口 [平面图↗](https://yapi.sharing8.cn/project/529/interface/api/34326) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/location-layout`
+ * @更新时间 `2024-06-24 11:02:43`
+ */
+export interface GetApiCoreBankLocationLayoutRequest {
+  /**
+   * 库房
+   */
+  houseNo: string;
+  /**
+   * 货架编号
+   */
+  shelfNo: string;
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 样本批号
+   */
+  sampleBatchNo?: string;
+}
+
+/**
+ * 接口 [平面图↗](https://yapi.sharing8.cn/project/529/interface/api/34326) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/location-layout`
+ * @更新时间 `2024-06-24 11:02:43`
+ */
+export type GetApiCoreBankLocationLayoutResponse = {
+  /**
+   * 货位号
+   */
+  locationNo: string;
+  /**
+   * 颜色
+   */
+  color: string;
+}[][];
+
+/**
+ * 接口 [平面图-批号明细↗](https://yapi.sharing8.cn/project/529/interface/api/34332) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/location-layout/batches`
+ * @更新时间 `2024-06-24 21:05:08`
+ */
+export interface GetApiCoreBankLocationLayoutBatchesRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  currPage: string;
+  pageSize: string;
+  /**
+   * 托盘存放类型：PLA-血浆，PER-样本
+   */
+  trayType: string;
+}
+
+/**
+ * 接口 [平面图-批号明细↗](https://yapi.sharing8.cn/project/529/interface/api/34332) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/location-layout/batches`
+ * @更新时间 `2024-06-24 21:05:08`
+ */
+export interface GetApiCoreBankLocationLayoutBatchesResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 采浆公司
+     */
+    stationName: string;
+    /**
+     * 批号
+     */
+    batchNo: string;
+    /**
+     * 数量
+     */
+    totalCount: number;
+  }[];
+}
+
+/**
+ * 接口 [平面图-箱号明细↗](https://yapi.sharing8.cn/project/529/interface/api/34338) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/location-layout/boxes`
+ * @更新时间 `2024-06-24 21:05:26`
+ */
+export interface GetApiCoreBankLocationLayoutBoxesRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  currPage: string;
+  pageSize: string;
+  /**
+   * 托盘存放类型：PLA-血浆，PER-样本
+   */
+  trayType: string;
+}
+
+/**
+ * 接口 [平面图-箱号明细↗](https://yapi.sharing8.cn/project/529/interface/api/34338) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/location-layout/boxes`
+ * @更新时间 `2024-06-24 21:05:26`
+ */
+export interface GetApiCoreBankLocationLayoutBoxesResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 箱号
+     */
+    boxNo: string;
+    /**
+     * 数量
+     */
+    totalCount: number;
+  }[];
+}
+
+/**
+ * 接口 [平面图-血浆\/样本明细↗](https://yapi.sharing8.cn/project/529/interface/api/34344) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/location-layout/detail`
+ * @更新时间 `2024-06-24 21:05:52`
+ */
+export interface GetApiCoreBankLocationLayoutDetailRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  currPage: string;
+  pageSize: string;
+  /**
+   * 批号
+   */
+  batchNo?: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+  /**
+   * 编号
+   */
+  number?: string;
+  /**
+   * 托盘存放类型：PLA-血浆，PER-保留样本
+   */
+  trayType: string;
+}
+
+/**
+ * 接口 [平面图-血浆\/样本明细↗](https://yapi.sharing8.cn/project/529/interface/api/34344) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/location-layout/detail`
+ * @更新时间 `2024-06-24 21:05:52`
+ */
+export interface GetApiCoreBankLocationLayoutDetailResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 箱号
+     */
+    boxNo: string;
+    /**
+     * 采浆公司
+     */
+    stationName: string;
+    /**
+     * 血浆/样本批号
+     */
+    batchNo: string;
+    /**
+     * 血浆编号
+     */
+    bagNo: string;
+    /**
+     * 样本编号
+     */
+    sampleNo: string;
+    /**
+     * 样本袋号
+     */
+    packNo: string;
+    /**
+     * 浆员编号（卡号）
+     */
+    cardNo: string;
+    /**
+     * 浆员姓名
+     */
+    donorName: string;
+    /**
+     * 采集日期
+     */
+    collectAt: string;
+  }[];
+}
+
+/**
+ * 接口 [平面图-明细统计表头（血浆和保留样本都调用此接口）↗](https://yapi.sharing8.cn/project/529/interface/api/34350) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/location-layout/summary/{locationNo}`
+ * @更新时间 `2024-06-24 17:54:56`
+ */
+export interface GetApiCoreBankLocationLayoutSummaryLocationNoRequest {
+  /**
+   * 货位号
+   */
+  locationNo: string;
+}
+
+/**
+ * 接口 [平面图-明细统计表头（血浆和保留样本都调用此接口）↗](https://yapi.sharing8.cn/project/529/interface/api/34350) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `GET /api/core/bank/location-layout/summary/{locationNo}`
+ * @更新时间 `2024-06-24 17:54:56`
+ */
+export interface GetApiCoreBankLocationLayoutSummaryLocationNoResponse {
+  /**
+   * 货位号
+   */
+  locationNo?: string;
+  /**
+   * 数量
+   */
+  totalCount?: number;
+  /**
+   * 存放类型
+   */
+  trayType?: string;
+  /**
+   * 托盘编号
+   */
+  trayNo?: string;
 }
 
 /* prettier-ignore-end */

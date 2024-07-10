@@ -33,7 +33,7 @@
 <script lang="ts" setup>
   import { ref, computed, unref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
-  import { addFormSchema, updateFormSchema, passwordFormSchema } from './users.data';
+  import { addFormSchema, updateFormSchema, passwordFormSchema, initPassword } from './users.data';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { addCasDoorUser, setCasDoorUserPwd, setCasDoorUser } from '@/api/oauth/users';
   import { getCasDoorAllPolicyRoles } from '@/api/oauth/policies';
@@ -71,10 +71,9 @@
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     resetFields();
-    setModalProps({ confirmLoading: false });
+    setModalProps({ confirmLoading: false, destroyOnClose: true });
     isUpdate.value = !!data?.isUpdate;
     isPassword.value = !!data?.isPassword;
-
     if (unref(isUpdate) || unref(isPassword)) {
       userId.value = data.record.name;
       setFieldsValue({
@@ -109,13 +108,14 @@
         } else {
           await addCasDoorUser({
             ...values,
+            password: initPassword,
           });
         }
+        closeModal();
       } catch (e) {
         console.log(e);
       }
       setModalProps({ confirmLoading: false });
-      closeModal();
       emit('success');
     } finally {
       setModalProps({ confirmLoading: false });

@@ -9,7 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
-import { CallbackButtonEnum } from '@/enums/authCodeEnum';
+import { CallbackButtonEnum, SearchManager } from '@/enums/authCodeEnum';
 
 const callManager: AppRouteModule = {
   path: '/callback',
@@ -72,10 +72,42 @@ const callManager: AppRouteModule = {
       path: 'callback-failure',
       name: 'CallbackFailure',
       meta: {
-        title: '回访名单失败',
+        title: '回访终止查询',
       },
       id: 930030,
       component: () => import('@/views/callback/callback-failure/index.vue'),
+    },
+    {
+      path: 'CallbackStatistics',
+      name: 'CallbackStatistics',
+      meta: {
+        title: '回访统计',
+      },
+      id: 9000250,
+      component: () => import('@/views/query-statistics/callback/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.CallbackExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
+    },
+    {
+      path: 'CallbackBatchStatistics',
+      name: 'CallbackBatchStatistics',
+      meta: {
+        title: '回访批号查询',
+      },
+      id: 9000260,
+      component: () => import('@/views/query-statistics/callback-batch/index.vue'),
+      authElements: [
+        {
+          id: SearchManager.CallbackBatchExport,
+          name: 'export',
+          title: '导出',
+        },
+      ],
     },
   ],
 };

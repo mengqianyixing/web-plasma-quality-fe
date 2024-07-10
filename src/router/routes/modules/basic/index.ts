@@ -85,7 +85,7 @@ const callManager: AppRouteModule = {
       path: 'ItemSetting',
       name: 'ItemSetting',
       meta: {
-        title: '检验项目设置',
+        title: '检测项目',
       },
       authElements: [
         {
@@ -159,6 +159,15 @@ const callManager: AppRouteModule = {
       component: () => import('@/views/system/report/index.vue'),
     },
     {
+      path: 'encoding',
+      name: 'TagEncoding',
+      meta: {
+        title: '系统编码管理',
+      },
+      id: 890020,
+      component: () => import('@/views/tag-manage/encoding/index.vue'),
+    },
+    {
       path: 'params',
       name: 'Params',
       id: 100060,
@@ -175,6 +184,14 @@ const callManager: AppRouteModule = {
         title: '采浆公司',
       },
       authElements: [
+        {
+          id: BaseSettingButtonEnum.StationAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.StationEdit,
+          title: '编辑',
+        },
         {
           id: BaseSettingButtonEnum.StationEnable,
           name: 'stationEnable',
@@ -193,7 +210,7 @@ const callManager: AppRouteModule = {
       name: 'RequiredItem',
       id: 100080,
       meta: {
-        title: '必检项',
+        title: '必检项目设置',
       },
       authElements: [
         {

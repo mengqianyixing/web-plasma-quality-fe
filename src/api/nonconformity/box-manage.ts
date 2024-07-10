@@ -4,6 +4,7 @@ import {
   GetApiCoreBankUnqualifiedBoxesRequest,
   GetApiCoreBankUnqualifiedBoxesResponse,
   PostApiCoreBagUnqualifiedRequest,
+  PostApiCoreBagUnqualifiedVerifyRequest,
   PostApiCoreBankUnqualifiedBoxRequest,
   PutApiCoreBankUnqualifiedBoxRequest,
 } from '@/api/type/nonconformityManage';
@@ -11,6 +12,7 @@ import { GetApiCoreBankWarehousesNameRequest } from '@/api/type/plasmaStoreManag
 
 enum Api {
   NONCONFORMITY_REGISTRATION = '/api/core/bag/unqualified',
+  NONCONFORMITY_REGISTRATION_VERIFY = '/api/core/bag/unqualified/verify',
   NONCONFORMITY_BOX_LIST = '/api/core/bank/unqualified/boxes',
   BOX_RESTFUL = '/api/core/bank/unqualified/box',
   NONCONFORMITY_BANK = '/api/core/bank/warehouses/name',
@@ -19,6 +21,13 @@ enum Api {
 export const nonconformityRegistration = (params: PostApiCoreBagUnqualifiedRequest) => {
   return defHttp.post({
     url: Api.NONCONFORMITY_REGISTRATION,
+    params,
+  });
+};
+
+export const nonconformityRegistrationVerify = (params: PostApiCoreBagUnqualifiedVerifyRequest) => {
+  return defHttp.post({
+    url: Api.NONCONFORMITY_REGISTRATION_VERIFY,
     params,
   });
 };

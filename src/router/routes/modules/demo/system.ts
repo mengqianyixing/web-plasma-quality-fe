@@ -1,11 +1,3 @@
-/*
- * @Author: HxB
- * @Date: 2023-12-25 16:00:06
- * @LastEditors: DoubleAm
- * @LastEditTime: 2024-02-22 10:09:13
- * @Description: 系统管理
- * @FilePath: \psms-fe\src\router\routes\modules\demo\system.ts
- */
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
@@ -13,7 +5,7 @@ import { LAYOUT } from '@/router/constant';
 const system: AppRouteModule = {
   path: '/system',
   name: 'System',
-  menuWeight: 1010,
+  menuWeight: 880,
   id: 101,
   component: LAYOUT,
   redirect: '/system/account',
@@ -28,7 +20,7 @@ const system: AppRouteModule = {
       name: 'AuthMenus',
       id: 101010,
       meta: {
-        title: '权限管理',
+        title: '角色管理',
       },
       component: () => import('@/views/system/auth/index.vue'),
       authElements: [
@@ -60,23 +52,32 @@ const system: AppRouteModule = {
       ],
       component: () => import('@/views/system/users/index.vue'),
     },
-
     {
-      path: 'policies',
-      name: 'Policies',
-      id: 101030,
+      path: 'dept',
+      name: 'Department',
+      id: 101021,
       meta: {
-        title: '资源管理',
+        title: '部门管理',
       },
-      authElements: [
-        {
-          id: 'E_110',
-          name: 'editPolicies',
-          title: '编辑策略',
-        },
-      ],
-      component: () => import('@/views/system/policies/index.vue'),
+      component: () => import('@/views/system/dept/index.vue'),
     },
+    //
+    // {
+    //   path: 'policies',
+    //   name: 'Policies',
+    //   id: 101030,
+    //   meta: {
+    //     title: '资源管理',
+    //   },
+    //   authElements: [
+    //     {
+    //       id: 'E_110',
+    //       name: 'editPolicies',
+    //       title: '编辑策略',
+    //     },
+    //   ],
+    //   component: () => import('@/views/system/policies/index.vue'),
+    // },
     {
       path: 'logs',
       name: 'Logs',
@@ -86,6 +87,15 @@ const system: AppRouteModule = {
       },
       component: () => import('@/views/system/logs/index.vue'),
     },
+    // {
+    //   path: 'thirdSysLogs',
+    //   name: 'ThirdSysLogs',
+    //   id: 101050,
+    //   meta: {
+    //     title: '交互日志',
+    //   },
+    //   component: () => import('@/views/system/thirdSysLogs/index.vue'),
+    // },
   ],
 };
 

@@ -11,7 +11,7 @@
       @change="reload"
     >
       <TabPane v-for="(tab, i) in tabList" :key="tab.key" :tab="tab.title">
-        <BasicTable @register="tableList[i][0]" />
+        <BasicTable @register="tableList[i][0]" class="root" />
       </TabPane>
     </Tabs>
     <TabelModal @register="registerModal" />
@@ -30,11 +30,13 @@
     numKey,
     ratioKey,
     checkKey,
+    dateKey,
+    batchKey,
   } from './data';
   import { PageWrapper } from '@/components/Page';
-  import { TabPane, Tabs } from 'ant-design-vue';
+  import { TabPane, Tabs, message } from 'ant-design-vue';
   import { nextTick, ref } from 'vue';
-  import { cloneDeep } from 'lodash-es';
+  import { cloneDeep, get } from 'lodash-es';
   import { isArray, isObject } from '@/utils/is';
   import {
     getCheckListApi,
@@ -53,9 +55,20 @@
 
   const [registerModal, { openModal }] = useModal();
   const activeKey = ref('0');
-  const CheckColumns = cloneDeep(checkColumns);
+  const CheckColumns = cloneDeep(
+    checkColumns(({ record, key, label, type }) => {
+      if (record.isCount) return get(record, key);
+      return (
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          onClick={() => cellClick(null, label, record, type)}
+        >
+          {get(record, key)}
+        </span>
+      );
+    }),
+  );
   let params = {};
-
   const tabList = [
     {
       api: getCheckListApi,
@@ -63,6 +76,7 @@
       key: '0',
       columns: CheckColumns,
       afterFetch: (res: Recordable[]) => {
+        setProps({ loading: false });
         const formatData = res.map((row) => ({
           ...row,
           [checkUnKey]: {
@@ -74,7 +88,6 @@
             ...row[exteriorKey].projects,
           },
         }));
-
         const row = getCheckCountRow(formatData);
         return [...formatData, row];
       },
@@ -85,6 +98,7 @@
       key: '1',
       columns: titerColumns,
       afterFetch: (res: Recordable[]) => {
+        setProps({ loading: false });
         const row = getTiterCountRow(res);
         return [...res, row];
       },
@@ -95,6 +109,7 @@
       key: '2',
       columns: followUpColumns,
       afterFetch: (res: Recordable[]) => {
+        setProps({ loading: false });
         const row = getFollowUpCountRow(res);
         return [...res, row];
       },
@@ -116,23 +131,35 @@
     }),
   );
 
-  const [registerTable] = useTable({
+  const [registerTable, { getForm, setProps }] = useTable({
     immediate: false,
     api: () => Promise.resolve([]),
     emptyDataIsShowTable: false,
-    formConfig: { schemas: searchFormSchema },
+    formConfig: { schemas: searchFormSchema, submitFunc },
     size: 'small',
     useSearchForm: true,
-    beforeFetch: (p) => {
-      params = p;
-      reload();
-      return p;
-    },
   });
+  function getFormDateIsNotNull() {
+    const values = getForm().getFieldsValue();
+    params = values;
+    return [...dateKey, ...batchKey].some((key) => values[key]);
+  }
+  function submitFunc() {
+    if (getFormDateIsNotNull()) {
+      reload();
+      return Promise.resolve();
+    }
+    message.warning('请至少选择日期或输入血浆批号');
+    return Promise.reject();
+  }
   function reload() {
-    nextTick(() => {
-      tableList[activeKey.value][1].reload();
-    });
+    setProps({ loading: false });
+    if (getFormDateIsNotNull()) {
+      nextTick(() => {
+        setProps({ loading: true });
+        tableList[activeKey.value][1].reload();
+      });
+    }
   }
 
   function getTiterCountRow(data: Recordable[]) {
@@ -140,14 +167,25 @@
       row[dataIndex as string] = 0;
       return row;
     }, {});
+    const bagCountMap = new Map();
     data.forEach((it) => {
       for (const key in it) {
         const data = it[key];
         row[key] += data || 0;
       }
+      bagCountMap.set(it['stationName'] + it['rawImm'], it['bagCount']);
     });
+    row[bagCountKey] = [...bagCountMap.values()].reduce((t, c) => {
+      t += c;
+      return t;
+    }, 0);
     row[ratioKey] = row['titerCount'] / (row[bagCountKey] || 1);
-    return { ...row, titerTypes: '--', rawImm: '--', stationName: '合计' };
+    return {
+      ...row,
+      titerTypes: '--',
+      rawImm: '--',
+      stationName: '合计',
+    };
   }
   function getCheckCountRow(data: Recordable[]) {
     const row = CheckColumns.reduce((row, { dataIndex, children = [] }) => {
@@ -203,7 +241,8 @@
   Promise.all([
     getSysSecondaryDictionary({
       dataKey: DictionaryReasonEnum.PlasmaFailedReason as any,
-      dictItemTypes: [DictionaryItemKeyEnum.PlasmaAccept],
+      dictItemTypes: [DictionaryItemKeyEnum.PlasmaAccept, DictionaryItemKeyEnum.SampleAccept],
+      show: 1,
     }),
     getSysSecondaryDictionary({
       dataKey: DictionaryReasonEnum.PlasmaFailedReason as any,
@@ -215,14 +254,14 @@
         dataIndex: [exteriorKey, it.dictItemId],
         title: it.label,
         width: it.label.length * 18,
-        customRender: ({ record }) => {
-          if (record.isCount) return record[exteriorKey]?.[it.dictItemId];
+        customRender: ({ record, value }) => {
+          if (record.isCount) return value || 0;
           return (
             <span
               class="text-blue-500 underline cursor-pointer"
               onClick={() => cellClick(it.dictItemId, it.label, record)}
             >
-              {record[exteriorKey]?.[it.dictItemId]}
+              {value || 0}
             </span>
           );
         },
@@ -233,34 +272,40 @@
         dataIndex: [checkUnKey, it.dictItemId],
         title: it.label,
         width: it.label.length * 18,
-        customRender: ({ record }) => {
-          if (record.isCount) return record[checkUnKey]?.[it.dictItemId];
-          console.log(record.isCount);
+        customRender: ({ record, value }) => {
+          if (record.isCount) return value || 0;
           return (
             <span
               class="text-blue-500 underline cursor-pointer"
               onClick={() => cellClick(it.dictItemId, it.label, record)}
             >
-              {record[checkUnKey]?.[it.dictItemId]}
+              {value || 0}
             </span>
           );
         },
       })),
     );
     tableList[0][1].setColumns(CheckColumns);
-    reload();
   });
-  function cellClick(failedCode: string, title: string, record: Recordable) {
-    const { getForm } = tableList[0][1];
-    const [batchNoBegin, batchNoEnd] = record.batch.split('~');
-    const values = getForm().getFieldsValue();
+  function cellClick(failedCode: string | null, title: string, record: Recordable, type?: string) {
     openModal(true, {
       failedCode,
       title,
-      ...values,
+      type,
+      ...params,
       stationNo: record.stationNo,
-      batchNoBegin,
-      batchNoEnd,
     });
   }
 </script>
+<style scoped>
+  .root :deep(.ant-table-body) {
+    position: static;
+  }
+
+  .root :deep(.ant-table-body tr:last-child) {
+    position: sticky;
+    top: 0;
+    bottom: 0;
+    background-color: #f5f5f5;
+  }
+</style>

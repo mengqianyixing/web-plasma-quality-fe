@@ -29,10 +29,10 @@ export type GetApiCoreBagQuarantineResponse = null;
  * 接口 [超一年期确认查询↗](https://yapi.sharing8.cn/project/529/interface/api/32947) 的 **请求类型**
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
- * @请求头 `GET /api/core/bag/plasma/expired`
- * @更新时间 `2024-01-29 18:23:43`
+ * @请求头 `GET /api/search/plasma/expired`
+ * @更新时间 `2024-06-17 09:21:17`
  */
-export interface GetApiCoreBagPlasmaExpiredRequest {
+export interface GetApiSearchPlasmaExpiredRequest {
   /**
    * 批次编码
    */
@@ -57,16 +57,20 @@ export interface GetApiCoreBagPlasmaExpiredRequest {
    * 页数大小不能为空
    */
   pageSize: string;
+  /**
+   * 浆员卡号
+   */
+  cardNo: string;
 }
 
 /**
  * 接口 [超一年期确认查询↗](https://yapi.sharing8.cn/project/529/interface/api/32947) 的 **返回类型**
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
- * @请求头 `GET /api/core/bag/plasma/expired`
- * @更新时间 `2024-01-29 18:23:43`
+ * @请求头 `GET /api/search/plasma/expired`
+ * @更新时间 `2024-06-17 09:21:17`
  */
-export interface GetApiCoreBagPlasmaExpiredResponse {
+export interface GetApiSearchPlasmaExpiredResponse {
   totalCount?: number;
   pageSize?: number;
   totalPage?: number;
@@ -109,6 +113,10 @@ export interface GetApiCoreBagPlasmaExpiredResponse {
      */
     donorNo: string;
     /**
+     * 浆员卡号
+     */
+    cardNo: string;
+    /**
      * 浆员名称
      */
     donorName: string;
@@ -128,22 +136,29 @@ export interface GetApiCoreBagPlasmaExpiredResponse {
 }
 
 /**
- * 接口 [超一年前二次确认↗](https://yapi.sharing8.cn/project/529/interface/api/32952) 的 **请求类型**
+ * 接口 [超一年期确认↗](https://yapi.sharing8.cn/project/529/interface/api/32952) 的 **请求类型**
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `POST /api/core/bag/plasma/expired`
- * @更新时间 `2024-01-30 11:42:43`
+ * @更新时间 `2024-07-03 17:36:38`
  */
 export interface PostApiCoreBagPlasmaExpiredRequest {
+  /**
+   * 浆袋号
+   */
   bagNo?: string;
+  /**
+   * 复核人username
+   */
+  reviewer?: string;
 }
 
 /**
- * 接口 [超一年前二次确认↗](https://yapi.sharing8.cn/project/529/interface/api/32952) 的 **返回类型**
+ * 接口 [超一年期确认↗](https://yapi.sharing8.cn/project/529/interface/api/32952) 的 **返回类型**
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `POST /api/core/bag/plasma/expired`
- * @更新时间 `2024-01-30 11:42:43`
+ * @更新时间 `2024-07-03 17:36:38`
  */
 export type PostApiCoreBagPlasmaExpiredResponse = null;
 
@@ -152,7 +167,7 @@ export type PostApiCoreBagPlasmaExpiredResponse = null;
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `GET /api/core/donor/unqualified/track`
- * @更新时间 `2024-03-26 15:51:00`
+ * @更新时间 `2024-05-31 15:24:40`
  */
 export interface GetApiCoreDonorUnqualifiedTrackRequest {
   currPage: string;
@@ -198,7 +213,7 @@ export interface GetApiCoreDonorUnqualifiedTrackRequest {
  *
  * @分类 [检疫期管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5559)
  * @请求头 `GET /api/core/donor/unqualified/track`
- * @更新时间 `2024-03-26 15:51:00`
+ * @更新时间 `2024-05-31 15:24:40`
  */
 export interface GetApiCoreDonorUnqualifiedTrackResponse {
   totalCount?: number;
@@ -227,6 +242,10 @@ export interface GetApiCoreDonorUnqualifiedTrackResponse {
      * 浆员编号
      */
     donorNo?: string;
+    /**
+     * 浆员卡号
+     */
+    cardNo?: string;
     /**
      * 姓名
      */

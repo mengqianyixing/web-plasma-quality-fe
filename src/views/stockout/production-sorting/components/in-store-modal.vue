@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-29 10:43:03
  * @LastEditors: zcc
@@ -28,7 +28,9 @@
           size="small"
         >
           <TabPane tab="分拣血浆箱" key="1">
-            <BasicForm @register="registerForm" />
+            <Spin :spinning="state.spinning">
+              <BasicForm @register="registerForm" />
+            </Spin>
             <div class="border border-slate-100"></div>
             <div style="height: calc(100% - 60px)">
               <BasicTable @register="registerBindTable">
@@ -55,7 +57,7 @@
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form';
-  import { message, TabPane, Tabs, Modal } from 'ant-design-vue';
+  import { message, TabPane, Tabs, Spin } from 'ant-design-vue';
   import { nextTick, reactive } from 'vue';
   import {
     trayInStoreColumns,
@@ -66,13 +68,18 @@
   } from '../production-sorting.data';
   import InModal from '@/views/tray/outInStore/inModal.vue';
   import { bindBoxApi } from '@/api/tray/relocation';
-  import { trayBoxListApi } from '@/api/tray/list';
-  import { getInStoreListApi, getSortingBoxListApi } from '@/api/stockout/production-sorting/index';
-  import { TRAY_STORE_STATE, TRAY_IN_STATE_TEXT } from '@/enums/stockoutEnum';
+  import { getInStoreListApi, getSortingBoxListApi } from '@/api/stockout/production-sorting';
+  import { TRAY_STORE_STATE } from '@/enums/stockoutEnum';
+  import { SERVER_ENUM } from '@/enums/serverEnum';
+  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { useMessage } from '@/hooks/web/useMessage';
 
+  const serverEnumStore = useServerEnumStoreWithOut();
+  const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
   const state = reactive({
     activeKey: '1',
     prepareNo: '',
+    spinning: false,
   });
   const emit = defineEmits(['close']);
   const [registerModal] = useModalInner(async ({ prepareNo }) => {
@@ -165,20 +172,21 @@
   function cancel() {
     emit('close');
   }
+
+  const { createConfirm } = useMessage();
+
   function handleUnbind() {
     const rows: Recordable[] = getBindSelectRows();
     if (rows.length === 0) return message.warning('请选择数据');
     const [row] = rows;
     if (!row.trayNo) return message.warning('请选择已绑定托盘的数据');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确定解绑箱号【' + row.boxNo + '】?',
       onOk: async () => {
         await bindBoxApi({ trayNo: row.trayNo, type: 'unbind', boxes: [row.boxNo] });
         message.success('解绑成功');
-        reloadBind();
-      },
-      onCancel: () => {
-        Modal.destroyAll();
+        await reloadBind();
       },
     });
   }
@@ -186,9 +194,7 @@
     const rows: Recordable[] = getSelectRows();
     if (rows.length === 0) return message.warning('请选择数据');
     if (rows.some((_) => _.state !== TRAY_STORE_STATE.OUT)) {
-      return message.warning(
-        '请选择【' + TRAY_IN_STATE_TEXT.get(TRAY_STORE_STATE.OUT) + '】的数据',
-      );
+      return message.warning('请选择【' + BankTrayStatusEnum(TRAY_STORE_STATE.OUT) + '】的数据');
     }
     openInModal(true, { data: rows });
   }
@@ -209,24 +215,12 @@
     if (e.code !== 'Enter' && e.code !== 'NumpadEnter') return;
     const { boxId, trayNo } = getFieldsValue();
     if (boxId && !trayNo) message.warning('请扫描托盘编号');
-    let count = 0;
-    if (trayNo) {
-      const list = await trayBoxListApi({ trayNo });
-      count = list.length;
-    }
     if (!boxId || !trayNo) return;
-    if (count >= 24) {
-      Modal.confirm({
-        content: '托盘绑定已满24箱，继续绑定?',
-        onOk: async () => {
-          submit();
-        },
-        onCancel: () => {
-          Modal.destroyAll();
-        },
-      });
-    } else {
-      submit();
+    try {
+      state.spinning = true;
+      await submit();
+    } finally {
+      state.spinning = false;
     }
   }
 </script>

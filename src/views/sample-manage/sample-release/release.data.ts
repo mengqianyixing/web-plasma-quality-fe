@@ -11,16 +11,20 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 80,
+    fixed: 'left',
   },
   {
     title: '样本批号',
     dataIndex: 'batchSampleNo',
-    width: 200,
+    width: 150,
+    fixed: 'left',
   },
   {
     title: '样本类型',
     dataIndex: 'sampleType',
     format: (text) => SampleType(text),
+    width: 80,
   },
   {
     title: '浆站出库日期',
@@ -28,14 +32,18 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 120,
   },
   {
     title: '样本数量',
     dataIndex: 'sampleCount',
+    width: 80,
   },
   {
     title: '接收人',
     dataIndex: 'acceptor',
+    width: 80,
+    ellipsis: false,
   },
   {
     title: '接收日期',
@@ -43,19 +51,24 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '合格样本数量',
     dataIndex: 'qualifiedCount',
+    width: 100,
   },
   {
     title: '不合格样本数量',
     dataIndex: 'unqualifiedCount',
     slots: { customRender: 'unqualifiedCount' },
+    width: 120,
   },
   {
     title: '验收人',
     dataIndex: 'verifier',
+    width: 80,
+    ellipsis: false,
   },
   {
     title: '验收日期',
@@ -63,6 +76,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '效价项目有效期至',
@@ -70,6 +84,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 120,
   },
   {
     title: '其他有效期至',
@@ -77,6 +92,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '验收状态',
@@ -84,6 +100,7 @@ export const columns: BasicColumn[] = [
     format(text) {
       return sampleVerifyStatusMap.get(<sampleVerifyStatusValueEnum>text) as string;
     },
+    width: 80,
   },
 ];
 
@@ -145,7 +162,7 @@ export const unqualifiedColumns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
   },
   {
     title: '不合格原因',

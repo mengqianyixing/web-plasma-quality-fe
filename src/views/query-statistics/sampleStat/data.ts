@@ -8,16 +8,18 @@ const { stationOptions } = useStation();
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
-export const columns: BasicColumn[] = [
+export const columns: (BasicColumn & { type?: string })[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 80,
+    fixed: 'left',
   },
   {
     title: '样本批号',
     dataIndex: 'sampleBatchNo',
     width: 120,
+    fixed: 'left',
   },
 
   {
@@ -25,11 +27,14 @@ export const columns: BasicColumn[] = [
     dataIndex: 'sampleType',
     format: (text) => SampleType(text),
     width: 80,
+    fixed: 'left',
   },
   {
     title: '样本总数',
     dataIndex: 'sampleCount',
     width: 80,
+    format: (v) => v || 0,
+    fixed: 'left',
   },
   {
     title: '接收人',
@@ -55,26 +60,35 @@ export const columns: BasicColumn[] = [
     title: '合格总数',
     dataIndex: 'qualifiedCount',
     width: 100,
+    format: (v) => v || 0,
   },
   {
     title: '不合格总数',
     dataIndex: 'unqualifiedCount',
     width: 100,
+    slots: { customRender: 'unqualifiedCount' },
+    type: 'UNQ',
   },
   {
     title: '高效价总数',
     dataIndex: 'totalHighTiter',
     width: 100,
+    slots: { customRender: 'totalHighTiter' },
+    type: 'HT',
   },
   {
     title: '低效价总数',
     dataIndex: 'totalLowTiter',
     width: 100,
+    slots: { customRender: 'totalLowTiter' },
+    type: 'LT',
   },
   {
     title: '无效价总数',
     dataIndex: 'totalNoTiter',
     width: 100,
+    slots: { customRender: 'totalNoTiter' },
+    type: 'NT',
   },
   {
     title: '试剂批号',
@@ -114,5 +128,25 @@ export const searchFormSchema: FormSchema[] = [
       class: 'w-full',
       valueFormat: 'YYYY-MM-DD',
     },
+  },
+];
+
+export const dtColumns: BasicColumn[] = [
+  {
+    dataIndex: 'donorNo',
+    title: '浆员编号',
+  },
+  {
+    dataIndex: 'donorName',
+    title: '浆员姓名',
+  },
+  {
+    dataIndex: 'sampleNo',
+    title: '样本编号',
+  },
+  {
+    dataIndex: 'collectAt',
+    title: '采集日期',
+    format: (v) => v?.slice(0, 10),
   },
 ];

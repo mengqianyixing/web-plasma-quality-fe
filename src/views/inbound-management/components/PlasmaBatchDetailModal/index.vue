@@ -1,14 +1,14 @@
-<!--
- * @Author: chiyifan chiyf@stpass.com
- * @Date: 2024-03-12 19:54:21
- * @LastEditors: chiyifan chiyf@stpass.com
- * @LastEditTime: 2024-03-14 16:22:45
- * @FilePath: \psms-fe\src\views\inbound-management\components\PlasmaBatchDetailModal\index.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
-  <BasicModal v-bind="$attrs" @register="register" title="验收详情" width="1400px" :minHeight="600">
+  <BasicModal
+    v-bind="$attrs"
+    @register="register"
+    title="验收详情"
+    width="1400px"
+    :minHeight="600"
+    @cancel="handleClose"
+  >
     <template #footer>
+      <div class="absolute text-right">血浆总袋数：{{ verifyCount }}</div>
       <a-button @click="handleClose">关闭</a-button>
     </template>
     <BasicForm
@@ -27,7 +27,7 @@
         <span>{{ row.collectAt ? dayjs(row.collectAt).format('YYYY-MM-DD') : '-' }}</span>
       </template>
       <template #verifyAt="{ row }">
-        <span>{{ row.verifyAt ? dayjs(row.verifyAt).format('YYYY-MM-DD') : '-' }}</span>
+        <span>{{ row.verifyAt ? dayjs(row.verifyAt).format('YYYY-MM-DD HH:mm:ss') : '-' }}</span>
       </template>
       <template #gender="{ row }">
         <span>{{ row.gender === 'M' ? '男' : row.gender === 'F' ? '女' : '' }}</span>
@@ -36,7 +36,6 @@
         <span>{{ PlasmaStateMap.get(row?.verifyState) }}</span>
       </template>
     </vxe-grid>
-    <div class="absolute bottom-2 right-[35px] text-right">血浆总袋数：{{ verifyCount }}</div>
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -62,15 +61,15 @@
     await setFieldsValue({
       stationName: data.record.stationName,
       batchNo: data.record.batchNo,
-      boxNo: data.record.boxNo,
+      stationBoxNo: data.record.boxNo,
       verifyResult: data.record?.field ?? '',
     });
-    _getPlasmaBag({ ...getFieldsValue() });
+    await _getPlasmaBag({ ...getFieldsValue() });
   });
 
   const gridOptions = reactive<VxeGridProps<any>>({
     border: true,
-    height: '520px',
+    height: '500px',
     showOverflow: true,
     exportConfig: {},
     columnConfig: {
@@ -96,8 +95,10 @@
     showFooter: false,
   });
 
-  const [registerForm, { setFieldsValue, getFieldsValue }] = useForm({
-    labelWidth: 80,
+  const [registerForm, { setFieldsValue, getFieldsValue, resetFields }] = useForm({
+    labelWidth: 100,
+    baseColProps: { flex: '0 1 285px' },
+    actionColOptions: { flex: '0 1 200px' },
     schemas: searchFormSchema,
     showResetButton: false,
   });
@@ -114,10 +115,11 @@
   }
 
   async function handleSubmit() {
-    _getPlasmaBag({ ...getFieldsValue() });
+    await _getPlasmaBag({ ...getFieldsValue() });
   }
 
   function handleClose() {
+    resetFields();
     closeModal();
     if (getFieldsValue().boxNo) {
       emit('close', record.value);

@@ -54,6 +54,13 @@ function createConfirm(options: ModalOptionsEx) {
     centered: true,
     icon: getIcon(iconType),
     ...options,
+    onOk: async () => {
+      try {
+        await options.onOk?.();
+      } catch (e) {
+        return Promise.resolve();
+      }
+    },
     content: renderContent(options),
   };
   return Modal.confirm(opt);

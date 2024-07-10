@@ -8,14 +8,14 @@
  */
 import { defHttp } from '@/utils/http/axios';
 import {
-  GetApiCoreBagPlasmaExpiredRequest,
-  GetApiCoreBagPlasmaExpiredResponse,
+  GetApiSearchPlasmaExpiredRequest,
+  GetApiSearchPlasmaExpiredResponse,
   PostApiCoreBagPlasmaExpiredRequest,
   PostApiCoreBagPlasmaExpiredResponse,
 } from '@/api/type/quarantineMange';
 
-export const getListApi = (params: GetApiCoreBagPlasmaExpiredRequest) =>
-  defHttp.get<GetApiCoreBagPlasmaExpiredResponse>({ url: '/api/core/bag/plasma/expired', params });
+export const getListApi = (params: GetApiSearchPlasmaExpiredRequest) =>
+  defHttp.get<GetApiSearchPlasmaExpiredResponse>({ url: '/api/search/plasma/expired', params });
 
 export const submitConfirmApi = (data: PostApiCoreBagPlasmaExpiredRequest) =>
   defHttp.post<PostApiCoreBagPlasmaExpiredResponse>({

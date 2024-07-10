@@ -37,11 +37,6 @@ export const columns: BasicColumn[] = [
     dataIndex: 'expireDate',
     width: 100,
   },
-  {
-    title: '使用截至日期',
-    dataIndex: 'deadline',
-    width: 100,
-  },
 ];
 
 export const formListSchema: FormSchema[] = [

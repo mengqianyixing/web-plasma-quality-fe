@@ -2,39 +2,14 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-dropdown
-          v-auth="[
-            StockOutButtonEnum.PlasmaSummaryPlasmaSummaryReport,
-            StockOutButtonEnum.PlasmaSummaryPlasmaTrackUnqReport,
-          ]"
+        <a-button
+          type="primary"
+          @click="handlePrint('PLASMA_SUMMARY')"
+          v-auth="StockOutButtonEnum.PlasmaSummaryReport"
+          :loading="reportLoading"
         >
-          <a-button type="primary" :loading="reportLoading">
-            打印
-            <DownOutlined />
-          </a-button>
-          <template #overlay>
-            <Menu>
-              <MenuItem>
-                <a-button
-                  type="link"
-                  @click="handlePrint('PLASMA_SUMMARY')"
-                  v-auth="StockOutButtonEnum.PlasmaSummaryPlasmaSummaryReport"
-                >
-                  血浆汇总表
-                </a-button>
-              </MenuItem>
-              <MenuItem>
-                <a-button
-                  type="link"
-                  @click="handlePrint('PLASMA_TRACK_UNQ_RECORD')"
-                  v-auth="StockOutButtonEnum.PlasmaSummaryPlasmaTrackUnqReport"
-                >
-                  续追踪不合格记录
-                </a-button>
-              </MenuItem>
-            </Menu>
-          </template>
-        </a-dropdown>
+          打印
+        </a-button>
       </template>
     </BasicTable>
     <ReportModal @register="registerReportModal" />
@@ -46,7 +21,8 @@
   import dayjs from 'dayjs';
   import { getPlasmaSummary } from '@/api/stockout/plasma-summary';
   import { useStation } from '@/hooks/common/useStation';
-  import { Dropdown as ADropdown, MenuItem, Menu, message } from 'ant-design-vue';
+  // import { Dropdown as ADropdown, MenuItem, Menu, message } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
 
   import { ref } from 'vue';
@@ -64,27 +40,34 @@
     {
       title: '血浆批号',
       dataIndex: 'batchNo',
+      width: 110,
     },
     {
       title: '采浆公司',
       dataIndex: 'stationName',
+      width: 80,
     },
     {
       title: '血浆总数',
       dataIndex: 'bagCount',
+      width: 80,
+
       // slots: { customRender: 'boxCount' },
     },
     {
-      title: '投产出库数量（袋）',
+      title: '投产出库数量(袋)',
       dataIndex: 'proOutCount',
+      width: 140,
     },
     {
-      title: '非投产出库数量（袋）',
+      title: '非投产出库数量(袋)',
       dataIndex: 'unProOutCount',
+      width: 140,
     },
     {
       title: '不合格数量',
       dataIndex: 'unqualifiedCount',
+      width: 100,
     },
     {
       title: '状态',
@@ -97,15 +80,25 @@
         }
         return '';
       },
+      width: 80,
+    },
+    {
+      title: '汇总日期',
+      dataIndex: 'createAt',
+      format: (text) => (text ? dayjs(text).format('YYYY-MM-DD') : '-'),
+      width: 100,
     },
     {
       title: '打印人',
       dataIndex: 'printor',
+      width: 100,
+      ellipsis: false,
     },
     {
-      title: '打印时间',
+      title: '打印日期',
       dataIndex: 'printAt',
-      format: (text) => (text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-'),
+      format: (text) => (text ? dayjs(text).format('YYYY-MM-DD') : '-'),
+      width: 100,
     },
   ];
 

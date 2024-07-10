@@ -6,13 +6,16 @@
     showFooter
     title="验收数量详情"
     width="1200px"
+    :minHeight="600"
     :isDetail="true"
     :showDetailBack="false"
-    @ok="closeModal"
+    :showOkBtn="false"
   >
-    <div class="modalTable">
-      <BasicTable @register="detailTable" :dataSource="detailTableSource" id="detail" />
-      <BasicTable @register="sumTable" :dataSource="sumTableSource" id="sum" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full flex">
+        <BasicTable @register="detailTable" :dataSource="detailTableSource" id="detail" />
+        <BasicTable @register="sumTable" :dataSource="sumTableSource" id="sum" />
+      </div>
     </div>
   </BasicModal>
 </template>
@@ -49,7 +52,7 @@
     inset: true,
     isCanResizeParent: true,
   });
-  const [registerVerifyNum, { closeModal }] = useModalInner((data) => {
+  const [registerVerifyNum] = useModalInner((data) => {
     batchNo.value = data.batchNo;
 
     detailTableSource.value = [];
@@ -68,9 +71,3 @@
     sumTableSource.value = originData.summaryList;
   }
 </script>
-<style>
-  .modalTable {
-    display: flex;
-    justify-content: center;
-  }
-</style>

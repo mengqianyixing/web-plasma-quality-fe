@@ -415,7 +415,7 @@ export type PutApiProductOrderReviewOrderNoResponse = string;
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `GET /api/sys/snaker/tasks/{orderId}`
- * @更新时间 `2024-04-09 09:32:42`
+ * @更新时间 `2024-04-23 14:41:51`
  */
 export interface GetApiSysSnakerTasksOrderIdRequest {
   /**
@@ -429,27 +429,17 @@ export interface GetApiSysSnakerTasksOrderIdRequest {
  *
  * @分类 [生产指令↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5173)
  * @请求头 `GET /api/sys/snaker/tasks/{orderId}`
- * @更新时间 `2024-04-09 09:32:42`
+ * @更新时间 `2024-04-23 14:41:51`
  */
-export interface GetApiSysSnakerTasksOrderIdResponse {
-  field_5: {
-    /**
-     * 操作人
-     */
-    name: string;
-    /**
-     * 节点
-     */
-    step: string;
-    /**
-     * 结果
-     */
-    result: string;
-    /**
-     * 操作时间
-     */
-    createTime: string;
-  }[];
-}
+export type GetApiSysSnakerTasksOrderIdResponse = {
+  name: string;
+  createTime: string;
+  result: string;
+  step: string;
+  /**
+   * 描述
+   */
+  desc: string;
+}[];
 
 /* prettier-ignore-end */

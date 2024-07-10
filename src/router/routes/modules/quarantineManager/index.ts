@@ -7,7 +7,7 @@
  * @FilePath: \psms-fe\src\router\routes\modules\QuarantineManager\index.ts
  */
 import type { AppRouteModule } from '@/router/types';
-import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
+import { QuarantineButtonEnum, ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
 import { LAYOUT } from '@/router/constant';
 
@@ -58,6 +58,11 @@ const quarantineManager: AppRouteModule = {
           name: 'print',
           title: '打印',
         },
+        {
+          id: QuarantineButtonEnum.ExportQuarantine,
+          name: 'print',
+          title: '导出',
+        },
       ],
     },
     {
@@ -72,6 +77,10 @@ const quarantineManager: AppRouteModule = {
           id: QuarantineButtonEnum.NonconformityTrackingReport,
           title: '追踪记录/报告',
         },
+        {
+          id: QuarantineButtonEnum.StationDetectionNonconformityReport,
+          title: '浆站检测不合格血浆追溯-昆明',
+        },
       ],
       component: () => import('@/views/query-statistics/nonconformityTracking/index.vue'),
     },
@@ -83,6 +92,12 @@ const quarantineManager: AppRouteModule = {
       },
       id: 9000220,
       component: () => import('@/views/query-statistics/stationRefuse/index.vue'),
+      authElements: [
+        {
+          id: QuarantineButtonEnum.StationRefuseExport,
+          title: '导出',
+        },
+      ],
     },
     {
       path: 'factoryCheckFail',
@@ -92,6 +107,12 @@ const quarantineManager: AppRouteModule = {
       },
       id: 9000110,
       component: () => import('@/views/query-statistics/factoryCheckFail/index.vue'),
+      authElements: [
+        {
+          id: QuarantineButtonEnum.FactoryCheckFailExcel,
+          title: '导出',
+        },
+      ],
     },
     {
       path: '/quarantine/overdue-confirmation',
@@ -101,6 +122,10 @@ const quarantineManager: AppRouteModule = {
         {
           id: QuarantineButtonEnum.OverdueConfirmationConfim,
           title: '确认',
+        },
+        {
+          id: ReCheckButtonEnum.OverdueConfirmationCheck,
+          title: '确认复核人',
         },
       ],
       meta: { title: '超一年期确认' },

@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2024-01-04 16:30:55
  * @LastEditors: zcc
@@ -10,10 +10,10 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    :title="'血浆批号【' + state + '】托盘入库'"
+    :title="'血浆批号【' + state.batchNo + '】托盘入库'"
     width="1060px"
     @cancel="emit('close')"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="redoHeight"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">
@@ -43,36 +43,41 @@
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchForm } from './data';
-  import { message, Modal } from 'ant-design-vue';
-  import { getListApi, trayBoxListApi } from '@/api/tray/list';
+  import { message } from 'ant-design-vue';
+  import { getListApi } from '@/api/tray/list';
   import InModal from '@/views/tray/outInStore/inModal.vue';
-  import { nextTick, ref } from 'vue';
+  import { nextTick, ref, reactive } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { bindVerifyBoxApi } from '@/api/tray/relocation';
 
   const emit = defineEmits(['register', 'close']);
   defineOptions({ name: 'InStoreModal' });
 
-  const state = ref('');
+  const state = reactive({
+    batchNo: '',
+    queryFlow: void 0,
+    inOut: void 0,
+  });
   const bizScen = ref('');
 
-  const [registerForm, { validate, clearValidate, setFieldsValue, getFieldsValue, resetFields }] =
-    useForm({
-      labelWidth: 90,
-      baseColProps: { span: 24 },
-      schemas: [
-        { label: '托盘编号', component: 'Input', field: 'trayNo', required: true },
-        { label: '箱号', component: 'Input', field: 'boxId', required: true },
-      ],
-      showActionButtonGroup: false,
-      autoSubmitOnEnter: true,
-    });
+  const [registerForm, { clearValidate, setFieldsValue, getFieldsValue, resetFields }] = useForm({
+    labelWidth: 90,
+    baseColProps: { span: 24 },
+    schemas: [
+      { label: '托盘编号', component: 'Input', field: 'trayNo', required: true },
+      { label: '箱号', component: 'Input', field: 'boxId', required: true },
+    ],
+    showActionButtonGroup: false,
+    autoSubmitOnEnter: true,
+  });
 
   const [registerInModal, { openModal: openInModal }] = useModal();
   const [registerBindModal, { openModal }] = useModal();
 
   const [registerModal] = useModalInner(async (data) => {
-    state.value = data.batchNo;
+    state.batchNo = data.batchNo;
+    state.queryFlow = data.queryFlow;
+    state.inOut = data.inOut;
     bizScen.value = data.bizScen;
     rePage();
   });
@@ -99,7 +104,7 @@
     size: 'small',
     isCanResizeParent: true,
     rowSelection: { type: 'checkbox' },
-    beforeFetch: (p) => ({ ...p, closed: '0', batchNo: state.value }),
+    beforeFetch: (p) => ({ ...p, closed: '0', ...state }),
     afterFetch: (res) => {
       clearSelectedRowKeys();
       return res;
@@ -128,23 +133,9 @@
     resetFields();
     clearValidate();
   }
-  async function okFunction() {
-    const values = await validate();
-    const list = await trayBoxListApi({ trayNo: values.trayNo });
 
-    if (list.length >= 24) {
-      Modal.confirm({
-        content: '托盘绑定已满24箱，继续绑定?',
-        onOk: async () => {
-          submit();
-        },
-        onCancel: () => {
-          Modal.destroyAll();
-        },
-      });
-    } else {
-      submit();
-    }
+  async function okFunction() {
+    await submit();
   }
   async function submit() {
     const { boxId, trayNo } = getFieldsValue();

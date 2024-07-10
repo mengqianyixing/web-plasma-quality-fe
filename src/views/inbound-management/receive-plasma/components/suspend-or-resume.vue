@@ -6,9 +6,15 @@
     @cancel="closeModalThis"
     :maskClosable="false"
     width="85%"
+    :min-height="600"
   >
-    <BasicForm @register="registerForm" />
-    <BasicTable @register="registerTable" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <BasicForm @register="registerForm" />
+        <div style="height: calc(100% - 80px)">
+          <BasicTable @register="registerTable" />
+        </div> </div
+    ></div>
   </BasicModal>
 </template>
 
@@ -148,7 +154,6 @@
           (userInfo.getUserInfo.username && record.creater != userInfo.getUserInfo.username), // 有继续人 || 接收人和已登录账户不一致不可操作
       }),
     },
-    clickToRowSelect: false,
     size: 'small',
     immediate: false,
     striped: false,
@@ -158,7 +163,7 @@
     },
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    isCanResizeParent: true,
   });
 
   // 提交暂停

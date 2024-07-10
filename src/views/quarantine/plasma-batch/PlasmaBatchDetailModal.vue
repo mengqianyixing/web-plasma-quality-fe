@@ -8,26 +8,47 @@
     cancelText="关闭"
     width="1000px"
   >
-    <BasicTable @register="registerTable">
+    <BasicTable :columns="modalColumns" @register="registerTable">
       <template #unqReason="{ record }">
         {{ formatUnReason(record?.fkFailedCode) }}
       </template>
       <template #prodReason="{ record }">
         {{ formatProdReason(record?.fkUnProdCode) }}
       </template>
+      <template #cardNo="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="openModal(true, record)"
+        >
+          {{ record.cardNo }}
+        </span>
+      </template>
     </BasicTable>
+    <DonorModel @register="registerDonorModal" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
   import { ref, onMounted } from 'vue';
-  import { BasicModal, useModalInner } from '@/components/Modal';
-  import { useTable, BasicTable } from '@/components/Table';
-  import { modalCommonColumns, colMap } from './plasma-batch.data';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
+  import { useTable, BasicTable, BasicColumn } from '@/components/Table';
+  import { modalCommonColumns, colMap, stateMap } from './plasma-batch.data';
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
+  import { getPlasmaBatchReleaseBags } from '@/api/quarantine/plasma-batch';
+  import DonorModel from '@/__components/donor/donorModel.vue';
 
-  const bagNos = ref<any>([]);
+  const [registerDonorModal, { openModal }] = useModal();
+  interface ParamsObj {
+    state: string;
+    ImmType?: string | null;
+    brNo: string;
+  }
+
+  const paramsObj: ParamsObj = {
+    state: '',
+    brNo: '',
+  };
   const modalTitle = ref<string>('');
-  const modalColumns = ref<any[]>([]);
+  const modalColumns = ref<BasicColumn[]>([]);
   const plasmaUnqualifiedDictionary = ref<Recordable[] | undefined>([]);
   const unProdReasonDictionary = ref<Recordable[] | undefined>([]);
 
@@ -59,26 +80,40 @@
     return unProdReasonDictionary.value?.find((it) => it.id === unqReason)?.label ?? unqReason;
   }
   const [registerTable, { reload }] = useTable({
-    dataSource: bagNos,
+    api: getPlasmaBatchReleaseBags,
     size: 'small',
-    maxHeight: 300,
-    columns: modalColumns,
-    pagination: false,
+    maxHeight: 350,
     clickToRowSelect: false,
     rowKey: 'batchNo',
-    useSearchForm: false,
+    useSearchForm: true,
     showTableSetting: false,
     bordered: true,
     showIndexColumn: true,
-
+    formConfig: { schemas: [{ field: 'bagNo', component: 'Input', label: '血浆编号' }] },
     canResize: true,
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    immediate: false,
+    beforeFetch: (p) => {
+      return { ...p, ...paramsObj };
+    },
   });
 
   const [registerModal, { setModalProps }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: false });
     modalTitle.value = data.title + '详情';
     modalColumns.value = [...modalCommonColumns, ...colMap[data.type]];
-    bagNos.value = data.content?.[data.type] || [];
+    paramsObj.state = stateMap[data.type];
+    if (data.type === 'trackedNormalBag') {
+      paramsObj.ImmType = 'N';
+    } else {
+      paramsObj.ImmType && delete paramsObj.ImmType;
+    }
+    paramsObj.brNo = data.record.brNo;
     await reload();
   });
 </script>

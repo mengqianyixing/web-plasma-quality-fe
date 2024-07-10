@@ -1,16 +1,16 @@
 import { defHttp } from '@/utils/http/axios';
 
 import {
-  GetApiProductPrepareOutStoreListRequest,
-  GetApiProductPrepareOutStoreListResponse,
+  GetApiSearchProdPrepareRequest,
+  GetApiSearchProdPrepareResponse,
 } from '@/api/type/queryStatistics';
 
 enum Api {
-  Prepare_Query = '/api/product/prepare/out-store/list',
+  Prepare_Query = '/api/search/prod/prepare',
 }
 
-export const getPrepareQuery = (params: GetApiProductPrepareOutStoreListRequest) =>
-  defHttp.get<GetApiProductPrepareOutStoreListResponse>(
+export const getPrepareQuery = (params: GetApiSearchProdPrepareRequest) =>
+  defHttp.get<GetApiSearchProdPrepareResponse>(
     { url: Api.Prepare_Query, params },
     { joinParamsToUrl: true },
   );

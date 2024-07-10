@@ -8,29 +8,35 @@
     :destroyOnClose="true"
     :draggable="false"
     :canFullscreen="false"
+    :min-height="600"
   >
-    <BasicTable @register="registerTable" :scroll="{ y: 600 }">
-      <template #sortCount="{ record }">
-        <div class="z-999">
-          <a-button type="link" @click="goPlasmaDetail(record, 'sortCount')">
-            {{ record.sortCount }}
-          </a-button>
-        </div>
-      </template>
-      <template #waitSortCount="{ record }">
-        <div class="z-999">
-          <a-button type="link" @click="goPlasmaDetail(record, 'waitSortCount')">
-            {{ record.waitSortCount }}
-          </a-button>
-        </div>
-      </template>
-      <template #toolbar>
-        <div class="flex gap-2">
-          <a-button> 自动分拣 </a-button>
-          <a-button> 转人工分拣 </a-button>
-        </div>
-      </template>
-    </BasicTable>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <div class="flex-1 h-full shrink-1">
+          <BasicTable @register="registerTable">
+            <template #sortCount="{ record }">
+              <div class="z-999">
+                <a-button type="link" @click="goPlasmaDetail(record, 'sortCount')">
+                  {{ record.sortCount }}
+                </a-button>
+              </div>
+            </template>
+            <template #waitSortCount="{ record }">
+              <div class="z-999">
+                <a-button type="link" @click="goPlasmaDetail(record, 'waitSortCount')">
+                  {{ record.waitSortCount }}
+                </a-button>
+              </div>
+            </template>
+            <template #toolbar>
+              <a-button> 自动分拣 </a-button>
+              <a-button> 转人工分拣 </a-button>
+            </template>
+          </BasicTable>
+        </div></div
+      ></div
+    >
+
     <PlasmaDetail @register="registerPlasmaDetailModal" />
   </BasicModal>
 </template>
@@ -57,11 +63,14 @@
         {
           title: '分拣血浆数量',
           dataIndex: 'sortCount',
+          width: 120,
           slots: { customRender: 'sortCount' },
         },
         {
           title: '待分拣血浆数量',
           dataIndex: 'waitSortCount',
+          width: 120,
+
           slots: { customRender: 'waitSortCount' },
         },
       );
@@ -75,15 +84,18 @@
     {
       title: '血浆批号',
       dataIndex: 'batchNo',
-      align: 'left',
+      width: 110,
     },
     {
       dataIndex: 'pickCount',
       title: '挑浆次数',
+      width: 80,
     },
     {
       title: '分拣人',
       dataIndex: 'operator',
+      width: 100,
+      ellipsis: false,
     },
     {
       title: '开始时间',
@@ -91,6 +103,7 @@
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
       },
+      width: 140,
     },
     {
       title: '结束时间',
@@ -98,10 +111,12 @@
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
       },
+      width: 140,
     },
     {
       title: '耗时',
       dataIndex: 'elapsedTime',
+      width: 100,
     },
     {
       title: '状态',
@@ -120,8 +135,6 @@
     beforeFetch: (p) => {
       return { ...p, prepareNo: prepareNo.value };
     },
-    pagination: true,
-    clickToRowSelect: false,
     rowSelection: {
       type: 'radio',
       onChange: (_, selectedRows: any) => {
@@ -139,6 +152,7 @@
     immediate: true,
     bordered: true,
     showIndexColumn: false,
+    isCanResizeParent: true,
   });
 
   // 血浆明细

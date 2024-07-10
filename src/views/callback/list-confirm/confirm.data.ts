@@ -7,15 +7,18 @@ export const columns: BasicColumn[] = [
     dataIndex: 'planNo',
     slots: { customRender: 'planNo' },
     width: 200,
+    fixed: 'left',
   },
   {
     title: '采浆公司',
     dataIndex: 'stationNo',
     slots: { customRender: 'stationNo' },
+    fixed: 'left',
   },
   {
     title: '浆员数量',
     dataIndex: 'donorNum',
+    fixed: 'left',
   },
   {
     title: '生成人',

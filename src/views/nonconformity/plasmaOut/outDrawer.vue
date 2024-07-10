@@ -13,7 +13,7 @@
     title="出库扫描"
     width="1200px"
     @cancel="emit('close')"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="fullscreen"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">

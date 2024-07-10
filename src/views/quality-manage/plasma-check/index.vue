@@ -3,7 +3,9 @@
     <BasicTable @register="registerTable">
       <template #auditId="{ record }">
         <span
-          class="text-blue-500 underline cursor-pointer"
+          :class="
+            !record?.auditId ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
           @click.stop.self="handlePreview(record)"
         >
           {{ record?.auditId }}
@@ -83,6 +85,7 @@
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
   import { QualityButtonEnum } from '@/enums/authCodeEnum';
+
   const reportLoading = ref(false);
 
   const { stationOptions } = useStation();
@@ -136,7 +139,6 @@
     size: 'small',
     striped: false,
     useSearchForm: true,
-
     bordered: true,
     showIndexColumn: false,
     canResize: true,
@@ -157,15 +159,13 @@
     switch (flag) {
       case 'add':
         openPlasmaCheckModal(true, {
-          isPreview: false,
-          isUpdate: false,
+          flag,
           record: selectedRowsRef.value[0],
         });
         break;
       case 'edit':
         openPlasmaCheckModal(true, {
-          isPreview: false,
-          isUpdate: true,
+          flag,
           record: selectedRowsRef.value[0],
         });
         break;
@@ -237,8 +237,7 @@
     if (!flag) return;
 
     openPlasmaCheckModal(true, {
-      isPreview: false,
-      isUpdate: false,
+      flag: 'add',
       record: selectedRowsRef.value[0],
     });
   }
@@ -255,8 +254,7 @@
     if (!flag) return;
 
     openPlasmaCheckModal(true, {
-      isPreview: false,
-      isUpdate: true,
+      flag: 'edit',
       record: selectedRowsRef.value[0],
     });
   }
@@ -357,8 +355,7 @@
 
   function handlePreview(record) {
     openPlasmaCheckModal(true, {
-      isPreview: true,
-      isUpdate: true,
+      flag: 'preview',
       record: record,
     });
   }
@@ -368,3 +365,9 @@
     reload();
   }
 </script>
+
+<style scoped>
+  :deep(.ant-table th) {
+    white-space: wrap;
+  }
+</style>

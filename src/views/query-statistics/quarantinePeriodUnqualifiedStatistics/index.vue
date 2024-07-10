@@ -1,6 +1,31 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" />
+    <BasicTable @register="registerTable" class="tableHeight">
+      <template #[checkUnqKey]="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="cellClick(Type.CHECK_FAIL, void 0, '检测不合格合计', record)"
+        >
+          {{ record[checkUnqKey]?.[numKey] }}
+        </span>
+      </template>
+      <template #[quarantineUnqKey]="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="cellClick(Type.QUA_FAIL, void 0, '检疫期不合格合计', record)"
+        >
+          {{ record[quarantineUnqKey]?.[numKey] }}
+        </span>
+      </template>
+      <template #[trackUnqKey]="{ record }: { record: Recordable }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="cellClick(Type.FTRK_FAIL, void 0, '续追踪不合格合计', record)"
+        >
+          {{ record[trackUnqKey]?.[numKey] }}
+        </span>
+      </template>
+    </BasicTable>
     <TabelModal @register="registerModal" />
   </PageWrapper>
 </template>
@@ -34,10 +59,12 @@
 
   defineOptions({ name: 'QuarantinePeriodUnqualifiedStatistics' });
 
+  let formData: Recordable = {};
   const cloneColumns = cloneDeep(columns);
   const [registerModal, { openModal }] = useModal();
+  const dictMap = new Map();
 
-  const [registerTable, { setColumns, reload, getForm }] = useTable({
+  const [registerTable, { setColumns, getForm }] = useTable({
     immediate: false,
     api: getListApi,
     columns: cloneColumns,
@@ -82,6 +109,7 @@
         formatParams[key] = params[key];
       }
     }
+    formData = formatParams;
     return formatParams;
   }
 
@@ -90,14 +118,12 @@
     await nextTick();
     const values = getFieldsValue();
     resetFields();
-    console.log(values);
     if (field === 'stationNo') {
       return setFieldsValue(values);
-    } else if (field === 'blockBy') {
-      setFieldsValue({ stationNo: values.stationNo, blockBy: values.blockBy });
-    } else if (field === '[blockStartDate, blockEndDate]') {
+    } else if (field === 'blockBy' || field === '[blockStartDate, blockEndDate]') {
       setFieldsValue({
         stationNo: values.stationNo,
+        blockBy: values.blockBy,
         blockStartDate: values.blockStartDate,
         blockEndDate: values.blockEndDate,
       });
@@ -136,9 +162,17 @@
       }
     });
     [checkUnqKey, quarantineUnqKey, trackUnqKey].forEach((key) => {
-      row[key][ratioKey] = row[key][numKey] / (row[bagNumKey] || 1);
+      if (!row[bagNumKey]) return 0;
+      row[key][ratioKey] = row[key][numKey] / row[bagNumKey];
     });
-    return { ...row, batch: '--', batchCount: '--', stationName: '合计', isCount: true };
+    return {
+      ...row,
+      batch: '--',
+      batchCount: '--',
+      stationName: '合计',
+      isCount: true,
+      stationNo: void 0,
+    };
   }
   Promise.all([
     getSysSecondaryDictionary({
@@ -160,7 +194,6 @@
         title: it.label,
         width: it.label.length * 16,
         customRender: ({ record }) => {
-          if (record.isCount) return record[checkUnqKey]?.[it.dictItemId];
           return (
             <span
               class="text-blue-500 underline cursor-pointer"
@@ -178,7 +211,6 @@
         title: it.label,
         width: it.label.length * 16,
         customRender: ({ record }) => {
-          if (record.isCount) return record[quarantineUnqKey]?.[it.dictItemId];
           return (
             <span
               class="text-blue-500 underline cursor-pointer"
@@ -196,7 +228,6 @@
         title: it.label,
         width: it.label.length * 16,
         customRender: ({ record }) => {
-          if (record.isCount) return record[trackUnqKey]?.[it.dictItemId];
           return (
             <span
               class="text-blue-500 underline cursor-pointer"
@@ -208,8 +239,10 @@
         },
       })),
     );
+    [...res1, ...res2, ...res3].forEach((it) => {
+      dictMap.set(it.dictItemId, it.label);
+    });
     setColumns(cloneColumns);
-    reload();
   });
   function cellClick(
     unqBagQuaType: string,
@@ -217,13 +250,18 @@
     title: string,
     record: Recordable,
   ) {
-    const values = getForm().getFieldsValue();
     openModal(true, {
       failedCode,
       title,
-      ...getFormatParams(values),
-      stationNo: record.stationNo,
+      ...formData,
+      stationNo: record.stationNo || formData.stationNo,
       unqBagQuaType,
+      dictMap,
     });
   }
 </script>
+<style scoped lang="less">
+  .tableHeight :deep(thead tr th) {
+    padding: 5px !important;
+  }
+</style>

@@ -11,7 +11,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    title="托盘浆箱列表"
+    title="托盘存放浆箱列表"
     width="600px"
     :minHeight="400"
     @fullscreen="redoHeight"

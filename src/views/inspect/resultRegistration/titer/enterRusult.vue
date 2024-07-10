@@ -15,7 +15,7 @@
     width="800px"
     okText="提交"
     cancelText="关闭"
-    :minHeight="520"
+    :minHeight="600"
     @cancel="close"
     @fullscreen="redoHeight"
     @ok="handleSubmit(true)"

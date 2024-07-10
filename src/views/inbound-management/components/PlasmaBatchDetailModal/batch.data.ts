@@ -2,14 +2,19 @@ import { FormSchema } from '@/components/Table';
 
 export const columns = [
   {
+    field: 'nowBoxNo',
+    title: '现存箱号',
+    width: 140,
+  },
+  {
     field: 'boxNo',
-    title: '箱号',
-    width: 120,
+    title: '浆站箱号',
+    width: 140,
   },
   {
     title: '血浆编号',
     field: 'bagNo',
-    width: 140,
+    width: 160,
   },
   {
     title: '采集日期',
@@ -19,7 +24,7 @@ export const columns = [
   },
   {
     title: '浆员编号',
-    field: 'donorNo',
+    field: 'cardNo',
     width: 120,
   },
   {
@@ -61,7 +66,7 @@ export const columns = [
   {
     title: '验收时间',
     field: 'verifyAt',
-    width: 120,
+    width: 180,
     slots: { default: 'verifyAt' },
   },
   {
@@ -90,25 +95,31 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       disabled: true,
     },
-    colProps: {
-      span: 4,
-    },
   },
   {
     field: 'batchNo',
     label: '血浆批号',
     component: 'Input',
-    colProps: {
-      span: 4,
-    },
   },
   {
-    field: 'boxNo',
-    label: '血浆箱号',
+    field: 'bagNo',
+    label: '血浆编号',
     component: 'Input',
-    colProps: {
-      span: 4,
-    },
+  },
+  {
+    field: 'nowBoxNo',
+    label: '现存箱号',
+    component: 'Input',
+  },
+  {
+    field: 'stationBoxNo',
+    label: '浆站箱号',
+    component: 'Input',
+  },
+  {
+    field: 'verifyBy',
+    label: '验收人',
+    component: 'Input',
   },
   {
     field: 'verifyState',
@@ -125,9 +136,6 @@ export const searchFormSchema: FormSchema[] = [
           label: '已验收',
         },
       ],
-    },
-    colProps: {
-      span: 4,
     },
   },
   {
@@ -150,8 +158,12 @@ export const searchFormSchema: FormSchema[] = [
         },
       ],
     },
-    colProps: {
-      span: 4,
-    },
+  },
+  {
+    field: 'order',
+    label: '排序',
+    component: 'Input',
+    defaultValue: 'desc',
+    show: false,
   },
 ];

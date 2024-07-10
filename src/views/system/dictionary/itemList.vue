@@ -15,7 +15,7 @@
             <a-button type="primary" @click="handleCreate">新增</a-button>
             <a-button type="primary" @click="handleUpdate">编辑</a-button>
             <template v-if="!(systemLevel > 0)">
-              <a-button type="primary" @click="handleRemove">删除</a-button>
+              <a-button v-show="false" type="primary" @click="handleRemove">删除</a-button>
               <a-button type="primary" @click="handleSwitch(true)">启用</a-button>
               <a-button type="primary" @click="handleSwitch(false)">禁用</a-button>
             </template>
@@ -39,7 +39,7 @@
   import { useModal } from '@/components/Modal';
   import { useRoute } from 'vue-router';
   import ItemFormModal from './itemFormDrawer.vue';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import {
     getDictListApi,
     getDictItemListApi,
@@ -51,14 +51,15 @@
   import { ref, onMounted } from 'vue';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
   import { cloneDeep } from 'lodash-es';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const currentRoute = useRoute();
   const dictId = ref(currentRoute.meta.dictId);
-  const systemLevel = ref(currentRoute.meta.systemLevel || 0);
+  const systemLevel = ref(Number(currentRoute.meta.systemLevel) || 0);
   const linkMap = ref(new Map());
   const enumsMap = ref(new Map());
   const formSchema = ref<FormSchema[]>([]);
-  let updataFormSchema = ref<FormSchema[]>([]);
+  let updateFormSchema = ref<FormSchema[]>([]);
   let isDelete = ref(true);
   const [registerItemFormModal, { openModal }] = useModal();
   const indexn = itemColumns.findIndex((x) => x.dataIndex === 'itemValue');
@@ -74,7 +75,8 @@
       },
       rowKey: 'dictItemId',
       columns:
-        ['sampleFailedReason', 'plasmaFailedReason'].includes(currentRoute.name) && indexn >= 0
+        ['sampleFailedReason', 'plasmaFailedReason'].includes(currentRoute.name as any) &&
+        indexn >= 0
           ? itemColumns.splice(indexn, 1)
           : itemColumns,
       size: 'small',
@@ -100,9 +102,13 @@
     setData();
   });
   const setData = async () => {
-    const res = await getDictListApi({ pageSize: 1000, currPage: 1, queryMenu: true });
-    const result = res.result.filter((x) => x.dictId === dictId.value);
-    const data = result && result.length > 0 ? result[0] : {};
+    const res = await getDictListApi({
+      pageSize: 1000,
+      currPage: 1,
+      queryMenu: true as unknown as string,
+    });
+    const result = res?.result?.filter((x) => x.dictId === dictId.value);
+    const data: any = result && result.length > 0 ? result[0] : {};
     setColumns(itemColumns);
     if (data.header) {
       const _columns = cloneDeep(itemColumns.slice());
@@ -210,7 +216,7 @@
           },
         },
       ];
-      updataFormSchema.value = formSchema.value.map((_) => ({
+      updateFormSchema.value = formSchema.value.map((_: any) => ({
         ..._,
         componentProps: {
           ...(_.componentProps || {}),
@@ -222,7 +228,7 @@
       setColumns(itemColumns.slice());
     }
     if (data.query) {
-      const formConfig = {
+      const formConfig: any = {
         schemas: [],
       };
       const links = data.query.filter((_) => _.linkedDict);
@@ -247,8 +253,8 @@
           }, new Map()),
         );
       });
-      data.query.forEach(async (x) => {
-        const d = {
+      for (const x of data.query) {
+        const d: any = {
           field: x.key,
           label: x.name,
           component: 'Select',
@@ -256,13 +262,13 @@
             options: x.options,
           },
         };
-        if (formConfig.schemas.filter((q) => q.field === d.field).length === 0) {
+        if (formConfig.schemas.filter((q: any) => q.field === d.field).length === 0) {
           formConfig.schemas.push(d);
         }
-      });
+      }
       setProps({ formConfig });
     }
-    reload();
+    await reload();
   };
   function formSuccess() {
     reload();
@@ -286,7 +292,7 @@
       await updateDictItemApi({ dictItemId: row.dictItemId, ...row, enable: false });
       clearSelectedRowKeys();
     }
-    reload();
+    await reload();
   }
   function handleCreate() {
     openModal(true, { data: { dictId: dictId.value }, formSchema: formSchema.value });
@@ -296,30 +302,31 @@
     if (!row) return;
     openModal(true, {
       data: { ...row, dictId: dictId.value, linkMap: linkMap.value },
-      formSchema: updataFormSchema.value,
+      formSchema: updateFormSchema.value,
       isUpdate: true,
     });
   }
+
+  const { createConfirm } = useMessage();
+
   function handleRemove() {
     const [row] = getSelectRow();
     if (!row) return;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: `确定删除${row.itemKey}？`,
       onOk: async () => {
         isDelete.value = true;
         openLoginModal(true, {});
-        // await removeDictItemApi({ dictItemId: row.dictItemId });
-        // clearSelectedRowKeys();
-        // reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function handleSwitch(enable: boolean) {
     const [row] = getSelectRow();
     if (!row) return;
     if (enable === !!row.enable) return message.warning('状态不需要变更');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + (enable ? '启用' : '禁用') + row.itemKey + '?',
       onOk: async () => {
         if (!enable) {
@@ -330,9 +337,8 @@
 
         await updateDictItemApi({ dictItemId: row.dictItemId, ...row, enable });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 </script>

@@ -7,12 +7,16 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    sorter: true,
     width: 100,
+    fixed: 'left',
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
+    sorter: true,
     width: 120,
+    fixed: 'left',
   },
   {
     title: '采集开始日期',
@@ -48,7 +52,7 @@ export const columns: BasicColumn[] = [
         width: 150,
       },
       {
-        title: '验收验收净重（kg）',
+        title: '验收净重（kg）',
         dataIndex: 'verifyWeight',
         width: 150,
       },

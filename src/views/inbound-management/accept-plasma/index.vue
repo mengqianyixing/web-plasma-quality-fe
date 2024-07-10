@@ -28,24 +28,48 @@
               <span>{{ acceptList?.length }}</span>
             </div>
             <div class="flex gap-2">
-              <a-button @click="handlePlasmaUnqualified">血浆不合格</a-button>
-              <a-button @click="handleSampleUnqualified">样本不合格</a-button>
-              <a-button @click="handleMissNumRegister">缺浆登记</a-button>
-              <a-button @click="suspendModal('BOX')">暂停箱记录</a-button>
-              <a-button @click="suspendModal('BCH')">暂停批记录</a-button>
-              <a-button @click="completeAccept">完成验收</a-button>
+              <a-button @click="handlePlasmaUnqualified" type="primary" :disabled="!batchNo">
+                血浆不合格
+              </a-button>
+              <a-button @click="handleSampleUnqualified" type="primary" :disabled="!batchNo">
+                样本不合格
+              </a-button>
+              <a-button @click="handleMissNumRegister" type="primary" :disabled="!batchNo">
+                缺浆登记
+              </a-button>
+              <a-button @click="suspendModal('BOX')" type="primary" :disabled="!batchNo">
+                暂停箱记录
+              </a-button>
+              <a-button @click="suspendModal('BCH')" type="primary" :disabled="!batchNo">
+                暂停批记录
+              </a-button>
+              <a-button @click="completeAccept" type="primary" :disabled="!batchNo">
+                完成验收
+              </a-button>
               <a-button
                 @click="
-                  openInModal(true, { ...filterForm, isAccept: true, bizScen: 'plasmaVerify' })
+                  openInModal(true, {
+                    ...filterForm,
+                    isAccept: true,
+                    bizScen: 'plasmaVerify',
+                    queryFlow: 'plasmaVerify',
+                    inOut: 'in',
+                  })
                 "
-                :disabled="!filterForm.batchNo"
+                :disabled="!batchNo"
+                type="primary"
               >
                 托盘入库
               </a-button>
-              <a-button @click="openOutModal(true, filterForm)" :disabled="!filterForm.batchNo">
+              <a-button
+                @click="
+                  openOutModal(true, { ...filterForm, inOut: 'out', queryFlow: 'plasmaVerify' })
+                "
+                :disabled="!batchNo"
+                type="primary"
+              >
                 托盘出库
               </a-button>
-              <!-- <a-button @click="openPrint">打印</a-button> -->
             </div>
           </div>
         </template>
@@ -58,12 +82,12 @@
     <LoginModal
       @register="registerLoginModal"
       @success="handleSuccess"
-      :auth-code="ReCheckButtonEnum.ReCheckLogin"
+      :auth-code="ReCheckButtonEnum.MissNumCheck"
     />
     <BatchDetail @register="registerBatchDetail" @close="handleBatchDetailClose" />
     <BoxDetail @register="registerBoxDetail" @success="handleGoDetail" />
     <suspendOrResumeModal
-      v-if="suspendModalVisible"
+      @register="registerSuspendOrResumeModal"
       ref="suspendOrResumeRef"
       @close="closeSuspend"
       @clear-info="clearInfo"
@@ -105,7 +129,6 @@
     plasmaComplete,
   } from '@/api/inbound-management/accept-plasma';
   import { getPrintRecord, printRecord } from '@/api/tag/printRecord';
-  import { Modal } from 'ant-design-vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import dayjs from 'dayjs';
 
@@ -113,8 +136,8 @@
   import BoxDetail from '../components/PlasmaBoxDetailModal/index.vue';
   import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal.vue';
   import revokeModal from './components/revoke-modal.vue';
-  import InStoreDrawer from '../components/inStoreDrawer/index.vue';
-  import OutStoreDrawer from '../components/outStoreDrawer/index.vue';
+  import InStoreDrawer from './components/inStoreDrawer/index.vue';
+  import OutStoreDrawer from './components/outStoreDrawer/index.vue';
   import LoginModal from '@/__components/ReviewLoginModal/index.vue';
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import ReprintModal from './components/reprint-modal.vue';
@@ -148,7 +171,7 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
+          <div class="flex items-center justify-center gap-2 w-[300px] max-w-full	 -mt-1">
             <a-input-search
               enter-button="登录"
               placeholder="请点击登录"
@@ -166,7 +189,7 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
+          <div class="flex items-center justify-center gap-2 w-[300px] max-w-full	 -mt-1">
             <a-input-search
               enter-button="选择"
               placeholder="请点击选择"
@@ -184,7 +207,7 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
+          <div class="flex items-center justify-center gap-2 w-[300px] max-w-full -mt-1">
             <a-input
               placeholder="请扫描"
               onChange={(event) => (trayNo.value = event.target.value)}
@@ -201,7 +224,7 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
+          <div class="flex items-center justify-center gap-2 w-[300px] max-w-full -mt-1">
             <a-input
               placeholder="请扫描"
               ref={bagNoRef}
@@ -297,13 +320,14 @@
   const [registerSampleUnqualifiedModal, { openModal: openSampleUnqualifiedModal }] = useModal();
   const [registerMissNumModal, { openModal: openMissNumModal }] = useModal();
   const [registerReprintModal, { openModal: openReprintModal }] = useModal();
+  const [registerSuspendOrResumeModal, { openModal: openSuspendOrResumeModal }] = useModal();
 
   // 表格数据
   const unAcceptList = computed(() => filterForm.value?.unVerifyBag ?? []);
   const acceptList = computed(() => filterForm.value?.verifyBag ?? []);
   const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
     border: true,
-    height: '670px',
+    height: '710px',
     showOverflow: true,
     exportConfig: {},
     columnConfig: {
@@ -340,7 +364,7 @@
   });
   const gridOptionsAccept = reactive<VxeGridProps<any>>({
     border: true,
-    height: '670px',
+    height: '710px',
     showOverflow: true,
     columnConfig: {
       resizable: true,
@@ -433,6 +457,7 @@
         tableLoading.value = true;
         const data = await plasmaVerifyBag(params);
         if (data) {
+          batchNo.value = data.batchNo;
           filterForm.value.stationName = data.stationName;
           filterForm.value.batchNo = data.batchNo;
           filterForm.value.verifyBagCount = data.verifyBagCount;
@@ -467,17 +492,17 @@
               filterForm.value.verifyBagCount
             ) {
               success('当前批验收完成');
-              openPrint(bagNo.value);
+              await openPrint(bagNo.value);
             } else if (!filterForm.value.unVerifyBag.length) {
               success('当前箱验收完成');
-              openPrint(bagNo.value);
+              await openPrint(bagNo.value);
             }
           }
         }
       } finally {
         tableLoading.value = false;
         bagNo.value = '';
-        nextTick(() => {
+        await nextTick(() => {
           bagNoRef.value.focus();
         });
       }
@@ -489,7 +514,8 @@
       if (!checker.value) {
         checker.value = val;
       } else {
-        Modal.confirm({
+        createConfirm({
+          iconType: 'warning',
           title: '确认是否替换当前复核人？',
           content: `替换复核人为：【${val}】`,
           onOk() {
@@ -557,26 +583,18 @@
   // 暂停/继续框
   const suspendModalVisible = ref(false);
   const suspendModal = (pattern: string) => {
-    if (!filterForm.value.batchNo) {
-      warning('请先选择批次!');
-      return;
-    }
     if (pattern === 'BOX') {
       if (!checker.value) {
         warning('请先登录复核人!');
         return;
       }
     }
-    suspendModalVisible.value = true;
-    nextTick(() => {
-      suspendOrResumeRef.value.searchForm.batchNo = filterForm.value.batchNo;
-      suspendOrResumeRef.value.searchForm.boxNo = filterForm.value.boxNo;
-      // 箱暂停使用已登录的复核人，批暂停需要单独登录
-      if (pattern === 'BOX') {
-        suspendOrResumeRef.value.searchForm.checker = checker.value;
-      }
-      suspendOrResumeRef.value.searchForm.pattern = pattern;
-      suspendOrResumeRef.value.getList();
+
+    openSuspendOrResumeModal(true, {
+      batchNo: filterForm.value.batchNo,
+      boxNo: filterForm.value.boxNo,
+      checker: pattern === 'BOX' ? checker.value : '',
+      pattern,
     });
   };
   const closeSuspend = () => {
@@ -601,10 +619,6 @@
   };
   // 血浆不合格登记
   function handlePlasmaUnqualified() {
-    if (!batchNo.value) {
-      warning('请先选择批号!');
-      return;
-    }
     openPlasmaUnqualifiedModal(true, {
       record: {
         batchNo: batchNo.value,
@@ -613,11 +627,6 @@
   }
 
   function handleSampleUnqualified() {
-    if (!batchNo.value) {
-      warning('请先选择批号!');
-      return;
-    }
-
     openSampleUnqualifiedModal(true, {
       record: {
         batchSampleNo: batchNo.value,
@@ -626,10 +635,6 @@
   }
 
   function handleMissNumRegister() {
-    if (!batchNo.value) {
-      warning('请先选择批号!');
-      return;
-    }
     openMissNumModal(true, {
       record: {
         batchNo: batchNo.value,
@@ -679,12 +684,10 @@
     showBoxDetailModal();
   }
 
+  const { createConfirm } = useMessage();
+
   // 完成验收
   async function completeAccept() {
-    if (!filterForm.value.batchNo) {
-      warning('请先选择批次!');
-      return;
-    }
     if (
       filterForm.value.bagCount <= 0 ||
       filterForm.value.verifyBagCount != filterForm.value.bagCount
@@ -692,7 +695,8 @@
       warning('请先验收完血浆!');
       return;
     }
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '提示?',
       icon: createVNode(ExclamationCircleOutlined),
       content: createVNode('div', { style: 'color:red;' }, '确认验收完成吗?'),
@@ -729,7 +733,7 @@
   async function openPrint(bagNo) {
     // 获取标签相关样式
     const res = await getPrintRecord({
-      labelType: 'PLAIN_BOX',
+      labelType: 'VERIFY_BOX',
       bissNo: bagNo, // 业务主键号
     });
     const { times } = res;

@@ -30,12 +30,13 @@
           :text="t('layout.header.dropdownChangeApi')"
           icon="ant-design:swap-outlined"
         />
-        <MenuItem
+        <!-- <MenuItem
           v-if="getUseLockPage"
           key="lock"
           :text="t('layout.header.tooltipLock')"
           icon="ion:lock-closed-outline"
-        />
+        /> -->
+        <MenuItem key="updatePassword" text="修改密码" icon="ant-design:key-outlined" />
         <MenuItem
           key="logout"
           :text="t('layout.header.dropdownItemLoginOut')"
@@ -47,6 +48,15 @@
   <LockAction @register="register" />
   <ChangeApi @register="registerApi" />
   <ChangePrintApi @register="registerPrintApi" />
+  <BasicModal
+    v-bind="$attrs"
+    @register="registerModal"
+    width="460px"
+    title="修改密码"
+    :footer="null"
+  >
+    <ModifyPassword class="mb-10px" :isUserUpdate="true" @cancel="openPasswordModal(false)" />
+  </BasicModal>
 </template>
 <script lang="ts" setup>
   import { Dropdown, Menu } from 'ant-design-vue';
@@ -57,13 +67,14 @@
   import { useHeaderSetting } from '@/hooks/setting/useHeaderSetting';
   import { useI18n } from '@/hooks/web/useI18n';
   import { useDesign } from '@/hooks/web/useDesign';
-  import { useModal } from '@/components/Modal';
+  import { useModal, BasicModal } from '@/components/Modal';
   import headerImg from '@/assets/images/header.jpg';
   import { propTypes } from '@/utils/propTypes';
   import { openWindow } from '@/utils';
   import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
+  import ModifyPassword from '@/views/sys/modifyPassword/index.vue';
 
-  type MenuEvent = 'logout' | 'doc' | 'lock' | 'api' | 'printApi';
+  type MenuEvent = 'logout' | 'doc' | 'lock' | 'api' | 'printApi' | 'updatePassword';
 
   const MenuItem = createAsyncComponent(() => import('./DropMenuItem.vue'));
   const LockAction = createAsyncComponent(() => import('../lock/LockModal.vue'));
@@ -75,10 +86,10 @@
   defineProps({
     theme: propTypes.oneOf(['dark', 'light']),
   });
-
+  const [registerModal, { openModal: openPasswordModal }] = useModal();
   const { prefixCls } = useDesign('header-user-dropdown');
   const { t } = useI18n();
-  const { getShowDoc, getUseLockPage, getShowApi, getShowPrintApi } = useHeaderSetting();
+  const { getShowDoc, getShowApi, getShowPrintApi } = useHeaderSetting();
   const userStore = useUserStore();
 
   const getUserInfo = computed(() => {
@@ -128,6 +139,9 @@
         break;
       case 'printApi':
         handlePrintApi();
+        break;
+      case 'updatePassword':
+        openPasswordModal(true);
         break;
     }
   }

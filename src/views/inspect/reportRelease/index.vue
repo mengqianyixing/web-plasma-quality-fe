@@ -13,6 +13,7 @@
         <a-button
           type="primary"
           @click="handleCreate"
+          :loading="createLoading"
           v-auth="InspectButtonEnum.ReportReleaseCreate"
           >报告生成</a-button
         >
@@ -51,7 +52,7 @@
       <template #totalUnqualified="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetails(record, 3, '不合格')"
+          @click.stop.self="handleDetails(record, 3, '检测不合格样本总数')"
         >
           {{ record.totalUnqualified }}
         </span>
@@ -59,7 +60,7 @@
       <template #totalQualified="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetails(record, 4, '合格')"
+          @click.stop.self="handleDetails(record, 4, '检测合格样本总数')"
         >
           {{ record.totalQualified }}
         </span>
@@ -67,7 +68,7 @@
       <template #totalHighTiter="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetails(record, 1, '高效价')"
+          @click.stop.self="handleDetails(record, 1, '高效价总数')"
         >
           {{ record.totalHighTiter }}
         </span>
@@ -75,7 +76,7 @@
       <template #totalLowTiter="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetails(record, 2, '低效价')"
+          @click.stop.self="handleDetails(record, 2, '低效价总数')"
         >
           {{ record.totalLowTiter }}
         </span>
@@ -83,9 +84,17 @@
       <template #totalNormal="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleDetails(record, 5, '无效价')"
+          @click.stop.self="handleDetails(record, 5, '无效价总数')"
         >
           {{ record.totalNormal }}
+        </span>
+      </template>
+      <template #bsNo="{ value }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="opeResultModal(true, { bsNo: value })"
+        >
+          {{ value }}
         </span>
       </template>
     </BasicTable>
@@ -96,7 +105,7 @@
       okText="提交"
       width="300px"
       :confirmLoading="confirmLoading"
-      title="取消原因"
+      title="撤销原因"
     >
       <div class="m-20px">
         <BasicForm @register="registerForm" />
@@ -104,6 +113,7 @@
     </Modal>
     <TabelModal @register="registerModal" />
     <ReportModal @register="registerReportModal" />
+    <ResultRegistration @register="registeResultModal" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
@@ -127,13 +137,17 @@
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
+  import ResultRegistration from './resultRegistration/index.vue';
 
   defineOptions({ name: 'ReportRelease' });
 
   const [registerReportModal, { openModal: openReportModal }] = useModal();
+  const [registeResultModal, { openModal: opeResultModal }] = useModal();
   const reportLoading = ref(false);
   const open = ref(false);
   const confirmLoading = ref(false);
+  const createLoading = ref(false);
+
   let revokeApi = revokeReportApi;
 
   const [registerModal, { openModal }] = useModal();
@@ -191,9 +205,14 @@
   async function handleCreate() {
     const [row] = getSelections(true);
     if (!row) return;
-    await createReportApi({ reportNo: row.reportNo });
-    message.success('制作成功');
-    reload();
+    try {
+      createLoading.value = true;
+      await createReportApi({ reportNo: row.reportNo });
+      message.success('制作成功');
+      reload();
+    } finally {
+      createLoading.value = false;
+    }
   }
   function handleUnCreate() {
     const [row] = getSelections(true);
@@ -210,7 +229,7 @@
       confirmLoading.value = true;
       await revokeApi({ reportNo: row.reportNo, cause });
       open.value = false;
-      message.success('取消成功');
+      message.success('撤销成功');
       reload();
     } finally {
       confirmLoading.value = false;

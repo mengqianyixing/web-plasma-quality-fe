@@ -1,19 +1,39 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable">
-      <template #[slot.slotName]="data" v-for="slot in slots" :key="slot.slotName">
-        <span v-if="data.record.isCount">
-          {{ get(data.record, slot.key) }}
-        </span>
-        <span
-          v-else
-          class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="cellClick(slot.slotName, data.record)"
-        >
-          {{ get(data.record, slot.key) }}
-        </span>
-      </template>
-    </BasicTable>
+  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex flex-col">
+    <div>
+      <BasicTable @register="registerTable" style="padding-bottom: 0" />
+    </div>
+    <div class="flex-1 p-16px pt-0px pb-0px bg-white m-6px mb-0px">
+      <vxe-grid v-bind="gridOptionsUnaccept" :data="unAcceptList" :loading="tableLoading">
+        <template #[slot.slotName]="{ row }" v-for="slot in slots" :key="slot.slotName">
+          <span v-if="row.stationName === '合计'">
+            {{ get(row, slot.key) }}
+          </span>
+          <span
+            v-else
+            class="text-blue-500 underline cursor-pointer"
+            @click.stop.self="cellClick(slot.slotName, row)"
+          >
+            {{ get(row, slot.key) }}
+          </span>
+        </template>
+      </vxe-grid>
+    </div>
+    <div class="mb-10px bg-white pb-6px pr-16px m-6px">
+      <a-pagination
+        class="float-right mt-2"
+        @change="handlePageChange"
+        @show-size-change="handleSizeChange"
+        size="small"
+        show-size-changer
+        show-quick-jumper
+        :page-size-options="['10', '30', '50', '80', '100']"
+        v-model:current="pager.currPage"
+        v-model:pageSize="pager.pageSize"
+        :total="pager.total"
+        :show-total="(total) => `共 ${total} 条数据`"
+      />
+    </div>
     <TabelModal @register="registerModal" />
   </PageWrapper>
 </template>
@@ -21,17 +41,23 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './data';
   import { PageWrapper } from '@/components/Page';
-  import { getListApi } from '@/api/query-statistics/titerPlasmaQuery';
-  import { isArray, isObject } from '@/utils/is';
-  import { PostApiCoreBagTiterResponse } from '@/api/type/queryStatistics';
+  import { getListApi, getCountApi } from '@/api/query-statistics/titerPlasmaQuery';
+  import { GetApiSearchPlasmaPrivilegeResponse } from '@/api/type/queryStatistics';
   import { get } from 'lodash-es';
   import { useModal } from '@/components/Modal';
   import TabelModal from './tabelModal.vue';
+  import { reactive, ref } from 'vue';
+  import { VxeGridProps } from 'vxe-table';
+  import { message, Pagination as APagination } from 'ant-design-vue';
 
   defineOptions({ name: 'TiterPlasmaQuery' });
 
   const [registerModal, { openModal }] = useModal();
-
+  const pager = reactive({
+    pageSize: 30,
+    currPage: 1,
+    total: 0,
+  });
   const slots = ['B', 'R', 'T', 'N', 'G'].reduce((res: Recordable[], it) => {
     const list = [
       { slotName: it + 'N', key: it + '.' + 'nTiter' },
@@ -40,20 +66,55 @@
     ];
     return [...res, ...list];
   }, []);
-  const [registerTable] = useTable({
-    api: getListApi,
-    columns,
+
+  const unAcceptList = ref([]);
+  const tableLoading = ref(false);
+  const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
+    border: true,
+    height: 'auto',
+    exportConfig: {},
+    columnConfig: {
+      resizable: true,
+    },
+    scrollY: {
+      enabled: false,
+      gt: 0,
+    },
+    pagerConfig: {
+      enabled: false,
+    },
+    formConfig: {
+      enabled: false,
+    },
+    toolbarConfig: {
+      refresh: false,
+      loading: false,
+      export: false,
+      custom: false,
+    },
+    columns: columns as any,
+    showFooter: false,
+  });
+  const [registerTable, { getForm, reload }] = useTable({
+    api: (p) => Promise.all([getListApi(p), getCountApi(p)]),
+    immediate: false,
+    columns: [],
     formConfig: {
       schemas: searchFormSchema,
+      submitFunc,
     },
+    emptyDataIsShowTable: false,
     size: 'small',
     striped: false,
     useSearchForm: true,
     bordered: true,
     pagination: false,
     showIndexColumn: false,
-    afterFetch: (res: PostApiCoreBagTiterResponse) => {
-      const formatData = res.map((row) => {
+    beforeFetch: (p) => ({ ...p, ...pager }),
+    afterFetch: (
+      res: [GetApiSearchPlasmaPrivilegeResponse, GetApiSearchPlasmaPrivilegeResponse['result'][0]],
+    ) => {
+      const formatData = [...res[0].result, res[1]].map((row) => {
         row['B'] = row.titers.find((it) => it.rawImm === '乙免') || {};
         row['R'] = row.titers.find((it) => it.rawImm === '狂免') || {};
         row['T'] = row.titers.find((it) => it.rawImm === '破免') || {};
@@ -61,50 +122,46 @@
         row['G'] = row.titers.find((it) => it.rawImm === '巨细胞') || {};
         return row;
       });
-
-      const row = getCountRow(formatData);
-      return [...formatData, row];
+      unAcceptList.value = formatData as any;
+      pager.total = res[0].totalCount;
+      return [];
     },
   });
+
+  async function handlePageChange(e) {
+    pager.currPage = e;
+    reload();
+  }
+
+  async function handleSizeChange(_, size) {
+    pager.pageSize = size;
+    reload();
+  }
+  function getFormIsNotNull() {
+    const values = getForm().getFieldsValue();
+    return Object.values(values).some((v) => v || v === 0);
+  }
+  function submitFunc() {
+    if (getFormIsNotNull()) {
+      reload();
+      return Promise.resolve();
+    }
+    message.warning('请选择或输入条件进行查询');
+    return Promise.reject();
+  }
   function cellClick(slotName: string, data: Recordable) {
     const [rawImm, titerLevel] = slotName.split('');
     const { batchNo, stationNo } = data;
-    openModal(true, { rawImm, titerLevel, batchNo, stationNo });
-  }
-  function getCountRow(data: Recordable[]) {
-    const row = columns.reduce((row, { dataIndex, children = [] }) => {
-      row[dataIndex as string] = 0;
-      children.forEach(({ dataIndex: ci }) => {
-        if (isArray(ci)) {
-          row[ci[0]] = row[ci[0]] || {};
-          row[ci[0]][ci[1]] = 0;
-        } else {
-          row[ci as string] = 0;
-        }
-      });
-      return row;
-    }, {});
-    data.forEach((it) => {
-      for (const key in it) {
-        const data = it[key];
-        if (isObject(data)) {
-          for (const ck in data) {
-            row[key][ck] += data[ck] || 0;
-          }
-        } else {
-          row[key] += data || 0;
-        }
-      }
-    });
-    row['B']['reagentBatch'] = '--';
-    row['R']['reagentBatch'] = '--';
-    row['T']['reagentBatch'] = '--';
-    ['B', 'R', 'T', 'N', 'G'].map((it) => {
-      row[it]['hRatio'] = row[it]['hTiter'] / row['bagCount'];
-      row[it]['lRatio'] = row[it]['lTiter'] / row['bagCount'];
-      row[it]['nRatio'] = row[it]['nTiter'] / row['bagCount'];
-    });
+    const values = getForm().getFieldsValue();
 
-    return { ...row, stationName: '合计', batchNo: '批次数：' + data.length + '批', isCount: true };
+    openModal(true, { rawImm, titerLevel, batchNo, stationNo, immunity: values.immunity });
   }
 </script>
+<style scoped>
+  :deep(.vxe-table--body tr:last-child) {
+    position: sticky;
+    top: 0;
+    bottom: 0;
+    background-color: #f5f5f5;
+  }
+</style>

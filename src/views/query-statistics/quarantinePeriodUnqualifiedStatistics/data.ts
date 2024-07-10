@@ -6,6 +6,7 @@ import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
 export const checkUnqKey = 'checkUnq';
 export const quarantineUnqKey = 'quarantineUnq';
@@ -28,11 +29,13 @@ export const columns: BasicColumn[] = [
     title: '采浆公司',
     dataIndex: 'stationName',
     width: 70,
+    fixed: 'left',
   },
   {
     title: '血浆数量（袋）',
     dataIndex: bagNumKey,
     width: 100,
+    fixed: 'left',
   },
 
   {
@@ -41,8 +44,9 @@ export const columns: BasicColumn[] = [
     children: [
       {
         title: '合计',
-        dataIndex: [checkUnqKey, numKey],
         width: 70,
+        dataIndex: [checkUnqKey, numKey],
+        slots: { customRender: checkUnqKey },
       },
       {
         title: '比率(%)',
@@ -59,8 +63,9 @@ export const columns: BasicColumn[] = [
     children: [
       {
         title: '合计',
-        dataIndex: [quarantineUnqKey, numKey],
         width: 70,
+        dataIndex: [quarantineUnqKey, numKey],
+        slots: { customRender: quarantineUnqKey },
       },
       {
         title: '比率(%)',
@@ -79,6 +84,7 @@ export const columns: BasicColumn[] = [
         title: '合计',
         dataIndex: [trackUnqKey, numKey],
         width: 70,
+        slots: { customRender: trackUnqKey },
       },
       {
         title: '比率(%)',
@@ -137,23 +143,60 @@ export const searchFormSchema: FormSchema[] = [
 
 export const dtColumns: BasicColumn[] = [
   {
-    dataIndex: 'donorNo',
-    title: '浆员编号',
-  },
-  {
-    dataIndex: 'name',
-    title: '浆员姓名',
+    dataIndex: 'stationName',
+    title: '采浆公司',
+    width: 80,
   },
   {
     dataIndex: 'batchNo',
     title: '血浆批号',
+    width: 120,
   },
   {
     dataIndex: 'bagNo',
     title: '血浆编号',
+    width: 140,
   },
   {
     dataIndex: 'collectAt',
-    title: '血浆采集日期',
+    title: '采集日期',
+    width: 100,
+  },
+  {
+    dataIndex: 'cardNo',
+    title: '浆员编号',
+    width: 100,
+  },
+  {
+    dataIndex: 'name',
+    title: '浆员姓名',
+    width: 100,
+  },
+  {
+    dataIndex: 'titerJudge',
+    title: '效价类型',
+    width: 80,
+    format: PlasmaType,
+  },
+  {
+    dataIndex: 'netWeight',
+    title: '验收净重(g)',
+    width: 100,
+  },
+  {
+    dataIndex: 'failedAt',
+    title: '不合格日期',
+    width: 100,
+  },
+  {
+    dataIndex: 'fkFailedCode',
+    title: '不合格原因',
+    slots: { customRender: 'fkFailedCode' },
+    width: 160,
+  },
+  {
+    dataIndex: 'inStoreAt',
+    title: '入不合格库日期',
+    width: 120,
   },
 ];

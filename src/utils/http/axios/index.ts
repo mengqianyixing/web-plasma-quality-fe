@@ -68,7 +68,7 @@ const transform: AxiosTransform = {
       } else if (options.successMessageMode === 'message') {
         createMessage.success(successMsg);
       }
-      return data || dataList;
+      return data === null ? dataList : data;
     }
 
     // 在此处根据自己项目的实际情况对不同的code执行不同的操作
@@ -229,7 +229,6 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         // authentication schemes，e.g: Bearer
         // authenticationScheme: 'Bearer',
         authenticationScheme: '',
-        timeout: 100 * 1000,
         // 基础接口地址
         // baseURL: globSetting.apiUrl,
 

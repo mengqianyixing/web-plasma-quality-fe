@@ -12,8 +12,8 @@
     @register="registerModal"
     showFooter
     title="血浆限制明细"
-    width="800px"
-    :minHeight="520"
+    width="1000px"
+    :minHeight="600"
     cancelText="关闭"
     @ok="okFun"
     @fullscreen="redoHeight"
@@ -29,19 +29,19 @@
   import { useModalInner, BasicModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { plasmaRestrictionColumns } from './batch-release.data';
-  import { getBindBoxsListApi } from '@/api/quality/plasma-restriction';
+  import { getPlasmaRestrictionListApi } from '@/api/quality/batch-release';
   import { ref } from 'vue';
 
-  const batchNos = ref([]);
+  const orderNo = ref('');
   const emit = defineEmits(['ok', 'register']);
   const [registerModal, { closeModal }] = useModalInner((data) => {
-    batchNos.value = data.batchNos;
+    orderNo.value = data.orderNo;
     setPagination({ current: 1 });
     reload();
   });
   const [registerTable, { redoHeight, reload, setPagination }] = useTable({
     immediate: false,
-    api: getBindBoxsListApi,
+    api: getPlasmaRestrictionListApi,
     size: 'small',
     fetchSetting: {
       pageField: 'currPage',
@@ -53,7 +53,7 @@
     inset: true,
     columns: plasmaRestrictionColumns,
     bordered: true,
-    beforeFetch: (p) => ({ ...p, batchNos: batchNos.value }),
+    beforeFetch: (p) => ({ ...p, orderNo: orderNo.value }),
   });
   function okFun() {
     closeModal();

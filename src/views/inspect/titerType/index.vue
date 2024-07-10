@@ -58,10 +58,11 @@
   import { PageWrapper } from '@/components/Page';
   import { useModal } from '@/components/Modal';
   import { columns, searchFormschema } from './titerType.data';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import { getListApi, updateTitlerTypeApi, removeTitlerTypeApi } from '@/api/inspect/titerType';
   import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'TiterType' });
 
@@ -114,18 +115,21 @@
     clearSelectedRowKeys();
     reload();
   }
+
+  const { createConfirm } = useMessage();
+
   function handleRemove() {
     const [row] = getSelections(true);
     if (!row) return;
     const { dictItemId, itemKey } = row;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认删除' + itemKey + '?',
       onOk: async () => {
         await removeTitlerTypeApi({ dictItemId: dictItemId });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function handleDetails(row) {
@@ -136,14 +140,14 @@
     if (!row) return;
     const { itemKey, dictItemId, enable } = row;
     if (enable === action) return message.warning('状态不需要变更');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + (action ? '启用' : '禁用') + itemKey + '?',
       onOk: async () => {
         await updateTitlerTypeApi({ dictItemId: dictItemId, enable: action });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 </script>

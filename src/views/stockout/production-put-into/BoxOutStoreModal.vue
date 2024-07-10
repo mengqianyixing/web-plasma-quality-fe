@@ -5,45 +5,57 @@
     title="逐箱出库列表"
     showFooter
     width="85%"
-    :showCancelBtn="false"
-    @ok="handleOk"
+    :min-height="600"
+    :showOkBtn="false"
+    :cancelText="'关闭'"
+    @cancel="handleClose"
   >
-    <div class="flex items-center gap-2 w-[300px]">
-      <span class="w-[80px]">箱号：</span>
-      <a-input
-        ref="inputRef"
-        size="large"
-        @press-enter="handleEnter"
-        placeholder="请扫箱号"
-        :disabled="inputDisabled"
-        v-model:value="inputValue"
-      />
-    </div>
-    <div class="flex mt-3">
-      <BasicTable
-        @register="registerNoOutTable"
-        :title="'未出库箱数: ' + noOutTableData?.length"
-        :dataSource="noOutTableData"
-      />
-      <BasicTable
-        @register="registerOutStoreTable"
-        :title="'已出库箱数: ' + outTableData?.length"
-        :dataSource="outTableData"
-      />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <div class="flex items-center gap-1 w-[300px]">
+          <span class="w-[80px]">箱号：</span>
+          <a-input
+            size="large"
+            @press-enter="_handleEnter"
+            placeholder="请扫箱号"
+            :disabled="inputDisabled"
+            v-model:value="inputValue"
+          />
+        </div>
+        <div class="flex" style="height: calc(100% - 40px)">
+          <div class="flex-1 shrink-1">
+            <BasicTable
+              @register="registerNoOutTable"
+              :title="'未出库箱数: ' + (noOutTableData?.length ?? 'N/A')"
+              :dataSource="noOutTableData"
+            />
+          </div>
+          <div class="flex-1 shrink-1">
+            <BasicTable
+              @register="registerOutStoreTable"
+              :title="'已出库箱数: ' + (outTableData?.length ?? 'N/A')"
+              :dataSource="outTableData"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </BasicModal>
 </template>
 <script lang="ts" setup>
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { ref, computed, nextTick } from 'vue';
+  import { ref, computed, watch } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { useScanHelper } from '@/hooks/common/useScanHelper';
+  import { debounce } from 'lodash-es';
 
   import {
     getProductionOutStoreList,
     productionOutStore,
   } from '@/api/stockout/production-put-into';
   import { GetApiProductOutStoreBoxesOrderNoResponse } from '@/api/type/productionSortingMangeMain';
+  import { RemoveEventFn } from '@/hooks/event/useEventListener';
 
   const orderNo = ref('');
   const inputDisabled = ref(false);
@@ -52,7 +64,15 @@
 
   const emit = defineEmits(['success', 'register']);
   const { createMessage } = useMessage();
-  const inputRef = ref<HTMLElement | null>(null);
+  const { barCode, startEvent, enterFlag } = useScanHelper();
+  const _handleEnter = debounce(handleEnter, 300);
+
+  watch([barCode, enterFlag], async ([code, flag]) => {
+    if (code && flag) {
+      inputValue.value = code;
+      await _handleEnter();
+    }
+  });
 
   const [registerNoOutTable] = useTable({
     columns: [
@@ -81,8 +101,9 @@
     indexColumnProps: {
       width: 80,
     },
+    inset: true,
+    isCanResizeParent: true,
     immediate: false,
-    canResize: false,
   });
   const [registerOutStoreTable] = useTable({
     columns: [
@@ -110,11 +131,15 @@
     indexColumnProps: {
       width: 80,
     },
+    inset: true,
+    isCanResizeParent: true,
     immediate: false,
-    canResize: false,
   });
+
+  let _removeEvent: RemoveEventFn = () => {};
   const [register, { setModalProps, closeModal }] = useModalInner(async (data) => {
-    inputRef.value?.focus();
+    const { removeEvent } = startEvent();
+    _removeEvent = removeEvent;
 
     setModalProps({
       maskClosable: false,
@@ -125,7 +150,13 @@
   });
 
   async function reloadTable() {
+    setModalProps({
+      loading: true,
+    });
     originTableData.value = await getProductionOutStoreList(orderNo.value);
+    setModalProps({
+      loading: false,
+    });
   }
 
   const noOutTableData = computed(() => originTableData.value?.notOutList);
@@ -135,6 +166,9 @@
     inputDisabled.value = true;
 
     try {
+      setModalProps({
+        loading: true,
+      });
       await productionOutStore({
         orderNo: orderNo.value,
         boxNo: inputValue.value,
@@ -148,15 +182,16 @@
         createMessage.success('全部出库成功');
       }
     } finally {
+      setModalProps({
+        loading: false,
+      });
       inputValue.value = '';
       inputDisabled.value = false;
-      await nextTick(() => {
-        inputRef.value?.focus();
-      });
     }
   }
 
-  function handleOk() {
+  function handleClose() {
+    _removeEvent();
     closeModal();
     emit('success');
   }

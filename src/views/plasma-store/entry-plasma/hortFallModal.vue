@@ -3,36 +3,56 @@
     wrapClassName="horFallModal"
     v-bind="$attrs"
     @register="registerHortFall"
-    showFooter
     title="不足量详情"
-    width="800px"
-    :isDetail="true"
-    :showDetailBack="false"
+    width="80%"
+    :min-height="650"
+    :showOkBtn="false"
   >
-    <BasicTable @register="registerTable" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute flex flex-col w-full h-full">
+        <BasicTable @register="registerTable" />
+      </div>
+    </div>
   </BasicModal>
 </template>
 <script setup lang="ts">
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { useTable, BasicTable } from '@/components/Table';
   import { hortFallNumModalColumns } from './entrySearch.data';
+  import { shortFailList } from '@/api/plasmaStore/entryPlasma';
+  import { ref } from 'vue';
 
   defineEmits(['register']);
 
-  const [registerHortFall] = useModalInner();
-  const [registerTable] = useTable({
-    immediate: true,
+  const batchNo = ref('');
+  const [registerTable, { reload }] = useTable({
+    api: shortFailList,
+    beforeFetch: (params) => {
+      return {
+        ...params,
+        batchNo: batchNo.value,
+      };
+    },
+    immediate: false,
     fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
       listField: 'result',
     },
-    formConfig: {
-      showResetButton: false,
-      schemas: [],
-    },
-    rowKey: 'hortFallNum',
+    inset: true,
+    isCanResizeParent: true,
     columns: hortFallNumModalColumns,
-    pagination: false,
     useSearchForm: false,
     bordered: true,
+  });
+
+  const [registerHortFall, { setModalProps }] = useModalInner((data) => {
+    setModalProps({
+      maskClosable: false,
+    });
+
+    batchNo.value = data.batchNo;
+    reload();
   });
 </script>

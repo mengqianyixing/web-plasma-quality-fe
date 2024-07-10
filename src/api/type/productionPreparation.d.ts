@@ -567,7 +567,7 @@ export interface GetApiProductPrepareSummaryBoxPrepareNoResponse {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/summary/bag/{prepareNo}`
- * @更新时间 `2024-01-10 15:08:32`
+ * @更新时间 `2024-07-05 10:51:18`
  */
 export interface GetApiProductPrepareSummaryBagPrepareNoRequest {
   /**
@@ -581,7 +581,7 @@ export interface GetApiProductPrepareSummaryBagPrepareNoRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/summary/bag/{prepareNo}`
- * @更新时间 `2024-01-10 15:08:32`
+ * @更新时间 `2024-07-05 10:51:18`
  */
 export interface GetApiProductPrepareSummaryBagPrepareNoResponse {
   field_1: {
@@ -614,6 +614,10 @@ export interface GetApiProductPrepareSummaryBagPrepareNoResponse {
      */
     donorName: string;
     /**
+     * 浆员卡号
+     */
+    cardNo: string;
+    /**
      * 血型
      */
     bloodType: string;
@@ -628,7 +632,7 @@ export interface GetApiProductPrepareSummaryBagPrepareNoResponse {
     /**
      * 血浆状态
      */
-    tracked: string;
+    plasmaStatus: string;
   }[];
 }
 
@@ -1154,7 +1158,7 @@ export interface GetApiProductPrepareSummaryPreviewResponse {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/sorting/bags`
- * @更新时间 `2024-01-30 18:13:15`
+ * @更新时间 `2024-05-31 15:00:24`
  */
 export interface GetApiProductPrepareSortingBagsRequest {
   prepareNo: string;
@@ -1183,7 +1187,7 @@ export interface GetApiProductPrepareSortingBagsRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/sorting/bags`
- * @更新时间 `2024-01-30 18:13:15`
+ * @更新时间 `2024-05-31 15:00:24`
  */
 export interface GetApiProductPrepareSortingBagsResponse {
   totalCount?: number;
@@ -1204,6 +1208,10 @@ export interface GetApiProductPrepareSortingBagsResponse {
      * 浆员编码
      */
     donorNo?: string;
+    /**
+     * 浆员卡号
+     */
+    cardNo?: string;
     /**
      * 效价类型
      */

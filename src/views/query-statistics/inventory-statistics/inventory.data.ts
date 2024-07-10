@@ -43,6 +43,9 @@ export const searchFormSchema: FormSchema[] = [
     field: '[acceptBeginAt,acceptEndAt]',
     label: '接收日期',
     component: 'RangePicker',
+    componentProps: {
+      valueFormat: 'YYYY-MM-DD',
+    },
   },
   {
     field: '[verifyBeginAt, verifyEndAt]',

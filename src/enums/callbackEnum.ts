@@ -32,3 +32,20 @@ export const donorStatusMap = new Map<donorStatusValueEnum, string>();
 donorStatusMap.set(donorStatusValueEnum.RFF, donorStatusEnum.RFF);
 donorStatusMap.set(donorStatusValueEnum.RFT, donorStatusEnum.RFT);
 donorStatusMap.set(donorStatusValueEnum.NOR, donorStatusEnum.NOR);
+
+export enum callbackModalEnum {
+  A = 'A',
+  B = 'B',
+}
+
+export enum QuarantineBatchControlEnum {
+  OPEN = 'open',
+  CLOSE = 'close',
+}
+
+export enum CallBackDetailState {
+  NOVISIT = 'FIL',
+  RESUME = 'SCP',
+  SUCCESS = 'SCS',
+  FAIL = 'END',
+}

@@ -3,6 +3,7 @@
     <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button
+          v-if="false"
           type="primary"
           @click="handleRemove"
           :disabled="!props.bsNo"

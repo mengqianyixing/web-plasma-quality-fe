@@ -5,8 +5,13 @@
     title="不合格样本数量列表"
     showFooter
     width="85%"
+    :minHeight="600"
   >
-    <BasicTable @register="registerTable" ref="table" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute flex flex-col w-full h-full">
+        <BasicTable @register="registerTable" ref="table" />
+      </div>
+    </div>
     <template #footer>
       <a-button @click="closeModal">关闭</a-button>
     </template>
@@ -36,17 +41,13 @@
         batchSampleNo: batchSampleNo.value,
       };
     },
-    size: 'small',
     striped: false,
     useSearchForm: false,
-
     bordered: true,
     showIndexColumn: true,
-    indexColumnProps: {
-      width: 80,
-    },
+    inset: false,
     immediate: false,
-    canResize: false,
+    isCanResizeParent: true,
   });
 
   const [register, { setModalProps, closeModal }] = useModalInner((data) => {

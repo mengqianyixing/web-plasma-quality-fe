@@ -114,11 +114,13 @@ export type GetApiSysPrintingRecordPreviewPrtNoResponse = string[];
  *
  * @分类 [打印记录↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5215)
  * @请求头 `PUT /api/sys/printingRecord`
- * @更新时间 `2023-12-27 10:18:05`
+ * @更新时间 `2024-04-20 16:38:34`
  */
 export interface PutApiSysPrintingRecordRequest {
-  prtNo: string;
+  prtNo?: string;
   reason?: string;
+  bssNo: string;
+  labelType: string;
 }
 
 /**
@@ -126,7 +128,7 @@ export interface PutApiSysPrintingRecordRequest {
  *
  * @分类 [打印记录↗](https://yapi.sharing8.cn/project/521/interface/api/cat_5215)
  * @请求头 `PUT /api/sys/printingRecord`
- * @更新时间 `2023-12-27 10:18:05`
+ * @更新时间 `2024-04-20 16:38:34`
  */
 export interface PutApiSysPrintingRecordResponse {
   times?: number;

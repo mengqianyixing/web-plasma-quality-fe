@@ -4,8 +4,9 @@
     @register="registerModal"
     :title="state.title"
     width="1200px"
-    :minHeight="520"
+    :minHeight="600"
     @fullscreen="redoHeight"
+    cancelText="关闭"
     @cancel="emit('close')"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
@@ -23,9 +24,11 @@
         </div>
         <div class="flex-1 shrink-1" style="height: calc(100% - 170px)">
           <BasicTable @register="registerTable">
-            <template #toolbar v-if="state.title !== '查看'">
-              <a-button type="primary" @click="methods.addClick">添加</a-button>
-              <a-button type="primary" @click="methods.removeClick">移除</a-button>
+            <template #toolbar>
+              <template v-if="state.title !== '查看'">
+                <a-button type="primary" @click="methods.addClick">添加</a-button>
+                <a-button type="primary" @click="methods.removeClick">移除</a-button>
+              </template>
             </template>
           </BasicTable>
         </div>
@@ -48,7 +51,8 @@
     removeTableApi,
   } from '@/api/nonconformity/plasmaOut';
   import { reactive } from 'vue';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const emit = defineEmits(['close', 'register']);
 
@@ -63,7 +67,15 @@
     });
   const [
     registerTable,
-    { getSelectRows, clearSelectedRowKeys, reload, setPagination, setTableData, redoHeight },
+    {
+      getSelectRows,
+      clearSelectedRowKeys,
+      reload,
+      setPagination,
+      setTableData,
+      redoHeight,
+      setProps,
+    },
   ] = useTable({
     api: dtTableApi,
     immediate: false,
@@ -88,7 +100,7 @@
       return res;
     },
   });
-  const [registerModal] = useModalInner(async ({ disabled, dlvNo }) => {
+  const [registerModal, { setModalProps }] = useModalInner(async ({ disabled, dlvNo }) => {
     state.dlvNo = dlvNo;
     updateSchema(
       formSchema.slice(1).map((_) => ({ ..._, componentProps: { disabled: !!disabled } })),
@@ -107,11 +119,17 @@
       setTableData([]);
       state.title = '新增';
     }
-    if (disabled) state.title = '查看';
+    if (disabled) {
+      setProps({ rowSelection: void 0 });
+      setModalProps({ showOkBtn: false });
+      state.title = '查看';
+    }
 
     resetFields();
     clearValidate();
   });
+
+  const { createConfirm } = useMessage();
 
   const methods = {
     addClick: () => {
@@ -121,15 +139,13 @@
     removeClick: () => {
       const rows = getSelectRows();
       if (rows.length === 0) return message.warning('请选择一条数据');
-      if (rows.length > 1) return message.warning('只能选择一条数据');
-      const [row] = rows;
-      Modal.confirm({
-        content: '确认删除' + row.bagNo + '?',
+      createConfirm({
+        iconType: 'warning',
+        content: '确认移除?',
         onOk: async () => {
-          await removeTableApi({ bagNo: row.bagNo });
-          reload();
+          await removeTableApi(rows.map((it) => it.bagNo));
+          await reload();
         },
-        onCancel: () => Modal.destroyAll(),
       });
     },
     submit: async () => {

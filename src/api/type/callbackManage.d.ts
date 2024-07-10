@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback`
- * @更新时间 `2024-03-09 10:57:49`
+ * @更新时间 `2024-06-28 14:59:59`
  */
 export interface GetApiCoreDonorCallbackRequest {
   pageSize: string;
@@ -49,6 +49,18 @@ export interface GetApiCoreDonorCallbackRequest {
    * 回访样本接收日期止
    */
   sampleAcceptEndDate?: string;
+  /**
+   * 回访样本发布日期
+   */
+  samplePublishStartDate?: string;
+  /**
+   * 回访样本发布日期
+   */
+  samplePublishEndDate?: string;
+  /**
+   * WIT  COF
+   */
+  states?: string;
 }
 
 /**
@@ -56,7 +68,7 @@ export interface GetApiCoreDonorCallbackRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback`
- * @更新时间 `2024-03-09 10:57:49`
+ * @更新时间 `2024-06-28 14:59:59`
  */
 export interface GetApiCoreDonorCallbackResponse {
   totalCount?: number;
@@ -140,7 +152,7 @@ export interface GetApiCoreDonorCallbackResponse {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/need`
- * @更新时间 `2024-01-13 11:09:01`
+ * @更新时间 `2024-06-21 14:37:34`
  */
 export interface GetApiCoreDonorCallbackNeedRequest {
   stationNo: string;
@@ -167,6 +179,12 @@ export interface GetApiCoreDonorCallbackNeedRequest {
    * 批次号
    */
   batchNo: string;
+  /**
+   * 血浆状态， 首次反复， 1 首次 2反复
+   */
+  trackType?: string;
+  pageSize: string;
+  currPage: string;
 }
 
 /**
@@ -174,61 +192,45 @@ export interface GetApiCoreDonorCallbackNeedRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/callback/need`
- * @更新时间 `2024-01-13 11:09:01`
+ * @更新时间 `2024-06-21 14:37:34`
  */
-export type GetApiCoreDonorCallbackNeedResponse = {
-  stationNo: string;
-  /**
-   * 浆员编号
-   */
-  donorNo: string;
-  /**
-   * 浆员姓名
-   */
-  donorName: string;
-  /**
-   * 身份证号
-   */
-  idcardId: string;
-  /**
-   * 性别
-   */
-  gender: string;
-  /**
-   * 状态
-   */
-  donatorStatus: string;
-  /**
-   * 拒绝日期
-   */
-  refuseDate?: string;
-  /**
-   * 拒绝原因
-   */
-  refuseReason?: string;
-  /**
-   * 最早待回访采浆日期
-   */
-  minCollTime: string;
-  /**
-   * 最早采浆血浆编号
-   */
-  minPlasmaNo: string;
-  /**
-   * 最后采浆日期
-   */
-  maxCollectTime: string;
-  /**
-   * 待追踪袋数
-   */
-  plasmaCount: number;
-  immType?: string;
-  callbackDate?: string;
-  callbackResult?: string;
-  sampleCollectTime?: string;
-  sampleNo?: string;
-  remark?: string;
-}[];
+export interface GetApiCoreDonorCallbackNeedResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    /**
+     * 浆员姓名
+     */
+    donorName: string;
+    /**
+     * 身份证号
+     */
+    idcardId: string;
+    /**
+     * 性别
+     */
+    gender: string;
+    donatorStatus: string;
+    minCollTime: string;
+    minPlasmaNo: string;
+    maxCollectTime: string;
+    plasmaCount: number;
+    stationNo: string;
+    trackType: string;
+    cardNo: string;
+    donorNo: string;
+    refuseDate: string;
+    refuseReason: string;
+    immType: string;
+    callbackDate: string;
+    callbackResult: string;
+    sampleCollectTime: string;
+    sampleNo: string;
+    remark: string;
+  }[];
+}
 
 /**
  * 接口 [待回访浆员生成↗](https://yapi.sharing8.cn/project/529/interface/api/31902) 的 **请求类型**
@@ -261,10 +263,10 @@ export type PostApiCoreDonorCallbackNeedResponse = null;
  * 接口 [回访批次详情↗](https://yapi.sharing8.cn/project/529/interface/api/31998) 的 **请求类型**
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
- * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-30 10:55:20`
+ * @请求头 `GET /api/search/donor/callback/detail`
+ * @更新时间 `2024-06-21 14:06:31`
  */
-export interface GetApiCoreDonorCallbackDetailRequest {
+export interface GetApiSearchDonorCallbackDetailRequest {
   /**
    * 回访批次号
    */
@@ -283,39 +285,55 @@ export interface GetApiCoreDonorCallbackDetailRequest {
   gapDays?: string;
   minCollectTime?: string;
   maxCollectTime?: string;
+  /**
+   * 血浆状态  传1首次 2反复
+   */
+  trackType?: string;
+  /**
+   * 浆员卡号
+   */
+  cardNo?: string;
+  currPage: string;
+  pageSize: string;
 }
 
 /**
  * 接口 [回访批次详情↗](https://yapi.sharing8.cn/project/529/interface/api/31998) 的 **返回类型**
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
- * @请求头 `GET /api/core/donor/callback/detail`
- * @更新时间 `2024-01-30 10:55:20`
+ * @请求头 `GET /api/search/donor/callback/detail`
+ * @更新时间 `2024-06-21 14:06:31`
  */
-export type GetApiCoreDonorCallbackDetailResponse = {
-  stationNo: string;
-  donorNo: string;
-  donorName: string;
-  idcardId: string;
-  gender: string;
-  donatorStatus: string;
-  immType: string;
-  refuseDate?: string | null;
-  refuseReason?: string | null;
-  minCollTime: string;
-  minPlasmaNo: string;
-  maxCollectTime: string;
-  plasmaCount: number;
-  callbackDate?: string;
-  /**
-   * 回访情况
-   */
-  state: string;
-  callbackResult?: string;
-  sampleCollectTime?: string;
-  sampleNo?: string;
-  remark?: string;
-}[];
+export interface GetApiSearchDonorCallbackDetailResponse {
+  totalCount?: number;
+  pageSize?: number;
+  totalPage?: number;
+  currPage?: number;
+  result?: {
+    stationNo: string;
+    donorNo: string;
+    donorName: string;
+    idcardId: string;
+    gender: string;
+    donatorStatus: string;
+    minCollTime: string;
+    minPlasmaNo: string;
+    maxCollectTime: string;
+    plasmaCount: number;
+    state: string;
+    immType: string;
+    bloodType: string;
+    deadline: string;
+    trackType: string;
+    refuseDate: null | string;
+    refuseReason: string | null;
+    callbackDate: string;
+    callbackResult: string;
+    sampleCollectTime: string;
+    sampleNo: string;
+    remark: string;
+  }[];
+}
 
 /**
  * 接口 [回访批次确认↗](https://yapi.sharing8.cn/project/529/interface/api/32001) 的 **请求类型**
@@ -497,10 +515,10 @@ export type GetApiCoreDonorCallbackResultResponse = {
  * 接口 [回访失败(终止回访)查询↗](https://yapi.sharing8.cn/project/529/interface/api/32882) 的 **请求类型**
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
- * @请求头 `GET /api/core/donor/callback/defeat`
- * @更新时间 `2024-01-26 14:35:42`
+ * @请求头 `GET /api/search/donor/callback-ended`
+ * @更新时间 `2024-07-06 16:47:21`
  */
-export interface GetApiCoreDonorCallbackDefeatRequest {
+export interface GetApiSearchDonorCallbackEndedRequest {
   pageSize: string;
   currPage: string;
   /**
@@ -525,18 +543,26 @@ export interface GetApiCoreDonorCallbackDefeatRequest {
  * 接口 [回访失败(终止回访)查询↗](https://yapi.sharing8.cn/project/529/interface/api/32882) 的 **返回类型**
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
- * @请求头 `GET /api/core/donor/callback/defeat`
- * @更新时间 `2024-01-26 14:35:42`
+ * @请求头 `GET /api/search/donor/callback-ended`
+ * @更新时间 `2024-07-06 16:47:21`
  */
-export type GetApiCoreDonorCallbackDefeatResponse = {
+export type GetApiSearchDonorCallbackEndedResponse = {
   /**
    * 采浆公司编号
    */
   stationNo: string;
   /**
+   * 采浆公司名称
+   */
+  stationName: string;
+  /**
    * 浆员编号
    */
   donorNo: string;
+  /**
+   * 浆员卡号 显示
+   */
+  cardNo: string;
   /**
    * 浆员姓名
    */
@@ -576,7 +602,7 @@ export type GetApiCoreDonorCallbackDefeatResponse = {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/block`
- * @更新时间 `2024-02-27 15:49:19`
+ * @更新时间 `2024-05-31 10:53:31`
  */
 export interface GetApiCoreDonorBlockRequest {
   pageSize: string;
@@ -612,7 +638,7 @@ export interface GetApiCoreDonorBlockRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/block`
- * @更新时间 `2024-02-27 15:49:19`
+ * @更新时间 `2024-05-31 10:53:31`
  */
 export interface GetApiCoreDonorBlockResponse {
   totalCount?: number;
@@ -628,6 +654,10 @@ export interface GetApiCoreDonorBlockResponse {
      * 浆站编号
      */
     donorNo: string;
+    /**
+     * 浆员卡号
+     */
+    cardNo: string;
     /**
      * 浆员名称
      */
@@ -647,17 +677,17 @@ export interface GetApiCoreDonorBlockResponse {
  * 接口 [回访状态明细↗](https://yapi.sharing8.cn/project/529/interface/api/34185) 的 **请求类型**
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
- * @请求头 `GET /api/core/donor/callback/status/detail`
- * @更新时间 `2024-04-02 17:02:08`
+ * @请求头 `GET /api/search/donor/callback/detail-state`
+ * @更新时间 `2024-07-05 16:51:01`
  */
-export interface GetApiCoreDonorCallbackStatusDetailRequest {
+export interface GetApiSearchDonorCallbackDetailStateRequest {
   pageSize: string;
   currPage: string;
   /**
    * SCP("回访成功-采浆"),
    *     SCS("回访成功-采样"),
-   *     FIL("回访失败"),
-   * WIT("未回访"),
+   * 未回访传    FIL("回访失败"),
+   *
    */
   status: string;
   /**
@@ -675,29 +705,25 @@ export interface GetApiCoreDonorCallbackStatusDetailRequest {
   /**
    * 血浆状态  首次反复
    */
-  plasmaStatus?: string;
-  /**
-   * 血浆类型
-   */
-  plasmaType?: string;
+  trackType?: string;
   /**
    * 浆员编号
    */
-  donorNo?: string;
+  cardNo?: string;
 }
 
 /**
  * 接口 [回访状态明细↗](https://yapi.sharing8.cn/project/529/interface/api/34185) 的 **返回类型**
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
- * @请求头 `GET /api/core/donor/callback/status/detail`
- * @更新时间 `2024-04-02 17:02:08`
+ * @请求头 `GET /api/search/donor/callback/detail-state`
+ * @更新时间 `2024-07-05 16:51:01`
  */
-export type GetApiCoreDonorCallbackStatusDetailResponse = {
+export type GetApiSearchDonorCallbackDetailStateResponse = {
   /**
    * 浆员编号
    */
-  donorNo: string;
+  cardNo: string;
   /**
    * 浆员姓名
    */
@@ -705,11 +731,15 @@ export type GetApiCoreDonorCallbackStatusDetailResponse = {
   /**
    * 最后采浆日期
    */
-  lastCollectTime: string;
+  maxCollectTime: string;
   /**
    * 血浆状态
    */
-  plasmaStatus?: string;
+  trackType?: string;
+  /**
+   * 现居地址
+   */
+  liveAddress: string;
   /**
    * 血浆袋数（袋）
    */
@@ -721,11 +751,7 @@ export type GetApiCoreDonorCallbackStatusDetailResponse = {
   /**
    * 样本采集日期
    */
-  sampleCollectDate?: string;
-  /**
-   * 回访发布日期
-   */
-  callbackPubDate: string;
+  sampleCollectTime?: string;
   /**
    * 样本编号
    */
@@ -740,24 +766,28 @@ export type GetApiCoreDonorCallbackStatusDetailResponse = {
  * 接口 [回访详情血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/34194) 的 **请求类型**
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
- * @请求头 `GET /api/core/donor/callback/status/detail-pack`
- * @更新时间 `2024-04-02 17:05:44`
+ * @请求头 `GET /api/search/donor/callback/detail/bag`
+ * @更新时间 `2024-06-21 16:14:16`
  */
-export interface GetApiCoreDonorCallbackStatusDetailPackRequest {
+export interface GetApiSearchDonorCallbackDetailBagRequest {
   /**
    * 浆员编号
    */
   donorNo: string;
+  /**
+   * 批次号
+   */
+  planNo: string;
 }
 
 /**
  * 接口 [回访详情血浆明细↗](https://yapi.sharing8.cn/project/529/interface/api/34194) 的 **返回类型**
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
- * @请求头 `GET /api/core/donor/callback/status/detail-pack`
- * @更新时间 `2024-04-02 17:05:44`
+ * @请求头 `GET /api/search/donor/callback/detail/bag`
+ * @更新时间 `2024-06-21 16:14:16`
  */
-export type GetApiCoreDonorCallbackStatusDetailPackResponse = {
+export type GetApiSearchDonorCallbackDetailBagResponse = {
   /**
    * 血浆编号
    */
@@ -767,21 +797,75 @@ export type GetApiCoreDonorCallbackStatusDetailPackResponse = {
    */
   donorNo: string;
   /**
-   * 浆员姓名
+   * 血浆状态
    */
-  donorName: string;
+  plasmaType: string;
   /**
    * 采集日期
    */
-  bagCollectDate: string;
+  collDate: string;
   /**
    * 血浆批号
    */
   batchNo: string;
   /**
+   * 浆员姓名
+   */
+  name: string;
+}[];
+
+/**
+ * 接口 [自主回访明细↗](https://yapi.sharing8.cn/project/529/interface/api/35796) 的 **请求类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `GET /api/search/donor/callback/detail-self`
+ * @更新时间 `2024-07-04 18:06:48`
+ */
+export interface GetApiSearchDonorCallbackDetailSelfRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 回访批号
+   */
+  planNo: string;
+  /**
    * 浆员编号
    */
-  refuseReason: string;
+  cardNo?: string;
+}
+
+/**
+ * 接口 [自主回访明细↗](https://yapi.sharing8.cn/project/529/interface/api/35796) 的 **返回类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `GET /api/search/donor/callback/detail-self`
+ * @更新时间 `2024-07-04 18:06:48`
+ */
+export type GetApiSearchDonorCallbackDetailSelfResponse = {
+  /**
+   * 浆员编号
+   */
+  cardNo: string;
+  /**
+   * 浆员姓名
+   */
+  name: string;
+  /**
+   * 回访日期
+   */
+  callbackDate: string;
+  /**
+   * 样本编号
+   */
+  sampleNo: string;
+  /**
+   * 血型
+   */
+  bloodType: string;
+  /**
+   * 现居地址
+   */
+  liveAddress: string;
 }[];
 
 /* prettier-ignore-end */

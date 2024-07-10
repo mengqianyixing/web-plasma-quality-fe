@@ -2,10 +2,22 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleAdd"> 新增 </a-button>
-        <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
-        <a-button type="primary" @click="handleDelete"> 撤销 </a-button>
-        <a-button type="primary" @click="handleLabelPrint"> 标签打印 </a-button>
+        <a-button type="primary" @click="handleAdd" v-auth="NonconformityButtonEnum.BoxAdd">
+          新增
+        </a-button>
+        <a-button type="primary" @click="handleEdit" v-auth="NonconformityButtonEnum.BoxEdit">
+          编辑
+        </a-button>
+        <a-button type="primary" @click="handleDelete" v-auth="NonconformityButtonEnum.BoxDelete">
+          撤销
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleLabelPrint"
+          v-auth="NonconformityButtonEnum.BoxPrint"
+        >
+          标签打印
+        </a-button>
       </template>
     </BasicTable>
 
@@ -13,6 +25,7 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup>
+  import { NonconformityButtonEnum } from '@/enums/authCodeEnum';
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './boxes.data';
   import { useModal } from '@/components/Modal';
@@ -50,6 +63,7 @@
         DictionaryItemKeyEnum.Quarantine,
         DictionaryItemKeyEnum.Other,
       ],
+      show: 1,
     });
 
     plasmaUnqualifiedDictionary.value = entries(groupBy(originDictionaryData, 'preBox')).map(
@@ -138,6 +152,11 @@
   }
 
   async function handleLabelPrint() {
+    if (!selectedRowsRef.value.length) {
+      createMessage.warn('请选择一条记录');
+      return;
+    }
+
     const res = await getPrintRecord({
       labelType: 'UQF_BOX',
       bissNo: selectedRowsRef.value[0].boxNo,

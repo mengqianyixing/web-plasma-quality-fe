@@ -10,6 +10,7 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 import { h } from 'vue';
 import { Select, Tag } from 'ant-design-vue';
 import { customRenderDate } from '@/utils/tableHelpRender';
+import { getDeptList } from '@/api/systemServer/system';
 
 function containsThreeOfFour(str: string) {
   const hasDigit = /\d/.test(str);
@@ -19,6 +20,7 @@ function containsThreeOfFour(str: string) {
   const count = (hasDigit ? 1 : 0) + (hasUpper ? 1 : 0) + (hasLower ? 1 : 0) + (hasSpecial ? 1 : 0);
   return count === 4;
 }
+export const initPassword = 'Stpass@test001';
 const dynamicPasswordRules = () => {
   return [
     {
@@ -104,18 +106,23 @@ export const addFormSchema: FormSchema[] = [
     component: 'Input',
     required: true,
   },
-  {
-    field: 'password',
-    label: '密码',
-    component: 'InputPassword',
-    required: true,
-    dynamicRules: dynamicPasswordRules,
-  },
+
   {
     field: 'roles',
     label: '角色',
     slot: 'users',
     component: 'Select',
+  },
+  {
+    field: 'groups',
+    label: '部门',
+    component: 'ApiSelect',
+    componentProps: {
+      mode: 'multiple',
+      api: getDeptList,
+      labelField: 'displayName',
+      valueField: 'name',
+    },
   },
   ...formSchema,
 ];
@@ -225,6 +232,17 @@ export const updateFormSchema: FormSchema[] = [
     label: '角色',
     slot: 'users',
     component: 'Select',
+  },
+  {
+    field: 'groups',
+    label: '部门',
+    component: 'ApiSelect',
+    componentProps: {
+      mode: 'multiple',
+      api: getDeptList,
+      labelField: 'displayName',
+      valueField: 'name',
+    },
   },
   ...formSchema,
 ];

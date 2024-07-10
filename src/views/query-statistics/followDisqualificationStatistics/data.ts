@@ -1,7 +1,11 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
 import { useStation } from '@/hooks/common/useStation';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+const serverEnumStore = useServerEnumStoreWithOut();
+const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 const { stationOptions } = useStation();
 export const backTrackUnqKey = 'backTrackUnq';
 export const followTrackNumUnqKey = 'followTrackNumUnq';
@@ -20,14 +24,17 @@ export const columns: BasicColumn[] = [
     title: '年份',
     dataIndex: 'year',
     width: 70,
+    fixed: 'left',
   },
   {
     title: '续追踪血浆数量(袋)',
     dataIndex: trackNumKey,
     width: 140,
+    fixed: 'left',
   },
   {
     title: '回访不合格追踪',
+    width: 100,
     children: [
       {
         dataIndex: [backTrackUnqKey, numKey],
@@ -44,6 +51,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '后续供浆检测不合格追踪',
+    width: 100,
     children: [
       {
         dataIndex: [followTrackNumUnqKey, numKey],
@@ -60,6 +68,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '其他无后续信息',
+    width: 100,
     children: [
       {
         dataIndex: [otherNumUnqKey, numKey],
@@ -105,25 +114,63 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
 ];
+
 export const dtColumns: BasicColumn[] = [
   {
-    dataIndex: 'donorNo',
-    title: '浆员编号',
-  },
-  {
-    dataIndex: 'name',
-    title: '浆员姓名',
+    dataIndex: 'stationName',
+    title: '采浆公司',
+    width: 80,
   },
   {
     dataIndex: 'batchNo',
     title: '血浆批号',
+    width: 120,
   },
   {
     dataIndex: 'bagNo',
     title: '血浆编号',
+    width: 140,
   },
   {
     dataIndex: 'collectAt',
-    title: '血浆采集日期',
+    title: '采集日期',
+    width: 100,
+  },
+  {
+    dataIndex: 'cardNo',
+    title: '浆员编号',
+    width: 100,
+  },
+  {
+    dataIndex: 'name',
+    title: '浆员姓名',
+    width: 100,
+  },
+  {
+    dataIndex: 'titerJudge',
+    title: '效价类型',
+    width: 80,
+    format: PlasmaType,
+  },
+  {
+    dataIndex: 'netWeight',
+    title: '验收净重(g)',
+    width: 100,
+  },
+  {
+    dataIndex: 'failedAt',
+    title: '不合格日期',
+    width: 100,
+  },
+  {
+    dataIndex: 'fkFailedCode',
+    title: '不合格原因',
+    slots: { customRender: 'fkFailedCode' },
+    width: 160,
+  },
+  {
+    dataIndex: 'inStoreAt',
+    title: '入不合格库日期',
+    width: 120,
   },
 ];

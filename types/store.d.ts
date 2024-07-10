@@ -35,6 +35,7 @@ export interface ErrorLogInfo {
 }
 
 export interface UserInfo {
+  needUpdatePassword: boolean;
   userId: string;
   username: string;
   menuIds?: number[];

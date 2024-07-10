@@ -1,11 +1,3 @@
-<!--
- * @Descripttion:
- * @version:
- * @Author: zcc
- * @Date: 2023-12-26 14:35:04
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-31 18:32:15
--->
 <template>
   <div class="p-16px">
     <BasicTable @register="registerTable">
@@ -23,7 +15,7 @@
       </template>
     </BasicTable>
 
-    <EncodingDrawer @register="registerEncodingDrawer" @success="handleSuccess" />
+    <EncodingEditModal @register="registerEncodingModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -31,18 +23,18 @@
   import { columns } from './encoding.data';
 
   import { getEncodingRules } from '@/api/tag/encoding';
-  import { useDrawer } from '@/components/Drawer';
+  import { useModal } from '@/components/Modal';
 
-  import EncodingDrawer from './EncodingDrawer.vue';
+  import EncodingEditModal from './EncodingEditModal.vue';
 
   defineOptions({ name: 'TagEncoding' });
 
-  const [registerEncodingDrawer, { openDrawer: openEncodingDrawer }] = useDrawer();
+  const [registerEncodingModal, { openModal: openEncodingEditModal }] = useModal();
 
   const [registerTable, { reload }] = useTable({
     api: getEncodingRules,
     columns,
-    clickToRowSelect: false,
+    clickToRowSelect: true,
     size: 'small',
     striped: false,
     useSearchForm: false,
@@ -57,7 +49,7 @@
   });
 
   function handleEdit(record: Recordable) {
-    openEncodingDrawer(true, {
+    openEncodingEditModal(true, {
       record,
       isUpdate: true,
     });

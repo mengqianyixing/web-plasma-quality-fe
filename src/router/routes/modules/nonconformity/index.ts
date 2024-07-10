@@ -9,7 +9,11 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
-import { ReCheckButtonEnum, NonconformityButtonEnum } from '@/enums/authCodeEnum';
+import {
+  ReCheckButtonEnum,
+  NonconformityButtonEnum,
+  NonconformityInStoreButtonEnum,
+} from '@/enums/authCodeEnum';
 
 const nonconformity: AppRouteModule = {
   path: '/nonconformity',
@@ -48,6 +52,24 @@ const nonconformity: AppRouteModule = {
         title: '不合格库房箱',
       },
       component: () => import('@/views/nonconformity/boxes/index.vue'),
+      authElements: [
+        {
+          id: NonconformityButtonEnum.BoxAdd,
+          title: '新增',
+        },
+        {
+          id: NonconformityButtonEnum.BoxEdit,
+          title: '编辑',
+        },
+        {
+          id: NonconformityButtonEnum.BoxDelete,
+          title: '撤销',
+        },
+        {
+          id: NonconformityButtonEnum.BoxPrint,
+          title: '标签打印',
+        },
+      ],
     },
     {
       path: 'plasma-manage',
@@ -61,12 +83,22 @@ const nonconformity: AppRouteModule = {
         {
           id: ReCheckButtonEnum.NonconformityPickCheck,
           name: 'reCheckPick',
-          title: '挑浆复核权限',
+          title: '挑浆',
         },
         {
           id: ReCheckButtonEnum.NonconformityInStoreCheck,
           name: 'recheckInStore',
-          title: '入库登录权限',
+          title: '入库',
+        },
+        {
+          id: NonconformityInStoreButtonEnum.NonconformityInStoreCheck,
+          name: 'check',
+          title: '审核',
+        },
+        {
+          id: NonconformityInStoreButtonEnum.NonconformityInStoreCancelCheck,
+          name: 'cancelCheck',
+          title: '撤销审核',
         },
       ],
     },
@@ -100,7 +132,7 @@ const nonconformity: AppRouteModule = {
         {
           id: NonconformityButtonEnum.PlasmaOutUnProcess,
 
-          title: '取消审核',
+          title: '撤销审核',
         },
         {
           id: NonconformityButtonEnum.PlasmaOutScan,

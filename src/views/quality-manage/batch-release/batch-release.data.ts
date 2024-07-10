@@ -16,19 +16,23 @@ export const columns: BasicColumn[] = [
     title: '制造批号',
     dataIndex: 'mesId',
     slots: { customRender: 'mesId' },
-    width: 120,
+    width: 160,
+    ellipsis: false,
+    fixed: 'left',
   },
   {
     title: '投产类型',
     dataIndex: 'orderType',
     format: (text) => PlasmaType(text),
     width: 70,
+    fixed: 'left',
   },
   {
     title: '计划投产日期',
     format: (text) => text?.slice(0, 10),
     dataIndex: 'planTask',
     width: 100,
+    fixed: 'left',
   },
   {
     title: '投产净重(kg)',
@@ -132,6 +136,7 @@ export const searchFormSchema: FormSchema[] = [
     field: 'state',
     component: 'Select',
     label: '放行状态',
+    defaultValue: 'TBR',
     componentProps: {
       options: statusList,
     },
@@ -142,27 +147,29 @@ export const plasmaRestrictionColumns: BasicColumn[] = [
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
-    width: '150px',
+    width: 120,
   },
   {
     title: '血浆箱号',
     dataIndex: 'boxNo',
-    width: '150px',
+    width: 120,
   },
   {
     title: '血浆总数',
     dataIndex: 'bagCount',
-    width: '150px',
+    width: 80,
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNos',
-    width: '300px',
+    width: 220,
+    ellipsis: false,
   },
   {
     title: '备注',
     dataIndex: 'remark',
-    width: '350px',
+    width: 220,
+    ellipsis: false,
   },
 ];
 export const nonconformityColumns: BasicColumn[] = [
@@ -243,14 +250,23 @@ export const formColumns: BasicColumn[] = [
   {
     title: '审核项目',
     dataIndex: 'appName',
+    ellipsis: false,
+    width: 120,
+    align: 'left',
   },
   {
     title: '审核内容',
     dataIndex: 'appContent',
+    ellipsis: false,
+    width: 360,
+    align: 'left',
   },
   {
     title: '审核结果',
     dataIndex: 'appResult',
+    ellipsis: false,
+    width: 200,
+    align: 'left',
   },
 ];
 

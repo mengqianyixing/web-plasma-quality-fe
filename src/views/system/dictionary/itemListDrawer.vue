@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-21 18:22:50
  * @LastEditors: DoubleAm
@@ -12,7 +12,7 @@
     @register="registerModal"
     :title="dictName"
     width="1200px"
-    :minHeight="520"
+    :minHeight="600"
     cancelText="关闭"
     :showOkBtn="false"
     @cancel="emit('close')"
@@ -42,7 +42,7 @@
   import { itemColumns, itemSearchFormSchema } from './dictionary.data';
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import ItemFormModal from './itemFormDrawer.vue';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import {
     getDictItemListApi,
     removeDictItemApi,
@@ -51,6 +51,7 @@
   } from '@/api/dictionary';
   import { getEnumsItems } from '@/api/enums';
   import { ref } from 'vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const emit = defineEmits(['close', 'register']);
   const dictId = ref('');
@@ -181,31 +182,34 @@
       isUpdate: true,
     });
   }
+
+  const { createConfirm } = useMessage();
+
   function handleRemove() {
     const [row] = getSelectRow();
     if (!row) return;
-    Modal.confirm({
+    createConfirm({
+      iconType: 'error',
       content: `确定删除${row.itemKey}？`,
       onOk: async () => {
         await removeDictItemApi({ dictItemId: row.dictItemId });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function handleSwitch(enable: boolean) {
     const [row] = getSelectRow();
     if (!row) return;
     if (enable === !!row.enable) return message.warning('状态不需要变更');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + (enable ? '启用' : '禁用') + row.itemKey + '?',
       onOk: async () => {
         await updateDictItemApi({ dictItemId: row.dictItemId, ...row, enable });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 </script>

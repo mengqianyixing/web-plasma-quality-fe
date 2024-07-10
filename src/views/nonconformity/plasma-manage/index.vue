@@ -13,10 +13,31 @@
         </span>
       </template>
       <template #toolbar>
-        <a-button type="primary" @click="handlePickPlasma">挑浆</a-button>
-        <a-button type="primary" @click="handleInStore">入库</a-button>
-        <a-button type="primary" @click="handleCheck">审核</a-button>
-        <a-button type="primary" @click="handleCancelCheck">取消审核</a-button>
+        <a-button
+          type="primary"
+          @click="handlePickPlasma"
+          v-auth="ReCheckButtonEnum.NonconformityPickCheck"
+          >挑浆
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleInStore"
+          v-auth="ReCheckButtonEnum.NonconformityInStoreCheck"
+        >
+          入库
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleCheck"
+          v-auth="NonconformityInStoreButtonEnum.NonconformityInStoreCheck"
+          >审核
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleCancelCheck"
+          v-auth="NonconformityInStoreButtonEnum.NonconformityInStoreCancelCheck"
+          >撤销审核
+        </a-button>
       </template>
     </BasicTable>
 
@@ -48,6 +69,7 @@
   import InStoreModal from '@/views/nonconformity/plasma-manage/InStoreModal.vue';
   import PlasmaDetailModal from '@/views/nonconformity/plasma-manage/PlasmaDetailModal.vue';
   import { useStation } from '@/hooks/common/useStation';
+  import { NonconformityInStoreButtonEnum, ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'PlasmaManage' });
 
@@ -157,7 +179,7 @@
     createConfirm({
       iconType: 'warning',
       title: '提示',
-      content: '确定取消审核吗？',
+      content: '确定撤销审核吗？',
       onOk: async () => {
         await nonconformityRedoCheck(selectedRow.value[0]?.bagNo);
 

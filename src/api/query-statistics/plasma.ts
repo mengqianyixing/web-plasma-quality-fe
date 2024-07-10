@@ -5,15 +5,15 @@ import {
   GetApiCoreBagCollectStatisticResponse,
   GetApiCoreBagOutInStorageStatisticRequest,
   GetApiCoreBagOutInStorageStatisticResponse,
-  GetApiCoreBagQualifiedInventoryStatisticQueryDateRequest,
-  GetApiCoreBagQualifiedInventoryStatisticQueryDateResponse,
   GetApiCoreBagStatisticsRequest,
   GetApiCoreBagStatisticsResponse,
+  GetApiSearchBankQualifiedInventoryStatisticQueryDateRequest,
+  GetApiSearchBankQualifiedInventoryStatisticQueryDateResponse,
 } from '@/api/type/queryStatistics';
 
 enum Api {
   Plasma_Statistics = '/api/core/bag/statistics',
-  Plasma_Qualified_Inventory = '/api/core/bag/qualified-inventory/statistic',
+  Plasma_Qualified_Inventory = '/api/search/bank/qualified-inventory/statistic',
   Plasma_BagCollect = '/api/core/bag/collect/statistic',
   Plasma_Raw_InStorage_Query = '/api/core/bag/out-in-storage/statistic',
 }
@@ -25,9 +25,9 @@ export const getPlasmaQueryList = (params: GetApiCoreBagStatisticsRequest) =>
   );
 
 export const getPlasmaQualifiedInventory = (
-  params: GetApiCoreBagQualifiedInventoryStatisticQueryDateRequest,
+  params: GetApiSearchBankQualifiedInventoryStatisticQueryDateRequest,
 ) =>
-  defHttp.get<GetApiCoreBagQualifiedInventoryStatisticQueryDateResponse>({
+  defHttp.get<GetApiSearchBankQualifiedInventoryStatisticQueryDateResponse>({
     url: Api.Plasma_Qualified_Inventory + '/' + params.queryDate,
   });
 

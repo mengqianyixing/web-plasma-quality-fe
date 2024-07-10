@@ -16,11 +16,7 @@
               {
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
-                popConfirm: {
-                  title: '是否确认删除',
-                  placement: 'left',
-                  confirm: handleDelete.bind(null, record),
-                },
+                onClick: handleDelete.bind(null, record),
               },
             ]"
           />
@@ -31,6 +27,8 @@
   </div>
 </template>
 <script lang="ts" setup>
+  import { createVNode } from 'vue';
+  import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { BasicTable, useTable, TableAction } from '@/components/Table';
   import { deleteCasDoorPolicy, getCasDoorPolicies } from '@/api/oauth/policies';
 
@@ -38,6 +36,7 @@
   import PolicyModal from './PolicyModal.vue';
 
   import { columns, searchFormSchema } from './policies.data';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'Policies' });
 
@@ -81,9 +80,25 @@
     });
   }
 
+  const { createConfirm } = useMessage();
+
   async function handleDelete(record: Recordable) {
-    await deleteCasDoorPolicy(record);
-    reload();
+    createConfirm({
+      iconType: 'warning',
+      title: '是否确认删除?',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: '',
+      okText: '删除',
+      okType: 'danger',
+      cancelText: '取消',
+      async onOk() {
+        await deleteCasDoorPolicy(record);
+        await reload();
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   }
 
   function handleSuccess() {

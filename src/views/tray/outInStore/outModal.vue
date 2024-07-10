@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-18 15:55:20
  * @LastEditors: zcc
@@ -20,7 +20,7 @@
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
         <BasicForm @register="registerForm" />
-        <div class="flex-1 shrink-1" style="height: calc(100% - 56px)">
+        <div class="flex-1 shrink-1" style="height: calc(100% - 76px)">
           <BasicTable @register="registerTable" />
         </div>
       </div>
@@ -36,7 +36,8 @@
   import { submitOutHouseApi } from '@/api/tray/relocation';
   import { getHouseSiteApi } from '@/api/plasmaStore/site';
 
-  const emit = defineEmits(['success']);
+  const emit = defineEmits(['success', 'register']);
+  const props = withDefaults(defineProps<{ dlvType: 'RSD' | 'RSO' | '' }>(), { dlvType: '' });
   const state = reactive({
     data: [],
     siteList: [],
@@ -81,6 +82,11 @@
         dlvInfo: state.data.map((_: Recordable) => _.trayNo),
         siteId: values.siteId,
       };
+
+      if (props.dlvType) {
+        params['dlvType'] = props.dlvType;
+      }
+
       await submitOutHouseApi(params);
       emit('success');
       setModalProps({ confirmLoading: false });
@@ -91,7 +97,7 @@
   }
   async function getSiteList(houseNo: string) {
     const res = await getHouseSiteApi({ houseNo: houseNo });
-    updateSchema({
+    await updateSchema({
       field: 'siteId',
       componentProps: { options: res || [] },
     });

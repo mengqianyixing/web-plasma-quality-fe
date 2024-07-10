@@ -382,6 +382,8 @@
   const [registerPrepareSuspendModal, { openModal: openPrepareSuspendModal }] = useModal();
   const [registerBatchSuspendModal, { openModal: openBatchSuspendModal }] = useModal();
 
+  const { createConfirm } = useMessage();
+
   // 血浆扫描
   async function handlePressEnter(e) {
     if (e.code === 'Enter' || e.code === 'NumpadEnter' || e === true) {
@@ -411,10 +413,10 @@
           if (data.unqReason) {
             // 可投产的不合格，直接提示
             if (data?.proBag === true) {
-              Modal.confirm({
+              createConfirm({
+                iconType: 'warning',
                 content: `${bagNo.value}为${data.unqReason}血浆!`,
                 onOk: () => handleUnqualifiedSuccess(),
-                onCancel: () => Modal.destroyAll(),
               });
             } else {
               openUnqualifiedModal(true, {
@@ -427,7 +429,8 @@
 
           // 整箱血浆为合格
           if (data.fullBoxQua) {
-            Modal.confirm({
+            createConfirm({
+              iconType: 'warning',
               title: '提示?',
               icon: createVNode(ExclamationCircleOutlined),
               content: createVNode(
@@ -465,6 +468,15 @@
             });
           }
 
+          let mixBatch = false;
+          // 分拣的是另外一批的血浆
+          if (
+            batchData.value?.batchSummary?.batchNo &&
+            batchData.value?.batchSummary?.batchNo != data.batchSummary.batchNo
+          ) {
+            mixBatch = true;
+          }
+
           // 准备号、批次详情数据
           prepareData.value = { ...data.preSummary };
           batchData.value = {
@@ -483,8 +495,8 @@
               item.isSelected = false;
             }
           }
-          // 数据回显，当前准备号第一次分拣/继续批次之后的第一次分拣
-          if (firstOperate) {
+          // 数据回显，当前准备号第一次分拣/继续批次之后的第一次分拣 || 混批情况
+          if (firstOperate || mixBatch) {
             initBox(data, true);
           } else {
             // 可投产箱子
@@ -581,39 +593,40 @@
                 });
               }
             }
-
-            // 满箱
-            if (data?.fullBox === true) {
-              let content = '';
-              if (data.selectedName === 'pros') content = '投产血浆';
-              if (data.selectedName === 'unProArr') content = '暂不投产血浆';
-              if (data.selectedName === 'utrkUnPro') content = '待放行血浆';
-              Modal.confirm({
-                title: '提示?',
-                icon: createVNode(ExclamationCircleOutlined),
-                content: createVNode(
-                  'div',
-                  { style: 'color:red;' },
-                  `${content}已扫描完毕，确认打印箱签?`,
-                ),
-                onOk() {
-                  // 走封箱操作 不需要提示
-                  // _sortingBoxSealing(targetBox, true);
-                  // 走打印逻辑
-                  printBox(cacheBagNo);
-                  cacheBagNo = '';
-                  prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
-                },
-                onCancel() {
-                  console.log('Cancel');
-                  prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
-                },
-                class: 'test',
-              });
-            }
+          }
+          // 满箱
+          if (data?.fullBox === true) {
+            let content = '';
+            if (data.selectedName === 'pros') content = '投产血浆';
+            if (data.selectedName === 'unPro') content = '暂不投产血浆';
+            if (data.selectedName === 'utrkUnPro') content = '待放行血浆';
+            createConfirm({
+              iconType: 'warning',
+              title: '提示?',
+              icon: createVNode(ExclamationCircleOutlined),
+              content: createVNode(
+                'div',
+                { style: 'color:red;' },
+                `${content}已扫描完毕，确认打印箱签?`,
+              ),
+              onOk() {
+                // 走封箱操作 不需要提示
+                // _sortingBoxSealing(targetBox, true);
+                // 走打印逻辑
+                printBox(cacheBagNo);
+                cacheBagNo = '';
+                prepareModalSuccess({ prepareNo: prepareNo.value, pickMode });
+              },
+              onCancel() {
+                console.log('Cancel');
+                prepareModalSuccess({ prepareNo: prepareNo.value, pickMode });
+              },
+              class: 'test',
+            });
           }
         } else {
-          Modal.confirm({
+          createConfirm({
+            iconType: 'warning',
             title: '提示',
             icon: createVNode(ExclamationCircleOutlined),
             autoFocusButton: 'ok',
@@ -837,7 +850,7 @@
       scrollObj.isTop = true;
       scrollObj.scollToIndex = 0;
     }
-    if (data.selectedName === 'unProArr') {
+    if (data.selectedName === 'unPro') {
       scrollObj.isTop = true;
       scrollObj.scollToIndex = data.selectedIndex + 1;
     }
@@ -893,7 +906,8 @@
       warning('请先分拣血浆');
       return;
     }
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       title: '提示?',
       icon: createVNode(ExclamationCircleOutlined),
       content: createVNode('div', { style: 'color:red;' }, '确认合箱重扫吗?'),
@@ -908,7 +922,7 @@
           console.log('合箱成功:', res);
           success('合箱成功!');
           // 请求总览数据
-          prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+          await prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
         } finally {
           closeFullLoading();
         }
@@ -934,12 +948,13 @@
     if (noTip) {
       doThis();
     } else {
-      Modal.confirm({
+      createConfirm({
+        iconType: 'warning',
         title: '提示?',
         icon: createVNode(ExclamationCircleOutlined),
         content: createVNode('div', { style: 'color:red;' }, '确认封箱并打印箱标签吗?'),
         async onOk() {
-          doThis();
+          await doThis();
         },
         onCancel() {
           console.log('Cancel');
@@ -983,7 +998,8 @@
       prepareData.value.sortTotal > 0 &&
       prepareData.value.sortTotal === prepareData.value.sortCount
     ) {
-      Modal.confirm({
+      createConfirm({
+        iconType: 'warning',
         title: '提示?',
         icon: createVNode(ExclamationCircleOutlined),
         content: createVNode('div', { style: 'color:red;' }, '确认要完成分拣吗?'),

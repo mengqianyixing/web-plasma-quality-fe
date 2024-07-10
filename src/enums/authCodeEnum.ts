@@ -25,9 +25,18 @@ export enum ReCheckButtonEnum {
   VerifyRelease = 'E_98003003',
   VerifyList = 'E_98003004',
   VisualInspectionList = 'E_98003005',
+  MaterialPreRegistrationUpdateDateCheck = 'E_9600300010',
+  ResultReRegistCheck = 'E_9600100010',
+  PMSAccept = 'E_98003006',
+  PMSAcceptCancel = 'E_98003007',
+  OverdueConfirmationCheck = 'E_950020001',
+  TiterImportConfirmationCheck = 'E_9600100011',
+  TiterSqImportConfirmationCheck = 'E_9600100012',
 }
 
 export enum BaseSettingButtonEnum {
+  StationAdd = 'E_1000701',
+  StationEdit = 'E_1000702',
   StationEnable = 'E_100070',
   StationDisable = 'E_100080',
 
@@ -64,7 +73,6 @@ export enum BaseSettingButtonEnum {
 
 export enum StoreButtonEnum {
   StoreSettingAdd = 'E_99001001',
-  StoreSettingUpdate = 'E_99001002',
   StoreSettingDisable = 'E_99001004',
   StoreSettingEnable = 'E_99001005',
 
@@ -98,6 +106,7 @@ export enum InspectButtonEnum {
   ResultRegistrationMaterialRegist = 'E_960010011',
   ResultRegistrationMaterialReRegist = 'E_960010012',
   ResultRegistrationSqImport = 'E_960010013',
+  ResultRegistrationTiterDelete = 'E_960010014',
 
   ReportReleaseCreate = 'E_96002001',
   ReportReleaseUnCreate = 'E_96002002',
@@ -110,8 +119,6 @@ export enum InspectButtonEnum {
   MaterialPreRegistrationUpdate = 'E_96003002',
   MaterialPreRegistrationReview = 'E_96003003',
   MaterialPreRegistrationUnReview = 'E_96003004',
-  MaterialPreRegistrationDisable = 'E_96003005',
-  MaterialPreRegistrationEnable = 'E_96003006',
   MaterialPreRegistrationUpdateDate = 'E_96003007',
 }
 
@@ -121,8 +128,14 @@ export enum QuarantineButtonEnum {
   ResetQuarantine = 'E_95003002',
   ReCheckQuarantine = 'E_95003003',
   PrintQuarantine = 'E_95003004',
+  ExportQuarantine = 'E_95003005',
 
   NonconformityTrackingReport = 'E_95004001',
+  StationDetectionNonconformityReport = 'E_95004002',
+
+  StationRefuseExport = 'E_900022001',
+
+  FactoryCheckFailExcel = 'E_900011001',
 }
 
 export enum QualityButtonEnum {
@@ -146,9 +159,15 @@ export enum QualityButtonEnum {
   BatchReleasePrint = 'E_94003006',
   BatchReleaseCancelAdd = 'E_94003007',
   BatchReleaseCancelReview = 'E_94003008',
+  BatchQuarantinePeriod = 'E_94003009',
 }
 
 export enum NonconformityButtonEnum {
+  BoxAdd = 'E_92001001',
+  BoxEdit = 'E_92001002',
+  BoxDelete = 'E_92001003',
+  BoxPrint = 'E_92001004',
+
   PlasmaOutAdd = 'E_92003001',
   PlasmaOutUpdate = 'E_92003002',
   PlasmaOutRemove = 'E_92003003',
@@ -170,6 +189,7 @@ export enum StockOutButtonEnum {
   ProductionPreparationReCheck = 'E_91001007',
   ProductionPreparationResetReCheck = 'E_91001008',
   ProductionPreparationDetailExport = 'E_91001009',
+  ProductionPreparationSortTask = 'E_91001010',
 
   ProductionOrderAdd = 'E_91003001',
   ProductionOrderEdit = 'E_91003002',
@@ -191,6 +211,10 @@ export enum StockOutButtonEnum {
   ProductionPlanTransferReport = 'E_91004009',
   ProductionPlanMaterialReport = 'E_910040010',
   ProductionPlanPlasmaReport = 'E_910040011',
+  ProductionPlanPMS = 'E_910040012',
+  ProductionPlanSummary = 'E_910040013',
+  ProductionPlanSummaryKunMing = 'E_910040014',
+  PlasmaProductionApplication = 'E_910040015',
 
   PutIntoTrayStockOut = 'E_91005001',
   PutIntoBoxStockOut = 'E_91005002',
@@ -211,13 +235,35 @@ export enum StockOutButtonEnum {
   NonPutIntoCheck = 'E_91006008',
   NonPutIntoCancelCheck = 'E_91006009',
   NonPutIntoScan = 'E_91006010',
+  NonPlasmaTransferRecordReport = 'E_91006011',
+  PlasmaTransferApplyReport = 'E_91006012',
 
-  PlasmaSummaryPlasmaSummaryReport = 'E_91007001',
-  PlasmaSummaryPlasmaTrackUnqReport = 'E_91007002',
+  PlasmaSummaryReport = 'E_91007001',
 }
 
 export enum SampleManageButtonEnum {
   SampleRelease = 'E_97003001',
+  SampleArrange = 'E_97003002',
+  TestPlanAdd = 'E_97004001',
+  TestPlanUpdate = 'E_97004002',
+
+  SampleDestroyAdd = 'E_97004003',
+  SampleDestroyEdit = 'E_97004004',
+  SampleDestroySubmit = 'E_97004005',
+  SampleDestroyCancelApply = 'E_97004006',
+  SampleDestroyCheck = 'E_97004007',
+  SampleDestroyCancelCheck = 'E_97004008',
+  SampleDestroyOutBand = 'E_97004009',
+  SampleDestroyPrint = 'E_97004010',
+
+  SampleWarehouseAdd = 'E_97004011',
+  SampleWarehouseEdit = 'E_97004012',
+  SampleWarehouseSubmit = 'E_97004013',
+  SampleWarehouseCancelApply = 'E_97004014',
+  SampleWarehouseCheck = 'E_97004015',
+  SampleWarehouseCancelCheck = 'E_97004016',
+  SampleWarehouseOutBand = 'E_97004017',
+  SampleWarehouseExport = 'E_97004018',
 }
 
 export enum CallbackButtonEnum {
@@ -242,4 +288,28 @@ export enum SearchManager {
   CallbackExport = 'E_90002501',
 
   CallbackBatchExport = 'E_90002601',
+
+  PlasmaQualifiedInventoryExport = 'E_900033001',
+
+  PlasmaBagCollectExport = 'E_900034001',
+
+  PlasmaRawInStoragePrint = 'E_900035001',
+
+  SampleQueryExport = 'E_900013001',
+}
+
+export enum TagManageButtonEnum {
+  TagStyleAdd = 'E_89001001',
+  TagStyleEdit = 'E_89001002',
+  TagStyleDelete = 'E_89001003',
+  TagStyleCopy = 'E_89001004',
+  TagStyleHistory = 'E_89001005',
+  TagStylePreview = 'E_89001006',
+  TagStyleOpen = 'E_89001007',
+  TagStyleClose = 'E_89001008',
+}
+
+export enum NonconformityInStoreButtonEnum {
+  NonconformityInStoreCheck = 'E_92005001',
+  NonconformityInStoreCancelCheck = 'E_92005002',
 }

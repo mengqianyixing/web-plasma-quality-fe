@@ -23,9 +23,18 @@
           type="primary"
           @click="handleImport"
           :disabled="!props.bsNo"
+          :loading="imLoading"
           v-auth="InspectButtonEnum.ResultRegistrationTiterImport"
         >
           效价导入
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleRemove"
+          :disabled="!props.bsNo"
+          v-auth="InspectButtonEnum.ResultRegistrationTiterDelete"
+        >
+          撤销项目
         </a-button>
         <a-button
           type="primary"
@@ -63,6 +72,7 @@
       "
     />
     <ImportModal @register="registerImportModal" @close="reload" />
+    <SqImportModal @register="registerSqImportModal" @close="reload" />
     <EnterRusult
       @register="registerEnterModal"
       @close="reload"
@@ -71,6 +81,19 @@
         reload();
       "
     />
+    <Modal
+      :open="open"
+      @cancel="open = false"
+      @ok="confirmRemove"
+      okText="提交"
+      width="300px"
+      :confirmLoading="confirmLoading"
+      title="撤销原因"
+    >
+      <div class="m-20px">
+        <BasicForm @register="registerForm" />
+      </div>
+    </Modal>
   </div>
 </template>
 <script setup lang="ts">
@@ -80,20 +103,30 @@
   import NotCheck from './notCheck.vue';
   import EnterRusult from './enterRusult.vue';
   import ImportModal from './importDrawer.vue';
+  import SqImportModal from './sqImportDrawer.vue';
   import { useModal } from '@/components/Modal';
-  import { getTiterListApi, submitSqImportApi } from '@/api/inspect/resultRegistration';
+  import {
+    getTiterListApi,
+    submitSqImportApi,
+    removeCheckApi,
+  } from '@/api/inspect/resultRegistration';
   import { watch, nextTick, onMounted, ref } from 'vue';
-  import { message } from 'ant-design-vue';
+  import { message, Modal } from 'ant-design-vue';
   import { getInspectMethodListApi } from '@/api/inspect/inspectMethod';
   import { InspectButtonEnum } from '@/enums/authCodeEnum';
+  import { BasicForm, useForm } from '@/components/Form';
 
   const emit = defineEmits(['reload']);
   const props = defineProps({
     bsNo: { type: String, default: '' },
   });
+  const open = ref(false);
+  const confirmLoading = ref(false);
+
   const options = ref<any[]>([]);
   const methodMap = ref(new Map());
   const sqLoading = ref(false);
+  const imLoading = ref(false);
 
   watch(
     () => props.bsNo,
@@ -105,11 +138,25 @@
       immediate: true,
     },
   );
+
   const [registerDtModal, { openModal: openDtModal }] = useModal();
   const [registerNotCheckModal, { openModal: openNotCheckModal }] = useModal();
   const [registerEnterModal, { openModal: openEnterModal }] = useModal();
   const [registerImportModal, { openModal: openImportModal }] = useModal();
-
+  const [registerSqImportModal, { openModal: openSqImportModal }] = useModal();
+  const [registerForm, { resetFields, clearValidate, validate }] = useForm({
+    labelWidth: 60,
+    baseColProps: { span: 24 },
+    schemas: [
+      {
+        field: 'cause',
+        component: 'Input',
+        label: '原因',
+        required: true,
+      },
+    ],
+    showActionButtonGroup: false,
+  });
   const [registerTable, { reload, getSelectRows, clearSelectedRowKeys }] = useTable({
     immediate: false,
     api: getTiterListApi,
@@ -135,19 +182,42 @@
   function handleDt(record: Recordable) {
     openDtModal(true, { ...record, bsNo: props.bsNo });
   }
+  function handleRemove() {
+    const rows = getSelectRows();
+    if (rows.length === 0) return message.warning('请选择一条数据');
+    if (rows[0].check === true) return message.warning('必检项不能撤销');
+    if (rows.length > 1) return message.warning('只能选择一条数据');
+    open.value = true;
+    resetFields();
+    clearValidate();
+  }
+  async function confirmRemove() {
+    const { cause } = await validate();
+    try {
+      const rows = getSelectRows();
+      const { projectId } = rows[0];
+      confirmLoading.value = true;
+      await removeCheckApi({ projectId, bsNo: props.bsNo, cause });
+      message.success('删除成功');
+      open.value = false;
+      reload();
+    } finally {
+      confirmLoading.value = false;
+    }
+  }
   async function handleSqImport() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     if (rows.length > 1) return message.warning('只能选择一条数据');
+    sqLoading.value = true;
     try {
-      sqLoading.value = true;
-      await submitSqImportApi({ bsNo: props.bsNo, project: rows[0].projectId });
-      reload();
+      const res = await submitSqImportApi({ bsNo: props.bsNo, project: rows[0].projectId });
+      openSqImportModal(true, res);
     } finally {
       sqLoading.value = false;
     }
   }
-  function handleImport() {
+  async function handleImport() {
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     if (rows.length > 1) return message.warning('只能选择一条数据');

@@ -38,10 +38,11 @@
   import { PageWrapper } from '@/components/Page';
   import { useModal } from '@/components/Modal';
   import { columns, siteCodeSchema } from './site.data';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import FormModal from './formModal.vue';
   import { getListApi, updateSiteApi } from '@/api/plasmaStore/site';
   import { StoreButtonEnum } from '@/enums/authCodeEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'PlasmaSite' });
 
@@ -93,19 +94,22 @@
     clearSelectedRowKeys();
     reload();
   }
+
+  const { createConfirm } = useMessage();
+
   function handleCheckStatus(action: number) {
     const [row] = getSelections(true);
     if (!row) return;
     const { siteNo, siteName, fkHouseNo, closed } = row;
     if (closed === action) return message.warning('状态不需要变更');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + (action ? '禁用' : '启用') + siteName + '?',
       onOk: async () => {
         await updateSiteApi({ siteNo, siteName, fkHouseNo, closed: action, siteNoOld: siteNo });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
 </script>

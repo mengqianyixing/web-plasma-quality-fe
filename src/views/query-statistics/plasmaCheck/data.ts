@@ -16,29 +16,42 @@ export const checkKey = 'check';
 export const bagCountKey = 'bagCount';
 export const numKey = 'num';
 export const ratioKey = 'ratio';
+export const dateKey = [
+  'verificationBegin',
+  'verificationEnd',
+  'acceptBegin',
+  'acceptEnd',
+  'issueBegin',
+  'issueEnd',
+];
+export const batchKey = ['batchNoBegin', 'batchNoEnd'];
 
-export const checkColumns: BasicColumn[] = [
+export const checkColumns: (customRender: Function) => BasicColumn[] = (customRender) => [
   {
     width: 70,
     title: '采浆公司',
     dataIndex: 'stationName',
+    fixed: 'left',
   },
   {
     width: 220,
     title: '血浆批号',
     dataIndex: 'batch',
+    fixed: 'left',
   },
 
   {
     width: 120,
     title: '批次数量(批)',
     dataIndex: 'batchCount',
+    fixed: 'left',
   },
   {
     width: 120,
     title: '血浆数量(袋)',
 
     dataIndex: bagCountKey,
+    fixed: 'left',
   },
   {
     title: '检测合格',
@@ -63,6 +76,13 @@ export const checkColumns: BasicColumn[] = [
         width: 70,
         title: '合计',
         dataIndex: [exteriorKey, numKey],
+        customRender: ({ record }) =>
+          customRender({
+            record,
+            key: [exteriorKey, numKey].join('.'),
+            label: '外观验收不合格合计',
+            type: '1',
+          }),
       },
       {
         width: 70,
@@ -80,6 +100,13 @@ export const checkColumns: BasicColumn[] = [
         width: 70,
         title: '合计',
         dataIndex: [checkUnKey, numKey],
+        customRender: ({ record }) =>
+          customRender({
+            record,
+            key: [checkUnKey, numKey].join('.'),
+            label: '检测不合格合计',
+            type: 2,
+          }),
       },
       {
         width: 70,
@@ -93,6 +120,8 @@ export const checkColumns: BasicColumn[] = [
     width: 140,
     title: '其他血浆不合格',
     dataIndex: 'other',
+    customRender: ({ record }) =>
+      customRender({ record, key: 'other', label: '其他血浆不合格', type: 3 }),
   },
 ];
 
@@ -205,16 +234,9 @@ export const searchFormSchema: FormSchema[] = [
       options: stationOptions,
     },
   },
+
   {
-    field: '[batchNoBegin, batchNoEnd]',
-    component: 'InputRange',
-    label: '血浆批号',
-    componentProps: {
-      isBetween: false,
-    },
-  },
-  {
-    field: '[verificationBegin,verificationEnd]',
+    field: '[' + dateKey[0] + ',' + dateKey[1] + ']',
     component: 'RangePicker',
     label: '验收发布日期',
     componentProps: {
@@ -223,7 +245,7 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '[acceptBegin,acceptEnd]',
+    field: '[' + dateKey[2] + ',' + dateKey[3] + ']',
     component: 'RangePicker',
     label: '接收日期',
     componentProps: {
@@ -231,6 +253,16 @@ export const searchFormSchema: FormSchema[] = [
       valueFormat: 'YYYY-MM-DD',
     },
   },
+  {
+    field: '[' + dateKey[4] + ',' + dateKey[5] + ']',
+    component: 'RangePicker',
+    label: '检测发布日期',
+    componentProps: {
+      class: 'w-full',
+      valueFormat: 'YYYY-MM-DD',
+    },
+  },
+
   {
     field: 'rawImm',
     component: 'Select',
@@ -258,35 +290,58 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: '[issueBegin,issueEnd]',
-    component: 'RangePicker',
-    label: '检测发布日期',
+    field: '[' + batchKey[0] + ',' + batchKey[1] + ']',
+    component: 'InputRange',
+    label: '血浆批号',
     componentProps: {
-      class: 'w-full',
-      valueFormat: 'YYYY-MM-DD',
+      isBetween: false,
+      allowClear: false,
     },
+    colProps: { flex: '0 0 440px' },
   },
 ];
 
 export const dtColumns: BasicColumn[] = [
   {
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     title: '浆员编号',
+    width: 100,
+    ellipsis: false,
   },
   {
     dataIndex: 'name',
     title: '浆员姓名',
+    width: 100,
+    ellipsis: false,
   },
   {
     dataIndex: 'batchNo',
     title: '血浆批号',
+    width: 120,
+    ellipsis: false,
   },
   {
     dataIndex: 'bagNo',
     title: '血浆编号',
+    width: 140,
+    ellipsis: false,
   },
   {
     dataIndex: 'collectionAt',
     title: '血浆采集日期',
+    width: 100,
+    ellipsis: false,
+  },
+  {
+    dataIndex: 'inputAt',
+    title: '入不合格库日期	',
+    width: 120,
+    ellipsis: false,
+  },
+  {
+    dataIndex: 'failed',
+    title: '不合格原因',
+    width: 160,
+    ellipsis: false,
   },
 ];

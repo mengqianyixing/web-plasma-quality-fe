@@ -13,9 +13,7 @@
         <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.StoreSettingAdd"
           >新增</a-button
         >
-        <!-- <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.StoreSettingUpdate"
-          >编辑</a-button
-        > -->
+
         <a-button
           type="primary"
           @click="handleCheckStatus('CLOSED')"
@@ -32,7 +30,7 @@
       <template #houseName="{ record }: { record: Recordable }">
         <span
           :class="
-            record.houseType[1] === STORE_FLAG.F ? '' : 'text-blue-500 underline cursor-pointer'
+            record.houseType[1] === STORE_FLAG.S ? 'text-blue-500 underline cursor-pointer' : ''
           "
           @click.stop.self="handleDetails(record)"
         >
@@ -63,12 +61,13 @@
   import { columns } from './setting.data';
   import { settingListApi, checkHouseApi } from '@/api/plasmaStore/setting';
   import { useModal } from '@/components/Modal';
-  import { message, Modal } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import FormModel from './formModel.vue';
   import LocationModel from './locationModel.vue';
   import AreaModel from './areaModel.vue';
   import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
   import { StoreButtonEnum } from '@/enums/authCodeEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'StoreSetting' });
 
@@ -102,25 +101,28 @@
   function handleCreate() {
     openModal(true, {});
   }
+
+  const { createConfirm } = useMessage();
+
   function handleCheckStatus(action: string) {
     const { selectedRowKeys } = getRowSelection() as { selectedRowKeys: string[] };
     if (selectedRowKeys.length === 0) return message.warning('请选择一条数据');
     else if (selectedRowKeys.length > 1) return message.warning('只能选择一条数据');
     const { closed, houseNo, houseName } = findTableDataRecord(selectedRowKeys[0]) as Recordable;
     if (closed === action) return message.warning('状态不需要变更');
-    Modal.confirm({
+    createConfirm({
+      iconType: 'warning',
       content: '确认' + (action === 'CLOSED' ? '禁用' : '启用') + houseName + '?',
       onOk: async () => {
         await checkHouseApi({ closed: action, houseNo });
         clearSelectedRowKeys();
-        reload();
+        await reload();
       },
-      onCancel: () => Modal.destroyAll(),
     });
   }
   function handleDetails(row: Recordable) {
     houseNo.value = row.houseNo;
-    if (row.houseType[1] === STORE_FLAG.F) {
+    if (row.houseType[1] !== STORE_FLAG.S) {
       return;
     } else {
       openLoactionModal(true, { houseNo: row.houseNo });

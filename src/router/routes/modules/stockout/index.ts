@@ -73,6 +73,11 @@ const nonconformity: AppRouteModule = {
           title: '撤销复核',
         },
         {
+          id: StockOutButtonEnum.ProductionPreparationSortTask,
+          name: 'sortTask',
+          title: 'PMS分拣',
+        },
+        {
           id: StockOutButtonEnum.ProductionPreparationDetailExport,
           name: 'resetReCheck',
           title: '导出明细',
@@ -127,7 +132,7 @@ const nonconformity: AppRouteModule = {
         {
           id: StockOutButtonEnum.ProductionOrderCancelRecheck,
           name: 'cancelRecheck',
-          title: '取消复核',
+          title: '撤销复核',
         },
         {
           id: StockOutButtonEnum.ProductionOrderExamine,
@@ -137,7 +142,7 @@ const nonconformity: AppRouteModule = {
         {
           id: StockOutButtonEnum.ProductionOrderCancelExamine,
           name: 'cancelExam',
-          title: '取消审核',
+          title: '撤销审核',
         },
         {
           id: StockOutButtonEnum.ProductionOrderPrint,
@@ -183,6 +188,10 @@ const nonconformity: AppRouteModule = {
           title: '撤销审核',
         },
         {
+          id: StockOutButtonEnum.ProductionPlanPMS,
+          title: 'PMS组垛',
+        },
+        {
           id: StockOutButtonEnum.ProductionPlanCheckListReport,
           title: '原料血浆投产清单',
         },
@@ -197,6 +206,18 @@ const nonconformity: AppRouteModule = {
         {
           id: StockOutButtonEnum.ProductionPlanPlasmaReport,
           title: '原料血浆投产计划',
+        },
+        {
+          id: StockOutButtonEnum.PlasmaProductionApplication,
+          title: '原料血浆投产申报表-昆明',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPlanSummary,
+          title: '下载原料血浆摘要',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPlanSummaryKunMing,
+          title: '下载原料血浆摘要-昆明',
         },
       ],
       component: () => import('@/views/stockout/production-plan/index.vue'),
@@ -311,6 +332,16 @@ const nonconformity: AppRouteModule = {
           name: 'scan',
           title: '扫描出库',
         },
+        {
+          id: StockOutButtonEnum.NonPlasmaTransferRecordReport,
+          name: 'nonPlasmaTransferRecord',
+          title: '非生产用血浆转移记录',
+        },
+        {
+          id: StockOutButtonEnum.PlasmaTransferApplyReport,
+          name: 'plasmaTransferApply',
+          title: '原料血浆转移申请表',
+        },
       ],
     },
     {
@@ -323,12 +354,8 @@ const nonconformity: AppRouteModule = {
       component: () => import('@/views/stockout/plasma-summary/index.vue'),
       authElements: [
         {
-          id: StockOutButtonEnum.PlasmaSummaryPlasmaSummaryReport,
-          title: '血浆汇总表',
-        },
-        {
-          id: StockOutButtonEnum.PlasmaSummaryPlasmaTrackUnqReport,
-          title: '续追踪不合格记录',
+          id: StockOutButtonEnum.PlasmaSummaryReport,
+          title: '打印',
         },
       ],
     },

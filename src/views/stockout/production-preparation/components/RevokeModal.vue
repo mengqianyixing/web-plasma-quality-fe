@@ -34,7 +34,7 @@
     {
       field: 'remark',
       component: 'InputTextArea',
-      label: '取消原因',
+      label: '撤销原因',
       colProps: { span: 24 },
       required: true,
     },

@@ -6,13 +6,24 @@
     :footer="null"
     width="100%"
     :draggable="false"
+    :destroyOnClose="true"
     :closeFunc="handleCloseFunc"
     defaultFullscreen
     :canFullscreen="false"
   >
     <BasicForm @register="registerForm" @submit="queryUntable" />
-    <div class="flex gap-1 mt-1">
-      <BasicTable @register="registerTableUn" class="inline-block pr-2 w-15/20" />
+    <div class="flex gap-1 mt-1 mb-2">
+      <vxe-grid
+        ref="tableRef"
+        :loading="vxeTableLoading"
+        @checkbox-change="selectChangeEvent"
+        v-bind="gridOptions"
+        :data="unPickTableData"
+        :columns="columnsUnRef"
+        @sort-change="sortChangeEvent"
+        show-overflow
+        class="inline-block pr-2 w-15/20"
+      />
       <div class="pr-2 w-1/20 icon-box">
         <Button :icon="h(DoubleRightOutlined)" @click="pick" :loading="pickLoading" />
         <Button
@@ -24,35 +35,43 @@
       </div>
       <BasicTable @register="registerTableEd" class="inline-block pr-2 w-4/20" />
     </div>
-    <Description @register="register" :data="prepareDetail" />
+    <Description @register="register" :data="prepareDetail" :schema="schema" />
   </BasicModal>
 </template>
 
 <script lang="tsx" setup>
+  import { VxeTableInstance, VxeGridProps } from 'vxe-table';
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { BasicForm, useForm, FormSchema } from '@/components/Form';
-  import { BasicColumn, useTable, BasicTable } from '@/components/Table';
+  import { BasicForm, FormSchema, useForm } from '@/components/Form';
+  import { BasicColumn, BasicTable, useTable } from '@/components/Table';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
-  import { Input, FormItem, FormItemRest, Button } from 'ant-design-vue';
+  import { Button } from 'ant-design-vue';
   import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons-vue';
-  import { ref, h } from 'vue';
+  import { h, reactive, ref } from 'vue';
   import dayjs from 'dayjs';
   import { useMessage } from '@/hooks/web/useMessage';
   import {
-    getPrepareList,
     getPickBatch,
     getPickBox,
-    pickBag,
-    revokePickBag,
     getPickedBatch,
     getPickedBox,
+    getPrepareList,
     getSummaryPreview,
+    pickBag,
+    revokePickBag,
   } from '@/api/stockout/production-preparation.js';
   import { useStation } from '@/hooks/common/useStation';
-  import { prepareStateMap, bagFlagMap, pickModeMap } from '@/enums/stockoutEnum';
+  import { bagFlagMap, pickModeMap, prepareStateMap } from '@/enums/stockoutEnum';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import {
+    GetApiProductPreparePickBatchResponse,
+    GetApiProductPrepareSummaryPreviewRequest,
+    PostApiProductPreparePickBagRequest,
+    PostApiProductPrepareRevokePickBagRequest,
+  } from '@/api/type/productionPreparation';
+  import { VxeGridPropTypes } from 'vxe-table/types/grid';
 
   const { stationOptions } = useStation();
   const serverEnumStore = useServerEnumStoreWithOut();
@@ -60,24 +79,75 @@
   const { createMessage } = useMessage();
   const { success, warning } = createMessage;
 
-  const emit = defineEmits(['closePickModal']);
+  const emit = defineEmits(['closePickModal', 'register']);
+
+  const tableRef = ref<VxeTableInstance<any>>();
+  const columnsUn: VxeGridPropTypes.Columns<any> = [
+    {
+      title: '采浆公司',
+      field: 'stationName',
+      width: 100,
+    },
+    {
+      title: '未挑数量',
+      field: 'unpickCount',
+      width: 100,
+    },
+    {
+      title: '满足数量',
+      field: 'passCount',
+      width: 100,
+      sortable: true,
+    },
+    {
+      title: '满足率',
+      field: 'passRatio',
+      width: 100,
+      formatter({ cellValue }) {
+        return cellValue ? cellValue + '%' : '-';
+      },
+      sortable: true,
+    },
+    {
+      title: '浆员数量',
+      field: 'donorCount',
+      width: 100,
+    },
+    {
+      title: '最早采集日期',
+      field: 'minCollectAt',
+      width: 130,
+      formatter({ cellValue }) {
+        return cellValue ? dayjs(cellValue).format('YYYY-MM-DD') : '-';
+      },
+      sortable: true,
+    },
+  ];
+  const columnsEd: BasicColumn[] = [
+    {
+      title: '血浆数量',
+      dataIndex: 'count',
+    },
+  ];
 
   let pickMode = ref(); // 是否为按批挑选
   const pickLoading = ref(false);
   const prepareNo = ref(); // 准备号
   const prodType = ref(); // 投产类型
   const cacheForm = ref(); // 缓存最近一次查询表单的入参
+  const unPickTableData = ref<GetApiProductPreparePickBatchResponse>([]);
+  const columnsUnRef = ref([...columnsUn]);
+
   const [registerModal] = useModalInner(async (data) => {
     pickMode.value = data.isBatch;
     prepareNo.value = data.prepareNo;
     prodType.value = data.prodType;
     const prodTypeName = PlasmaType(prodType.value);
-    const untablePropsCols = [...columnsUn]; // 未挑选表格列
     // 更新汇总数据
-    _getPrepareList();
+    await _getPrepareList();
     // 按批
     if (data.isBatch) {
-      updateSchema([
+      await updateSchema([
         {
           component: 'Select',
           label: '首次挑浆',
@@ -91,21 +161,24 @@
           ifShow: false,
         },
       ]);
-      setProps({
-        api: getPickBatch,
-        rowKey: 'batchNo',
-      });
-      untablePropsCols.unshift({
-        title: '待挑选血浆批号',
-        dataIndex: 'batchNo',
-        fixed: true,
-        sorter: true,
-      });
-      untablePropsCols.push({
-        title: '挑浆次数',
-        dataIndex: 'batchPickCount',
-        width: 100,
-      });
+      columnsUnRef.value = [
+        {
+          type: 'checkbox',
+          width: 50,
+        },
+        {
+          title: '待挑选血浆批号',
+          field: 'batchNo',
+          sortable: true,
+          width: 150,
+        },
+        ...columnsUnRef.value,
+        {
+          title: '挑浆次数',
+          field: 'batchPickCount',
+          width: 100,
+        },
+      ];
       setPropsed({
         api: getPickedBatch,
         columns: [
@@ -119,7 +192,7 @@
         ],
       });
     } else {
-      updateSchema([
+      await updateSchema([
         {
           component: 'Select',
           label: '首次挑浆',
@@ -133,20 +206,21 @@
           ifShow: true,
         },
       ]);
-      setProps({
-        api: getPickBox,
-        rowKey: 'boxNo',
-      });
-      untablePropsCols.unshift(
+      columnsUnRef.value.unshift(
+        {
+          type: 'checkbox',
+          width: 50,
+        },
         {
           title: '待挑选血浆箱号',
-          dataIndex: 'boxNo',
-          fixed: true,
-          sorter: true,
+          field: 'boxNo',
+          sortable: true,
+          width: 150,
         },
         {
           title: '血浆批号',
-          dataIndex: 'batchNo',
+          field: 'batchNo',
+          width: 150,
         },
       );
       setPropsed({
@@ -164,7 +238,7 @@
     }
     // 非普浆
     if (prodType.value !== 'N') {
-      updateSchema([
+      await updateSchema([
         {
           component: 'Select',
           label: '效价类型',
@@ -185,25 +259,23 @@
           },
         },
       ]);
-      untablePropsCols.push(
+      columnsUnRef.value.push(
         {
           title: '平均效价',
-          dataIndex: 'avgTiter',
+          field: 'avgTiter',
           width: 110,
         },
         {
           title: `${prodType.value}H,${prodTypeName}高效价`,
-          dataIndex: 'heightCount',
-          width: 150,
+          field: 'heightCount',
         },
         {
           title: `${prodType.value}L,${prodTypeName}低效价`,
-          dataIndex: 'lowCount',
-          width: 150,
+          field: 'lowCount',
         },
       );
     } else {
-      updateSchema([
+      await updateSchema([
         {
           component: 'Input',
           label: '效价类型',
@@ -214,31 +286,28 @@
           },
         },
       ]);
-      setFieldsValue({
+      await setFieldsValue({
         titerLevel: '普通',
       });
-      untablePropsCols.push({
+      columnsUnRef.value.push({
         title: '普通血浆数量',
-        dataIndex: 'ordinaryCount',
+        field: 'ordinaryCount',
         width: 110,
       });
     }
-    setProps({
-      columns: untablePropsCols,
-    });
-    queryUntable();
-    reloaded();
+
+    await reloadLeftTable();
+    await queryUntable();
+    await reloaded();
   });
 
   // 关闭弹框前
   function handleCloseFunc() {
-    resetFields();
-    setTableData([]);
+    columnsUnRef.value = [...columnsUn];
     setTableDataed([]);
-    clearSelectedRowKeys();
     clearSelectedRowKeysed();
     emit('closePickModal');
-    return true;
+    return Promise.resolve(true);
   }
 
   const FormSchemas: FormSchema[] = [
@@ -259,37 +328,10 @@
       labelWidth: 90,
     },
     {
-      field: 'minCollectDay',
-      defaultValue: '', // 第一个默认值
-      fields: ['maxCollectDay'],
-      defaultValueObj: { maxCollectDay: '' }, // 第二个默认值
-      component: 'Input',
+      field: '[minCollectDay,maxCollectDay]',
+      label: '采集天数',
+      component: 'InputRange',
       colProps: { span: 5 },
-      renderColContent({ model, field }, { disabled }) {
-        return (
-          <FormItem name="minCollectDay" label="采集天数" label-col={{ style: { width: '90px' } }}>
-            <Input.Group compact>
-              <Input
-                disabled={disabled}
-                style="width: 130px"
-                v-model:value={model[field]}
-                autocomplete="off"
-                placeholder="请输入"
-              ></Input>
-              <span style="margin-top: 4px;padding: 0 15px;border-right: 0;">至</span>
-              <FormItemRest>
-                <Input
-                  style="width: 130px; margin-left: -1px;"
-                  placeholder="请输入"
-                  autocomplete="off"
-                  v-model:value={model['maxCollectDay']}
-                  disabled={disabled}
-                />
-              </FormItemRest>
-            </Input.Group>
-          </FormItem>
-        );
-      },
     },
     {
       component: 'Input',
@@ -322,40 +364,13 @@
       colProps: { span: 5 },
     },
     {
-      field: 'minTiter',
-      defaultValue: '', // 第一个默认值
-      fields: ['maxTiter'],
-      defaultValueObj: { maxTiter: '' }, // 第二个默认值
-      component: 'Input',
+      field: '[minTiter,maxTiter]',
+      label: '效价范围',
+      component: 'InputRange',
       colProps: { span: 5 },
-      renderColContent({ model, field }, { disabled }) {
-        return (
-          <FormItem name="minTiter" label="效价范围" label-col={{ style: { width: '90px' } }}>
-            <Input.Group compact>
-              <Input
-                disabled={disabled}
-                style="width: 130px"
-                v-model:value={model[field]}
-                autocomplete="off"
-                placeholder="请输入"
-              ></Input>
-              <span style="margin-top: 4px;padding: 0 15px;border-right: 0;">至</span>
-              <FormItemRest>
-                <Input
-                  style="width: 130px; margin-left: -1px;"
-                  autocomplete="off"
-                  placeholder="请输入"
-                  v-model:value={model['maxTiter']}
-                  disabled={disabled}
-                />
-              </FormItemRest>
-            </Input.Group>
-          </FormItem>
-        );
-      },
     },
   ];
-  const [registerForm, { updateSchema, getFieldsValue, resetFields, setFieldsValue }] = useForm({
+  const [registerForm, { updateSchema, getFieldsValue, setFieldsValue }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
     schemas: FormSchemas,
@@ -367,93 +382,40 @@
     },
   });
 
-  const columnsUn: BasicColumn[] = [
-    {
-      title: '采浆公司',
-      dataIndex: 'stationName',
+  const gridOptions = reactive<VxeGridProps<any>>({
+    border: true,
+    maxHeight: 600,
+    showOverflow: true,
+    exportConfig: {},
+    columnConfig: {
+      resizable: true,
     },
-    {
-      title: '未挑数量',
-      dataIndex: 'unpickCount',
-      width: 100,
+    scrollY: {
+      enabled: true,
+      gt: 0,
     },
-    {
-      title: '满足数量',
-      dataIndex: 'passCount',
-      width: 100,
-      sorter: true,
+    pagerConfig: {
+      enabled: false,
     },
-    {
-      title: '满足率',
-      dataIndex: 'passRatio',
-      sorter: true,
-      width: 100,
-      format(text) {
-        return text ? text + '%' : '-';
-      },
+    formConfig: {
+      enabled: false,
     },
-    {
-      title: '浆员数量',
-      dataIndex: 'donorCount',
-      width: 100,
+    checkboxConfig: {
+      trigger: 'row',
     },
-    {
-      title: '最早采集日期',
-      dataIndex: 'minCollectAt',
-      sorter: true,
-      format(text) {
-        return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-      },
+    toolbarConfig: {
+      refresh: false,
+      loading: false,
+      export: false,
+      custom: false,
     },
-  ];
-  const columnsEd: BasicColumn[] = [
-    {
-      title: '血浆数量',
-      dataIndex: 'count',
+    showFooter: false,
+    sortConfig: {
+      trigger: 'cell',
+      remote: true,
     },
-  ];
+  });
 
-  const [registerTableUn, { reload, setProps, getSelectRows, clearSelectedRowKeys, setTableData }] =
-    useTable({
-      maxHeight: 510,
-      columns: columnsUn,
-      useSearchForm: false,
-      beforeFetch: (p) => {
-        let { currPage, pageSize, field: orderBy, order: sort } = p;
-        if (sort === 'ascend') sort = 'asc';
-        if (sort === 'descend') sort = 'desc';
-        const formValue = getFieldsValue();
-        prodType.value === 'N' && delete formValue.titerLevel;
-        return {
-          currPage,
-          pageSize,
-          orderBy,
-          sort,
-          prepareNo: prepareNo.value,
-          ...formValue,
-        };
-      },
-      pagination: { pageSize: 20 },
-      fetchSetting: {
-        pageField: 'currPage',
-        sizeField: 'pageSize',
-        totalField: 'totalCount',
-        listField: 'result',
-      },
-      clickToRowSelect: false,
-      size: 'small',
-      striped: false,
-      rowSelection: {
-        type: 'checkbox',
-        onChange: unSelectionChange,
-        hideSelectAll: true,
-        preserveSelectedRowKeys: true,
-      },
-      immediate: false,
-      bordered: true,
-      showIndexColumn: false,
-      canResize: true,
-    });
   const [
     registerTableEd,
     {
@@ -473,7 +435,7 @@
     },
     useSearchForm: false,
     pagination: false,
-    clickToRowSelect: false,
+    clickToRowSelect: true,
     size: 'small',
     striped: false,
     rowSelection: {
@@ -629,21 +591,19 @@
   ];
   const [register] = useDescription({
     column: 4,
-    schema: schema,
   });
 
   // 点击查询未挑血浆，并缓存筛选条件
   async function queryUntable() {
-    await reload();
+    await reloadLeftTable();
     cacheForm.value = getFieldsValue();
   }
 
   // 未挑选表格勾选事件
-  async function unSelectionChange(selectedRowKeys, selectedRows) {
-    console.log('微挑选勾选事件', getSelectRows(), selectedRows);
+  async function selectChangeEvent({ records }) {
     // 一个都没勾，初始化数据
-    if (!selectedRows.length) {
-      _getPrepareList();
+    if (!records.length) {
+      await _getPrepareList();
       return;
     }
     await compareFilter();
@@ -685,7 +645,10 @@
   async function pick() {
     const res = await compareFilter();
     if (res === false) return; // 中止挑选
-    const selected = getSelectRows();
+    const $table = tableRef.value;
+    if (!$table) return;
+
+    const selected = $table.getCheckboxRecords()!;
     if (!selected) {
       warning('请先勾选数据!');
       return;
@@ -714,15 +677,14 @@
 
     pickLoading.value = true;
     try {
-      const res = await pickBag(params);
-      console.log(res);
+      await pickBag(params as unknown as PostApiProductPreparePickBagRequest);
       success('挑选成功!');
-      clearSelectedRowKeys();
+      await $table.clearCheckboxRow();
       clearSelectedRowKeysed();
-      queryUntable();
-      reloaded();
+      await queryUntable();
+      await reloaded();
       // 挑选成功，查询落地数据作为汇总详情数据
-      _getPrepareList();
+      await _getPrepareList();
     } finally {
       pickLoading.value = false;
     }
@@ -748,14 +710,14 @@
 
     pickLoading.value = true;
     try {
-      await revokePickBag(params);
+      await revokePickBag(params as unknown as PostApiProductPrepareRevokePickBagRequest);
       success('挑选成功!');
-      clearSelectedRowKeys();
+      await tableRef.value!.clearCheckboxRow();
       clearSelectedRowKeysed();
-      queryUntable();
-      reloaded();
+      await queryUntable();
+      await reloaded();
       // 挑选成功，查询落地数据作为汇总详情数据
-      _getPrepareList();
+      await _getPrepareList();
     } finally {
       pickLoading.value = false;
     }
@@ -765,7 +727,11 @@
   async function _getSummaryPreview() {
     const { minCollectDay, maxCollectDay, firstFlag, titerLevel, minTiter, maxTiter, boxNo } =
       getFieldsValue();
-    const selected = getSelectRows();
+
+    const $table = tableRef.value;
+    if (!$table) return;
+
+    const selected = $table.getCheckboxRecords()!;
     const params = {
       prepareNo: prepareNo.value,
       batchNos: [] as string[],
@@ -786,8 +752,9 @@
     // 普浆不需要效价类型
     prodType.value === 'N' && delete params.titerLevel;
 
-    const data = await getSummaryPreview(params);
-    prepareDetail.value = data;
+    prepareDetail.value = await getSummaryPreview(
+      params as unknown as GetApiProductPrepareSummaryPreviewRequest,
+    );
   }
 
   // 获取汇总数据（已挑非实时）
@@ -799,8 +766,54 @@
   // 重置查询
   async function customResetFunc() {
     setTimeout(() => {
-      reload();
+      reloadLeftTable();
     });
+  }
+
+  const vxeTableLoading = ref(false);
+  async function reloadLeftTable() {
+    const formValue = getFieldsValue();
+    prodType.value === 'N' && delete formValue.titerLevel;
+
+    vxeTableLoading.value = true;
+
+    if (pickMode.value) {
+      try {
+        unPickTableData.value = (
+          (await getPickBatch({
+            prepareNo: prepareNo.value,
+            currPage: String(1),
+            pageSize: String(99999),
+            sort: sorter.value?.order,
+            orderBy: sorter.value?.field,
+            ...formValue,
+          })) as any
+        )?.result;
+      } finally {
+        vxeTableLoading.value = false;
+      }
+    } else {
+      try {
+        unPickTableData.value = (
+          (await getPickBox({
+            prepareNo: prepareNo.value,
+            currPage: String(1),
+            pageSize: String(99999),
+            sort: sorter.value?.order,
+            orderBy: sorter.value?.field,
+            ...formValue,
+          } as any)) as any
+        )?.result;
+      } finally {
+        vxeTableLoading.value = false;
+      }
+    }
+  }
+
+  const sorter = ref();
+  async function sortChangeEvent(e) {
+    sorter.value = e;
+    await reloadLeftTable();
   }
 </script>
 <style lang="less" scoped>

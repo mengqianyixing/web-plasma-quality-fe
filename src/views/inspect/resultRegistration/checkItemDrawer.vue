@@ -1,11 +1,3 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: zcc
- * @Date: 2024-01-02 13:43:33
- * @LastEditors: zcc
- * @LastEditTime: 2024-01-12 17:47:27
--->
 <template>
   <BasicModal
     v-bind="$attrs"

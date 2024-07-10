@@ -7,22 +7,29 @@
     :maskClosable="false"
     :showCancelBtn="false"
     :showOkBtn="false"
+    :min-height="600"
     width="70%"
   >
-    <BasicTable @register="registerTable">
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'action'">
-          <TableAction
-            :actions="[
-              {
-                label: '核对',
-                onClick: handleCheck.bind(null, record),
-              },
-            ]"
-          />
-        </template>
-      </template>
-    </BasicTable>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <div class="flex-1 h-full shrink-1">
+          <BasicTable @register="registerTable">
+            <template #bodyCell="{ column, record }">
+              <template v-if="column.key === 'action'">
+                <TableAction
+                  :actions="[
+                    {
+                      label: '核对',
+                      onClick: handleCheck.bind(null, record),
+                    },
+                  ]"
+                />
+              </template>
+            </template>
+          </BasicTable>
+        </div>
+      </div>
+    </div>
   </BasicModal>
   <PackingCheckModal @register="registerPackingCheckModal" @success="reload" />
 </template>
@@ -143,7 +150,7 @@
 
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
+    isCanResizeParent: true,
     actionColumn: {
       width: 80,
       title: '操作',

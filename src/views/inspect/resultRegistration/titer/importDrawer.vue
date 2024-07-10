@@ -12,9 +12,9 @@
     @register="registerModal"
     title="效价导入"
     width="1000px"
-    :show-ok-btn="false"
     cancelText="关闭"
     @cancel="emit('close')"
+    @ok="checkNuc"
   >
     <div class="flex flex-col h-full">
       <div class="title">
@@ -45,24 +45,43 @@
       <CellWapper :data="cellData" cell-width="33%" :cell-list="cellList" :gap="0" />
       <div class="flex-1 mt-8px">
         <div class="h-6/10">
-          <BasicTable @register="registerTable" />
+          <vxe-grid v-bind="topTableOptions" :data="dataSource.dataSaved" />
         </div>
         <div class="h-4/10">
-          <BasicTable @register="registerFailTable" />
+          <vxe-grid v-bind="bottomTableOptions" :data="dataSource.dataFaild" />
         </div>
       </div>
     </div>
+    <BasicModal
+      @register="registerConfirmModal"
+      title="效价导入复核人确认"
+      okText="提交"
+      width="300px"
+      @ok="handleSubmit"
+      @cancel="resetFields"
+    >
+      <BasicForm @register="registerForm" />
+    </BasicModal>
+    <Login
+      @register="registerLoginModal"
+      @success="login"
+      :auth-code="ReCheckButtonEnum.TiterImportConfirmationCheck"
+    />
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { BasicTable, useTable } from '@/components/Table';
   import { CellWapper } from '@/components/CellWapper';
   import { importSuccessColumns, importFailColumns, cellList } from './data';
-  import { BasicModal, useModalInner } from '@/components/Modal';
-  import { ref, reactive } from 'vue';
+  import { useModalInner, useModal, BasicModal } from '@/components/Modal';
+  import { ref, reactive, markRaw, h } from 'vue';
   import { Upload as AUpload, message } from 'ant-design-vue';
-  import { uploadItemTiter } from '@/api/inspect/resultRegistration';
+  import { uploadItemTiter, updateImportApi } from '@/api/inspect/resultRegistration';
   import { PostApiCoreLabRegistrationTiterUploadResponse } from '@/api/type/inspectManage';
+  import { VxeGridProps } from 'vxe-table';
+  import { BasicForm, useForm } from '@/components/Form';
+  import Login from '@/__components/ReviewLoginModal/index.vue';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const fileList = ref<File[]>([]);
   const loading = ref(false);
@@ -72,6 +91,7 @@
 
   const emit = defineEmits(['close']);
 
+  const { createConfirm } = useMessage();
   const cellData = ref<PostApiCoreLabRegistrationTiterUploadResponse['summary']>({
     filename: '',
     uploadAt: '',
@@ -79,53 +99,153 @@
     count: '',
     successCount: '',
     faildCount: '',
+    normalNum: '',
+    lowNum: '',
+    isNucleic: false,
+    heightNum: '',
   });
   const dataSource = reactive<{
     dataSaved: PostApiCoreLabRegistrationTiterUploadResponse['dataSaved'];
     dataFaild: PostApiCoreLabRegistrationTiterUploadResponse['dataFaild'];
   }>({
-    dataSaved: [],
-    dataFaild: [],
+    dataSaved: markRaw([]),
+    dataFaild: markRaw([]),
   });
 
   defineOptions({ name: 'ImportModal' });
 
-  const [registerTable, { reload: reloadSaved }] = useTable({
-    api: () => Promise.resolve({ result: dataSource.dataSaved }),
-    fetchSetting: {
-      listField: 'result',
+  const topTableOptions = reactive<VxeGridProps<any>>({
+    border: true,
+    height: '280px',
+    showOverflow: true,
+    exportConfig: {},
+    columnConfig: {
+      resizable: true,
     },
-    immediate: false,
-    pagination: false,
+    scrollY: {
+      enabled: true,
+      gt: 0,
+    },
+    pagerConfig: {
+      enabled: false,
+    },
+    formConfig: {
+      enabled: false,
+    },
+    toolbarConfig: {
+      refresh: false,
+      loading: false,
+      export: false,
+      custom: false,
+    },
     columns: importSuccessColumns,
-    size: 'small',
-    useSearchForm: false,
-    showIndexColumn: false,
-    showTableSetting: false,
-    bordered: true,
-    isCanResizeParent: true,
+    showFooter: false,
   });
-  const [registerFailTable, { reload: reloadFaild }] = useTable({
-    api: () => Promise.resolve({ result: dataSource.dataFaild }),
-    fetchSetting: {
-      listField: 'result',
+  const bottomTableOptions = reactive<VxeGridProps<any>>({
+    border: true,
+    height: '280px',
+    showOverflow: true,
+    exportConfig: {},
+    columnConfig: {
+      resizable: true,
     },
-    immediate: false,
-    isCanResizeParent: true,
+    scrollY: {
+      enabled: true,
+      gt: 0,
+    },
+    pagerConfig: {
+      enabled: false,
+    },
+    formConfig: {
+      enabled: false,
+    },
+    toolbarConfig: {
+      refresh: false,
+      loading: false,
+      export: false,
+      custom: false,
+    },
     columns: importFailColumns,
-    size: 'small',
-    pagination: false,
-    useSearchForm: false,
-    showTableSetting: false,
-    bordered: true,
+    showFooter: false,
   });
-  const [registerModal] = useModalInner(({ projectId, bsNo }) => {
+  const [registerLoginModal, { openModal: openLoginModal }] = useModal();
+  const [registerConfirmModal, { openModal: openConfirmModal, setModalProps }] = useModal();
+
+  const [registerForm, { validate, setFieldsValue, resetFields }] = useForm({
+    labelWidth: 80,
+    baseColProps: { span: 24 },
+    schemas: [
+      {
+        field: 'reviewer',
+        component: 'InputSearch',
+        label: '复核人',
+        required: true,
+        componentProps: {
+          'enter-button': '登录',
+          placeholder: '请点击登录按钮',
+          readonly: true,
+          onSearch: () => {
+            openLoginModal(true, {});
+          },
+        },
+      },
+    ],
+    showActionButtonGroup: false,
+  });
+  async function checkNuc() {
+    if (dataSource.dataSaved.length === 0) return message.warning('没有导入成功的数据');
+    if (cellData.value.isNucleic) {
+      createConfirm({
+        iconType: 'warning',
+        title: '提示',
+        content: () =>
+          h(
+            'div',
+            {
+              style: {
+                color: 'red',
+              },
+            },
+            '核酸不合格确认导入效价？',
+          ),
+        onOk: () => {
+          openConfirmModal();
+        },
+      });
+    } else {
+      openConfirmModal();
+    }
+  }
+  async function handleSubmit() {
+    const values = await validate();
+    setModalProps({ confirmLoading: true });
+    try {
+      await updateImportApi({
+        userName: values.reviewer,
+        dataSavedList: dataSource.dataSaved.map((it) => ({
+          sampleNo: it.sampleNo,
+          conclusion: it.conclusion,
+          titerResult: it.titerResult,
+          projectId: it.projectId,
+        })),
+      });
+      message.success('效价导入已生效');
+      openConfirmModal(false);
+      resetFields();
+      closeModal();
+      emit('close');
+    } finally {
+      setModalProps({ confirmLoading: false });
+    }
+  }
+  function login(userName, data) {
+    setFieldsValue({ reviewer: data.username });
+  }
+  const [registerModal, { closeModal }] = useModalInner(({ projectId, bsNo }) => {
     pid.value = projectId;
     bsno.value = bsNo;
-    dataSource.dataFaild.splice(0, dataSource.dataFaild.length);
-    dataSource.dataSaved.splice(0, dataSource.dataSaved.length);
-    reloadSaved();
-    reloadFaild();
+    dataSource.dataFaild = [];
+    dataSource.dataSaved = [];
     for (const key in cellData.value) {
       cellData.value[key] = '';
     }
@@ -143,10 +263,8 @@
         if (key === 'filename') continue;
         cellData.value[key] = summary[key];
       }
-      dataSource.dataFaild.splice(0, dataSource.dataFaild.length, ...dataFaild);
-      dataSource.dataSaved.splice(0, dataSource.dataSaved.length, ...dataSaved);
-      reloadSaved();
-      reloadFaild();
+      dataSource.dataFaild = markRaw(dataFaild || []);
+      dataSource.dataSaved = markRaw(dataSaved || []);
       message.success('导入成功');
     } finally {
       loading.value = false;

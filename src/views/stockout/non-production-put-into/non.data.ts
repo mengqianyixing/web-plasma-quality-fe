@@ -11,19 +11,30 @@ export const columns: BasicColumn[] = [
     dataIndex: 'dlvNo',
     slots: { customRender: 'dlvNo' },
     width: 150,
+    fixed: 'left',
   },
   {
-    title: '申请原因',
+    title: '血浆数量',
+    dataIndex: 'bagNum',
+    width: 100,
+    fixed: 'left',
+  },
+  {
+    title: '原因',
     dataIndex: 'reason',
+    ellipsis: false,
     width: 200,
   },
   {
     title: '转移部门',
     dataIndex: 'transferDepartment',
+    width: 120,
   },
   {
     title: '转移申请人',
     dataIndex: 'applicant',
+    ellipsis: false,
+    width: 120,
   },
   {
     title: '申请日期',
@@ -36,6 +47,8 @@ export const columns: BasicColumn[] = [
   {
     title: '记录人',
     dataIndex: 'creator',
+    ellipsis: false,
+    width: 120,
   },
   {
     title: '记录日期',
@@ -48,6 +61,8 @@ export const columns: BasicColumn[] = [
   {
     title: '准备人',
     dataIndex: 'preparedBy',
+    ellipsis: false,
+    width: 120,
   },
   {
     title: '准备日期',
@@ -60,6 +75,8 @@ export const columns: BasicColumn[] = [
   {
     title: '复核人',
     dataIndex: 'reviewer',
+    ellipsis: false,
+    width: 120,
   },
   {
     title: '复核日期',
@@ -72,7 +89,8 @@ export const columns: BasicColumn[] = [
   {
     title: '审核人',
     dataIndex: 'checker',
-    width: 80,
+    ellipsis: false,
+    width: 120,
   },
   {
     title: '审核日期',
@@ -93,6 +111,7 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'status',
+    width: 100,
   },
 ];
 
@@ -114,7 +133,7 @@ export const searchSchema: FormSchema[] = [
     field: 'state',
     component: 'Select',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankDeliverstateType),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BankNonProdDeliverState),
     },
     label: '状态',
   },
@@ -139,7 +158,7 @@ export const plasmaDetailColumns: BasicColumn[] = [
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
   },
   {
     title: '检疫期类型',
@@ -158,7 +177,7 @@ export const plasmaDetailColumns: BasicColumn[] = [
     dataIndex: 'titerNum',
   },
   {
-    title: '血浆状态',
+    title: '血浆过程状态',
     dataIndex: 'plasmaStatus',
   },
 ];

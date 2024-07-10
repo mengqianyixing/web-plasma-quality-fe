@@ -10,13 +10,14 @@
     :closeFunc="handleCloseFunc"
     :canFullscreen="false"
   >
-    <PageWrapper contentFullHeight fixedHeight>
-      <Row v-if="!readOnly">
-        <Col :span="3" :offset="21" style="margin-bottom: 12px">
+    <!-- <PageWrapper contentFullHeight fixedHeight> -->
+    <PageWrapper>
+      <div class="flex justify-end" v-if="!readOnly">
+        <div style="margin-bottom: 12px">
           <a-button @click="goPick(true)" style="margin-right: 12px"> 按批挑选 </a-button>
           <a-button @click="goPick(false)"> 按箱挑选 </a-button>
-        </Col>
-      </Row>
+        </div>
+      </div>
       <Description @register="register" :data="prepareDetail" />
       <Tabs v-model:activeKey="activeKey" @change="changeTabs" style="margin-top: 12px" type="card">
         <TabPane key="columnsImmunity" tab="效价类型" force-render />
@@ -34,25 +35,30 @@
           >
         </template>
       </Tabs>
-      <BasicTable @register="registerTable" :scroll="{ y: 520 }">
+      <BasicTable v-if="activeKey !== 'columnsBag'" @register="registerTable" :scroll="{ y: 520 }">
         <template #bodyCell="{ record, column }">
           <template v-if="column.key === 'action'">
-            <TableAction
-              :actions="[
-                {
-                  label: '删除',
-                  color: 'error',
-                  popConfirm: {
-                    title: '是否确认删除',
-                    placement: 'left',
-                    confirm: handleDel.bind(null, record),
-                  },
-                },
-              ]"
-            />
+            <a-button type="text" danger @click="handleDel(record)">删除</a-button>
           </template>
         </template>
       </BasicTable>
+      <vxe-grid
+        v-if="activeKey === 'columnsBag'"
+        ref="xTable"
+        @scroll="handleScroll"
+        v-bind="gridOptions"
+        :data="plasmaDetailData"
+        show-overflow
+        class="inline-block w-100%"
+        :loading="tableLoading"
+      >
+        <template #collectAt="{ row }">
+          <span>{{ row.collectAt ? dayjs(row.collectAt).format('YYYY-MM-DD') : '-' }}</span>
+        </template>
+        <template #calculateAt="{ row }">
+          <span>{{ row.calculateAt ? dayjs(row.calculateAt).format('YYYY-MM-DD') : '-' }}</span>
+        </template>
+      </vxe-grid>
     </PageWrapper>
   </BasicModal>
   <PickModal @register="registerPickModal" @close-pick-modal="closePickModal" />
@@ -61,13 +67,15 @@
 <script lang="tsx" setup>
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
-  import { Row, Col, Tabs, TabPane } from 'ant-design-vue';
+  import { Tabs, TabPane } from 'ant-design-vue';
+  import { VxeGridProps } from 'vxe-table';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
-  import { BasicTable, useTable, BasicColumn, TableAction } from '@/components/Table';
+  import { BasicTable, useTable, BasicColumn } from '@/components/Table';
+  import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { jsonToSheetXlsx } from '@/components/Excel';
-  import { ref } from 'vue';
+  import { ref, reactive, nextTick, createVNode } from 'vue';
   import {
     prepareStateMap,
     bagFlagMap,
@@ -94,11 +102,20 @@
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
   const { createMessage } = useMessage();
 
-  const emit = defineEmits(['success']);
+  const emit = defineEmits(['success', 'register']);
   const activeKey = ref('columnsImmunity');
 
   const prepareDetail = ref(); // 准备详情
   const readOnly = ref(false);
+  let plasmaDetailData = []; // 血浆明细表格数据
+  const tableLoading = ref(false);
+  const xTable = ref(null);
+  const plasmaDetailPage = ref({
+    currPage: 1,
+    pageSize: 20,
+    totalCount: 0,
+  });
+
   const [registerModal, { setModalProps }] = useModalInner(async (data) => {
     prepareDetail.value = data.record;
     readOnly.value = data?.readOnly;
@@ -357,69 +374,94 @@
     },
   ];
 
-  const columnsBag: BasicColumn[] = [
+  const columnsBag = [
     {
       title: '浆站名称',
-      dataIndex: 'stationName',
-      align: 'left',
+      field: 'stationName',
+      // align: 'left',
     },
     {
       title: '血浆批号',
-      dataIndex: 'batchNo',
+      field: 'batchNo',
     },
     {
       title: '血浆箱号',
-      dataIndex: 'boxNo',
+      field: 'boxNo',
     },
     {
       title: '血浆编号',
-      dataIndex: 'bagNo',
+      field: 'bagNo',
     },
     {
       title: '采集日期',
-      dataIndex: 'collectAt',
-      format(text) {
-        return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-      },
+      field: 'collectAt',
+      slots: { default: 'collectAt' },
     },
     {
       title: '浆员编号',
-      dataIndex: 'donorNo',
+      field: 'cardNo',
     },
     {
       title: '浆员姓名',
-      dataIndex: 'donorName',
+      field: 'donorName',
     },
     {
       title: '血型',
-      dataIndex: 'bloodType',
+      field: 'bloodType',
     },
     {
       title: '效价类型',
-      dataIndex: 'immunity',
+      field: 'immunity',
     },
     {
       title: '效价值',
-      dataIndex: 'titer',
+      field: 'titer',
     },
     {
       title: '检疫期满足日期',
-      dataIndex: 'calculateAt',
-      format(text) {
-        return text ? dayjs(text).format('YYYY-MM-DD') : '-';
-      },
+      field: 'calculateAt',
+      slots: { default: 'calculateAt' },
     },
     {
       title: '血浆流程状态',
-      dataIndex: 'tracked',
-      format(text) {
-        const val = text ? BagTrackMap.get(text as BagTrackValueEnum) : '';
-        return val;
-      },
+      field: 'plasmaStatus',
+      // format(text) {
+      //   const val = text ? BagTrackMap.get(text as BagTrackValueEnum) : '';
+      //   return val;
+      // },
     },
   ];
 
-  const [registerTable, { setProps, reload, getRawDataSource, setLoading }] = useTable({
+  const gridOptions = reactive<VxeGridProps<any>>({
+    border: true,
+    // height: '520px',
+    maxHeight: 600,
+    showOverflow: true,
+    exportConfig: {},
+    columnConfig: {
+      resizable: true,
+    },
+    scrollY: {
+      enabled: true,
+      gt: 0,
+    },
+    pagerConfig: {
+      enabled: false,
+    },
+    formConfig: {
+      enabled: false,
+    },
+    toolbarConfig: {
+      refresh: false,
+      loading: false,
+      export: false,
+      custom: false,
+    },
+    columns: columnsBag,
+    showFooter: false,
+  });
+
+  const [registerTable, { setProps, reload, setLoading }] = useTable({
     api: getImmunityList,
     columns: columnsImmunity,
     useSearchForm: false,
@@ -467,18 +509,23 @@
         };
         break;
       case 'columnsBag':
-        api = getBagList;
-        columns = columnsBag;
+        plasmaDetailData = [];
+        plasmaDetailPage.value.currPage = 1;
+        plasmaDetailPage.value.pageSize = 20;
+        plasmaDetailPage.value.totalCount = 0;
+        _getBagList();
         break;
       default:
         break;
     }
-    setProps({
-      api,
-      columns,
-      actionColumn,
+    nextTick(() => {
+      setProps({
+        api,
+        columns,
+        actionColumn,
+      });
+      reload();
     });
-    reload();
   }
 
   const [registerPickModal, { openModal: openPickModal }] = useModal();
@@ -501,8 +548,45 @@
     reload();
   }
 
+  // 获取血浆明细
+  async function _getBagList() {
+    try {
+      const data = {
+        prepareNo: prepareDetail.value.prepareNo,
+        currPage: plasmaDetailPage.value.currPage,
+        pageSize: plasmaDetailPage.value.pageSize,
+      };
+      tableLoading.value = true;
+      const res = await getBagList(data);
+      plasmaDetailPage.value.totalCount = res.totalCount;
+      plasmaDetailData = plasmaDetailData.concat(res.result);
+      const $table = xTable.value;
+      if ($table) {
+        // 表格局部加载
+        $table.loadData(plasmaDetailData);
+      }
+    } finally {
+      tableLoading.value = false;
+    }
+  }
+
+  function handleScroll({ scrollTop, scrollHeight }) {
+    const wrapperHeight = document.querySelector('.vxe-table--body-wrapper.body--wrapper')
+      ?.clientHeight;
+    // 滚到当前底部加载下一块
+    if (
+      scrollTop + wrapperHeight >= scrollHeight - 10 &&
+      plasmaDetailPage.value.currPage * plasmaDetailPage.value.pageSize <
+        plasmaDetailPage.value.totalCount
+    ) {
+      plasmaDetailPage.value.currPage++;
+      _getBagList();
+    }
+  }
+
   // 关闭弹框前
   function handleCloseFunc() {
+    activeKey.value = 'columnsImmunity';
     emit('success');
     return true;
   }
@@ -510,7 +594,13 @@
   // 导出功能
   const exportLoading = ref(false);
   async function handleExport() {
-    const tableDate = getRawDataSource();
+    const data = {
+      prepareNo: prepareDetail.value.prepareNo,
+      currPage: 1,
+      pageSize: 9999999,
+    };
+    const res = await getBagList(data);
+    const tableDate = res.result;
     if (!tableDate.length) {
       createMessage.warn('暂无可导出的数据!');
       return;
@@ -531,7 +621,9 @@
           immunity: it.immunity,
           titer: it.titer,
           calculateAt: it.calculateAt ? dayjs(it.calculateAt).format('YYYY-MM-DD') : '',
-          tracked: it.tracked ? BagTrackMap.get(it.tracked as BagTrackValueEnum) : '',
+          plasmaStatus: it.plasmaStatus
+            ? BagTrackMap.get(it.plasmaStatus as BagTrackValueEnum)
+            : '',
         };
       });
 
@@ -548,7 +640,7 @@
           immunity: '效价类型',
           titer: '效价值',
           calculateAt: '检疫期满足日期',
-          tracked: '血浆流程状态	',
+          plasmaStatus: '血浆流程状态	',
         },
         filename: `投产准备号:${prepareDetail.value.prepareNo}-血浆明细.xlsx`,
         data: _exportData,
@@ -562,25 +654,41 @@
     }
   }
 
+  const { createConfirm } = useMessage();
+
   // 删除
   async function handleDel(record) {
-    console.log('shanchu', record);
-    const params = {
-      prepareNo: prepareDetail.value.prepareNo,
-      immType: record.immType,
-      titerLevel: record.titerLevel,
-    };
-    // 箱
-    if (Object.prototype.hasOwnProperty.call(record, 'boxNo')) params['boxNos'] = [record.boxNo];
-    // 批
-    else params['batchNos'] = [record.batchNo];
+    createConfirm({
+      iconType: 'warning',
+      title: '是否确认删除?',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: '',
+      okText: '删除',
+      okType: 'danger',
+      cancelText: '取消',
+      async onOk() {
+        const params = {
+          prepareNo: prepareDetail.value.prepareNo,
+          immType: record.immType,
+          titerLevel: record.titerLevel,
+        };
+        // 箱
+        if (Object.prototype.hasOwnProperty.call(record, 'boxNo'))
+          params['boxNos'] = [record.boxNo];
+        // 批
+        else params['batchNos'] = [record.batchNo];
 
-    try {
-      setLoading(true);
-      await revokePickBag(params);
-      closePickModal();
-    } finally {
-      setLoading(false);
-    }
+        try {
+          setLoading(true);
+          await revokePickBag(params);
+          closePickModal();
+        } finally {
+          setLoading(false);
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   }
 </script>

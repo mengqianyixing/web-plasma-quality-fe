@@ -567,7 +567,7 @@ export interface GetApiProductPrepareSummaryBoxPrepareNoResponse {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/summary/bag/{prepareNo}`
- * @更新时间 `2024-01-10 15:08:32`
+ * @更新时间 `2024-07-05 10:51:18`
  */
 export interface GetApiProductPrepareSummaryBagPrepareNoRequest {
   /**
@@ -581,7 +581,7 @@ export interface GetApiProductPrepareSummaryBagPrepareNoRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/summary/bag/{prepareNo}`
- * @更新时间 `2024-01-10 15:08:32`
+ * @更新时间 `2024-07-05 10:51:18`
  */
 export interface GetApiProductPrepareSummaryBagPrepareNoResponse {
   field_1: {
@@ -614,6 +614,10 @@ export interface GetApiProductPrepareSummaryBagPrepareNoResponse {
      */
     donorName: string;
     /**
+     * 浆员卡号
+     */
+    cardNo: string;
+    /**
      * 血型
      */
     bloodType: string;
@@ -628,7 +632,7 @@ export interface GetApiProductPrepareSummaryBagPrepareNoResponse {
     /**
      * 血浆状态
      */
-    tracked: string;
+    plasmaStatus: string;
   }[];
 }
 
@@ -1154,7 +1158,7 @@ export interface GetApiProductPrepareSummaryPreviewResponse {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/sorting/bags`
- * @更新时间 `2024-01-30 18:13:15`
+ * @更新时间 `2024-05-31 15:00:24`
  */
 export interface GetApiProductPrepareSortingBagsRequest {
   prepareNo: string;
@@ -1183,7 +1187,7 @@ export interface GetApiProductPrepareSortingBagsRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/sorting/bags`
- * @更新时间 `2024-01-30 18:13:15`
+ * @更新时间 `2024-05-31 15:00:24`
  */
 export interface GetApiProductPrepareSortingBagsResponse {
   totalCount?: number;
@@ -1204,6 +1208,10 @@ export interface GetApiProductPrepareSortingBagsResponse {
      * 浆员编码
      */
     donorNo?: string;
+    /**
+     * 浆员卡号
+     */
+    cardNo?: string;
     /**
      * 效价类型
      */
@@ -1271,7 +1279,7 @@ export interface PostApiCoreBankDeliverNonproductiveResponse {}
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive`
- * @更新时间 `2024-02-29 14:27:12`
+ * @更新时间 `2024-04-22 16:52:29`
  */
 export interface GetApiCoreBankDeliverNonproductiveRequest {
   pageSize: string;
@@ -1299,7 +1307,7 @@ export interface GetApiCoreBankDeliverNonproductiveRequest {
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive`
- * @更新时间 `2024-02-29 14:27:12`
+ * @更新时间 `2024-04-22 16:52:29`
  */
 export interface GetApiCoreBankDeliverNonproductiveResponse {
   totalCount?: number;
@@ -1311,6 +1319,10 @@ export interface GetApiCoreBankDeliverNonproductiveResponse {
      * 申请单号
      */
     dlvNo: string;
+    /**
+     * 血浆数量
+     */
+    bagNum: string;
     /**
      * 申请原因
      */
@@ -1410,7 +1422,7 @@ export interface PutApiCoreBankDeliverNonproductiveResponse {}
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive/pick-plasma`
- * @更新时间 `2024-03-12 13:47:45`
+ * @更新时间 `2024-06-27 09:24:58`
  */
 export interface GetApiCoreBankDeliverNonproductivePickPlasmaRequest {
   pageSize: string;
@@ -1444,9 +1456,13 @@ export interface GetApiCoreBankDeliverNonproductivePickPlasmaRequest {
    */
   titerType?: string;
   /**
-   * 血浆类型
+   * 血浆类型   检测合格 ：UTRK  检疫期合格：PASS
    */
   plasmaStatus?: string;
+  /**
+   * 浆员卡号
+   */
+  cardNo: string;
 }
 
 /**
@@ -1454,7 +1470,7 @@ export interface GetApiCoreBankDeliverNonproductivePickPlasmaRequest {
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive/pick-plasma`
- * @更新时间 `2024-03-12 13:47:45`
+ * @更新时间 `2024-06-27 09:24:58`
  */
 export interface GetApiCoreBankDeliverNonproductivePickPlasmaResponse {
   totalCount?: number;
@@ -1482,6 +1498,10 @@ export interface GetApiCoreBankDeliverNonproductivePickPlasmaResponse {
      * 浆员编号
      */
     donorNo: string;
+    /**
+     * 浆员卡号
+     */
+    cardNo: string;
     /**
      * 采集日期
      */
@@ -1604,7 +1624,7 @@ export interface GetApiCoreBankDeliverNonproductiveDetailBoxResponse {
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive/detail-plasma`
- * @更新时间 `2024-02-27 17:54:02`
+ * @更新时间 `2024-05-31 18:00:53`
  */
 export interface GetApiCoreBankDeliverNonproductiveDetailPlasmaRequest {
   dlvNo: string;
@@ -1615,7 +1635,7 @@ export interface GetApiCoreBankDeliverNonproductiveDetailPlasmaRequest {
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive/detail-plasma`
- * @更新时间 `2024-02-27 17:54:02`
+ * @更新时间 `2024-05-31 18:00:53`
  */
 export interface GetApiCoreBankDeliverNonproductiveDetailPlasmaResponse {
   totalCount?: number;
@@ -1647,6 +1667,10 @@ export interface GetApiCoreBankDeliverNonproductiveDetailPlasmaResponse {
      * 浆员编号
      */
     donorNo: string;
+    /**
+     * 浆员卡号
+     */
+    cardNo: string;
     /**
      * 血型
      */
@@ -1868,7 +1892,7 @@ export interface PostApiCoreBankDeliverNonproductiveScanResponse {}
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive/scan`
- * @更新时间 `2024-02-27 22:07:21`
+ * @更新时间 `2024-05-31 18:06:43`
  */
 export interface GetApiCoreBankDeliverNonproductiveScanRequest {
   /**
@@ -1882,7 +1906,7 @@ export interface GetApiCoreBankDeliverNonproductiveScanRequest {
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
  * @请求头 `GET /api/core/bank/deliver/nonproductive/scan`
- * @更新时间 `2024-02-27 22:07:21`
+ * @更新时间 `2024-05-31 18:06:43`
  */
 export interface GetApiCoreBankDeliverNonproductiveScanResponse {
   waitList?: {
@@ -1898,11 +1922,13 @@ export interface GetApiCoreBankDeliverNonproductiveScanResponse {
      * 浆员姓名
      */
     donorName: string;
+    cardNo: string;
   }[];
   outList?: {
     bagNo?: string;
     donorNo?: string;
     donorName?: string;
+    cardNo?: string;
   }[];
 }
 

@@ -7,7 +7,7 @@
     width="80%"
     @ok="handleSubmit"
   >
-    <a-tabs v-model:activeKey="activeKey">
+    <a-tabs v-model:activeKey="activeKey" @change="handleTabChange">
       <a-tab-pane key="1" tab="编辑">
         <BasicForm @register="registerForm" />
 
@@ -30,11 +30,7 @@
                     {
                       label: '删除',
                       color: 'error',
-                      popConfirm: {
-                        title: '是否确认删除',
-                        placement: 'left',
-                        confirm: handleStyleDelete.bind(null, record),
-                      },
+                      onClick: handleStyleDelete.bind(null, record),
                     },
                   ]"
                 />
@@ -42,15 +38,15 @@
             </template>
           </BasicTable>
           <div>
-            <img :src="previewUrl" alt="" />
+            <img class="w-full" :src="previewUrl" alt="" />
           </div>
         </div>
       </a-tab-pane>
-      <a-tab-pane key="2" tab="编辑JSON" force-render>
+      <a-tab-pane key="2" tab="编辑JSON">
         <div class="flex">
-          <CodeEditor class="w-8/10" v-model:value="JsonValue" :mode="modeValue" />
+          <CodeEditor class="w-1/2 flex-shrink-1" v-model:value="JsonValue" :mode="modeValue" />
           <div>
-            <img :src="previewUrl" alt="" />
+            <img class="w-1/2" :src="previewUrl" alt="" />
           </div>
         </div>
       </a-tab-pane>
@@ -60,7 +56,7 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { ref, computed, unref } from 'vue';
+  import { ref, computed, unref, createVNode } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { BasicTable, TableAction, useTable } from '@/components/Table';
   import { styleDetailColumns, formSchema } from './style.data';
@@ -69,11 +65,14 @@
   import StyleColumnModal from './StyleColumnModal.vue';
 
   import { Tabs, TabPane } from 'ant-design-vue';
+  import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { addStyle, editStyle, getStylePreview, getTagDetail } from '@/api/tag/manage';
   import { GetApiSysTagTagNoResponse, PostApiSysTagPreviewRequest } from '@/api/type/tagManage';
   import type { Nullable } from '@vben/types';
   import { CodeEditor, MODE } from '@/components/CodeEditor';
   import { tagStatusValueEnum } from '@/enums/tagManageEnum';
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { Key } from 'ant-design-vue/lib/table/interface';
 
   const ATabs = Tabs;
   const ATabPane = TabPane;
@@ -143,7 +142,6 @@
       state.value = data.record.state;
 
       originDetailData.value = await getTagDetail(tagNo.value);
-      JsonValue.value = JSON.stringify(originDetailData.value, null, 2);
 
       previewStyle.value = await getStylePreview({
         ...originDetailData.value,
@@ -250,8 +248,24 @@
     } as PostApiSysTagPreviewRequest);
   }
 
+  const { createConfirm } = useMessage();
+
   function handleStyleDelete(record: Recordable) {
-    deleteTableDataRecord(record.key);
+    createConfirm({
+      iconType: 'error',
+      title: '是否确认删除?',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: '',
+      okText: '删除',
+      okType: 'danger',
+      cancelText: '取消',
+      onOk() {
+        deleteTableDataRecord(record.key);
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   }
 
   function handleSuccess(rowRecord: Recordable, flag = false) {
@@ -259,6 +273,13 @@
       updateTableDataRecord(rowKey.value, rowRecord);
     } else {
       insertTableDataRecord(rowRecord);
+    }
+  }
+
+  function handleTabChange(key: Key) {
+    if (key === '2') {
+      JsonValue.value = JSON.stringify(originDetailData.value, null, 2);
+      modeValue.value = MODE.JSON;
     }
   }
 </script>

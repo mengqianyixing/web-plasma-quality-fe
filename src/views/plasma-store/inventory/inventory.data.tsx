@@ -1,9 +1,12 @@
 import { VxeGridPropTypes } from '@/components/VxeTable';
 import { FormSchema } from '@/components/Form';
-import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
 import { PlasmaOutboundTypeMap, PlasmaOutboundTypeValueEnum } from '@/enums/plasmaEnum';
 import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
 import { Select, RangePicker, FormItem, FormItemRest } from 'ant-design-vue';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+
+const serverEnumStore = useServerEnumStoreWithOut();
 
 export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
@@ -55,9 +58,6 @@ export const formSchema: FormSchema[] = [
     label: '采浆公司',
     field: 'stationNo',
     component: 'Select',
-    colProps: {
-      span: 5,
-    },
   },
   {
     label: '血浆出库类型',
@@ -78,9 +78,6 @@ export const formSchema: FormSchema[] = [
           ].includes(it.value),
         ),
     },
-    colProps: {
-      span: 5,
-    },
   },
   {
     field: 'dateKey',
@@ -88,10 +85,17 @@ export const formSchema: FormSchema[] = [
     fields: ['date'],
     component: 'Input',
     label: '日期',
+    labelWidth: '30',
     render({ model, field }, { disabled }) {
       return (
-        <div class="flex gap-2">
-          <Select disabled={disabled} style="width: 120px;" allowClear v-model:value={model[field]}>
+        <div class="flex gap-2 ">
+          <Select
+            disabled={disabled}
+            dropdownMatchSelectWidth={false}
+            allowClear={false}
+            style="width: 90px;"
+            v-model:value={model[field]}
+          >
             <Select.Option value="receipt">接收日期</Select.Option>
             <Select.Option value="verify">验收发布日期</Select.Option>
           </Select>
@@ -103,29 +107,18 @@ export const formSchema: FormSchema[] = [
         </div>
       );
     },
-    colProps: {
-      span: 8,
-    },
   },
   {
     label: '血浆批号',
     field: 'batchNo',
     component: 'Input',
-    colProps: {
-      span: 5,
-    },
   },
   {
     label: '血浆过程状态',
     field: 'state',
-    component: 'ApiSelect',
+    component: 'Select',
     componentProps: {
-      api: getSysDictionary,
-      params: [DictionaryEnum.StockPlasmaProcessStatus],
-      resultField: '[0].dictImtes',
-    },
-    colProps: {
-      span: 5,
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BagFlow),
     },
   },
   {
@@ -136,9 +129,6 @@ export const formSchema: FormSchema[] = [
       api: getDilutionTypeApi,
       labelField: 'key',
       valueField: 'value',
-    },
-    colProps: {
-      span: 5,
     },
   },
 ];

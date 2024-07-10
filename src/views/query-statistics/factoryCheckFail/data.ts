@@ -10,7 +10,7 @@ export const columns: BasicColumn[] = [
     width: 70,
   },
   {
-    title: '血浆批号',
+    title: '样本批号',
     dataIndex: 'batchNo',
     width: 120,
   },
@@ -24,11 +24,11 @@ export const columns: BasicColumn[] = [
   {
     title: '样本编号',
     dataIndex: 'sampleNo',
-    width: 120,
+    width: 140,
   },
   {
     title: '浆员编号',
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     width: 120,
   },
   {
@@ -57,7 +57,7 @@ export const columns: BasicColumn[] = [
   {
     title: '已销毁血浆编号',
     dataIndex: 'destroyedBagNo',
-    width: 120,
+    width: 125,
     ellipsis: false,
   },
   {
@@ -80,7 +80,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     component: 'Input',
     field: 'batchNo',
-    label: '血浆批号',
+    label: '样本批号',
   },
   {
     component: 'RangePicker',

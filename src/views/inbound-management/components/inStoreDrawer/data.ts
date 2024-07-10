@@ -7,8 +7,11 @@
  * @LastEditTime: 2024-01-16 15:04:35
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
-import { TRAY_IN_STATE_TEXT } from '@/enums/stockoutEnum';
+import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
+const serverEnumStore = useServerEnumStoreWithOut();
+const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
 export const columns: BasicColumn[] = [
   {
     title: '托盘编号',
@@ -25,7 +28,7 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'trayStatus',
-    format: (t) => TRAY_IN_STATE_TEXT.get(t) as string,
+    format: BankTrayStatusEnum,
   },
   {
     title: '所在库房',

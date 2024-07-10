@@ -1,18 +1,24 @@
 import { defHttp } from '@/utils/http/axios';
 
 import {
-  GetApiCoreBagUnqualifiedStatisticBatchRequest,
-  GetApiCoreBagUnqualifiedStatisticBatchResponse,
-  GetApiCoreBagUnqualifiedStatisticStationRequest,
-  GetApiCoreBagUnqualifiedStatisticStationResponse,
   GetApiCoreBatchStatisticRequest,
   GetApiCoreBatchStatisticResponse,
+  GetApiSearchBatchCountTotalRequest,
+  GetApiSearchBatchCountTotalResponse,
+  GetApiSearchBatchUnqualifiedStatisticBatchRequest,
+  GetApiSearchBatchUnqualifiedStatisticBatchResponse,
+  GetApiSearchBatchUnqualifiedStatisticStationRequest,
+  GetApiSearchBatchUnqualifiedStatisticStationResponse,
+  GetApiSearchPlasmaUnqualifiedRequest,
+  GetApiSearchPlasmaUnqualifiedResponse,
 } from '@/api/type/queryStatistics';
 
 enum Api {
   BATCH_STATISTICS = '/api/core/batch/statistic',
-  UNQUALIFIED_PLASMA_STATION = '/api/core/bag/unqualified/statistic-station',
-  UNQUALIFIED_PLASMA_BATCH = '/api/core/bag/unqualified/statistic-batch',
+  UNQUALIFIED_PLASMA_STATION = '/api/search/batch/unqualified/statistic-station',
+  UNQUALIFIED_PLASMA_BATCH = '/api/search/batch/unqualified/statistic-batch',
+  UNQUALIFIED_PLASMA_COUNT_TOTAL = '/api/search/batch/count-total',
+  DETAIL = '/api/search/plasma/unqualified',
 }
 
 export const getBatchList = (params: GetApiCoreBatchStatisticRequest) =>
@@ -22,18 +28,40 @@ export const getBatchList = (params: GetApiCoreBatchStatisticRequest) =>
   );
 
 export const getUnqualifiedPlasmaStation = (
-  params: GetApiCoreBagUnqualifiedStatisticStationRequest,
+  params: GetApiSearchBatchUnqualifiedStatisticStationRequest,
 ) =>
-  defHttp.get<GetApiCoreBagUnqualifiedStatisticStationResponse>(
+  defHttp.get<GetApiSearchBatchUnqualifiedStatisticStationResponse>(
     { url: Api.UNQUALIFIED_PLASMA_STATION, params },
     { joinParamsToUrl: true },
   );
 
-export const getUnqualifiedPlasmaBatch = (params: GetApiCoreBagUnqualifiedStatisticBatchRequest) =>
-  defHttp.get<GetApiCoreBagUnqualifiedStatisticBatchResponse>(
+export const getUnqualifiedPlasmaBatch = (
+  params: GetApiSearchBatchUnqualifiedStatisticBatchRequest,
+) =>
+  defHttp.get<GetApiSearchBatchUnqualifiedStatisticBatchResponse>(
     {
       url: Api.UNQUALIFIED_PLASMA_BATCH,
       params,
     },
     { joinParamsToUrl: true },
+  );
+
+export const getUnqualifiedPlasmaCountTotal = (params: GetApiSearchBatchCountTotalRequest) =>
+  defHttp.get<GetApiSearchBatchCountTotalResponse>(
+    {
+      url: Api.UNQUALIFIED_PLASMA_COUNT_TOTAL,
+      params,
+    },
+    { joinParamsToUrl: true },
+  );
+
+export const getUnqualifiedDetail = (params: GetApiSearchPlasmaUnqualifiedRequest) =>
+  defHttp.get<GetApiSearchPlasmaUnqualifiedResponse>(
+    {
+      url: Api.DETAIL,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
   );

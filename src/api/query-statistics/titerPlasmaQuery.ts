@@ -1,19 +1,25 @@
 import { defHttp } from '@/utils/http/axios';
 
 import {
-  PostApiCoreBagTiterRequest,
-  PostApiCoreBagTiterResponse,
-  PostApiCoreBagTiterDetailsRequest,
-  PostApiCoreBagTiterDetailsResponse,
+  GetApiSearchPlasmaPrivilegeDetailsRequest,
+  GetApiSearchPlasmaPrivilegeDetailsResponse,
+  GetApiSearchPlasmaPrivilegeRequest,
+  GetApiSearchPlasmaPrivilegeResponse,
+  GetApiSearchPlasmaPrivilegeTotalRequest,
+  GetApiSearchPlasmaPrivilegeTotalResponse,
 } from '@/api/type/queryStatistics';
 
 enum Api {
-  LIST = '/api/core/bag/titer',
-  DT = '/api/core/bag/titer/details',
+  LIST = '/api/search/plasma/privilege',
+  DT = '/api/search/plasma/privilege/details',
+  COUNT = '/api/search/plasma/privilege/total',
 }
 
-export const getListApi = (params: PostApiCoreBagTiterRequest) =>
-  defHttp.post<PostApiCoreBagTiterResponse>({ url: Api.LIST, params });
+export const getListApi = (params: GetApiSearchPlasmaPrivilegeRequest) =>
+  defHttp.get<GetApiSearchPlasmaPrivilegeResponse>({ url: Api.LIST, params });
 
-export const getDtApi = (params: PostApiCoreBagTiterDetailsRequest) =>
-  defHttp.post<PostApiCoreBagTiterDetailsResponse>({ url: Api.DT, params });
+export const getDtApi = (params: GetApiSearchPlasmaPrivilegeDetailsRequest) =>
+  defHttp.get<GetApiSearchPlasmaPrivilegeDetailsResponse>({ url: Api.DT, params });
+
+export const getCountApi = (params: GetApiSearchPlasmaPrivilegeTotalRequest) =>
+  defHttp.get<GetApiSearchPlasmaPrivilegeTotalResponse>({ url: Api.COUNT, params });
