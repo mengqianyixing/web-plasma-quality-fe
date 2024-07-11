@@ -119,9 +119,9 @@
       setTableData([]);
       state.title = '新增';
     }
+    setProps({ rowSelection: disabled ? void 0 : { type: 'checkbox' } });
+    setModalProps({ showOkBtn: !disabled });
     if (disabled) {
-      setProps({ rowSelection: void 0 });
-      setModalProps({ showOkBtn: false });
       state.title = '查看';
     }
 
