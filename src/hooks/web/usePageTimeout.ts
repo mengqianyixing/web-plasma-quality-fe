@@ -38,7 +38,6 @@ export function usePageTimeout(time: string | number, delay: number) {
   async function startTimer() {
     if (timerId) clearTimeout(timerId);
     const timer = ((parseInt(time) || TIMEOUT) - delay) * 1000;
-    console.log((parseInt(time) || TIMEOUT) * 1000, getTimeDiff());
     timerId = setTimeout(async () => {
       if (getTimeDiff() - timer < 99) {
         startTimer();
