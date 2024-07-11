@@ -18,7 +18,7 @@
   import { useModal } from '@/components/Modal';
   import DeptModal from './DeptModal.vue';
 
-  import { columns, searchFormSchema } from './dept.data';
+  import { columns } from './dept.data';
   import { PageWrapper } from '@/components/Page';
   import { ref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
@@ -41,10 +41,7 @@
     },
     api: getDeptList,
     columns,
-    formConfig: {
-      schemas: searchFormSchema,
-    },
-    useSearchForm: true,
+    useSearchForm: false,
     bordered: true,
     showIndexColumn: false,
     canResize: true,
