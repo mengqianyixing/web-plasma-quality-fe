@@ -88,6 +88,7 @@
   const pid = ref('');
   const bsno = ref('');
   const hasFile = ref(false);
+  const model = ref('');
 
   const emit = defineEmits(['close']);
 
@@ -228,6 +229,7 @@
           titerResult: it.titerResult,
           projectId: it.projectId,
         })),
+        model: model.value,
       });
       message.success('效价导入已生效');
       openConfirmModal(false);
@@ -263,6 +265,7 @@
         if (key === 'filename') continue;
         cellData.value[key] = summary[key];
       }
+      model.value = res.model;
       dataSource.dataFaild = markRaw(dataFaild || []);
       dataSource.dataSaved = markRaw(dataSaved || []);
       message.success('导入成功');

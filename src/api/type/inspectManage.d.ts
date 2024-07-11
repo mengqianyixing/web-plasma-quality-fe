@@ -1385,7 +1385,7 @@ export type PostApiCoreLabRegistrationSampleResponse = {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload`
- * @更新时间 `2024-07-04 14:05:15`
+ * @更新时间 `2024-07-11 13:42:04`
  */
 export interface PostApiCoreLabRegistrationTiterUploadRequest {
   file: FileData;
@@ -1398,7 +1398,7 @@ export interface PostApiCoreLabRegistrationTiterUploadRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload`
- * @更新时间 `2024-07-04 14:05:15`
+ * @更新时间 `2024-07-11 13:42:04`
  */
 export interface PostApiCoreLabRegistrationTiterUploadResponse {
   /**
@@ -1494,6 +1494,7 @@ export interface PostApiCoreLabRegistrationTiterUploadResponse {
     unsavedData: string;
     notes: string;
   }[];
+  model: string;
 }
 
 /**
@@ -1922,7 +1923,7 @@ export type DeleteApiCoreLabRegistrationLabItemUnqualifiedResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/mbBanin`
- * @更新时间 `2024-07-04 14:04:47`
+ * @更新时间 `2024-07-11 13:42:27`
  */
 export interface PostApiCoreLabMbBaninRequest {
   /**
@@ -1940,7 +1941,7 @@ export interface PostApiCoreLabMbBaninRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/mbBanin`
- * @更新时间 `2024-07-04 14:04:47`
+ * @更新时间 `2024-07-11 13:42:27`
  */
 export interface PostApiCoreLabMbBaninResponse {
   summary: {
@@ -1972,6 +1973,7 @@ export interface PostApiCoreLabMbBaninResponse {
     unsavedData: string;
     notes: string;
   }[];
+  model: string;
 }
 
 /**
@@ -2067,7 +2069,7 @@ export type PutApiCoreLabUnqualifiedSampleResponse = string;
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload/update`
- * @更新时间 `2024-07-05 15:22:49`
+ * @更新时间 `2024-07-11 13:42:58`
  */
 export interface PostApiCoreLabRegistrationTiterUploadUpdateRequest {
   dataSavedList: {
@@ -2080,6 +2082,7 @@ export interface PostApiCoreLabRegistrationTiterUploadUpdateRequest {
    * 复核人姓名
    */
   userName: string;
+  model: string;
 }
 
 /**
@@ -2087,7 +2090,7 @@ export interface PostApiCoreLabRegistrationTiterUploadUpdateRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `POST /api/core/lab/registration/titer/upload/update`
- * @更新时间 `2024-07-05 15:22:49`
+ * @更新时间 `2024-07-11 13:42:58`
  */
 export interface PostApiCoreLabRegistrationTiterUploadUpdateResponse {}
 
