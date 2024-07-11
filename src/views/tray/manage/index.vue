@@ -162,6 +162,7 @@
     if (rows.length > 1) return message.warning('只能选择一条数据');
     else if (rows.length === 0) return message.warning('请选择一条数据');
     const [row] = rows;
+    if (row.totalNumber) return message.warning('负载托盘不可停用');
     if (row.closed === closed) return message.warning('状态不需要变更');
     openLoginModal(true, {});
   }
