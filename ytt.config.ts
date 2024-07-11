@@ -120,6 +120,13 @@ export default defineConfig([
             },
             outputFilePath: 'src/api/type/departmentManagement.d.ts',
           },
+          {
+            id: 6092,
+            getRequestFunctionName(interfaceInfo, changeCase) {
+              return changeCase.camelCase(`${interfaceInfo.method}${interfaceInfo.path}`);
+            },
+            outputFilePath: 'src/api/type/systemSettings.d.ts',
+          },
         ],
       },
       {

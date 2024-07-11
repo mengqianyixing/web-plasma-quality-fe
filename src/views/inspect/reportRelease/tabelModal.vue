@@ -28,7 +28,7 @@
 
   const state = reactive({ reportNo: '', type: 1, title: '' });
 
-  const [registerTable, { redoHeight, reload, setColumns, getForm }] = useTable({
+  const [registerTable, { redoHeight, setColumns, getForm }] = useTable({
     immediate: false,
     api: getUnqualifiedApi,
     columns: totalUnqualifiedColumns,
@@ -51,13 +51,12 @@
   const [registerModal] = useModalInner(async ({ reportNo, type, title }) => {
     await nextTick();
     const { updateSchema, resetFields } = getForm();
-    resetFields();
     state.reportNo = reportNo;
     state.type = type;
     state.title = title;
     updateSchema({ field: 'conclusion', ifShow: !(type === 3 || type === 4) });
     const columns = [...totalUnqualifiedColumns, ...(columnsMap[type] || [])];
     setColumns(columns);
-    reload();
+    resetFields();
   });
 </script>
