@@ -139,6 +139,7 @@
   const columnsUnRef = ref([...columnsUn]);
 
   const [registerModal] = useModalInner(async (data) => {
+    sorter.value = {};
     pickMode.value = data.isBatch;
     prepareNo.value = data.prepareNo;
     prodType.value = data.prodType;
@@ -268,10 +269,12 @@
         {
           title: `${prodType.value}H,${prodTypeName}高效价`,
           field: 'heightCount',
+          width: 100,
         },
         {
           title: `${prodType.value}L,${prodTypeName}低效价`,
           field: 'lowCount',
+          width: 100,
         },
       );
     } else {
