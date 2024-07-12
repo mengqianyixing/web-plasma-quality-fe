@@ -17,6 +17,7 @@
         ref="tableRef"
         :loading="vxeTableLoading"
         @checkbox-change="selectChangeEvent"
+        @checkbox-all="selectAllEvent"
         v-bind="gridOptions"
         :data="unPickTableData"
         :columns="columnsUnRef"
@@ -443,7 +444,7 @@
     striped: false,
     rowSelection: {
       type: 'checkbox',
-      hideSelectAll: true,
+      hideSelectAll: false,
     },
     immediate: false,
     bordered: true,
@@ -600,6 +601,16 @@
   async function queryUntable() {
     await reloadLeftTable();
     cacheForm.value = getFieldsValue();
+  }
+
+  async function selectAllEvent({ records }) {
+    // 一个都没勾，初始化数据
+    if (!records.length) {
+      await _getPrepareList();
+      return;
+    }
+    await compareFilter();
+    await _getSummaryPreview();
   }
 
   // 未挑选表格勾选事件
