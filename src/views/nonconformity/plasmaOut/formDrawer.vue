@@ -120,7 +120,7 @@
       state.title = '新增';
     }
     setProps({ rowSelection: disabled ? void 0 : { type: 'checkbox' } });
-    setModalProps({ showOkBtn: !disabled });
+    setModalProps({ showOkBtn: false });
     if (disabled) {
       state.title = '查看';
     }
