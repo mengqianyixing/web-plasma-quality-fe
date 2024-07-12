@@ -139,6 +139,15 @@ const storeManager: AppRouteModule = {
       id: 990050,
       component: () => import('@/views/plasma-store/site/index.vue'),
     },
+    {
+      path: 'locationLayout',
+      name: 'LocationLayout',
+      meta: {
+        title: '平面图',
+      },
+      id: 990070,
+      component: () => import('@/views/plasma-store/location-layout/index.vue'),
+    },
   ],
 };
 
