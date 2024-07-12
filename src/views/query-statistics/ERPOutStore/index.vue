@@ -13,6 +13,7 @@
           @register="registerTable"
           :columns="item.columns"
           :formConfig="item.formConfig"
+          :immediate="false"
         >
           <template #dlvNo="{ record }">
             <span
@@ -86,6 +87,7 @@
       label: '投产出库',
       columns: prodERPColumns,
       api: getERPOutProdList,
+
       formConfig: {
         schemas: searchFormSchemaByProd,
         submitOnReset: true,
@@ -110,6 +112,7 @@
   ];
 
   const [registerTable, { getForm }] = useTable({
+    immediate: false,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -125,7 +128,6 @@
     useSearchForm: true,
     bordered: true,
     showIndexColumn: false,
-    immediate: true,
   });
 
   function handleDlvNoClick(dlvNo: string) {

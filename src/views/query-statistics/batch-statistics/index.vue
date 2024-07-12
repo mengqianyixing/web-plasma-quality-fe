@@ -17,6 +17,7 @@
   };
 
   const [registerTable] = useTable({
+    immediate: false,
     api: getBatchList,
     columns,
     formConfig: {

@@ -30,6 +30,7 @@
   const [registerUnModal, { openModal: openUnModal }] = useModal();
 
   const [registerTable] = useTable({
+    immediate: false,
     api: getListApi,
     columns: columns(({ record, key, label }) => {
       if (record.isCount) return get(record, key);
