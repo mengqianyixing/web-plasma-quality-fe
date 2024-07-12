@@ -8,6 +8,7 @@
  */
 import type { AppRouteModule } from '@/router/types';
 import { QuarantineButtonEnum, ReCheckButtonEnum } from '@/enums/authCodeEnum';
+import { COMPANY } from '@/enums/company';
 
 import { LAYOUT } from '@/router/constant';
 
@@ -57,6 +58,7 @@ const quarantineManager: AppRouteModule = {
           id: QuarantineButtonEnum.PrintQuarantine,
           name: 'print',
           title: '打印',
+          company: COMPANY.RS,
         },
         {
           id: QuarantineButtonEnum.ExportQuarantine,
@@ -76,10 +78,12 @@ const quarantineManager: AppRouteModule = {
         {
           id: QuarantineButtonEnum.NonconformityTrackingReport,
           title: '追踪记录/报告',
+          company: COMPANY.RS,
         },
         {
           id: QuarantineButtonEnum.StationDetectionNonconformityReport,
           title: '浆站检测不合格血浆追溯-昆明',
+          company: COMPANY.KM,
         },
       ],
       component: () => import('@/views/query-statistics/nonconformityTracking/index.vue'),

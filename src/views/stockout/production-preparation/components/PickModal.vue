@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    :title="`投产准备-血浆挑选-按${pickMode ? '批' : '箱'}`"
+    :title="`投产准备-血浆挑选-按${pickMode ? '批' : iskm ? '托盘' : '箱'}`"
     :footer="null"
     width="100%"
     :draggable="false"
@@ -73,7 +73,11 @@
     PostApiProductPrepareRevokePickBagRequest,
   } from '@/api/type/productionPreparation';
   import { VxeGridPropTypes } from 'vxe-table/types/grid';
+  import { COMPANY } from '@/enums/company';
+  import { useGlobSetting } from '@/hooks/setting/index';
 
+  const globSetting = useGlobSetting();
+  const iskm = globSetting.company === COMPANY.KM;
   const { stationOptions } = useStation();
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -203,7 +207,7 @@
         },
         {
           component: 'Input',
-          label: '血浆箱号',
+          label: iskm ? '托盘编号' : '血浆箱号',
           field: 'boxNo',
           ifShow: true,
         },
@@ -214,7 +218,7 @@
           width: 50,
         },
         {
-          title: '待挑选血浆箱号',
+          title: iskm ? '待挑选托盘编号' : '待挑选血浆箱号',
           field: 'boxNo',
           sortable: true,
           width: 150,
@@ -229,7 +233,7 @@
         api: getPickedBox,
         columns: [
           {
-            title: '已挑选血浆箱号',
+            title: iskm ? '已挑选托盘编号' : '已挑选血浆箱号',
             dataIndex: 'boxNo',
             align: 'left',
             fixed: true,

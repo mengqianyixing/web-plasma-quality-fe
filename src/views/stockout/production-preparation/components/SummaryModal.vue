@@ -15,7 +15,7 @@
       <div class="flex justify-end" v-if="!readOnly">
         <div style="margin-bottom: 12px">
           <a-button @click="goPick(true)" style="margin-right: 12px"> 按批挑选 </a-button>
-          <a-button @click="goPick(false)"> 按箱挑选 </a-button>
+          <a-button @click="goPick(false)"> {{ iskm ? '按托盘挑选' : '按箱挑选' }} </a-button>
         </div>
       </div>
       <Description @register="register" :data="prepareDetail" />
@@ -23,7 +23,7 @@
         <TabPane key="columnsImmunity" tab="效价类型" force-render />
         <TabPane key="columnsStation" tab="采浆公司" />
         <TabPane key="columnsBatch" tab="血浆批次" />
-        <TabPane key="columnsBox" tab="血浆箱号" />
+        <TabPane key="columnsBox" :tab="iskm ? '托盘明细' : '血浆箱号'" />
         <TabPane key="columnsBag" tab="血浆明细" />
         <template #rightExtra v-if="activeKey === 'columnsBag'">
           <a-button
@@ -97,7 +97,11 @@
   } from '@/api/stockout/production-preparation.js';
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
   import dayjs from 'dayjs';
+  import { COMPANY } from '@/enums/company';
+  import { useGlobSetting } from '@/hooks/setting/index';
 
+  const globSetting = useGlobSetting();
+  const iskm = globSetting.company === COMPANY.KM;
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
   const { createMessage } = useMessage();
@@ -357,7 +361,7 @@
       dataIndex: 'batchNo',
     },
     {
-      title: '血浆箱号',
+      title: iskm ? '托盘编号' : '血浆箱号',
       dataIndex: 'boxNo',
     },
     {
@@ -385,7 +389,7 @@
       field: 'batchNo',
     },
     {
-      title: '血浆箱号',
+      title: iskm ? '托盘编号' : '血浆箱号',
       field: 'boxNo',
     },
     {
@@ -631,7 +635,7 @@
         header: {
           stationName: '浆站名称',
           batchNo: '血浆批号',
-          boxNo: '血浆箱号',
+          boxNo: iskm ? '托盘编号' : '血浆箱号',
           bagNo: '血浆编号',
           collectAt: '采集日期',
           donorNo: '浆员编号',

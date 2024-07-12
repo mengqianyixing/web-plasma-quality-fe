@@ -15,7 +15,11 @@ import {
 
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { SERVER_ENUM } from '@/enums/serverEnum';
+import { COMPANY } from '@/enums/company';
+import { useGlobSetting } from '@/hooks/setting/index';
 
+const globSetting = useGlobSetting();
+const iskm = globSetting.company === COMPANY.KM;
 const serverEnumStore = useServerEnumStoreWithOut();
 
 export const columns: BasicColumn[] = [
@@ -67,7 +71,7 @@ export const columns: BasicColumn[] = [
     ellipsis: false,
   },
   {
-    title: '箱号',
+    title: iskm ? '托盘/箱' : '箱号',
     dataIndex: 'boxNo',
     ellipsis: false,
     width: 130,

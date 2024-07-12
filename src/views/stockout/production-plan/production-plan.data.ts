@@ -22,7 +22,11 @@ import {
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { formatKg } from '@/utils';
+import { useGlobSetting } from '@/hooks/setting/index';
+import { COMPANY } from '@/enums/company';
 
+const globSetting = useGlobSetting();
+const iskm = globSetting.company === COMPANY.KM;
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
@@ -199,7 +203,7 @@ export const tabList = [
   },
   {
     key: TAB.BOX,
-    label: '血浆箱号',
+    label: iskm ? '托盘明细' : '血浆箱号',
     checkbox: true,
     api: formatResp(getSelectBoxListApi),
   },
@@ -224,7 +228,7 @@ export const tabList = [
     api: getForPlasmaListApi,
     pagination: true,
   },
-];
+].filter((it) => it.key !== TAB.STACKER || iskm);
 
 export const tableColumns: Record<string, BasicColumn[]> = {
   [TAB.PREPARE]: [
@@ -312,7 +316,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
       width: 120,
     },
     {
-      title: '血浆箱号',
+      title: iskm ? '托盘编号' : '血浆箱号',
       dataIndex: 'boxNo',
       width: 120,
     },
@@ -431,7 +435,7 @@ export const tableColumns: Record<string, BasicColumn[]> = {
       width: 120,
     },
     {
-      title: '血浆箱号',
+      title: iskm ? '托盘编号' : '血浆箱号',
       dataIndex: 'boxNo',
       width: 120,
     },
@@ -543,7 +547,7 @@ export const pickingColumns: Record<string, BasicColumn[]> = {
       width: 120,
     },
     {
-      title: '血浆箱号',
+      title: iskm ? '托盘编号' : '血浆箱号',
       dataIndex: 'boxNo',
       width: 120,
     },
@@ -580,7 +584,7 @@ export const pickingColumns: Record<string, BasicColumn[]> = {
 };
 
 export const boxScheam: FormSchema = {
-  label: '血浆箱号',
+  label: iskm ? '托盘编号' : '血浆箱号',
   field: 'boxNo',
   component: 'Input',
 };

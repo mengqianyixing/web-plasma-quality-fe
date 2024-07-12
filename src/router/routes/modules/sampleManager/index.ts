@@ -7,6 +7,7 @@
  * @FilePath: \psms-fe\src\router\routes\modules\sampleManager\index.ts
  */
 import type { AppRouteModule } from '@/router/types';
+import { COMPANY } from '@/enums/company';
 
 import { LAYOUT } from '@/router/constant';
 import { ReCheckButtonEnum, SampleManageButtonEnum } from '@/enums/authCodeEnum';
@@ -173,6 +174,7 @@ const sampleManager: AppRouteModule = {
       path: 'test-plan',
       name: 'TestPlan',
       id: 970040,
+      company: COMPANY.RS,
       meta: { title: '检测计划' },
       component: () => import('@/views/sample-manage/testPlan/index.vue'),
       authElements: [

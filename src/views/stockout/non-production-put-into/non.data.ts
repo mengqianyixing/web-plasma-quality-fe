@@ -2,7 +2,11 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 import dayjs from 'dayjs';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useGlobSetting } from '@/hooks/setting/index';
+import { COMPANY } from '@/enums/company';
 
+const globSetting = useGlobSetting();
+const iskm = globSetting.company === COMPANY.KM;
 const serverEnumStore = useServerEnumStoreWithOut();
 
 export const columns: BasicColumn[] = [
@@ -152,7 +156,7 @@ export const plasmaDetailColumns: BasicColumn[] = [
     ellipsis: false,
   },
   {
-    title: '血浆箱号',
+    title: iskm ? '托盘编号' : '血浆箱号',
     dataIndex: 'boxNo',
     width: 120,
     ellipsis: false,
@@ -207,7 +211,7 @@ export const plasmaBoxColumns: BasicColumn[] = [
     dataIndex: 'batchNo',
   },
   {
-    title: '血浆箱号',
+    title: iskm ? '托盘编号' : '血浆箱号',
     dataIndex: 'boxNo',
   },
   {

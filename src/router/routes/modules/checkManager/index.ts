@@ -10,6 +10,7 @@ import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
 import { ReCheckButtonEnum, InspectButtonEnum } from '@/enums/authCodeEnum';
+import { COMPANY } from '@/enums/company';
 
 const checkManager: AppRouteModule = {
   path: '/inspect',
@@ -104,6 +105,7 @@ const checkManager: AppRouteModule = {
         {
           id: InspectButtonEnum.ResultRegistrationSqImport,
           title: '思桥效价导入',
+          company: COMPANY.RS,
         },
         {
           id: InspectButtonEnum.ResultRegistrationTiterImport,
@@ -140,6 +142,7 @@ const checkManager: AppRouteModule = {
         {
           id: ReCheckButtonEnum.TiterSqImportConfirmationCheck,
           title: '思桥效价导入确认复核人权限',
+          company: COMPANY.RS,
         },
       ],
     },
@@ -174,6 +177,7 @@ const checkManager: AppRouteModule = {
         {
           id: InspectButtonEnum.ReportReleasePrint,
           title: '打印',
+          company: COMPANY.RS,
         },
       ],
       component: () => import('@/views/inspect/reportRelease/index.vue'),

@@ -10,6 +10,7 @@ import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
 import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+import { COMPANY } from '@/enums/company';
 
 const inboundmanagement: AppRouteModule = {
   path: '/inboundmanagement',
@@ -94,11 +95,13 @@ const inboundmanagement: AppRouteModule = {
           id: ReCheckButtonEnum.PMSAccept,
           name: 'pmsAccept',
           title: 'PMS验收',
+          company: COMPANY.KM,
         },
         {
           id: ReCheckButtonEnum.PMSAcceptCancel,
           name: 'pmsAcceptCancel',
           title: 'PMS验收撤销',
+          company: COMPANY.KM,
         },
         {
           id: ReCheckButtonEnum.PlasmaInboundRecordCheck,

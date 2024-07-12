@@ -8,6 +8,11 @@
  */
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { PlasmaStateMap } from '@/enums/plasmaEnum';
+import { useGlobSetting } from '@/hooks/setting/index';
+import { COMPANY } from '@/enums/company';
+
+const globSetting = useGlobSetting();
+const iskm = globSetting.company === COMPANY.KM;
 
 export const columns: BasicColumn[] = [
   {
@@ -41,11 +46,15 @@ export const columns: BasicColumn[] = [
     title: '验收复核人',
     dataIndex: 'checker',
   },
-  {
-    title: '托盘编号',
-    dataIndex: 'trayNo',
-    width: 80,
-  },
+  ...(iskm
+    ? []
+    : [
+        {
+          title: '托盘编号',
+          dataIndex: 'trayNo',
+          width: 80,
+        },
+      ]),
   {
     title: '状态',
     dataIndex: 'verifyState',

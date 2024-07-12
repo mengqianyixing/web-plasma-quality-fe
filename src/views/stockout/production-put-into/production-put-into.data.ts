@@ -9,7 +9,11 @@ import {
 import dayjs from 'dayjs';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { useGlobSetting } from '@/hooks/setting/index';
+import { COMPANY } from '@/enums/company';
 
+const globSetting = useGlobSetting();
+const iskm = globSetting.company === COMPANY.KM;
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
@@ -62,7 +66,7 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '投浆箱数',
+    title: iskm ? '托盘数量' : '投浆箱数',
     dataIndex: 'boxNum',
     slots: { customRender: 'boxNum' },
     width: 80,

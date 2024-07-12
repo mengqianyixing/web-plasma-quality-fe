@@ -4,7 +4,11 @@ import dayjs from 'dayjs';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useStation } from '@/hooks/common/useStation';
+import { useGlobSetting } from '@/hooks/setting/index';
+import { COMPANY } from '@/enums/company';
 
+const globSetting = useGlobSetting();
+const iskm = globSetting.company === COMPANY.KM;
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
 
@@ -28,7 +32,7 @@ export const columns: BasicColumn[] = [
     fixed: 'left',
   },
   {
-    title: '现存箱号',
+    title: iskm ? '现存托盘/箱' : '现存箱号',
     dataIndex: 'currBoxNo',
     width: 150,
     fixed: 'left',
@@ -261,7 +265,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: 'currBoxNo',
-    label: '现存箱号',
+    label: iskm ? '现存托盘/箱' : '现存箱号',
     component: 'Input',
   },
 
