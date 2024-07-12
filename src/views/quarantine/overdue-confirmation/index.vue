@@ -17,6 +17,14 @@
           >确认</a-button
         >
       </template>
+      <template #cardNo="{ value }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="openModal(true, { cardNo: value })"
+        >
+          {{ value }}
+        </span>
+      </template>
     </BasicTable>
     <BasicModal
       @register="registerConfirmModal"
@@ -32,6 +40,7 @@
       @success="login"
       :auth-code="ReCheckButtonEnum.OverdueConfirmationCheck"
     />
+    <DonorModel @register="registerDonorModal" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
@@ -44,9 +53,10 @@
   import { useModal, BasicModal } from '@/components/Modal';
   import { BasicForm, useForm } from '@/components/Form';
   import Login from '@/__components/ReviewLoginModal/index.vue';
+  import DonorModel from '@/__components/donor/donorModel.vue';
 
   defineOptions({ name: 'OverdueConfirmation' });
-
+  const [registerDonorModal, { openModal }] = useModal();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,
     fetchSetting: {
