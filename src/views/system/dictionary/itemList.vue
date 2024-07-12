@@ -65,7 +65,7 @@
   const indexn = itemColumns.findIndex((x) => x.dataIndex === 'itemValue');
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, setColumns, setProps }] =
     useTable({
-      title: '',
+      showIndexColumn: false,
       api: getDictItemListApi,
       fetchSetting: {
         pageField: 'currPage',

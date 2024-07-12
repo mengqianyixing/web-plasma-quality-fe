@@ -5,7 +5,11 @@
         <a-button type="primary" @click="handlePrint" v-auth="StoreButtonEnum.TrayListPrint"
           >打印</a-button
         >
-        <a-button type="primary" @click="handlePrintAgain" v-auth="StoreButtonEnum.TrayListRePrint"
+        <a-button
+          type="primary"
+          :loading="loading"
+          @click="handlePrintAgain"
+          v-auth="StoreButtonEnum.TrayListRePrint"
           >补打</a-button
         >
         <a-button type="primary" @click="handleDiscard(1)" v-auth="StoreButtonEnum.TrayListDisable"
@@ -67,7 +71,7 @@
     disableTrayApi,
     getListApi,
   } from '@/api/tray/list';
-  import { printRecord } from '@/api/tag/printRecord';
+  import { printRecord, replayPrintRecord } from '@/api/tag/printRecord';
   import { message } from 'ant-design-vue';
   import TableModal from './tableDrawer.vue';
   import BoxTableModal from './boxTableDrawer.vue';
@@ -75,9 +79,11 @@
   import BagSampleTableModel from './bagSampleTableModel.vue';
   import BoxSampleTableModel from './boxSampleTableModel.vue';
   import { ReCheckButtonEnum, StoreButtonEnum } from '@/enums/authCodeEnum';
+  import { ref } from 'vue';
 
   defineOptions({ name: 'TrayList' });
 
+  const loading = ref(false);
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
   const [registerModal, { openModal, closeModal, setModalProps }] = useModal();
   const [registerTableModal, { openModal: openTableModal }] = useModal();
@@ -129,12 +135,34 @@
     setModalProps({ confirmLoading: false });
     openModal(true);
   }
-  function handlePrintAgain() {}
+  async function handlePrintAgain() {
+    let i = 0;
+    const rows = getSelectRows();
+    try {
+      if (rows.length === 0) return message.warning('请选择数据');
+      loading.value = true;
+      for (const row of rows) {
+        const res = await replayPrintRecord({ labelType: 'TRAY', bssNo: row.trayNo });
+        const params = {
+          ...res,
+          dpi: res.resolution,
+        };
+        await printRecord(params);
+        i++;
+      }
+      message.success('本次打印成功' + i + '个');
+    } catch {
+      message.warning(`本次成功${i}个、失败${rows.length - i}个。请检查打印机状态！！！`);
+    } finally {
+      loading.value = false;
+    }
+  }
   function handleDiscard(closed: number) {
     const rows = getSelectRows();
     if (rows.length > 1) return message.warning('只能选择一条数据');
     else if (rows.length === 0) return message.warning('请选择一条数据');
     const [row] = rows;
+    if (row.totalNumber) return message.warning('负载托盘不可停用');
     if (row.closed === closed) return message.warning('状态不需要变更');
     openLoginModal(true, {});
   }

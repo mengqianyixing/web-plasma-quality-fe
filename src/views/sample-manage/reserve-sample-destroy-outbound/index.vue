@@ -44,13 +44,7 @@
           v-auth="SampleManageButtonEnum.SampleDestroyOutBand"
           >出库
         </a-button>
-        <a-button
-          type="primary"
-          @click="handlePrint"
-          :loading="reportLoading"
-          v-auth="SampleManageButtonEnum.SampleDestroyPrint"
-          >打印
-        </a-button>
+        <a-button type="primary" @click="handlePrint" :loading="reportLoading">打印 </a-button>
       </template>
       <template #dlvNo="{ record }">
         <span

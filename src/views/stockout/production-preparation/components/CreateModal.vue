@@ -20,6 +20,12 @@
 
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { getSysParamsByParamKey } from '@/api/systemServer/params';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import {
+    PostApiProductPrepareSaveRequest,
+    PostApiProductPrepareUpdateRequest,
+  } from '@/api/type/productionPreparation';
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const { createMessage } = useMessage();
@@ -27,6 +33,7 @@
 
   const emit = defineEmits(['success', 'register']);
 
+  const companyFlag = ref('');
   const isUpdate = ref(true);
   const prepareNo = ref(''); // 准备号
   const formSchema: FormSchema[] = [
@@ -68,12 +75,6 @@
       component: 'Select',
       colProps: { span: 24 },
       required: true,
-      componentProps: {
-        options: [...pickModeMap.entries()].map(([key, value]) => ({
-          value: key,
-          label: `${key}，${value}`,
-        })),
-      },
     },
   ];
   const [registerForm, { resetFields, setFieldsValue, validate, updateSchema }] = useForm({
@@ -84,21 +85,40 @@
   });
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-    resetFields();
+    await resetFields();
     setModalProps({ confirmLoading: false });
+
+    companyFlag.value = await getSysParamsByParamKey(SysParamsEnum.BloodProductionCompany);
+    await updateSchema({
+      field: 'pickMode',
+      componentProps: {
+        options:
+          companyFlag.value === 'RS'
+            ? [
+                {
+                  label: '投/暂不投/待放行',
+                  value: 'B',
+                },
+              ]
+            : [...pickModeMap.entries()].map(([key, value]) => ({
+                value: key,
+                label: `${key}，${value}`,
+              })),
+      },
+    });
     isUpdate.value = !!data?.isUpdate;
     prepareNo.value = data?.record?.prepareNo;
     if (unref(isUpdate)) {
-      updateSchema({
+      await updateSchema({
         field: 'prepareNo',
         ifShow: true,
       });
-      setFieldsValue({
+      await setFieldsValue({
         ...data.record,
       });
     } else {
       // 新增不需要准备号字段
-      updateSchema({
+      await updateSchema({
         field: 'prepareNo',
         ifShow: false,
       });
@@ -112,10 +132,13 @@
       const values = await validate();
       setModalProps({ confirmLoading: true });
       if (isUpdate.value) {
-        await updatePrepare({ ...values, prepareNo: prepareNo.value });
+        await updatePrepare({
+          ...values,
+          prepareNo: prepareNo.value,
+        } as PostApiProductPrepareUpdateRequest);
         success('修改成功!');
       } else {
-        await addPrepare(values);
+        await addPrepare(values as PostApiProductPrepareSaveRequest);
         success('新增成功!');
       }
       closeModal();

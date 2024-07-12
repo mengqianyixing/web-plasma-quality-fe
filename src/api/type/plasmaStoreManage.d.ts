@@ -930,7 +930,7 @@ export interface GetApiCoreBatchPlasmaInStoreResponse {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/location-layout`
- * @更新时间 `2024-06-24 11:02:43`
+ * @更新时间 `2024-07-11 16:52:20`
  */
 export interface GetApiCoreBankLocationLayoutRequest {
   /**
@@ -956,7 +956,7 @@ export interface GetApiCoreBankLocationLayoutRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/location-layout`
- * @更新时间 `2024-06-24 11:02:43`
+ * @更新时间 `2024-07-11 16:52:20`
  */
 export type GetApiCoreBankLocationLayoutResponse = {
   /**
@@ -967,6 +967,10 @@ export type GetApiCoreBankLocationLayoutResponse = {
    * 颜色
    */
   color: string;
+  /**
+   * 显示内容
+   */
+  desc: string;
 }[][];
 
 /**

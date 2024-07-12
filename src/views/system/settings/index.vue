@@ -13,6 +13,9 @@
   import { getCasdoorApplicationConfig, setCasdoorApplication } from '@/api/systemServer/settings';
   import { PostApiSysCasdoorApplicationConfigRequest } from '@/api/type/systemSettings';
   import { onMounted, ref } from 'vue';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  const { createMessage } = useMessage();
 
   defineOptions({ name: 'CasConfig' });
 
@@ -86,6 +89,27 @@
         },
         label: '登陆有效时长',
       },
+      {
+        field: 'rule',
+        label: '验证码规则',
+        component: 'Select',
+        componentProps: {
+          options: [
+            {
+              label: '无',
+              value: 'None',
+            },
+            {
+              label: '始终开启',
+              value: 'Always',
+            },
+            {
+              label: '动态开启',
+              value: 'Dynamic',
+            },
+          ],
+        },
+      },
     ],
     showActionButtonGroup: true,
     showResetButton: false,
@@ -100,6 +124,8 @@
       await setCasdoorApplication(values as PostApiSysCasdoorApplicationConfigRequest);
 
       await setFormValues();
+
+      createMessage.success('保存成功');
     } finally {
       await setProps({ submitButtonOptions: { loading: false } });
     }

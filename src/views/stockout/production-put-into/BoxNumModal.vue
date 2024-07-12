@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="register"
-    title="箱数详情"
+    :title="iskm ? '托盘明细' : '箱数详情'"
     showFooter
     width="60%"
     :min-height="600"
@@ -34,7 +34,11 @@
   import { getBoxNumDetailList } from '@/api/stockout/production-put-into';
 
   import DetailModal from './DetailModal.vue';
+  import { useGlobSetting } from '@/hooks/setting/index';
+  import { COMPANY } from '@/enums/company';
 
+  const globSetting = useGlobSetting();
+  const iskm = globSetting.company === COMPANY.KM;
   const orderNo = ref('');
 
   defineEmits(['success', 'register']);
@@ -49,7 +53,7 @@
         dataIndex: 'prepareNo',
       },
       {
-        title: '血浆箱号',
+        title: iskm ? '托盘编号' : '血浆箱号',
         dataIndex: 'boxNo',
       },
       {

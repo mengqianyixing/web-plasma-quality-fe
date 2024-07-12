@@ -11,12 +11,14 @@ export interface AppAuthElement {
   title?: string;
   name?: string;
   id: string;
+  company?: string;
 }
 
 // @ts-ignore
 export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
   menuWeight?: number; // 菜单排序权重，越高越前面。
   id?: number;
+  company?: string;
   name: string;
   meta: RouteMeta;
   component?: Component | string;

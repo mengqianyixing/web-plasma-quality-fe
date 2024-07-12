@@ -46,6 +46,7 @@
   const basicUpload = ref<any>();
   const [registerTable, { clearSelectedRowKeys, getSelectRows, reload }] = useTable({
     api: getReportList,
+    showIndexColumn: false,
     size: 'small',
     fetchSetting: {
       pageField: 'currPage',

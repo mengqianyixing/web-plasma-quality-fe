@@ -24,6 +24,8 @@
   defineOptions({ name: 'ERPEntryStore' });
 
   const [registerTable, { getForm }] = useTable({
+    immediate: false,
+
     api: getERPInboundList,
     columns,
     formConfig: {

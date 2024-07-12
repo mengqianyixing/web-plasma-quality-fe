@@ -32,7 +32,7 @@
             type="primary"
             @click="openModal(true, { type: TAB.BOX, orderNo: state.orderNo })"
           >
-            血浆箱挑选
+            {{ iskm ? '托盘挑选' : '血浆箱挑选' }}
           </a-button>
           <a-button
             v-show="activeKey === TAB.BOX || activeKey === TAB.PREPARE"
@@ -53,12 +53,8 @@
             @change="change"
             class="h-full bg-white tabs"
           >
-            <template v-for="tab in tabList">
-              <TabPane
-                :key="tab.key"
-                :tab="tab.label"
-                v-if="tab.key !== TAB.STACKER || state.isStacker"
-              >
+            <template v-for="tab in tabList" :key="tab.key">
+              <TabPane :tab="tab.label">
                 <div style="height: calc(100% - 20px)">
                   <component
                     :is="componentMap.get(tab.key)"
@@ -87,7 +83,11 @@
     submitPrepareCancelApi,
   } from '@/api/stockout/production-plan';
   import PickingModal from './picking-moda.vue';
+  import { useGlobSetting } from '@/hooks/setting/index';
+  import { COMPANY } from '@/enums/company';
 
+  const globSetting = useGlobSetting();
+  const iskm = globSetting.company === COMPANY.KM;
   const emit = defineEmits(['close']);
   const [registerPickingModal, { openModal }] = useModal();
   const activeKey = ref(tabList[0].key);

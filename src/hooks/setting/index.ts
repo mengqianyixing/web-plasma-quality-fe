@@ -9,6 +9,7 @@ export const useGlobSetting = (): Readonly<GlobConfig> => {
     VITE_GLOB_API_URL_PREFIX,
     VITE_GLOB_UPLOAD_URL,
     VITE_GLOB_PRINT_URL,
+    VITE_GLOB_COMPANY,
   } = getAppEnvConfig();
 
   // Take global configuration
@@ -19,6 +20,7 @@ export const useGlobSetting = (): Readonly<GlobConfig> => {
     shortName: VITE_GLOB_APP_TITLE.replace(/\s/g, '_').replace(/-/g, '_'),
     urlPrefix: VITE_GLOB_API_URL_PREFIX,
     uploadUrl: VITE_GLOB_UPLOAD_URL,
+    company: VITE_GLOB_COMPANY,
   };
   return glob as Readonly<GlobConfig>;
 };

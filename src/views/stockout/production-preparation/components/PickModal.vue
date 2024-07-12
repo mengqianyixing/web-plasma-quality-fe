@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    :title="`投产准备-血浆挑选-按${pickMode ? '批' : '箱'}`"
+    :title="`投产准备-血浆挑选-按${pickMode ? '批' : iskm ? '托盘' : '箱'}`"
     :footer="null"
     width="100%"
     :draggable="false"
@@ -17,6 +17,7 @@
         ref="tableRef"
         :loading="vxeTableLoading"
         @checkbox-change="selectChangeEvent"
+        @checkbox-all="selectAllEvent"
         v-bind="gridOptions"
         :data="unPickTableData"
         :columns="columnsUnRef"
@@ -72,7 +73,11 @@
     PostApiProductPrepareRevokePickBagRequest,
   } from '@/api/type/productionPreparation';
   import { VxeGridPropTypes } from 'vxe-table/types/grid';
+  import { COMPANY } from '@/enums/company';
+  import { useGlobSetting } from '@/hooks/setting/index';
 
+  const globSetting = useGlobSetting();
+  const iskm = globSetting.company === COMPANY.KM;
   const { stationOptions } = useStation();
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -139,6 +144,7 @@
   const columnsUnRef = ref([...columnsUn]);
 
   const [registerModal] = useModalInner(async (data) => {
+    sorter.value = {};
     pickMode.value = data.isBatch;
     prepareNo.value = data.prepareNo;
     prodType.value = data.prodType;
@@ -201,7 +207,7 @@
         },
         {
           component: 'Input',
-          label: '血浆箱号',
+          label: iskm ? '托盘编号' : '血浆箱号',
           field: 'boxNo',
           ifShow: true,
         },
@@ -212,7 +218,7 @@
           width: 50,
         },
         {
-          title: '待挑选血浆箱号',
+          title: iskm ? '待挑选托盘编号' : '待挑选血浆箱号',
           field: 'boxNo',
           sortable: true,
           width: 150,
@@ -227,7 +233,7 @@
         api: getPickedBox,
         columns: [
           {
-            title: '已挑选血浆箱号',
+            title: iskm ? '已挑选托盘编号' : '已挑选血浆箱号',
             dataIndex: 'boxNo',
             align: 'left',
             fixed: true,
@@ -268,10 +274,12 @@
         {
           title: `${prodType.value}H,${prodTypeName}高效价`,
           field: 'heightCount',
+          width: 100,
         },
         {
           title: `${prodType.value}L,${prodTypeName}低效价`,
           field: 'lowCount',
+          width: 100,
         },
       );
     } else {
@@ -440,7 +448,7 @@
     striped: false,
     rowSelection: {
       type: 'checkbox',
-      hideSelectAll: true,
+      hideSelectAll: false,
     },
     immediate: false,
     bordered: true,
@@ -597,6 +605,16 @@
   async function queryUntable() {
     await reloadLeftTable();
     cacheForm.value = getFieldsValue();
+  }
+
+  async function selectAllEvent({ records }) {
+    // 一个都没勾，初始化数据
+    if (!records.length) {
+      await _getPrepareList();
+      return;
+    }
+    await compareFilter();
+    await _getSummaryPreview();
   }
 
   // 未挑选表格勾选事件

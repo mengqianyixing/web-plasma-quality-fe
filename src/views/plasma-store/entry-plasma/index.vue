@@ -85,6 +85,7 @@
   const { currentRoute } = useRouter();
 
   const [registerTable, { getForm }] = useTable({
+    immediate: false,
     api: receptionDetailApi,
     fetchSetting: {
       pageField: 'currPage',

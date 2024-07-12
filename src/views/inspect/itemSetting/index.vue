@@ -83,6 +83,7 @@
     useSearchForm: true,
     showTableSetting: false,
     bordered: true,
+    showIndexColumn: false,
     rowSelection: { type: 'radio' },
     afterFetch: (res) => {
       clearSelectedRowKeys();

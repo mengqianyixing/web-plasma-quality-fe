@@ -10,6 +10,7 @@ import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
 import { ReCheckButtonEnum, StockOutButtonEnum } from '@/enums/authCodeEnum';
+import { COMPANY } from '@/enums/company';
 
 const nonconformity: AppRouteModule = {
   path: '/stockout',
@@ -76,6 +77,7 @@ const nonconformity: AppRouteModule = {
           id: StockOutButtonEnum.ProductionPreparationSortTask,
           name: 'sortTask',
           title: 'PMS分拣',
+          company: COMPANY.KM,
         },
         {
           id: StockOutButtonEnum.ProductionPreparationDetailExport,
@@ -148,6 +150,7 @@ const nonconformity: AppRouteModule = {
           id: StockOutButtonEnum.ProductionOrderPrint,
           name: 'print',
           title: '打印',
+          company: COMPANY.RS,
         },
       ],
     },
@@ -190,34 +193,42 @@ const nonconformity: AppRouteModule = {
         {
           id: StockOutButtonEnum.ProductionPlanPMS,
           title: 'PMS组垛',
+          company: COMPANY.KM,
         },
         {
           id: StockOutButtonEnum.ProductionPlanCheckListReport,
           title: '原料血浆投产清单',
+          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.ProductionPlanTransferReport,
           title: '原料血浆转移记录',
+          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.ProductionPlanMaterialReport,
           title: '原料血浆复检试剂统计报表',
+          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.ProductionPlanPlasmaReport,
           title: '原料血浆投产计划',
+          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.PlasmaProductionApplication,
           title: '原料血浆投产申报表-昆明',
+          company: COMPANY.KM,
         },
         {
           id: StockOutButtonEnum.ProductionPlanSummary,
           title: '下载原料血浆摘要',
+          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.ProductionPlanSummaryKunMing,
           title: '下载原料血浆摘要-昆明',
+          company: COMPANY.KM,
         },
       ],
       component: () => import('@/views/stockout/production-plan/index.vue'),
@@ -336,11 +347,13 @@ const nonconformity: AppRouteModule = {
           id: StockOutButtonEnum.NonPlasmaTransferRecordReport,
           name: 'nonPlasmaTransferRecord',
           title: '非生产用血浆转移记录',
+          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.PlasmaTransferApplyReport,
           name: 'plasmaTransferApply',
           title: '原料血浆转移申请表',
+          company: COMPANY.RS,
         },
       ],
     },
@@ -356,6 +369,7 @@ const nonconformity: AppRouteModule = {
         {
           id: StockOutButtonEnum.PlasmaSummaryReport,
           title: '打印',
+          company: COMPANY.RS,
         },
       ],
     },

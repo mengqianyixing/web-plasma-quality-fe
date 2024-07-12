@@ -63,7 +63,7 @@
   const [registerItemFormModal, { openModal }] = useModal();
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, redoHeight, setColumns }] =
     useTable({
-      title: '',
+      showIndexColumn: false,
       isCanResizeParent: true,
       api: getDictItemListApi,
       fetchSetting: {

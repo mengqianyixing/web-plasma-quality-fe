@@ -28,6 +28,7 @@
   const [registerModal, { openModal }] = useModal();
 
   const [registerTable] = useTable({
+    immediate: false,
     api: getProductionInquiry,
     columns,
     formConfig: {

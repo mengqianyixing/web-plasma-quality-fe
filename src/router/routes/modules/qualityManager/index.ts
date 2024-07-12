@@ -8,6 +8,7 @@
  */
 import type { AppRouteModule } from '@/router/types';
 import { QualityButtonEnum } from '@/enums/authCodeEnum';
+import { COMPANY } from '@/enums/company';
 
 import { LAYOUT } from '@/router/constant';
 
@@ -83,6 +84,7 @@ const checkManager: AppRouteModule = {
           id: QualityButtonEnum.PlasmaCheckPrint,
           name: 'print',
           title: '打印',
+          company: COMPANY.RS,
         },
         {
           id: QualityButtonEnum.PlasmaCheckApproval,
@@ -128,10 +130,12 @@ const checkManager: AppRouteModule = {
         {
           id: QualityButtonEnum.BatchReleasePrint,
           title: '原料血浆投产批放行单',
+          company: COMPANY.RS,
         },
         {
           id: QualityButtonEnum.BatchQuarantinePeriod,
           title: '原料血浆检疫期筛选情况-昆明',
+          company: COMPANY.KM,
         },
       ],
       meta: {

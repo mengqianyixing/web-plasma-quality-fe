@@ -31,6 +31,7 @@
         componentProps: {
           disabled: true,
         },
+        show: false,
       },
       {
         field: 'cancelReason',
@@ -42,6 +43,7 @@
         componentProps: {
           rows: 4,
         },
+        required: true,
       },
       {
         field: 'state',

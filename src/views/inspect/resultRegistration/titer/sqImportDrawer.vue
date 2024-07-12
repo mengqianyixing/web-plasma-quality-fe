@@ -52,6 +52,7 @@
   import { useMessage } from '@/hooks/web/useMessage';
 
   const emit = defineEmits(['close']);
+  const model = ref('');
 
   const cellData = ref<PostApiCoreLabMbBaninResponse['summary']>({
     filename: '',
@@ -187,6 +188,7 @@
           titerResult: it.titerResult,
           projectId: it.projectId,
         })),
+        model: model.value,
       });
       message.success('效价导入已生效');
       openConfirmModal(false);
@@ -207,6 +209,7 @@
       for (const key in cellData.value) {
         cellData.value[key] = res.summary[key];
       }
+      model.value = res.model;
     },
   );
 </script>

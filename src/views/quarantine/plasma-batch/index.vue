@@ -72,7 +72,7 @@
   import PlasmaBatchDetailModal from './PlasmaBatchDetailModal.vue';
   import DeleteModal from './DeleteModal.vue';
 
-  import { columns, searchFormSchema } from './plasma-batch.data';
+  import { columns, searchFormSchema, STATE } from './plasma-batch.data';
   import { useStation } from '@/hooks/common/useStation';
   import { onMounted, ref, watchEffect } from 'vue';
   import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
@@ -190,6 +190,7 @@
 
   function handleDelete() {
     getSelections(true, ([row]) => {
+      if (row.state === STATE.R.value) return message.warning('报告在复核后不可撤销');
       openDeleteModal(true, {
         record: row,
       });

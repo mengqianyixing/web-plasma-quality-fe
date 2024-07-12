@@ -17,13 +17,15 @@ export function usePageTimeout(time: string | number, delay: number) {
     isTrigger = true;
     createErrorModal({
       title: '提示',
-      content: '长时间未操作，系统自动登出，是否回到登录页面？',
+      content: '长时间未操作，系统自动登出，请重新登录！',
       cancelButtonProps: {},
       onOk: () => {
         oauth.goToCasDoorLogin().then((res) => {
           return (window.location.href = res.data ?? window.location.href);
         });
       },
+      keyboard: false,
+      maskClosable: false,
     });
   }
   function restartTimer() {
@@ -38,7 +40,6 @@ export function usePageTimeout(time: string | number, delay: number) {
   async function startTimer() {
     if (timerId) clearTimeout(timerId);
     const timer = ((parseInt(time) || TIMEOUT) - delay) * 1000;
-    console.log((parseInt(time) || TIMEOUT) * 1000, getTimeDiff());
     timerId = setTimeout(async () => {
       if (getTimeDiff() - timer < 99) {
         startTimer();

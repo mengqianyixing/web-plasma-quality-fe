@@ -81,6 +81,7 @@
     size: 'small',
     useSearchForm: true,
     showTableSetting: false,
+    showIndexColumn: false,
     bordered: true,
     rowSelection: { type: 'radio' },
     scroll: { x: 0 },

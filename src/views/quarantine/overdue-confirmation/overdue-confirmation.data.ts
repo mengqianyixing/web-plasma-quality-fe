@@ -26,6 +26,7 @@ export const columns: BasicColumn[] = [
     title: '浆员编号',
     dataIndex: 'cardNo',
     width: 120,
+    slots: { customRender: 'cardNo' },
   },
   {
     title: '浆员姓名',
@@ -51,16 +52,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'collectAt',
     width: 100,
   },
-  {
-    title: '最后采浆日期',
-    dataIndex: 'lastCollectAt',
-    width: 100,
-  },
-  {
-    title: '最后回访日期',
-    dataIndex: 'lastCallBackAt',
-    width: 100,
-  },
+
   {
     title: '确认人',
     dataIndex: 'creator',

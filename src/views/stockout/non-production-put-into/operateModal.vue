@@ -27,7 +27,7 @@
             <a-tab-pane key="batch" tab="血浆批号" force-render>
               <BasicTable @register="registerBatchTable" />
             </a-tab-pane>
-            <a-tab-pane key="box" tab="血浆箱号" force-render>
+            <a-tab-pane key="box" :tab="iskm ? '托盘明细' : '血浆箱号'" force-render>
               <BasicTable @register="registerBoxTable" />
             </a-tab-pane>
             <a-tab-pane key="detail" tab="血浆明细" force-render>
@@ -73,7 +73,11 @@
     PostApiCoreBankDeliverNonproductiveRequest,
     PutApiCoreBankDeliverNonproductiveRequest,
   } from '@/api/type/stockoutManage';
+  import { useGlobSetting } from '@/hooks/setting/index';
+  import { COMPANY } from '@/enums/company';
 
+  const globSetting = useGlobSetting();
+  const iskm = globSetting.company === COMPANY.KM;
   const ATabs = Tabs;
   const ATabPane = TabPane;
   defineOptions({ name: 'OperateModal' });

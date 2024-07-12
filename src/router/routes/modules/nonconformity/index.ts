@@ -14,6 +14,7 @@ import {
   NonconformityButtonEnum,
   NonconformityInStoreButtonEnum,
 } from '@/enums/authCodeEnum';
+import { COMPANY } from '@/enums/company';
 
 const nonconformity: AppRouteModule = {
   path: '/nonconformity',
@@ -143,16 +144,19 @@ const nonconformity: AppRouteModule = {
           id: NonconformityButtonEnum.PlasmaOutTransferPrint,
 
           title: '转移记录打印',
+          company: COMPANY.RS,
         },
         {
           id: NonconformityButtonEnum.PlasmaOutPlasmaPrint,
 
           title: '不合格原料血浆信息清单打印',
+          company: COMPANY.RS,
         },
         {
           id: NonconformityButtonEnum.PlasmaOutDestructionPrint,
 
           title: '不合格原料血浆销毁处理申请审批表',
+          company: COMPANY.RS,
         },
       ],
       id: 920030,

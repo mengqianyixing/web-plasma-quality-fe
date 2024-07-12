@@ -16,7 +16,7 @@ export const columns: BasicColumn[] = [
   {
     title: '文件编号',
     dataIndex: 'ctrlNo',
-    width: 140,
+    width: 160,
   },
   {
     title: '报表名称',
@@ -33,37 +33,37 @@ export const columns: BasicColumn[] = [
   {
     title: '版本号',
     dataIndex: 'ctrlVersion',
-    width: 120,
+    width: 80,
   },
   {
     title: '起草人',
     dataIndex: 'creator',
-    width: 120,
+    width: 100,
   },
   {
     title: '模版版本号',
     dataIndex: 'templateVersion',
-    width: 120,
+    width: 100,
   },
   {
     title: '生效日期',
     dataIndex: 'effectiveDate',
-    width: 120,
+    width: 100,
   },
   {
     title: '有效期至',
     dataIndex: 'expiredDate',
-    width: 120,
+    width: 100,
   },
   {
     title: '修改人',
     dataIndex: 'updater',
-    width: 120,
+    width: 100,
   },
   {
     title: '修改日期',
     dataIndex: 'updateAt',
-    width: 120,
+    width: 100,
     format: (v) => v?.slice(0, 10),
   },
   {
