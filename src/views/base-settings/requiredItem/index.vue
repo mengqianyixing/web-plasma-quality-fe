@@ -88,6 +88,7 @@
 
   const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
     api: getListApi,
+    showIndexColumn: false,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',

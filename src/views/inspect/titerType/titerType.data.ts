@@ -43,13 +43,6 @@ export const columns: BasicColumn[] = [
   },
 
   {
-    title: '默认标记',
-    dataIndex: 'defaultTag',
-    customRender: ({ record }) => {
-      return record.defaultTag ? '是' : '否';
-    },
-  },
-  {
     title: '是否启用',
     dataIndex: 'enable',
     customRender: ({ record }) => {
