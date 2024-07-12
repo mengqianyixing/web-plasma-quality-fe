@@ -12,7 +12,9 @@
     <div class="flex h-full ml-20px mr-20px">
       <div class="container flex-1 h-full w-160px" v-for="item in state" :key="item.plasmaType">
         <div class="text-center text-white title bg-slate-100">
-          {{ PlasmaType(item.plasmaType) }}
+          {{
+            sampleTypeRef === sampleTypeEnum.CallbackSample ? 'N/A' : PlasmaType(item.plasmaType)
+          }}
         </div>
         <div class="title">
           <a-checkbox
@@ -47,6 +49,7 @@
 
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { sampleTypeEnum } from '@/enums/sampleEnum';
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -62,36 +65,42 @@
       disabled?: boolean;
     }[];
   };
-  const emit = defineEmits(['confirm']);
+  const emit = defineEmits(['confirm', 'register']);
 
   const state = ref<CheckGrop[] & GetApiCoreLabRegistrationLabRequestProjectsBsNoResponse>([]);
   const bsno = ref('');
-  const [registerModal, { setModalProps, closeModal }] = useModalInner(async ({ bsNo }) => {
-    bsno.value = bsNo;
-    const res = await getCheckItemListApi({ bsNo });
-    if (res.length === 0) {
-      message.warning('检测项目已全部添加');
-      return;
-    }
-    state.value = res
-      .map((_) => {
-        return {
-          ..._,
-          checkAll: false,
-          indeterminate: false,
-          values: _.labProjects.filter((it) => it.check || it.acquiesce).map((it) => it.projectId),
-          options: _.labProjects.map((_) => ({
-            value: _.projectId,
-            label: _.projectAbbr,
-            disabled: _.check,
-          })),
-        };
-      })
-      .filter((_) => _.options.length);
-    state.value.forEach((it) => {
-      change(it.values, it);
-    });
-  });
+  const sampleTypeRef = ref('');
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(
+    async ({ bsNo, sampleType }) => {
+      bsno.value = bsNo;
+      sampleTypeRef.value = sampleType;
+      const res = await getCheckItemListApi({ bsNo });
+      if (res.length === 0) {
+        message.warning('检测项目已全部添加');
+        return;
+      }
+      state.value = res
+        .map((_) => {
+          return {
+            ..._,
+            checkAll: false,
+            indeterminate: false,
+            values: _.labProjects
+              .filter((it) => it.check || it.acquiesce)
+              .map((it) => it.projectId),
+            options: _.labProjects.map((_) => ({
+              value: _.projectId,
+              label: _.projectAbbr,
+              disabled: _.check,
+            })),
+          };
+        })
+        .filter((_) => _.options.length);
+      state.value.forEach((it) => {
+        change(it.values, it);
+      });
+    },
+  );
   async function handleSubmit() {
     const validate = unref(state).some((_) => _.values.length > 0);
     if (!validate) return message.warning('请选择项目');

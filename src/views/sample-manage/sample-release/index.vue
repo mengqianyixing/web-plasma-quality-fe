@@ -129,6 +129,6 @@
       createMessage.warning('请选择已验收的样本');
       return;
     }
-    openCIModal(true, { bsNo: row.batchSampleNo });
+    openCIModal(true, { ...row, bsNo: row.batchSampleNo });
   }
 </script>
