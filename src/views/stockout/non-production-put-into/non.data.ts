@@ -143,42 +143,57 @@ export const plasmaDetailColumns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 100,
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
+    width: 120,
+    ellipsis: false,
   },
   {
     title: '血浆箱号',
     dataIndex: 'boxNo',
+    width: 120,
+    ellipsis: false,
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
+    width: 120,
+    ellipsis: false,
   },
   {
     title: '浆员编号',
     dataIndex: 'cardNo',
+    width: 120,
+    ellipsis: false,
   },
   {
     title: '检疫期类型',
     dataIndex: 'trackType',
+    width: 100,
+    ellipsis: false,
   },
   {
     title: '血型',
     dataIndex: 'bloodType',
+    width: 80,
   },
   {
     title: '效价类型',
     dataIndex: 'titerType',
+    width: 100,
   },
   {
     title: '效价值',
     dataIndex: 'titerNum',
+    width: 60,
   },
   {
     title: '血浆过程状态',
     dataIndex: 'plasmaStatus',
+    width: 100,
   },
 ];
 
@@ -209,21 +224,26 @@ export const plasmaBatchColumns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 100,
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
+    width: 140,
   },
   {
     title: '效价类型',
     dataIndex: 'titerType',
+    width: 100,
   },
   {
     title: '血浆总数',
     dataIndex: 'plasmaTotal',
+    width: 100,
   },
   {
     title: '血浆净重(kg)',
     dataIndex: 'totalWeight',
+    width: 100,
   },
 ];

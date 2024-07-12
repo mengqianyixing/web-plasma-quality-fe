@@ -4,7 +4,7 @@
     @register="registerModal"
     title="挑选血浆"
     @ok="handleSubmit"
-    :min-height="700"
+    :min-height="600"
     width="1200px"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
@@ -20,9 +20,8 @@
   import { getPickPlasmaList, pickPlasma } from '@/api/stockout/non-productin-put-into';
   import { onMounted, ref, watchEffect } from 'vue';
   import { useStation } from '@/hooks/common/useStation';
-  import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-  import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
 
   defineOptions({ name: 'PickPlasmaModal' });
   const emit = defineEmits(['success', 'register']);
@@ -30,8 +29,6 @@
   const { stationOptions } = useStation();
   const { createMessage } = useMessage();
   const { warning } = createMessage;
-
-  const serverEnumStore = useServerEnumStoreWithOut();
 
   const selectedRow = ref<Recordable>([]);
   onMounted(async () => {
@@ -124,9 +121,11 @@
         {
           field: 'titerType',
           label: '效价类型',
-          component: 'Select',
+          component: 'ApiSelect',
           componentProps: {
-            options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
+            api: getDilutionTypeApi,
+            labelField: 'key',
+            valueField: 'value',
           },
         },
       ],
