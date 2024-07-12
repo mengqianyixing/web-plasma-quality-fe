@@ -136,7 +136,7 @@
               onChange={(e) => (boxNoValue.value = e.target.value)}
             />
             <div class="flex items-center justify-center w-[80px]">{packCount.value}</div>
-            <a-button type="primary" onClick={handleSeal}>
+            <a-button type="primary" onClick={handleSeal} loading={sealBtnLoading.value}>
               封箱
             </a-button>
           </div>
@@ -407,8 +407,10 @@
     }
   }
 
+  const sealBtnLoading = ref(false);
   async function handleSeal() {
     try {
+      sealBtnLoading.value = true;
       const resBoxNo = await acceptSeal({
         batchNo: batchValue.value,
         boxNo: boxNoValue.value,
@@ -422,8 +424,10 @@
       }
 
       createMessage.success('封箱成功，正在打印标签');
-    } finally {
+    } catch (e) {
       createMessage.warn('操作失败，请重试');
+    } finally {
+      sealBtnLoading.value = false;
     }
   }
 
