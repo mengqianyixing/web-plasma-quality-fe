@@ -395,7 +395,7 @@ export const detailColumns: BasicColumn[] = [
     width: 150,
   },
   {
-    title: '验收净重',
+    title: '验收净重（g）',
     dataIndex: 'netWeight',
     width: 100,
   },
