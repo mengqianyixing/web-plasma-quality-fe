@@ -27,8 +27,8 @@
     baseColProps: { span: 48 },
     schemas: [
       {
-        field: 'orderNo',
-        label: '生产指令编号',
+        field: 'mesId',
+        label: '制造批号',
         component: 'Input',
         componentProps: {
           disabled: true,
@@ -38,12 +38,18 @@
         field: 'cause',
         label: '原因',
         component: 'InputTextArea',
+        required: true,
         colProps: {
           span: 20,
         },
         componentProps: {
           rows: 4,
         },
+      },
+      {
+        field: 'orderNo',
+        component: 'Input',
+        ifShow: false,
       },
     ],
     showActionButtonGroup: false,
