@@ -13,7 +13,15 @@
           class="text-blue-500 underline cursor-pointer empty-value"
           @click.stop.self="handleDetailClick(data.record, col.slots?.customRender, col.title)"
         >
-          {{ get(data.record, ((col.dataIndex as any) || []).join('.')) }}
+          <template v-if="col.slots?.customRender === 'UNTRACKED'">
+            {{
+              get(data.record, 'summary.firstUnTrackedCount') +
+              get(data.record, 'summary.reUnTrackedCount')
+            }}
+          </template>
+          <template v-else>
+            {{ get(data.record, ((col.dataIndex as any) || []).join('.')) }}
+          </template>
         </span>
       </template>
 
