@@ -1013,34 +1013,34 @@ export interface GetApiProductPreparePickBagBoxPrepareNoResponse {
  * 接口 [挑浆汇总预览查询↗](https://yapi.sharing8.cn/project/529/interface/api/32542) 的 **请求类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `GET /api/product/prepare/summary/preview`
- * @更新时间 `2024-01-18 10:01:12`
+ * @请求头 `POST /api/product/prepare/summary/preview`
+ * @更新时间 `2024-07-15 09:21:44`
  */
-export interface GetApiProductPrepareSummaryPreviewRequest {
+export interface PostApiProductPrepareSummaryPreviewRequest {
   /**
    * 投产准备号
    */
-  prepareNo?: string;
+  prepareNo: string;
   /**
    * 1、ALL-限制  2、NO-不限制  3、血浆限制单号
    */
-  bagFlag?: string;
+  bagFlag: string;
   /**
    * 首次挑选
    */
-  firstFlag?: string;
+  firstFlag: string;
   /**
    * 最小采集天数
    */
-  minCollectDay?: string;
+  minCollectDay: string;
   /**
    * 最大采集天数
    */
-  maxCollectDay?: string;
+  maxCollectDay: string;
   /**
    * 效价
    */
-  immunity?: string;
+  immunity: string;
   /**
    * 最小效价值
    */
@@ -1063,10 +1063,10 @@ export interface GetApiProductPrepareSummaryPreviewRequest {
  * 接口 [挑浆汇总预览查询↗](https://yapi.sharing8.cn/project/529/interface/api/32542) 的 **返回类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `GET /api/product/prepare/summary/preview`
- * @更新时间 `2024-01-18 10:01:12`
+ * @请求头 `POST /api/product/prepare/summary/preview`
+ * @更新时间 `2024-07-15 09:21:44`
  */
-export interface GetApiProductPrepareSummaryPreviewResponse {
+export interface PostApiProductPrepareSummaryPreviewResponse {
   field_8: {
     /**
      * 投产准备号
