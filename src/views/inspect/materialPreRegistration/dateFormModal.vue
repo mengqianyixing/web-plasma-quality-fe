@@ -42,7 +42,9 @@
           label: '使用截至日期',
           defaultValue: dayjs().format('YYYY-MM-DD'),
           required: true,
+
           componentProps: {
+            disabled: true,
             class: 'w-full',
             disabledDate: (date: Dayjs) => date && date > dayjs(dayjs().format('YYYY-MM-DD')),
           },
