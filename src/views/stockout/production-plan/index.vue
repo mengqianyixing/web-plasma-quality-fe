@@ -178,6 +178,8 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { PrintServerEnum } from '@/enums/printServerEnum';
 
+  const { createErrorModal } = useMessage();
+
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'ProductionPlan' });
 
@@ -396,15 +398,27 @@
         ReportKey: key,
         contentKey: row.mesId,
       });
-      const blob = new Blob([res.data], {
-        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.download = `原料血浆摘要${row.mesId}.doc`;
-      a.href = url;
-      a.click();
-      window.URL.revokeObjectURL(url);
+      const blobFile = new Blob([res.data], { type: 'application/json' });
+      const reader = new FileReader();
+      reader.readAsText(blobFile, 'utf-8');
+      reader.onload = function (e) {
+        try {
+          const data = JSON.parse(e.target!.result as string);
+          if (data.code === '500') {
+            createErrorModal({ title: '错误提示', content: data.msg });
+          }
+        } catch (e) {
+          const blob = new Blob([res.data], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.download = `原料血浆摘要${row.mesId}.doc`;
+          a.href = url;
+          a.click();
+          window.URL.revokeObjectURL(url);
+        }
+      };
     } finally {
       loading.value = false;
     }
