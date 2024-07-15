@@ -36,7 +36,12 @@
       </div>
       <BasicTable @register="registerTableEd" class="inline-block pr-2 w-4/20" />
     </div>
-    <Description @register="register" :data="prepareDetail" :schema="schema" />
+    <Description
+      @register="register"
+      :data="prepareDetail"
+      :schema="schema"
+      v-loading="previewLoading"
+    />
   </BasicModal>
 </template>
 
@@ -68,13 +73,13 @@
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
   import {
     GetApiProductPreparePickBatchResponse,
-    GetApiProductPrepareSummaryPreviewRequest,
     PostApiProductPreparePickBagRequest,
     PostApiProductPrepareRevokePickBagRequest,
+    PostApiProductPrepareSummaryPreviewRequest,
   } from '@/api/type/productionPreparation';
   import { VxeGridPropTypes } from 'vxe-table/types/grid';
   import { COMPANY } from '@/enums/company';
-  import { useGlobSetting } from '@/hooks/setting/index';
+  import { useGlobSetting } from '@/hooks/setting';
 
   const globSetting = useGlobSetting();
   const iskm = globSetting.company === COMPANY.KM;
@@ -741,6 +746,7 @@
     }
   }
 
+  const previewLoading = ref(false);
   // 获取预览汇总数据
   async function _getSummaryPreview() {
     const { minCollectDay, maxCollectDay, firstFlag, titerLevel, minTiter, maxTiter, boxNo } =
@@ -770,9 +776,14 @@
     // 普浆不需要效价类型
     prodType.value === 'N' && delete params.titerLevel;
 
-    prepareDetail.value = await getSummaryPreview(
-      params as unknown as GetApiProductPrepareSummaryPreviewRequest,
-    );
+    try {
+      previewLoading.value = true;
+      prepareDetail.value = await getSummaryPreview(
+        params as unknown as PostApiProductPrepareSummaryPreviewRequest,
+      );
+    } finally {
+      previewLoading.value = false;
+    }
   }
 
   // 获取汇总数据（已挑非实时）

@@ -421,6 +421,16 @@ export const detailColumns: BasicColumn[] = [
     width: 150,
   },
   {
+    title: '血浆批号',
+    dataIndex: 'batchNo',
+    width: 150,
+  },
+  {
+    title: '验收净重',
+    dataIndex: 'netWeight',
+    width: 100,
+  },
+  {
     title: '采集日期',
     dataIndex: 'collectionAt',
     format(text) {

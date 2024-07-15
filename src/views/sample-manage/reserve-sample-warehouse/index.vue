@@ -84,13 +84,16 @@
     revokeKeepPack,
     acceptComplete,
   } from '@/api/sample-manage/reserve-sample-destory';
-  import { PostApiCoreBatchSampleAcceptKeepPackResponse } from '@/api/type/sampleManage';
+  import {
+    GetApiCoreBatchSampleAcceptKeepPackBatchNoResponse,
+    PostApiCoreBatchSampleAcceptKeepPackResponse,
+  } from '@/api/type/sampleManage';
 
   const { createMessage, createConfirm } = useMessage();
 
   defineOptions({ name: 'ReserveSampleWarehouse' });
 
-  const originKeepPackData = ref<PostApiCoreBatchSampleAcceptKeepPackResponse>({});
+  const originKeepPackData = ref<GetApiCoreBatchSampleAcceptKeepPackBatchNoResponse>({});
   const tableLoading = ref(false);
 
   const trayRef = ref(null);
@@ -360,6 +363,10 @@
   async function initTableData() {
     tableLoading.value = true;
     originKeepPackData.value = await getKeepPackDetail(batchValue.value);
+
+    if (originKeepPackData.value?.lastPackAccept) {
+      await handleSeal();
+    }
     trayValue.value = originKeepPackData.value.trayNo || '';
     boxNoValue.value = originKeepPackData.value.boxNo || '';
 
