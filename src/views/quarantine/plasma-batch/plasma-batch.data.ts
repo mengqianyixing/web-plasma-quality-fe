@@ -44,6 +44,7 @@ export const stateMap = {
   firstUnTrackedBag: 'FIRST_UNTRACKED',
   reUnTrackedBag: 'RE_UNTRACKED',
   unProductionBag: 'UNPRO',
+  UNTRACKED: 'UNTRACKED',
 };
 
 export const columns: BasicColumn[] = [
@@ -100,6 +101,11 @@ export const columns: BasicColumn[] = [
     title: '反复续追踪血浆',
     dataIndex: ['summary', 'reUnTrackedCount'],
     slots: { customRender: 'reUnTrackedBag' },
+    width: 120,
+  },
+  {
+    title: '续追踪血浆合计',
+    slots: { customRender: 'UNTRACKED' },
     width: 120,
   },
   {
@@ -291,6 +297,7 @@ export const colMap: Record<string, BasicColumn[]> = {
   trackedNormalBag: trackedColumns,
   trackedSpecialBag: trackedColumns,
   unProductionBag: otherColumns,
+  UNTRACKED: otherColumns,
 };
 export const modalCommonColumns: BasicColumn[] = [
   {
