@@ -68,6 +68,7 @@ export const donorSchema: DescItem[] = [
   {
     label: '浆员状态',
     field: 'donorStatus',
+    render: (text) => (text === '永拒' ? <span style="color:red;">{text}</span> : text),
   },
   {
     label: '不合格依据日期',
