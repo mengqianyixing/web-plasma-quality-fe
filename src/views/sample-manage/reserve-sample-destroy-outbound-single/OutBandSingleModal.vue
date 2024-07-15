@@ -247,6 +247,7 @@
         dlvNo: dlvNo.value,
         sampleNo: sampleNo.value!,
       });
+      sampleNo.value = '';
       await initTableData();
     } finally {
       barCode.value = '';

@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-26 17:41:03
  * @LastEditors: zcc
@@ -93,6 +93,13 @@
         {
           field: 'plasmaType',
           componentProps: { onChange: handlePlasmaTypeChange },
+        },
+        {
+          field: 'priority',
+          componentProps: {
+            step: 1,
+            precision: 0,
+          },
         },
       ]);
       clearValidate();

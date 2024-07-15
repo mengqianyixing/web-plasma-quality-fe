@@ -2,8 +2,10 @@ import { BasicColumn, FormSchema } from '@/components/Table';
 import { VxeGridPropTypes } from '@/components/VxeTable';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useStation } from '@/hooks/common/useStation';
 
 const serverEnumStore = useServerEnumStoreWithOut();
+const { stationOptions } = useStation();
 
 export const columns: BasicColumn[] = [
   {
@@ -52,6 +54,29 @@ export const columns: BasicColumn[] = [
 ];
 
 export const searchFormSchema: FormSchema[] = [
+  {
+    field: 'stationNo',
+    component: 'Select',
+    label: '采浆公司',
+    componentProps: {
+      options: stationOptions,
+    },
+  },
+  {
+    field: 'sampleBatchNo',
+    component: 'Input',
+    label: '样本批号',
+  },
+  {
+    field: 'sampleNo',
+    component: 'Input',
+    label: '样本编号',
+  },
+  {
+    field: 'cardNo',
+    component: 'Input',
+    label: '浆员编号',
+  },
   {
     field: 'dlvNo',
     component: 'Input',

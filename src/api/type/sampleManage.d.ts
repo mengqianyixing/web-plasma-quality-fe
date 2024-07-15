@@ -836,7 +836,7 @@ export interface GetApiCoreSamplePlanDetailResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample`
- * @更新时间 `2024-06-18 11:44:36`
+ * @更新时间 `2024-07-13 15:56:04`
  */
 export interface GetApiCoreBankDeliverSampleRequest {
   /**
@@ -861,6 +861,22 @@ export interface GetApiCoreBankDeliverSampleRequest {
    * 保留样本单个出库RSD，批量出库RSO
    */
   dlyType: string;
+  /**
+   * 浆站编号
+   */
+  stationNo?: string;
+  /**
+   * 样本编号
+   */
+  sampleNo?: string;
+  /**
+   * 样本批号
+   */
+  sampleBatchNo?: string;
+  /**
+   * 浆员编号
+   */
+  cardNo?: string;
 }
 
 /**
@@ -868,7 +884,7 @@ export interface GetApiCoreBankDeliverSampleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample`
- * @更新时间 `2024-06-18 11:44:36`
+ * @更新时间 `2024-07-13 15:56:04`
  */
 export interface GetApiCoreBankDeliverSampleResponse {
   /**
@@ -1377,7 +1393,7 @@ export type GetApiCoreBatchSampleAcceptPackNextBoxnoResponse = string;
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `POST /api/core/batch/sample/accept/keep-pack`
- * @更新时间 `2024-05-27 17:05:46`
+ * @更新时间 `2024-07-15 14:09:25`
  */
 export interface PostApiCoreBatchSampleAcceptKeepPackRequest {
   /**
@@ -1403,7 +1419,7 @@ export interface PostApiCoreBatchSampleAcceptKeepPackRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `POST /api/core/batch/sample/accept/keep-pack`
- * @更新时间 `2024-05-27 17:05:46`
+ * @更新时间 `2024-07-15 14:09:25`
  */
 export interface PostApiCoreBatchSampleAcceptKeepPackResponse {
   /**
@@ -1450,6 +1466,10 @@ export interface PostApiCoreBatchSampleAcceptKeepPackResponse {
    * 接收状态
    */
   acceptState?: string;
+  /**
+   * 标识是否最后一袋接收
+   */
+  lastPackAccept?: boolean;
   /**
    * 未接收列表
    */
@@ -1954,7 +1974,7 @@ export interface GetApiCoreBatchSampleAcceptKeepPackBatchesResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/batch/sample/accept/keep-pack/{batchNo}`
- * @更新时间 `2024-05-28 16:48:37`
+ * @更新时间 `2024-07-15 14:10:15`
  */
 export interface GetApiCoreBatchSampleAcceptKeepPackBatchNoRequest {
   /**
@@ -1968,7 +1988,7 @@ export interface GetApiCoreBatchSampleAcceptKeepPackBatchNoRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/batch/sample/accept/keep-pack/{batchNo}`
- * @更新时间 `2024-05-28 16:48:37`
+ * @更新时间 `2024-07-15 14:10:15`
  */
 export interface GetApiCoreBatchSampleAcceptKeepPackBatchNoResponse {
   outWarehouseDate?: string;
@@ -1979,6 +1999,13 @@ export interface GetApiCoreBatchSampleAcceptKeepPackBatchNoResponse {
   bagCount?: number;
   totalCount?: number;
   acceptState?: string;
+  boxNo?: string;
+  packCount?: number;
+  trayNo?: string;
+  /**
+   * 标识是否最后一袋接收，true表示是
+   */
+  lastPackAccept?: boolean;
   unAcceptList?: {
     sampleBagNo?: string;
     sampleCount?: number;

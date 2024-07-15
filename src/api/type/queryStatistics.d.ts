@@ -4934,7 +4934,7 @@ export type GetApiSearchSampleLabCountDetailResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/unqualified`
- * @更新时间 `2024-06-14 18:06:24`
+ * @更新时间 `2024-07-13 11:13:03`
  */
 export interface GetApiSearchPlasmaUnqualifiedRequest {
   /**
@@ -4978,7 +4978,7 @@ export interface GetApiSearchPlasmaUnqualifiedRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/unqualified`
- * @更新时间 `2024-06-14 18:06:24`
+ * @更新时间 `2024-07-13 11:13:03`
  */
 export interface GetApiSearchPlasmaUnqualifiedResponse {
   /**
@@ -5005,6 +5005,10 @@ export interface GetApiSearchPlasmaUnqualifiedResponse {
    * 血浆批号
    */
   batchNo: string;
+  /**
+   * 验收净重
+   */
+  netWeight: string;
   /**
    * 样本编号
    */
