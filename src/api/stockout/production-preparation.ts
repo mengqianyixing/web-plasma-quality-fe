@@ -39,8 +39,8 @@ import {
   GetApiProductPreparePickBagBatchPrepareNoResponse,
   GetApiProductPreparePickBagBoxPrepareNoRequest,
   GetApiProductPreparePickBagBoxPrepareNoResponse,
-  GetApiProductPrepareSummaryPreviewRequest,
-  GetApiProductPrepareSummaryPreviewResponse,
+  PostApiProductPrepareSummaryPreviewRequest,
+  PostApiProductPrepareSummaryPreviewResponse,
 } from '@/api/type/productionPreparation';
 
 enum Api {
@@ -190,8 +190,8 @@ export const getPickedBox = (params: GetApiProductPreparePickBagBoxPrepareNoRequ
 };
 
 // 挑浆汇总预览
-export const getSummaryPreview = (params: GetApiProductPrepareSummaryPreviewRequest) => {
-  return defHttp.get<GetApiProductPrepareSummaryPreviewResponse>({
+export const getSummaryPreview = (params: PostApiProductPrepareSummaryPreviewRequest) => {
+  return defHttp.post<PostApiProductPrepareSummaryPreviewResponse>({
     url: Api.GetSummaryPreview,
     params,
   });
