@@ -88,7 +88,6 @@
   const [registerTable, { getForm, redoHeight }] = useTable({
     api: getPlasmaBatchReleaseBags,
     size: 'small',
-    clickToRowSelect: false,
     rowKey: 'batchNo',
     useSearchForm: true,
     showTableSetting: false,

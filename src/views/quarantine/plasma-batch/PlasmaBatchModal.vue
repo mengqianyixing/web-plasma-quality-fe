@@ -6,8 +6,14 @@
     @register="registerModal"
     :title="getTitle"
     @ok="handleSubmit"
+    :minHeight="600"
+    @fullscreen="redoHeight"
   >
-    <BasicTable @register="registerTable" />
+    <div class="flex h-inherit max-h-inherit min-h-inherit">
+      <div class="flex-1 w-full">
+        <BasicTable @register="registerTable" />
+      </div>
+    </div>
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -36,11 +42,12 @@
     });
   });
 
-  const [registerTable, { reload, getForm, clearSelectedRowKeys }] = useTable({
+  const [registerTable, { reload, getForm, clearSelectedRowKeys, redoHeight }] = useTable({
     api: getPlasmaBatchUnReleases,
     pagination: {
       pageSize: 10,
     },
+    isCanResizeParent: true,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -48,7 +55,6 @@
       listField: 'result',
     },
     size: 'small',
-    maxHeight: 300,
     columns: modalColumns,
     formConfig: {
       schemas: modalSearchFormSchema,
@@ -64,8 +70,6 @@
 
     bordered: true,
     showIndexColumn: false,
-
-    canResize: true,
   });
 
   const [registerModal, { setModalProps }] = useModalInner(async (data) => {
