@@ -28,11 +28,11 @@
   import { bindBoxApi } from '@/api/tray/relocation';
   import { message, Spin } from 'ant-design-vue';
   import { trayBoxListApi } from '@/api/tray/list';
-  import { ref } from 'vue';
+  import { ref, nextTick } from 'vue';
 
   const count = ref(0);
   const spinning = ref(false);
-  const [registerForm, { getFieldsValue, setFieldsValue, setProps }] = useForm({
+  const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
     labelWidth: 90,
     baseColProps: { flex: '0 0 370px' },
     schemas: plasmaBoxScanFormSchema,
@@ -65,8 +65,19 @@
   });
   async function submit() {
     const { boxId, trayNo } = getFieldsValue();
-    await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: [boxId] });
-    await setFieldsValue({ boxId: '' });
+    const focusedElement = document.activeElement as HTMLElement;
+    focusedElement.blur();
+    try {
+      await bindBoxApi({
+        trayNo: trayNo,
+        type: props.isBinding ? 'bind' : 'unbind',
+        boxes: [boxId],
+      });
+      await setFieldsValue({ boxId: '' });
+    } finally {
+      await nextTick();
+      focusedElement.focus();
+    }
     message.success('操作成功');
     trayBoxListApi({ trayNo }).then((res) => {
       count.value = res.length;
@@ -79,10 +90,8 @@
     if (!boxId || !trayNo) return;
     try {
       spinning.value = true;
-      setProps({ readonly: true });
       await submit();
     } finally {
-      setProps({ readonly: false });
       spinning.value = false;
     }
   }

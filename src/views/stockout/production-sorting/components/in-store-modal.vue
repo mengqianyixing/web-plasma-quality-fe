@@ -88,7 +88,7 @@
     change(state.activeKey);
   });
   const [registerInModal, { openModal: openInModal }] = useModal();
-  const [registerForm, { getFieldsValue, setFieldsValue, resetFields, setProps }] = useForm({
+  const [registerForm, { getFieldsValue, setFieldsValue, resetFields }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 8 },
     schemas: bindFormSchema.map((schems) => ({
@@ -200,16 +200,23 @@
   }
   async function submit() {
     const { boxId, trayNo } = getFieldsValue();
-    await bindBoxApi({
-      trayNo: trayNo,
-      type: 'bind',
-      boxes: [boxId],
-      bizScen: 'plasmaSort',
-      prepareNo: state.prepareNo,
-    });
-    setFieldsValue({ boxId: '' });
-    message.success('绑定成功');
-    reloadBind();
+    const focusedElement = document.activeElement as HTMLElement;
+    focusedElement.blur();
+    try {
+      await bindBoxApi({
+        trayNo: trayNo,
+        type: 'bind',
+        boxes: [boxId],
+        bizScen: 'plasmaSort',
+        prepareNo: state.prepareNo,
+      });
+      setFieldsValue({ boxId: '' });
+      message.success('绑定成功');
+      reloadBind();
+    } finally {
+      await nextTick();
+      focusedElement.focus();
+    }
   }
   async function handleSubmit(e: KeyboardEvent) {
     if (e.code !== 'Enter' && e.code !== 'NumpadEnter') return;
@@ -218,11 +225,9 @@
     if (!boxId || !trayNo) return;
     try {
       state.spinning = true;
-      setProps({ readonly: true });
       await submit();
     } finally {
       state.spinning = false;
-      setProps({ readonly: false });
     }
   }
 </script>
