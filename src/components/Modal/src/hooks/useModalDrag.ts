@@ -27,16 +27,16 @@ export function useModalDragMove(context: UseModalDragMoveContext) {
       const disX = e.clientX;
       const disY = e.clientY;
       const screenWidth = document.body.clientWidth; // body当前宽度
-      const screenHeight = document.documentElement.clientHeight; // 可见区域高度(应为body高度，可某些环境下无法获取)
+      // const screenHeight = document.documentElement.clientHeight; // 可见区域高度(应为body高度，可某些环境下无法获取)
 
       const dragDomWidth = dragDom.offsetWidth; // 对话框宽度
-      const dragDomheight = dragDom.offsetHeight; // 对话框高度
+      // const dragDomheight = dragDom.offsetHeight; // 对话框高度
 
       const minDragDomLeft = dragDom.offsetLeft;
 
       const maxDragDomLeft = screenWidth - dragDom.offsetLeft - dragDomWidth;
       const minDragDomTop = dragDom.offsetTop;
-      const maxDragDomTop = screenHeight - dragDom.offsetTop - dragDomheight;
+      // const maxDragDomTop = screenHeight - dragDom.offsetTop - dragDomheight;
       // 获取到的值带px 正则匹配替换
       const domLeft = getStyle(dragDom, 'left');
       const domTop = getStyle(dragDom, 'top');
@@ -66,9 +66,12 @@ export function useModalDragMove(context: UseModalDragMoveContext) {
 
         if (-top > minDragDomTop) {
           top = -minDragDomTop;
-        } else if (top > maxDragDomTop) {
-          top = maxDragDomTop;
         }
+        // 当minheight超出屏幕高度的时候拖拽会跳到顶部无法滚动
+        // 注释后下方就没有边界限制了 《上面相关变量也注释了》
+        //  else if (top > maxDragDomTop) {
+        //   top = maxDragDomTop;
+        // }
 
         // 移动当前元素
         dragDom.style.cssText += `;left:${left + styL}px;top:${top + styT}px;`;
