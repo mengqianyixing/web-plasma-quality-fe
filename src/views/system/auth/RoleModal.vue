@@ -19,16 +19,7 @@
               checkable
               @check="handleTreeSelect"
               title="菜单/权限分配"
-            />
-          </div>
-          <div class="divider"></div>
-          <div class="preview-tree">
-            <BasicTree
-              :treeData="getFilterTreeData(treeData, model[field])"
               ref="previewTreeRef"
-              :selectable="false"
-              :fieldNames="{ title: 'title', key: 'id' }"
-              title="菜单/权限预览"
             />
           </div>
         </div>
@@ -56,10 +47,10 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { ref, computed, unref, nextTick } from 'vue';
+  import { ref, computed, unref } from 'vue';
   import { BasicForm, useForm } from '@/components/Form';
   import { formSchema } from './role.data';
-  import { filterRoutes, getFilterTreeData } from './dataTransfer';
+  import { filterRoutes } from './dataTransfer';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTree, TreeActionType, TreeItem } from '@/components/Tree';
   import { Select, SelectOption } from 'ant-design-vue';
@@ -78,18 +69,6 @@
   const userOptions = ref<any[]>([]);
   const previewTreeRef = ref<Nullable<TreeActionType>>(null);
 
-  function getTree() {
-    const tree = unref(previewTreeRef);
-    if (!tree) {
-      throw new Error('previewTreeRef is null!');
-    }
-    return tree;
-  }
-
-  function expandPreviewTree(checkAll: boolean) {
-    getTree().expandAll(checkAll);
-  }
-
   getCasDoorAllUsers().then((res) => {
     userOptions.value = res.map((item) => {
       return {
@@ -106,30 +85,72 @@
     showActionButtonGroup: false,
   });
 
+  function generateCheckedAndHalfChecked(treeData, userPermissions) {
+    let checked: string[] = [];
+    let halfChecked: string[] = [];
+
+    function traverse(node) {
+      let isChecked = userPermissions.includes(String(node.id));
+      let allChildrenChecked = true;
+      let anyChildChecked = false;
+
+      if (node.children && node.children.length > 0) {
+        node.children.forEach((child) => {
+          const childResult = traverse(child);
+          if (!childResult.isChecked && !childResult.isHalfChecked) {
+            allChildrenChecked = false;
+          }
+          if (childResult.isChecked || childResult.isHalfChecked) {
+            anyChildChecked = true;
+          }
+        });
+
+        //父节点half勾选判断
+        if (allChildrenChecked) {
+          isChecked = true;
+        } else if (anyChildChecked) {
+          halfChecked.push(node.id);
+          isChecked = false;
+        }
+      }
+
+      if (isChecked) {
+        checked.push(node.id);
+      }
+
+      return {
+        id: node.id,
+        isChecked: isChecked,
+        isHalfChecked: halfChecked.includes(node.id),
+      };
+    }
+
+    treeData.forEach((node) => traverse(node));
+
+    return {
+      checked: checked,
+      halfChecked: halfChecked,
+    };
+  }
+
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-    resetFields();
+    await resetFields();
     setModalProps({ confirmLoading: false });
     // 需要在setFieldsValue之前先填充treeData，否则Tree组件可能会报key not exist警告
     if (unref(treeData).length === 0) {
       treeData.value = filterRoutes(modulesRouteList);
+      console.log(treeData.value, 'value');
     }
     isUpdate.value = !!data?.isUpdate;
 
     if (unref(isUpdate)) {
+      const domains = generateCheckedAndHalfChecked(treeData.value, data.record.domains);
+
       roleId.value = data.record.name;
-      // let res: any = [];
-      // try {
-      //   res = await getRoleDomainAuth({ name: data.record.name });
-      // } catch (e) {
-      //   res = [];
-      // }
-      setFieldsValue({
-        // ...res,
+      await setFieldsValue({
         ...data.record,
-        domains: (data?.record?.domains ?? []).map((it) => (isNaN(Number(it)) ? it : Number(it))),
+        domains,
         oldName: data.record.name,
-      }).then(() => {
-        expandPreviewTree(true);
       });
     }
   });
@@ -140,12 +161,9 @@
     return option.key.toLowerCase().indexOf(input.toLowerCase()) >= 0;
   };
 
-  function handleTreeSelect(keys, nodes) {
-    console.log({ keys, nodes });
-    nextTick().then(() => {
-      expandPreviewTree(true);
-    });
-    // @TODO 半选父组件
+  const halfCheck = ref([]);
+  function handleTreeSelect(_, nodes) {
+    halfCheck.value = nodes.halfCheckedKeys;
   }
 
   async function handleSubmit() {
@@ -167,13 +185,13 @@
         if (unref(isUpdate)) {
           await setCasDoorRole({
             ...values,
-            domains,
+            domains: [...domains, ...halfCheck.value],
             oldName: roleId.value,
           });
         } else {
           await addCasDoorRole({
             ...values,
-            domains,
+            domains: [...domains, ...halfCheck.value],
           });
         }
       } catch (e) {

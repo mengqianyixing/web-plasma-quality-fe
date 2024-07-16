@@ -7,7 +7,7 @@
     @cancel="handelCancel"
     width="550px"
   >
-    <BasicForm @register="registerForm" />
+    <BasicForm @register="registerForm" @submit="handleSubmit" />
 
     <LoginModal
       @register="registerLoginModal"
@@ -73,6 +73,7 @@
       baseColProps: { span: 48 },
       schemas: inStoreSchema,
       showActionButtonGroup: false,
+      autoSubmitOnEnter: true,
       transformDateFunc(date) {
         return date ? date.format('YYYY-MM-DD') : '';
       },
