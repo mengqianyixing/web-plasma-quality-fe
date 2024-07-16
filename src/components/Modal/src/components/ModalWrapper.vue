@@ -111,15 +111,20 @@
     try {
       const modalDom = bodyDom.parentElement && bodyDom.parentElement.parentElement;
       if (!modalDom) return;
-      const modalRect = (modalDom as Element).getBoundingClientRect();
 
+      const modalRect = getComputedStyle(modalDom as Element).top;
+      const modalTop = Number.parseInt(modalRect);
       let maxHeight =
         window.innerHeight -
-        (modalRect.bottom - modalRect.top) +
+        modalTop * 2 +
         (props.footerOffset! || 0) -
         props.modalFooterHeight -
         props.modalHeaderHeight;
 
+      // 距离顶部过进会出现滚动条
+      if (modalTop < 40) {
+        maxHeight -= 26;
+      }
       await nextTick();
       const spinEl: any = unref(spinRef);
 
