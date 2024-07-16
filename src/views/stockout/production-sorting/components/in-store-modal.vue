@@ -200,16 +200,23 @@
   }
   async function submit() {
     const { boxId, trayNo } = getFieldsValue();
-    await bindBoxApi({
-      trayNo: trayNo,
-      type: 'bind',
-      boxes: [boxId],
-      bizScen: 'plasmaSort',
-      prepareNo: state.prepareNo,
-    });
-    setFieldsValue({ boxId: '' });
-    message.success('绑定成功');
-    reloadBind();
+    const focusedElement = document.activeElement as HTMLElement;
+    focusedElement.blur();
+    try {
+      await bindBoxApi({
+        trayNo: trayNo,
+        type: 'bind',
+        boxes: [boxId],
+        bizScen: 'plasmaSort',
+        prepareNo: state.prepareNo,
+      });
+      setFieldsValue({ boxId: '' });
+      message.success('绑定成功');
+      reloadBind();
+    } finally {
+      await nextTick();
+      focusedElement.focus();
+    }
   }
   async function handleSubmit(e: KeyboardEvent) {
     if (e.code !== 'Enter' && e.code !== 'NumpadEnter') return;

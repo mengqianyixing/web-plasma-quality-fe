@@ -112,19 +112,21 @@
       const modalDom = bodyDom.parentElement && bodyDom.parentElement.parentElement;
       if (!modalDom) return;
 
-      const modalRect = getComputedStyle(modalDom as Element).top;
-      const modalTop = Number.parseInt(modalRect);
-      let maxHeight =
-        window.innerHeight -
-        modalTop * 2 +
-        (props.footerOffset! || 0) -
-        props.modalFooterHeight -
-        props.modalHeaderHeight;
+      // const modalRect = getComputedStyle(modalDom as Element).top;
+      // const modalTop = Number.parseInt(modalRect);
+      // *2在配合拖拽的时候非常不合理，当拖拽到底部的时候modalTop非常大 计算后最大高度会非常小 暂时不限制
 
-      // 距离顶部过进会出现滚动条
-      if (modalTop < 40) {
-        maxHeight -= 26;
-      }
+      // let maxHeight =
+      //   window.innerHeight -
+      //   modalTop * 2 +
+      //   (props.footerOffset! || 0) -
+      //   props.modalFooterHeight -
+      //   props.modalHeaderHeight;
+
+      // // 距离顶部过进会出现滚动条
+      // if (modalTop < 40) {
+      //   maxHeight -= 26;
+      // }
       await nextTick();
       const spinEl: any = unref(spinRef);
 
@@ -138,11 +140,7 @@
         realHeightRef.value =
           window.innerHeight - props.modalFooterHeight - props.modalHeaderHeight - 10;
       } else {
-        realHeightRef.value = props.height
-          ? props.height
-          : realHeight.value > maxHeight
-            ? maxHeight
-            : realHeight.value;
+        realHeightRef.value = props.height ? props.height : realHeight.value;
       }
       emit('height-change', unref(realHeightRef));
     } catch (error) {
