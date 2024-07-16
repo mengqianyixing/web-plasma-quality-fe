@@ -7,23 +7,29 @@
     :showOkBtn="false"
     cancelText="关闭"
     width="1000px"
+    :minHeight="600"
+    @fullscreen="redoHeight"
   >
-    <BasicTable :columns="modalColumns" @register="registerTable">
-      <template #unqReason="{ record }">
-        {{ formatUnReason(record?.fkFailedCode) }}
-      </template>
-      <template #prodReason="{ record }">
-        {{ formatProdReason(record?.fkUnProdCode) }}
-      </template>
-      <template #cardNo="{ record }: { record: Recordable }">
-        <span
-          class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="openModal(true, record)"
-        >
-          {{ record.cardNo }}
-        </span>
-      </template>
-    </BasicTable>
+    <div class="flex h-inherit max-h-inherit min-h-inherit">
+      <div class="flex-1 w-full">
+        <BasicTable :columns="modalColumns" @register="registerTable">
+          <template #unqReason="{ record }">
+            {{ formatUnReason(record?.fkFailedCode) }}
+          </template>
+          <template #prodReason="{ record }">
+            {{ formatProdReason(record?.fkUnProdCode) }}
+          </template>
+          <template #cardNo="{ record }: { record: Recordable }">
+            <span
+              class="text-blue-500 underline cursor-pointer"
+              @click.stop.self="openModal(true, record)"
+            >
+              {{ record.cardNo }}
+            </span>
+          </template>
+        </BasicTable>
+      </div></div
+    >
     <DonorModel @register="registerDonorModal" />
   </BasicModal>
 </template>
@@ -79,10 +85,9 @@
   function formatProdReason(unqReason: string) {
     return unProdReasonDictionary.value?.find((it) => it.id === unqReason)?.label ?? unqReason;
   }
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { getForm, redoHeight }] = useTable({
     api: getPlasmaBatchReleaseBags,
     size: 'small',
-    maxHeight: 350,
     clickToRowSelect: false,
     rowKey: 'batchNo',
     useSearchForm: true,
@@ -90,7 +95,7 @@
     bordered: true,
     showIndexColumn: true,
     formConfig: { schemas: [{ field: 'bagNo', component: 'Input', label: '血浆编号' }] },
-    canResize: true,
+    isCanResizeParent: true,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -104,6 +109,7 @@
   });
 
   const [registerModal, { setModalProps }] = useModalInner(async (data) => {
+    const { resetFields } = getForm();
     setModalProps({ confirmLoading: false });
     modalTitle.value = data.title + '详情';
     modalColumns.value = [...modalCommonColumns, ...colMap[data.type]];
@@ -114,6 +120,6 @@
       paramsObj.ImmType && delete paramsObj.ImmType;
     }
     paramsObj.brNo = data.record.brNo;
-    await reload();
+    await resetFields();
   });
 </script>
