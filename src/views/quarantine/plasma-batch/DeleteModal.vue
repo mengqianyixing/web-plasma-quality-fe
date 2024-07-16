@@ -76,9 +76,9 @@
         ...values,
       });
       emit('success');
+      closeModal();
     } finally {
       setModalProps({ confirmLoading: false });
-      closeModal();
     }
   }
 </script>
