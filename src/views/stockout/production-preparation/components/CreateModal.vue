@@ -91,6 +91,7 @@
     companyFlag.value = await getSysParamsByParamKey(SysParamsEnum.BloodProductionCompany);
     await updateSchema({
       field: 'pickMode',
+      defaultValue: companyFlag.value === 'RS' ? 'B' : '',
       componentProps: {
         options:
           companyFlag.value === 'RS'
