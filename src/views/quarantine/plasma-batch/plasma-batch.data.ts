@@ -255,13 +255,13 @@ export const colMap: Record<string, BasicColumn[]> = {
     {
       title: '不合格日期',
       dataIndex: 'failedAt',
-      width: 90,
+      width: 100,
     },
     {
       title: '不合格原因',
       dataIndex: 'fkFailedCode',
       slots: { customRender: 'unqReason' },
-      width: 200,
+      width: 160,
       ellipsis: false,
     },
     {
@@ -273,12 +273,12 @@ export const colMap: Record<string, BasicColumn[]> = {
     {
       title: '浆员姓名',
       dataIndex: 'donorName',
-      width: 100,
+      width: 80,
     },
     {
       title: '采集日期',
       dataIndex: 'collectAt',
-      width: 90,
+      width: 100,
     },
     {
       title: '验收净重(g)',
@@ -303,7 +303,8 @@ export const modalCommonColumns: BasicColumn[] = [
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
-    width: 110,
+    width: 140,
+    ellipsis: false,
   },
 ];
 
