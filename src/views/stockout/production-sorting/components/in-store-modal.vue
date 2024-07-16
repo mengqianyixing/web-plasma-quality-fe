@@ -88,7 +88,7 @@
     change(state.activeKey);
   });
   const [registerInModal, { openModal: openInModal }] = useModal();
-  const [registerForm, { getFieldsValue, setFieldsValue, resetFields }] = useForm({
+  const [registerForm, { getFieldsValue, setFieldsValue, resetFields, setProps }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 8 },
     schemas: bindFormSchema.map((schems) => ({
@@ -218,9 +218,11 @@
     if (!boxId || !trayNo) return;
     try {
       state.spinning = true;
+      setProps({ readonly: true });
       await submit();
     } finally {
       state.spinning = false;
+      setProps({ readonly: false });
     }
   }
 </script>

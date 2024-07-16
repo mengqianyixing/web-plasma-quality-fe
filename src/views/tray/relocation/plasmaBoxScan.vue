@@ -32,7 +32,7 @@
 
   const count = ref(0);
   const spinning = ref(false);
-  const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
+  const [registerForm, { getFieldsValue, setFieldsValue, setProps }] = useForm({
     labelWidth: 90,
     baseColProps: { flex: '0 0 370px' },
     schemas: plasmaBoxScanFormSchema,
@@ -79,8 +79,10 @@
     if (!boxId || !trayNo) return;
     try {
       spinning.value = true;
+      setProps({ readonly: true });
       await submit();
     } finally {
+      setProps({ readonly: false });
       spinning.value = false;
     }
   }
