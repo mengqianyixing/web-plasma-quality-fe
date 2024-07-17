@@ -434,7 +434,7 @@
 
       const res = await getPrintRecord({
         labelType: 'KEEP_SAMPLE_BOX',
-        bissNo: '箱号_样本批号',
+        bissNo: `${boxNoValue.value}_${batchValue.value}`,
       });
       await printRecord({
         ...res,
