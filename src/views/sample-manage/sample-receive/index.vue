@@ -43,7 +43,16 @@
 </template>
 
 <script setup lang="tsx">
-  import { computed, nextTick, reactive, ref, shallowRef, watch } from 'vue';
+  import {
+    computed,
+    nextTick,
+    reactive,
+    ref,
+    shallowRef,
+    watch,
+    onActivated,
+    onDeactivated,
+  } from 'vue';
 
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import Description from '@/components/Description/src/Description.vue';
@@ -83,10 +92,22 @@
   const bagRef = ref(null);
 
   const { createConfirm } = useMessage();
-
+  let _removeEvent = () => {};
+  onActivated(() => {
+    if (isReceiveByBag.value) {
+      const { removeEvent } = startEvent();
+      _removeEvent = removeEvent;
+    }
+  });
+  onDeactivated(() => {
+    _removeEvent();
+  });
   getSysParamsByParamKey(SysParamsEnum.BatchSampleAcceptPattern).then((res) => {
     receiveModal.value = res;
-    if (isReceiveByBag.value) startEvent();
+    if (isReceiveByBag.value) {
+      const { removeEvent } = startEvent();
+      _removeEvent = removeEvent;
+    }
   });
   const receiveModal = shallowRef<sampleReceiveModalEnum>();
   const isReceiveByBag = computed(() => receiveModal.value === sampleReceiveModalEnum.BAG);
@@ -108,7 +129,7 @@
               enter-button="接收"
               value={bagValue}
               onChange={(e) => (bagValue.value = e.target.value)}
-              onPressEnter={_handleReceiveByBag}
+              onkeyup={handleKeyupEnter}
             />
           </div>
         );
@@ -323,7 +344,11 @@
   );
 
   const _handleReceiveByBag = debounce(handleReceiveByBag, 300);
-
+  function handleKeyupEnter(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      _handleReceiveByBag();
+    }
+  }
   const bsaNo = ref<undefined | string>(undefined);
   async function handleReceiveByBag() {
     try {

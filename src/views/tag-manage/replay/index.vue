@@ -22,10 +22,10 @@
   const labelTypeDictionary = ref<Recordable[] | undefined>([]);
 
   onMounted(async () => {
-    const dictionaryArr = await getTagDictionary([TagDictionaryType.LabelType]);
+    const dictionaryArr = await getTagDictionary([TagDictionaryType.LabelReplayType]);
     if (!dictionaryArr.length) return;
     labelTypeDictionary.value = dictionaryArr.find(
-      (it) => it.dictNo === TagDictionaryType.LabelType,
+      (it) => it.dictNo === TagDictionaryType.LabelReplayType,
     )?.dictImtes;
     await updateSchema({
       field: 'labelType',

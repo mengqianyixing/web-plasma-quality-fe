@@ -50,11 +50,13 @@
       },
       inset: true,
       isCanResizeParent: true,
+      pagination: false,
       columns: boxColumns,
       size: 'small',
       useSearchForm: true,
       bordered: true,
       rowSelection: { type: 'checkbox' },
+      beforeFetch: (p) => ({ ...p, pageSize: 100000, currPage: 1 }),
       afterFetch: (res) => {
         clearSelectedRowKeys();
         return res;

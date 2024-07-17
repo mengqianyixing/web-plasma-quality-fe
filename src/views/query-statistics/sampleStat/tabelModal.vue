@@ -17,17 +17,18 @@
 </template>
 <script lang="ts" setup>
   import { nextTick, reactive } from 'vue';
-  import { totalUnqualifiedColumns, columnsMap, totalUnqualifiedSearch } from './data';
+  import { dtColumns, totalUnqualifiedSearch, typeMap } from './data';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { getUnqualifiedApi } from '@/api/inspect/reportRelease';
+  import { getDtApi } from '@/api/query-statistics/sampleStat';
 
   const state = reactive({ bsNo: '', type: 1, title: '' });
 
-  const [registerTable, { redoHeight, setColumns, getForm }] = useTable({
+  const [registerTable, { redoHeight, getForm, setProps }] = useTable({
     immediate: false,
     api: getUnqualifiedApi,
-    columns: totalUnqualifiedColumns,
+    columns: dtColumns,
     formConfig: { schemas: totalUnqualifiedSearch },
     fetchSetting: {
       pageField: 'currPage',
@@ -46,12 +47,15 @@
   });
   const [registerModal] = useModalInner(async ({ sampleBatchNo, type, title }) => {
     await nextTick();
+    if (type === typeMap.UNQ) {
+      setProps({ api: getDtApi });
+    } else {
+      setProps({ api: getUnqualifiedApi });
+    }
     const { resetFields } = getForm();
     state.bsNo = sampleBatchNo;
     state.type = type;
     state.title = title;
-    const columns = [...totalUnqualifiedColumns, ...(columnsMap[type] || [])];
-    setColumns(columns);
     resetFields();
   });
 </script>

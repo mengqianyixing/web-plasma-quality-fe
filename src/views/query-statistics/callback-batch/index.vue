@@ -33,7 +33,7 @@
 
   const { currentRoute } = useRouter();
 
-  const [registerTable, { getForm }] = useTable({
+  const [registerTable, { getForm, setProps }] = useTable({
     api: getCallbackBatchStatistics,
     columns,
     formConfig: {
@@ -50,6 +50,14 @@
     useSearchForm: true,
     bordered: true,
     immediate: false,
+    sortFn: (e) => {
+      setProps({
+        searchInfo: {
+          sortIdx: e.order && e.field,
+          sortOrder: e?.order?.slice(0, -3).toUpperCase(),
+        },
+      });
+    },
   });
 
   const loading = ref(false);

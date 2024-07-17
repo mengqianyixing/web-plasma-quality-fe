@@ -1158,7 +1158,7 @@ export interface PostApiProductPrepareSummaryPreviewResponse {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/sorting/bags`
- * @更新时间 `2024-05-31 15:00:24`
+ * @更新时间 `2024-07-17 09:20:28`
  */
 export interface GetApiProductPrepareSortingBagsRequest {
   prepareNo: string;
@@ -1180,6 +1180,18 @@ export interface GetApiProductPrepareSortingBagsRequest {
    * 准备投产
    */
   prepareProduce?: string;
+  /**
+   * 分拣人
+   */
+  sorter?: string;
+  /**
+   * 分拣开始时间
+   */
+  sortingAtBegin?: string;
+  /**
+   * 分拣结束时间
+   */
+  sortingAtEnd?: string;
 }
 
 /**
@@ -1187,7 +1199,7 @@ export interface GetApiProductPrepareSortingBagsRequest {
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
  * @请求头 `GET /api/product/prepare/sorting/bags`
- * @更新时间 `2024-05-31 15:00:24`
+ * @更新时间 `2024-07-17 09:20:28`
  */
 export interface GetApiProductPrepareSortingBagsResponse {
   totalCount?: number;

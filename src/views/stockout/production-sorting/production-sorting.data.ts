@@ -12,6 +12,10 @@ export const trayInStoreColumns: BasicColumn[] = [
     dataIndex: 'trayNo',
   },
   {
+    title: '箱号类型',
+    dataIndex: 'boxTypes',
+  },
+  {
     title: '箱数',
     dataIndex: 'boxCount',
   },

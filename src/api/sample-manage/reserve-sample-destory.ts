@@ -35,7 +35,6 @@ import {
   PostApiCoreBankDeliverSampleRequest,
   PostApiCoreBankDeliverSampleResponse,
   PostApiCoreBankDeliverSampleScanRequest,
-  PostApiCoreBankDeliverSampleScanResponse,
   PostApiCoreBatchSampleAcceptKeepPackRequest,
   PostApiCoreBatchSampleAcceptKeepPackResponse,
   PutApiCoreBankDeliverSampleProcessDlvNoRequest,
@@ -171,10 +170,15 @@ export const keepPackOutBandList = (params: GetApiCoreBankDeliverSampleScanReque
   );
 
 export const keepPackScan = (params: PostApiCoreBankDeliverSampleScanRequest) =>
-  defHttp.post<PostApiCoreBankDeliverSampleScanResponse>({
-    url: Api.SCAN_LIST,
-    params,
-  });
+  defHttp.post(
+    {
+      url: Api.SCAN_LIST,
+      params,
+    },
+    {
+      isReturnNativeResponse: true,
+    },
+  );
 
 export const keepPackOutBandTrayList = (params: GetApiCoreBankDeliverSampleTrayRequest) =>
   defHttp.get<GetApiCoreBankDeliverSampleTrayResponse>(

@@ -71,7 +71,7 @@ const quarantineManager: AppRouteModule = {
       path: 'nonconformityTracking',
       name: 'NonconformityTracking',
       meta: {
-        title: '不合格追踪',
+        title: '检疫期追踪',
       },
       id: 950040,
       authElements: [

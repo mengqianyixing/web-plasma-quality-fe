@@ -17,7 +17,7 @@
           <a-input
             ref="inputRef"
             size="large"
-            @press-enter="handleEnter"
+            @keyup="handleKeyupEnter"
             placeholder="请扫箱号"
             :disabled="inputDisabled"
             v-model:value="inputValue"
@@ -68,7 +68,11 @@
       await _handleEnter();
     }
   });
-
+  function handleKeyupEnter(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      _handleEnter();
+    }
+  }
   const receptionCount = ref(0);
   const acceptedCount = ref(0);
   const receptionTitle = computed(() => `未接收箱数：${receptionCount.value}`);

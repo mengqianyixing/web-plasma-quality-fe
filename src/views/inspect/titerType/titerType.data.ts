@@ -148,6 +148,7 @@ export const formListSchema: FormSchema[] = [
     label: '默认标记',
     required: true,
     defaultValue: false,
+    ifShow: false,
     componentProps: {
       options: [
         {

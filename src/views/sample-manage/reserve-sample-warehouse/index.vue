@@ -88,6 +88,7 @@
     GetApiCoreBatchSampleAcceptKeepPackBatchNoResponse,
     PostApiCoreBatchSampleAcceptKeepPackResponse,
   } from '@/api/type/sampleManage';
+  import { getPrintRecord, printRecord } from '@/api/tag/printRecord';
 
   const { createMessage, createConfirm } = useMessage();
 
@@ -364,9 +365,6 @@
     tableLoading.value = true;
     originKeepPackData.value = await getKeepPackDetail(batchValue.value);
 
-    if (originKeepPackData.value?.lastPackAccept) {
-      await handleSeal();
-    }
     trayValue.value = originKeepPackData.value.trayNo || '';
     boxNoValue.value = originKeepPackData.value.boxNo || '';
 
@@ -394,6 +392,10 @@
       });
 
       originRes = await keepPackAccept(_params);
+
+      if (originRes?.lastPackAccept) {
+        await handleSeal();
+      }
     } finally {
       packNo.value = '';
     }
@@ -424,13 +426,23 @@
         trayNo: trayValue.value,
       });
 
+      createMessage.success('封箱成功，正在打印标签');
+
+      const res = await getPrintRecord({
+        labelType: 'KEEP_SAMPLE_BOX',
+        bissNo: `${boxNoValue.value}_${batchValue.value}`,
+      });
+      await printRecord({
+        ...res,
+        resolution: void 0,
+        dpi: res.resolution,
+      });
+
       if (!resBoxNo) {
         boxNoValue.value = '';
       } else {
         boxNoValue.value = resBoxNo;
       }
-
-      createMessage.success('封箱成功，正在打印标签');
     } catch (e) {
       createMessage.warn('操作失败，请重试');
     } finally {
