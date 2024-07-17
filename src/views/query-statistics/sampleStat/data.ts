@@ -8,7 +8,7 @@ const { stationOptions } = useStation();
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
-const typeMap = {
+export const typeMap = {
   UNQ: '3',
   HT: '1',
   LT: '2',
@@ -141,7 +141,7 @@ export const searchFormSchema: FormSchema[] = [
 
 export const dtColumns: BasicColumn[] = [
   {
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     title: '浆员编号',
   },
   {
