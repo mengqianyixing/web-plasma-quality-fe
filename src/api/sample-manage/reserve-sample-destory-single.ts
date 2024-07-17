@@ -13,7 +13,6 @@ import {
   PostApiCoreBankDeliverSamplePickSingleRequest,
   PostApiCoreBankDeliverSamplePickSingleResponse,
   PostApiCoreBankDeliverSampleScanSingleRequest,
-  PostApiCoreBankDeliverSampleScanSingleResponse,
 } from '@/api/type/sampleManage';
 
 enum Api {
@@ -68,10 +67,15 @@ export const keepPackOutBandSingleList = (params: GetApiCoreBankDeliverSampleSca
   );
 
 export const keepPackSingleScan = (params: PostApiCoreBankDeliverSampleScanSingleRequest) =>
-  defHttp.post<PostApiCoreBankDeliverSampleScanSingleResponse>({
-    url: Api.SCAN_LIST,
-    params,
-  });
+  defHttp.post(
+    {
+      url: Api.SCAN_LIST,
+      params,
+    },
+    {
+      isReturnNativeResponse: true,
+    },
+  );
 
 export const keepPackOutBandTrayList = (params: GetApiSearchBankSampleTraySingleRequest) =>
   defHttp.get<GetApiSearchBankSampleTraySingleResponse>(

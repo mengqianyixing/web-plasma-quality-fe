@@ -6,6 +6,7 @@
     width="80%"
     :min-height="650"
     :showOkBtn="false"
+    @cancel="remove"
   >
     <Description @register="register" :data="originTableData" />
 
@@ -63,6 +64,9 @@
     keepPackOutBandSingleList,
     keepPackSingleScan,
   } from '@/api/sample-manage/reserve-sample-destory-single';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  const { createErrorModal } = useMessage();
 
   const { barCode, enterFlag, startEvent } = useScanHelper();
 
@@ -87,7 +91,7 @@
               enter-button="接收"
               value={sampleNo}
               onChange={(e) => (sampleNo.value = e.target.value)}
-              onPressEnter={_handleReceiveByScan}
+              onkeyup={handleKeyupEnter}
             />
           </div>
         );
@@ -104,6 +108,7 @@
   });
 
   const dlvNo = ref('');
+  let remove = () => {};
   const originTableData = ref<GetApiCoreBankDeliverSampleScanSingleResponse>({
     outedList: [],
     outedNum: '',
@@ -111,7 +116,9 @@
     waitOutNum: '',
   });
   const [registerModal, { setModalProps }] = useModalInner(async (data) => {
-    startEvent();
+    sampleNo.value = '';
+    const { removeEvent } = startEvent();
+    remove = removeEvent;
     setModalProps({
       maskClosable: false,
     });
@@ -238,17 +245,43 @@
     },
   );
 
+  function handleKeyupEnter(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      _handleReceiveByScan();
+    }
+  }
   const _handleReceiveByScan = debounce(handleReceiveByScan, 300);
 
   async function handleReceiveByScan() {
+    if (!sampleNo.value) return;
     try {
       tableLoading.value = true;
-      await keepPackSingleScan({
+      const res = await keepPackSingleScan({
         dlvNo: dlvNo.value,
         sampleNo: sampleNo.value!,
       });
-      sampleNo.value = '';
-      await initTableData();
+      if (res.data.code === '0') {
+        sampleNo.value = '';
+        await initTableData();
+      } else if (res.status === 200 && res.data.msg) {
+        remove();
+        const focusedElement = document.activeElement as HTMLElement;
+        focusedElement?.blur();
+        createErrorModal({
+          title: '提示',
+          content: res.data.msg,
+          onOk: () => {
+            const { removeEvent } = startEvent();
+            remove = removeEvent;
+          },
+          keyboard: false,
+          wrapClassName: 'osm9527',
+        });
+        const dom: HTMLElement | null = document.querySelector('.osm9527 button');
+        setTimeout(() => {
+          dom?.blur();
+        });
+      }
     } finally {
       barCode.value = '';
       enterFlag.value = false;
