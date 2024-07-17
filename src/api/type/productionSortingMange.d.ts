@@ -110,7 +110,7 @@ export interface GetApiCoreBankTraySortOutResponse {
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
  * @请求头 `GET /api/core/bank/tray/sort-in`
- * @更新时间 `2024-02-05 17:16:11`
+ * @更新时间 `2024-07-17 14:02:37`
  */
 export interface GetApiCoreBankTraySortInRequest {
   /**
@@ -140,7 +140,7 @@ export interface GetApiCoreBankTraySortInRequest {
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
  * @请求头 `GET /api/core/bank/tray/sort-in`
- * @更新时间 `2024-02-05 17:16:11`
+ * @更新时间 `2024-07-17 14:02:37`
  */
 export interface GetApiCoreBankTraySortInResponse {
   totalCount?: number;
@@ -152,6 +152,10 @@ export interface GetApiCoreBankTraySortInResponse {
      * 托盘编号
      */
     trayNo?: string;
+    /**
+     * 箱号类型
+     */
+    boxTypes?: string;
     /**
      * 箱数
      */
