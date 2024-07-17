@@ -152,7 +152,7 @@ export const columns: BasicColumn[] = [
       },
       {
         title: '效价结果值',
-        dataIndex: ['reCheckInfo', 'titer'],
+        dataIndex: ['reCheckInfo', 'titerStr'],
         width: 150,
       },
     ],

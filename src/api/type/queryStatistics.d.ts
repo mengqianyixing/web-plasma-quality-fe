@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/statistics`
- * @更新时间 `2024-05-31 15:59:38`
+ * @更新时间 `2024-07-17 13:19:27`
  */
 export interface GetApiCoreBagStatisticsRequest {
   /**
@@ -163,7 +163,7 @@ export interface GetApiCoreBagStatisticsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/statistics`
- * @更新时间 `2024-05-31 15:59:38`
+ * @更新时间 `2024-07-17 13:19:27`
  */
 export interface GetApiCoreBagStatisticsResponse {
   currPage?: number;
@@ -266,6 +266,10 @@ export interface GetApiCoreBagStatisticsResponse {
        * 效价结果值
        */
       titer?: number;
+      /**
+       * 效价结果值（字符串）
+       */
+      titerStr?: string;
     };
     /**
      * 检疫期参考信息（满足日期、样本批号、样本编号、采集日期、浆站检验日期、厂家复检日期、样本结果、不合格项目）
