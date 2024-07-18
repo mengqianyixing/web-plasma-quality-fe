@@ -11,7 +11,16 @@
           导出
         </a-button>
       </template>
+      <template #cardNo="{ value }">
+        <span
+          class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="openModal(true, { cardNo: value })"
+        >
+          {{ value }}
+        </span>
+      </template>
     </BasicTable>
+    <DonorModel @register="registerDonorModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -25,6 +34,8 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { message } from 'ant-design-vue';
   import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
+  import DonorModel from '@/__components/donor/donorModel.vue';
+  import { useModal } from '@/components/Modal';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   const { currentRoute } = useRouter();
@@ -32,7 +43,7 @@
   defineOptions({ name: 'FactoryCheckFail' });
 
   const loading = ref(false);
-
+  const [registerDonorModal, { openModal }] = useModal();
   const [registerTable, { getForm }] = useTable({
     api: getListApi,
     columns,
