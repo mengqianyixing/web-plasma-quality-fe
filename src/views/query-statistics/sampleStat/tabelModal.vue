@@ -23,7 +23,7 @@
   import { getUnqualifiedApi } from '@/api/inspect/reportRelease';
   import { getDtApi } from '@/api/query-statistics/sampleStat';
 
-  const state = reactive({ bsNo: '', type: 1, title: '' });
+  const state = reactive({ bsNo: '', type: 1, title: '', sampleType: '' });
 
   const [registerTable, { redoHeight, getForm, setProps }] = useTable({
     immediate: false,
@@ -42,10 +42,10 @@
     isCanResizeParent: true,
     inset: false,
     beforeFetch: (p) => {
-      return { ...p, ...state };
+      return { ...p, ...state, batchNo: state.bsNo, sampleSubType: state.type };
     },
   });
-  const [registerModal] = useModalInner(async ({ sampleBatchNo, type, title }) => {
+  const [registerModal] = useModalInner(async ({ sampleBatchNo, type, title, sampleType }) => {
     await nextTick();
     if (type === typeMap.UNQ) {
       setProps({ api: getDtApi });
@@ -56,6 +56,7 @@
     state.bsNo = sampleBatchNo;
     state.type = type;
     state.title = title;
+    state.sampleType = sampleType;
     resetFields();
   });
 </script>
