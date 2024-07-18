@@ -142,8 +142,8 @@
         values.receiptStartDate = values.date[0];
         values.receiptEndDate = values.date[1];
       } else if (values.dateKey === 'verify' && values.date) {
-        values.verifyPubStartDate = values.date[0];
-        values.verifyPubEndDate = values.date[1];
+        values.verifyStartDate = values.date[0];
+        values.verifyEndDate = values.date[1];
       }
       const searchParams = {
         ...values,
@@ -185,8 +185,8 @@
       values.receiptStartDate = values.date[0];
       values.receiptEndDate = values.date[1];
     } else if (values.dateKey === 'verify' && values.date) {
-      values.verifyPubStartDate = values.date[0];
-      values.verifyPubEndDate = values.date[1];
+      values.verifyStartDate = values.date[0];
+      values.verifyEndDate = values.date[1];
     }
 
     const searchParams = {

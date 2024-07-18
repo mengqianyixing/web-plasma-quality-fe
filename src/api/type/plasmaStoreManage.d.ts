@@ -382,7 +382,7 @@ export interface GetApiCoreBankLocationsResponse {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/search/bank/stock`
- * @更新时间 `2024-06-13 19:42:15`
+ * @更新时间 `2024-07-18 10:41:47`
  */
 export interface GetApiSearchBankStockRequest {
   /**
@@ -439,11 +439,11 @@ export interface GetApiSearchBankStockRequest {
   /**
    * 验收发布开始时间
    */
-  verifyPubStartDate?: string;
+  verifyStartDate?: string;
   /**
    * 验收发布结束时间
    */
-  verifyPubEndDate?: string;
+  verifyEndDate?: string;
 }
 
 /**
@@ -451,7 +451,7 @@ export interface GetApiSearchBankStockRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/search/bank/stock`
- * @更新时间 `2024-06-13 19:42:15`
+ * @更新时间 `2024-07-18 10:41:47`
  */
 export type GetApiSearchBankStockResponse = {
   /**
