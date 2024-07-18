@@ -16,7 +16,7 @@
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
-  import { columns, searchFormSchema } from './batch.data';
+  import { columns, searchFormSchema, sortColunm } from './batch.data';
   import { PageWrapper } from '@/components/Page';
 
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
@@ -51,9 +51,10 @@
     bordered: true,
     immediate: false,
     sortFn: (e) => {
+      const column = e.column as sortColunm;
       setProps({
         searchInfo: {
-          sortIdx: e.order && e.field,
+          sortIdx: e.order && column.sortField,
           sortOrder: e?.order?.slice(0, -3).toUpperCase(),
         },
       });

@@ -3,12 +3,16 @@ import { BasicColumn } from '@/components/Table';
 import { useStation } from '@/hooks/common/useStation';
 
 const { stationOptions } = useStation();
-export const columns: BasicColumn[] = [
+export interface sortColunm extends BasicColumn {
+  sortField?: string;
+}
+export const columns: sortColunm[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
     sorter: true,
     width: 100,
+    sortField: 'bs.station_no',
   },
   {
     title: '样本批号',
@@ -16,6 +20,7 @@ export const columns: BasicColumn[] = [
     sorter: true,
     width: 120,
     ellipsis: false,
+    sortField: 'bs.bs_no',
   },
 
   {
