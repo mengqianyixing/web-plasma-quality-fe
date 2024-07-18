@@ -17,7 +17,7 @@
             ><a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a
             ><a @click="_sortingBoxSealing(item)">封箱</a></template
           >
-          <div class="text-4" v-for="one in item.bagNos" :key="one">{{ one }}</div>
+          <div class="text-4 one-bag" v-for="one in item.bagNos" :key="one">{{ one }}</div>
         </Card>
       </div>
     </div>
@@ -38,7 +38,7 @@
             ><a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a
             ><a @click="_sortingBoxSealing(item)">封箱</a></template
           >
-          <div class="text-4" v-for="one in item.bagNos" :key="one">{{ one }}</div>
+          <div class="text-4 one-bag" v-for="one in item.bagNos" :key="one">{{ one }}</div>
         </Card>
       </div>
     </div>
@@ -509,7 +509,7 @@
               topBoxData.value[0].isSelected = true;
               // targetBox = topBoxData.value[0];
               nextTick(() => {
-                scollToBox(true, 'PRO');
+                scollToBox(true, 'PRO', true);
               });
             }
             // B时的不投产箱子,A时为空
@@ -551,7 +551,7 @@
                 nextTick(() => {
                   topBoxData.value[scollToIndex].isSelected = true;
                   // 滚动逻辑...
-                  scollToBox(true, topBoxData.value[scollToIndex].immTypeName);
+                  scollToBox(true, topBoxData.value[scollToIndex].immTypeName, true);
                 });
               }
             }
@@ -589,7 +589,7 @@
                 // targetBox = bottomBoxData.value[scollToIndex];
                 nextTick(() => {
                   bottomBoxData.value[scollToIndex].isSelected = true;
-                  scollToBox(false, bottomBoxData.value[scollToIndex].immTypeName);
+                  scollToBox(false, bottomBoxData.value[scollToIndex].immTypeName, true);
                 });
               }
             }
@@ -881,13 +881,22 @@
       : `${immType + titerLevel},${PlasmaType(immType) + titerLevelText}`;
   }
   // 定位到操作箱
-  function scollToBox(isTop, childId) {
+  function scollToBox(isTop, childId, isBold?) {
     const parentDom = isTop ? topBoxBarRef.value : bottomBoxBarRef.value;
     const childDom = parentDom.querySelector(`#${childId}`);
     parentDom.scrollTo({
       left: childDom.offsetLeft - 100,
       behavior: 'smooth',
     });
+    // 清除所有加粗袋号
+    const elements = document.querySelectorAll('.one-bag');
+    elements.forEach((element) => {
+      element.style.fontWeight = '400';
+    });
+    // 当前操作袋号加粗
+    if (!isBold) return;
+    const firstBag = childDom.querySelector('.one-bag');
+    if (firstBag) firstBag.style.fontWeight = 'bold';
   }
 
   // 装箱信息
