@@ -10,8 +10,6 @@ import {
   GetApiCoreBankDeliverSampleDetailBagResponse,
   GetApiCoreBankDeliverSampleDetailRequest,
   GetApiCoreBankDeliverSampleDetailResponse,
-  GetApiCoreBankDeliverSamplePickRequest,
-  GetApiCoreBankDeliverSamplePickResponse,
   GetApiCoreBankDeliverSampleRequest,
   GetApiCoreBankDeliverSampleResponse,
   GetApiCoreBankDeliverSampleScanRequest,
@@ -30,6 +28,8 @@ import {
   GetApiCoreBatchSampleAcceptKeepPackPackesResponse,
   GetApiCoreBatchSampleAcceptKeepPackTraiesRequest,
   GetApiCoreBatchSampleAcceptKeepPackTraiesResponse,
+  GetApiSearchSampleRetainSamplePickRequest,
+  GetApiSearchSampleRetainSamplePickResponse,
   PostApiCoreBankDeliverSamplePickRequest,
   PostApiCoreBankDeliverSamplePickResponse,
   PostApiCoreBankDeliverSampleRequest,
@@ -54,6 +54,7 @@ enum Api {
   RESERVE_SAMPLE_DESTROY_LIST = '/api/core/bank/deliver/sample',
   DELIVER_SAMPLE_DETAIL = '/api/core/bank/deliver/sample/detail',
   PICK_SAMPLE_LIST = '/api/core/bank/deliver/sample-pick',
+  SEARCH_PICK_SAMPLE_LIST = '/api/search/sample/retain/sample-pick',
   SUBMIT_APPLICATION = '/api/core/bank/deliver/sample/ready',
   CHECK_APPLICATION = '/api/core/bank/deliver/sample/process',
   SAMPLE_ACCEPT = '/api/core/batch/sample/accept/keep-pack',
@@ -110,9 +111,9 @@ export const getDeliverSampleDetailByBag = (params: GetApiCoreBankDeliverSampleD
     },
   );
 
-export const getPickSampleList = (params: GetApiCoreBankDeliverSamplePickRequest) =>
-  defHttp.get<GetApiCoreBankDeliverSamplePickResponse>({
-    url: Api.PICK_SAMPLE_LIST,
+export const getPickSampleList = (params: GetApiSearchSampleRetainSamplePickRequest) =>
+  defHttp.get<GetApiSearchSampleRetainSamplePickResponse>({
+    url: Api.SEARCH_PICK_SAMPLE_LIST,
     params,
   });
 
