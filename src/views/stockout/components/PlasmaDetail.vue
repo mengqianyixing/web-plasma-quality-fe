@@ -204,6 +204,18 @@
       component: 'Input',
       colProps: { span: 4 },
     },
+    {
+      field: '[sortingAtBegin, sortingAtEnd]',
+      component: 'RangePicker',
+      label: '分拣日期',
+      colProps: { span: 4 },
+    },
+    {
+      field: 'sorter',
+      label: '分拣人',
+      component: 'Input',
+      colProps: { span: 4 },
+    },
   ];
   const [registerTable, { getForm, reload }] = useTable({
     api: getSortBags,
@@ -212,6 +224,9 @@
     formConfig: {
       labelWidth: 80,
       schemas: searchFormSchema,
+      transformDateFunc(date) {
+        return date ? date.format('YYYY-MM-DD') : ''; // 时间格式只要日期
+      },
     },
     clickToRowSelect: false,
     fetchSetting: {
