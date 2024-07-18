@@ -398,6 +398,9 @@
   const gridOptions = reactive<VxeGridProps<any>>({
     border: true,
     maxHeight: 600,
+    rowConfig: {
+      isHover: true,
+    },
     showOverflow: true,
     exportConfig: {},
     columnConfig: {
