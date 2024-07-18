@@ -152,6 +152,9 @@
     showOverflow: true,
     height: 600,
     align: 'center',
+    rowConfig: {
+      isHover: true,
+    },
     size: 'small',
     exportConfig: {},
     columnConfig: {

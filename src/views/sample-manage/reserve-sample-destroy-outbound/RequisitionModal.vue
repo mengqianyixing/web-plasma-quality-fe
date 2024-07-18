@@ -114,6 +114,9 @@
     border: true,
     showOverflow: true,
     align: 'center',
+    rowConfig: {
+      isHover: true,
+    },
     size: 'small',
     exportConfig: {},
     columnConfig: {

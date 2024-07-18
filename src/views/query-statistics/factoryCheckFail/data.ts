@@ -30,6 +30,7 @@ export const columns: BasicColumn[] = [
     title: '浆员编号',
     dataIndex: 'cardNo',
     width: 120,
+    slots: { customRender: 'cardNo' },
   },
   {
     title: '浆员姓名',
@@ -49,15 +50,15 @@ export const columns: BasicColumn[] = [
     ellipsis: false,
   },
   {
-    title: '已销毁血浆批号',
+    title: '浆站已销毁血浆批号',
     dataIndex: 'destroyedBatchNo',
-    width: 120,
+    width: 150,
     ellipsis: false,
   },
   {
-    title: '已销毁血浆编号',
+    title: '浆站已销毁血浆编号',
     dataIndex: 'destroyedBagNo',
-    width: 125,
+    width: 150,
     ellipsis: false,
   },
   {

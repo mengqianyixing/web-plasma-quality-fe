@@ -150,6 +150,9 @@
   const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
     border: true,
     height: '710px',
+    rowConfig: {
+      isHover: true,
+    },
     showOverflow: true,
     exportConfig: {},
     columnConfig: {
@@ -191,6 +194,9 @@
   const gridOptionsAccept = reactive<VxeGridProps<any>>({
     border: true,
     height: '710px',
+    rowConfig: {
+      isHover: true,
+    },
     showOverflow: true,
     columnConfig: {
       resizable: true,

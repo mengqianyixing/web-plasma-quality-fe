@@ -20,12 +20,12 @@
       </template>
       <template #pickBagCount="{ record }">
         <div class="z-999">
-          <!-- <a-button type="link" @click="goPlasmaDetail(record)">
+          <a-button type="link" @click="goPlasmaDetail(record)">
             {{ record.summary?.pickBagCount }}
-          </a-button> -->
-          <span>
+          </a-button>
+          <!-- <span>
             {{ record.summary?.pickBagCount }}
-          </span>
+          </span> -->
         </div>
       </template>
       <template #prodBagCount="{ record }">

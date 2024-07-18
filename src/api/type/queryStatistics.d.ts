@@ -2092,7 +2092,7 @@ export interface GetApiSearchPlasmaPrivilegeResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/sample/callback/statistic`
- * @更新时间 `2024-03-02 11:17:46`
+ * @更新时间 `2024-07-17 18:03:47`
  */
 export interface GetApiCoreBatchSampleCallbackStatisticRequest {
   /**
@@ -2113,6 +2113,14 @@ export interface GetApiCoreBatchSampleCallbackStatisticRequest {
   sampleBatchNo?: string;
   pageSize: string;
   currPage: string;
+  /**
+   * 样本批号bs.bs_no   浆站编号 bs.station_no
+   */
+  sortIdx?: string;
+  /**
+   * DESC 降序 ASC 升序
+   */
+  sortOrder?: string;
 }
 
 /**
@@ -2120,7 +2128,7 @@ export interface GetApiCoreBatchSampleCallbackStatisticRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/sample/callback/statistic`
- * @更新时间 `2024-03-02 11:17:46`
+ * @更新时间 `2024-07-17 18:03:47`
  */
 export interface GetApiCoreBatchSampleCallbackStatisticResponse {
   totalCount?: number;
@@ -4811,10 +4819,10 @@ export interface GetApiSearchBatchCountTotalResponse {
  * 接口 [样本统计：样本详情列表↗](https://yapi.sharing8.cn/project/529/interface/api/35280) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/sample/statistics/detail`
- * @更新时间 `2024-06-12 16:15:32`
+ * @请求头 `GET /api/search/sample/statistics/detail`
+ * @更新时间 `2024-07-17 15:52:40`
  */
-export interface GetApiCoreSampleStatisticsDetailRequest {
+export interface GetApiSearchSampleStatisticsDetailRequest {
   /**
    * 当前页码
    */
@@ -4849,10 +4857,10 @@ export interface GetApiCoreSampleStatisticsDetailRequest {
  * 接口 [样本统计：样本详情列表↗](https://yapi.sharing8.cn/project/529/interface/api/35280) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/core/sample/statistics/detail`
- * @更新时间 `2024-06-12 16:15:32`
+ * @请求头 `GET /api/search/sample/statistics/detail`
+ * @更新时间 `2024-07-17 15:52:40`
  */
-export interface GetApiCoreSampleStatisticsDetailResponse {
+export interface GetApiSearchSampleStatisticsDetailResponse {
   currPage?: number;
   pageSize?: number;
   totalCount?: number;

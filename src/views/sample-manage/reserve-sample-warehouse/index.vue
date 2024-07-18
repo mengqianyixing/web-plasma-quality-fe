@@ -249,6 +249,9 @@
     height: '750px',
     showOverflow: true,
     exportConfig: {},
+    rowConfig: {
+      isHover: true,
+    },
     columnConfig: {
       resizable: true,
     },
@@ -288,6 +291,9 @@
     border: true,
     height: '750px',
     showOverflow: true,
+    rowConfig: {
+      isHover: true,
+    },
     columnConfig: {
       resizable: true,
     },

@@ -9,7 +9,7 @@ const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
 const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
 export const typeMap = {
-  UNQ: '3',
+  UNQ: 'UNQ',
   HT: '1',
   LT: '2',
   NT: '5',

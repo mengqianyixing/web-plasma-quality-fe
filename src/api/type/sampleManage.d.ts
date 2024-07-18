@@ -1009,10 +1009,10 @@ export type GetApiCoreBankDeliverSampleDetailResponse = {
  * 接口 [批量挑选保留样本批次列表↗](https://yapi.sharing8.cn/project/529/interface/api/34854) 的 **请求类型**
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
- * @请求头 `GET /api/core/bank/deliver/sample-pick`
- * @更新时间 `2024-05-24 10:43:11`
+ * @请求头 `GET /api/search/sample/retain/sample-pick`
+ * @更新时间 `2024-07-18 16:20:42`
  */
-export interface GetApiCoreBankDeliverSamplePickRequest {
+export interface GetApiSearchSampleRetainSamplePickRequest {
   /**
    * 采浆公司
    */
@@ -1027,10 +1027,10 @@ export interface GetApiCoreBankDeliverSamplePickRequest {
  * 接口 [批量挑选保留样本批次列表↗](https://yapi.sharing8.cn/project/529/interface/api/34854) 的 **返回类型**
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
- * @请求头 `GET /api/core/bank/deliver/sample-pick`
- * @更新时间 `2024-05-24 10:43:11`
+ * @请求头 `GET /api/search/sample/retain/sample-pick`
+ * @更新时间 `2024-07-18 16:20:42`
  */
-export type GetApiCoreBankDeliverSamplePickResponse = {
+export type GetApiSearchSampleRetainSamplePickResponse = {
   /**
    * 采浆公司
    */
