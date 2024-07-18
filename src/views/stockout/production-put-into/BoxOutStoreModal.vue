@@ -16,7 +16,7 @@
           <span class="w-[80px]">箱号：</span>
           <a-input
             size="large"
-            @press-enter="_handleEnter"
+            @keyup="handleKeyupEnter"
             placeholder="请扫箱号"
             :disabled="inputDisabled"
             v-model:value="inputValue"
@@ -73,7 +73,11 @@
       await _handleEnter();
     }
   });
-
+  function handleKeyupEnter(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      _handleEnter();
+    }
+  }
   const [registerNoOutTable] = useTable({
     columns: [
       {

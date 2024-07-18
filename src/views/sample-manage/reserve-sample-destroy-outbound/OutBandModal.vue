@@ -6,6 +6,7 @@
     width="80%"
     :min-height="600"
     :showOkBtn="false"
+    @cancel="_removeEvent"
   >
     <Description @register="register" :data="originTableData" />
 
@@ -59,6 +60,9 @@
   import { debounce } from 'lodash-es';
   import { keepPackOutBandList, keepPackScan } from '@/api/sample-manage/reserve-sample-destory';
   import { GetApiCoreBankDeliverSampleScanResponse } from '@/api/type/sampleManage';
+  import { useMessage } from '@/hooks/web/useMessage';
+
+  const { createErrorModal } = useMessage();
 
   const { barCode, enterFlag, startEvent } = useScanHelper();
 
@@ -78,7 +82,7 @@
               enter-button="接收"
               value={sampleBagNo}
               onChange={(e) => (sampleBagNo.value = e.target.value)}
-              onPressEnter={_handleReceiveByScan}
+              onkeyup={handleKeyupEnter}
             />
           </div>
         );
@@ -126,8 +130,11 @@
     waitList: [],
     waitOutNum: '',
   });
+  let _removeEvent = () => {};
   const [registerModal, { setModalProps }] = useModalInner(async (data) => {
-    startEvent();
+    sampleBagNo.value = '';
+    const { removeEvent } = startEvent();
+    _removeEvent = removeEvent;
     setModalProps({
       maskClosable: false,
     });
@@ -247,14 +254,40 @@
   );
 
   const _handleReceiveByScan = debounce(handleReceiveByScan, 300);
-
+  function handleKeyupEnter(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      _handleReceiveByScan();
+    }
+  }
   async function handleReceiveByScan() {
     try {
       tableLoading.value = true;
-      await keepPackScan({
+      const res = await keepPackScan({
         dlvNo: dlvNo.value,
         sampleBagNo: sampleBagNo.value!,
       });
+      if (res.data.code === '0') {
+        sampleBagNo.value = '';
+        await initTableData();
+      } else if (res.status === 200 && res.data.msg) {
+        _removeEvent();
+        const focusedElement = document.activeElement as HTMLElement;
+        focusedElement?.blur();
+        createErrorModal({
+          title: '提示',
+          content: res.data.msg,
+          onOk: () => {
+            const { removeEvent } = startEvent();
+            _removeEvent = removeEvent;
+          },
+          keyboard: false,
+          wrapClassName: 'obm9527',
+        });
+        const dom: HTMLElement | null = document.querySelector('.obm9527 button');
+        setTimeout(() => {
+          dom?.blur();
+        });
+      }
       await initTableData();
     } finally {
       barCode.value = '';

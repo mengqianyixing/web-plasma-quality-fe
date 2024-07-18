@@ -8,7 +8,7 @@ const { stationOptions } = useStation();
 
 const serverEnumStore = useServerEnumStoreWithOut();
 const SampleType = serverEnumStore.getServerEnumText(SERVER_ENUM.SampleType);
-const typeMap = {
+export const typeMap = {
   UNQ: '3',
   HT: '1',
   LT: '2',
@@ -123,7 +123,9 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '样本类型',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.SampleType),
+      options: serverEnumStore
+        .getServerEnum(SERVER_ENUM.SampleType)
+        .filter((item) => ['CAB', 'NOR', 'CMV'].includes(item.value)),
     },
   },
   {
@@ -139,7 +141,7 @@ export const searchFormSchema: FormSchema[] = [
 
 export const dtColumns: BasicColumn[] = [
   {
-    dataIndex: 'donorNo',
+    dataIndex: 'cardNo',
     title: '浆员编号',
   },
   {

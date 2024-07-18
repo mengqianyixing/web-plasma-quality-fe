@@ -432,7 +432,7 @@
   }
 
   // 血浆扫描
-  async function handlePressEnter(e) {
+  async function handlePressEnter(e, blockVerify: Boolean | undefined) {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
       if (!bagNo.value) {
         warning('请扫描血浆编号！');
@@ -449,13 +449,28 @@
         bagNo: bagNo.value,
         checker: checker.value,
         trayNo: trayNo.value,
+        blockVerify,
       };
 
       // 没有选择批号直接扫码进行的验收操作，将批次信息回填，不作为实际验收操作,相当于查询此批信息
       const realAccept = !!filterForm.value.batchNo;
       try {
         tableLoading.value = true;
-        const data = await plasmaVerifyBag(params);
+        const res = await plasmaVerifyBag(params);
+        if (res.data.code !== '0' && res.data.msg) {
+          createWarningModal({
+            title: '提示',
+            content: res.data.msg,
+            keyboard: false,
+            wrapClassName: 'ap9527',
+          });
+          const dom: HTMLElement | null = document.querySelector('.ap9527 button');
+          setTimeout(() => {
+            dom?.blur();
+          });
+          return;
+        }
+        const data = res.data.data;
         if (data) {
           batchNo.value = data.batchNo;
           filterForm.value.stationName = data.stationName;
@@ -479,32 +494,49 @@
           filterForm.value.verifyBag = data.verifyBag;
 
           if (realAccept) {
-            success('验收成功');
             donorFailed.value = data.donorFailed; // 献血浆者不符合
-            if (data.donorFailed) {
+            if (data.donorFailed && !blockVerify) {
               createWarningModal({
                 title: '提示',
                 content: createVNode('div', { style: 'color:red;' }, data.donorFailed),
+                keyboard: false,
+                wrapClassName: 'ap9527',
+                onOk: () => {
+                  handlePressEnter({ code: 'Enter' }, true);
+                },
+              });
+              const focusedElement = document.activeElement as HTMLElement;
+              focusedElement?.blur();
+              const dom: HTMLElement | null = document.querySelector('.ap9527 button');
+              setTimeout(() => {
+                dom?.blur();
+              });
+            } else {
+              success('验收成功');
+              if (
+                filterForm.value.verifyBagCount == filterForm.value.bagCount &&
+                filterForm.value.verifyBagCount
+              ) {
+                success('当前批验收完成');
+                await openPrint(bagNo.value);
+              } else if (!filterForm.value.unVerifyBag.length) {
+                success('当前箱验收完成');
+                await openPrint(bagNo.value);
+              }
+              bagNo.value = '';
+              nextTick(() => {
+                bagNoRef.value.focus();
               });
             }
-            if (
-              filterForm.value.verifyBagCount == filterForm.value.bagCount &&
-              filterForm.value.verifyBagCount
-            ) {
-              success('当前批验收完成');
-              await openPrint(bagNo.value);
-            } else if (!filterForm.value.unVerifyBag.length) {
-              success('当前箱验收完成');
-              await openPrint(bagNo.value);
-            }
+          } else {
+            bagNo.value = '';
+            nextTick(() => {
+              bagNoRef.value.focus();
+            });
           }
         }
       } finally {
         tableLoading.value = false;
-        bagNo.value = '';
-        await nextTick(() => {
-          bagNoRef.value.focus();
-        });
       }
     }
   }

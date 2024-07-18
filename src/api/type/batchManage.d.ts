@@ -960,7 +960,7 @@ export interface GetApiCoreBatchSampleAcceptResponse {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/verify/bag`
- * @更新时间 `2024-01-11 18:23:41`
+ * @更新时间 `2024-07-17 16:02:04`
  */
 export interface PostApiCoreBatchPlasmaVerifyBagRequest {
   /**
@@ -983,6 +983,10 @@ export interface PostApiCoreBatchPlasmaVerifyBagRequest {
    * 托盘编号
    */
   trayNo: string;
+  /**
+   * 献血浆者不符合时true才会验收
+   */
+  blockVerify: boolean;
 }
 
 /**
@@ -990,7 +994,7 @@ export interface PostApiCoreBatchPlasmaVerifyBagRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `POST /api/core/batch/plasma/verify/bag`
- * @更新时间 `2024-01-11 18:23:41`
+ * @更新时间 `2024-07-17 16:02:04`
  */
 export interface PostApiCoreBatchPlasmaVerifyBagResponse {
   /**

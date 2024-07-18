@@ -52,10 +52,22 @@ export const getPlasmaBox = (params: GetApiCoreBatchPlasmaVerifyBoxRequest) => {
 
 // 血浆验收
 export const plasmaVerifyBag = (params: PostApiCoreBatchPlasmaVerifyBagRequest) => {
-  return defHttp.post<PostApiCoreBatchPlasmaVerifyBagResponse>({
-    url: Api.PlasmaVerifyBag,
-    params,
-  });
+  return defHttp.post<{
+    data: {
+      code: string;
+      msg: string;
+      data: PostApiCoreBatchPlasmaVerifyBagResponse;
+    };
+    status: number;
+  }>(
+    {
+      url: Api.PlasmaVerifyBag,
+      params,
+    },
+    {
+      isReturnNativeResponse: true,
+    },
+  );
 };
 
 // 血浆验收-暂停/继续箱

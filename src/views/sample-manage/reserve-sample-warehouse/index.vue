@@ -426,22 +426,23 @@
         trayNo: trayValue.value,
       });
 
-      if (!resBoxNo) {
-        boxNoValue.value = '';
-      } else {
-        boxNoValue.value = resBoxNo;
-      }
+      createMessage.success('封箱成功，正在打印标签');
 
       const res = await getPrintRecord({
         labelType: 'KEEP_SAMPLE_BOX',
-        bissNo: '箱号_样本批号',
+        bissNo: `${boxNoValue.value}_${batchValue.value}`,
       });
       await printRecord({
         ...res,
         resolution: void 0,
         dpi: res.resolution,
       });
-      createMessage.success('封箱成功，正在打印标签');
+
+      if (!resBoxNo) {
+        boxNoValue.value = '';
+      } else {
+        boxNoValue.value = resBoxNo;
+      }
     } catch (e) {
       createMessage.warn('操作失败，请重试');
     } finally {
