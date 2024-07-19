@@ -16,37 +16,37 @@ export const columns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
-    width: 150,
+    width: 100,
     fixed: 'left',
   },
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
-    width: 150,
+    width: 140,
     fixed: 'left',
   },
   {
     title: '浆站箱号',
     dataIndex: 'stationBoxNo',
-    width: 150,
+    width: 130,
     fixed: 'left',
   },
   {
     title: iskm ? '现存托盘/箱' : '现存箱号',
     dataIndex: 'currBoxNo',
-    width: 150,
+    width: 130,
     fixed: 'left',
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
-    width: 150,
+    width: 140,
     fixed: 'left',
   },
   {
     title: '采集日期',
     dataIndex: 'collectAt',
-    width: 150,
+    width: 100,
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
@@ -62,22 +62,22 @@ export const columns: BasicColumn[] = [
   {
     title: '浆员姓名',
     dataIndex: 'donorName',
-    width: 100,
+    width: 80,
   },
   {
     title: '浆员状态',
     dataIndex: 'donorStatus',
-    width: 100,
+    width: 80,
   },
   {
     title: '血型',
     dataIndex: 'bloodType',
-    width: 100,
+    width: 60,
   },
   {
     title: '来浆类型',
     dataIndex: 'plasmaTypeFromStation',
-    width: 100,
+    width: 80,
     format: (text) => {
       return `${text}, ${serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType)(text)}`;
     },
@@ -85,10 +85,11 @@ export const columns: BasicColumn[] = [
   {
     title: '效价类型',
     dataIndex: 'titerType',
-    width: 200,
+    width: 150,
     format: (text) => {
       return `${text ?? '--'}`;
     },
+    ellipsis: false,
   },
   {
     title: '浆站净重(g)',
@@ -103,7 +104,8 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆过程状态',
     dataIndex: 'plasmaStatus',
-    width: 200,
+    width: 150,
+    ellipsis: false,
   },
   {
     title: '检疫期类型',
@@ -114,6 +116,7 @@ export const columns: BasicColumn[] = [
     title: '血浆不合格原因',
     dataIndex: 'plasmaUnqualifiedReason',
     width: 150,
+    ellipsis: false,
   },
   {
     title: '血浆复检信息',
@@ -121,7 +124,7 @@ export const columns: BasicColumn[] = [
       {
         title: '结果发布日期',
         dataIndex: ['reCheckInfo', 'issueAt'],
-        width: 150,
+        width: 100,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
@@ -138,22 +141,23 @@ export const columns: BasicColumn[] = [
             return '-';
           }
         },
-        width: 150,
+        width: 80,
       },
       {
         title: '不合格项目',
         dataIndex: ['reCheckInfo', 'unqualifiedItems'],
         width: 150,
+        ellipsis: false,
       },
       {
         title: '血浆类型',
         dataIndex: ['reCheckInfo', 'immunityType'],
-        width: 150,
+        width: 80,
       },
       {
         title: '效价结果值',
         dataIndex: ['reCheckInfo', 'titerStr'],
-        width: 150,
+        width: 100,
       },
     ],
   },
@@ -164,7 +168,7 @@ export const columns: BasicColumn[] = [
       {
         title: '满足日期',
         dataIndex: ['trackedSeeInfo', 'qualifiedDate'],
-        width: 150,
+        width: 100,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
@@ -172,17 +176,19 @@ export const columns: BasicColumn[] = [
       {
         title: '样本批号',
         dataIndex: ['trackedSeeInfo', 'batchSampleNo'],
-        width: 150,
+        width: 130,
+        ellipsis: false,
       },
       {
         title: '样本编号',
         dataIndex: ['trackedSeeInfo', 'sampleNo'],
-        width: 150,
+        width: 130,
+        ellipsis: false,
       },
       {
         title: '采集日期',
         dataIndex: ['trackedSeeInfo', 'collectAt'],
-        width: 150,
+        width: 100,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
@@ -190,7 +196,7 @@ export const columns: BasicColumn[] = [
       {
         title: '厂家复检日期',
         dataIndex: ['trackedSeeInfo', 'reCheckDate'],
-        width: 150,
+        width: 100,
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '-';
         },
@@ -207,19 +213,22 @@ export const columns: BasicColumn[] = [
             return '-';
           }
         },
-        width: 150,
+        width: 80,
       },
       {
         title: '不合格项目',
         dataIndex: ['trackedSeeInfo', 'unqualifiedItems'],
         width: 150,
+        ellipsis: false,
       },
     ],
   },
   {
     title: '地址',
     dataIndex: 'address',
-    width: 200,
+    width: 320,
+    ellipsis: false,
+    align: 'left',
   },
 ];
 

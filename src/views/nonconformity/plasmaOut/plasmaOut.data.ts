@@ -302,7 +302,7 @@ export const outRightColumns: BasicColumn[] = [
     dataIndex: 'operator',
   },
   {
-    title: '扫描日期',
+    title: '扫描时间',
     dataIndex: 'operateAt',
   },
 ];

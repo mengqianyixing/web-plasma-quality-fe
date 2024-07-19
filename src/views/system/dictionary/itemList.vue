@@ -105,7 +105,7 @@
     const res = await getDictListApi({
       pageSize: 1000,
       currPage: 1,
-      queryMenu: true as unknown as string,
+      queryMenu: true,
     });
     const result = res?.result?.filter((x) => x.dictId === dictId.value);
     const data: any = result && result.length > 0 ? result[0] : {};
@@ -186,6 +186,7 @@
             options: _.options,
             maxlength: _.maxSize,
             min: 1,
+            formatter: (value: string) => (_.key === 'order' ? value && parseInt(value) : value),
           },
           dynamicRules: () => {
             return [

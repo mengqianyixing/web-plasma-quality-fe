@@ -4,7 +4,7 @@
     @register="register"
     title="逐箱出库列表"
     showFooter
-    width="85%"
+    width="800px"
     :min-height="600"
     :showOkBtn="false"
     :cancelText="'关闭'"
@@ -83,10 +83,12 @@
       {
         title: '箱号',
         dataIndex: 'boxNo',
+        width: 150,
       },
       {
         title: '血浆总数',
         dataIndex: 'bagNum',
+        width: 80,
       },
     ],
     fetchSetting: {
@@ -114,10 +116,12 @@
       {
         title: '箱号',
         dataIndex: 'boxNo',
+        width: 150,
       },
       {
         title: '血浆总数',
         dataIndex: 'bagNum',
+        width: 80,
       },
     ],
     fetchSetting: {

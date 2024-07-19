@@ -12,7 +12,7 @@
     @register="registerModal"
     cancelText="关闭"
     :title="state.title"
-    width="85%"
+    width="1000px"
     :minHeight="600"
     @ok="handleSubmit"
   >

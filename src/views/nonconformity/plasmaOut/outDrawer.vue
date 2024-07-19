@@ -14,6 +14,8 @@
     width="1200px"
     @cancel="emit('close')"
     :minHeight="600"
+    cancelText="关闭"
+    :showOkBtn="false"
     @fullscreen="fullscreen"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">

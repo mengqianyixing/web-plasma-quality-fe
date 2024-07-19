@@ -95,6 +95,7 @@
   }
   function handleUpdate() {
     getSelections(true, ([row]) => {
+      if (row.state !== 'OPEN') return message.warning('无效报表不允许编辑');
       openFormModal(true, { isUpdate: true, ...row });
     });
   }
