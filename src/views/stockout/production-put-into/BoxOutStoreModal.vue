@@ -18,7 +18,7 @@
             size="large"
             @keyup="handleKeyupEnter"
             placeholder="请扫箱号"
-            :disabled="inputDisabled"
+            :readonly="inputDisabled"
             v-model:value="inputValue"
           />
         </div>
