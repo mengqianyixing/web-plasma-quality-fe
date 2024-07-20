@@ -143,13 +143,11 @@
       label: '准备号',
       component: 'Input',
       required: true,
-      colProps: { span: 4 },
     },
     {
       field: 'batchNo',
       label: '血浆批号',
       component: 'ApiSelect',
-      colProps: { span: 4 },
       componentProps: {
         api: getSortingBatch,
         labelField: 'batchNo',
@@ -161,13 +159,11 @@
       field: 'boxNo',
       label: '血浆箱号',
       component: 'Input',
-      colProps: { span: 4 },
     },
     {
       field: 'prepareProduce',
       label: '准备投产',
       component: 'Select',
-      colProps: { span: 4 },
       componentProps: {
         options: [...prepareProduceMap.entries()].map(([key, value]) => ({
           value: key,
@@ -179,7 +175,6 @@
       field: 'sorting',
       label: '分拣状态',
       component: 'Select',
-      colProps: { span: 4 },
       componentProps: {
         options: [...sortingMap.entries()].map(([key, value]) => ({
           value: key,
@@ -191,7 +186,6 @@
       field: 'immTypeLevel',
       label: '效价类型',
       component: 'ApiSelect',
-      colProps: { span: 4 },
       componentProps: {
         api: getDilutionTypeApi,
         labelField: 'key',
@@ -202,19 +196,16 @@
       field: 'bagNo',
       label: '血浆编号',
       component: 'Input',
-      colProps: { span: 4 },
     },
     {
       field: '[sortingAtBegin, sortingAtEnd]',
       component: 'RangePicker',
       label: '分拣日期',
-      colProps: { span: 4 },
     },
     {
       field: 'sorter',
       label: '分拣人',
       component: 'Input',
-      colProps: { span: 4 },
     },
   ];
   const [registerTable, { getForm, reload }] = useTable({
