@@ -4,7 +4,7 @@
     @register="register"
     title="按箱接收列表"
     showFooter
-    width="85%"
+    width="800px"
     :min-height="600"
     :showOkBtn="false"
     :cancelText="'关闭'"
@@ -19,7 +19,7 @@
             size="large"
             @keyup="handleKeyupEnter"
             placeholder="请扫箱号"
-            :disabled="inputDisabled"
+            :readonly="inputDisabled"
             v-model:value="inputValue"
           />
         </div>
@@ -84,10 +84,12 @@
       {
         title: '箱号',
         dataIndex: 'boxNo',
+        width: 150,
       },
       {
         title: '血浆总数',
         dataIndex: 'acceptBagCount',
+        width: 80,
       },
     ],
     fetchSetting: {
@@ -126,10 +128,12 @@
       {
         title: '箱号',
         dataIndex: 'boxNo',
+        width: 150,
       },
       {
         title: '血浆总数',
         dataIndex: 'acceptBagCount',
+        width: 80,
       },
     ],
     fetchSetting: {

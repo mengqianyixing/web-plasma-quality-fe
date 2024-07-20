@@ -181,13 +181,17 @@ export interface GetApiCoreBankTraiesResponse {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray`
- * @更新时间 `2023-12-19 17:13:59`
+ * @更新时间 `2024-07-18 18:40:30`
  */
 export interface PostApiCoreBankTrayRequest {
   /**
-   * 托盘数量
+   * 托盘数量，打印的时候必填
    */
-  trayNumber: number;
+  trayNumber?: number;
+  /**
+   * 补打托盘编号数组
+   */
+  trayNoList?: string[];
 }
 
 /**
@@ -195,7 +199,7 @@ export interface PostApiCoreBankTrayRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray`
- * @更新时间 `2023-12-19 17:13:59`
+ * @更新时间 `2024-07-18 18:40:30`
  */
 export interface PostApiCoreBankTrayResponse {
   /**

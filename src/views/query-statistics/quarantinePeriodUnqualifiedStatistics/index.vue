@@ -178,14 +178,17 @@
     getSysSecondaryDictionary({
       dataKey: DictionaryReasonEnum.PlasmaFailedReason as any,
       dictItemTypes: [DictionaryItemKeyEnum.Test],
+      show: 1,
     }),
     getSysSecondaryDictionary({
       dataKey: DictionaryReasonEnum.PlasmaFailedReason as any,
       dictItemTypes: [DictionaryItemKeyEnum.Quarantine],
+      show: 1,
     }),
     getSysSecondaryDictionary({
       dataKey: DictionaryReasonEnum.PlasmaFailedReason as any,
       dictItemTypes: [DictionaryItemKeyEnum.Track],
+      show: 1,
     }),
   ]).then(([res1, res2, res3]) => {
     cloneColumns[2].children?.unshift(

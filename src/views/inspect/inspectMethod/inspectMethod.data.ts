@@ -73,6 +73,9 @@ export const formListSchema: FormSchema[] = [
     component: 'InputNumber',
     label: '排序号',
     required: true,
+    componentProps: {
+      formatter: (value: string) => value && parseInt(value),
+    },
   },
   {
     field: 'enable',

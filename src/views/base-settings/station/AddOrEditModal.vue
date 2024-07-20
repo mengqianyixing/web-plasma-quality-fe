@@ -80,6 +80,9 @@
         component: 'InputNumber',
         colProps: { span: 20 },
         required: true,
+        componentProps: {
+          formatter: (value: string) => value && parseInt(value),
+        },
       },
       {
         label: '浆站编码',

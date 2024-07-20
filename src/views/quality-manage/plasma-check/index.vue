@@ -314,6 +314,8 @@
   async function handlePrint() {
     if (selectedRowsRef.value.length === 0) createMessage.warn('请选择数据');
     const row = selectedRowsRef.value[0];
+    if (row.auditState === PlasmaCheckStateValueEnum.WC)
+      return createMessage.warn('待审核不允许打印');
     try {
       reportLoading.value = true;
       const res = await getReportApi({

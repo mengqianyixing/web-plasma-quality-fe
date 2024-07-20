@@ -168,6 +168,9 @@ export const itemFormSchema: FormSchema[] = [
     label: '排序',
     component: 'InputNumber',
     colProps: { span: 22 },
+    componentProps: {
+      formatter: (value: string) => value && parseInt(value),
+    },
   },
   {
     field: 'enable',

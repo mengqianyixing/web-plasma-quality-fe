@@ -71,6 +71,9 @@
   const tableLoading = ref(false);
   const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
     border: true,
+    rowConfig: {
+      isHover: true,
+    },
     height: 'auto',
     exportConfig: {},
     columnConfig: {

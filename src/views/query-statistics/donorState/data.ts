@@ -70,6 +70,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'cause',
     width: 200,
     ellipsis: false,
+    sorter: true,
   },
   {
     title: '淘汰系统',
@@ -130,7 +131,7 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     label: '浆员状态',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.DonorStatus),
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.DonorSearchStatus),
     },
   },
   {

@@ -7,6 +7,7 @@
     :minHeight="600"
     @fullscreen="redoHeight"
     cancelText="关闭"
+    :footer="null"
     @cancel="emit('close')"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">

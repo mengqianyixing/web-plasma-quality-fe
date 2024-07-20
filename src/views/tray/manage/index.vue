@@ -71,7 +71,7 @@
     disableTrayApi,
     getListApi,
   } from '@/api/tray/list';
-  import { printRecord, replayPrintRecord } from '@/api/tag/printRecord';
+  import { printRecord } from '@/api/tag/printRecord';
   import { message } from 'ant-design-vue';
   import TableModal from './tableDrawer.vue';
   import BoxTableModal from './boxTableDrawer.vue';
@@ -141,11 +141,15 @@
     try {
       if (rows.length === 0) return message.warning('请选择数据');
       loading.value = true;
-      for (const row of rows) {
-        const res = await replayPrintRecord({ labelType: 'TRAY', bssNo: row.trayNo });
+      const resList = await createTrayLabelApi({
+        trayNumber: rows.length,
+        trayNoList: rows.map((_) => _.trayNo),
+      });
+      for (const key in resList) {
         const params = {
-          ...res,
-          dpi: res.resolution,
+          ...resList[key],
+          resolution: void 0,
+          dpi: resList[key].resolution,
         };
         await printRecord(params);
         i++;

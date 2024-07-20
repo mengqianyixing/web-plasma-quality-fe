@@ -77,6 +77,9 @@
     showOverflow: true,
     height: 580,
     align: 'center',
+    rowConfig: {
+      isHover: true,
+    },
     size: 'small',
     exportConfig: {},
     columnConfig: {

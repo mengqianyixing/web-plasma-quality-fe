@@ -80,6 +80,9 @@
     height: 580,
     align: 'center',
     size: 'small',
+    rowConfig: {
+      isHover: true,
+    },
     exportConfig: {},
     columnConfig: {
       resizable: true,

@@ -25,19 +25,19 @@
   import { requisitionColumns } from '@/views/sample-manage/reserve-sample-destroy-outbound/reserve.data';
   import { getPickSampleList, pickDeliverSample } from '@/api/sample-manage/reserve-sample-destory';
   import {
-    GetApiCoreBankDeliverSamplePickRequest,
-    GetApiCoreBankDeliverSamplePickResponse,
+    GetApiSearchSampleRetainSamplePickRequest,
+    GetApiSearchSampleRetainSamplePickResponse,
   } from '@/api/type/sampleManage';
   import dayjs from 'dayjs';
   import { useStation } from '@/hooks/common/useStation';
 
   const emit = defineEmits(['success', 'register']);
 
-  const tableData = ref<GetApiCoreBankDeliverSamplePickResponse>([]);
-  const vxeRef = ref<VxeTableInstance<GetApiCoreBankDeliverSamplePickResponse[number]>>();
+  const tableData = ref<GetApiSearchSampleRetainSamplePickResponse>([]);
+  const vxeRef = ref<VxeTableInstance<GetApiSearchSampleRetainSamplePickResponse[number]>>();
   const { stationOptions } = useStation();
 
-  const [registerForm, { getFieldsValue }] = useForm({
+  const [registerForm, { getFieldsValue, resetFields }] = useForm({
     showAdvancedButton: false,
     schemas: [
       {
@@ -72,6 +72,9 @@
     showOverflow: true,
     height: 600,
     align: 'center',
+    rowConfig: {
+      isHover: true,
+    },
     size: 'small',
     exportConfig: {},
     columnConfig: {
@@ -97,6 +100,7 @@
 
   const dlvNo = ref('');
   const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
+    resetFields();
     setModalProps({
       maskClosable: false,
     });
@@ -115,7 +119,7 @@
 
       tableData.value = (await getPickSampleList({
         ...values,
-      } as GetApiCoreBankDeliverSamplePickRequest)) as unknown as any;
+      } as GetApiSearchSampleRetainSamplePickRequest)) as unknown as any;
 
       await nextTick(() => {
         vxeRef.value?.setAllCheckboxRow(true);

@@ -59,4 +59,5 @@ export enum SERVER_ENUM {
   RsLabSampleType = 'RsLabSampleType',
   SampleMixTypeEnum = 'SampleMixTypeEnum',
   CallbackAdapterState = 'CallbackAdapterState',
+  DonorSearchStatus = 'DonorSearchStatus',
 }

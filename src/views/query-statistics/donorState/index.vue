@@ -34,7 +34,7 @@
 
   const loading = ref(false);
 
-  const [registerTable, { getForm, reload, setPagination }] = useTable({
+  const [registerTable, { getForm, reload, setPagination, setProps }] = useTable({
     immediate: false,
     api: getListApi,
     columns,
@@ -65,6 +65,14 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
+    sortFn: (e) => {
+      setProps({
+        searchInfo: {
+          sortIdx: e.order && e.field,
+          sortOrder: e?.order?.slice(0, -3).toUpperCase(),
+        },
+      });
+    },
   });
   async function handleExport() {
     try {
