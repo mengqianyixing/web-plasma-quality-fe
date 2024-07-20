@@ -16,14 +16,18 @@ export const columns: BasicColumn[] = [
     title: '标签类型',
     dataIndex: 'labelType',
     slots: { customRender: 'labelType' },
+    width: 130,
   },
   {
     title: '标签编号',
     dataIndex: 'bissNo',
+    ellipsis: false,
+    width: 160,
   },
   {
     title: '打印份数',
     dataIndex: 'times',
+    width: 80,
   },
   {
     title: '是否打印',
@@ -31,14 +35,17 @@ export const columns: BasicColumn[] = [
     format: (text) => {
       return text ? '是' : '否';
     },
+    width: 80,
   },
   {
     title: '打印原因',
     dataIndex: 'reason',
+    width: 120,
   },
   {
     title: '打印人',
     dataIndex: 'creator',
+    width: 120,
   },
   {
     title: '打印时间',
@@ -46,6 +53,7 @@ export const columns: BasicColumn[] = [
     format: (text) => {
       return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
     },
+    width: 160,
   },
 ];
 

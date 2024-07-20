@@ -26,6 +26,7 @@
         <a-button
           type="primary"
           @click="handleProcess"
+          :loading="reviewLoading"
           v-auth="InspectButtonEnum.ReportReleaseProcess"
           >复核</a-button
         >
@@ -39,6 +40,7 @@
           type="primary"
           @click="handleRelease"
           v-auth="InspectButtonEnum.ReportReleaseRelease"
+          :loading="releaseLoading"
           >发布</a-button
         >
         <a-button
@@ -147,6 +149,8 @@
   const open = ref(false);
   const confirmLoading = ref(false);
   const createLoading = ref(false);
+  const reviewLoading = ref(false);
+  const releaseLoading = ref(false);
 
   let revokeApi = revokeReportApi;
 
@@ -238,9 +242,14 @@
   async function handleProcess() {
     const [row] = getSelections(true);
     if (!row) return;
-    await processReportApi({ reportNo: row.reportNo });
-    reload();
-    message.success('审核成功');
+    reviewLoading.value = true;
+    try {
+      await processReportApi({ reportNo: row.reportNo });
+      reload();
+      message.success('审核成功');
+    } finally {
+      reviewLoading.value = false;
+    }
   }
   async function handleUnProcess() {
     const [row] = getSelections(true);
@@ -253,9 +262,14 @@
   async function handleRelease() {
     const [row] = getSelections(true);
     if (!row) return;
-    await releaseReportApi({ reportNo: row.reportNo });
-    reload();
-    message.success('发布成功');
+    releaseLoading.value = true;
+    try {
+      await releaseReportApi({ reportNo: row.reportNo });
+      reload();
+      message.success('发布成功');
+    } finally {
+      releaseLoading.value = false;
+    }
   }
   async function handlePrint() {
     const [row] = getSelections(true);

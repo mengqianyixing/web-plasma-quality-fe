@@ -10,7 +10,13 @@
         </a-button>
       </template>
     </BasicTable>
-    <BasicModal @register="registerModal" width="600px" @ok="confirm" :show-footer="true">
+    <BasicModal
+      @register="registerModal"
+      width="300px"
+      title="托盘绑定"
+      @ok="confirm"
+      :show-footer="true"
+    >
       <BasicForm @register="registerForm" />
     </BasicModal>
   </div>
@@ -65,7 +71,7 @@
     },
   );
   const [registerModal, { openModal, setModalProps }] = useModal();
-  const [registerForm, { validate, clearValidate }] = useForm({
+  const [registerForm, { validate, clearValidate, resetFields }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
     schemas: [{ label: '托盘编号', required: true, component: 'Input', field: 'trayNo' }],
@@ -166,6 +172,7 @@
   function handleBinding() {
     const row = getSelectRows();
     if (row.length === 0) return message.warning('请选择数据');
+    resetFields();
     clearValidate();
     openModal(true);
   }
