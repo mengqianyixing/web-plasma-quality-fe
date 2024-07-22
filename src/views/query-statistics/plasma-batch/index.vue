@@ -156,7 +156,7 @@
     bottom: number | string;
     backgroundColor: string;
   }>({
-    position: 'sticky',
+    position: undefined,
     top: '',
     bottom: 0,
     backgroundColor: 'white',
