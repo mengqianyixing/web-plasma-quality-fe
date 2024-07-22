@@ -620,7 +620,7 @@ export interface GetApiProductPrepareSortingPrepareNoResponse {
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `POST /api/product/prepare/sorting/bag`
- * @更新时间 `2024-02-27 09:34:00`
+ * @更新时间 `2024-07-19 18:24:55`
  */
 export interface PostApiProductPrepareSortingBagRequest {
   prepareNo: string;
@@ -639,7 +639,7 @@ export interface PostApiProductPrepareSortingBagRequest {
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `POST /api/product/prepare/sorting/bag`
- * @更新时间 `2024-02-27 09:34:00`
+ * @更新时间 `2024-07-19 18:24:55`
  */
 export interface PostApiProductPrepareSortingBagResponse {
   /**
@@ -782,6 +782,14 @@ export interface PostApiProductPrepareSortingBagResponse {
    * 箱号
    */
   boxNo: string;
+  /**
+   * 血浆分拣类型
+   */
+  pickType: string;
+  /**
+   * 封箱后新箱号
+   */
+  newBoxNo: string;
 }
 
 /**
@@ -846,7 +854,7 @@ export type PostApiProductPrepareSortingMouldAssemblingResponse = null;
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `POST /api/product/prepare/sorting/all-qua/box`
- * @更新时间 `2024-02-04 15:55:32`
+ * @更新时间 `2024-07-19 18:45:34`
  */
 export interface PostApiProductPrepareSortingAllQuaBoxRequest {
   prepareNo: string;
@@ -858,9 +866,14 @@ export interface PostApiProductPrepareSortingAllQuaBoxRequest {
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `POST /api/product/prepare/sorting/all-qua/box`
- * @更新时间 `2024-02-04 15:55:32`
+ * @更新时间 `2024-07-19 18:45:34`
  */
-export interface PostApiProductPrepareSortingAllQuaBoxResponse {}
+export interface PostApiProductPrepareSortingAllQuaBoxResponse {
+  /**
+   * 封箱后新箱号
+   */
+  newBoxNo: string;
+}
 
 /**
  * 接口 [分拣完成↗](https://yapi.sharing8.cn/project/529/interface/api/33027) 的 **请求类型**

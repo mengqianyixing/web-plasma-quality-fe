@@ -137,8 +137,14 @@ export const trayOutStoreColumns: BasicColumn[] = [
     slots: { customRender: 'box' },
   },
   {
+    title: '待分拣血浆批号',
+    dataIndex: 'waitBatchNoes',
+    ellipsis: false,
+  },
+  {
     title: '待分拣血浆箱数',
     dataIndex: 'waitBoxCount',
+    slots: { customRender: 'waitBoxCount' },
   },
   {
     title: '是否全分拣',
