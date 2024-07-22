@@ -12,40 +12,50 @@ export const plasmaTrayModelColumns: BasicColumn[] = [
 export const taryRelocationColumns: BasicColumn[] = [
   {
     title: '托盘编号',
-    dataIndex: '',
+    dataIndex: 'trayNo',
+    width: 100,
   },
   {
     title: '原货位',
-    dataIndex: '',
+    dataIndex: 'sourceLocatonNo',
+    width: 100,
   },
   {
     title: '原库房',
-    dataIndex: '',
+    dataIndex: 'sourceHouseName',
+    width: 160,
+    ellipsis: false,
   },
   {
     title: '目标货位',
-    dataIndex: '',
+    dataIndex: 'targetLocatonNo',
+    width: 100,
   },
   {
     title: '目标库房',
-    dataIndex: '',
+    dataIndex: 'targetHouseName',
+    width: 160,
+    ellipsis: false,
   },
   {
     title: '操作人',
-    dataIndex: '',
+    dataIndex: 'operator',
+    width: 100,
+    ellipsis: false,
   },
   {
     title: '操作时间',
-    dataIndex: '',
+    dataIndex: 'operateTime',
+    width: 160,
   },
-  {
-    title: '状态',
-    dataIndex: '',
-  },
-  {
-    title: '处理时间',
-    dataIndex: '',
-  },
+  // {
+  //   title: '状态',
+  //   dataIndex: '',
+  // },
+  // {
+  //   title: '处理时间',
+  //   dataIndex: '',
+  // },
 ];
 
 export const siteSchema: FormSchema = {
@@ -118,25 +128,30 @@ export const plasmaBoxScanSearchFormSchema: FormSchema[] = [
   {
     component: 'Input',
     label: '箱号',
-    field: 'boxId',
+    field: 'boxNo',
   },
 ];
 export const plasmaBoxScanColumns: (isBinding: boolean) => BasicColumn[] = (isBinding) => [
   {
     title: '箱号',
-    dataIndex: '',
+    dataIndex: 'boxNo',
+    ellipsis: false,
   },
   {
     title: '目标托盘',
-    dataIndex: '',
+    dataIndex: 'trayNo',
+    width: 140,
   },
   {
     title: isBinding ? '绑定人' : '解绑人',
-    dataIndex: '',
+    dataIndex: 'operator',
+    width: 100,
+    ellipsis: false,
   },
   {
     title: isBinding ? '绑定时间' : '解绑时间',
-    dataIndex: '',
+    dataIndex: 'operateTime',
+    width: 160,
   },
 ];
 

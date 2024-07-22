@@ -1069,4 +1069,126 @@ export interface GetApiCoreBankTrayKeepsamplesResponse {
   }[];
 }
 
+/**
+ * 接口 [查询托盘移库记录列表↗](https://yapi.sharing8.cn/project/529/interface/api/36228) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/move-record`
+ * @更新时间 `2024-07-20 15:09:54`
+ */
+export interface GetApiCoreBankTrayMoveRecordRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * 托盘编号
+   */
+  trayNo?: string;
+}
+
+/**
+ * 接口 [查询托盘移库记录列表↗](https://yapi.sharing8.cn/project/529/interface/api/36228) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/move-record`
+ * @更新时间 `2024-07-20 15:09:54`
+ */
+export interface GetApiCoreBankTrayMoveRecordResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 托盘编号
+     */
+    trayNo?: string;
+    /**
+     * 原货位
+     */
+    sourceLocatonNo?: string;
+    /**
+     * 原库房
+     */
+    sourceHouseName?: string;
+    /**
+     * 目标货位
+     */
+    targetLocatonNo?: string;
+    /**
+     * 目标库房
+     */
+    targetHouseName?: string;
+    /**
+     * 操作人
+     */
+    operator?: string;
+    /**
+     * 操作时间
+     */
+    operateTime?: string;
+    /**
+     * 状态
+     */
+    status?: string;
+    /**
+     * 处理时间
+     */
+    dealTime?: string;
+  }[];
+}
+
+/**
+ * 接口 [查询托盘与箱绑定解绑记录↗](https://yapi.sharing8.cn/project/529/interface/api/36234) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/bind-record`
+ * @更新时间 `2024-07-20 15:18:03`
+ */
+export interface GetApiCoreBankTrayBindRecordRequest {
+  currPage: string;
+  pageSize: string;
+  /**
+   * 托盘号
+   */
+  trayNo?: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+  /**
+   * 操作类型：bind-绑定，unbind-解绑
+   */
+  operateType: string;
+}
+
+/**
+ * 接口 [查询托盘与箱绑定解绑记录↗](https://yapi.sharing8.cn/project/529/interface/api/36234) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/bind-record`
+ * @更新时间 `2024-07-20 15:18:03`
+ */
+export interface GetApiCoreBankTrayBindRecordResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 托盘号
+     */
+    trayNo?: string;
+    /**
+     * 箱号
+     */
+    boxNo?: string;
+    /**
+     * 操作人
+     */
+    operator?: string;
+    /**
+     * 操作时间
+     */
+    operateTime?: string;
+  }[];
+}
+
 /* prettier-ignore-end */

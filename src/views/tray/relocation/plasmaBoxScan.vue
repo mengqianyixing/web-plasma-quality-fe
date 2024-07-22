@@ -25,7 +25,7 @@
     plasmaBoxScanSearchFormSchema,
     plasmaBoxScanColumns,
   } from './relocation.data';
-  import { bindBoxApi } from '@/api/tray/relocation';
+  import { bindBoxApi, getTrayBoxBindRecordApi } from '@/api/tray/relocation';
   import { message, Spin } from 'ant-design-vue';
   import { trayBoxListApi } from '@/api/tray/list';
   import { ref, nextTick } from 'vue';
@@ -46,8 +46,8 @@
     },
   });
   const columns = plasmaBoxScanColumns(props.isBinding);
-  const [registerTable] = useTable({
-    api: () => Promise.resolve({ result: [] }),
+  const [registerTable, { reload }] = useTable({
+    api: getTrayBoxBindRecordApi,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -61,6 +61,7 @@
     columns: columns,
     useSearchForm: true,
     bordered: true,
+    beforeFetch: (p) => ({ ...p, operateType: props.isBinding ? 'bind' : 'unbind' }),
     size: 'small',
   });
   async function submit() {
@@ -74,6 +75,7 @@
         boxes: [boxId],
       });
       await setFieldsValue({ boxId: '' });
+      reload();
     } finally {
       await nextTick();
       focusedElement.focus();
