@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="register"
-    title="批量挑选保留样本批次2"
+    title="批量挑选保留样本批次"
     width="80%"
     :min-height="650"
     showFooter
