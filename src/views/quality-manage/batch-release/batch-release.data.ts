@@ -141,6 +141,14 @@ export const searchFormSchema: FormSchema[] = [
       options: statusList,
     },
   },
+  {
+    field: 'dlvType',
+    component: 'Select',
+    label: '出库类型',
+    componentProps: {
+      options: serverEnumStore.getServerEnum(SERVER_ENUM.BatchReleaseDlvType),
+    },
+  },
 ];
 
 export const plasmaRestrictionColumns: BasicColumn[] = [
