@@ -26,7 +26,7 @@
             </div>
             <div class="h-40px bg-#ffffff mt-2 flex items-center gap-2">
               <a-button type="primary" @click="handlePick"> 挑选 </a-button>
-              <a-button type="primary" @click="handleDelete"> 删除 </a-button>
+              <a-button type="primary" @click="handleDelete"> 移除 </a-button>
             </div>
           </div>
         </template>

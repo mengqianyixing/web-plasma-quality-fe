@@ -64,7 +64,7 @@
     total: 0,
   });
 
-  const [registerForm, { getFieldsValue }] = useForm({
+  const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
     showAdvancedButton: false,
     baseColProps: { flex: '0 0 373px' },
     actionColOptions: { flex: '1 1 120px', style: 'max-width:unset; text-align:right;' },
@@ -180,12 +180,17 @@
 
   const dlvNo = ref('');
   const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
+    const values = getFieldsValue();
+    const nullValues = Object.keys(values).reduce((t, c) => {
+      t[c] = void 0;
+      return t;
+    }, {});
+    setFieldsValue(nullValues);
+
     setModalProps({
       maskClosable: false,
     });
     dlvNo.value = data.dlvNo;
-
-    await initTableData();
   });
 
   const { createConfirm, createMessage } = useMessage();
