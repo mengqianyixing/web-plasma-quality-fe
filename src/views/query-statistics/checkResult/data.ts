@@ -218,8 +218,8 @@ export const searchFormSchema: FormSchema[] = [
   },
 
   {
-    field: 'issueAt',
-    component: 'DatePicker',
+    field: '[issueBegin,issueEnd]',
+    component: 'RangePicker',
     label: '结果发布日期',
     componentProps: {
       class: 'w-full',
@@ -227,8 +227,8 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: 'collectAt',
-    component: 'DatePicker',
+    field: '[collectionBegin,collectionEnd]',
+    component: 'RangePicker',
     label: '样本采集日期',
     componentProps: {
       class: 'w-full',

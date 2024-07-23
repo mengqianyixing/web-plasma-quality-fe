@@ -29,7 +29,7 @@
   const serverEnumStore = useServerEnumStoreWithOut();
   const state = reactive({ batchNo: '', sampleType: '' });
 
-  const [registerTable, { redoHeight, reload, setPagination }] = useTable({
+  const [registerTable, { redoHeight, setPagination, getForm }] = useTable({
     immediate: false,
     api: getDtApi,
     columns: dtColumns,
@@ -64,7 +64,7 @@
     state.batchNo = bsNo;
     state.sampleType = sampleType;
     setPagination({ current: 1 });
-
-    reload();
+    const { resetFields } = getForm();
+    resetFields();
   });
 </script>
