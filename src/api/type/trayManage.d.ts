@@ -269,7 +269,7 @@ export interface GetApiCoreBankTrayTrayNoResponse {}
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/box`
- * @更新时间 `2024-03-30 15:51:23`
+ * @更新时间 `2024-07-23 09:54:02`
  */
 export interface PostApiCoreBankTrayBoxRequest {
   /**
@@ -285,7 +285,7 @@ export interface PostApiCoreBankTrayBoxRequest {
    */
   type: string;
   /**
-   * 具体业务场景，plasmaVerify-血浆验收，plasmaSort-血浆分拣，handwork-手工绑定解绑
+   * 具体业务场景，plasmaVerify-血浆验收，plasmaSort-血浆分拣，handwork-手工绑定解绑，scanBox-托盘移库的血浆箱扫描绑定解绑
    */
   bizScen?: string;
   /**
@@ -299,7 +299,7 @@ export interface PostApiCoreBankTrayBoxRequest {
  *
  * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
  * @请求头 `POST /api/core/bank/tray/box`
- * @更新时间 `2024-03-30 15:51:23`
+ * @更新时间 `2024-07-23 09:54:02`
  */
 export interface PostApiCoreBankTrayBoxResponse {
   /**

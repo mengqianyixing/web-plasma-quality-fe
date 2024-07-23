@@ -73,6 +73,7 @@
         trayNo: trayNo,
         type: props.isBinding ? 'bind' : 'unbind',
         boxes: [boxId],
+        bizScen: 'scanBox',
       });
       await setFieldsValue({ boxId: '' });
       reload();
