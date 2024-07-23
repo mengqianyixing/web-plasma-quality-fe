@@ -11,7 +11,7 @@
           :id="item.pickType === 'PRO' ? 'PRO' : item.immTypeName"
           class="one-card min-w-57.5 mr-3 flex-shrink-0 h-57.5"
           :class="{ selected: item.isSelected }"
-          :title="`${item.title}(${item.sortCount}/${item.totalCount})`"
+          :title="`${item.title}(${item.sortCount}/${item.sortTotalCount}/${item.totalCount})`"
         >
           <template #extra
             ><a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a
@@ -32,7 +32,7 @@
           :id="item.immTypeName"
           class="one-card min-w-57.5 mr-3 flex-shrink-0 h-57.5"
           :class="{ selected: item.isSelected }"
-          :title="`${item.title}(${item.sortCount}/${item.totalCount})`"
+          :title="`${item.title}(${item.sortCount}/${item.sortTotalCount}/${item.totalCount})`"
         >
           <template #extra
             ><a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a
@@ -501,6 +501,7 @@
             // 可投产箱子
             if (data.pros?.bagNos?.length) {
               topBoxData.value[0].sortCount = data.pros?.sortCount;
+              topBoxData.value[0].sortTotalCount = data.pros?.sortTotalCount;
               topBoxData.value[0].totalCount = data.pros?.totalCount;
               topBoxData.value[0].immType = data.pros?.immType;
               // 可投产血浆列表有长度，说明正在挑的是可投产的，更新血浆列表
@@ -527,6 +528,7 @@
                     pickType: data.unPro?.pickType,
                     title: getTiterText(item),
                     sortCount: item?.sortCount,
+                    sortTotalCount: item?.sortTotalCount,
                     totalCount: item?.totalCount,
                     bagNos: item?.bagNos,
                     // isSelected: !!item?.bagNos?.length,
@@ -538,6 +540,8 @@
                   if (data.unPro?.sortImmTypes?.[index]?.bagNos?.length) {
                     topBoxData.value[index + 1].sortCount =
                       data.unPro?.sortImmTypes?.[index]?.sortCount;
+                    topBoxData.value[index + 1].sortTotalCount =
+                      data.unPro?.sortImmTypes?.[index]?.sortTotalCount;
                     topBoxData.value[index + 1].totalCount =
                       data.unPro?.sortImmTypes?.[index]?.totalCount;
                     topBoxData.value[index + 1].bagNos = data.unPro?.sortImmTypes?.[index]?.bagNos;
@@ -810,6 +814,7 @@
         immType: data.pros?.immType,
         pickType: 'PRO',
         sortCount: data.pros?.sortCount ?? '',
+        sortTotalCount: data.pros?.sortTotalCount ?? '',
         totalCount: data.pros?.totalCount || '',
         bagNos: data.pros?.bagNos,
         isSelected: false,
@@ -822,6 +827,10 @@
         sortCount:
           data.pros && Object.prototype.hasOwnProperty.call(data.pros, 'sortCount')
             ? data.pros.sortCount
+            : '',
+        sortTotalCount:
+          data.pros && Object.prototype.hasOwnProperty.call(data.pros, 'sortTotalCount')
+            ? data.pros.sortTotalCount
             : '',
         totalCount:
           data.pros && Object.prototype.hasOwnProperty.call(data.pros, 'totalCount')
@@ -838,6 +847,7 @@
         pickType: data.unPro?.pickType,
         title: getTiterText(item),
         sortCount: item?.sortCount,
+        sortTotalCount: item?.sortTotalCount,
         totalCount: item?.totalCount,
         bagNos: item?.bagNos,
         isSelected: false,
@@ -852,6 +862,7 @@
         pickType: data.utrkUnPro?.pickType,
         title: getTiterText(item),
         sortCount: item?.sortCount,
+        sortTotalCount: item?.sortTotalCount,
         totalCount: item?.totalCount,
         bagNos: item?.bagNos,
         isSelected: false,
