@@ -3,7 +3,7 @@
     v-bind="$attrs"
     @register="registerModal"
     title="不合格暂存"
-    width="23%"
+    width="450px"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />

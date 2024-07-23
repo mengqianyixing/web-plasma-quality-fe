@@ -31,7 +31,11 @@
   import { settingListApi } from '@/api/plasmaStore/setting';
   import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
   import { reactive, nextTick } from 'vue';
-  import { submitRelocationApi, taryHouseApi } from '@/api/tray/relocation';
+  import {
+    submitRelocationApi,
+    taryHouseApi,
+    getTrayRelocationRecordApi,
+  } from '@/api/tray/relocation';
   import LocationModal from '@/components/BusinessDrawer/locationDrawer/index.vue';
   import { getHouseSiteApi } from '@/api/plasmaStore/site';
   import { useLoading } from '@/components/Loading';
@@ -66,8 +70,8 @@
     actionColOptions: { span: 4 },
   });
 
-  const [registerTable] = useTable({
-    api: () => Promise.resolve({ result: [] }),
+  const [registerTable, { reload }] = useTable({
+    api: getTrayRelocationRecordApi,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -153,6 +157,7 @@
       });
       resetFields();
       clearValidate();
+      reload();
     } finally {
       closeFullLoading();
     }

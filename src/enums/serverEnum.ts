@@ -60,4 +60,5 @@ export enum SERVER_ENUM {
   SampleMixTypeEnum = 'SampleMixTypeEnum',
   CallbackAdapterState = 'CallbackAdapterState',
   DonorSearchStatus = 'DonorSearchStatus',
+  BatchReleaseDlvType = 'BatchReleaseDlvType',
 }

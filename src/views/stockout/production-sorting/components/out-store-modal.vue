@@ -28,12 +28,24 @@
             <span
               v-if="record.boxCount"
               class="text-blue-500 underline cursor-pointer"
-              @click.stop.self="handleBoxClick(record)"
+              @click.stop.self="handleBoxClick(record, null)"
             >
               {{ record.boxCount }}
             </span>
             <span v-else>
               {{ record.boxCount }}
+            </span>
+          </template>
+          <template #waitBoxCount="{ record }">
+            <span
+              :class="
+                !record?.waitBoxCount
+                  ? 'pointer-events-none'
+                  : 'text-blue-500 underline cursor-pointer'
+              "
+              @click.stop.self="handleBoxClick(record, 1)"
+            >
+              {{ record?.waitBoxCount }}
             </span>
           </template>
         </BasicTable>
@@ -66,7 +78,7 @@
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { message } from 'ant-design-vue';
-  import { reactive, nextTick } from 'vue';
+  import { reactive, nextTick, ref } from 'vue';
   import { bindBoxApi } from '@/api/tray/relocation';
   import {
     trayOutStoreColumns,
@@ -87,7 +99,7 @@
     prepareNo: '',
     trayNo: '',
   });
-  const emit = defineEmits(['close']);
+  const emit = defineEmits(['close', 'register']);
   const [registerModal] = useModalInner(async ({ prepareNo }) => {
     state.prepareNo = prepareNo;
     reload();
@@ -134,13 +146,12 @@
     columns: boxBindColumns,
     inset: true,
     isCanResizeParent: true,
-    rowKey: 'boxNo',
     pagination: false,
     size: 'small',
     showTableSetting: false,
     bordered: true,
     rowSelection: { type: 'checkbox' },
-    beforeFetch: (p) => ({ ...p, ...state }),
+    beforeFetch: (p) => ({ ...p, ...state, waitFlag: waitFlag.value }),
     afterFetch: (res: any[]) => {
       clearBindSelectedRowKeys();
       setBindSelectedRowKeys(res.filter((it) => it.sortState).map((it) => it.boxNo));
@@ -178,8 +189,11 @@
       },
     });
   }
-  async function handleBoxClick(row: Recordable) {
+
+  const waitFlag = ref<Nullable<1>>(null);
+  async function handleBoxClick(row: Recordable, flag: Nullable<1> = null) {
     state.trayNo = row.trayNo;
+    waitFlag.value = flag;
     openBindModal(true);
     await nextTick();
     await reloadBind();

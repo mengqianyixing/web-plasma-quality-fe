@@ -455,7 +455,7 @@ export interface PutApiProductReleaseCancelResponse {}
  *
  * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
  * @请求头 `POST /api/product/releases`
- * @更新时间 `2024-01-31 18:43:41`
+ * @更新时间 `2024-07-22 15:53:06`
  */
 export interface PostApiProductReleasesRequest {
   /**
@@ -472,6 +472,10 @@ export interface PostApiProductReleasesRequest {
   state?: string;
   currPage: number;
   pageSize: number;
+  /**
+   * 出库类型
+   */
+  dlvType?: string;
 }
 
 /**
@@ -479,7 +483,7 @@ export interface PostApiProductReleasesRequest {
  *
  * @分类 [血浆批放行↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5469)
  * @请求头 `POST /api/product/releases`
- * @更新时间 `2024-01-31 18:43:41`
+ * @更新时间 `2024-07-22 15:53:06`
  */
 export interface PostApiProductReleasesResponse {
   pageSize: number;

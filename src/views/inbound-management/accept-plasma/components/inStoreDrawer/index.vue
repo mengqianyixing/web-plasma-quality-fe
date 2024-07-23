@@ -14,6 +14,8 @@
     width="1060px"
     @cancel="emit('close')"
     :minHeight="600"
+    cancelText="关闭"
+    :showOkBtn="false"
     @fullscreen="redoHeight"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">

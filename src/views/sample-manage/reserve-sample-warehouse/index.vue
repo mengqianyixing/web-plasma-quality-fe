@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper>
+  <PageWrapper v-loading="pageLoading">
     <Description @register="register" :data="originKeepPackData" />
     <vxe-grid
       v-bind="gridOptionsUnaccept"
@@ -380,9 +380,11 @@
 
   const _handleAcceptSample = debounce(handleAcceptSample, 300);
 
+  const pageLoading = ref(false);
   async function handleAcceptSample() {
     let originRes: PostApiCoreBatchSampleAcceptKeepPackResponse;
     try {
+      pageLoading.value = true;
       const params = {
         batchNo: batchValue.value,
         packNo: packNo.value,
@@ -404,6 +406,7 @@
       }
     } finally {
       packNo.value = '';
+      pageLoading.value = false;
     }
 
     originKeepPackData.value = originRes;
@@ -432,23 +435,25 @@
         trayNo: trayValue.value,
       });
 
-      createMessage.success('封箱成功，正在打印标签');
-
-      const res = await getPrintRecord({
-        labelType: 'KEEP_SAMPLE_BOX',
-        bissNo: `${boxNoValue.value}_${batchValue.value}`,
-      });
-      await printRecord({
-        ...res,
-        resolution: void 0,
-        dpi: res.resolution,
-      });
+      const cacheBoxNo = unref(boxNoValue);
 
       if (!resBoxNo) {
         boxNoValue.value = '';
       } else {
         boxNoValue.value = resBoxNo;
       }
+
+      createMessage.success('封箱成功，正在打印标签');
+
+      const res = await getPrintRecord({
+        labelType: 'KEEP_SAMPLE_BOX',
+        bissNo: `${cacheBoxNo}_${batchValue.value}`,
+      });
+      await printRecord({
+        ...res,
+        resolution: void 0,
+        dpi: res.resolution,
+      });
     } catch (e) {
       createMessage.warn('操作失败，请重试');
     } finally {

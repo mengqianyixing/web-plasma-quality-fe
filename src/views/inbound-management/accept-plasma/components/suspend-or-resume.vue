@@ -127,6 +127,7 @@
           label: '血浆箱号',
           field: 'boxNo',
           component: 'Input',
+          componentProps: { disabled: true },
         },
         'batchNo',
       );
@@ -205,6 +206,7 @@
         component: 'Input',
         label: '血浆批号',
         required: true,
+        componentProps: { disabled: true },
       },
       {
         label: '备注',
