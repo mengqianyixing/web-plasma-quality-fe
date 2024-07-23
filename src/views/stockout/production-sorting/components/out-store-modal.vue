@@ -146,7 +146,6 @@
     columns: boxBindColumns,
     inset: true,
     isCanResizeParent: true,
-    rowKey: 'boxNo',
     pagination: false,
     size: 'small',
     showTableSetting: false,
