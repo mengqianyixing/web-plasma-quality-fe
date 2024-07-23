@@ -441,8 +441,6 @@
               onOk() {
                 // 走整箱分拣操作
                 _sortingAllQua(true, data.boxNo);
-                // 走打印逻辑
-                console.log('OK');
               },
               onCancel() {
                 // 重新走一次分拣逻辑
@@ -690,7 +688,7 @@
         bagNo.value = '';
         console.log('整箱扫描', res);
         // 走打印逻辑 只有可投产才有整箱分拣的逻辑
-        printBox(res.newBoxNo, 'SAMPLE_BOX_1');
+        printBox(res, 'SAMPLE_BOX_1');
         // 请求总览数据
         prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
       } finally {
