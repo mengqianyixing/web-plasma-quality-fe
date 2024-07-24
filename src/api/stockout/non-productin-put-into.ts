@@ -23,7 +23,6 @@ import {
   PostApiCoreBankDeliverNonproductiveRequest,
   PostApiCoreBankDeliverNonproductiveResponse,
   PostApiCoreBankDeliverNonproductiveScanRequest,
-  PostApiCoreBankDeliverNonproductiveScanResponse,
   PutApiCoreBankDeliverNonproductiveProcessDlvNoRequest,
   PutApiCoreBankDeliverNonproductiveReadyDlvNoRequest,
   PutApiCoreBankDeliverNonproductiveReadyDlvNoResponse,
@@ -133,7 +132,12 @@ export const getPlasmaScanList = (params: GetApiCoreBankDeliverNonproductiveScan
   });
 
 export const outStorePlasma = (params: PostApiCoreBankDeliverNonproductiveScanRequest) =>
-  defHttp.post<PostApiCoreBankDeliverNonproductiveScanResponse>({
-    url: Api.PLASMA_SCAN_RESTFUL,
-    params,
-  });
+  defHttp.post(
+    {
+      url: Api.PLASMA_SCAN_RESTFUL,
+      params,
+    },
+    {
+      isReturnNativeResponse: true,
+    },
+  );

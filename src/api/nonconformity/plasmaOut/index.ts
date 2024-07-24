@@ -1,7 +1,6 @@
 import { defHttp } from '@/utils/http/axios';
 import {
   PostApiCoreBankDeliverDetailOutRequest,
-  PostApiCoreBankDeliverDetailOutResponse,
   PostApiCoreBankDeliverPlasmaRequest,
   PostApiCoreBankDeliverPlasmaResponse,
   PostApiCoreBankDeliversRequest,
@@ -83,7 +82,7 @@ export const unProcessApi = (data: PutApiCoreBankPreviewReviewRevokeRequest) =>
   defHttp.put<PutApiCoreBankPreviewReviewRevokeResponse>({ url: Api.UN_PROCESS, data });
 
 export const scanApi = (data: PostApiCoreBankDeliverDetailOutRequest) =>
-  defHttp.post<PostApiCoreBankDeliverDetailOutResponse>({ url: Api.SCAN, data });
+  defHttp.post({ url: Api.SCAN, data }, { isReturnNativeResponse: true });
 
 export const notScanApi = (data: PostApiCoreBankDeliverPlasmaSelectedNotOutRequest) =>
   defHttp.post<PostApiCoreBankDeliverPlasmaSelectedNotOutResponse>({ url: Api.NOT_SCAN, data });
