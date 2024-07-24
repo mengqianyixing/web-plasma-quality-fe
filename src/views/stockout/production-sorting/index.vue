@@ -163,7 +163,7 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[300px] -mt-1">
+          <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
             <a-input-search
               placeholder="请选择准备号"
               enter-button="选择"
@@ -301,7 +301,7 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
+          <div class="flex items-center justify-center gap-2 w-[180px] -mt-1">
             <a-input
               placeholder="请扫描"
               value={boxNo}
@@ -318,7 +318,7 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[250px] -mt-1">
+          <div class="flex items-center justify-center gap-2 w-[180px] -mt-1">
             <a-input
               placeholder="请扫描"
               value={bagNo}
@@ -571,6 +571,7 @@
                     pickType: data.utrkUnPro?.pickType,
                     title: getTiterText(item),
                     sortCount: item?.sortCount,
+                    sortTotalCount: item?.sortTotalCount,
                     totalCount: item?.totalCount,
                     bagNos: item?.bagNos,
                     // isSelected: !!item?.bagNos?.length,
@@ -580,6 +581,7 @@
                 bottomBoxData.value.forEach((item, index) => {
                   if (data.utrkUnPro?.sortImmTypes?.[index]?.bagNos?.length) {
                     item.sortCount = data.utrkUnPro?.sortImmTypes?.[index]?.sortCount;
+                    item.sortTotalCount = data.utrkUnPro?.sortImmTypes?.[index]?.sortTotalCount;
                     item.totalCount = data.utrkUnPro?.sortImmTypes?.[index]?.totalCount;
                     item.bagNos = data.utrkUnPro?.sortImmTypes?.[index]?.bagNos;
                     scollToIndex = index;
