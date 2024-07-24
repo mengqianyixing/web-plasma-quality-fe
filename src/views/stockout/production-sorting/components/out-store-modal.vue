@@ -141,6 +141,7 @@
       setSelectedRowKeys: setBindSelectedRowKeys,
     },
   ] = useTable({
+    rowKey: 'boxNo',
     immediate: false,
     api: getBoxListApi,
     columns: boxBindColumns,
