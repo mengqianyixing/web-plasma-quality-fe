@@ -7,13 +7,11 @@ import {
   GetApiCoreBatchSummaryRequest,
   GetApiCoreBatchSummaryResponse,
   PostApiCoreBatchPlasmaAcceptBoxRequest,
-  PostApiCoreBatchPlasmaAcceptBoxResponse,
   GetApiCoreBatchAcceptationBatchNoRequest,
   GetApiCoreBatchAcceptationBatchNoResponse,
   PostApiCoreBatchPlasmaAcceptBatchPauseRequest,
   PostApiCoreBatchPlasmaAcceptBatchPauseResponse,
   GetApiCoreBatchTrayCheckTrayNoRequest,
-  GetApiCoreBatchTrayCheckTrayNoResponse,
   PostApiCoreBatchPlasmaAcceptBatchRequest,
   PostApiCoreBatchPlasmaAcceptBatchResponse,
 } from '@/api/type/batchManage';
@@ -49,7 +47,12 @@ export const getBatchSummary = (params: GetApiCoreBatchSummaryRequest) => {
 
 // 血浆接收
 export const acceptPlasma = (params: PostApiCoreBatchPlasmaAcceptBoxRequest) => {
-  return defHttp.post<PostApiCoreBatchPlasmaAcceptBoxResponse>({ url: Api.AcceptPlasma, params });
+  return defHttp.post(
+    { url: Api.AcceptPlasma, params },
+    {
+      isReturnNativeResponse: true,
+    },
+  );
 };
 
 // // 血浆接收-提交申请单
@@ -74,9 +77,14 @@ export const receivePause = (params: PostApiCoreBatchPlasmaAcceptBatchPauseReque
 
 // 血浆接收-接收托盘校验
 export const checkTrayNo = (params: GetApiCoreBatchTrayCheckTrayNoRequest['trayNo']) => {
-  return defHttp.get<GetApiCoreBatchTrayCheckTrayNoResponse>({
-    url: `${Api.CheckTrayNo}/${params}`,
-  });
+  return defHttp.get(
+    {
+      url: `${Api.CheckTrayNo}/${params}`,
+    },
+    {
+      isReturnNativeResponse: true,
+    },
+  );
 };
 
 // 血浆接收(批)

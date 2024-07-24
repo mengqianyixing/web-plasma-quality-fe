@@ -70,7 +70,7 @@
 
   defineOptions({ name: 'ReceivePlasma' });
 
-  const { createMessage } = useMessage();
+  const { createMessage, createWarningModal } = useMessage();
   const { success, warning } = createMessage;
   const [registerModal, { openModal }] = useModal();
 
@@ -185,7 +185,21 @@
       };
       try {
         tableLoading.value = true;
-        const data = await acceptPlasma(params);
+        const res = await acceptPlasma(params);
+        const data = res.data.data;
+        if (res.data.code !== '0' && res.data.msg) {
+          createWarningModal({
+            title: '提示',
+            content: res.data.msg,
+            keyboard: false,
+            wrapClassName: 'rpbat9527',
+          });
+          const dom: HTMLElement | null = document.querySelector('.rpbat9527 button');
+          setTimeout(() => {
+            dom?.blur();
+          });
+          return;
+        }
         if (data) {
           success('接收成功!');
           batchNo.value = data.batchNo;
@@ -218,7 +232,20 @@
       }
       try {
         tableLoading.value = true;
-        await checkTrayNo(trayNo.value);
+        const res = await checkTrayNo(trayNo.value);
+        if (res.data.code !== '0' && res.data.msg) {
+          createWarningModal({
+            title: '提示',
+            content: res.data.msg,
+            keyboard: false,
+            wrapClassName: 'rpbox9527',
+          });
+          const dom: HTMLElement | null = document.querySelector('.rpbox9527 button');
+          setTimeout(() => {
+            dom?.blur();
+          });
+          return;
+        }
         tableLoading.value = false;
         nextTick(() => {
           boxNoRef.value.focus();
