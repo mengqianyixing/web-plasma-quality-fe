@@ -188,12 +188,11 @@
         boxes: boxes,
         bizScen: 'handwork',
       });
-      setModalProps({ confirmLoading: false });
       openModal(false);
       clearSelectedRowKeys();
       await reload();
-    } catch (e) {
-      console.log(e);
+    } finally {
+      setModalProps({ confirmLoading: false });
     }
   }
 </script>

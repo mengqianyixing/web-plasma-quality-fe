@@ -136,9 +136,14 @@
   }
 
   function handleEditRequisition() {
-    if (getSelectRows().length === 0) {
+    const rows = getSelectRows();
+    const [row] = rows;
+    if (rows.length === 0) {
       createMessage.warn('请选择审核申请单号');
       return;
+    }
+    if (row.state !== '未提交') {
+      return createMessage.warn('已提交的不可修改');
     }
 
     openRequisitionSingleModal(true, {

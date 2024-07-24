@@ -50,7 +50,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'planOut',
     width: 120,
     format(text) {
-      return dayjs(text).format('YYYY-MM-DD');
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
   },
   {
@@ -58,7 +58,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'planTask',
     width: 120,
     format(text) {
-      return dayjs(text).format('YYYY-MM-DD');
+      return text ? dayjs(text).format('YYYY-MM-DD') : '';
     },
   },
   {

@@ -32,7 +32,12 @@
             <span>{{ acceptList?.length }}</span>
           </div>
           <div>
-            <a-button type="primary" @click="handleAcceptSample" v-if="!isReceiveByBag">
+            <a-button
+              type="primary"
+              :disabled="!inputValue"
+              @click="handleAcceptSample"
+              v-if="!isReceiveByBag"
+            >
               接收
             </a-button>
           </div>

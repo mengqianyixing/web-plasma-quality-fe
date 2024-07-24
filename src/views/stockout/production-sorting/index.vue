@@ -5,17 +5,17 @@
       <div class="card-bar-header h-10 lh-10 pl-3 ]">{{ pickTitle.top }}</div>
       <div class="card-bar-body flex w-100% p-3 bg-[#fff] overflow-x-auto" ref="topBoxBarRef">
         <Card
-          v-for="item in topBoxData"
+          v-for="(item, index) in topBoxData"
           :key="item.title"
           size="small"
           :id="item.pickType === 'PRO' ? 'PRO' : item.immTypeName"
           class="one-card min-w-57.5 mr-3 flex-shrink-0 h-57.5"
           :class="{ selected: item.isSelected }"
-          :title="`${item.title}(${item.sortCount}/${item.totalCount})`"
+          :title="`${item.title}(${item.sortCount}/${item.sortTotalCount}/${item.totalCount})`"
         >
           <template #extra
             ><a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a
-            ><a @click="_sortingBoxSealing(item)">封箱</a></template
+            ><a @click="_sortingBoxSealing(item, index, true)">封箱</a></template
           >
           <div class="text-4 one-bag" v-for="one in item.bagNos" :key="one">{{ one }}</div>
         </Card>
@@ -26,17 +26,17 @@
       <div class="h-10 pl-3 card-bar-header lh-10">{{ pickTitle.bottom }}</div>
       <div class="card-bar-body flex w-100% p-3 bg-[#fff] overflow-x-auto" ref="bottomBoxBarRef">
         <Card
-          v-for="item in bottomBoxData"
+          v-for="(item, index) in bottomBoxData"
           :key="item.title"
           size="small"
           :id="item.immTypeName"
           class="one-card min-w-57.5 mr-3 flex-shrink-0 h-57.5"
           :class="{ selected: item.isSelected }"
-          :title="`${item.title}(${item.sortCount}/${item.totalCount})`"
+          :title="`${item.title}(${item.sortCount}/${item.sortTotalCount}/${item.totalCount})`"
         >
           <template #extra
             ><a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a
-            ><a @click="_sortingBoxSealing(item)">封箱</a></template
+            ><a @click="_sortingBoxSealing(item, index, false)">封箱</a></template
           >
           <div class="text-4 one-bag" v-for="one in item.bagNos" :key="one">{{ one }}</div>
         </Card>
@@ -441,8 +441,6 @@
               onOk() {
                 // 走整箱分拣操作
                 _sortingAllQua(true, data.boxNo);
-                // 走打印逻辑
-                console.log('OK');
               },
               onCancel() {
                 // 重新走一次分拣逻辑
@@ -454,7 +452,6 @@
           }
 
           success('分拣血浆成功!');
-          let cacheBagNo = bagNo.value; // 缓存箱号，打印用
           bagNo.value = '';
           nextTick(() => {
             bagNoRef.value.focus();
@@ -502,6 +499,7 @@
             // 可投产箱子
             if (data.pros?.bagNos?.length) {
               topBoxData.value[0].sortCount = data.pros?.sortCount;
+              topBoxData.value[0].sortTotalCount = data.pros?.sortTotalCount;
               topBoxData.value[0].totalCount = data.pros?.totalCount;
               topBoxData.value[0].immType = data.pros?.immType;
               // 可投产血浆列表有长度，说明正在挑的是可投产的，更新血浆列表
@@ -528,6 +526,7 @@
                     pickType: data.unPro?.pickType,
                     title: getTiterText(item),
                     sortCount: item?.sortCount,
+                    sortTotalCount: item?.sortTotalCount,
                     totalCount: item?.totalCount,
                     bagNos: item?.bagNos,
                     // isSelected: !!item?.bagNos?.length,
@@ -539,6 +538,8 @@
                   if (data.unPro?.sortImmTypes?.[index]?.bagNos?.length) {
                     topBoxData.value[index + 1].sortCount =
                       data.unPro?.sortImmTypes?.[index]?.sortCount;
+                    topBoxData.value[index + 1].sortTotalCount =
+                      data.unPro?.sortImmTypes?.[index]?.sortTotalCount;
                     topBoxData.value[index + 1].totalCount =
                       data.unPro?.sortImmTypes?.[index]?.totalCount;
                     topBoxData.value[index + 1].bagNos = data.unPro?.sortImmTypes?.[index]?.bagNos;
@@ -597,9 +598,28 @@
           // 满箱
           if (data?.fullBox === true) {
             let content = '';
-            if (data.selectedName === 'pros') content = '投产血浆';
-            if (data.selectedName === 'unPro') content = '暂不投产血浆';
-            if (data.selectedName === 'utrkUnPro') content = '待放行血浆';
+            let labelType = '';
+            if (pickMode === 'A') {
+              if (data?.pickType === 'PRO') {
+                labelType = 'SAMPLE_BOX_1';
+                content = '投产血浆';
+              } else {
+                labelType = 'SAMPLE_BOX_2';
+                content = '暂不投产血浆';
+              }
+            }
+            if (pickMode === 'B') {
+              if (data?.pickType === 'PRO') {
+                labelType = 'SAMPLE_BOX_1';
+                content = '投产血浆';
+              } else if (data?.pickType === 'UPR') {
+                labelType = 'SAMPLE_BOX_3';
+                content = '检疫期合格暂不投产血浆';
+              } else if (data?.pickType === 'WV') {
+                labelType = 'SAMPLE_BOX_4';
+                content = '待放行血浆';
+              }
+            }
             createConfirm({
               iconType: 'warning',
               title: '提示?',
@@ -613,8 +633,7 @@
                 // 走封箱操作 不需要提示
                 // _sortingBoxSealing(targetBox, true);
                 // 走打印逻辑
-                printBox(cacheBagNo);
-                cacheBagNo = '';
+                printBox(data.newBoxNo, labelType);
                 prepareModalSuccess({ prepareNo: prepareNo.value, pickMode });
               },
               onCancel() {
@@ -668,6 +687,8 @@
         boxNo.value = '';
         bagNo.value = '';
         console.log('整箱扫描', res);
+        // 走打印逻辑 只有可投产才有整箱分拣的逻辑
+        printBox(res, 'SAMPLE_BOX_1');
         // 请求总览数据
         prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
       } finally {
@@ -783,7 +804,7 @@
    * @param needSelect 是否需要高亮选中箱
    */
   function initBox(data, needSelect = false) {
-    // 处理箱数据 pros => 投产列表  unPro => 不投产列表(A时为空、B时为不投产)  utrkUnPro => 不投产或待放行（A时为不投产、B时为待放行）作为 bottomBoxData 数据
+    // 处理箱数据 pros => 投产列表  unPro => 不投产列表(A时为空、B时为检疫期合格暂不投产)  utrkUnPro => 暂不投产或待放行（A时为暂不投产、B时为待放行）作为 bottomBoxData 数据
     topBoxData.value = [];
     if (data.pros?.bagNos.length) {
       topBoxData.value.push({
@@ -791,6 +812,7 @@
         immType: data.pros?.immType,
         pickType: 'PRO',
         sortCount: data.pros?.sortCount ?? '',
+        sortTotalCount: data.pros?.sortTotalCount ?? '',
         totalCount: data.pros?.totalCount || '',
         bagNos: data.pros?.bagNos,
         isSelected: false,
@@ -803,6 +825,10 @@
         sortCount:
           data.pros && Object.prototype.hasOwnProperty.call(data.pros, 'sortCount')
             ? data.pros.sortCount
+            : '',
+        sortTotalCount:
+          data.pros && Object.prototype.hasOwnProperty.call(data.pros, 'sortTotalCount')
+            ? data.pros.sortTotalCount
             : '',
         totalCount:
           data.pros && Object.prototype.hasOwnProperty.call(data.pros, 'totalCount')
@@ -819,6 +845,7 @@
         pickType: data.unPro?.pickType,
         title: getTiterText(item),
         sortCount: item?.sortCount,
+        sortTotalCount: item?.sortTotalCount,
         totalCount: item?.totalCount,
         bagNos: item?.bagNos,
         isSelected: false,
@@ -833,6 +860,7 @@
         pickType: data.utrkUnPro?.pickType,
         title: getTiterText(item),
         sortCount: item?.sortCount,
+        sortTotalCount: item?.sortTotalCount,
         totalCount: item?.totalCount,
         bagNos: item?.bagNos,
         isSelected: false,
@@ -944,8 +972,8 @@
   }
 
   // 封箱
-  async function _sortingBoxSealing(data, noTip?) {
-    console.log('封箱', data);
+  async function _sortingBoxSealing(data, index, isTop) {
+    console.log('封箱222222222222222222222', data);
     if (!prepareNo.value) {
       warning('请选择投产准备号!');
       return;
@@ -954,23 +982,19 @@
       warning('请先分拣血浆');
       return;
     }
-    if (noTip) {
-      doThis();
-    } else {
-      createConfirm({
-        iconType: 'warning',
-        title: '提示?',
-        icon: createVNode(ExclamationCircleOutlined),
-        content: createVNode('div', { style: 'color:red;' }, '确认封箱并打印箱标签吗?'),
-        async onOk() {
-          await doThis();
-        },
-        onCancel() {
-          console.log('Cancel');
-        },
-        class: 'test',
-      });
-    }
+    createConfirm({
+      iconType: 'warning',
+      title: '提示?',
+      icon: createVNode(ExclamationCircleOutlined),
+      content: createVNode('div', { style: 'color:red;' }, '确认封箱并打印箱标签吗?'),
+      async onOk() {
+        await doThis();
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+      class: 'test',
+    });
     async function doThis() {
       const params = {
         prepareNo: prepareNo.value,
@@ -985,7 +1009,21 @@
         console.log('封箱成功:', res);
         success('封箱成功!');
         // 走打印逻辑
-        printBox(data.bagNos[0]);
+        let labelType = '';
+        if (pickMode === 'A') {
+          if (isTop) labelType = 'SAMPLE_BOX_1';
+          else labelType = 'SAMPLE_BOX_2';
+        }
+        if (pickMode === 'B') {
+          if (isTop) {
+            if (index === 0) labelType = 'SAMPLE_BOX_1';
+            else labelType = 'SAMPLE_BOX_3';
+          } else {
+            labelType = 'SAMPLE_BOX_4';
+          }
+        }
+
+        printBox(res, labelType);
         // 请求总览数据
         prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
       } finally {
@@ -1113,11 +1151,11 @@
   }
 
   // 打印箱签
-  async function printBox(bagNo) {
+  async function printBox(newBoxNo, labelType) {
     // 获取标签相关样式
     const res = await getPrintRecord({
-      labelType: 'SORTING_BOX',
-      bissNo: bagNo,
+      labelType,
+      bissNo: newBoxNo,
     });
     const params = {
       ...res,

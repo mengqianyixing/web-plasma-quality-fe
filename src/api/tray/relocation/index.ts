@@ -20,6 +20,10 @@ import {
   GetApiCoreBankWarehouseTrayTrayNoResponse,
   GetApiCoreBankTrayBoxesRequest,
   GetApiCoreBankTrayBoxesResponse,
+  GetApiCoreBankTrayBindRecordRequest,
+  GetApiCoreBankTrayBindRecordResponse,
+  GetApiCoreBankTrayMoveRecordRequest,
+  GetApiCoreBankTrayMoveRecordResponse,
 } from '@/api/type/trayManage';
 
 enum Api {
@@ -62,3 +66,15 @@ export const getBankBoxesList = (params: GetApiCoreBankTrayBoxesRequest) =>
       joinParamsToUrl: true,
     },
   );
+
+export const getTrayBoxBindRecordApi = (params: GetApiCoreBankTrayBindRecordRequest) =>
+  defHttp.get<GetApiCoreBankTrayBindRecordResponse>({
+    url: '/api/core/bank/tray/bind-record',
+    params,
+  });
+
+export const getTrayRelocationRecordApi = (params: GetApiCoreBankTrayMoveRecordRequest) =>
+  defHttp.get<GetApiCoreBankTrayMoveRecordResponse>({
+    url: '/api/core/bank/tray/move-record',
+    params,
+  });

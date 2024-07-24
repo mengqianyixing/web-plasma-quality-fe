@@ -34,7 +34,7 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆最晚投产日期',
     dataIndex: 'bagLatestProdDate',
-    width: 100,
+    width: 120,
   },
   {
     title: '备注',

@@ -3,15 +3,21 @@
     v-bind="$attrs"
     @register="register"
     title="不合格暂存"
-    width="80%"
+    width="800px"
     @ok="handleOk"
     @cancel="handleCancel"
+    :minHeight="600"
+    @fullscreen="redoHeight"
   >
-    <BasicTable @register="registerTable">
-      <template #unqReason="{ record }">
-        {{ formatUnReason(record?.unqReason) }}
-      </template>
-    </BasicTable>
+    <div class="flex h-inherit max-h-inherit min-h-inherit">
+      <div class="flex-1 w-full">
+        <BasicTable @register="registerTable">
+          <template #unqReason="{ record }">
+            {{ formatUnReason(record?.unqReason) }}
+          </template>
+        </BasicTable>
+      </div></div
+    >
   </BasicModal>
 
   <PickBatchModal @register="registerPickBatch" @success="handlePickSuccess" />
@@ -59,7 +65,7 @@
     });
   });
 
-  const [registerTable, { reload, getForm, clearSelectedRowKeys }] = useTable({
+  const [registerTable, { reload, getForm, clearSelectedRowKeys, redoHeight }] = useTable({
     api: nonconformityPlasmaList,
     columns: unqualifiedColumns,
     beforeFetch: (params) => {
@@ -115,9 +121,9 @@
     useSearchForm: true,
     bordered: true,
     showIndexColumn: false,
-    canResize: false,
     immediate: false,
     pagination: false,
+    isCanResizeParent: true,
   });
 
   const [register] = useModalInner(async (data) => {

@@ -37,7 +37,7 @@
   const vxeRef = ref<VxeTableInstance<GetApiSearchSampleRetainSamplePickResponse[number]>>();
   const { stationOptions } = useStation();
 
-  const [registerForm, { getFieldsValue, resetFields }] = useForm({
+  const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
     showAdvancedButton: false,
     schemas: [
       {
@@ -100,7 +100,7 @@
 
   const dlvNo = ref('');
   const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
-    resetFields();
+    setFieldsValue({ stationNo: void 0, batchNo: void 0 });
     setModalProps({
       maskClosable: false,
     });
