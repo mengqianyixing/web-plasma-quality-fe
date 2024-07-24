@@ -286,10 +286,14 @@ export const outLeftColumns: BasicColumn[] = [
   {
     title: '浆员编号',
     dataIndex: 'cardNo',
+    width: 120,
+    ellipsis: false,
   },
   {
     title: '浆员姓名',
     dataIndex: 'donorName',
+    width: 120,
+    ellipsis: false,
   },
 ];
 export const outRightColumns: BasicColumn[] = [
@@ -300,9 +304,13 @@ export const outRightColumns: BasicColumn[] = [
   {
     title: '扫描人',
     dataIndex: 'operator',
+    width: 120,
+    ellipsis: false,
   },
   {
     title: '扫描时间',
     dataIndex: 'operateAt',
+    width: 160,
+    ellipsis: false,
   },
 ];

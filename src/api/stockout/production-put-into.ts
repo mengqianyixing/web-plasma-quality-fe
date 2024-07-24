@@ -60,7 +60,12 @@ export const getAcceptedReceptionList = (params: PostApiProductReceptionAccepted
   });
 
 export const productionAcceptByBox = (params: PostApiProductReceptionAcceptBoxRequest) =>
-  defHttp.post({ url: Api.PRODUCTION_ACCEPT_BOX, params });
+  defHttp.post(
+    { url: Api.PRODUCTION_ACCEPT_BOX, params },
+    {
+      isReturnNativeResponse: true,
+    },
+  );
 
 export const getProductionOutStoreList = (
   params: GetApiProductOutStoreBoxesOrderNoRequest['orderNo'],
@@ -70,7 +75,7 @@ export const getProductionOutStoreList = (
   });
 
 export const productionOutStore = (params: PostApiProductOutStoreBoxRequest) =>
-  defHttp.post({ url: Api.PRODUCTION_OUT_STORE, params }, { errorMessageMode: 'message' });
+  defHttp.post({ url: Api.PRODUCTION_OUT_STORE, params }, { isReturnNativeResponse: true });
 
 export const revokeProductionOutStore = (
   params: DeleteApiProductOutStoreBatchOrderNoRequest['orderNo'],

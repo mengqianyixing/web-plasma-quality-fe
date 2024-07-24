@@ -68,7 +68,7 @@
 
   defineOptions({ name: 'ReceivePlasma' });
 
-  const { createMessage, createConfirm } = useMessage();
+  const { createMessage, createConfirm, createWarningModal } = useMessage();
   const { success, warning } = createMessage;
   const [registerModal, { openModal }] = useModal();
 
@@ -304,9 +304,22 @@
       }
       try {
         tableLoading.value = true;
-        await checkTrayNo(trayNo.value);
-        tableLoading.value = false;
-      } catch (err) {
+
+        const res = await checkTrayNo(trayNo.value);
+        if (res.data.code !== '0' && res.data.msg) {
+          createWarningModal({
+            title: '提示',
+            content: res.data.msg,
+            keyboard: false,
+            wrapClassName: 'rpbat9527',
+          });
+          const dom: HTMLElement | null = document.querySelector('.rpbat9527 button');
+          setTimeout(() => {
+            dom?.blur();
+          });
+          return;
+        }
+      } finally {
         tableLoading.value = false;
       }
     }

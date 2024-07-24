@@ -56,7 +56,7 @@
   const inputValue = ref('');
 
   const emit = defineEmits(['success', 'register']);
-  const { createMessage } = useMessage();
+  const { createMessage, createWarningModal } = useMessage();
   const inputRef = ref<HTMLElement | null>(null);
 
   const { barCode, startEvent, enterFlag } = useScanHelper();
@@ -190,11 +190,28 @@
         loading: true,
       });
 
-      await productionAcceptByBox({
+      const res = await productionAcceptByBox({
         orderNo: orderNo.value,
         boxNo: inputValue.value,
       });
-
+      if (res.data.code !== '0' && res.data.msg) {
+        _removeEvent();
+        createWarningModal({
+          title: '提示',
+          content: res.data.msg,
+          keyboard: false,
+          wrapClassName: 'ppbr9527',
+          onOk: () => {
+            const { removeEvent } = startEvent();
+            _removeEvent = removeEvent;
+          },
+        });
+        const dom: HTMLElement | null = document.querySelector('.ppbr9527 button');
+        setTimeout(() => {
+          dom?.blur();
+        });
+        return;
+      }
       createMessage.success('接收成功');
     } finally {
       setModalProps({

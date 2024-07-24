@@ -92,6 +92,7 @@
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { getBatchInfo } from '@/api/stockout/production-sorting/production-sorting-main';
 
   const serverEnumStore = useServerEnumStoreWithOut();
   const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
@@ -102,11 +103,28 @@
   const emit = defineEmits(['close', 'register']);
   const [registerModal] = useModalInner(async ({ prepareNo }) => {
     state.prepareNo = prepareNo;
+
+    const batchInfo = await getBatchInfo({
+      currPage: String(1),
+      pageSize: String(9999),
+      prepareNo,
+    });
+
+    await getForm()?.updateSchema({
+      field: 'batchNo',
+      componentProps: {
+        options:
+          batchInfo?.result?.map((it) => ({
+            label: it.batchNo,
+            value: it.batchNo,
+          })) || [],
+      },
+    });
     reload();
   });
   const [registerOutModal, { openModal: openOutModal }] = useModal();
   const [registenBindModal, { openModal: openBindModal }] = useModal();
-  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
+  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, getForm }] = useTable({
     immediate: false,
     api: getOutStoreListApi,
     fetchSetting: {
@@ -141,6 +159,7 @@
       setSelectedRowKeys: setBindSelectedRowKeys,
     },
   ] = useTable({
+    rowKey: 'boxNo',
     immediate: false,
     api: getBoxListApi,
     columns: boxBindColumns,
@@ -151,7 +170,12 @@
     showTableSetting: false,
     bordered: true,
     rowSelection: { type: 'checkbox' },
-    beforeFetch: (p) => ({ ...p, ...state, waitFlag: waitFlag.value }),
+    beforeFetch: (p) => ({
+      ...p,
+      ...state,
+      waitFlag: waitFlag.value,
+      boxNo: getForm().getFieldsValue().boxNo,
+    }),
     afterFetch: (res: any[]) => {
       clearBindSelectedRowKeys();
       setBindSelectedRowKeys(res.filter((it) => it.sortState).map((it) => it.boxNo));

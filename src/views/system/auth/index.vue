@@ -38,10 +38,13 @@
   import { ref, createVNode } from 'vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { useMessage } from '@/hooks/web/useMessage';
-  import { exportFile, formatDate, transferCSVData } from 'js-xxx';
+  import { exportFile, formatDate, getRandNum, transferCSVData } from 'js-xxx';
   import { modulesRouteList } from '@/router/routes';
+  import { useUserStore } from '@/store/modules/user';
+  import { pushLog } from '@/api/oauth/logger';
 
   const { createMessage } = useMessage();
+  const userStore = useUserStore();
 
   defineOptions({ name: 'AuthMenus' });
 
@@ -155,6 +158,18 @@
       `角色权限导出-${formatDate(new Date(), 'yyyymmddhhiissS')}`,
       'csv',
     );
+
+    pushLog({
+      usrName: userStore.userInfo?.username,
+      usrId: userStore.userInfo?.userAccount,
+      moduleType: 1,
+      optName: '系统',
+      optContent: `导出角色【${selectedRowsRef.value.map((it) => it.displayName).join(',')}】成功`,
+      path: 'POST /api/sys/user/logout',
+      time: getRandNum(10, 50),
+      reqData: JSON.stringify(userStore.userInfo),
+      respData: JSON.stringify({ code: 0, msg: 'ok', data: null }),
+    });
     createMessage.success('导出成功');
   }
 

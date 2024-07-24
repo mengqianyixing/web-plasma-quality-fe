@@ -61,6 +61,7 @@
     // getRoleDomainAuth,
     setCasDoorRole,
   } from '@/api/oauth/auth';
+  import { intersection, xor } from 'lodash-es';
 
   const emit = defineEmits(['success', 'register']);
   const isUpdate = ref(true);
@@ -133,6 +134,30 @@
     };
   }
 
+  function structureTreeIdMap(treeData) {
+    const res: {
+      id: string;
+      title: string;
+    }[] = [];
+
+    function traverse(node) {
+      res.push({
+        id: node.id,
+        title: node.title,
+      });
+      if (node.children && node.children.length > 0) {
+        node.children.forEach((child) => {
+          traverse(child);
+        });
+      }
+    }
+
+    treeData.forEach((node) => traverse(node));
+
+    return res;
+  }
+
+  const cacheInnerData: any = {};
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     await resetFields();
     setModalProps({ confirmLoading: false });
@@ -147,6 +172,8 @@
       const domains = generateCheckedAndHalfChecked(treeData.value, data.record.domains);
 
       roleId.value = data.record.name;
+      cacheInnerData.domains = domains;
+      cacheInnerData.users = data.record.users;
       await setFieldsValue({
         ...data.record,
         domains,
@@ -167,6 +194,8 @@
   }
 
   async function handleSubmit() {
+    const authArr = structureTreeIdMap(treeData.value);
+
     try {
       const values = await validate();
       if (!values.users) {
@@ -183,15 +212,72 @@
       setModalProps({ confirmLoading: true });
       try {
         if (unref(isUpdate)) {
+          const users = values.users.map((item) => item.split('/')[1]);
+          const cacheUsers = cacheInnerData.users.map((item) => item.split('/')[1]);
+
+          const intersectionUser = intersection(users, cacheUsers);
+          const addMsg = xor(users, intersectionUser).join(',')
+            ? `绑定了用户[${xor(users, intersectionUser).join(',')}]`
+            : '';
+          const removeMsg = xor(cacheUsers, intersectionUser).join(',')
+            ? `解绑了用户[${xor(cacheUsers, intersectionUser).join(',')}]`
+            : '';
+
+          const curDomains = [...domains, ...halfCheck.value];
+          const cacheDomains = [
+            ...cacheInnerData.domains.checked,
+            ...cacheInnerData.domains.halfChecked,
+          ];
+
+          const intersectionDomains = intersection(curDomains, cacheDomains);
+
+          const addAuth = xor(curDomains, intersectionDomains)
+            .map((item) => {
+              const auth = authArr.find((auth) => auth.id === item);
+              return auth!.title;
+            })
+            .join(',')
+            ? `绑定了菜单权限[${xor(curDomains, intersectionDomains)
+                .map((item) => {
+                  const auth = authArr.find((auth) => auth.id === item);
+                  return auth!.title;
+                })
+                .join(',')}]`
+            : '';
+
+          const removeAuth = xor(cacheDomains, intersectionDomains)
+            .map((item) => {
+              const auth = authArr.find((auth) => auth.id === item);
+              return auth!.title;
+            })
+            .join(',')
+            ? `解绑了菜单权限[${xor(cacheDomains, intersectionDomains)
+                .map((item) => {
+                  const auth = authArr.find((auth) => auth.id === item);
+                  return auth!.title;
+                })
+                .join(',')}]`
+            : '';
+
           await setCasDoorRole({
             ...values,
             domains: [...domains, ...halfCheck.value],
             oldName: roleId.value,
+            logMsg: `${addMsg},${removeMsg},${addAuth},${removeAuth}`,
           });
         } else {
+          const users = values.users.map((item) => item.split('/')[1]).join(',');
+          const authMsg = [...domains, ...halfCheck.value]
+            .map((item) => {
+              const auth = authArr.find((auth) => auth.id === item);
+              return auth!.title;
+            })
+            .join(',');
+          const logMsg = `绑定了用户[${users}], 绑定了菜单权限[${authMsg}]`;
           await addCasDoorRole({
             ...values,
             domains: [...domains, ...halfCheck.value],
+            logMsg,
           });
         }
       } catch (e) {

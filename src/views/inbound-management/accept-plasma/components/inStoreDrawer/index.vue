@@ -142,7 +142,7 @@
   async function submit() {
     const { boxId, trayNo } = getFieldsValue();
     await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind' });
-    setFieldsValue({ boxId: '', trayNo: '' });
+    setFieldsValue({ boxId: '' });
     message.success('操作成功');
     reload();
   }

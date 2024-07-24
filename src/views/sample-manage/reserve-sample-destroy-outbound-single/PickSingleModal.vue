@@ -64,7 +64,7 @@
     total: 0,
   });
 
-  const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
+  const [registerForm, { getFieldsValue }] = useForm({
     showAdvancedButton: false,
     baseColProps: { flex: '0 0 373px' },
     actionColOptions: { flex: '1 1 120px', style: 'max-width:unset; text-align:right;' },
@@ -179,14 +179,9 @@
   });
 
   const dlvNo = ref('');
+  let isFirst = true;
   const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
-    const values = getFieldsValue();
-    const nullValues = Object.keys(values).reduce((t, c) => {
-      t[c] = void 0;
-      return t;
-    }, {});
-    setFieldsValue(nullValues);
-
+    if (isFirst === false) initTableData();
     setModalProps({
       maskClosable: false,
     });
@@ -197,6 +192,7 @@
 
   const tableLoading = ref(false);
   async function initTableData() {
+    isFirst = false;
     try {
       tableLoading.value = true;
       const values = getFieldsValue();

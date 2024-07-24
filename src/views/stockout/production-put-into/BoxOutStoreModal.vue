@@ -63,7 +63,7 @@
   const originTableData = ref<GetApiProductOutStoreBoxesOrderNoResponse>({});
 
   const emit = defineEmits(['success', 'register']);
-  const { createMessage } = useMessage();
+  const { createMessage, createWarningModal } = useMessage();
   const { barCode, startEvent, enterFlag } = useScanHelper();
   const _handleEnter = debounce(handleEnter, 300);
 
@@ -177,11 +177,28 @@
       setModalProps({
         loading: true,
       });
-      await productionOutStore({
+      const res = await productionOutStore({
         orderNo: orderNo.value,
         boxNo: inputValue.value,
       });
-
+      if (res.data.code !== '0' && res.data.msg) {
+        _removeEvent();
+        createWarningModal({
+          title: '提示',
+          content: res.data.msg,
+          keyboard: false,
+          wrapClassName: 'ppbos9527',
+          onOk: () => {
+            const { removeEvent } = startEvent();
+            _removeEvent = removeEvent;
+          },
+        });
+        const dom: HTMLElement | null = document.querySelector('.ppbos9527 button');
+        setTimeout(() => {
+          dom?.blur();
+        });
+        return;
+      }
       createMessage.success('出库成功');
 
       await reloadTable();
