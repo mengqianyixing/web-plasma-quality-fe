@@ -868,10 +868,10 @@ export type GetApiProductPlanStackOrderNoResponse = {
  * 接口 [pms组垛任务创建↗](https://yapi.sharing8.cn/project/529/interface/api/34830) 的 **请求类型**
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
- * @请求头 `GET /api/product/plan/bag-out/{orderNo}`
- * @更新时间 `2024-05-21 17:32:45`
+ * @请求头 `POST /api/product/plan/bag-out/{orderNo}`
+ * @更新时间 `2024-07-24 16:10:40`
  */
-export interface GetApiProductPlanBagOutOrderNoRequest {
+export interface PostApiProductPlanBagOutOrderNoRequest {
   orderNo: string;
 }
 
@@ -879,9 +879,9 @@ export interface GetApiProductPlanBagOutOrderNoRequest {
  * 接口 [pms组垛任务创建↗](https://yapi.sharing8.cn/project/529/interface/api/34830) 的 **返回类型**
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
- * @请求头 `GET /api/product/plan/bag-out/{orderNo}`
- * @更新时间 `2024-05-21 17:32:45`
+ * @请求头 `POST /api/product/plan/bag-out/{orderNo}`
+ * @更新时间 `2024-07-24 16:10:40`
  */
-export interface GetApiProductPlanBagOutOrderNoResponse {}
+export interface PostApiProductPlanBagOutOrderNoResponse {}
 
 /* prettier-ignore-end */

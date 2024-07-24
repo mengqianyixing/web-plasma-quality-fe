@@ -1971,4 +1971,27 @@ export interface DeleteApiCoreBankDeliverNonproductiveRequest {
  */
 export interface DeleteApiCoreBankDeliverNonproductiveResponse {}
 
+/**
+ * 接口 [非生产出库挑浆系统↗](https://yapi.sharing8.cn/project/529/interface/api/36240) 的 **请求类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `POST /api/core/bank/deliver/nonproductive/pms-out/{dlvNo}`
+ * @更新时间 `2024-07-24 16:25:35`
+ */
+export interface PostApiCoreBankDeliverNonproductivePmsOutDlvNoRequest {
+  /**
+   * 出库单号
+   */
+  dlvNo: string;
+}
+
+/**
+ * 接口 [非生产出库挑浆系统↗](https://yapi.sharing8.cn/project/529/interface/api/36240) 的 **返回类型**
+ *
+ * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)
+ * @请求头 `POST /api/core/bank/deliver/nonproductive/pms-out/{dlvNo}`
+ * @更新时间 `2024-07-24 16:25:35`
+ */
+export interface PostApiCoreBankDeliverNonproductivePmsOutDlvNoResponse {}
+
 /* prettier-ignore-end */

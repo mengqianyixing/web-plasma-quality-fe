@@ -571,7 +571,7 @@ export interface GetApiCoreBankLocationStatisticsResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/sample/result`
- * @更新时间 `2024-05-22 14:26:24`
+ * @更新时间 `2024-07-23 15:57:15`
  */
 export interface GetApiSearchSampleResultRequest {
   pageSize: string;
@@ -591,11 +591,13 @@ export interface GetApiSearchSampleResultRequest {
   /**
    * 结果发布日期
    */
-  issueAt: string;
+  issueBegin: string;
+  issueEnd: string;
   /**
    * 样本采集日期
    */
-  collectAt: string;
+  collectionBegin: string;
+  collectionEnd: string;
 }
 
 /**
@@ -603,7 +605,7 @@ export interface GetApiSearchSampleResultRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/sample/result`
- * @更新时间 `2024-05-22 14:26:24`
+ * @更新时间 `2024-07-23 15:57:15`
  */
 export interface GetApiSearchSampleResultResponse {
   totalCount: number;
