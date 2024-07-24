@@ -179,6 +179,6 @@ export const submitCheckCancelApi = (data: PutApiProductPlanCheckCancelRequest) 
     data: data,
   });
 export const submitPMSApi = (data: PutApiProductPlanReviewOrderNoRequest) =>
-  defHttp.get({
+  defHttp.post({
     url: Api.PMS + data.orderNo,
   });
