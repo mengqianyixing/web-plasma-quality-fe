@@ -174,7 +174,7 @@ export const trayOutStoreFormSchema: FormSchema[] = [
   {
     label: '血浆批号',
     field: 'batchNo',
-    component: 'Input',
+    component: 'Select',
   },
   {
     label: '血浆箱号',
