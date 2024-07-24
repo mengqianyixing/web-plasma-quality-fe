@@ -143,6 +143,9 @@
       label: '准备号',
       component: 'Input',
       required: true,
+      componentProps: {
+        disabled: true,
+      },
     },
     {
       field: 'batchNo',
