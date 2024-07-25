@@ -242,7 +242,7 @@ export const locationCell: Cell[] = [
     label: '货位数',
   },
   {
-    field: '',
+    field: 'locationUsedCount',
     label: '已使用货位数',
   },
 ];
