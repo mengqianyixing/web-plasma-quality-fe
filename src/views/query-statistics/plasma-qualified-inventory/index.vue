@@ -26,6 +26,7 @@
   import { PageWrapper } from '@/components/Page';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { message } from 'ant-design-vue';
+  import dayjs from 'dayjs';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'PlasmaQualifiedInventory' });
@@ -34,7 +35,6 @@
 
   const [registerTable, { getForm }] = useTable({
     immediate: false,
-
     api: getPlasmaQualifiedInventory,
     columns,
     formConfig: {
@@ -112,11 +112,19 @@
       immTypeCount = accAdd(immTypeCount, item.immTypeCount);
       immTypeWeight = accAdd(immTypeWeight, item.immTypeWeight);
     });
+
+    const minCollectAtArr = tableData.map((item) => dayjs(item.minCollectAt));
+
+    const earliestDate = minCollectAtArr.reduce((earliest, current) => {
+      return current.isBefore(earliest) ? current : earliest;
+    }, minCollectAtArr[0]);
+
     return [
       {
         immType: '总计',
         immTypeCount,
         immTypeWeight,
+        minCollectAt: earliestDate.format('YYYY-MM-DD'),
       },
     ];
   }
