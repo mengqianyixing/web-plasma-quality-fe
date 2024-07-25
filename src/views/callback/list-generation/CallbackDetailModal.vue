@@ -139,7 +139,11 @@
     unref(isPreview) ? '名单详情' : unref(isUpdate) ? '编辑名单' : '生成名单',
   );
 
-  const [register] = useModalInner((data) => {
+  const [register, { setModalProps }] = useModalInner((data) => {
+    setModalProps({
+      maskClosable: false,
+      destroyOnClose: true,
+    });
     isUpdate.value = data.isUpdate;
     isPreview.value = data.isPreview;
     batchNo.value = data.planNo;
