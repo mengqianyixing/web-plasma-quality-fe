@@ -25,14 +25,6 @@ export const columns: BasicColumn[] = [
   {
     title: '浆员性别',
     dataIndex: 'gender',
-    customRender: ({ text }) => {
-      if (text === 'M') {
-        return '男';
-      } else if (text === 'F') {
-        return '女';
-      }
-      return '';
-    },
     width: 80,
   },
   {
