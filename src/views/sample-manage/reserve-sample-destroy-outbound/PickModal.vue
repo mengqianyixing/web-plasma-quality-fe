@@ -37,7 +37,7 @@
   const vxeRef = ref<VxeTableInstance<GetApiSearchSampleRetainSamplePickResponse[number]>>();
   const { stationOptions } = useStation();
 
-  const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
+  const [registerForm, { getFieldsValue }] = useForm({
     showAdvancedButton: false,
     schemas: [
       {
@@ -99,13 +99,13 @@
   });
 
   const dlvNo = ref('');
+  let isFirst = true;
   const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
-    setFieldsValue({ stationNo: void 0, batchNo: void 0 });
     setModalProps({
       maskClosable: false,
     });
     dlvNo.value = data.dlvNo;
-
+    !isFirst && initTableData();
     // await initTableData();
   });
 
@@ -113,6 +113,7 @@
 
   const tableLoading = ref(false);
   async function initTableData() {
+    isFirst = false;
     try {
       tableLoading.value = true;
       const values = getFieldsValue();

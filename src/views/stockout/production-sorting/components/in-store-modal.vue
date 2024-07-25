@@ -29,7 +29,7 @@
         >
           <TabPane tab="分拣血浆箱" key="1">
             <Spin :spinning="state.spinning">
-              <BasicForm @register="registerForm" />
+              <BasicForm @register="registerForm" ref="formRef" />
             </Spin>
             <div class="border border-slate-100"></div>
             <div style="height: calc(100% - 60px)">
@@ -58,7 +58,7 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form';
   import { message, TabPane, Tabs, Spin } from 'ant-design-vue';
-  import { nextTick, reactive } from 'vue';
+  import { nextTick, reactive, ref } from 'vue';
   import {
     trayInStoreColumns,
     trayInStoreFormSchema,
@@ -81,6 +81,7 @@
     prepareNo: '',
     spinning: false,
   });
+  const formRef = ref();
   const emit = defineEmits(['close']);
   const [registerModal] = useModalInner(async ({ prepareNo }) => {
     resetFields();
@@ -96,6 +97,7 @@
       componentProps: {
         ...schems.componentProps,
         onkeyup: handleSubmit,
+        class: schems.field,
       },
     })),
     showActionButtonGroup: false,
@@ -222,6 +224,7 @@
     if (e.code !== 'Enter' && e.code !== 'NumpadEnter') return;
     const { boxId, trayNo } = getFieldsValue();
     if (boxId && !trayNo) message.warning('请扫描托盘编号');
+    if (trayNo) formRef.value.$el.querySelector('.boxId input')?.focus();
     if (!boxId || !trayNo) return;
     try {
       state.spinning = true;

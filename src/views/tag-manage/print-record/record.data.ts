@@ -30,17 +30,12 @@ export const columns: BasicColumn[] = [
     width: 80,
   },
   {
-    title: '是否打印',
+    title: '是否补打',
     dataIndex: 'supplementary',
     format: (text) => {
       return text ? '是' : '否';
     },
     width: 80,
-  },
-  {
-    title: '打印原因',
-    dataIndex: 'reason',
-    width: 120,
   },
   {
     title: '打印人',

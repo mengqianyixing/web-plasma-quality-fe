@@ -11,7 +11,7 @@
     v-bind="$attrs"
     @register="registerModal"
     title="出库扫描"
-    width="1200px"
+    width="1100px"
     @cancel="emit('close')"
     :minHeight="600"
     cancelText="关闭"
@@ -40,10 +40,12 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { scanApi, scanedApi, notScanApi } from '@/api/nonconformity/plasmaOut';
   import { reactive } from 'vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const emit = defineEmits(['close']);
 
   const state = reactive({ no: '' });
+  const { createWarningModal } = useMessage();
 
   const [registerForm, { clearValidate, resetFields, getFieldsValue }] = useForm({
     labelWidth: 90,
@@ -104,7 +106,26 @@
   }
   async function handleSubmit() {
     const { bagNo } = getFieldsValue();
-    await scanApi({ bagNo, no: state.no });
+    const res = await scanApi({ bagNo, no: state.no });
+    const focusedElement = document.activeElement as HTMLElement;
+    focusedElement?.blur();
+    if (res.data.code !== '0' && res.data.msg) {
+      createWarningModal({
+        title: '提示',
+        content: res.data.msg,
+        keyboard: false,
+        wrapClassName: 'npppo9527',
+        onOk: () => {
+          focusedElement?.focus();
+        },
+      });
+      const dom: HTMLElement | null = document.querySelector('.npppo9527 button');
+      setTimeout(() => {
+        dom?.blur();
+      });
+      return;
+    }
+    focusedElement?.focus();
     resetFields();
     reloadLeft();
     reloadRight();

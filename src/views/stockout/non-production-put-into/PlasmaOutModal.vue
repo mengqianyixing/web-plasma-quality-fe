@@ -4,9 +4,10 @@
     @register="register"
     title="扫描出库"
     showFooter
-    width="85%"
+    width="1000px"
     :min-height="600"
     :showOkBtn="false"
+    cancel-text="关闭"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -43,10 +44,9 @@
 </template>
 <script lang="ts" setup>
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { ref, computed, watchEffect, nextTick } from 'vue';
+  import { ref, computed, nextTick } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
   import { useMessage } from '@/hooks/web/useMessage';
-  import { useFocus } from '@vueuse/core';
 
   import { getPlasmaScanList, outStorePlasma } from '@/api/stockout/non-productin-put-into';
   import { GetApiCoreBankDeliverNonproductiveScanResponse } from '@/api/type/stockoutManage';
@@ -57,14 +57,8 @@
   const originTableData = ref<GetApiCoreBankDeliverNonproductiveScanResponse>({});
 
   defineEmits(['success', 'register']);
-  const { createMessage } = useMessage();
+  const { createMessage, createWarningModal } = useMessage();
   const inputRef = ref<HTMLElement | null>(null);
-  const { focused } = useFocus(inputRef);
-  watchEffect(() => {
-    if (!focused.value) {
-      focused.value = true;
-    }
-  });
 
   const [registerNoOutTable] = useTable({
     columns: [
@@ -75,10 +69,13 @@
       {
         title: '浆员姓名',
         dataIndex: 'donorName',
+        width: 100,
+        ellipsis: false,
       },
       {
         title: '浆员编号',
         dataIndex: 'cardNo',
+        width: 120,
       },
     ],
     fetchSetting: {
@@ -109,10 +106,13 @@
       {
         title: '浆员姓名',
         dataIndex: 'donorName',
+        width: 100,
+        ellipsis: false,
       },
       {
         title: '浆员编号',
         dataIndex: 'cardNo',
+        width: 120,
       },
     ],
     fetchSetting: {
@@ -155,22 +155,37 @@
     inputDisabled.value = true;
 
     try {
-      await outStorePlasma({
+      const res = await outStorePlasma({
         dlvNo: dlvNo.value,
         bagNo: inputValue.value,
       });
-
+      if (res.data.code !== '0' && res.data.msg) {
+        createWarningModal({
+          title: '提示',
+          content: res.data.msg,
+          keyboard: false,
+          wrapClassName: 'npppo9527',
+          onOk: () => {
+            nextTick(() => {
+              inputRef.value?.focus();
+            });
+          },
+        });
+        const dom: HTMLElement | null = document.querySelector('.npppo9527 button');
+        setTimeout(() => {
+          dom?.blur();
+        });
+        return;
+      }
       createMessage.success('出库成功');
 
       await reloadTable();
-    } catch (e) {
-      console.log(123123);
+      nextTick(() => {
+        inputRef.value?.focus();
+      });
     } finally {
       inputValue.value = '';
       inputDisabled.value = false;
-      await nextTick(() => {
-        inputRef.value?.focus();
-      });
     }
   }
 </script>

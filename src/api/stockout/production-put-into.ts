@@ -22,6 +22,7 @@ import {
   PostApiProductReceptionBoxesRequest,
   PostApiProductReceptionBoxesResponse,
 } from '@/api/type/productionReceiveManage';
+import { PostApiProductPlanBagOutOrderNoRequest } from '@/api/type/productionPlan';
 
 enum Api {
   PRODUCTION_BATCH_PUT_INTO = '/api/product/out-store/batch',
@@ -35,6 +36,7 @@ enum Api {
   PRODUCTION_TRAY_OUT_STORE = '/api/product/prepare/tray/out',
   PRODUCTION_BOX_NUM_DETAIL = '/api/product/order/box',
   PMS_SORT_TASK = '/api/product/prepare/sorting/task',
+  PMS_PICK_SYSTEM = '/api/product/plan/bag-out',
 }
 
 export const productionStockOutByBatch = (params: PostApiProductOutStoreBatchRequest) =>
@@ -60,7 +62,12 @@ export const getAcceptedReceptionList = (params: PostApiProductReceptionAccepted
   });
 
 export const productionAcceptByBox = (params: PostApiProductReceptionAcceptBoxRequest) =>
-  defHttp.post({ url: Api.PRODUCTION_ACCEPT_BOX, params });
+  defHttp.post(
+    { url: Api.PRODUCTION_ACCEPT_BOX, params },
+    {
+      isReturnNativeResponse: true,
+    },
+  );
 
 export const getProductionOutStoreList = (
   params: GetApiProductOutStoreBoxesOrderNoRequest['orderNo'],
@@ -70,7 +77,7 @@ export const getProductionOutStoreList = (
   });
 
 export const productionOutStore = (params: PostApiProductOutStoreBoxRequest) =>
-  defHttp.post({ url: Api.PRODUCTION_OUT_STORE, params }, { errorMessageMode: 'message' });
+  defHttp.post({ url: Api.PRODUCTION_OUT_STORE, params }, { isReturnNativeResponse: true });
 
 export const revokeProductionOutStore = (
   params: DeleteApiProductOutStoreBatchOrderNoRequest['orderNo'],
@@ -94,4 +101,11 @@ export const productionPMSTask = (params: PostApiProductPrepareSortingTaskReques
   defHttp.post<PostApiProductPrepareSortingTaskResponse>({
     url: Api.PMS_SORT_TASK,
     params,
+  });
+
+export const productionPMSPickSystem = (
+  params: PostApiProductPlanBagOutOrderNoRequest['orderNo'],
+) =>
+  defHttp.post({
+    url: Api.PMS_PICK_SYSTEM + `/${params}`,
   });

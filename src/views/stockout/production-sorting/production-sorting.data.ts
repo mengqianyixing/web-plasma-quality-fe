@@ -68,9 +68,6 @@ export const bindFormSchema: FormSchema[] = [
     componentProps: {
       placeholder: '扫描血浆箱号',
       autocomplete: 'off',
-      onkeyup: () => {
-        console.log(112);
-      },
     },
   },
 ];
@@ -174,7 +171,7 @@ export const trayOutStoreFormSchema: FormSchema[] = [
   {
     label: '血浆批号',
     field: 'batchNo',
-    component: 'Input',
+    component: 'Select',
   },
   {
     label: '血浆箱号',

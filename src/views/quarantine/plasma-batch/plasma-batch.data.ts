@@ -105,6 +105,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '续追踪血浆合计',
+    dataIndex: 'UNTRACKED',
     slots: { customRender: 'UNTRACKED' },
     width: 120,
   },

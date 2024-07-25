@@ -20,10 +20,10 @@ import {
   GetApiCoreBankDeliverNonproductiveScanResponse,
   PostApiCoreBankDeliverNonproductivePickPlasmaRequest,
   PostApiCoreBankDeliverNonproductivePickPlasmaResponse,
+  PostApiCoreBankDeliverNonproductivePmsOutDlvNoRequest,
   PostApiCoreBankDeliverNonproductiveRequest,
   PostApiCoreBankDeliverNonproductiveResponse,
   PostApiCoreBankDeliverNonproductiveScanRequest,
-  PostApiCoreBankDeliverNonproductiveScanResponse,
   PutApiCoreBankDeliverNonproductiveProcessDlvNoRequest,
   PutApiCoreBankDeliverNonproductiveReadyDlvNoRequest,
   PutApiCoreBankDeliverNonproductiveReadyDlvNoResponse,
@@ -42,6 +42,7 @@ enum Api {
   NON_PRODUCTIVE_REVIEW = '/api/core/bank/deliver/nonproductive/review',
   NON_PRODUCTIVE_CHECK = '/api/core/bank/deliver/nonproductive/process',
   PLASMA_SCAN_RESTFUL = '/api/core/bank/deliver/nonproductive/scan',
+  PICK_SYSTEM = '/api/core/bank/deliver/nonproductive/pms-out',
 }
 
 export const getCoreBankDelivers = (params: GetApiCoreBankDeliverNonproductiveRequest) =>
@@ -133,7 +134,19 @@ export const getPlasmaScanList = (params: GetApiCoreBankDeliverNonproductiveScan
   });
 
 export const outStorePlasma = (params: PostApiCoreBankDeliverNonproductiveScanRequest) =>
-  defHttp.post<PostApiCoreBankDeliverNonproductiveScanResponse>({
-    url: Api.PLASMA_SCAN_RESTFUL,
-    params,
+  defHttp.post(
+    {
+      url: Api.PLASMA_SCAN_RESTFUL,
+      params,
+    },
+    {
+      isReturnNativeResponse: true,
+    },
+  );
+
+export const pickSystem = (
+  params: PostApiCoreBankDeliverNonproductivePmsOutDlvNoRequest['dlvNo'],
+) =>
+  defHttp.post({
+    url: Api.PICK_SYSTEM + `/${params}`,
   });
