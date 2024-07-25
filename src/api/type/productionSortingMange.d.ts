@@ -188,7 +188,7 @@ export interface GetApiCoreBankTraySortInResponse {
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
  * @请求头 `GET /api/core/bank/tray/sort-out/boxes`
- * @更新时间 `2024-07-22 16:17:50`
+ * @更新时间 `2024-07-24 15:33:33`
  */
 export interface GetApiCoreBankTraySortOutBoxesRequest {
   /**
@@ -203,6 +203,10 @@ export interface GetApiCoreBankTraySortOutBoxesRequest {
    * 是否待分拣血浆箱， 0表示否，1表示是
    */
   waitFlag?: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
 }
 
 /**
@@ -210,7 +214,7 @@ export interface GetApiCoreBankTraySortOutBoxesRequest {
  *
  * @分类 [分拣-托盘出入库，解绑绑定↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5568)
  * @请求头 `GET /api/core/bank/tray/sort-out/boxes`
- * @更新时间 `2024-07-22 16:17:50`
+ * @更新时间 `2024-07-24 15:33:33`
  */
 export type GetApiCoreBankTraySortOutBoxesResponse = {
   /**

@@ -170,7 +170,12 @@
     showTableSetting: false,
     bordered: true,
     rowSelection: { type: 'checkbox' },
-    beforeFetch: (p) => ({ ...p, ...state, waitFlag: waitFlag.value }),
+    beforeFetch: (p) => ({
+      ...p,
+      ...state,
+      waitFlag: waitFlag.value,
+      boxNo: getForm().getFieldsValue().boxNo,
+    }),
     afterFetch: (res: any[]) => {
       clearBindSelectedRowKeys();
       setBindSelectedRowKeys(res.filter((it) => it.sortState).map((it) => it.boxNo));
