@@ -415,6 +415,7 @@
             if (data?.proBag === true) {
               createConfirm({
                 iconType: 'warning',
+                autoFocusButton: null,
                 content: `${bagNo.value}为${data.unqReason}血浆!`,
                 onOk: () => handleUnqualifiedSuccess(),
               });
@@ -650,7 +651,7 @@
             iconType: 'warning',
             title: '提示',
             icon: createVNode(ExclamationCircleOutlined),
-            autoFocusButton: 'ok',
+            autoFocusButton: null,
             cancelButtonProps: { style: { display: 'none' } },
             content: createVNode('div', { style: 'color:red;' }, res.data?.msg || '系统出错!'),
             onOk() {
