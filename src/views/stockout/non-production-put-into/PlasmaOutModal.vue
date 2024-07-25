@@ -44,10 +44,9 @@
 </template>
 <script lang="ts" setup>
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { ref, computed, watchEffect, nextTick } from 'vue';
+  import { ref, computed, nextTick } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
   import { useMessage } from '@/hooks/web/useMessage';
-  import { useFocus } from '@vueuse/core';
 
   import { getPlasmaScanList, outStorePlasma } from '@/api/stockout/non-productin-put-into';
   import { GetApiCoreBankDeliverNonproductiveScanResponse } from '@/api/type/stockoutManage';
@@ -60,12 +59,6 @@
   defineEmits(['success', 'register']);
   const { createMessage, createWarningModal } = useMessage();
   const inputRef = ref<HTMLElement | null>(null);
-  const { focused } = useFocus(inputRef);
-  watchEffect(() => {
-    if (!focused.value) {
-      focused.value = true;
-    }
-  });
 
   const [registerNoOutTable] = useTable({
     columns: [

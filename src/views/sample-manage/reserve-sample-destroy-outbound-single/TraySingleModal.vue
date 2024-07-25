@@ -35,7 +35,7 @@
   import { trayColumns } from '@/views/sample-manage/reserve-sample-destroy-outbound-single/reserve-single.data';
   import { keepPackOutBandTrayList } from '@/api/sample-manage/reserve-sample-destory-single';
   import {
-    GetApiCoreBankDeliverSamplePickResponse,
+    GetApiSearchBankSampleTraySingleResponse,
     GetApiSearchBankSampleTraySingleRequest,
   } from '@/api/type/sampleManage';
   import dayjs from 'dayjs';
@@ -44,8 +44,8 @@
 
   defineEmits(['success', 'register']);
 
-  const tableData = ref<GetApiCoreBankDeliverSamplePickResponse>([]);
-  const vxeRef = ref<VxeTableInstance<GetApiCoreBankDeliverSamplePickResponse[number]>>();
+  const tableData = ref<GetApiSearchBankSampleTraySingleResponse[]>([]);
+  const vxeRef = ref<VxeTableInstance<GetApiSearchBankSampleTraySingleResponse>>();
 
   const [registerOutModal, { openModal }] = useModal();
   const [registerForm, { getFieldsValue }] = useForm({

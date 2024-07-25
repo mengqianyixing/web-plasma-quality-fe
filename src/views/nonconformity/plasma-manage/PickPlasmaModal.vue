@@ -7,7 +7,7 @@
     @cancel="handelCancel"
     width="550px"
   >
-    <BasicForm @register="registerForm" @submit="handleSubmit" />
+    <BasicForm @register="registerForm" />
 
     <LoginModal
       @register="registerLoginModal"
@@ -29,6 +29,7 @@
   import { useScanHelper } from '@/hooks/common/useScanHelper';
   import { watch } from 'vue';
   import { RemoveEventFn } from '@/hooks/event/useEventListener';
+  import { debounce } from 'lodash-es';
 
   const { createMessage } = useMessage();
 
@@ -50,11 +51,13 @@
 
   const [registerLoginModal, { openModal }] = useModal();
 
+  const _handleSubmit = debounce(handleSubmit, 300) as () => Promise<void>;
   const [registerForm, { resetFields, validate, setFieldsValue, updateSchema }] = useForm({
     size: 'large',
     labelWidth: 130,
     baseColProps: { span: 48 },
     schemas: pickSchema,
+    submitFunc: _handleSubmit,
     showActionButtonGroup: false,
     autoSubmitOnEnter: true,
     transformDateFunc(date) {

@@ -68,9 +68,6 @@ export const bindFormSchema: FormSchema[] = [
     componentProps: {
       placeholder: '扫描血浆箱号',
       autocomplete: 'off',
-      onkeyup: () => {
-        console.log(112);
-      },
     },
   },
 ];

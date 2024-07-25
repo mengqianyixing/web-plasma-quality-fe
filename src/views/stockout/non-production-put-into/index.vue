@@ -62,7 +62,9 @@
           >
             撤销审核
           </a-button>
-          <a-button type="primary"> 挑浆系统 </a-button>
+          <a-button type="primary" @click="handlePickingSystem" :loading="pickLoading">
+            挑浆系统
+          </a-button>
           <a-button type="primary" @click="handleScan" v-auth="StockOutButtonEnum.NonPutIntoScan">
             扫描出库
           </a-button>
@@ -123,6 +125,7 @@
     checkDeliverNonProductive,
     completeDeliverNonProductive,
     getCoreBankDelivers,
+    pickSystem,
     reviewDeliverNonProductive,
     revokeCheckDeliverNonProductive,
     revokeDeliverNonProductive,
@@ -361,6 +364,19 @@
       clearSelectedRowKeys();
     } finally {
       reportLoading.value = false;
+    }
+  }
+
+  const pickLoading = ref(false);
+  async function handlePickingSystem() {
+    if (!selectRowsCheck()) return;
+
+    try {
+      pickLoading.value = true;
+
+      await pickSystem(selectedRow.value[0]?.dlvNo);
+    } finally {
+      pickLoading.value = false;
     }
   }
 </script>
