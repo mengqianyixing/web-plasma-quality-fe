@@ -106,6 +106,7 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { PageWrapper } from '@/components/Page';
   import {
+    productionPMSPickSystem,
     productionReceiveByBatch,
     productionReceiveRevokeByBatch,
     productionStockOutByBatch,
@@ -257,6 +258,8 @@
       iconType: 'warning',
       onOk: async () => {
         createMessage.success('下发出库指令到挑浆系统成功');
+
+        await productionPMSPickSystem(selectedRow.value[0]?.orderNo);
 
         clearSelectedRowKeys();
         await reload();
