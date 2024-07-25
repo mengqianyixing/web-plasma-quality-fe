@@ -114,6 +114,10 @@ export const searchFormSchema: FormSchema[] = [
           label: '已联络拒绝',
           value: '已联络拒绝',
         },
+        {
+          label: '浆员拒绝',
+          value: '浆员拒绝',
+        },
       ],
     },
   },
