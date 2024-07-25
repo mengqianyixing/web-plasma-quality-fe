@@ -206,7 +206,7 @@ export type PostApiCoreBatchPlasmaAuditResponse = string;
  *
  * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
  * @请求头 `PUT /api/core/batch/plasma/audit`
- * @更新时间 `2024-01-17 19:36:11`
+ * @更新时间 `2024-07-25 10:26:40`
  */
 export interface PutApiCoreBatchPlasmaAuditRequest {
   /**
@@ -237,6 +237,10 @@ export interface PutApiCoreBatchPlasmaAuditRequest {
      * 审核结果
      */
     auditResult: string;
+    /**
+     * 审核项目数据id
+     */
+    bradId?: string;
   }[];
   /**
    * 审核结论
@@ -253,7 +257,7 @@ export interface PutApiCoreBatchPlasmaAuditRequest {
  *
  * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
  * @请求头 `PUT /api/core/batch/plasma/audit`
- * @更新时间 `2024-01-17 19:36:11`
+ * @更新时间 `2024-07-25 10:26:40`
  */
 export type PutApiCoreBatchPlasmaAuditResponse = string;
 
@@ -362,7 +366,7 @@ export type PutApiCoreBatchPlasmaAuditApprovalResponse = string;
  *
  * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
  * @请求头 `GET /api/core/batch/plasma/audit/{id}`
- * @更新时间 `2024-01-19 18:59:10`
+ * @更新时间 `2024-07-25 10:25:53`
  */
 export interface GetApiCoreBatchPlasmaAuditIdRequest {
   id: string;
@@ -373,7 +377,7 @@ export interface GetApiCoreBatchPlasmaAuditIdRequest {
  *
  * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
  * @请求头 `GET /api/core/batch/plasma/audit/{id}`
- * @更新时间 `2024-01-19 18:59:10`
+ * @更新时间 `2024-07-25 10:25:53`
  */
 export interface GetApiCoreBatchPlasmaAuditIdResponse {
   /**
@@ -412,6 +416,10 @@ export interface GetApiCoreBatchPlasmaAuditIdResponse {
      * 审核结果
      */
     auditResult?: string;
+    /**
+     * 审核项目数据id
+     */
+    bradId?: string;
   }[];
   /**
    * 血浆限制确认内容

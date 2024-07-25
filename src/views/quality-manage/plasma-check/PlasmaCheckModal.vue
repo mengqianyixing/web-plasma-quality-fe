@@ -115,6 +115,11 @@
         align: 'left',
         width: 200,
       },
+      {
+        title: 'Id',
+        dataIndex: 'bradId',
+        ifShow: false,
+      },
     ],
     rowSelection: {
       type: 'radio',
