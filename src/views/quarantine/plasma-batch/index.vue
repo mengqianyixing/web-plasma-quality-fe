@@ -241,7 +241,10 @@
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(
         lastLevelCols,
-        data.result || [],
+        (data.result || []).map((it) => ({
+          ...it,
+          UNTRACKED: (it?.summary?.firstUnTrackedCount || 0) + (it?.summary?.reUnTrackedCount || 0),
+        })),
         rows.length,
       );
       jsonToSheetXlsx({
