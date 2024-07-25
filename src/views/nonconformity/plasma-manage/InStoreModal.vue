@@ -7,7 +7,7 @@
     @cancel="handelCancel"
     width="550px"
   >
-    <BasicForm @register="registerForm" @submit="handleSubmit" />
+    <BasicForm @register="registerForm" />
 
     <LoginModal
       @register="registerLoginModal"
@@ -29,6 +29,7 @@
   import { useScanHelper } from '@/hooks/common/useScanHelper';
   import { RemoveEventFn } from '@/hooks/event/useEventListener';
   import { watch, ref } from 'vue';
+  import { debounce } from 'lodash-es';
 
   defineOptions({ name: 'PickPlasmaModal' });
 
@@ -66,6 +67,7 @@
 
   const [registerLoginModal, { openModal }] = useModal();
 
+  const _handleSubmit = debounce(handleSubmit, 300) as () => Promise<void>;
   const [registerForm, { resetFields, validate, setFieldsValue, updateSchema, getFieldsValue }] =
     useForm({
       size: 'large',
@@ -73,6 +75,7 @@
       baseColProps: { span: 48 },
       schemas: inStoreSchema,
       showActionButtonGroup: false,
+      submitFunc: _handleSubmit,
       autoSubmitOnEnter: true,
       transformDateFunc(date) {
         return date ? date.format('YYYY-MM-DD') : '';
