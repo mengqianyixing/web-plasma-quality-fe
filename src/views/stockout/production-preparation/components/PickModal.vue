@@ -67,6 +67,8 @@
     pickBag,
     revokePickBag,
   } from '@/api/stockout/production-preparation.js';
+  import { settingListApi } from '@/api/plasmaStore/setting';
+  import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
   import { useStation } from '@/hooks/common/useStation';
   import { bagFlagMap, pickModeMap, prepareStateMap } from '@/enums/stockoutEnum';
   import { SERVER_ENUM } from '@/enums/serverEnum';
@@ -76,6 +78,7 @@
     PostApiProductPreparePickBagRequest,
     PostApiProductPrepareRevokePickBagRequest,
     PostApiProductPrepareSummaryPreviewRequest,
+    GetApiProductPrepareListRequest,
   } from '@/api/type/productionPreparation';
   import { VxeGridPropTypes } from 'vxe-table/types/grid';
   import { COMPANY } from '@/enums/company';
@@ -203,7 +206,16 @@
         ],
       });
     } else {
-      await updateSchema([
+      // 获取库房下拉备选项
+      const warehouseOpts = (
+        await settingListApi({
+          warehouseType: STORE_FLAG.S,
+          currPage: '1',
+          pageSize: '1000',
+          closed: CLOSED.NORMAL,
+        })
+      )?.result;
+      let upSchs = [
         {
           component: 'Select',
           label: '首次挑浆',
@@ -216,7 +228,25 @@
           field: 'boxNo',
           ifShow: true,
         },
-      ]);
+      ];
+      if (warehouseOpts.length) {
+        upSchs = [
+          ...upSchs,
+          {
+            component: 'ApiSelect',
+            field: 'houseNo',
+            ifShow: true,
+            label: '库房',
+          },
+          {
+            component: 'Select',
+            label: '货架',
+            field: 'shelfNo',
+            ifShow: true,
+          },
+        ];
+      }
+      await updateSchema(upSchs);
       columnsUnRef.value.unshift(
         {
           type: 'checkbox',
@@ -328,7 +358,7 @@
       component: 'Select',
       label: '采浆公司',
       field: 'stationNo',
-      colProps: { span: 5 },
+      colProps: { span: 4 },
       componentProps: {
         options: stationOptions,
       },
@@ -337,7 +367,7 @@
       component: 'Input',
       label: '血浆批号',
       field: 'batchNo',
-      colProps: { span: 5 },
+      colProps: { span: 4 },
       labelWidth: 90,
     },
     {
@@ -350,13 +380,13 @@
       component: 'Input',
       label: '血浆箱号',
       field: 'boxNo',
-      colProps: { span: 5 },
+      colProps: { span: 4 },
     },
     {
       component: 'Select',
       label: '首次挑浆',
       field: 'firstFlag',
-      colProps: { span: 5 },
+      colProps: { span: 4 },
       componentProps: {
         options: [
           {
@@ -374,7 +404,7 @@
       component: 'Select',
       label: '效价类型',
       field: 'titerLevel',
-      colProps: { span: 5 },
+      colProps: { span: 4 },
     },
     {
       field: '[minTiter,maxTiter]',
@@ -382,7 +412,50 @@
       component: 'InputRange',
       colProps: { span: 5 },
     },
+    {
+      field: 'houseNo',
+      component: 'Select',
+      label: '库房',
+      ifShow: false,
+      colProps: { span: 4 },
+      componentProps: {
+        api: settingListApi,
+        params: {
+          warehouseType: STORE_FLAG.S,
+          currPage: '1',
+          pageSize: '1000',
+          closed: CLOSED.NORMAL,
+        },
+        valueField: 'houseNo',
+        labelField: 'houseName',
+        resultField: 'result',
+      },
+      rules: [{ validator }],
+    },
+    {
+      component: 'Select',
+      label: '货架',
+      field: 'shelfNo',
+      ifShow: false,
+      colProps: { span: 4 },
+      componentProps: {
+        options: Array.from({ length: 4 }, (_, i) => {
+          return {
+            label: '第' + (i + 1) + '排',
+            value: i + 1,
+          };
+        }),
+      },
+      rules: [{ validator }],
+    },
   ];
+  function validator() {
+    const obj = getFieldsValue();
+    if ((obj.houseNo && !obj.shelfNo) || (!obj.houseNo && obj.shelfNo)) {
+      return Promise.reject('请选择库房和货架');
+    }
+    return Promise.resolve();
+  }
   const [registerForm, { updateSchema, getFieldsValue, setFieldsValue }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
@@ -390,9 +463,6 @@
     showActionButtonGroup: true,
     showResetButton: true,
     resetFunc: customResetFunc,
-    actionColOptions: {
-      span: 14,
-    },
   });
 
   const gridOptions = reactive<VxeGridProps<any>>({
@@ -791,7 +861,11 @@
 
   // 获取汇总数据（已挑非实时）
   async function _getPrepareList() {
-    const data = await getPrepareList({ prepareNo: prepareNo.value, currPage: 1, pageSize: 1 });
+    const data = await getPrepareList({
+      prepareNo: prepareNo.value,
+      currPage: String(1),
+      pageSize: String(1),
+    } as GetApiProductPrepareListRequest);
     prepareDetail.value = data.result[0];
   }
 
