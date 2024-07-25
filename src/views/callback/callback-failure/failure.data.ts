@@ -92,5 +92,29 @@ export const searchFormSchema: FormSchema[] = [
     field: 'failureReason',
     label: '失败原因',
     component: 'Select',
+    componentProps: {
+      options: [
+        {
+          label: '其他',
+          value: '其他',
+        },
+        {
+          label: '未联系上',
+          value: '未联系上',
+        },
+        {
+          label: '死亡',
+          value: '死亡',
+        },
+        {
+          label: '无需联络',
+          value: '无需联络',
+        },
+        {
+          label: '已联络拒绝',
+          value: '已联络拒绝',
+        },
+      ],
+    },
   },
 ];
