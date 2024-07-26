@@ -105,20 +105,6 @@ export const trayRelocationFormSchema: (fn1: Function, fn2: Function) => FormSch
   },
 ];
 
-export const plasmaBoxScanFormSchema: FormSchema[] = [
-  {
-    component: 'Input',
-    label: '托盘编号',
-    field: 'trayNo',
-    colProps: { span: 8 },
-  },
-  {
-    component: 'Input',
-    label: '箱号',
-    field: 'boxId',
-    colProps: { span: 8 },
-  },
-];
 export const plasmaBoxScanSearchFormSchema: FormSchema[] = [
   {
     component: 'Input',

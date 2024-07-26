@@ -245,13 +245,13 @@ export const pickSchema: FormSchema[] = [
     colProps: { span: 20 },
     required: true,
   },
-  {
-    field: 'bagNo',
-    label: '不合格血浆编号',
-    component: 'Input',
-    colProps: { span: 20 },
-    required: true,
-  },
+  // {
+  //   field: 'bagNo',
+  //   label: '不合格血浆编号',
+  //   component: 'Input',
+  //   colProps: { span: 20 },
+  //   required: true,
+  // },
 ];
 
 export const inStoreSchema: FormSchema[] = [
@@ -267,20 +267,20 @@ export const inStoreSchema: FormSchema[] = [
     },
     required: true,
   },
-  {
-    field: 'boxNo',
-    label: '不合格箱号',
-    component: 'Input',
-    colProps: { span: 20 },
-    required: true,
-  },
-  {
-    field: 'bagNo',
-    label: '不合格血浆编号',
-    component: 'Input',
-    colProps: { span: 20 },
-    required: true,
-  },
+  // {
+  //   field: 'boxNo',
+  //   label: '不合格箱号',
+  //   component: 'Input',
+  //   colProps: { span: 20 },
+  //   required: true,
+  // },
+  // {
+  //   field: 'bagNo',
+  //   label: '不合格血浆编号',
+  //   component: 'Input',
+  //   colProps: { span: 20 },
+  //   required: true,
+  // },
 ];
 
 export const detailSchema: DescItem[] = [
