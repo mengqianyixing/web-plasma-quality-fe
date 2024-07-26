@@ -516,7 +516,7 @@ export type GetApiCoreDonorCallbackResultResponse = {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/search/donor/callback-ended`
- * @更新时间 `2024-07-06 16:47:21`
+ * @更新时间 `2024-07-25 17:38:10`
  */
 export interface GetApiSearchDonorCallbackEndedRequest {
   pageSize: string;
@@ -535,6 +535,11 @@ export interface GetApiSearchDonorCallbackEndedRequest {
   callBackEndDate?: string;
   /**
    * 失败原因
+   * 其他
+   * 未联系上
+   * 死亡
+   * 无需联络
+   * 已联络拒绝
    */
   failureReason?: string;
 }
@@ -544,7 +549,7 @@ export interface GetApiSearchDonorCallbackEndedRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/search/donor/callback-ended`
- * @更新时间 `2024-07-06 16:47:21`
+ * @更新时间 `2024-07-25 17:38:10`
  */
 export type GetApiSearchDonorCallbackEndedResponse = {
   /**

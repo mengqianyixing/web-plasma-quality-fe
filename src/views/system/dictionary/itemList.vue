@@ -258,7 +258,7 @@
         const d: any = {
           field: x.key,
           label: x.name,
-          component: 'Select',
+          component: x.type === 'text' ? 'Input' : 'Select',
           componentProps: {
             options: x.options,
           },

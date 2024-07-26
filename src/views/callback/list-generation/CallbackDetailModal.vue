@@ -6,6 +6,7 @@
     width="85%"
     :min-height="600"
     :showOkBtn="false"
+    @cancel="handleCancel"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
@@ -103,7 +104,7 @@
           )
       : callbackDetailModalColumns;
   });
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, getForm }] = useTable({
     api: getCallbackDetail,
     formConfig: {
       schemas: callbackDetailFormSchema,
@@ -139,7 +140,7 @@
     unref(isPreview) ? '名单详情' : unref(isUpdate) ? '编辑名单' : '生成名单',
   );
 
-  const [register] = useModalInner((data) => {
+  const [register, { closeModal }] = useModalInner((data) => {
     isUpdate.value = data.isUpdate;
     isPreview.value = data.isPreview;
     batchNo.value = data.planNo;
@@ -155,5 +156,10 @@
       cardNo: _record.cardNo,
       planNo: batchNo.value,
     });
+  }
+
+  function handleCancel() {
+    getForm().resetFields();
+    closeModal();
   }
 </script>

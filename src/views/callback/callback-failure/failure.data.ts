@@ -25,14 +25,6 @@ export const columns: BasicColumn[] = [
   {
     title: '浆员性别',
     dataIndex: 'gender',
-    customRender: ({ text }) => {
-      if (text === 'M') {
-        return '男';
-      } else if (text === 'F') {
-        return '女';
-      }
-      return '';
-    },
     width: 80,
   },
   {
@@ -100,5 +92,29 @@ export const searchFormSchema: FormSchema[] = [
     field: 'failureReason',
     label: '失败原因',
     component: 'Select',
+    componentProps: {
+      options: [
+        {
+          label: '其他',
+          value: '其他',
+        },
+        {
+          label: '未联系上',
+          value: '未联系上',
+        },
+        {
+          label: '死亡',
+          value: '死亡',
+        },
+        {
+          label: '无需联络',
+          value: '无需联络',
+        },
+        {
+          label: '浆员拒绝',
+          value: '浆员拒绝',
+        },
+      ],
+    },
   },
 ];
