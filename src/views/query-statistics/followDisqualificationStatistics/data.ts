@@ -5,7 +5,7 @@ import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 
 const serverEnumStore = useServerEnumStoreWithOut();
-const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
+const ConclusionType = serverEnumStore.getServerEnumText(SERVER_ENUM.ConclusionType);
 const { stationOptions } = useStation();
 export const backTrackUnqKey = 'backTrackUnq';
 export const followTrackNumUnqKey = 'followTrackNumUnq';
@@ -149,8 +149,8 @@ export const dtColumns: BasicColumn[] = [
   {
     dataIndex: 'titerJudge',
     title: '效价类型',
-    width: 80,
-    format: PlasmaType,
+    width: 100,
+    format: ConclusionType,
   },
   {
     dataIndex: 'netWeight',
