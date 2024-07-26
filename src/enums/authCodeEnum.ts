@@ -237,7 +237,7 @@ export enum StockOutButtonEnum {
   NonPutIntoScan = 'E_91006010',
   NonPlasmaTransferRecordReport = 'E_91006011',
   PlasmaTransferApplyReport = 'E_91006012',
-
+  NonPutIntoPickPlasmaSystem = 'E_91006013',
   PlasmaSummaryReport = 'E_91007001',
 }
 
@@ -254,6 +254,7 @@ export enum SampleManageButtonEnum {
   SampleDestroyCheck = 'E_97004007',
   SampleDestroyCancelCheck = 'E_97004008',
   SampleDestroyOutBand = 'E_97004009',
+  SampleDestroyOutBandWMS = 'E_97004019',
   SampleDestroyPrint = 'E_97004010',
 
   SampleWarehouseAdd = 'E_97004011',
@@ -263,6 +264,7 @@ export enum SampleManageButtonEnum {
   SampleWarehouseCheck = 'E_97004015',
   SampleWarehouseCancelCheck = 'E_97004016',
   SampleWarehouseOutBand = 'E_97004017',
+  SampleWarehouseOutBandWMS = 'E_97004020',
   SampleWarehouseExport = 'E_97004018',
 }
 

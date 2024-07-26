@@ -46,6 +46,12 @@
         </a-button>
         <a-button
           type="primary"
+          @click="handleOutBound"
+          v-auth="SampleManageButtonEnum.SampleWarehouseOutBandWMS"
+          >WMS出库
+        </a-button>
+        <a-button
+          type="primary"
           @click="handleExport"
           :loading="loading"
           v-auth="SampleManageButtonEnum.SampleWarehouseExport"

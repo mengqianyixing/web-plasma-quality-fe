@@ -246,36 +246,43 @@ const nonconformity: AppRouteModule = {
           id: StockOutButtonEnum.PutIntoTrayStockOut,
           name: 'trayStockOut',
           title: '托盘出库',
+          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.PutIntoBoxStockOut,
           name: 'boxStockOut',
           title: '逐箱出库',
+          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.PutIntoBatchStockOut,
           name: 'batchStockOut',
           title: '整批出库',
+          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.PutIntoPickPlasmaSystem,
           name: 'pickPlasmaSystem',
-          title: '挑浆系统',
+          title: 'PMS出库',
+          company: COMPANY.KM,
         },
         {
           id: StockOutButtonEnum.PutIntoCancelStockOut,
           name: 'cancelStockOut',
           title: '撤销出库',
+          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.PutIntoBoxReceive,
           name: 'boxReceive',
           title: '逐箱接收',
+          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.PutIntoBatchReceive,
           name: 'batchReceive',
           title: '整批接收',
+          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.PutIntoCancelExamine,
@@ -339,9 +346,15 @@ const nonconformity: AppRouteModule = {
           title: '撤销审核',
         },
         {
+          id: StockOutButtonEnum.NonPutIntoPickPlasmaSystem,
+          title: 'PMS出库',
+          company: COMPANY.KM,
+        },
+        {
           id: StockOutButtonEnum.NonPutIntoScan,
           name: 'scan',
           title: '扫描出库',
+          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.NonPlasmaTransferRecordReport,

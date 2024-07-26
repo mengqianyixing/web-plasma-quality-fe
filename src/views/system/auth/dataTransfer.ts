@@ -9,6 +9,9 @@
 
 import { TreeItem } from '@/components/Tree';
 import { jsonClone } from 'js-xxx';
+import { useGlobSetting } from '@/hooks/setting/index';
+
+const globSetting = useGlobSetting();
 
 /**
  * 处理预览树特殊数据显示
@@ -76,10 +79,14 @@ export function filterRoutes(routes: any[]): any[] {
   const filteredRoutes: any[] = [];
 
   routes.forEach((item: any) => {
+    if (item.company && item.company !== globSetting.company) {
+      return false;
+    }
     if (item.id && !item.children && !item.authElements) {
       if (`${item?.id}`.includes('E_')) {
         item.class = 'auth-element-tree-node';
       }
+      console.log(item.company);
       filteredRoutes.push({
         ...item,
         title: item?.meta?.title ?? item.title ?? item.name,

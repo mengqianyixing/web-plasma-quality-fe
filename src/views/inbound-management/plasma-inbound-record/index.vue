@@ -79,16 +79,6 @@
         >
           验收发布
         </a-button>
-        <a-button type="primary" @click="handleVerifyList" v-auth="ReCheckButtonEnum.VerifyList">
-          验收清单
-        </a-button>
-        <a-button
-          type="primary"
-          @click="handleVisualInspectionList"
-          v-auth="ReCheckButtonEnum.VisualInspectionList"
-        >
-          外观检查清单
-        </a-button>
       </template>
     </BasicTable>
 
@@ -224,14 +214,6 @@
         await reload();
       },
     });
-  }
-
-  function handleVerifyList() {
-    createMessage.warn('开发中 : ( ');
-  }
-
-  function handleVisualInspectionList() {
-    createMessage.warn('开发中 : ( ');
   }
 
   function handleSuccess() {

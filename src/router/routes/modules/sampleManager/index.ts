@@ -75,47 +75,15 @@ const sampleManager: AppRouteModule = {
       ],
     },
     {
-      path: 'reserve-sample-destroy-outbound',
-      name: 'ReserveSampleDestroyOutbound',
-      id: 970100,
+      path: 'reserve-sample-warehouse',
+      name: 'ReserveSampleWarehouse',
+      id: 970110,
       meta: {
-        title: '保留样本销毁出库',
+        title: '保留样本入库',
       },
-      authElements: [
-        {
-          id: SampleManageButtonEnum.SampleDestroyAdd,
-          title: '新增',
-        },
-        {
-          id: SampleManageButtonEnum.SampleDestroyEdit,
-          title: '编辑',
-        },
-        {
-          id: SampleManageButtonEnum.SampleDestroySubmit,
-          title: '提交申请',
-        },
-        {
-          id: SampleManageButtonEnum.SampleDestroyCancelApply,
-          title: '撤销申请',
-        },
-        {
-          id: SampleManageButtonEnum.SampleDestroyCheck,
-          title: '审核',
-        },
-        {
-          id: SampleManageButtonEnum.SampleDestroyCancelCheck,
-          title: '撤销审核',
-        },
-        {
-          id: SampleManageButtonEnum.SampleDestroyOutBand,
-          title: '出库',
-        },
-        {
-          id: SampleManageButtonEnum.SampleDestroyPrint,
-          title: '打印',
-        },
-      ],
-      component: () => import('@/views/sample-manage/reserve-sample-destroy-outbound/index.vue'),
+      company: COMPANY.RS,
+
+      component: () => import('@/views/sample-manage/reserve-sample-warehouse/index.vue'),
     },
     {
       path: 'reserve-sample-destroy-outbound-single',
@@ -152,6 +120,12 @@ const sampleManager: AppRouteModule = {
         {
           id: SampleManageButtonEnum.SampleWarehouseOutBand,
           title: '出库',
+          company: COMPANY.RS,
+        },
+        {
+          id: SampleManageButtonEnum.SampleWarehouseOutBandWMS,
+          title: 'WMS出库',
+          company: COMPANY.KM,
         },
         {
           id: SampleManageButtonEnum.SampleWarehouseExport,
@@ -162,32 +136,73 @@ const sampleManager: AppRouteModule = {
         import('@/views/sample-manage/reserve-sample-destroy-outbound-single/index.vue'),
     },
     {
-      path: 'reserve-sample-warehouse',
-      name: 'ReserveSampleWarehouse',
-      id: 970110,
+      path: 'reserve-sample-destroy-outbound',
+      name: 'ReserveSampleDestroyOutbound',
+      id: 970100,
       meta: {
-        title: '保留样本入库',
+        title: '保留样本销毁出库',
       },
-      component: () => import('@/views/sample-manage/reserve-sample-warehouse/index.vue'),
-    },
-    {
-      path: 'test-plan',
-      name: 'TestPlan',
-      id: 970040,
-      company: COMPANY.RS,
-      meta: { title: '检测计划' },
-      component: () => import('@/views/sample-manage/testPlan/index.vue'),
       authElements: [
         {
-          id: SampleManageButtonEnum.TestPlanAdd,
+          id: SampleManageButtonEnum.SampleDestroyAdd,
           title: '新增',
         },
         {
-          id: SampleManageButtonEnum.TestPlanUpdate,
+          id: SampleManageButtonEnum.SampleDestroyEdit,
           title: '编辑',
         },
+        {
+          id: SampleManageButtonEnum.SampleDestroySubmit,
+          title: '提交申请',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyCancelApply,
+          title: '撤销申请',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyCheck,
+          title: '审核',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyCancelCheck,
+          title: '撤销审核',
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyOutBand,
+          title: '出库',
+          company: COMPANY.RS,
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyOutBandWMS,
+          title: 'WMS出库',
+          company: COMPANY.KM,
+        },
+        {
+          id: SampleManageButtonEnum.SampleDestroyPrint,
+          title: '打印',
+        },
       ],
+      component: () => import('@/views/sample-manage/reserve-sample-destroy-outbound/index.vue'),
     },
+
+    // {
+    //   path: 'test-plan',
+    //   name: 'TestPlan',
+    //   id: 970040,
+    //   company: COMPANY.RS,
+    //   meta: { title: '检测计划' },
+    //   component: () => import('@/views/sample-manage/testPlan/index.vue'),
+    //   authElements: [
+    //     {
+    //       id: SampleManageButtonEnum.TestPlanAdd,
+    //       title: '新增',
+    //     },
+    //     {
+    //       id: SampleManageButtonEnum.TestPlanUpdate,
+    //       title: '编辑',
+    //     },
+    //   ],
+    // },
   ],
 };
 

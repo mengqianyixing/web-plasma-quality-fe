@@ -46,6 +46,12 @@
         </a-button>
         <a-button
           type="primary"
+          @click="handleOutBound"
+          v-auth="SampleManageButtonEnum.SampleDestroyOutBandWMS"
+          >WMS出库
+        </a-button>
+        <a-button
+          type="primary"
           @click="handlePrint"
           :loading="reportLoading"
           v-auth="SampleManageButtonEnum.SampleDestroyPrint"

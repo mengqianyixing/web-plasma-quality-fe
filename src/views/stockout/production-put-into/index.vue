@@ -45,7 +45,7 @@
             @click="handlePickPlasmaSystem"
             v-auth="StockOutButtonEnum.PutIntoPickPlasmaSystem"
           >
-            挑浆系统
+            PMS出库
           </a-button>
           <a-button
             type="primary"

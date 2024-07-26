@@ -47,6 +47,7 @@ const inboundmanagement: AppRouteModule = {
       meta: {
         title: '血浆验收',
       },
+      company: COMPANY.RS,
       component: () => import('@/views/inbound-management/accept-plasma/index.vue'),
       authElements: [
         {
@@ -122,22 +123,23 @@ const inboundmanagement: AppRouteModule = {
           id: ReCheckButtonEnum.WeightRegister,
           name: 'weightRegister',
           title: '重量登记',
+          company: COMPANY.RS,
         },
         {
           id: ReCheckButtonEnum.VerifyRelease,
           name: 'verifyRelease',
           title: '验收发布',
         },
-        {
-          id: ReCheckButtonEnum.VerifyList,
-          name: 'verifyList',
-          title: '验收清单',
-        },
-        {
-          id: ReCheckButtonEnum.VisualInspectionList,
-          name: 'visualInspectionList',
-          title: '外观检查单',
-        },
+        // {
+        //   id: ReCheckButtonEnum.VerifyList,
+        //   name: 'verifyList',
+        //   title: '验收清单',
+        // },
+        // {
+        //   id: ReCheckButtonEnum.VisualInspectionList,
+        //   name: 'visualInspectionList',
+        //   title: '外观检查单',
+        // },
       ],
     },
   ],

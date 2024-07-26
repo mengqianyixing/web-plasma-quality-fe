@@ -82,7 +82,7 @@ const quarantineManager: AppRouteModule = {
         },
         {
           id: QuarantineButtonEnum.StationDetectionNonconformityReport,
-          title: '浆站检测不合格血浆追溯-昆明',
+          title: '浆站检测不合格血浆追溯',
           company: COMPANY.KM,
         },
       ],
