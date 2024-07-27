@@ -10,7 +10,29 @@
   <div class="h-full">
     <Spin :spinning="spinning">
       <div style="box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%)" class="flex pt-12px m-24px mt-8px">
-        <BasicForm @register="registerForm" class="flex-1" @submit="handleSubmit" />
+        <div class="form flex-1 flex">
+          <div class="form-item">
+            <span class="form-label">托盘编号</span>
+            <ScanInput
+              :value="formData.trayNo"
+              @enter="_submit"
+              @keyup="handleKeyUp"
+              size="lg"
+              @scan-change="(code) => (formData.trayNo = code)"
+            />
+          </div>
+          <div class="form-item">
+            <span class="form-label">箱号</span>
+            <ScanInput
+              :value="formData.boxId"
+              @enter="_submit"
+              size="lg"
+              ref="boxidRef"
+              @keyup="handleKeyUp"
+              @scan-change="(code) => (formData.boxId = code)"
+            />
+          </div>
+        </div>
         <div class="w-100px text-[20px] text-red-400">箱数：{{ count }}</div>
       </div>
     </Spin>
@@ -19,27 +41,22 @@
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
-  import { BasicForm, useForm } from '@/components/Form';
-  import {
-    plasmaBoxScanFormSchema,
-    plasmaBoxScanSearchFormSchema,
-    plasmaBoxScanColumns,
-  } from './relocation.data';
+  import { plasmaBoxScanSearchFormSchema, plasmaBoxScanColumns } from './relocation.data';
   import { bindBoxApi, getTrayBoxBindRecordApi } from '@/api/tray/relocation';
   import { message, Spin } from 'ant-design-vue';
   import { trayBoxListApi } from '@/api/tray/list';
-  import { ref, nextTick } from 'vue';
+  import { ref, nextTick, reactive } from 'vue';
+  import ScanInput from '@/components/Form/src/components/ScanInput.vue';
+  import { debounce } from 'lodash-es';
 
   const count = ref(0);
   const spinning = ref(false);
-  const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
-    labelWidth: 90,
-    baseColProps: { flex: '0 0 370px' },
-    schemas: plasmaBoxScanFormSchema,
-    showActionButtonGroup: false,
-    showResetButton: false,
-    autoSubmitOnEnter: true,
+  const boxidRef = ref();
+  const formData = reactive({
+    trayNo: '',
+    boxId: '',
   });
+
   const props = defineProps({
     isBinding: {
       type: Boolean,
@@ -65,7 +82,7 @@
     size: 'small',
   });
   async function submit() {
-    const { boxId, trayNo } = getFieldsValue();
+    const { boxId, trayNo } = formData;
     const focusedElement = document.activeElement as HTMLElement;
     focusedElement.blur();
     try {
@@ -75,7 +92,7 @@
         boxes: [boxId],
         bizScen: 'scanBox',
       });
-      await setFieldsValue({ boxId: '' });
+      formData.boxId = '';
       reload();
     } finally {
       await nextTick();
@@ -86,10 +103,16 @@
       count.value = res.length;
     });
   }
-
+  const _submit = debounce(handleSubmit, 200);
+  function handleKeyUp(e) {
+    if (e.key === 'Enter') {
+      _submit();
+    }
+  }
   async function handleSubmit() {
-    const { boxId, trayNo } = getFieldsValue();
+    const { boxId, trayNo } = formData;
     if (boxId && !trayNo) message.warning('请扫描托盘编号');
+    if (trayNo && !boxId) boxidRef.value.$el.focus();
     if (!boxId || !trayNo) return;
     try {
       spinning.value = true;
@@ -99,3 +122,18 @@
     }
   }
 </script>
+<style scoped lang="scss">
+  .form-item {
+    display: flex;
+    align-items: center;
+    width: 370px;
+    margin-bottom: 15px;
+
+    .form-label {
+      width: 100px;
+      margin-right: 10px;
+      font-size: 16px;
+      text-align: right;
+    }
+  }
+</style>

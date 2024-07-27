@@ -43,6 +43,7 @@
   });
 
   const [registerTable, { getForm, clearSelectedRowKeys }] = useTable({
+    immediate: false,
     api: getPickPlasmaList,
     columns: [
       {

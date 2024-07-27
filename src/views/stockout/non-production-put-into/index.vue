@@ -62,8 +62,13 @@
           >
             撤销审核
           </a-button>
-          <a-button type="primary" @click="handlePickingSystem" :loading="pickLoading">
-            挑浆系统
+          <a-button
+            type="primary"
+            @click="handlePickingSystem"
+            :loading="pickLoading"
+            v-auth="StockOutButtonEnum.NonPutIntoPickPlasmaSystem"
+          >
+            PMS出库
           </a-button>
           <a-button type="primary" @click="handleScan" v-auth="StockOutButtonEnum.NonPutIntoScan">
             扫描出库

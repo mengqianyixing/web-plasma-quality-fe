@@ -32,13 +32,6 @@
               >
                 撤销验收
               </a-button>
-              <a-button
-                type="primary"
-                @click="openArrangeModel(true, { batchNo: inputValue })"
-                :disabled="!sampleBatchData.verifyedList?.length"
-              >
-                查看试管架
-              </a-button>
             </div>
           </div>
           <div style="height: calc(100% - 60px)">
@@ -237,7 +230,7 @@
   const [registerRevokeVerifySampleModal, { openModal: openRevokeVerifySampleModal }] = useModal();
   const [registerMissingModal, { openModal: openMissingModal }] = useModal();
   const [registerPlasmaVerifyModal, { openModal: openPlasmaVerifyModal }] = useModal();
-  const [registerArrangeModel, { openModal: openArrangeModel }] = useModal();
+  const [registerArrangeModel] = useModal();
   const [registerCancelVerifyModal, { openModal: openCancelVerifyModal }] = useModal();
 
   const gridOptionsUnaccept = reactive<VxeGridProps<any>>({

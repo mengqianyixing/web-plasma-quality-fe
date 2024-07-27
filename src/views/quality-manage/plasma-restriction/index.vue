@@ -38,11 +38,11 @@
     <FormModal @register="registerModal" @success="success" />
     <BasicModal
       @register="registerBindModal"
-      showFooter
       :title="`批次【${batchNo}】限制血浆箱列表`"
       width="800px"
       :minHeight="600"
       @fullscreen="redoHeight"
+      :footer="null"
     >
       <div class="relative h-inherit max-h-inherit min-h-inherit">
         <div class="absolute w-full h-full">

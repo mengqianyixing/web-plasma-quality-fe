@@ -65,6 +65,7 @@
     keepPackSingleScan,
   } from '@/api/sample-manage/reserve-sample-destory-single';
   import { useMessage } from '@/hooks/web/useMessage';
+  import ScanInput from '@/components/Form/src/components/ScanInput.vue';
 
   const { createErrorModal } = useMessage();
 
@@ -86,12 +87,14 @@
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[300px]" ref="bagRef">
-            <a-input
+            <ScanInput
               placeholder="扫描样本条码"
-              enter-button="接收"
-              value={sampleNo}
-              onChange={(e) => (sampleNo.value = e.target.value)}
+              value={sampleNo.value}
+              onEnter={_handleReceiveByScan}
               onkeyup={handleKeyupEnter}
+              onScanChange={(code: string) => {
+                sampleNo.value = code;
+              }}
             />
           </div>
         );
@@ -246,7 +249,7 @@
   );
 
   function handleKeyupEnter(e: KeyboardEvent) {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' || e.code === 'Enter') {
       _handleReceiveByScan();
     }
   }

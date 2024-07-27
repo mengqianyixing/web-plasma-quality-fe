@@ -134,7 +134,7 @@ const checkManager: AppRouteModule = {
         },
         {
           id: QualityButtonEnum.BatchQuarantinePeriod,
-          title: '原料血浆检疫期筛选情况-昆明',
+          title: '原料血浆检疫期筛选情况',
           company: COMPANY.KM,
         },
       ],

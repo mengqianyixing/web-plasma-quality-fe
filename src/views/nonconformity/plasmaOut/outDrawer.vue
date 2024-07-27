@@ -20,7 +20,19 @@
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
-        <BasicForm @register="registerForm" @submit="handleSubmit" />
+        <div class="form flex-1 flex">
+          <div class="form-item">
+            <span class="form-label">血浆编号</span>
+            <ScanInput
+              :value="formData.bagNo"
+              @enter="_submit"
+              @keyup="handleKeyUp"
+              size="lg"
+              ref="bagNoRef"
+              @scan-change="(code) => (formData.bagNo = code)"
+            />
+          </div>
+        </div>
         <div class="flex flex-1" style="height: calc(100% - 60px)">
           <div class="h-full w-600px">
             <BasicTable @register="registerLeftTable" />
@@ -35,25 +47,21 @@
 </template>
 <script setup lang="ts">
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { BasicForm, useForm } from '@/components/Form';
   import { outLeftColumns, outRightColumns } from './plasmaOut.data';
   import { BasicTable, useTable } from '@/components/Table';
   import { scanApi, scanedApi, notScanApi } from '@/api/nonconformity/plasmaOut';
-  import { reactive } from 'vue';
+  import { reactive, ref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { debounce } from 'lodash-es';
+  import ScanInput from '@/components/Form/src/components/ScanInput.vue';
 
   const emit = defineEmits(['close']);
 
   const state = reactive({ no: '' });
+  const formData = reactive({ bagNo: '' });
+  const bagNoRef = ref();
   const { createWarningModal } = useMessage();
 
-  const [registerForm, { clearValidate, resetFields, getFieldsValue }] = useForm({
-    labelWidth: 90,
-    baseColProps: { span: 8 },
-    schemas: [{ field: 'bagNo', component: 'Input', label: '血浆编号', required: true }],
-    showActionButtonGroup: false,
-    autoSubmitOnEnter: true,
-  });
   const [
     registerLeftTable,
     { reload: reloadLeft, setPagination: setPaginationLeft, redoHeight: lRedoHeight },
@@ -104,8 +112,14 @@
     lRedoHeight();
     rRedoHeight();
   }
+  const _submit = debounce(handleSubmit, 200);
+  function handleKeyUp(e) {
+    if (e.key === 'Enter') {
+      _submit();
+    }
+  }
   async function handleSubmit() {
-    const { bagNo } = getFieldsValue();
+    const { bagNo } = formData;
     const res = await scanApi({ bagNo, no: state.no });
     const focusedElement = document.activeElement as HTMLElement;
     focusedElement?.blur();
@@ -126,17 +140,32 @@
       return;
     }
     focusedElement?.focus();
-    resetFields();
+    formData.bagNo = '';
     reloadLeft();
     reloadRight();
   }
   const [registerModal] = useModalInner(({ dlvNo }) => {
     state.no = dlvNo;
-    resetFields();
-    clearValidate();
+    formData.bagNo = '';
+    bagNoRef.value.$el.focus();
     setPaginationLeft({ current: 1 });
     setPaginationRight({ current: 1 });
     reloadLeft();
     reloadRight();
   });
 </script>
+<style scoped lang="scss">
+  .form-item {
+    display: flex;
+    align-items: center;
+    width: 370px;
+    margin-bottom: 15px;
+
+    .form-label {
+      width: 100px;
+      margin-right: 10px;
+      font-size: 16px;
+      text-align: right;
+    }
+  }
+</style>

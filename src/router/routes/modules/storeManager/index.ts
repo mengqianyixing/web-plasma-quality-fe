@@ -10,6 +10,7 @@ import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
 import { ReCheckButtonEnum, StoreButtonEnum } from '@/enums/authCodeEnum';
+import { COMPANY } from '@/enums/company';
 
 const storeManager: AppRouteModule = {
   path: '/plasma-store',
@@ -52,6 +53,7 @@ const storeManager: AppRouteModule = {
       meta: {
         title: '托盘管理',
       },
+      company: COMPANY.RS,
       id: 990020,
       component: () => import('@/views/tray/manage/index.vue'),
       authElements: [
@@ -80,6 +82,8 @@ const storeManager: AppRouteModule = {
       meta: {
         title: '托盘移库',
       },
+      company: COMPANY.RS,
+
       id: 990030,
       component: () => import('@/views/tray/relocation/index.vue'),
     },
@@ -89,6 +93,8 @@ const storeManager: AppRouteModule = {
       meta: {
         title: '托盘出入库',
       },
+      company: COMPANY.RS,
+
       authElements: [
         {
           id: StoreButtonEnum.TrayOutStore,
@@ -108,12 +114,16 @@ const storeManager: AppRouteModule = {
       meta: {
         title: '托盘越库',
       },
+      company: COMPANY.RS,
+
       id: 990060,
       component: () => import('@/views/tray/ferry/index.vue'),
     },
     {
       path: 'site',
       name: 'PlasmaSite',
+      company: COMPANY.RS,
+
       meta: {
         title: '站点管理',
       },
@@ -145,6 +155,8 @@ const storeManager: AppRouteModule = {
       meta: {
         title: '平面图',
       },
+      company: COMPANY.RS,
+
       id: 990070,
       component: () => import('@/views/plasma-store/location-layout/index.vue'),
     },
