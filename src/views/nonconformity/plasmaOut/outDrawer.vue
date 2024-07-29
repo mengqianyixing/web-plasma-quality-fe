@@ -11,7 +11,7 @@
     v-bind="$attrs"
     @register="registerModal"
     title="出库扫描"
-    width="1100px"
+    width="1200px"
     @cancel="emit('close')"
     :minHeight="600"
     cancelText="关闭"
@@ -34,10 +34,10 @@
           </div>
         </div>
         <div class="flex flex-1" style="height: calc(100% - 60px)">
-          <div class="h-full w-600px">
+          <div class="h-full flex-1">
             <BasicTable @register="registerLeftTable" />
           </div>
-          <div class="h-full w-600px">
+          <div class="h-full flex-1">
             <BasicTable @register="registerRightTable" />
           </div>
         </div>
@@ -79,7 +79,6 @@
     size: 'small',
     useSearchForm: false,
     bordered: true,
-    rowSelection: { type: 'checkbox' },
     beforeFetch: (p) => ({
       ...p,
       dlvNo: state.no,
