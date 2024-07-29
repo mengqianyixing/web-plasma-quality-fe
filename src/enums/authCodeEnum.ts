@@ -149,6 +149,7 @@ export enum QualityButtonEnum {
   PlasmaCheckReCheck = 'E_94002004',
   PlasmaCheckCancelReCheck = 'E_94002005',
   PlasmaCheckPrint = 'E_94002006',
+  PlasmaKMCheckPrint = 'E_94002008',
   PlasmaCheckApproval = 'E_94002007',
 
   BatchReleaseAdd = 'E_94003001',

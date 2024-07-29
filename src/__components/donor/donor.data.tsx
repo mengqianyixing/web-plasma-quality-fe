@@ -300,7 +300,7 @@ export const callbackColumns: BasicColumn[] = [
     dataIndex: 'state',
   },
   {
-    title: '样本结果',
+    title: '检测结果',
     dataIndex: 'reslut',
   },
   {
