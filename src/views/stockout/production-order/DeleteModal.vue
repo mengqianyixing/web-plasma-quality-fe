@@ -5,9 +5,9 @@
     title="撤销指令"
     @ok="handleSubmit"
     @close="resetFields"
-    width="150"
+    width="350px"
   >
-    <BasicForm @register="registerForm" />
+    <BasicForm class="m-20px" @register="registerForm" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -23,8 +23,8 @@
 
   const orderNo = ref('');
   const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
-    labelWidth: 120,
-    baseColProps: { span: 48 },
+    labelWidth: 80,
+    baseColProps: { style: { width: '100%' } },
     schemas: [
       {
         field: 'mesId',
@@ -39,11 +39,8 @@
         label: '原因',
         component: 'InputTextArea',
         required: true,
-        colProps: {
-          span: 20,
-        },
         componentProps: {
-          rows: 4,
+          rows: 1,
         },
       },
       {

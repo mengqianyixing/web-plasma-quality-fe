@@ -4,9 +4,10 @@
     @register="registerModal"
     :title="getTitle"
     @ok="handleSubmit"
-    width="500px"
+    width="350px"
+    :min-height="80"
   >
-    <BasicForm @register="registerForm" />
+    <BasicForm class="m-20px" @register="registerForm" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -31,8 +32,8 @@
   const orderNo = ref('');
 
   const [registerForm, { resetFields, validate }] = useForm({
-    labelWidth: 100,
-    baseColProps: { span: 48 },
+    labelWidth: 80,
+    baseColProps: { style: { width: '100%' } },
     schemas: checkFormSchema,
     showActionButtonGroup: false,
   });

@@ -282,9 +282,8 @@ export const checkFormSchema: FormSchema[] = [
     field: 'idea',
     label: '意见',
     component: 'InputTextArea',
-    colProps: { span: 20 },
     componentProps: {
-      rows: 6,
+      rows: 1,
     },
   },
 ];
