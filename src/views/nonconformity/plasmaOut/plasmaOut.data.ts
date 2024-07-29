@@ -282,6 +282,7 @@ export const outLeftColumns: BasicColumn[] = [
   {
     title: '未扫描血浆编号',
     dataIndex: 'bagNo',
+    width: 160,
   },
   {
     title: '浆员编号',
@@ -292,7 +293,7 @@ export const outLeftColumns: BasicColumn[] = [
   {
     title: '浆员姓名',
     dataIndex: 'donorName',
-    width: 120,
+    width: 100,
     ellipsis: false,
   },
 ];
@@ -300,11 +301,12 @@ export const outRightColumns: BasicColumn[] = [
   {
     title: '已扫描血浆编号',
     dataIndex: 'bagNo',
+    width: 160,
   },
   {
     title: '扫描人',
     dataIndex: 'operator',
-    width: 120,
+    width: 100,
     ellipsis: false,
   },
   {

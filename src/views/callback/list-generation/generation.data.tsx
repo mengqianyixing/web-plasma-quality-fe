@@ -121,9 +121,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: '[createStartDate, createEndDate]',
     label: '生成日期',
-    defaultValue: [dayjs().subtract(1, 'month'), dayjs()],
     component: 'RangePicker',
-
     componentProps: {
       format: 'YYYY-MM-DD',
     },

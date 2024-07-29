@@ -37,9 +37,17 @@
         </a-button>
         <a-button
           type="primary"
-          @click="handlePrint"
+          @click="handlePrint(PrintServerEnum.PLASMA_INSPECTION_RECORDS)"
           :loading="reportLoading"
           v-auth="QualityButtonEnum.PlasmaCheckPrint"
+        >
+          打印
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handlePrint(PrintServerEnum.KM_PLASMA_INSPECTION_RECORDS)"
+          :loading="reportLoading"
+          v-auth="QualityButtonEnum.PlasmaKMCheckPrint"
         >
           打印
         </a-button>
@@ -85,6 +93,7 @@
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
   import { QualityButtonEnum } from '@/enums/authCodeEnum';
+  import { PrintServerEnum } from '@/enums/printServerEnum';
 
   const reportLoading = ref(false);
 
@@ -311,7 +320,7 @@
     });
   }
 
-  async function handlePrint() {
+  async function handlePrint(reportKey: PrintServerEnum) {
     if (selectedRowsRef.value.length === 0) createMessage.warn('请选择数据');
     const row = selectedRowsRef.value[0];
     if (row.auditState === PlasmaCheckStateValueEnum.WC)
@@ -319,7 +328,7 @@
     try {
       reportLoading.value = true;
       const res = await getReportApi({
-        reportKey: 'PLASMA_INSPECTION_RECORDS',
+        reportKey,
         contentKey: row.batchNo,
       });
       openReportModal(true, window.URL.createObjectURL(res));

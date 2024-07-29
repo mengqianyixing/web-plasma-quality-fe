@@ -183,15 +183,13 @@
       field: '[minCollectTime, maxCollectTime]',
       defaultValue: [
         dayjs().subtract(1, 'year').add(1, 'day').format('YYYY-MM-DD'),
-        dayjs()
-          .subtract(Number(gapDays.value) + 1, 'day')
-          .format('YYYY-MM-DD'),
+        dayjs().subtract(gapDays.value, 'day').format('YYYY-MM-DD'),
       ],
       componentProps: {
         disabledDate: (current: Dayjs) => {
           return (
             !current.isAfter(dayjs().subtract(1, 'year').add(1, 'day')) ||
-            current.isAfter(dayjs().subtract(Number(gapDays.value) + 1, 'day'))
+            current.isAfter(dayjs().subtract(gapDays.value, 'day'))
           );
         },
       },
