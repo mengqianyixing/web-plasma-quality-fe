@@ -67,6 +67,7 @@
   import suspendOrResumeModal from './components/suspend-or-resume.vue';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import dayjs from 'dayjs';
+  import ScanInput from '@/components/Form/src/components/ScanInput.vue';
 
   defineOptions({ name: 'ReceivePlasma' });
 
@@ -126,13 +127,16 @@
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[300px] max-w-full	 -mt-1">
-            <a-input
+            <ScanInput
               placeholder="请扫描"
               ref={boxNoRef}
-              value={boxNo}
+              value={boxNo.value}
               disabled={tableLoading.value}
-              onChange={(event) => (boxNo.value = event.target.value)}
-              onkeyup={debounce(handlePressEnter, 500)}
+              onScanChange={(code: string) => {
+                boxNo.value = code;
+              }}
+              onEnter={_handlePressEnter}
+              onkeyup={_handlePressEnter}
             />
           </div>
         );
@@ -166,6 +170,8 @@
     title: '血浆接收信息',
     schema: schema,
   });
+
+  const _handlePressEnter = debounce(handlePressEnter, 500);
 
   // 箱号扫描
   async function handlePressEnter(e) {
@@ -213,7 +219,7 @@
         tableLoading.value = false;
         boxNo.value = '';
         await nextTick(() => {
-          boxNoRef.value.focus();
+          boxNoRef.value.$el.focus();
         });
       }
     }
@@ -248,7 +254,7 @@
         }
         tableLoading.value = false;
         nextTick(() => {
-          boxNoRef.value.focus();
+          boxNoRef.value.$el.focus();
         });
       } catch (err) {
         console.log(err);
