@@ -145,6 +145,7 @@
   import SampleUnqualifiedModal from '@/views/inbound-management/accept-plasma/components/SampleUnqualifiedModal.vue';
   import MissNumModal from '@/views/inbound-management/accept-plasma/components/MissNumModal.vue';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import ScanInput from '@/components/Form/src/components/ScanInput.vue';
 
   defineOptions({ name: 'AcceptPlasma' });
 
@@ -225,13 +226,16 @@
       render() {
         return (
           <div class="flex items-center justify-center gap-2 w-[300px] max-w-full -mt-1">
-            <a-input
+            <ScanInput
               placeholder="请扫描"
               ref={bagNoRef}
-              value={bagNo}
+              value={bagNo.value}
               disabled={tableLoading.value}
-              onChange={(event) => (bagNo.value = event.target.value)}
-              onkeyup={debounce(handlePressEnter, 500)}
+              onScanChange={(code: string) => {
+                bagNo.value = code;
+              }}
+              onEnter={_handlePressEnter}
+              onkeyup={_handlePressEnter}
             />
           </div>
         );
@@ -432,13 +436,13 @@
   function handlePressEnterTrayNo(e) {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
       nextTick(() => {
-        bagNoRef.value.focus();
+        bagNoRef.value.$el.focus();
       });
     }
   }
-
+  const _handlePressEnter = debounce(handlePressEnter, 500);
   // 血浆扫描
-  async function handlePressEnter(e, blockVerify: Boolean | undefined) {
+  async function handlePressEnter(e, blockVerify: boolean = false) {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
       if (!bagNo.value) {
         warning('请扫描血浆编号！');
@@ -531,13 +535,13 @@
               }
               bagNo.value = '';
               nextTick(() => {
-                bagNoRef.value.focus();
+                bagNoRef.value.$el.focus();
               });
             }
           } else {
             bagNo.value = '';
             nextTick(() => {
-              bagNoRef.value.focus();
+              bagNoRef.value.$el.focus();
             });
           }
         }
