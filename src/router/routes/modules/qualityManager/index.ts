@@ -87,6 +87,12 @@ const checkManager: AppRouteModule = {
           company: COMPANY.RS,
         },
         {
+          id: QualityButtonEnum.PlasmaKMCheckPrint,
+          name: 'print',
+          title: '打印',
+          company: COMPANY.KM,
+        },
+        {
           id: QualityButtonEnum.PlasmaCheckApproval,
           name: 'approval',
           title: '批准',
