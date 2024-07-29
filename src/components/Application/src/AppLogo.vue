@@ -85,7 +85,7 @@
 
     &__title {
       transition: all 0.5s;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       line-height: normal;
     }
