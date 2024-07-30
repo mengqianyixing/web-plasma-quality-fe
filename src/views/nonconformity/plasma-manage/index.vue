@@ -34,7 +34,7 @@
         </a-button>
         <a-button
           type="primary"
-          @click="handleCancelCheck"
+          @click="handleOpenCancelCheck"
           v-auth="NonconformityInStoreButtonEnum.NonconformityInStoreCancelCheck"
           >撤销审核
         </a-button>
@@ -44,11 +44,22 @@
     <PickPlasmaModal @register="registerPickModal" @success="handleSuccess" />
     <InStoreModal @register="registerInStoreModal" @success="handleSuccess" />
     <PlasmaDetailModal @register="registerDetailModal" />
+    <BasicModal
+      @register="registerUnCheckModal"
+      @ok="handleCancelCheck"
+      okText="提交"
+      width="300px"
+      title="撤销原因"
+    >
+      <div class="m-20px">
+        <BasicForm @register="registerForm" />
+      </div>
+    </BasicModal>
   </PageWrapper>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
-  import { useModal } from '@/components/Modal';
+  import { useModal, BasicModal } from '@/components/Modal';
   import { useMessage } from '@/hooks/web/useMessage';
   import { PageWrapper } from '@/components/Page';
   import { columns, searchSchema } from './manage.data';
@@ -70,6 +81,7 @@
   import PlasmaDetailModal from '@/views/nonconformity/plasma-manage/PlasmaDetailModal.vue';
   import { useStation } from '@/hooks/common/useStation';
   import { NonconformityInStoreButtonEnum, ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { BasicForm, useForm } from '@/components/Form';
 
   defineOptions({ name: 'PlasmaManage' });
 
@@ -106,6 +118,7 @@
   const [registerPickModal, { openModal: openPickModal }] = useModal();
   const [registerInStoreModal, { openModal: openInStoreModal }] = useModal();
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
+  const [registerUnCheckModal, { openModal: openUnCheckModal, setModalProps }] = useModal();
 
   const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
     api: nonconformityPlasmaList,
@@ -138,6 +151,20 @@
     },
     showIndexColumn: false,
     canResize: true,
+  });
+
+  const [registerForm, { resetFields, clearValidate, validate }] = useForm({
+    labelWidth: 80,
+    baseColProps: { span: 24 },
+    schemas: [
+      {
+        field: 'reason',
+        component: 'Input',
+        label: '原因',
+        required: true,
+      },
+    ],
+    showActionButtonGroup: false,
   });
 
   function checkSelectedRows() {
@@ -173,20 +200,25 @@
     });
   }
 
-  function handleCancelCheck() {
+  function handleOpenCancelCheck() {
     if (!checkSelectedRows()) return;
+    openUnCheckModal(true);
+    resetFields();
+    clearValidate();
+  }
 
-    createConfirm({
-      iconType: 'warning',
-      title: '提示',
-      content: '确定撤销审核吗？',
-      onOk: async () => {
-        await nonconformityRedoCheck(selectedRow.value[0]?.bagNo);
-
-        await reload();
-        clearSelectedRowKeys();
-      },
-    });
+  async function handleCancelCheck() {
+    if (!checkSelectedRows()) return;
+    try {
+      const { reason } = await validate();
+      setModalProps({ confirmLoading: true });
+      await nonconformityRedoCheck({ bagNo: selectedRow.value[0]?.bagNo, reason });
+      await reload();
+      clearSelectedRowKeys();
+      openUnCheckModal(false);
+    } finally {
+      setModalProps({ confirmLoading: false });
+    }
   }
 
   function formatUnqReason(unqReason: string) {
