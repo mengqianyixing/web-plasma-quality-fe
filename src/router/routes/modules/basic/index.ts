@@ -23,6 +23,47 @@ const callManager: AppRouteModule = {
   },
   children: [
     {
+      path: 'station',
+      name: 'Station',
+      id: 100070,
+      meta: {
+        title: '采浆公司',
+      },
+      authElements: [
+        {
+          id: BaseSettingButtonEnum.StationAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.StationEdit,
+          title: '编辑',
+        },
+        {
+          id: BaseSettingButtonEnum.StationEnable,
+          name: 'stationEnable',
+          title: '启用按钮权限',
+        },
+        {
+          id: BaseSettingButtonEnum.StationDisable,
+          name: 'stationDisable',
+          title: '禁用按钮权限(含审核)',
+        },
+      ],
+      component: () => import('@/views/base-settings/station/index.vue'),
+    },
+    {
+      path: `plasmaImmType`,
+      name: 'PlasmaImmType',
+      meta: {
+        title: '血浆类型',
+        dictId: '100009',
+        systemLevel: 0,
+      },
+      id: 100090,
+      component: () => import('@/views/system/dictionary/itemList.vue'),
+    },
+
+    {
       path: 'TiterType',
       name: 'TiterType',
       meta: {
@@ -113,99 +154,6 @@ const callManager: AppRouteModule = {
       component: () => import('@/views/inspect/itemSetting/index.vue'),
     },
     {
-      path: 'dictionary',
-      name: 'Dictionary',
-      meta: {
-        title: '字典管理',
-      },
-      id: 100040,
-      authElements: [
-        {
-          id: BaseSettingButtonEnum.DictionaryAdd,
-          title: '新增',
-        },
-        {
-          id: BaseSettingButtonEnum.DictionaryUpdate,
-          title: '编辑',
-        },
-        {
-          id: BaseSettingButtonEnum.DictionaryDelete,
-          title: '删除',
-        },
-        {
-          id: BaseSettingButtonEnum.DictionaryItemAdd,
-          title: '字典项配置',
-        },
-      ],
-      component: () => import('@/views/system/dictionary/index.vue'),
-    },
-    {
-      path: 'report',
-      name: 'Report',
-      id: 100050,
-      authElements: [
-        {
-          id: BaseSettingButtonEnum.ReportAdd,
-          title: '新增',
-        },
-        {
-          id: BaseSettingButtonEnum.ReportUpdate,
-          title: '编辑',
-        },
-      ],
-      meta: {
-        title: '报表设置',
-      },
-      component: () => import('@/views/system/report/index.vue'),
-    },
-    {
-      path: 'encoding',
-      name: 'TagEncoding',
-      meta: {
-        title: '系统编码管理',
-      },
-      id: 890020,
-      component: () => import('@/views/tag-manage/encoding/index.vue'),
-    },
-    {
-      path: 'params',
-      name: 'Params',
-      id: 100060,
-      meta: {
-        title: '系统参数',
-      },
-      component: () => import('@/views/system/params/index.vue'),
-    },
-    {
-      path: 'station',
-      name: 'Station',
-      id: 100070,
-      meta: {
-        title: '采浆公司',
-      },
-      authElements: [
-        {
-          id: BaseSettingButtonEnum.StationAdd,
-          title: '新增',
-        },
-        {
-          id: BaseSettingButtonEnum.StationEdit,
-          title: '编辑',
-        },
-        {
-          id: BaseSettingButtonEnum.StationEnable,
-          name: 'stationEnable',
-          title: '启用按钮权限',
-        },
-        {
-          id: BaseSettingButtonEnum.StationDisable,
-          name: 'stationDisable',
-          title: '禁用按钮权限(含审核)',
-        },
-      ],
-      component: () => import('@/views/base-settings/station/index.vue'),
-    },
-    {
       path: 'requiredItem',
       name: 'RequiredItem',
       id: 100080,
@@ -232,6 +180,92 @@ const callManager: AppRouteModule = {
         },
       ],
       component: () => import('@/views/base-settings/requiredItem/index.vue'),
+    },
+    {
+      path: `plasmaFailedReason`,
+      name: 'PlasmaFailedReason',
+      meta: {
+        title: '血浆不合格原因',
+        dictId: '110001',
+        systemLevel: 0,
+      },
+      id: 1000100,
+      component: () => import('@/views/system/dictionary/itemList.vue'),
+    },
+    {
+      path: `sampleFailedReason`,
+      name: 'SampleFailedReason',
+      meta: {
+        title: '样本不合格原因',
+        dictId: '110003',
+        systemLevel: 0,
+      },
+      id: 1000110,
+      component: () => import('@/views/system/dictionary/itemList.vue'),
+    },
+    {
+      path: 'report',
+      name: 'Report',
+      id: 100050,
+      authElements: [
+        {
+          id: BaseSettingButtonEnum.ReportAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.ReportUpdate,
+          title: '编辑',
+        },
+      ],
+      meta: {
+        title: '报表设置',
+      },
+      component: () => import('@/views/system/report/index.vue'),
+    },
+    {
+      path: 'params',
+      name: 'Params',
+      id: 100060,
+      meta: {
+        title: '系统参数',
+      },
+      component: () => import('@/views/system/params/index.vue'),
+    },
+    {
+      path: 'encoding',
+      name: 'TagEncoding',
+      meta: {
+        title: '系统编码管理',
+      },
+      id: 890020,
+      component: () => import('@/views/tag-manage/encoding/index.vue'),
+    },
+    {
+      path: 'dictionary',
+      name: 'Dictionary',
+      meta: {
+        title: '字典管理',
+      },
+      id: 100040,
+      authElements: [
+        {
+          id: BaseSettingButtonEnum.DictionaryAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.DictionaryUpdate,
+          title: '编辑',
+        },
+        {
+          id: BaseSettingButtonEnum.DictionaryDelete,
+          title: '删除',
+        },
+        {
+          id: BaseSettingButtonEnum.DictionaryItemAdd,
+          title: '字典项配置',
+        },
+      ],
+      component: () => import('@/views/system/dictionary/index.vue'),
     },
   ],
 };

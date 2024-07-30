@@ -53,6 +53,7 @@
   import { cloneDeep } from 'lodash-es';
   import { useMessage } from '@/hooks/web/useMessage';
 
+  defineOptions({ name: 'ComponentPage' });
   const currentRoute = useRoute();
   const dictId = ref(currentRoute.meta.dictId);
   const systemLevel = ref(Number(currentRoute.meta.systemLevel) || 0);
