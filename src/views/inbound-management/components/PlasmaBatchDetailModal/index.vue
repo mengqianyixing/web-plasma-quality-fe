@@ -86,7 +86,7 @@
     rowConfig: {
       isHover: true,
     },
-    showOverflow: true,
+    showOverflow: '',
     exportConfig: {},
     columnConfig: {
       resizable: true,
@@ -142,3 +142,10 @@
     }
   }
 </script>
+<style scoped>
+  /* 虚拟滚动不支持换行 最多两行  */
+  ::v-deep(.no-ellipsis div) {
+    overflow: unset !important;
+    white-space: normal !important;
+  }
+</style>

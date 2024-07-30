@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="register"
-    title="保留样本批量出库申请"
+    title="保留样本单个出库申请"
     width="80%"
     :min-height="650"
     :showOkBtn="false"

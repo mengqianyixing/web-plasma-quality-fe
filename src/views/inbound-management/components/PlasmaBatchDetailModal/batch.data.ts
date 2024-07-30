@@ -5,27 +5,31 @@ export const columns = [
     field: 'nowBoxNo',
     title: '现存箱号',
     width: 140,
+    className: 'no-ellipsis',
   },
   {
     field: 'boxNo',
     title: '浆站箱号',
     width: 140,
+    className: 'no-ellipsis',
   },
   {
     title: '血浆编号',
     field: 'bagNo',
     width: 160,
+    className: 'no-ellipsis',
   },
   {
     title: '采集日期',
     field: 'collectAt',
     slots: { default: 'collectAt' },
-    width: 120,
+    width: 110,
   },
   {
     title: '浆员编号',
     field: 'cardNo',
     width: 120,
+    className: 'no-ellipsis',
   },
   {
     title: '浆员名称',
@@ -36,12 +40,12 @@ export const columns = [
     title: '性别',
     field: 'gender',
     slots: { default: 'gender' },
-    width: 100,
+    width: 50,
   },
   {
     title: '血型',
     field: 'bloodType',
-    width: 100,
+    width: 50,
   },
   {
     title: '浆站重量(g)',
@@ -78,12 +82,14 @@ export const columns = [
   {
     title: '血浆验收结果',
     field: 'bagResult',
-    width: 120,
+    width: 160,
+    className: 'no-ellipsis',
   },
   {
     title: '样本验收结果',
     field: 'sampleResult',
-    width: 120,
+    width: 160,
+    className: 'no-ellipsis',
   },
 ];
 

@@ -40,7 +40,7 @@
       function keyupEvent(e: KeyboardEvent) {
         if (['Shift', 'Process'].includes(e.key)) return;
         const now = Date.now();
-        if (time === 0 && /^[0-9a-zA-Z]{1}$/.test(e.key)) {
+        if (time === 0 && /^[0-9a-zA-Z-]{1}$/.test(e.key)) {
           firstCode = e.key.toUpperCase();
           time = now;
         }
@@ -48,7 +48,7 @@
         if (now - time < 40 && time !== now) {
           readOnly.value = true;
           time = now;
-          if (/^[0-9a-zA-Z]{1}$/.test(e.key)) {
+          if (/^[0-9a-zA-Z-]{1}$/.test(e.key)) {
             code.value = firstCode + code.value.toUpperCase() + e.key;
             firstCode = '';
             emit('change', code.value);

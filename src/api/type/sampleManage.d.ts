@@ -2330,7 +2330,7 @@ export interface GetApiCoreBankDeliverSampleScanSingleResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/search/bank/sample/tray-single`
- * @更新时间 `2024-06-18 11:17:44`
+ * @更新时间 `2024-07-26 17:09:45`
  */
 export interface GetApiSearchBankSampleTraySingleRequest {
   /**
@@ -2356,7 +2356,7 @@ export interface GetApiSearchBankSampleTraySingleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/search/bank/sample/tray-single`
- * @更新时间 `2024-06-18 11:17:44`
+ * @更新时间 `2024-07-26 17:09:45`
  */
 export interface GetApiSearchBankSampleTraySingleResponse {
   /**
@@ -2391,6 +2391,7 @@ export interface GetApiSearchBankSampleTraySingleResponse {
    * 存放位置
    */
   location: string;
+  houseNo: string;
 }
 
 /**

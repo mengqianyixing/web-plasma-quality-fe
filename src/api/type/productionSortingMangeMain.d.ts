@@ -296,7 +296,7 @@ export interface GetApiProductPrepareSortingBatchInfoResponse {
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `GET /api/product/prepare/sorting/boxs`
- * @更新时间 `2024-02-04 16:00:23`
+ * @更新时间 `2024-07-29 18:59:43`
  */
 export interface GetApiProductPrepareSortingBoxsRequest {
   /**
@@ -318,6 +318,14 @@ export interface GetApiProductPrepareSortingBoxsRequest {
    *     RVD("已复核"),
    */
   state?: string;
+  /**
+   * ASC, DESC
+   */
+  sortOrder: string;
+  /**
+   * 装箱时间：operateAt
+   */
+  sortIdx: string;
 }
 
 /**
@@ -325,7 +333,7 @@ export interface GetApiProductPrepareSortingBoxsRequest {
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `GET /api/product/prepare/sorting/boxs`
- * @更新时间 `2024-02-04 16:00:23`
+ * @更新时间 `2024-07-29 18:59:43`
  */
 export interface GetApiProductPrepareSortingBoxsResponse {
   totalCount?: number;

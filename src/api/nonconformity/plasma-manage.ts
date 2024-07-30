@@ -7,6 +7,7 @@ import {
   PostApiCoreBagUnqualifiedPickBatchRequest,
   PostApiCoreBagUnqualifiedPickRequest,
   PostApiCoreBagUnqualifiedProcessBagNoRequest,
+  DeleteApiCoreBagUnqualifiedProcessRequest,
 } from '@/api/type/nonconformityManage';
 import { defHttp } from '@/utils/http/axios';
 
@@ -30,9 +31,8 @@ export const nonconformityInStore = (params: PostApiCoreBagUnqualifiedInStoreReq
 export const nonconformityCheck = (params: PostApiCoreBagUnqualifiedProcessBagNoRequest['bagNo']) =>
   defHttp.post({ url: Api.NONCONFORMITY_PLASMA_CHECK + '/' + params });
 
-export const nonconformityRedoCheck = (
-  params: PostApiCoreBagUnqualifiedProcessBagNoRequest['bagNo'],
-) => defHttp.delete({ url: Api.NONCONFORMITY_PLASMA_CHECK + '/' + params });
+export const nonconformityRedoCheck = (params: DeleteApiCoreBagUnqualifiedProcessRequest) =>
+  defHttp.delete({ url: Api.NONCONFORMITY_PLASMA_CHECK, params });
 
 export const nonconformityPlasmaDetail = (params: GetApiCoreBagUnqualifiedBagNoRequest['bagNo']) =>
   defHttp.get<GetApiCoreBagUnqualifiedBagNoResponse>({

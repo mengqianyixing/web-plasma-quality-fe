@@ -37,7 +37,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { useModalInner, useModal } from '@/components/Modal';
-  import { BasicTable, useTable, TableAction } from '@/components/Table';
+  import { BasicTable, useTable, TableAction, BasicColumn } from '@/components/Table';
   import { FormSchema } from '@/components/Form';
   import BasicModal from '@/components/Modal/src/BasicModal.vue';
   import { getSortBoxs } from '@/api/stockout/production-sorting/production-sorting-main';
@@ -52,11 +52,12 @@
     prepareNo.value = data.prepareNo;
   });
 
-  const columns = [
+  const columns: BasicColumn[] = [
     {
       title: '血浆箱号',
       dataIndex: 'boxNo',
       width: 180,
+      sorter: true,
     },
     {
       title: '装箱类型',
@@ -75,11 +76,12 @@
       dataIndex: 'operator',
     },
     {
-      title: '装箱日期',
+      title: '装箱时间',
       dataIndex: 'operateAt',
       format(text) {
-        return text ? dayjs(text).format('YYYY-MM-DD') : '-';
+        return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
       },
+      sorter: true,
     },
     {
       title: '状态',
@@ -133,6 +135,13 @@
       schemas: searchFormSchema,
     },
     beforeFetch: (p) => {
+      if (p.order) {
+        if (p.order === 'ascend') p.sortOrder = 'ASC';
+        if (p.order === 'descend') p.sortOrder = 'DESC';
+        p.sortIdx = p.field;
+        delete p.order;
+        delete p.field;
+      }
       return { ...p, prepareNo: prepareNo.value };
     },
     immediate: true,
