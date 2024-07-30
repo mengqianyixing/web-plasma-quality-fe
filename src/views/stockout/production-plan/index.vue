@@ -377,6 +377,9 @@
   async function handlePrint(reportType: string) {
     const [row] = getSelections(true);
     if (!row) return;
+    if ([STATUS.TBP, STATUS.PLI].includes(row.state)) {
+      return message.warning('未完成计划不可打印');
+    }
     try {
       reportLoading.value = true;
       const res = await getReportApi({ reportKey: reportType, contentKey: row.mesId });
@@ -391,7 +394,9 @@
   async function handleDownloadAbstract(key: PrintServerEnum) {
     const [row] = getSelections(true);
     if (!row) return;
-
+    if ([STATUS.TBP, STATUS.PLI].includes(row.state)) {
+      return message.warning('未完成计划不可下载');
+    }
     try {
       loading.value = true;
       const res = await downloadReport({
