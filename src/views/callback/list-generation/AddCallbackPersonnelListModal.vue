@@ -188,7 +188,7 @@
       componentProps: {
         disabledDate: (current: Dayjs) => {
           return (
-            !current.isAfter(dayjs().subtract(1, 'year').add(1, 'day')) ||
+            !current.isAfter(dayjs().subtract(1, 'year')) ||
             current.isAfter(dayjs().subtract(gapDays.value, 'day'))
           );
         },

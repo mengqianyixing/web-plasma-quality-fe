@@ -89,6 +89,23 @@ const quarantineManager: AppRouteModule = {
       component: () => import('@/views/query-statistics/nonconformityTracking/index.vue'),
     },
     {
+      path: '/quarantine/overdue-confirmation',
+      name: 'OverdueConfirmation',
+      id: 950020,
+      authElements: [
+        {
+          id: QuarantineButtonEnum.OverdueConfirmationConfim,
+          title: '确认',
+        },
+        {
+          id: ReCheckButtonEnum.OverdueConfirmationCheck,
+          title: '确认复核人',
+        },
+      ],
+      meta: { title: '超一年期确认' },
+      component: () => import('@/views/quarantine/overdue-confirmation/index.vue'),
+    },
+    {
       path: 'stationRefuse',
       name: 'StationRefuse',
       meta: {
@@ -117,23 +134,6 @@ const quarantineManager: AppRouteModule = {
           title: '导出',
         },
       ],
-    },
-    {
-      path: '/quarantine/overdue-confirmation',
-      name: 'OverdueConfirmation',
-      id: 950020,
-      authElements: [
-        {
-          id: QuarantineButtonEnum.OverdueConfirmationConfim,
-          title: '确认',
-        },
-        {
-          id: ReCheckButtonEnum.OverdueConfirmationCheck,
-          title: '确认复核人',
-        },
-      ],
-      meta: { title: '超一年期确认' },
-      component: () => import('@/views/quarantine/overdue-confirmation/index.vue'),
     },
   ],
 };

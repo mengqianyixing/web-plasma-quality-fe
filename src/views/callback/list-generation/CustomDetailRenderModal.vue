@@ -71,7 +71,7 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
-    showIndexColumn: false,
+    showIndexColumn: true,
     scroll: {
       x: 0,
     },

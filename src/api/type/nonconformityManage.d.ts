@@ -278,24 +278,28 @@ export interface PostApiCoreBagUnqualifiedProcessBagNoResponse {}
  * 接口 [不合格浆袋审核撤回↗](https://yapi.sharing8.cn/project/529/interface/api/32172) 的 **请求类型**
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
- * @请求头 `DELETE /api/core/bag/unqualified/process/{bagNo}`
- * @更新时间 `2024-01-08 11:31:27`
+ * @请求头 `DELETE /api/core/bag/unqualified/process`
+ * @更新时间 `2024-07-30 14:58:54`
  */
-export interface DeleteApiCoreBagUnqualifiedProcessBagNoRequest {
+export interface DeleteApiCoreBagUnqualifiedProcessRequest {
   /**
    * 浆袋编号
    */
   bagNo: string;
+  /**
+   * 原因
+   */
+  reason: string;
 }
 
 /**
  * 接口 [不合格浆袋审核撤回↗](https://yapi.sharing8.cn/project/529/interface/api/32172) 的 **返回类型**
  *
  * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
- * @请求头 `DELETE /api/core/bag/unqualified/process/{bagNo}`
- * @更新时间 `2024-01-08 11:31:27`
+ * @请求头 `DELETE /api/core/bag/unqualified/process`
+ * @更新时间 `2024-07-30 14:58:54`
  */
-export interface DeleteApiCoreBagUnqualifiedProcessBagNoResponse {}
+export interface DeleteApiCoreBagUnqualifiedProcessResponse {}
 
 /**
  * 接口 [不合格血浆详情↗](https://yapi.sharing8.cn/project/529/interface/api/32175) 的 **请求类型**

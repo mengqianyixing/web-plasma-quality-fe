@@ -6,8 +6,6 @@ import { mainOutRoutes } from './mainOut';
 import { PageEnum } from '@/enums/pageEnum';
 import { jsonClone } from 'js-xxx';
 import { t } from '@/hooks/web/useI18n';
-import { getDictListApi } from '@/api/dictionary';
-import { usePermission } from '@/hooks/web/usePermission';
 
 // import.meta.glob() 直接引入所有的模块 Vite 独有的功能
 const modules = import.meta.glob('./modules/**/*.ts', { eager: true });
@@ -22,28 +20,7 @@ Object.keys(modules).forEach(async (key) => {
 
 export async function getRoutes() {
   return new Promise((resolve) => {
-    getDictListApi({ pageSize: 1000, currPage: 1, queryMenu: true }).then((res) => {
-      const { refreshMenu } = usePermission();
-      const result = res.result?.map((x, i) => ({
-        path: `/${x.dictNo}`,
-        name: x.dictNo,
-        meta: {
-          title: x.dictName,
-          dictId: x.dictId,
-          systemLevel: x.systemLevel,
-        },
-        id: 100061 + i,
-        component: () => import('@/views/system/dictionary/itemList.vue'),
-      }));
-      const index = routeModuleList.findIndex((x) => x.name === 'Basic');
-      result?.forEach((x) => {
-        routeModuleList[index].children?.push(x);
-      });
-      modulesRouteList = jsonClone(routeModuleList);
-      routeIdMap = getRouteIdMap(modulesRouteList);
-      refreshMenu(false);
-      resolve(true);
-    });
+    resolve(true);
   });
 }
 
@@ -66,9 +43,9 @@ function getRouteIdMap(routes: any[]) {
   return ret;
 }
 
-export let modulesRouteList = jsonClone(routeModuleList);
+export const modulesRouteList = jsonClone(routeModuleList);
 
-export let routeIdMap = getRouteIdMap(modulesRouteList);
+export const routeIdMap = getRouteIdMap(modulesRouteList);
 
 export const asyncRoutes = [PAGE_NOT_FOUND_ROUTE, ...routeModuleList];
 
