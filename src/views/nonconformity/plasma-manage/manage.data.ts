@@ -21,6 +21,9 @@ import { useGlobSetting } from '@/hooks/setting/index';
 const globSetting = useGlobSetting();
 const iskm = globSetting.company === COMPANY.KM;
 const serverEnumStore = useServerEnumStoreWithOut();
+const BagUnqualifiedFlowEnum = serverEnumStore.getServerEnumText(
+  SERVER_ENUM.BagUnqualifiedFlowEnum,
+);
 
 export const columns: BasicColumn[] = [
   {
@@ -74,6 +77,13 @@ export const columns: BasicColumn[] = [
     title: iskm ? '托盘/箱' : '箱号',
     dataIndex: 'boxNo',
     ellipsis: false,
+    width: 130,
+  },
+  {
+    title: '不合格类型',
+    dataIndex: 'flow',
+    ellipsis: false,
+    format: BagUnqualifiedFlowEnum,
     width: 130,
   },
   {
