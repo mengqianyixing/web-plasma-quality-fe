@@ -139,8 +139,8 @@
       parent: x.parent.meta.title,
     }));
     selectedRowsRef.value.forEach((x, i) => {
-      const usersStr = (x.users ?? []).join('、');
-      excelCol.push({ label: `${x.name}/${x.displayName}/${usersStr}`, prop: `domainsStr${i}` });
+      const usersStr = (x.users ?? []).map((it) => it.split('/')[1]).join('、');
+      excelCol.push({ label: `${x.displayName}/${usersStr}`, prop: `domainsStr${i}` });
       results.forEach((v, n) => {
         if (v.btn.id) {
           if (x.domains.includes(v.btn.id)) {
