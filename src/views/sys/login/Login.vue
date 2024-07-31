@@ -1,5 +1,5 @@
 <template>
-  <div :class="prefixCls" class="relative w-full h-full px-4">
+  <div :class="prefixCls" class="relative w-full h-full px-4" v-show="false">
     <div class="absolute flex items-center right-4 top-4">
       <AppDarkModeToggle class="mr-2 enter-x" v-if="!sessionTimeout" />
       <AppLocalePicker
