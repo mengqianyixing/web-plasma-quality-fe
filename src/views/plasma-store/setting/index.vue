@@ -10,9 +10,12 @@
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.StoreSettingAdd"
-          >新增</a-button
-        >
+        <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.StoreSettingAdd">
+          新增
+        </a-button>
+        <a-button type="primary" @click="handleUpdate" v-auth="StoreButtonEnum.StoreSettingAdd">
+          编辑
+        </a-button>
 
         <a-button
           type="primary"
@@ -76,39 +79,47 @@
   const [registerAreaModal] = useModal();
   const houseNo = ref('');
 
-  const [registerTable, { getRowSelection, findTableDataRecord, reload, clearSelectedRowKeys }] =
-    useTable({
-      api: settingListApi,
-      fetchSetting: {
-        pageField: 'currPage',
-        sizeField: 'pageSize',
-        totalField: 'totalCount',
-        listField: 'result',
-      },
-      rowKey: 'houseNo',
-      columns,
-      size: 'small',
-      useSearchForm: false,
-      showTableSetting: false,
-      bordered: true,
-      rowSelection: { type: 'radio' },
-      afterFetch: (res) => {
-        clearSelectedRowKeys();
-        return res;
-      },
-    });
+  const [registerTable, { getSelectRows, reload, clearSelectedRowKeys }] = useTable({
+    api: settingListApi,
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    rowKey: 'houseNo',
+    columns,
+    size: 'small',
+    useSearchForm: false,
+    showTableSetting: false,
+    bordered: true,
+    rowSelection: { type: 'radio' },
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
+  });
 
   function handleCreate() {
     openModal(true, {});
+  }
+  function handleUpdate() {
+    const rows = getSelectRows();
+    if (rows.length === 0) return message.warning('请选择一条数据');
+    const [row] = rows;
+    const [typeFlag, storeFlag, autoFlag] = row.houseType.split('');
+    openModal(true, {
+      isUpdate: true,
+      row: { ...row, typeFlag, storeFlag, autoFlag, capacity: row.standard.maxLocationSize },
+    });
   }
 
   const { createConfirm } = useMessage();
 
   function handleCheckStatus(action: string) {
-    const { selectedRowKeys } = getRowSelection() as { selectedRowKeys: string[] };
-    if (selectedRowKeys.length === 0) return message.warning('请选择一条数据');
-    else if (selectedRowKeys.length > 1) return message.warning('只能选择一条数据');
-    const { closed, houseNo, houseName } = findTableDataRecord(selectedRowKeys[0]) as Recordable;
+    const rows = getSelectRows();
+    if (rows.length === 0) return message.warning('请选择一条数据');
+    const { closed, houseNo, houseName } = rows[0];
     if (closed === action) return message.warning('状态不需要变更');
     createConfirm({
       iconType: 'warning',

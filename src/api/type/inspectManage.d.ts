@@ -2099,7 +2099,7 @@ export interface PostApiCoreLabRegistrationTiterUploadUpdateResponse {}
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `GET /api/core/lab/item/basicInfo/{bsNo}`
- * @更新时间 `2024-07-03 09:46:16`
+ * @更新时间 `2024-07-31 15:07:58`
  */
 export interface GetApiCoreLabItemBasicInfoBsNoRequest {
   bsNo: string;
@@ -2110,7 +2110,7 @@ export interface GetApiCoreLabItemBasicInfoBsNoRequest {
  *
  * @分类 [检验结果登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5341)
  * @请求头 `GET /api/core/lab/item/basicInfo/{bsNo}`
- * @更新时间 `2024-07-03 09:46:16`
+ * @更新时间 `2024-07-31 15:07:58`
  */
 export interface GetApiCoreLabItemBasicInfoBsNoResponse {
   stationName: string;
@@ -2119,6 +2119,7 @@ export interface GetApiCoreLabItemBasicInfoBsNoResponse {
   totalQualified: string;
   totalUnqualified: string;
   state: string;
+  sampleCode: string;
 }
 
 /**

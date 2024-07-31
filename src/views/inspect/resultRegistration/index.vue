@@ -33,7 +33,7 @@
         </div>
       </div>
       <CellWapper
-        :data="rowData"
+        :data="rowData || {}"
         cell-width="16.66%"
         labelWidth="160px"
         :cell-list="cellList"
@@ -81,6 +81,7 @@
     getPlasmaCountApi,
     submitRegistrationApi,
     sumbitRevokeRegistrationApi,
+    getBatchInfoApi,
   } from '@/api/inspect/resultRegistration';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
@@ -89,6 +90,7 @@
   import dayjs, { Dayjs } from 'dayjs';
   import { useMessage } from '@/hooks/web/useMessage';
   import { sampleTypeEnum } from '@/enums/sampleEnum';
+  import { GetApiCoreLabItemBasicInfoBsNoResponse } from '@/api/type/inspectManage';
 
   defineOptions({ name: 'ResultRegistration' });
 
@@ -99,7 +101,7 @@
   const bsNo = ref('');
   const registrationLoading = ref(false);
   const unregistrationLoading = ref(false);
-  const rowData = ref({ status: '', sampleType: '', sampleCode: '' });
+  const rowData = ref<GetApiCoreLabItemBasicInfoBsNoResponse>();
   const countData = ref({});
   const plasmaCellList = ref<Cell[]>([]);
   const reloadMap = ref<Map<string, Function>>(new Map());
@@ -130,15 +132,14 @@
 
   async function confirm(row) {
     bsNo.value = row.bsNo;
-    rowData.value = row;
-    openModal(false);
+    rowData.value = await getBatchInfoApi({ bsNo: bsNo.value });
     const res = await getPlasmaCountApi({ bsNo: row.bsNo });
     const initValue: { list: Cell[]; data: Record<number, number> } = {
       list: [],
       data: {},
     };
-    const { sampleType, sampleCode } = rowData.value;
-    const isCAB = sampleType === sampleTypeEnum.CallbackSample || sampleCode === '回访样本';
+    const { sampleType } = rowData.value;
+    const isCAB = sampleType === sampleTypeEnum.CallbackSample;
     const { list, data } = res.reduce((t, row, i) => {
       t.list.push({
         field: i.toString(),
@@ -154,10 +155,10 @@
     const values = await validate();
     setModalProps({ confirmLoading: true });
     submitRegistrationApi({ bsNo: bsNo.value, checkCompletionDate: values.checkCompletionDate })
-      .then(() => {
+      .then(async () => {
         openCancelModal(false);
         message.success('登记成功');
-        rowData.value.status = '登记完成';
+        rowData.value = await getBatchInfoApi({ bsNo: bsNo.value });
       })
       .finally(() => {
         setModalProps({ confirmLoading: false });
@@ -179,7 +180,6 @@
         try {
           unregistrationLoading.value = true;
           await sumbitRevokeRegistrationApi({ bsNo: bsNo.value });
-          rowData.value.status = '登记中';
           confirm(rowData.value);
         } finally {
           unregistrationLoading.value = false;

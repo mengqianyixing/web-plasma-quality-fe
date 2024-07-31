@@ -73,6 +73,7 @@ export enum BaseSettingButtonEnum {
 
 export enum StoreButtonEnum {
   StoreSettingAdd = 'E_99001001',
+  StoreSettingUpdate = 'E_99001002',
   StoreSettingDisable = 'E_99001004',
   StoreSettingEnable = 'E_99001005',
 

@@ -15,6 +15,8 @@ export const columns: BasicColumn[] = [
   {
     title: '库房名称',
     slots: { customRender: 'houseName' },
+    width: 150,
+    ellipsis: false,
   },
   {
     title: '库房类别',
@@ -22,6 +24,7 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return TYPE_FLAG_TEXT[record.houseType[0]];
     },
+    width: 100,
   },
   {
     title: '存放模式',
@@ -29,6 +32,7 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return STORE_FLAG_TEXT[record.houseType[1]];
     },
+    width: 100,
   },
   {
     title: '是否立体库',
@@ -36,6 +40,7 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return AUTO_FLAG_TEXT[record.houseType[2]];
     },
+    width: 100,
   },
   {
     title: '货位数',
@@ -43,11 +48,13 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return record.standard.maxLocationSize;
     },
+    width: 100,
   },
 
   {
     title: '已使用货位数',
     dataIndex: 'locationUsedCount',
+    width: 120,
   },
   {
     title: '是否启用',
@@ -55,10 +62,13 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return CLOSED_TEXT[record.closed];
     },
+    width: 80,
   },
   {
     title: '备注',
     dataIndex: 'remark',
+    width: 150,
+    ellipsis: false,
   },
 ];
 
@@ -78,7 +88,8 @@ export const initFormSchema: (opt: {
   houseType: String;
   updateSchema: Function;
   setFieldsValue: Function;
-}) => FormSchema[] = ({ name, houseType, updateSchema, setFieldsValue }) => [
+  isUpdate: boolean;
+}) => FormSchema[] = ({ name, houseType, updateSchema, setFieldsValue, isUpdate }) => [
   {
     field: 'houseName',
     label: name + '名称',
@@ -94,7 +105,7 @@ export const initFormSchema: (opt: {
     required: true,
     defaultValue: houseType[0] || TYPE_FLAG.N,
     componentProps: {
-      disabled: !!houseType,
+      disabled: !!houseType || isUpdate,
       options: [
         { label: TYPE_FLAG_TEXT.N, value: TYPE_FLAG.N },
         { label: TYPE_FLAG_TEXT.F, value: TYPE_FLAG.F },
@@ -110,7 +121,7 @@ export const initFormSchema: (opt: {
     required: true,
     defaultValue: houseType[1] || STORE_FLAG.S,
     componentProps: {
-      disabled: !!houseType,
+      disabled: !!houseType || isUpdate,
       options: [
         { label: STORE_FLAG_TEXT.S, value: STORE_FLAG.S },
         { label: STORE_FLAG_TEXT.F, value: STORE_FLAG.F },
@@ -118,7 +129,7 @@ export const initFormSchema: (opt: {
       onChange: (value) => {
         updateSchema({
           field: 'autoFlag',
-          componentProps: { disabled: value === STORE_FLAG.F },
+          componentProps: { disabled: value === STORE_FLAG.F || isUpdate },
         });
         if (value === STORE_FLAG.F) {
           setFieldsValue({ autoFlag: AUTO_FLAG.M });
@@ -134,7 +145,7 @@ export const initFormSchema: (opt: {
     required: true,
     defaultValue: houseType[2] || AUTO_FLAG.A,
     componentProps: {
-      disabled: !!houseType,
+      disabled: true,
       options: [
         { label: AUTO_FLAG_TEXT.A, value: AUTO_FLAG.A },
         { label: AUTO_FLAG_TEXT.M, value: AUTO_FLAG.M },
@@ -144,6 +155,10 @@ export const initFormSchema: (opt: {
   {
     ...capacitySchema,
     colProps: { span: 12 },
+    componentProps: {
+      ...capacitySchema.componentProps,
+      disabled: isUpdate,
+    },
   },
   {
     field: 'closed',
@@ -153,6 +168,7 @@ export const initFormSchema: (opt: {
     required: true,
     defaultValue: CLOSED.NORMAL,
     componentProps: {
+      disabled: isUpdate,
       options: [
         { label: CLOSED_TEXT.NORMAL, value: CLOSED.NORMAL },
         { label: CLOSED_TEXT.CLOSED, value: CLOSED.CLOSED },

@@ -11,7 +11,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
-    :title="'新增' + getNodeType"
+    :title="(state.isUpdate ? '编辑' : '新增') + getNodeType"
     width="600px"
     @ok="handleSubmit"
   >
@@ -23,7 +23,7 @@
   import { BasicForm, useForm } from '@/components/Form';
   import { initFormSchema } from './setting.data';
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { addHouseApi } from '@/api/plasmaStore/setting';
+  import { addHouseApi, updateHouseApi } from '@/api/plasmaStore/setting';
   import { noop } from '@/utils/index';
 
   const emit = defineEmits(['success', 'register']);
@@ -31,6 +31,8 @@
   defineOptions({ name: 'FormModel' });
   const state = reactive({
     parentHouseNo: '',
+    isUpdate: false,
+    houseNo: '',
   });
 
   const getNodeType = computed(() => (state.parentHouseNo === 'ROOT' ? '库房' : '区域'));
@@ -40,31 +42,34 @@
     houseType: '',
     updateSchema: noop,
     setFieldsValue: noop,
+    isUpdate: false,
   });
 
   const [registerForm, { validate, updateSchema, setFieldsValue, clearValidate }] = useForm({
-    labelWidth: 90,
+    labelWidth: 100,
     baseColProps: { span: 24 },
     schemas: formSchema,
     showActionButtonGroup: false,
   });
   const [registerModal, { setModalProps, closeModal }] = useModalInner(
-    ({ parentHouseType, parentHouseNo }) => {
+    ({ parentHouseType, parentHouseNo, isUpdate, row = {} }) => {
       state.parentHouseNo = parentHouseNo || 'ROOT';
+      state.isUpdate = isUpdate;
+      state.houseNo = row.houseNo;
       const formSchema = initFormSchema({
         name: getNodeType.value,
         houseType: parentHouseType || '',
         updateSchema,
         setFieldsValue,
+        isUpdate: !!isUpdate,
       });
       setModalProps({ confirmLoading: false });
       updateSchema(formSchema);
-      setFieldsValue(
-        formSchema.reduce((t, c) => {
-          t[c.field] = c.defaultValue;
-          return t;
-        }, {}),
-      );
+      const defaultValues = formSchema.reduce((t, c) => {
+        t[c.field] = c.defaultValue;
+        return t;
+      }, {});
+      setFieldsValue({ ...defaultValues, ...row });
       clearValidate();
     },
   );
@@ -74,14 +79,18 @@
       const { houseName, typeFlag, storeFlag, autoFlag, capacity, remark, closed } =
         await validate();
       setModalProps({ confirmLoading: true });
-      await addHouseApi({
-        closed,
-        houseName,
-        capacity,
-        parentHouseNo: state.parentHouseNo,
-        houseType: typeFlag + storeFlag + autoFlag,
-        remark,
-      });
+      if (state.isUpdate) {
+        await updateHouseApi({ houseName, remark, houseNo: state.houseNo });
+      } else {
+        await addHouseApi({
+          closed,
+          houseName,
+          capacity,
+          parentHouseNo: state.parentHouseNo,
+          houseType: typeFlag + storeFlag + autoFlag,
+          remark,
+        });
+      }
       closeModal();
       emit('success');
     } finally {

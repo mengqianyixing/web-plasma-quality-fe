@@ -447,7 +447,7 @@
 
       const res = await getPrintRecord({
         labelType: 'KEEP_SAMPLE_BOX',
-        bissNo: `${cacheBoxNo}_${batchValue.value}`,
+        bissNo: `${cacheBoxNo}`,
       });
       await printRecord({
         ...res,

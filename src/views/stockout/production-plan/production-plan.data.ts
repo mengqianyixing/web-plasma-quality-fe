@@ -539,6 +539,11 @@ export const pickingColumns: Record<string, BasicColumn[]> = {
       dataIndex: 'maxCollectAt',
       width: 100,
     },
+    {
+      title: '是否限制血浆',
+      dataIndex: 'haveFlag',
+      width: 100,
+    },
   ],
   [TAB.BOX]: [
     {
