@@ -96,13 +96,11 @@ const inboundmanagement: AppRouteModule = {
           id: ReCheckButtonEnum.PMSAccept,
           name: 'pmsAccept',
           title: 'PMS验收',
-          company: COMPANY.KM,
         },
         {
           id: ReCheckButtonEnum.PMSAcceptCancel,
           name: 'pmsAcceptCancel',
           title: 'PMS验收撤销',
-          company: COMPANY.KM,
         },
         {
           id: ReCheckButtonEnum.PlasmaInboundRecordCheck,
