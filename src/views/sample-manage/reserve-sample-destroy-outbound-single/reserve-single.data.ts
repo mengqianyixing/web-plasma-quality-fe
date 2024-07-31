@@ -227,20 +227,8 @@ export const trayColumns: VxeGridPropTypes.Columns = [
     field: 'sampleNo',
   },
   {
-    title: '类别',
-    field: 'source',
-  },
-  {
     title: '样本袋号',
     field: 'sampleBagNo',
-  },
-  {
-    title: '浆员姓名',
-    field: 'donorName',
-  },
-  {
-    title: '浆员编号',
-    field: 'donorNo',
   },
   {
     title: '箱号',
