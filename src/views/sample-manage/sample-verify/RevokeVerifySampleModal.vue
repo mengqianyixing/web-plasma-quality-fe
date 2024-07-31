@@ -26,7 +26,7 @@
   defineOptions({ name: 'FormModel' });
 
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
-  const [registerForm, { setFieldsValue, validate }] = useForm({
+  const [registerForm, { setFieldsValue, validate, resetFields }] = useForm({
     layout: 'horizontal',
     labelWidth: 120,
     wrapperCol: {
@@ -92,6 +92,7 @@
     createMessage.success('撤销成功');
 
     closeModal();
+    resetFields();
     emit('success');
   }
 
