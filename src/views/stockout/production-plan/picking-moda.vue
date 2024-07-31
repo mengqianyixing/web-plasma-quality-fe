@@ -32,7 +32,9 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { message } from 'ant-design-vue';
   import { submitBoxSelectApi, submitPrepareSelectApi } from '@/api/stockout/production-plan';
+  import { useMessage } from '@/hooks/web/useMessage';
 
+  const { createConfirm } = useMessage();
   const emit = defineEmits(['confim']);
   const activeKey = ref(TAB.PREPARE);
   const orderNo = ref('');
@@ -80,25 +82,39 @@
     if (rows.length === 0) return message.warning('请选择数据');
     const prodPrepares = rows.map((_) => _.ppNo);
     const boxNos = rows.map((_) => _.boxNo);
-    try {
-      setModalProps({ confirmLoading: true });
-      if (activeKey.value === TAB.PREPARE) {
-        await submitPrepareSelectApi({
-          orderNo: orderNo.value,
-          prodPrepares,
-          bagCount: rows.reduce((t, c) => ((t += c.prodBagCount), t), 0),
-        });
-      } else {
-        await submitBoxSelectApi({
-          orderNo: orderNo.value,
-          boxNos,
-          bagCount: rows.reduce((t, c) => ((t += c.prodBagCount), t), 0),
-        });
+    const haveFlag = rows.some((_) => _.haveFlag === '是');
+
+    const submit = async () => {
+      try {
+        setModalProps({ confirmLoading: true });
+        if (activeKey.value === TAB.PREPARE) {
+          await submitPrepareSelectApi({
+            orderNo: orderNo.value,
+            prodPrepares,
+            bagCount: rows.reduce((t, c) => ((t += c.prodBagCount), t), 0),
+          });
+        } else {
+          await submitBoxSelectApi({
+            orderNo: orderNo.value,
+            boxNos,
+            bagCount: rows.reduce((t, c) => ((t += c.prodBagCount), t), 0),
+          });
+        }
+        message.success('添加成功');
+        emit('confim');
+      } finally {
+        setModalProps({ confirmLoading: false });
       }
-      message.success('添加成功');
-      emit('confim');
-    } finally {
-      setModalProps({ confirmLoading: false });
+    };
+    if (haveFlag) {
+      createConfirm({
+        title: '确认',
+        content: '已经勾选限制血浆，是否继续？',
+        iconType: 'warning',
+        onOk: submit,
+      });
+    } else {
+      submit();
     }
   }
 </script>
