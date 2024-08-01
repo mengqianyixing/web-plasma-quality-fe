@@ -175,6 +175,10 @@ export const requisitionDetailByBatch: BasicColumn[] = [
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
+  {
+    dataIndex: 'state',
+    title: '状态',
+  },
 ];
 export const requisitionDetailByBag: BasicColumn[] = [
   {
