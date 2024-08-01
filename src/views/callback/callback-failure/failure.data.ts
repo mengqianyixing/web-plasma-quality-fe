@@ -117,4 +117,9 @@ export const searchFormSchema: FormSchema[] = [
       ],
     },
   },
+  {
+    field: 'cardNo',
+    label: '浆员编号',
+    component: 'Input',
+  },
 ];

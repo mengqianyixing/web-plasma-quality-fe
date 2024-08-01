@@ -64,7 +64,7 @@
       return res;
     },
   });
-  const [registerModal, { setModalProps }] = useModalInner(async () => {
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(async () => {
     setPagination({ current: 1 });
     reload();
   });
@@ -77,10 +77,14 @@
       try {
         setModalProps({ confirmLoading: true });
         await submitItemDtApi({ bsNo: row.bsNo });
+        emit('confirm', row);
+        closeModal();
       } finally {
         setModalProps({ confirmLoading: false });
       }
+    } else {
+      emit('confirm', row);
+      closeModal();
     }
-    emit('confirm', row);
   }
 </script>

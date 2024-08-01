@@ -8,6 +8,7 @@
  */
 // @TODO: [API TYPE] 稳定版后再使用 ytt 统一生成类型声明
 import { defHttp } from '@/utils/http/axios';
+import { PostApiSysCasdoorAllUsersResponse } from '../type/userManage';
 
 /**
  * 获取所有用户
@@ -15,7 +16,7 @@ import { defHttp } from '@/utils/http/axios';
  * @returns
  */
 export const getCasDoorAllUsers = (params?) =>
-  defHttp.get(
+  defHttp.post<PostApiSysCasdoorAllUsersResponse>(
     { url: '/api/sys/casdoor/all-users', params },
     {
       joinParamsToUrl: true,

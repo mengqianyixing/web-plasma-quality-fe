@@ -464,4 +464,114 @@ export type PostApiSysUsersByUserIdsResponse = {
   status: string;
 }[];
 
+/**
+ * 接口 [查询用户信息（包含角色）↗](https://yapi.sharing8.cn/project/521/interface/api/36264) 的 **请求类型**
+ *
+ * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
+ * @请求头 `POST /api/sys/casdoor/all-users`
+ * @更新时间 `2024-07-31 17:45:08`
+ */
+export interface PostApiSysCasdoorAllUsersRequest {
+  userIds?: string[];
+}
+
+/**
+ * 接口 [查询用户信息（包含角色）↗](https://yapi.sharing8.cn/project/521/interface/api/36264) 的 **返回类型**
+ *
+ * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
+ * @请求头 `POST /api/sys/casdoor/all-users`
+ * @更新时间 `2024-07-31 17:45:08`
+ */
+export type PostApiSysCasdoorAllUsersResponse = {
+  owner?: string;
+  name?: string;
+  createdTime?: string;
+  updatedTime?: string;
+  id?: string;
+  type?: string;
+  password?: string;
+  passwordSalt?: string;
+  displayName?: string;
+  firstName?: string;
+  lastName?: string;
+  avatar?: string;
+  permanentAvatar?: string;
+  email?: string;
+  phone?: string;
+  location?: string;
+  address?: null;
+  affiliation?: string;
+  title?: string;
+  idCardType?: string;
+  idCard?: string;
+  homepage?: string;
+  bio?: string;
+  tag?: string;
+  region?: string;
+  language?: string;
+  gender?: string;
+  birthday?: string;
+  education?: string;
+  score?: number;
+  karma?: number;
+  ranking?: number;
+  signupApplication?: string;
+  hash?: string;
+  preHash?: string;
+  createdIp?: string;
+  lastSigninTime?: string;
+  lastSigninIp?: string;
+  github?: string;
+  google?: string;
+  qq?: string;
+  wechat?: string;
+  facebook?: string;
+  dingtalk?: string;
+  weibo?: string;
+  gitee?: string;
+  linkedin?: string;
+  wecom?: string;
+  lark?: string;
+  gitlab?: string;
+  adfs?: string;
+  baidu?: string;
+  alipay?: string;
+  casdoor?: string;
+  infoflow?: string;
+  apple?: string;
+  azuread?: string;
+  slack?: string;
+  steam?: string;
+  bilibili?: string;
+  okta?: string;
+  douyin?: string;
+  custom?: string;
+  ldap?: string;
+  properties?: null;
+  roles?: {
+    owner: string;
+    name: string;
+    createdTime: string;
+    displayName: string;
+    users: null;
+    roles: string[];
+    domains: string[];
+    groups: string[];
+    description: string;
+    enabled: boolean;
+    isEnabled: boolean;
+  }[];
+  permissions?: null;
+  groups?: string[];
+  emailVerified?: boolean;
+  isEmailVerified?: boolean;
+  isDefaultAvatar?: boolean;
+  isOnline?: boolean;
+  isAdmin?: boolean;
+  isGlobalAdmin?: boolean;
+  isForbidden?: boolean;
+  isDeleted?: boolean;
+  isPasswordExpired?: boolean;
+}[];
+
 /* prettier-ignore-end */

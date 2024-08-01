@@ -647,7 +647,7 @@
       label: '平均效价值',
       contentMinWidth: 100,
       render(val, data) {
-        return <div>{data.summary.avgTiter}</div>;
+        return <div>{data.prodType === 'N' ? 'N/A' : data.summary.avgTiter}</div>;
       },
     },
     {

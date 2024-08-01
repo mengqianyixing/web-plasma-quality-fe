@@ -1186,4 +1186,35 @@ export interface GetApiCoreBankLocationLayoutSummaryLocationNoResponse {
   trayNo?: string;
 }
 
+/**
+ * 接口 [编辑库房↗](https://yapi.sharing8.cn/project/529/interface/api/36255) 的 **请求类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `PUT /api/core/bank/warehouse/update`
+ * @更新时间 `2024-07-31 16:49:24`
+ */
+export interface PutApiCoreBankWarehouseUpdateRequest {
+  /**
+   * 库房编号
+   */
+  houseNo: string;
+  /**
+   * 库房名称
+   */
+  houseName: string;
+  /**
+   * 备注
+   */
+  remark?: string;
+}
+
+/**
+ * 接口 [编辑库房↗](https://yapi.sharing8.cn/project/529/interface/api/36255) 的 **返回类型**
+ *
+ * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
+ * @请求头 `PUT /api/core/bank/warehouse/update`
+ * @更新时间 `2024-07-31 16:49:24`
+ */
+export type PutApiCoreBankWarehouseUpdateResponse = string;
+
 /* prettier-ignore-end */

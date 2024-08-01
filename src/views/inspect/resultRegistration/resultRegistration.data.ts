@@ -24,9 +24,9 @@ export const cellList = [
     label: '样本批号',
   },
   {
-    field: 'sampleCode',
+    field: 'sampleType',
     label: '样本类型',
-    format: (data: Recordable) => SampleType(data.sampleCode),
+    format: (data: Recordable) => SampleType(data.sampleType),
   },
   {
     field: 'totalCount',

@@ -493,7 +493,7 @@ export interface PostApiProductPlanBagResponse {
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/prepare`
- * @更新时间 `2024-01-18 18:12:22`
+ * @更新时间 `2024-07-31 15:39:06`
  */
 export interface PostApiProductPlanPrepareRequest {
   orderNo: string;
@@ -508,7 +508,7 @@ export interface PostApiProductPlanPrepareRequest {
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/prepare`
- * @更新时间 `2024-01-18 18:12:22`
+ * @更新时间 `2024-07-31 15:39:06`
  */
 export interface PostApiProductPlanPrepareResponse {
   totalCount: number;
@@ -523,6 +523,7 @@ export interface PostApiProductPlanPrepareResponse {
     prodBagCount: string;
     netWeight: string;
     boxCount: string;
+    haveFlag: string;
   }[];
 }
 

@@ -36,6 +36,8 @@ export const columns: sortColunm[] = [
   {
     title: '接收日期',
     dataIndex: 'receiveDate',
+    sorter: true,
+    sortField: 'bsa.accept_at',
     width: 100,
   },
   {
