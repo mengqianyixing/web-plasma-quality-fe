@@ -202,6 +202,8 @@
 
   function handleOpenCancelCheck() {
     if (!checkSelectedRows()) return;
+    const row = selectedRow.value[0];
+    if (row.checked === '未审核') return createMessage.warn('未审核的数据不可撤销');
     openUnCheckModal(true);
     resetFields();
     clearValidate();
