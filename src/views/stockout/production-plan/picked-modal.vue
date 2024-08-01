@@ -45,7 +45,7 @@
           </a-button>
         </div>
         <CellWapper :data="cellData" :cell-list="cellList" :gap="0" />
-        <div class="flex-1 w-full">
+        <div class="flex-1 w-full mt-10px">
           <Tabs
             type="card"
             size="small"
@@ -55,7 +55,7 @@
           >
             <template v-for="tab in tabList" :key="tab.key">
               <TabPane :tab="tab.label">
-                <div style="height: calc(100% - 20px)">
+                <div style="height: calc(100% - 30px)">
                   <component
                     :is="componentMap.get(tab.key)"
                     @register="tableInstanceMap.get(tab.key)[0]"
