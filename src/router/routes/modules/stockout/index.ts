@@ -1,8 +1,8 @@
 /*
  * @Author: HxB
  * @Date: 2023-12-25 16:00:06
- * @LastEditors: zcc
- * @LastEditTime: 2024-02-01 15:54:43
+ * @LastEditors: chiyifan chiyf@stpass.com
+ * @LastEditTime: 2024-07-31 16:45:05
  * @Description: 出库管理
  * @FilePath: \psms-fe\src\router\routes\modules\stockout\index.ts
  */
@@ -81,8 +81,18 @@ const nonconformity: AppRouteModule = {
         },
         {
           id: StockOutButtonEnum.ProductionPreparationDetailExport,
-          name: 'resetReCheck',
+          name: 'export',
           title: '导出明细',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPreparationAutoSorting,
+          name: 'autoSorting',
+          title: '自动分拣',
+        },
+        {
+          id: StockOutButtonEnum.ProductionPreparationManualSorting,
+          name: 'manualSorting',
+          title: '转人工分拣',
         },
       ],
     },
