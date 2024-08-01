@@ -35,7 +35,29 @@
       @ok="okFunction"
       @cancel="emit('close')"
     >
-      <BasicForm @register="registerForm" @submit="okFunction" />
+      <div class="form">
+        <div class="form-item">
+          <span class="form-label">托盘编号</span>
+          <ScanInput
+            :value="formData.trayNo"
+            @enter="_submit"
+            @keyup="handleKeyUp"
+            size="lg"
+            ref="trayRef"
+            @scan-change="(code) => (formData.trayNo = code)"
+          />
+        </div>
+        <div class="form-item">
+          <span class="form-label">箱号</span>
+          <ScanInput
+            :value="formData.boxId"
+            @enter="_submit"
+            size="lg"
+            ref="boxRef"
+            @keyup="handleKeyUp"
+            @scan-change="(code) => (formData.boxId = code)"
+          /> </div
+      ></div>
     </BasicModal>
   </BasicModal>
 </template>
@@ -47,29 +69,25 @@
   import { getListApi } from '@/api/tray/list';
   import InModal from '@/views/tray/outInStore/inModal.vue';
   import { nextTick, ref, reactive } from 'vue';
-  import { BasicForm, useForm } from '@/components/Form';
   import { bindVerifyBoxApi } from '@/api/tray/relocation';
+  import ScanInput from '@/components/Form/src/components/ScanInput.vue';
+  import { debounce } from 'lodash-es';
 
   const emit = defineEmits(['register', 'close']);
   defineOptions({ name: 'InStoreModal' });
 
+  const formData = reactive({
+    trayNo: '',
+    boxId: '',
+  });
   const state = reactive({
     batchNo: '',
     queryFlow: void 0,
     inOut: void 0,
   });
   const bizScen = ref('');
-
-  const [registerForm, { clearValidate, setFieldsValue, getFieldsValue, resetFields }] = useForm({
-    labelWidth: 90,
-    baseColProps: { span: 24 },
-    schemas: [
-      { label: '托盘编号', component: 'Input', field: 'trayNo', required: true },
-      { label: '箱号', component: 'Input', field: 'boxId', required: true },
-    ],
-    showActionButtonGroup: false,
-    autoSubmitOnEnter: true,
-  });
+  const boxRef = ref();
+  const trayRef = ref();
 
   const [registerInModal, { openModal: openInModal }] = useModal();
   const [registerBindModal, { openModal }] = useModal();
@@ -130,17 +148,26 @@
   async function handleReBind() {
     openModal();
     await nextTick();
-    resetFields();
-    clearValidate();
+    formData.boxId = '';
+    formData.trayNo = '';
+    trayRef.value.$el.focus();
   }
 
+  const _submit = debounce(submit, 200);
+  function handleKeyUp(e) {
+    if (e.key === 'Enter') {
+      _submit();
+    }
+  }
   async function okFunction() {
-    await submit();
+    await _submit();
   }
   async function submit() {
-    const { boxId, trayNo } = getFieldsValue();
+    const { boxId, trayNo } = formData;
+    if (trayNo && !boxId) boxRef.value.$el.focus();
+    if (!boxId || !trayNo) return message.warning('请扫描' + (boxId ? '托盘' : '箱号'));
     await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind' });
-    setFieldsValue({ boxId: '', trayNo: '' });
+    formData.boxId = '';
     message.success('操作成功');
     reload();
   }
@@ -156,3 +183,18 @@
     return rows;
   }
 </script>
+<style scoped lang="scss">
+  .form-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+
+    .form-label {
+      width: 100px;
+      margin-right: 10px;
+      font-size: 16px;
+      text-align: right;
+    }
+  }
+</style>
