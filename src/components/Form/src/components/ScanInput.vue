@@ -27,12 +27,12 @@
         code.value = '';
       }, 100);
       const _enter = debounce(() => {
+        setTimeout(_update, 300);
         if (code.value.length < 2) {
           code.value = '';
           return;
         }
         emit('enter');
-        setTimeout(_update, 100);
       }, 100);
       const _reset = debounce(() => {
         time = 0;
