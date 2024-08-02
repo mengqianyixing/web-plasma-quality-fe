@@ -28,6 +28,13 @@
                 </a-button>
               </div>
             </template>
+            <template #action="{ record }">
+              <div class="z-999">
+                <a-button type="link" v-if="record.useStoring" @click.stop="goSort(record)"
+                  >分拣</a-button
+                >
+              </div>
+            </template>
             <template #toolbar>
               <a-button
                 @click="autoSorting"
@@ -60,7 +67,10 @@
   import { BasicTable, useTable, BasicColumn } from '@/components/Table';
   import dayjs from 'dayjs';
   import PlasmaDetail from './PlasmaDetail.vue';
-  import { getBatchInfo } from '@/api/stockout/production-sorting/production-sorting-main';
+  import {
+    getBatchInfo,
+    setSortingBatch,
+  } from '@/api/stockout/production-sorting/production-sorting-main';
   import { productionPMSTask } from '@/api/stockout/production-put-into';
   import { prepareStateMap, prepareStateValueEnum } from '@/enums/stockoutEnum';
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
@@ -141,12 +151,18 @@
         return `${prepareStateMap.get(text as prepareStateValueEnum)}`;
       },
     },
+    {
+      title: '操作',
+      dataIndex: 'action',
+      width: 120,
+      slots: { customRender: 'action' },
+    },
   ];
 
   const { createConfirm, createMessage } = useMessage();
   const { warning } = createMessage;
 
-  const [registerTable, { setProps, reload, getDataSource }] = useTable({
+  const [registerTable, { setProps, reload, getDataSource, setLoading }] = useTable({
     api: getBatchInfo,
     columns: columnsImmunity,
     useSearchForm: false,
@@ -209,5 +225,23 @@
   function manualSorting() {
     warning('暂无法转人工分拣!');
     return;
+  }
+
+  async function goSort(record) {
+    createConfirm({
+      title: '确认',
+      content: '请确认是否继续分拣？',
+      iconType: 'warning',
+      onOk: async () => {
+        try {
+          setLoading(true);
+          await setSortingBatch({ batchNo: record.batchNo, prepareNo: prepareNo.value });
+          createMessage.success('操作成功');
+          reload();
+        } finally {
+          setLoading(false);
+        }
+      },
+    });
   }
 </script>

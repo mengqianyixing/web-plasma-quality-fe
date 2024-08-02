@@ -57,7 +57,6 @@
       title: '血浆箱号',
       dataIndex: 'boxNo',
       width: 180,
-      sorter: true,
     },
     {
       title: '装箱类型',
