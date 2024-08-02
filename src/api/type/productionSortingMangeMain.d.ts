@@ -254,10 +254,10 @@ export type GetApiProductPrepareTrayOutResponse = {
  * 接口 [分拣批次信息查询↗](https://yapi.sharing8.cn/project/529/interface/api/32867) 的 **请求类型**
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
- * @请求头 `GET /api/product/prepare/sorting/batch-info`
- * @更新时间 `2024-02-04 15:58:01`
+ * @请求头 `GET /api/product/prepare/sorting/batch`
+ * @更新时间 `2024-08-01 18:09:56`
  */
-export interface GetApiProductPrepareSortingBatchInfoRequest {
+export interface GetApiProductPrepareSortingBatchRequest {
   prepareNo: string;
   currPage: string;
   pageSize: string;
@@ -267,10 +267,10 @@ export interface GetApiProductPrepareSortingBatchInfoRequest {
  * 接口 [分拣批次信息查询↗](https://yapi.sharing8.cn/project/529/interface/api/32867) 的 **返回类型**
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
- * @请求头 `GET /api/product/prepare/sorting/batch-info`
- * @更新时间 `2024-02-04 15:58:01`
+ * @请求头 `GET /api/product/prepare/sorting/batch`
+ * @更新时间 `2024-08-01 18:09:56`
  */
-export interface GetApiProductPrepareSortingBatchInfoResponse {
+export interface GetApiProductPrepareSortingBatchResponse {
   totalCount?: number;
   pageSize?: number;
   totalPage?: number;
@@ -288,6 +288,10 @@ export interface GetApiProductPrepareSortingBatchInfoResponse {
      *   RUN, //准备中     REV, //待复核     TPK, //待分拣     RPK, //分拣中     CPK, //已分拣     OUT, //已出库     DEL  //已取消
      */
     state?: string;
+    /**
+     * 当前用户可设置分拣中
+     */
+    useStoring?: boolean;
   }[];
 }
 
@@ -1129,5 +1133,26 @@ export interface PostApiProductPrepareSortingTaskRequest {
  * @更新时间 `2024-06-05 16:55:39`
  */
 export interface PostApiProductPrepareSortingTaskResponse {}
+
+/**
+ * 接口 [设置分拣中批次,继续分拣↗](https://yapi.sharing8.cn/project/529/interface/api/36309) 的 **请求类型**
+ *
+ * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
+ * @请求头 `POST /api/product/prepare/commit/set/sorting/batch/{prepareNo}/{batchNo}`
+ * @更新时间 `2024-08-01 18:11:53`
+ */
+export interface PostApiProductPrepareCommitSetSortingBatchPrepareNoBatchNoRequest {
+  prepareNo: string;
+  batchNo: string;
+}
+
+/**
+ * 接口 [设置分拣中批次,继续分拣↗](https://yapi.sharing8.cn/project/529/interface/api/36309) 的 **返回类型**
+ *
+ * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
+ * @请求头 `POST /api/product/prepare/commit/set/sorting/batch/{prepareNo}/{batchNo}`
+ * @更新时间 `2024-08-01 18:11:53`
+ */
+export interface PostApiProductPrepareCommitSetSortingBatchPrepareNoBatchNoResponse {}
 
 /* prettier-ignore-end */
