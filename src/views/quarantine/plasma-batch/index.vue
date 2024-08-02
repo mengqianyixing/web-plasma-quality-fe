@@ -178,7 +178,7 @@
     getSelections(true, ([row]) => {
       createConfirm({
         iconType: 'warning',
-        content: '确认' + title + '?',
+        content: '确认' + title + row.fkBpNo + '?',
         onOk: async () => {
           setPlasmaBatchRelease({
             brNo: row.brNo,

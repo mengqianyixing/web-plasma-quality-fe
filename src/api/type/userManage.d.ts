@@ -469,7 +469,7 @@ export type PostApiSysUsersByUserIdsResponse = {
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `POST /api/sys/casdoor/all-users`
- * @更新时间 `2024-07-31 17:45:08`
+ * @更新时间 `2024-08-01 09:50:27`
  */
 export interface PostApiSysCasdoorAllUsersRequest {
   userIds?: string[];
@@ -480,7 +480,7 @@ export interface PostApiSysCasdoorAllUsersRequest {
  *
  * @分类 [用户管理↗](https://yapi.sharing8.cn/project/521/interface/api/cat_4376)
  * @请求头 `POST /api/sys/casdoor/all-users`
- * @更新时间 `2024-07-31 17:45:08`
+ * @更新时间 `2024-08-01 09:50:27`
  */
 export type PostApiSysCasdoorAllUsersResponse = {
   owner?: string;

@@ -34,6 +34,8 @@ import {
   PostApiCoreBankDeliverSamplePickResponse,
   PostApiCoreBankDeliverSampleRequest,
   PostApiCoreBankDeliverSampleResponse,
+  PostApiCoreBankDeliverSampleScanBatchRequest,
+  PostApiCoreBankDeliverSampleScanBatchResponse,
   PostApiCoreBankDeliverSampleScanRequest,
   PostApiCoreBatchSampleAcceptKeepPackRequest,
   PostApiCoreBatchSampleAcceptKeepPackResponse,
@@ -69,6 +71,7 @@ enum Api {
   REVOKE_KEEP_PACK = '/api/core/batch/sample/accept/keep-pack/revoke',
   BATCH_KEEP_PACK = '/api/core/batch/sample/accept/keep-pack/batches',
   ACCEPT_FINISH = '/api/core/batch/sample/accept/keep-pack/finish',
+  OUT_BAND_BY_BATCH = '/api/core/bank/deliver/sample/scan-batch',
 }
 
 export const getReserveSampleList = (params: GetApiCoreBankDeliverSampleRequest) =>
@@ -269,5 +272,11 @@ export const getKeepPackDetail = (
 export const acceptComplete = (params: PutApiCoreBatchSampleAcceptKeepPackFinishRequest) =>
   defHttp.put<PutApiCoreBatchSampleAcceptKeepPackFinishRequest>({
     url: Api.ACCEPT_FINISH,
+    params,
+  });
+
+export const outBandByBatch = (params: PostApiCoreBankDeliverSampleScanBatchRequest) =>
+  defHttp.post<PostApiCoreBankDeliverSampleScanBatchResponse>({
+    url: Api.OUT_BAND_BY_BATCH,
     params,
   });

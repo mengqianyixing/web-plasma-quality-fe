@@ -7,17 +7,19 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './data';
   import { PageWrapper } from '@/components/Page';
+  import { message } from 'ant-design-vue';
   import { getListApi } from '@/api/query-statistics/titerPlasmaStat';
   import { isArray, isObject } from '@/utils/is';
   import { GetApiSearchPlasmaPrivilegeCountResponse } from '@/api/type/queryStatistics';
 
   defineOptions({ name: 'TiterPlasmaStat' });
 
-  const [registerTable] = useTable({
+  const [registerTable, { getForm, reload }] = useTable({
     api: getListApi,
     columns,
     formConfig: {
       schemas: searchFormSchema,
+      submitFunc,
     },
     pagination: false,
     size: 'small',
@@ -68,6 +70,18 @@
     });
 
     return { ...row, stationName: '合计', rawImm: '--' };
+  }
+  function submitFunc() {
+    if (getFormIsNotNull()) {
+      reload();
+      return Promise.resolve();
+    }
+    message.warning('请选择或输入条件进行查询');
+    return Promise.reject();
+  }
+  function getFormIsNotNull() {
+    const values = getForm().getFieldsValue();
+    return Object.values(values).some((v) => v || v === 0);
   }
 </script>
 <style scoped lang="less">

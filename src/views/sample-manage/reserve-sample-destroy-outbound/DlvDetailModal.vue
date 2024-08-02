@@ -6,7 +6,9 @@
     width="80%"
     :min-height="650"
     showFooter
-    :showOkBtn="false"
+    :showOkBtn="showOkBtn"
+    @ok="handleOk"
+    okText="出库"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
@@ -37,10 +39,11 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { Tabs } from 'ant-design-vue';
 
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
   import {
     getDeliverSampleDetail,
     getDeliverSampleDetailByBag,
+    outBandByBatch,
   } from '@/api/sample-manage/reserve-sample-destory';
 
   import {
@@ -48,6 +51,10 @@
     requisitionDetailByBatch,
     searchFormSchema,
   } from '@/views/sample-manage/reserve-sample-destroy-outbound/reserve.data';
+  import { useMessage } from '@/hooks/web/useMessage';
+  import { GetApiCoreBankDeliverSampleDetailResponse } from '@/api/type/sampleManage';
+
+  const { createMessage, createConfirm } = useMessage();
 
   defineEmits(['success', 'register']);
 
@@ -98,9 +105,14 @@
     });
   });
 
-  const [registerBatchTable] = useTable({
+  const selectedRow = ref<GetApiCoreBankDeliverSampleDetailResponse>([]);
+  const [registerBatchTable, { clearSelectedRowKeys, reload }] = useTable({
     api: getDeliverSampleDetail,
     columns: requisitionDetailByBatch,
+    afterFetch: (data) => {
+      clearSelectedRowKeys();
+      return data;
+    },
     beforeFetch: (params) => {
       return {
         ...params,
@@ -108,6 +120,18 @@
       };
     },
     size: 'small',
+    clickToRowSelect: true,
+    rowSelection: {
+      type: 'checkbox',
+      onChange: (_, selectedRows: any) => {
+        selectedRow.value = selectedRows;
+      },
+      getCheckboxProps: (record) => {
+        return {
+          disabled: record.state !== '未出库',
+        };
+      },
+    },
     useSearchForm: false,
     showTableSetting: false,
     bordered: true,
@@ -155,6 +179,30 @@
     inset: true,
     isCanResizeParent: true,
   });
+
+  const showOkBtn = computed(() => currentKey.value === 'batch');
+  async function handleOk() {
+    if (!selectedRow.value.length) {
+      createMessage.warn('请选择要出库的批次');
+      return;
+    }
+
+    createConfirm({
+      title: '确认',
+      content: '确定要出库？',
+      iconType: 'warning',
+      onOk: async () => {
+        await outBandByBatch({
+          dlvNo: dlvNo.value,
+          sampleBatchNos: selectedRow.value.map((item) => item?.batchNo),
+        });
+
+        createMessage.success('出库成功');
+
+        await reload();
+      },
+    });
+  }
 </script>
 <style scoped>
   .tabs :deep(.ant-tabs-content) {

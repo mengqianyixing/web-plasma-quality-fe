@@ -124,7 +124,7 @@ export const plasmaBoxScanColumns: (isBinding: boolean) => BasicColumn[] = (isBi
     ellipsis: false,
   },
   {
-    title: '目标托盘',
+    title: isBinding ? '目标托盘' : '托盘编号',
     dataIndex: 'trayNo',
     width: 140,
   },

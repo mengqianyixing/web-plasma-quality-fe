@@ -13,7 +13,7 @@
         <a-button type="primary" @click="handleCreate" v-auth="StoreButtonEnum.StoreSettingAdd">
           新增
         </a-button>
-        <a-button type="primary" @click="handleUpdate" v-auth="StoreButtonEnum.StoreSettingAdd">
+        <a-button type="primary" @click="handleUpdate" v-auth="StoreButtonEnum.StoreSettingUpdate">
           编辑
         </a-button>
 
