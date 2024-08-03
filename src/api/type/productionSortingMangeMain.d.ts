@@ -1138,10 +1138,10 @@ export interface PostApiProductPrepareSortingTaskResponse {}
  * 接口 [设置分拣中批次,继续分拣↗](https://yapi.sharing8.cn/project/529/interface/api/36309) 的 **请求类型**
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
- * @请求头 `POST /api/product/prepare/commit/set/sorting/batch/{prepareNo}/{batchNo}`
- * @更新时间 `2024-08-01 18:11:53`
+ * @请求头 `POST /api/product/prepare/set/sorting/batch/{prepareNo}/{batchNo}`
+ * @更新时间 `2024-08-03 14:07:04`
  */
-export interface PostApiProductPrepareCommitSetSortingBatchPrepareNoBatchNoRequest {
+export interface PostApiProductPrepareSetSortingBatchPrepareNoBatchNoRequest {
   prepareNo: string;
   batchNo: string;
 }
@@ -1150,9 +1150,9 @@ export interface PostApiProductPrepareCommitSetSortingBatchPrepareNoBatchNoReque
  * 接口 [设置分拣中批次,继续分拣↗](https://yapi.sharing8.cn/project/529/interface/api/36309) 的 **返回类型**
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
- * @请求头 `POST /api/product/prepare/commit/set/sorting/batch/{prepareNo}/{batchNo}`
- * @更新时间 `2024-08-01 18:11:53`
+ * @请求头 `POST /api/product/prepare/set/sorting/batch/{prepareNo}/{batchNo}`
+ * @更新时间 `2024-08-03 14:07:04`
  */
-export interface PostApiProductPrepareCommitSetSortingBatchPrepareNoBatchNoResponse {}
+export interface PostApiProductPrepareSetSortingBatchPrepareNoBatchNoResponse {}
 
 /* prettier-ignore-end */

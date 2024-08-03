@@ -30,8 +30,8 @@ import {
   PostApiProductPrepareSortingBatchPauseResponse,
   PostApiProductPrepareSortingPreparePauseRequest,
   PostApiProductPrepareSortingPreparePauseResponse,
-  PostApiProductPrepareCommitSetSortingBatchPrepareNoBatchNoRequest,
-  PostApiProductPrepareCommitSetSortingBatchPrepareNoBatchNoResponse,
+  PostApiProductPrepareSetSortingBatchPrepareNoBatchNoRequest,
+  PostApiProductPrepareSetSortingBatchPrepareNoBatchNoResponse,
 } from '@/api/type/productionSortingMangeMain';
 
 enum Api {
@@ -53,7 +53,7 @@ enum Api {
   BATCH_PAUSE = '/api/product/prepare/sorting/batch/pause',
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   PREPARE_PAUSE = '/api/product/prepare/sorting/prepare/pause',
-  SET_SORTING_BATCH = '/api/product/prepare/commit/set/sorting/batch',
+  SET_SORTING_BATCH = '/api/product/prepare/set/sorting/batch',
 }
 
 // 分拣批次信息
@@ -183,9 +183,9 @@ export const preparePause = (params: PostApiProductPrepareSortingPreparePauseReq
 
 // 血浆分拣-设置分拣中批次,继续分拣
 export const setSortingBatch = (
-  params: PostApiProductPrepareCommitSetSortingBatchPrepareNoBatchNoRequest,
+  params: PostApiProductPrepareSetSortingBatchPrepareNoBatchNoRequest,
 ) => {
-  return defHttp.post<PostApiProductPrepareCommitSetSortingBatchPrepareNoBatchNoResponse>({
+  return defHttp.post<PostApiProductPrepareSetSortingBatchPrepareNoBatchNoResponse>({
     url: `${Api.SET_SORTING_BATCH}/${params.prepareNo}/${params.batchNo}`,
   });
 };

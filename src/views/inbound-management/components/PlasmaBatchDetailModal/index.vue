@@ -58,12 +58,6 @@
 
   const [register, { closeModal }] = useModalInner(async (data) => {
     record.value = data.record;
-    updateSchema([
-      { field: 'batchNo', rules: [{ validator }] },
-      { field: 'bagNo', rules: [{ validator }] },
-      { field: 'nowBoxNo', rules: [{ validator }] },
-      { field: 'stationBoxNo', rules: [{ validator }] },
-    ]);
     await setFieldsValue({
       stationName: data.record.stationName,
       batchNo: data.record.batchNo,
@@ -72,13 +66,6 @@
     });
     await _getPlasmaBag({ ...getFieldsValue() });
   });
-  function validator() {
-    const obj = getFieldsValue();
-    if (!obj.batchNo && !obj.bagNo && !obj.nowBoxNo && !obj.stationBoxNo) {
-      return Promise.reject('请最少填入一项！');
-    }
-    return Promise.resolve();
-  }
 
   const gridOptions = reactive<VxeGridProps<any>>({
     border: true,
@@ -111,7 +98,7 @@
     showFooter: false,
   });
 
-  const [registerForm, { setFieldsValue, getFieldsValue, resetFields, updateSchema }] = useForm({
+  const [registerForm, { setFieldsValue, getFieldsValue, resetFields }] = useForm({
     labelWidth: 100,
     baseColProps: { flex: '0 1 285px' },
     actionColOptions: { flex: '0 1 200px' },
