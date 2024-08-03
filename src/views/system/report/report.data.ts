@@ -98,6 +98,12 @@ export const formSchema: FormSchema[] = [
     label: '版本号',
   },
   {
+    field: 'creator',
+    component: 'Input',
+    label: '起草人',
+    required: true,
+  },
+  {
     field: 'effectiveDate',
     component: 'DatePicker',
     label: '生效日期',
