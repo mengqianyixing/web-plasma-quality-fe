@@ -78,7 +78,7 @@
   const prepareNo = ref(''); // 准备号
   const selectedRow = ref([]); // 表格已选中
 
-  const [registerModal] = useModalInner(async (data) => {
+  const [registerModal, { closeModal }] = useModalInner(async (data) => {
     prepareNo.value = data.record.prepareNo;
     if (data.record.prepareState !== 'RUN') {
       const cols = [...columnsImmunity];
@@ -190,7 +190,7 @@
   });
 
   // 血浆明细
-  const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal, closeModal }] = useModal();
+  const [registerPlasmaDetailModal, { openModal: openPlasmaDetailModal }] = useModal();
   function goPlasmaDetail(record, sort?) {
     openPlasmaDetailModal(true, {
       record: {
@@ -237,10 +237,8 @@
           setLoading(true);
           await setSortingBatch({ batchNo: record.batchNo, prepareNo: prepareNo.value });
           createMessage.success('操作成功');
-          setTimeout(() => {
-            emit('success');
-            closeModal();
-          }, 1000);
+          emit('success');
+          closeModal();
         } finally {
           setLoading(false);
         }
