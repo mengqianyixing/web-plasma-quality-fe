@@ -201,7 +201,7 @@
       label: '血浆净重(kg)',
       contentMinWidth: 100,
       render(val, data) {
-        return <div>{data.summary.netWeight}</div>;
+        return <div>{data.summary.netWeight === 0 ? 0 : data.summary.netWeight.toFixed(3)}</div>;
       },
     },
     {
@@ -245,7 +245,15 @@
       label: '平均效价值',
       contentMinWidth: 100,
       render(val, data) {
-        return <div>{data.prodType === 'N' ? 'N/A' : data.summary.avgTiter.toFixed(3)}</div>;
+        return (
+          <div>
+            {data.prodType === 'N'
+              ? 'N/A'
+              : data.summary.avgTiter === 0
+                ? 0
+                : data.summary.avgTiter.toFixed(3)}
+          </div>
+        );
       },
     },
     {
