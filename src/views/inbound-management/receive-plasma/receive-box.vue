@@ -191,23 +191,17 @@
       };
       try {
         tableLoading.value = true;
-        const res = await acceptPlasma(params);
-        const data = res.data.data;
-        if (res.data.code !== '0' && res.data.msg) {
-          createWarningModal({
-            title: '提示',
-            content: res.data.msg,
-            keyboard: false,
-            wrapClassName: 'rpbat9527',
-          });
-          const dom: HTMLElement | null = document.querySelector('.rpbat9527 button');
+        const focusedElement = document.activeElement as InputHTMLElement;
+        const data = await acceptPlasma(params, () => {
           setTimeout(() => {
-            dom?.blur();
-          });
-          return;
-        }
+            focusedElement.focus();
+            focusedElement.select();
+          }, 300);
+        });
+
         if (data) {
           success('接收成功!');
+          boxNo.value = '';
           batchNo.value = data.batchNo;
           filterForm.value = data;
           if (data.acceptDetail?.unAcceptCount <= 0) {
@@ -217,10 +211,7 @@
         }
       } finally {
         tableLoading.value = false;
-        boxNo.value = '';
-        await nextTick(() => {
-          boxNoRef.value.$el.focus();
-        });
+        nextTick(boxNoRef.value.$el.focus);
       }
     }
   }
