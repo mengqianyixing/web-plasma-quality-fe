@@ -1,5 +1,12 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="registerModal" showFooter width="500px" @ok="handleSubmit">
+  <BasicModal
+    v-bind="$attrs"
+    @register="registerModal"
+    showFooter
+    width="500px"
+    title="不合格登记"
+    @ok="handleSubmit"
+  >
     <BasicForm @register="registerForm" @submit="handleSubmit" />
 
     <LoginModal

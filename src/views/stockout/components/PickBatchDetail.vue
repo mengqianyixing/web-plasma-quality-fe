@@ -55,7 +55,6 @@
         </div></div
       ></div
     >
-
     <PlasmaDetail @register="registerPlasmaDetailModal" />
   </BasicModal>
 </template>
@@ -75,10 +74,11 @@
   import { prepareStateMap, prepareStateValueEnum } from '@/enums/stockoutEnum';
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
 
+  const emit = defineEmits(['success']);
   const prepareNo = ref(''); // 准备号
   const selectedRow = ref([]); // 表格已选中
 
-  const [registerModal] = useModalInner(async (data) => {
+  const [registerModal, { closeModal }] = useModalInner(async (data) => {
     prepareNo.value = data.record.prepareNo;
     if (data.record.prepareState !== 'RUN') {
       const cols = [...columnsImmunity];
@@ -237,7 +237,8 @@
           setLoading(true);
           await setSortingBatch({ batchNo: record.batchNo, prepareNo: prepareNo.value });
           createMessage.success('操作成功');
-          reload();
+          emit('success');
+          closeModal();
         } finally {
           setLoading(false);
         }

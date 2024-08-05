@@ -101,7 +101,13 @@
       const { bagNo } = formData;
       if (!bagNo) return createMessage.warning('请扫描');
       setModalProps({ confirmLoading: true });
-      await nonconformityPick({ ...values, bagNo } as PostApiCoreBagUnqualifiedPickRequest);
+      const focusedElement = document.activeElement as InputHTMLElement;
+      await nonconformityPick({ ...values, bagNo } as PostApiCoreBagUnqualifiedPickRequest, () => {
+        setTimeout(() => {
+          focusedElement.focus();
+          focusedElement.select();
+        }, 300);
+      });
       createMessage.success('挑浆成功');
       formData.bagNo = '';
     } catch (e) {

@@ -51,7 +51,6 @@
   import { BasicTable, useTable } from '@/components/Table';
   import { scanApi, scanedApi, notScanApi } from '@/api/nonconformity/plasmaOut';
   import { reactive, ref } from 'vue';
-  import { useMessage } from '@/hooks/web/useMessage';
   import { debounce } from 'lodash-es';
   import ScanInput from '@/components/Form/src/components/ScanInput.vue';
 
@@ -60,7 +59,6 @@
   const state = reactive({ no: '' });
   const formData = reactive({ bagNo: '' });
   const bagNoRef = ref();
-  const { createWarningModal } = useMessage();
 
   const [
     registerLeftTable,
@@ -119,26 +117,15 @@
   }
   async function handleSubmit() {
     const { bagNo } = formData;
-    const res = await scanApi({ bagNo, no: state.no });
-    const focusedElement = document.activeElement as HTMLElement;
-    focusedElement?.blur();
-    if (res.data.code !== '0' && res.data.msg) {
-      createWarningModal({
-        title: '提示',
-        content: res.data.msg,
-        keyboard: false,
-        wrapClassName: 'npppo9527',
-        onOk: () => {
-          focusedElement?.focus();
-        },
-      });
-      const dom: HTMLElement | null = document.querySelector('.npppo9527 button');
+    const focusedElement = document.activeElement as InputHTMLElement;
+
+    await scanApi({ bagNo, no: state.no }, () => {
       setTimeout(() => {
-        dom?.blur();
-      });
-      return;
-    }
-    focusedElement?.focus();
+        focusedElement.focus();
+        focusedElement.select();
+      }, 300);
+    });
+    focusedElement.focus();
     formData.bagNo = '';
     reloadLeft();
     reloadRight();

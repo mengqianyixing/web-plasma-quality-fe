@@ -81,8 +81,8 @@ export const processApi = (data: PutApiCoreBankPreviewReviewNoRequest) =>
 export const unProcessApi = (data: PutApiCoreBankPreviewReviewRevokeRequest) =>
   defHttp.put<PutApiCoreBankPreviewReviewRevokeResponse>({ url: Api.UN_PROCESS, data });
 
-export const scanApi = (data: PostApiCoreBankDeliverDetailOutRequest) =>
-  defHttp.post({ url: Api.SCAN, data }, { isReturnNativeResponse: true });
+export const scanApi = (data: PostApiCoreBankDeliverDetailOutRequest, errOkCb?: () => void) =>
+  defHttp.post({ url: Api.SCAN, data }, { errorMessageModeOkCb: errOkCb });
 
 export const notScanApi = (data: PostApiCoreBankDeliverPlasmaSelectedNotOutRequest) =>
   defHttp.post<PostApiCoreBankDeliverPlasmaSelectedNotOutResponse>({ url: Api.NOT_SCAN, data });

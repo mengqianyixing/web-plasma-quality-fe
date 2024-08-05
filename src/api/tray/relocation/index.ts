@@ -48,11 +48,17 @@ export const submitRelocationApi = (params: PostApiCoreBankTrayWarehouseMoveRequ
     params,
   });
 
-export const bindBoxApi = (params: PostApiCoreBankTrayBoxRequest) =>
-  defHttp.post<PostApiCoreBankTrayBoxResponse>({ url: '/api/core/bank/tray/box', params });
+export const bindBoxApi = (params: PostApiCoreBankTrayBoxRequest, errOkCb?: () => void) =>
+  defHttp.post<PostApiCoreBankTrayBoxResponse>(
+    { url: '/api/core/bank/tray/box', params },
+    { errorMessageModeOkCb: errOkCb },
+  );
 
-export const bindVerifyBoxApi = (params: PostApiCoreBankTrayBoxRequest) =>
-  defHttp.post<PostApiCoreBankTrayBoxResponse>({ url: '/api/core/bank/tray/box/verify', params });
+export const bindVerifyBoxApi = (params: PostApiCoreBankTrayBoxRequest, errOkCb: () => void) =>
+  defHttp.post<PostApiCoreBankTrayBoxResponse>(
+    { url: '/api/core/bank/tray/box/verify', params },
+    { errorMessageModeOkCb: errOkCb },
+  );
 
 export const taryHouseApi = ({ trayNo }: GetApiCoreBankWarehouseTrayTrayNoRequest) =>
   defHttp.get<GetApiCoreBankWarehouseTrayTrayNoResponse>({

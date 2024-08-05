@@ -44,13 +44,16 @@
     </div>
     <PrepareModal @register="registerPrepareModal" @success="prepareModalSuccess" />
     <PackingInfoModal @register="registerPackingInfoModal" />
-    <PickBatchDetail @register="registerPickBatchDetailModal" />
+    <PickBatchDetail @register="registerPickBatchDetailModal" @success="_prepareSuspendSuccess" />
     <PlasmaDetail @register="registerPlasmaDetailModal" />
     <InStoreModal @register="registerInStoreModal" />
     <OutStoreModal @register="registerOutStoreModal" />
     <UnqualifiedModal @register="registerUnqualifiedModal" @success="handleUnqualifiedSuccess" />
-    <PrepareSuspendModal @register="registerPrepareSuspendModal" @success="PrepareSuspendSuccess" />
-    <BatchSuspendModal @register="registerBatchSuspendModal" @success="PrepareSuspendSuccess" />
+    <PrepareSuspendModal
+      @register="registerPrepareSuspendModal"
+      @success="_prepareSuspendSuccess"
+    />
+    <BatchSuspendModal @register="registerBatchSuspendModal" @success="_prepareSuspendSuccess" />
   </PageWrapper>
 </template>
 
@@ -637,11 +640,11 @@
                 // _sortingBoxSealing(targetBox, true);
                 // 走打印逻辑
                 printBox(data.newBoxNo, labelType);
-                prepareModalSuccess({ prepareNo: prepareNo.value, pickMode });
+                _prepareSuspendSuccess();
               },
               onCancel() {
                 console.log('Cancel');
-                prepareModalSuccess({ prepareNo: prepareNo.value, pickMode });
+                _prepareSuspendSuccess();
               },
               class: 'test',
             });
@@ -693,7 +696,7 @@
         // 走打印逻辑 只有可投产才有整箱分拣的逻辑
         printBox(res, 'SAMPLE_BOX_1');
         // 请求总览数据
-        prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+        _prepareSuspendSuccess();
       } finally {
         boxNo.value = '';
         closeFullLoading();
@@ -962,7 +965,7 @@
           console.log('合箱成功:', res);
           success('合箱成功!');
           // 请求总览数据
-          await prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+          await _prepareSuspendSuccess();
         } finally {
           closeFullLoading();
         }
@@ -1028,7 +1031,7 @@
 
         printBox(res, labelType);
         // 请求总览数据
-        prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+        _prepareSuspendSuccess();
       } finally {
         closeFullLoading();
       }
@@ -1141,8 +1144,8 @@
     });
   }
   // 刷新页面数据
-  function PrepareSuspendSuccess() {
-    prepareModalSuccess({ prepareNo: prepareNo.value, pickMode: pickMode });
+  async function _prepareSuspendSuccess() {
+    await prepareModalSuccess({ prepareNo: prepareNo.value, pickMode });
   }
 
   // 批号暂停

@@ -46,11 +46,14 @@ export const getBatchSummary = (params: GetApiCoreBatchSummaryRequest) => {
 };
 
 // 血浆接收
-export const acceptPlasma = (params: PostApiCoreBatchPlasmaAcceptBoxRequest) => {
+export const acceptPlasma = (
+  params: PostApiCoreBatchPlasmaAcceptBoxRequest,
+  errOkCb: () => void,
+) => {
   return defHttp.post(
     { url: Api.AcceptPlasma, params },
     {
-      isReturnNativeResponse: true,
+      errorMessageModeOkCb: errOkCb,
     },
   );
 };

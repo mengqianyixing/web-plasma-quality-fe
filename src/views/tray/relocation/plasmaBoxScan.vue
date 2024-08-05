@@ -83,15 +83,22 @@
   });
   async function submit() {
     const { boxId, trayNo } = formData;
-    const focusedElement = document.activeElement as HTMLElement;
-    focusedElement.blur();
+    const focusedElement = document.activeElement as InputHTMLElement;
     try {
-      await bindBoxApi({
-        trayNo: trayNo,
-        type: props.isBinding ? 'bind' : 'unbind',
-        boxes: [boxId],
-        bizScen: 'scanBox',
-      });
+      await bindBoxApi(
+        {
+          trayNo: trayNo,
+          type: props.isBinding ? 'bind' : 'unbind',
+          boxes: [boxId],
+          bizScen: 'scanBox',
+        },
+        () => {
+          setTimeout(() => {
+            focusedElement.focus();
+            focusedElement.select();
+          }, 300);
+        },
+      );
       formData.boxId = '';
       reload();
     } finally {
@@ -105,6 +112,7 @@
   }
   const _submit = debounce(handleSubmit, 200);
   function handleKeyUp(e) {
+    console.log('?>>>>.');
     if (e.key === 'Enter') {
       _submit();
     }

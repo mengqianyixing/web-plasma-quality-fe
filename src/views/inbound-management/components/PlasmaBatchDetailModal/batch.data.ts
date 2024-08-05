@@ -34,7 +34,8 @@ export const columns = [
   {
     title: '浆员名称',
     field: 'donorName',
-    width: 100,
+    width: 80,
+    className: 'no-ellipsis',
   },
   {
     title: '性别',
@@ -60,12 +61,14 @@ export const columns = [
   {
     title: '验收人',
     field: 'verifyUser',
-    width: 100,
+    width: 80,
+    className: 'no-ellipsis',
   },
   {
     title: '复核人',
     field: 'checker',
-    width: 100,
+    width: 80,
+    className: 'no-ellipsis',
   },
   {
     title: '验收时间',
@@ -77,18 +80,18 @@ export const columns = [
     title: '验收状态',
     field: 'verifyState',
     slots: { default: 'verifyState' },
-    width: 100,
+    width: 80,
   },
   {
     title: '血浆验收结果',
     field: 'bagResult',
-    width: 160,
+    width: 250,
     className: 'no-ellipsis',
   },
   {
     title: '样本验收结果',
     field: 'sampleResult',
-    width: 160,
+    width: 250,
     className: 'no-ellipsis',
   },
 ];
