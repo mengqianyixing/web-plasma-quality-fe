@@ -126,7 +126,7 @@ export const searchFormschema: FormSchema[] = [
   },
 
   {
-    field: 'state',
+    field: 'states',
     component: 'Select',
     label: '样本状态',
     defaultValue: serverEnumStore
