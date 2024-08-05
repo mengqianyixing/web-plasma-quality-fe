@@ -15,6 +15,7 @@
     @cancel="emit('close')"
     :minHeight="600"
     @fullscreen="redoHeight"
+    :footer="null"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">
       <div class="flex-1 w-full">
