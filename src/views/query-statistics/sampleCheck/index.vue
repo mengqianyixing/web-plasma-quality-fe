@@ -113,22 +113,23 @@
   ) {
     const type = isArray(key) ? key[0] + key[1].slice(0, 1).toUpperCase() + key[1].slice(1) : key;
     const values = getForm().getFieldsValue();
+
     openModal2(true, {
       type,
       title,
       failedCode,
-      sampleType: record.sampleType === '--' ? void 0 : record.sampleType,
-      stationNo: record.sampleType === '--' ? void 0 : record.stationNo,
       ...values,
+      sampleType: record.sampleType === '--' ? values.sampleType : record.sampleType,
+      stationNo: record.sampleType === '--' ? values.stationNo : record.stationNo,
     });
   }
   function cellClick3(record: Recordable) {
     const values = getForm().getFieldsValue();
 
     openModal3(true, {
-      sampleType: record.sampleType === '--' ? void 0 : record.sampleType,
-      stationNo: record.sampleType === '--' ? void 0 : record.stationNo,
       ...values,
+      sampleType: record.sampleType === '--' ? values.sampleType : record.sampleType,
+      stationNo: record.sampleType === '--' ? values.stationNo : record.stationNo,
     });
   }
   function getCountRow(data: Recordable[]) {
