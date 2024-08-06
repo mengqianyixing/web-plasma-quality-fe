@@ -5404,4 +5404,61 @@ export interface GetApiSearchBankPlasmaStatisticStockTotalResponse {
   verifyWeight?: number;
 }
 
+/**
+ * 接口 [回访统计合计↗](https://yapi.sharing8.cn/project/529/interface/api/36453) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/donor/callback-count/total`
+ * @更新时间 `2024-08-06 14:34:20`
+ */
+export interface GetApiSearchDonorCallbackCountTotalRequest {
+  /**
+   * 采浆公司
+   */
+  stationNo?: string;
+  /**
+   * 回访发布日期起
+   */
+  pubStartDate?: string;
+  /**
+   * 回访发布日期止
+   */
+  pubEndDate?: string;
+  /**
+   * 回访日期起
+   */
+  callbackStartDate?: string;
+  /**
+   * 回访日期止
+   */
+  callbackEndDate?: string;
+  /**
+   * 回访样本检测发布日期起
+   */
+  samplePubStartDate?: string;
+  /**
+   * 回访样本检测发布日期止
+   */
+  samplePubEndDate?: string;
+  pageSize: string;
+  currPage: string;
+}
+
+/**
+ * 接口 [回访统计合计↗](https://yapi.sharing8.cn/project/529/interface/api/36453) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/donor/callback-count/total`
+ * @更新时间 `2024-08-06 14:34:20`
+ */
+export interface GetApiSearchDonorCallbackCountTotalResponse {
+  totalNum?: number;
+  recoverNum?: number;
+  sampleNum?: number;
+  failedNum?: number;
+  endNum?: number;
+  passPlasmaNum?: number;
+  canPassPlasmaNum?: number;
+}
+
 /* prettier-ignore-end */

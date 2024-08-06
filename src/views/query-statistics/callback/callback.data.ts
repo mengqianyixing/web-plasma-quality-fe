@@ -5,6 +5,10 @@ import { useStation } from '@/hooks/common/useStation';
 const { stationOptions } = useStation();
 export const columns: BasicColumn[] = [
   {
+    title: '序号',
+    dataIndex: 'index',
+  },
+  {
     title: '采浆公司',
     dataIndex: 'stationName',
   },

@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight>
+  <PageWrapper dense contentFullHeight fixedHeight class="root">
     <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button
@@ -12,19 +12,43 @@
         </a-button>
       </template>
     </BasicTable>
+
+    <div class="flex justify-end h-46px bg-white pr-16px p-4px" v-if="pagerLeft.total > 0">
+      <a-pagination
+        class="mt-2"
+        @change="handlePageChange"
+        @show-size-change="handleSizeChange"
+        size="small"
+        show-size-changer
+        show-quick-jumper
+        v-model:current="pagerLeft.current"
+        v-model:pageSize="pagerLeft.pageSize"
+        :total="pagerLeft.total"
+        :show-total="(total) => `共 ${total} 条数据`"
+      />
+    </div>
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './callback.data';
   import { PageWrapper } from '@/components/Page';
-  import { getCallbackStatisticList } from '@/api/query-statistics/callback';
+  import {
+    getCallbackStatisticList,
+    getTotalCallbackStatistic,
+  } from '@/api/query-statistics/callback';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
-  import { ref } from 'vue';
+  import { reactive, ref, watch } from 'vue';
   import { SearchManager } from '@/enums/authCodeEnum';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
-  import { message } from 'ant-design-vue';
+  import { message, Pagination as APagination } from 'ant-design-vue';
+  import { PositionType } from 'ant-design-vue/es/image/style';
+  import {
+    GetApiSearchDonorCallbackCountTotalRequest,
+    GetApiSearchDonorCallbackCountTotalResponse,
+  } from '@/api/type/queryStatistics';
+  import { debounce } from 'lodash-es';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -32,11 +56,87 @@
 
   const { currentRoute } = useRouter();
 
-  const [registerTable, { getForm }] = useTable({
+  const totalData = ref<GetApiSearchDonorCallbackCountTotalResponse>({});
+  const pagerLeft = reactive({
+    current: 1,
+    pageSize: 30,
+    total: 0,
+  });
+  const totalStyle = ref<{
+    position: PositionType;
+    top: number | string;
+    bottom: number | string;
+  }>({
+    position: 'sticky',
+    top: 0,
+    bottom: 0,
+  });
+
+  watch(
+    () => totalData.value,
+    () => {
+      setTimeout(() => {
+        const bodyDom = document.getElementsByClassName('ant-table-tbody')[0];
+        const containerDom = document.getElementsByClassName('ant-table-container')[0];
+        const headerDom = document.getElementsByClassName('ant-table-thead')[0];
+
+        const length = getDataSource().length;
+        const filterPx = (str: string) => str.replace(/px/g, '');
+
+        const bodyH = Number(filterPx(getComputedStyle(bodyDom).height));
+        const containerH = Number(filterPx(getComputedStyle(containerDom).height));
+        const headerH = Number(filterPx(getComputedStyle(headerDom).height));
+
+        if (bodyH < containerH - headerH) {
+          totalStyle.value.position = 'relative';
+          totalStyle.value.top = containerH - 38 * length - headerH - 15 + 'px';
+          totalStyle.value.bottom = '';
+        } else {
+          totalStyle.value.position = 'sticky';
+          totalStyle.value.bottom = 0;
+          totalStyle.value.top = '';
+        }
+      }, 300);
+    },
+  );
+  let _reloadTable: () => Promise<void>;
+  const [registerTable, { getForm, getDataSource, reload, getRawDataSource }] = useTable({
     api: getCallbackStatisticList,
     columns,
+    beforeFetch: (params) => {
+      return {
+        ...params,
+        currPage: pagerLeft.current,
+        pageSize: pagerLeft.pageSize,
+      };
+    },
+    afterFetch: async (data) => {
+      const _data = getRawDataSource();
+
+      pagerLeft.total = _data.totalCount;
+      pagerLeft.pageSize = _data.pageSize;
+      pagerLeft.current = _data.currPage;
+
+      totalData.value = await getTotalCallbackStatistic({
+        ...getForm().getFieldsValue(),
+        currPage: String(pagerLeft.current),
+        pageSize: String(pagerLeft.pageSize),
+      } as GetApiSearchDonorCallbackCountTotalRequest);
+
+      if (!data.length) {
+        return [];
+      }
+
+      return [
+        ...data.map((it, idx) => ({ ...it, index: idx + 1 })),
+        { ...totalData.value, index: '合计' },
+      ];
+    },
     formConfig: {
       schemas: searchFormSchema,
+      submitFunc: () => _reloadTable(),
+      resetFunc: resetFunc,
+      submitOnReset: true,
     },
     fetchSetting: {
       pageField: 'currPage',
@@ -48,7 +148,27 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
+    showIndexColumn: false,
   });
+
+  _reloadTable = debounce(reload, 300) as () => Promise<void>;
+  async function resetFunc() {
+    pagerLeft.current = 1;
+
+    await _reloadTable();
+  }
+
+  async function handlePageChange(e) {
+    pagerLeft.current = e;
+
+    await reload();
+  }
+
+  async function handleSizeChange(_, size) {
+    pagerLeft.pageSize = size;
+
+    await reload();
+  }
 
   const loading = ref(false);
 
@@ -80,3 +200,12 @@
     }
   }
 </script>
+<style scoped>
+  .root :deep(.ant-table-tbody tr:last-child) {
+    position: v-bind('totalStyle.position');
+    z-index: 99;
+    top: v-bind('totalStyle.top');
+    bottom: v-bind('totalStyle.bottom');
+    background-color: #f5f5f5;
+  }
+</style>
