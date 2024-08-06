@@ -6,7 +6,6 @@ import {
   GetApiCoreBatchPlasmaVerifyBoxRequest,
   GetApiCoreBatchPlasmaVerifyBoxResponse,
   PostApiCoreBatchPlasmaVerifyBagRequest,
-  PostApiCoreBatchPlasmaVerifyBagResponse,
   PostApiCoreBatchPlasmaVerifyBoxPauseRequest,
   PostApiCoreBatchPlasmaVerifyBoxPauseResponse,
   PostApiCoreBatchPlasmaVerifyBatchPauseRequest,
@@ -17,6 +16,7 @@ import {
   PostApiCoreBatchPlasmaVerifyRevokeBagResponse,
   GetApiCoreBatchPlasmaVerifyBatchNoRequest,
   GetApiCoreBatchPlasmaVerifyBatchNoResponse,
+  PostApiCoreBatchPlasmaVerifyBagResponse,
 } from '@/api/type/batchManage';
 
 enum Api {
@@ -51,22 +51,16 @@ export const getPlasmaBox = (params: GetApiCoreBatchPlasmaVerifyBoxRequest) => {
 };
 
 // 血浆验收
-export const plasmaVerifyBag = (params: PostApiCoreBatchPlasmaVerifyBagRequest) => {
-  return defHttp.post<{
-    data: {
-      code: string;
-      msg: string;
-      data: PostApiCoreBatchPlasmaVerifyBagResponse;
-    };
-    status: number;
-  }>(
+export const plasmaVerifyBag = (
+  params: PostApiCoreBatchPlasmaVerifyBagRequest,
+  errOkCb: () => void,
+) => {
+  return defHttp.post<PostApiCoreBatchPlasmaVerifyBagResponse>(
     {
       url: Api.PlasmaVerifyBag,
       params,
     },
-    {
-      isReturnNativeResponse: true,
-    },
+    { errorMessageModeOkCb: errOkCb },
   );
 };
 

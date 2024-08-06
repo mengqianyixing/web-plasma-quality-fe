@@ -452,7 +452,7 @@
         warning('请登录复核人！');
         return;
       }
-
+      const focusedElement = document.activeElement as InputHTMLElement;
       const params = {
         batchNo: batchNo.value,
         boxNo: filterForm.value.boxNo,
@@ -466,21 +466,12 @@
       const realAccept = !!filterForm.value.batchNo;
       try {
         tableLoading.value = true;
-        const res = await plasmaVerifyBag(params);
-        if (res.data.code !== '0' && res.data.msg) {
-          createWarningModal({
-            title: '提示',
-            content: res.data.msg,
-            keyboard: false,
-            wrapClassName: 'ap9527',
-          });
-          const dom: HTMLElement | null = document.querySelector('.ap9527 button');
+        const data = await plasmaVerifyBag(params, () => {
           setTimeout(() => {
-            dom?.blur();
-          });
-          return;
-        }
-        const data = res.data.data;
+            focusedElement.focus();
+            focusedElement.select();
+          }, 300);
+        });
         if (data) {
           batchNo.value = data.batchNo;
           filterForm.value.stationName = data.stationName;
@@ -515,7 +506,6 @@
                   handlePressEnter({ code: 'Enter' }, true);
                 },
               });
-              const focusedElement = document.activeElement as HTMLElement;
               focusedElement?.blur();
               const dom: HTMLElement | null = document.querySelector('.ap9527 button');
               setTimeout(() => {

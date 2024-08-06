@@ -6,7 +6,7 @@
     width="80%"
     :min-height="650"
     :showOkBtn="false"
-    @cancel="remove"
+    @cancel="handelCancel"
   >
     <Description @register="register" :data="originTableData" />
 
@@ -73,6 +73,7 @@
 
   const tableLoading = ref(false);
   const sampleNo = ref('');
+  const sampleNoRef = ref();
 
   const schema: DescItem[] = [
     {
@@ -95,6 +96,7 @@
               onScanChange={(code: string) => {
                 sampleNo.value = code;
               }}
+              ref={sampleNoRef}
             />
           </div>
         );
@@ -268,21 +270,18 @@
         await initTableData();
       } else if (res.status === 200 && res.data.msg) {
         remove();
-        const focusedElement = document.activeElement as HTMLElement;
-        focusedElement?.blur();
-        createErrorModal({
+        return createErrorModal({
           title: '提示',
           content: res.data.msg,
           onOk: () => {
             const { removeEvent } = startEvent();
             remove = removeEvent;
+            setTimeout(() => {
+              sampleNoRef.value.$el.focus();
+              sampleNoRef.value.$el.select();
+            }, 300);
           },
           keyboard: false,
-          wrapClassName: 'osm9527',
-        });
-        const dom: HTMLElement | null = document.querySelector('.osm9527 button');
-        setTimeout(() => {
-          dom?.blur();
         });
       }
     } finally {
@@ -291,7 +290,9 @@
       tableLoading.value = false;
     }
   }
-
+  function handelCancel() {
+    remove();
+  }
   function handleTrayOutBand() {
     openTraySingleModal(true, {
       dlvNo: dlvNo.value,

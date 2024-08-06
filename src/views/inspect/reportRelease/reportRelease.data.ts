@@ -126,10 +126,15 @@ export const searchFormschema: FormSchema[] = [
   },
 
   {
-    field: 'state',
+    field: 'states',
     component: 'Select',
     label: '样本状态',
+    defaultValue: serverEnumStore
+      .getServerEnum(SERVER_ENUM.ReportStateType)
+      .filter((it) => it.value !== 'PUD')
+      .map((it) => it.value),
     componentProps: {
+      mode: 'multiple',
       options: serverEnumStore.getServerEnum(SERVER_ENUM.ReportStateType),
     },
   },

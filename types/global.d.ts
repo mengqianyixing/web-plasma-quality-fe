@@ -29,6 +29,9 @@ declare global {
     webkitFullscreenElement?: Element;
   }
 
+  interface InputHTMLElement extends HTMLElement {
+    select: () => void;
+  }
   // vue
   declare type PropType<T> = VuePropType<T>;
   declare type VueNode = VNodeChild | JSX.Element;

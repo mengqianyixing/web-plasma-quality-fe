@@ -19,14 +19,23 @@ enum Api {
   NONCONFORMITY_PLASMA_RESTFUL = '/api/core/bag/unqualified',
 }
 
-export const nonconformityPick = (params: PostApiCoreBagUnqualifiedPickRequest) =>
-  defHttp.post({ url: Api.NONCONFORMITY_PLASMA_PICK, params });
+export const nonconformityPick = (
+  params: PostApiCoreBagUnqualifiedPickRequest,
+  errOkCb?: () => void,
+) =>
+  defHttp.post({ url: Api.NONCONFORMITY_PLASMA_PICK, params }, { errorMessageModeOkCb: errOkCb });
 
 export const nonconformityPlasmaPickByBatch = (params: PostApiCoreBagUnqualifiedPickBatchRequest) =>
   defHttp.post({ url: Api.NONCONFORMITY_PLASMA_PICK_BATCH, params });
 
-export const nonconformityInStore = (params: PostApiCoreBagUnqualifiedInStoreRequest) =>
-  defHttp.post({ url: Api.NONCONFORMITY_PLASMA_IN_STORE, params });
+export const nonconformityInStore = (
+  params: PostApiCoreBagUnqualifiedInStoreRequest,
+  errOkCb?: () => void,
+) =>
+  defHttp.post(
+    { url: Api.NONCONFORMITY_PLASMA_IN_STORE, params },
+    { errorMessageModeOkCb: errOkCb },
+  );
 
 export const nonconformityCheck = (params: PostApiCoreBagUnqualifiedProcessBagNoRequest['bagNo']) =>
   defHttp.post({ url: Api.NONCONFORMITY_PLASMA_CHECK + '/' + params });

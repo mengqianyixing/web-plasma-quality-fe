@@ -130,11 +130,20 @@
       const values = await validate();
       if (!bagNo || !boxNo) return createMessage.warning('请扫描');
       setModalProps({ confirmLoading: true });
-      await nonconformityInStore({
-        ...values,
-        bagNo,
-        boxNo,
-      } as PostApiCoreBagUnqualifiedInStoreRequest);
+      const focusedElement = document.activeElement as InputHTMLElement;
+      await nonconformityInStore(
+        {
+          ...values,
+          bagNo,
+          boxNo,
+        } as PostApiCoreBagUnqualifiedInStoreRequest,
+        () => {
+          setTimeout(() => {
+            focusedElement.focus();
+            focusedElement.select();
+          }, 300);
+        },
+      );
       createMessage.success('入库成功');
       formData.bagNo = '';
     } finally {

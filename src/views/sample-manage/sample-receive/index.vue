@@ -81,6 +81,7 @@
   import { SysParamsEnum } from '@/enums/sysParamsEnum';
   import { useScanHelper } from '@/hooks/common/useScanHelper';
   import { debounce } from 'lodash-es';
+  import ScanInput from '@/components/Form/src/components/ScanInput.vue';
 
   const { barCode, enterFlag, startEvent } = useScanHelper();
 
@@ -94,7 +95,7 @@
   const sampleBatchData = ref<GetApiCoreBatchSampleAcceptBatchSampleNoResponse | {}>({});
   const inputValue = ref('');
   const tableLoading = ref(false);
-  const bagRef = ref(null);
+  const bagRef = ref();
 
   const { createConfirm } = useMessage();
   let _removeEvent = () => {};
@@ -128,13 +129,13 @@
             class="flex items-center justify-center gap-2 w-[300px] max-w-full	 -mt-1"
             ref="bagRef"
           >
-            <a-input
-              ref={(el) => (bagRef.value = el)}
+            <ScanInput
+              ref={bagRef}
               placeholder="扫描袋号条码"
-              enter-button="接收"
-              value={bagValue}
-              onChange={(e) => (bagValue.value = e.target.value)}
+              value={bagValue.value}
+              onScanChange={(code) => (bagValue.value = code)}
               onkeyup={handleKeyupEnter}
+              onEnter={_handleReceiveByBag}
             />
           </div>
         );
@@ -319,7 +320,7 @@
     tableLoading.value = false;
     await nextTick(() => {
       if (!bagRef.value) return;
-      (bagRef.value as HTMLInputElement)?.focus();
+      bagRef.value.$el.focus();
     });
   }
 
@@ -363,14 +364,26 @@
   const bsaNo = ref<undefined | string>(undefined);
   async function handleReceiveByBag() {
     try {
-      const receiveData = await receiveSampleByBag({
-        packNo: bagValue.value,
-        bsaNo: bsaNo.value!,
-      });
+      _removeEvent();
+      const receiveData = await receiveSampleByBag(
+        {
+          packNo: bagValue.value,
+          bsaNo: bsaNo.value!,
+        },
+        () => {
+          const { removeEvent } = startEvent();
+          _removeEvent = removeEvent;
+          setTimeout(() => {
+            bagRef.value.$el.focus();
+            bagRef.value.$el.select();
+          }, 300);
+        },
+      );
+      const { removeEvent } = startEvent();
+      _removeEvent = removeEvent;
       inputValue.value = receiveData.batchSampleNo!;
       bsaNo.value = receiveData.bsaNo!;
       await handlePressEnter();
-
       if (receiveData.acceptState === sampleReceiveStatusValueEnum.S) {
         bsaNo.value = undefined;
         bagValue.value = '';

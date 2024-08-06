@@ -15,6 +15,7 @@
     @cancel="emit('close')"
     :minHeight="600"
     @fullscreen="redoHeight"
+    :footer="null"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">
       <div class="flex-1 w-full">
@@ -166,7 +167,13 @@
     const { boxId, trayNo } = formData;
     if (trayNo && !boxId) boxRef.value.$el.focus();
     if (!boxId || !trayNo) return message.warning('请扫描' + (boxId ? '托盘' : '箱号'));
-    await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind' });
+    const focusedElement = document.activeElement as InputHTMLElement;
+    await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind' }, () => {
+      setTimeout(() => {
+        focusedElement.focus();
+        focusedElement.select();
+      }, 300);
+    });
     formData.boxId = '';
     message.success('操作成功');
     reload();

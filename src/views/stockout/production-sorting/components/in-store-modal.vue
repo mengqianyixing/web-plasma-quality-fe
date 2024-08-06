@@ -29,7 +29,29 @@
         >
           <TabPane tab="分拣血浆箱" key="1">
             <Spin :spinning="state.spinning">
-              <BasicForm @register="registerForm" ref="formRef" />
+              <div class="form flex">
+                <div class="form-item">
+                  <span class="form-label">托盘编号</span>
+                  <ScanInput
+                    :value="formData.trayNo"
+                    @enter="_submit"
+                    @keyup="handleKeyUp"
+                    size="lg"
+                    ref="trayRef"
+                    @scan-change="(code) => (formData.trayNo = code)"
+                  />
+                </div>
+                <div class="form-item">
+                  <span class="form-label">箱号</span>
+                  <ScanInput
+                    :value="formData.boxId"
+                    @enter="_submit"
+                    size="lg"
+                    ref="boxRef"
+                    @keyup="handleKeyUp"
+                    @scan-change="(code) => (formData.boxId = code)"
+                  /> </div
+              ></div>
             </Spin>
             <div class="border border-slate-100"></div>
             <div style="height: calc(100% - 60px)">
@@ -56,13 +78,11 @@
 <script setup lang="ts">
   import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
-  import { BasicForm, useForm } from '@/components/Form';
   import { message, TabPane, Tabs, Spin } from 'ant-design-vue';
   import { nextTick, reactive, ref } from 'vue';
   import {
     trayInStoreColumns,
     trayInStoreFormSchema,
-    bindFormSchema,
     bindSearchFormSchema,
     sortingBoxBindColumns,
   } from '../production-sorting.data';
@@ -73,7 +93,15 @@
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
   import { useMessage } from '@/hooks/web/useMessage';
+  import ScanInput from '@/components/Form/src/components/ScanInput.vue';
+  import { debounce } from 'lodash-es';
 
+  const formData = reactive({
+    trayNo: '',
+    boxId: '',
+  });
+  const boxRef = ref();
+  const trayRef = ref();
   const serverEnumStore = useServerEnumStoreWithOut();
   const BankTrayStatusEnum = serverEnumStore.getServerEnumText(SERVER_ENUM.BankTrayStatusEnum);
   const state = reactive({
@@ -81,29 +109,15 @@
     prepareNo: '',
     spinning: false,
   });
-  const formRef = ref();
   const emit = defineEmits(['close']);
   const [registerModal] = useModalInner(async ({ prepareNo }) => {
-    resetFields();
     state.prepareNo = prepareNo;
+    formData.boxId = '';
+    formData.trayNo = '';
     change(state.activeKey);
   });
   const [registerInModal, { openModal: openInModal }] = useModal();
-  const [registerForm, { getFieldsValue, setFieldsValue, resetFields }] = useForm({
-    labelWidth: 90,
-    baseColProps: { span: 8 },
-    schemas: bindFormSchema.map((schems) => ({
-      ...schems,
-      componentProps: {
-        ...schems.componentProps,
-        onkeyup: handleSubmit,
-        class: schems.field,
-      },
-    })),
-    showActionButtonGroup: false,
-    showResetButton: false,
-    autoSubmitOnEnter: true,
-  });
+
   const [
     registerBindTable,
     {
@@ -200,42 +214,60 @@
     }
     openInModal(true, { data: rows });
   }
+  const _submit = debounce(submit, 200);
+  function handleKeyUp(e) {
+    if (e.key === 'Enter') {
+      _submit();
+    }
+  }
   async function submit() {
-    const { boxId, trayNo } = getFieldsValue();
-    const focusedElement = document.activeElement as HTMLElement;
-    focusedElement.blur();
+    const { boxId, trayNo } = formData;
+    if (trayNo && !boxId) boxRef.value.$el.focus();
+    if (!boxId || !trayNo) return message.warning('请扫描' + (boxId ? '托盘' : '箱号'));
+    const focusedElement = document.activeElement as InputHTMLElement;
     try {
-      await bindBoxApi({
-        trayNo: trayNo,
-        type: 'bind',
-        boxes: [boxId],
-        bizScen: 'plasmaSort',
-        prepareNo: state.prepareNo,
-      });
-      setFieldsValue({ boxId: '' });
+      state.spinning = true;
+      await bindBoxApi(
+        {
+          trayNo: trayNo,
+          type: 'bind',
+          boxes: [boxId],
+          bizScen: 'plasmaSort',
+          prepareNo: state.prepareNo,
+        },
+        () => {
+          setTimeout(() => {
+            focusedElement.focus();
+            focusedElement.select();
+          }, 300);
+        },
+      );
+      formData.boxId = '';
       message.success('绑定成功');
       reloadBind();
     } finally {
       await nextTick();
+      state.spinning = false;
       focusedElement.focus();
     }
   }
-  async function handleSubmit(e: KeyboardEvent) {
-    if (e.code !== 'Enter' && e.code !== 'NumpadEnter') return;
-    const { boxId, trayNo } = getFieldsValue();
-    if (boxId && !trayNo) message.warning('请扫描托盘编号');
-    if (trayNo) formRef.value.$el.querySelector('.boxId input')?.focus();
-    if (!boxId || !trayNo) return;
-    try {
-      state.spinning = true;
-      await submit();
-    } finally {
-      state.spinning = false;
-    }
-  }
 </script>
-<style scoped>
+<style scoped lang="scss">
   .tabs :deep(.ant-tabs-content) {
     height: 100%;
+  }
+
+  .form-item {
+    display: flex;
+    align-items: center;
+    width: 400px;
+    margin-bottom: 15px;
+
+    .form-label {
+      width: 100px;
+      margin-right: 10px;
+      font-size: 16px;
+      text-align: right;
+    }
   }
 </style>

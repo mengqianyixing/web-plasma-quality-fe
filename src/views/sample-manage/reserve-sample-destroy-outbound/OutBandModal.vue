@@ -6,7 +6,7 @@
     width="80%"
     :min-height="600"
     :showOkBtn="false"
-    @cancel="_removeEvent"
+    @cancel="handelCancel"
   >
     <Description @register="register" :data="originTableData" />
 
@@ -61,6 +61,7 @@
   import { keepPackOutBandList, keepPackScan } from '@/api/sample-manage/reserve-sample-destory';
   import { GetApiCoreBankDeliverSampleScanResponse } from '@/api/type/sampleManage';
   import { useMessage } from '@/hooks/web/useMessage';
+  import ScanInput from '@/components/Form/src/components/ScanInput.vue';
 
   const { createErrorModal } = useMessage();
 
@@ -68,6 +69,7 @@
 
   const tableLoading = ref(false);
   const sampleBagNo = ref('');
+  const sampleBagNoRef = ref();
 
   const schema: DescItem[] = [
     {
@@ -76,13 +78,14 @@
       contentMinWidth: 100,
       render() {
         return (
-          <div class="flex items-center justify-center gap-2 w-[300px]" ref="bagRef">
-            <a-input
+          <div class="flex items-center justify-center gap-2 " ref="bagRef">
+            <ScanInput
               placeholder="扫描袋号条码"
-              enter-button="接收"
-              value={sampleBagNo}
-              onChange={(e) => (sampleBagNo.value = e.target.value)}
+              value={sampleBagNo.value}
+              onScanChange={(code) => (sampleBagNo.value = code)}
               onkeyup={handleKeyupEnter}
+              onEnter={_handleReceiveByScan}
+              ref={sampleBagNoRef}
             />
           </div>
         );
@@ -277,31 +280,29 @@
         await initTableData();
       } else if (res.status === 200 && res.data.msg) {
         _removeEvent();
-        const focusedElement = document.activeElement as HTMLElement;
-        focusedElement?.blur();
-        createErrorModal({
+        return createErrorModal({
           title: '提示',
           content: res.data.msg,
           onOk: () => {
             const { removeEvent } = startEvent();
             _removeEvent = removeEvent;
+            setTimeout(() => {
+              sampleBagNoRef.value.$el.focus();
+              sampleBagNoRef.value.$el.select();
+            }, 300);
           },
           keyboard: false,
-          wrapClassName: 'obm9527',
-        });
-        const dom: HTMLElement | null = document.querySelector('.obm9527 button');
-        setTimeout(() => {
-          dom?.blur();
         });
       }
-      await initTableData();
     } finally {
       barCode.value = '';
       enterFlag.value = false;
       tableLoading.value = false;
     }
   }
-
+  function handelCancel() {
+    _removeEvent();
+  }
   function handleTrayOutBand() {
     openTrayModal(true, {
       dlvNo: dlvNo.value,
