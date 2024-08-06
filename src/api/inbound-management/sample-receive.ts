@@ -37,8 +37,16 @@ export const getSampleReceiveDetail = (
 export const receiveSample = (params: PostApiCoreBatchSampleAcceptRequest) =>
   defHttp.post({ url: Api.SAMPLE_ACCEPT_RESTFUL, params });
 
-export const receiveSampleByBag = (params: PostApiCoreBatchSampleAcceptPackRequest) =>
-  defHttp.post<PostApiCoreBatchSampleAcceptPackResponse>({ url: Api.SAMPLE_RECEIVE_BAG, params });
+export const receiveSampleByBag = (
+  params: PostApiCoreBatchSampleAcceptPackRequest,
+  errorOkCb?: () => void,
+) =>
+  defHttp.post<PostApiCoreBatchSampleAcceptPackResponse>(
+    { url: Api.SAMPLE_RECEIVE_BAG, params },
+    {
+      errorMessageModeOkCb: errorOkCb,
+    },
+  );
 
 export const getSampleDictionary = (params: PostApiSysDictionaryItemsRequest) =>
   defHttp.post<PostApiSysDictionaryItemsResponse>({ url: Api.DICTIONARY, params });

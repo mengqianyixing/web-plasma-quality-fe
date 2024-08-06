@@ -14,13 +14,15 @@
       <div class="absolute w-full h-full">
         <div class="flex items-center gap-1 w-[300px]">
           <span class="w-[80px]">箱号：</span>
-          <a-input
+          <ScanInput
             ref="inputRef"
-            size="large"
+            size="lg"
             @keyup="handleKeyupEnter"
+            @scan-change="(code) => (inputValue = code)"
             placeholder="请扫箱号"
+            @enter="_handleEnter"
             :readonly="inputDisabled"
-            v-model:value="inputValue"
+            :value="inputValue"
           />
         </div>
         <div class="flex" style="height: calc(100% - 40px)">
@@ -50,6 +52,7 @@
     productionAcceptByBox,
   } from '@/api/stockout/production-put-into';
   import { RemoveEventFn } from '@/hooks/event/useEventListener';
+  import ScanInput from '@/components/Form/src/components/ScanInput.vue';
 
   const orderNo = ref('');
   const inputDisabled = ref(false);
@@ -57,7 +60,7 @@
 
   const emit = defineEmits(['success', 'register']);
   const { createMessage, createWarningModal } = useMessage();
-  const inputRef = ref<HTMLElement | null>(null);
+  const inputRef = ref();
 
   const { barCode, startEvent, enterFlag } = useScanHelper();
   const _handleEnter = debounce(handleEnter, 300);
@@ -196,31 +199,27 @@
       });
       if (res.data.code !== '0' && res.data.msg) {
         _removeEvent();
-        createWarningModal({
+        return createWarningModal({
           title: '提示',
           content: res.data.msg,
           keyboard: false,
-          wrapClassName: 'ppbr9527',
           onOk: () => {
             const { removeEvent } = startEvent();
             _removeEvent = removeEvent;
+            setTimeout(() => {
+              inputRef.value.$el.focus();
+              inputRef.value.$el.select();
+            }, 300);
           },
         });
-        const dom: HTMLElement | null = document.querySelector('.ppbr9527 button');
-        setTimeout(() => {
-          dom?.blur();
-        });
-        return;
       }
+      inputValue.value = '';
       createMessage.success('接收成功');
     } finally {
       setModalProps({
         loading: false,
       });
-
-      inputValue.value = '';
       inputDisabled.value = false;
-
       reloadTable();
     }
   }

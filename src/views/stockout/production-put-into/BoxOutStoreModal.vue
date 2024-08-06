@@ -14,12 +14,15 @@
       <div class="absolute w-full h-full">
         <div class="flex items-center gap-1 w-[300px]">
           <span class="w-[80px]">箱号：</span>
-          <a-input
-            size="large"
+          <ScanInput
+            size="lg"
             @keyup="handleKeyupEnter"
             placeholder="请扫箱号"
+            @scan-change="(code) => (inputValue = code)"
             :readonly="inputDisabled"
-            v-model:value="inputValue"
+            @enter="_handleEnter"
+            :value="inputValue"
+            ref="inputRef"
           />
         </div>
         <div class="flex" style="height: calc(100% - 40px)">
@@ -56,10 +59,12 @@
   } from '@/api/stockout/production-put-into';
   import { GetApiProductOutStoreBoxesOrderNoResponse } from '@/api/type/productionSortingMangeMain';
   import { RemoveEventFn } from '@/hooks/event/useEventListener';
+  import ScanInput from '@/components/Form/src/components/ScanInput.vue';
 
   const orderNo = ref('');
   const inputDisabled = ref(false);
   const inputValue = ref('');
+  const inputRef = ref();
   const originTableData = ref<GetApiProductOutStoreBoxesOrderNoResponse>({});
 
   const emit = defineEmits(['success', 'register']);
@@ -183,21 +188,19 @@
       });
       if (res.data.code !== '0' && res.data.msg) {
         _removeEvent();
-        createWarningModal({
+        return createWarningModal({
           title: '提示',
           content: res.data.msg,
           keyboard: false,
-          wrapClassName: 'ppbos9527',
           onOk: () => {
             const { removeEvent } = startEvent();
             _removeEvent = removeEvent;
+            setTimeout(() => {
+              inputRef.value.$el.focus();
+              inputRef.value.$el.select();
+            }, 300);
           },
         });
-        const dom: HTMLElement | null = document.querySelector('.ppbos9527 button');
-        setTimeout(() => {
-          dom?.blur();
-        });
-        return;
       }
       createMessage.success('出库成功');
 
