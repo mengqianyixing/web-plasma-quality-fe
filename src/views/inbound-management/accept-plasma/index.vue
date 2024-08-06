@@ -115,7 +115,7 @@
 </template>
 
 <script setup lang="tsx">
-  import { ref, computed, reactive, nextTick, createVNode } from 'vue';
+  import { ref, computed, reactive, nextTick, createVNode, onActivated } from 'vue';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
   import Description from '@/components/Description/src/Description.vue';
   import { useMessage } from '@/hooks/web/useMessage';
@@ -130,6 +130,7 @@
   } from '@/api/inbound-management/accept-plasma';
   import { getPrintRecord, printRecord } from '@/api/tag/printRecord';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+  import { getSysParamsList } from '@/api/systemServer/params';
   import dayjs from 'dayjs';
 
   import BatchDetail from '../components/PlasmaBatchDetailModal/index.vue';
@@ -432,6 +433,38 @@
     showFooter: false,
   });
 
+  const acceptSort = {
+    title: '', // bag/verifyTime
+    sort: '', // asc/desc
+  };
+  onActivated(() => {
+    _getSysParamsList();
+  });
+  // 获取已验收列表排序依据
+  async function _getSysParamsList() {
+    const params = {
+      currPage: '1',
+      pageSize: '1',
+      paramName: '血浆袋验收列表顺序',
+    };
+    const res = await getSysParamsList(params);
+    if (res.result && res.result.length) {
+      const one = res.result[0];
+      acceptSort.title = one.paramValue?.split(',')[0] ?? '';
+      acceptSort.sort = one.paramValue?.split(',')[1] ?? '';
+    }
+  }
+  // 已验收列表排序 没设置时为按最新验收的在上
+  function sortAcceptFilter(arr) {
+    if (!arr.length) return arr;
+    const title = acceptSort.title === 'bag' ? 'bagNo' : 'verifyAt';
+    if (acceptSort.sort === 'asc') {
+      return arr.sort((a, b) => a[title].localeCompare(b[title], 'en', { numeric: true }));
+    } else {
+      return arr.sort((a, b) => b[title].localeCompare(a[title], 'en', { numeric: true }));
+    }
+  }
+
   // 托盘号扫描
   function handlePressEnterTrayNo(e) {
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
@@ -492,7 +525,7 @@
             };
           });
 
-          filterForm.value.verifyBag = data.verifyBag;
+          filterForm.value.verifyBag = sortAcceptFilter(data.verifyBag);
 
           if (realAccept) {
             donorFailed.value = data.donorFailed; // 献血浆者不符合
@@ -578,6 +611,7 @@
         bagNo: item,
       };
     });
+    filterForm.value.verifyBag = sortAcceptFilter(res.verifyBag);
   }
 
   // 点击登录按钮
