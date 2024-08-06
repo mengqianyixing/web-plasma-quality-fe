@@ -5,11 +5,14 @@ import {
   GetApiCoreBatchSampleCallbackStatisticResponse,
   GetApiSearchDonorCallbackCountRequest,
   GetApiSearchDonorCallbackCountResponse,
+  GetApiSearchDonorCallbackCountTotalRequest,
+  GetApiSearchDonorCallbackCountTotalResponse,
 } from '@/api/type/queryStatistics';
 
 enum Api {
   CALLBACK_STATISTIC = '/api/search/donor/callback-count',
   CALLBACK_BATCH_STATISTICS = '/api/core/batch/sample/callback/statistic',
+  TOTAL_CALLBACK_STATISTIC = '/api/search/donor/callback-count/total',
 }
 
 export const getCallbackStatisticList = (params: GetApiSearchDonorCallbackCountRequest) =>
@@ -22,4 +25,15 @@ export const getCallbackBatchStatistics = (params: GetApiCoreBatchSampleCallback
   defHttp.get<GetApiCoreBatchSampleCallbackStatisticResponse>(
     { url: Api.CALLBACK_BATCH_STATISTICS, params },
     { joinParamsToUrl: true },
+  );
+
+export const getTotalCallbackStatistic = (params: GetApiSearchDonorCallbackCountTotalRequest) =>
+  defHttp.get<GetApiSearchDonorCallbackCountTotalResponse>(
+    {
+      url: Api.TOTAL_CALLBACK_STATISTIC,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
   );

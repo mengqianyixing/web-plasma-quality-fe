@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: zcc
  * @Date: 2023-12-29 16:24:20
  * @LastEditors: zcc
@@ -29,7 +29,6 @@
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { batchColumns, batchSearchScheam } from './resultRegistration.data';
-  import { defineEmits } from 'vue';
   import { getBatchListApi, submitItemDtApi } from '@/api/inspect/resultRegistration';
   import { message } from 'ant-design-vue';
 

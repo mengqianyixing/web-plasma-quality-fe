@@ -38,7 +38,7 @@
     locationCell,
   } from './setting.data';
   import { message } from 'ant-design-vue';
-  import { reactive, defineEmits } from 'vue';
+  import { reactive } from 'vue';
   import { CellWapper } from '@/components/CellWapper';
   import { useMessage } from '@/hooks/web/useMessage';
 

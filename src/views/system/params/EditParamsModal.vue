@@ -62,7 +62,7 @@
         required: true,
       },
       {
-        label: '参数健名',
+        label: '参数键名',
         field: 'paramKey',
         component: 'Input',
         colProps: { span: 20 },
