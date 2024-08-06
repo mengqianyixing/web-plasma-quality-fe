@@ -46,7 +46,7 @@
         </a-button>
         <a-button
           type="primary"
-          @click="handleOutBound"
+          @click="handleOutBoundWMS"
           v-auth="SampleManageButtonEnum.SampleWarehouseOutBandWMS"
           >WMS出库
         </a-button>
@@ -87,6 +87,7 @@
     checkApplication,
     submitApplication,
     getReserveSampleList,
+    outBoundWMSApi,
   } from '@/api/sample-manage/reserve-sample-destory';
 
   import RequisitionSingleModal from '@/views/sample-manage/reserve-sample-destroy-outbound-single/RequisitionSingleModal.vue';
@@ -244,7 +245,22 @@
       ...getSelectRows()[0],
     });
   }
-
+  function handleOutBoundWMS() {
+    const rows = getSelectRows();
+    const [row] = rows;
+    if (!row) return createMessage.warn('请选择出库申请单号');
+    if (row.state !== '待出库') return createMessage.warn('请选择待出库的数据');
+    createConfirm({
+      title: '确认',
+      content: '确认WMS出库？',
+      iconType: 'warning',
+      onOk: async () => {
+        await outBoundWMSApi({ dlvNo: row.dlvNo });
+        createMessage.success('出库成功');
+        await reload();
+      },
+    });
+  }
   const loading = ref(false);
   async function handleExport() {
     if (getSelectRows().length === 0) {
