@@ -611,7 +611,7 @@
                 content = '投产血浆';
               } else {
                 labelType = 'SAMPLE_BOX_2';
-                content = '暂不投产血浆';
+                content = `暂不投产血浆${getTiterText(data.utrkUnPro?.sortImmTypes[0])}`;
               }
             }
             if (pickMode === 'B') {
@@ -620,10 +620,10 @@
                 content = '投产血浆';
               } else if (data?.pickType === 'UPR') {
                 labelType = 'SAMPLE_BOX_3';
-                content = '检疫期合格暂不投产血浆';
+                content = `检疫期合格暂不投产血浆${getTiterText(data.unPro?.sortImmTypes[0])}`;
               } else if (data?.pickType === 'WV') {
                 labelType = 'SAMPLE_BOX_4';
-                content = '待放行血浆';
+                content = `待放行血浆${getTiterText(data.utrkUnPro?.sortImmTypes[0])}`;
               }
             }
             createConfirm({
