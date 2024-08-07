@@ -76,13 +76,7 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { jsonToSheetXlsx } from '@/components/Excel';
   import { ref, reactive, nextTick, createVNode } from 'vue';
-  import {
-    prepareStateMap,
-    bagFlagMap,
-    pickModeMap,
-    BagTrackMap,
-    BagTrackValueEnum,
-  } from '@/enums/stockoutEnum';
+  import { prepareStateMap, bagFlagMap, pickModeMap } from '@/enums/stockoutEnum';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
   import PickModal from './PickModal.vue';
@@ -437,10 +431,6 @@
     {
       title: '血浆流程状态',
       field: 'plasmaStatus',
-      // format(text) {
-      //   const val = text ? BagTrackMap.get(text as BagTrackValueEnum) : '';
-      //   return val;
-      // },
     },
   ];
 
@@ -636,9 +626,7 @@
           immunity: it.immunity,
           titer: it.titer,
           calculateAt: it.calculateAt ? dayjs(it.calculateAt).format('YYYY-MM-DD') : '',
-          plasmaStatus: it.plasmaStatus
-            ? BagTrackMap.get(it.plasmaStatus as BagTrackValueEnum)
-            : '',
+          plasmaStatus: it.plasmaStatus,
         };
       });
 
