@@ -15,11 +15,12 @@ import {
 
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { SERVER_ENUM } from '@/enums/serverEnum';
+import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+import { SysParamsEnum } from '@/enums/sysParamsEnum';
 import { COMPANY } from '@/enums/company';
-import { useGlobSetting } from '@/hooks/setting/index';
 
-const globSetting = useGlobSetting();
-const iskm = globSetting.company === COMPANY.KM;
+const globalApiStore = useGlobalApiStoreWithOut();
+const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 const serverEnumStore = useServerEnumStoreWithOut();
 const BagUnqualifiedFlowEnum = serverEnumStore.getServerEnumText(
   SERVER_ENUM.BagUnqualifiedFlowEnum,

@@ -91,7 +91,7 @@
   const trayRef = ref();
 
   const [registerInModal, { openModal: openInModal }] = useModal();
-  const [registerBindModal, { openModal }] = useModal();
+  const [registerBindModal, { openModal, setModalProps }] = useModal();
 
   const [registerModal] = useModalInner(async (data) => {
     state.batchNo = data.batchNo;
@@ -167,16 +167,21 @@
     const { boxId, trayNo } = formData;
     if (trayNo && !boxId) boxRef.value.$el.focus();
     if (!boxId || !trayNo) return message.warning('请扫描' + (boxId ? '托盘' : '箱号'));
-    const focusedElement = document.activeElement as InputHTMLElement;
-    await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind' }, () => {
-      setTimeout(() => {
-        focusedElement.focus();
-        focusedElement.select();
-      }, 300);
-    });
-    formData.boxId = '';
-    message.success('操作成功');
-    reload();
+    try {
+      const focusedElement = document.activeElement as InputHTMLElement;
+      setModalProps({ loading: true, confirmLoading: true });
+      await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind' }, () => {
+        setTimeout(() => {
+          focusedElement.focus();
+          focusedElement.select();
+        }, 300);
+      });
+      formData.boxId = '';
+      message.success('操作成功');
+      reload();
+    } finally {
+      setModalProps({ loading: false, confirmLoading: false });
+    }
   }
   function getSelections(onlyOne: boolean) {
     const rows = getSelectRows();

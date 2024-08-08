@@ -81,11 +81,12 @@
     GetApiProductPrepareListRequest,
   } from '@/api/type/productionPreparation';
   import { VxeGridPropTypes } from 'vxe-table/types/grid';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
   import { COMPANY } from '@/enums/company';
-  import { useGlobSetting } from '@/hooks/setting';
 
-  const globSetting = useGlobSetting();
-  const iskm = globSetting.company === COMPANY.KM;
+  const globalApiStore = useGlobalApiStoreWithOut();
+  const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
   const { stationOptions } = useStation();
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);

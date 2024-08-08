@@ -203,7 +203,7 @@
         });
       }
       createMessage.success('出库成功');
-
+      inputValue.value = '';
       await reloadTable();
 
       if (noOutTableData.value?.length === 0) {
@@ -213,7 +213,6 @@
       setModalProps({
         loading: false,
       });
-      inputValue.value = '';
       inputDisabled.value = false;
     }
   }

@@ -9,10 +9,11 @@
 
 import { TreeItem } from '@/components/Tree';
 import { jsonClone } from 'js-xxx';
-import { useGlobSetting } from '@/hooks/setting/index';
+import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+import { SysParamsEnum } from '@/enums/sysParamsEnum';
 
-const globSetting = useGlobSetting();
-
+const globalApiStore = useGlobalApiStoreWithOut();
+const company = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany);
 /**
  * 处理预览树特殊数据显示
  * 比如：
@@ -79,7 +80,7 @@ export function filterRoutes(routes: any[]): any[] {
   const filteredRoutes: any[] = [];
 
   routes.forEach((item: any) => {
-    if (item.company && item.company !== globSetting.company) {
+    if (item.company && item.company !== company) {
       return false;
     }
     if (item.id && !item.children && !item.authElements) {
