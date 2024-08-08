@@ -1,4 +1,4 @@
 export enum COMPANY {
-  RS = 'rs',
-  KM = 'km',
+  RS = 'RS',
+  KM = 'KM',
 }

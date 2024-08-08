@@ -151,8 +151,6 @@ export interface GlobConfig {
   urlPrefix?: string;
   // Project abbreviation
   shortName: string;
-
-  company: string;
 }
 export interface GlobEnvConfig {
   // Site title
@@ -165,6 +163,4 @@ export interface GlobEnvConfig {
   VITE_GLOB_UPLOAD_URL?: string;
   // print url
   VITE_GLOB_PRINT_URL?: string;
-
-  VITE_GLOB_COMPANY: string;
 }

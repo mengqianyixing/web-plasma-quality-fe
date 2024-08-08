@@ -1,6 +1,7 @@
 import type { Router, RouteLocationNormalized } from 'vue-router';
 import { useAppStoreWithOut } from '@/store/modules/app';
 import { useUserStoreWithOut } from '@/store/modules/user';
+import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { useTransitionSetting } from '@/hooks/setting/useTransitionSetting';
 import { AxiosCanceler } from '@/utils/http/axios/axiosCancel';
@@ -15,6 +16,7 @@ import projectSetting from '@/settings/projectSetting';
 import { createParamMenuGuard } from './paramMenuGuard';
 import { PAGE_NOT_FOUND_NAME } from '@/router/constant';
 import { closeGlobalLoading } from '@/utils/domUtils';
+import { SysParamsEnum } from '@/enums/sysParamsEnum';
 
 // Don't change the order of creation
 export function setupRouterGuard(router: Router) {
@@ -22,7 +24,7 @@ export function setupRouterGuard(router: Router) {
   createPageLoadingGuard(router);
   createHttpGuard(router);
   createServerEnumsGuard(router);
-  createModifyPasswordGuard(router);
+  createCompanyGuard(router), createModifyPasswordGuard(router);
   createScrollGuard(router);
   createMessageGuard(router);
   createProgressGuard(router);
@@ -136,6 +138,20 @@ async function createServerEnumsGuard(router: Router) {
     const hasCode = window.location.search.includes('code') || to.query.code;
     if (hasCode && to.name === 'Login') return true;
     closeGlobalLoading();
+  });
+}
+async function createCompanyGuard(router: Router) {
+  const userStore = useUserStoreWithOut();
+  const globalApiStore = useGlobalApiStoreWithOut();
+  router.beforeEach(async (to) => {
+    if (to.name === PAGE_NOT_FOUND_NAME) {
+      return true;
+    }
+    if (!userStore.getToken) {
+      return true;
+    }
+    await globalApiStore.getSysParamsValue(SysParamsEnum.BloodProductionCompany);
+    return true;
   });
 }
 
