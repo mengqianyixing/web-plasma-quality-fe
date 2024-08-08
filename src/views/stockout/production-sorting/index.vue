@@ -496,9 +496,11 @@
               item.isSelected = false;
             }
           }
+          // 缓存当前分拣血浆所在箱，满箱提示时用
+          let currentBox = {};
           // 数据回显，当前准备号第一次分拣/继续批次之后的第一次分拣 || 混批情况
           if (firstOperate || mixBatch) {
-            initBox(data, true);
+            currentBox = initBox(data, true);
           } else {
             // 可投产箱子
             if (data.pros?.bagNos?.length) {
@@ -510,9 +512,8 @@
               topBoxData.value[0].bagNos = data.pros?.bagNos;
               topBoxData.value[0].isSelected = true;
               // targetBox = topBoxData.value[0];
-              nextTick(() => {
-                scollToBox(true, 'PRO', true);
-              });
+              currentBox = topBoxData.value[0];
+              scollToBox(true, 'PRO', true);
             }
             // B时的不投产箱子,A时为空
             if (data.unPro?.sortImmTypes?.length) {
@@ -523,7 +524,6 @@
                   if (item?.bagNos?.length) {
                     scollToIndex = index + 1;
                   }
-
                   return {
                     immTypeName: item?.immTypeName,
                     immType: item?.immType,
@@ -552,12 +552,10 @@
                 });
               }
               if (scollToIndex !== -1) {
-                // targetBox = topBoxData.value[scollToIndex];
-                nextTick(() => {
-                  topBoxData.value[scollToIndex].isSelected = true;
-                  // 滚动逻辑...
-                  scollToBox(true, topBoxData.value[scollToIndex].immTypeName, true);
-                });
+                topBoxData.value[scollToIndex].isSelected = true;
+                currentBox = topBoxData.value[scollToIndex];
+                // 滚动逻辑...
+                scollToBox(true, topBoxData.value[scollToIndex].immTypeName, true);
               }
             }
             // A时的不投产或B的待放行
@@ -593,17 +591,16 @@
                 });
               }
               if (scollToIndex !== -1) {
-                // targetBox = bottomBoxData.value[scollToIndex];
-                nextTick(() => {
-                  bottomBoxData.value[scollToIndex].isSelected = true;
-                  scollToBox(false, bottomBoxData.value[scollToIndex].immTypeName, true);
-                });
+                bottomBoxData.value[scollToIndex].isSelected = true;
+                currentBox = bottomBoxData.value[scollToIndex];
+                scollToBox(false, bottomBoxData.value[scollToIndex].immTypeName, true);
               }
             }
           }
           // 满箱
           if (data?.fullBox === true) {
             let content = '';
+            let suffix = '';
             let labelType = '';
             if (pickMode === 'A') {
               if (data?.pickType === 'PRO') {
@@ -611,7 +608,7 @@
                 content = '投产血浆';
               } else {
                 labelType = 'SAMPLE_BOX_2';
-                content = '暂不投产血浆';
+                content = `暂不投产血浆${currentBox.title}`;
               }
             }
             if (pickMode === 'B') {
@@ -620,12 +617,14 @@
                 content = '投产血浆';
               } else if (data?.pickType === 'UPR') {
                 labelType = 'SAMPLE_BOX_3';
-                content = '检疫期合格暂不投产血浆';
+                content = `检疫期合格暂不投产血浆${currentBox.title}`;
               } else if (data?.pickType === 'WV') {
                 labelType = 'SAMPLE_BOX_4';
-                content = '待放行血浆';
+                content = `检疫期待放行血浆${currentBox.title}`;
               }
             }
+            if (currentBox?.sortTotalCount === currentBox?.totalCount) suffix = '已扫描完毕';
+            else suffix = '已满箱';
             createConfirm({
               iconType: 'warning',
               title: '提示?',
@@ -633,7 +632,7 @@
               content: createVNode(
                 'div',
                 { style: 'color:red;' },
-                `${content}已扫描完毕，确认打印箱签?`,
+                `${content}${suffix}，确认打印箱签?`,
               ),
               onOk() {
                 // 走封箱操作 不需要提示
@@ -892,19 +891,19 @@
       scrollObj.isTop = false;
       scrollObj.scollToIndex = data.selectedIndex;
     }
-    nextTick(() => {
-      if (scrollObj.isTop) {
-        topBoxData.value[scrollObj.scollToIndex].isSelected = true;
-        if (scrollObj.scollToIndex === 0) {
-          scollToBox(true, 'PRO');
-        } else {
-          scollToBox(scrollObj.isTop, topBoxData.value[scrollObj.scollToIndex].immTypeName);
-        }
+    if (scrollObj.isTop) {
+      topBoxData.value[scrollObj.scollToIndex].isSelected = true;
+      if (scrollObj.scollToIndex === 0) {
+        scollToBox(true, 'PRO');
       } else {
-        bottomBoxData.value[scrollObj.scollToIndex].isSelected = true;
-        scollToBox(scrollObj.isTop, bottomBoxData.value[scrollObj.scollToIndex].immTypeName);
+        scollToBox(scrollObj.isTop, topBoxData.value[scrollObj.scollToIndex].immTypeName);
       }
-    });
+      return topBoxData.value[scrollObj.scollToIndex];
+    } else {
+      bottomBoxData.value[scrollObj.scollToIndex].isSelected = true;
+      scollToBox(scrollObj.isTop, bottomBoxData.value[scrollObj.scollToIndex].immTypeName);
+      return bottomBoxData.value[scrollObj.scollToIndex];
+    }
   }
 
   function getTiterText(item: Recordable | void) {
@@ -916,21 +915,23 @@
   }
   // 定位到操作箱
   function scollToBox(isTop, childId, isBold?) {
-    const parentDom = isTop ? topBoxBarRef.value : bottomBoxBarRef.value;
-    const childDom = parentDom.querySelector(`#${childId}`);
-    parentDom.scrollTo({
-      left: childDom.offsetLeft - 100,
-      behavior: 'smooth',
+    nextTick(() => {
+      const parentDom = isTop ? topBoxBarRef.value : bottomBoxBarRef.value;
+      const childDom = parentDom.querySelector(`#${childId}`);
+      parentDom.scrollTo({
+        left: childDom.offsetLeft - 100,
+        behavior: 'smooth',
+      });
+      // 清除所有加粗袋号
+      const elements = document.querySelectorAll('.one-bag');
+      elements.forEach((element) => {
+        element.style.fontWeight = '400';
+      });
+      // 当前操作袋号加粗
+      if (!isBold) return;
+      const firstBag = childDom.querySelector('.one-bag');
+      if (firstBag) firstBag.style.fontWeight = 'bold';
     });
-    // 清除所有加粗袋号
-    const elements = document.querySelectorAll('.one-bag');
-    elements.forEach((element) => {
-      element.style.fontWeight = '400';
-    });
-    // 当前操作袋号加粗
-    if (!isBold) return;
-    const firstBag = childDom.querySelector('.one-bag');
-    if (firstBag) firstBag.style.fontWeight = 'bold';
   }
 
   // 装箱信息
