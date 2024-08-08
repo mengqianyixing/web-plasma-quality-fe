@@ -13,13 +13,15 @@
       <div class="absolute w-full h-full">
         <div class="flex items-center gap-2 w-[300px]">
           <span class="w-[120px] ml-4">血浆编号：</span>
-          <a-input
+          <ScanInput
             ref="inputRef"
-            size="large"
-            @press-enter="handleEnter"
+            size="lg"
             placeholder="请扫描血浆编号"
-            :disabled="inputDisabled"
-            v-model:value="inputValue"
+            @scan-change="(code) => (inputValue = code)"
+            :readonly="inputDisabled"
+            :value="inputValue"
+            @enter="_handleEnter"
+            @keyup="handleKeyupEnter"
           />
         </div>
         <div class="flex" style="height: calc(100% - 40px)">
@@ -44,12 +46,14 @@
 </template>
 <script lang="ts" setup>
   import { BasicModal, useModalInner } from '@/components/Modal';
-  import { ref, computed, nextTick } from 'vue';
+  import { ref, computed } from 'vue';
   import { BasicTable, useTable } from '@/components/Table';
   import { useMessage } from '@/hooks/web/useMessage';
 
   import { getPlasmaScanList, outStorePlasma } from '@/api/stockout/non-productin-put-into';
   import { GetApiCoreBankDeliverNonproductiveScanResponse } from '@/api/type/stockoutManage';
+  import ScanInput from '@/components/Form/src/components/ScanInput.vue';
+  import { debounce } from 'lodash-es';
 
   const dlvNo = ref('');
   const inputDisabled = ref(false);
@@ -58,7 +62,7 @@
 
   defineEmits(['success', 'register']);
   const { createMessage, createWarningModal } = useMessage();
-  const inputRef = ref<HTMLElement | null>(null);
+  const inputRef = ref();
 
   const [registerNoOutTable] = useTable({
     columns: [
@@ -134,7 +138,7 @@
     canResize: false,
   });
   const [register, { setModalProps }] = useModalInner(async (data) => {
-    inputRef.value?.focus();
+    inputRef.value.$el.focus();
 
     setModalProps({
       maskClosable: false,
@@ -151,6 +155,13 @@
   const noOutTableData = computed(() => originTableData.value?.waitList ?? []);
   const outTableData = computed(() => originTableData.value?.outList ?? []);
 
+  const _handleEnter = debounce(handleEnter, 300);
+
+  function handleKeyupEnter(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      _handleEnter();
+    }
+  }
   async function handleEnter() {
     inputDisabled.value = true;
 
@@ -164,27 +175,20 @@
           title: '提示',
           content: res.data.msg,
           keyboard: false,
-          wrapClassName: 'npppo9527',
           onOk: () => {
-            nextTick(() => {
-              inputRef.value?.focus();
-            });
+            setTimeout(() => {
+              inputRef.value.$el.focus();
+              inputRef.value.$el.select();
+            }, 300);
           },
         });
-        const dom: HTMLElement | null = document.querySelector('.npppo9527 button');
-        setTimeout(() => {
-          dom?.blur();
-        });
+
         return;
       }
       createMessage.success('出库成功');
-
-      await reloadTable();
-      nextTick(() => {
-        inputRef.value?.focus();
-      });
-    } finally {
       inputValue.value = '';
+      await reloadTable();
+    } finally {
       inputDisabled.value = false;
     }
   }
