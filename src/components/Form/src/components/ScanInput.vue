@@ -32,7 +32,7 @@
           code.value = '';
           return;
         }
-        emit('enter');
+        emit('enter', { code: 'Enter' });
       }, 100);
       const _reset = debounce(() => {
         time = 0;
