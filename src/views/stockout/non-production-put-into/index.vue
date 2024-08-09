@@ -73,36 +73,40 @@
           <a-button type="primary" @click="handleScan" v-auth="StockOutButtonEnum.NonPutIntoScan">
             扫描出库
           </a-button>
-          <a-dropdown
+          <span
             v-auth="[
               StockOutButtonEnum.NonPlasmaTransferRecordReport,
               StockOutButtonEnum.PlasmaTransferApplyReport,
             ]"
           >
-            <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
-            <template #overlay>
-              <Menu>
-                <MenuItem>
-                  <a-button
-                    type="link"
-                    @click="handlePrint(PrintServerEnum.NON_PLASMA_TRANSFER_RECORD)"
-                    v-auth="StockOutButtonEnum.NonPlasmaTransferRecordReport"
-                  >
-                    非生产用血浆转移记录
-                  </a-button>
-                </MenuItem>
-                <MenuItem>
-                  <a-button
-                    type="link"
-                    @click="handlePrint(PrintServerEnum.RAW_PLASMA_TRANSFER)"
-                    v-auth="StockOutButtonEnum.PlasmaTransferApplyReport"
-                  >
-                    原料血浆转移申请表
-                  </a-button>
-                </MenuItem>
-              </Menu>
-            </template>
-          </a-dropdown>
+            <a-dropdown>
+              <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
+              <template #overlay>
+                <Menu>
+                  <span v-auth="StockOutButtonEnum.NonPlasmaTransferRecordReport">
+                    <MenuItem>
+                      <a-button
+                        type="link"
+                        @click="handlePrint(PrintServerEnum.NON_PLASMA_TRANSFER_RECORD)"
+                      >
+                        非生产用血浆转移记录
+                      </a-button>
+                    </MenuItem>
+                  </span>
+                  <span v-auth="StockOutButtonEnum.PlasmaTransferApplyReport">
+                    <MenuItem>
+                      <a-button
+                        type="link"
+                        @click="handlePrint(PrintServerEnum.RAW_PLASMA_TRANSFER)"
+                      >
+                        原料血浆转移申请表
+                      </a-button>
+                    </MenuItem>
+                  </span>
+                </Menu>
+              </template>
+            </a-dropdown>
+          </span>
         </div>
       </template>
     </BasicTable>

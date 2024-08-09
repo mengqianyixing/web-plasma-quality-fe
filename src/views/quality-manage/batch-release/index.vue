@@ -55,24 +55,27 @@
         >
           打印
         </a-button>
-        <a-dropdown
+        <span
           v-auth="[QualityButtonEnum.BatchReleasePrintKM, QualityButtonEnum.BatchQuarantinePeriod]"
         >
-          <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
-          <template #overlay>
-            <Menu>
-              <MenuItem @click="handlePrint" v-auth="QualityButtonEnum.BatchReleasePrintKM">
-                <a-button type="link" :loading="reportLoading"> 批放行单 </a-button>
-              </MenuItem>
-              <MenuItem
-                @click="handlePrintQuarantine"
-                v-auth="QualityButtonEnum.BatchQuarantinePeriod"
-              >
-                <a-button type="link" :loading="reportLoading"> 筛选表 </a-button>
-              </MenuItem>
-            </Menu>
-          </template>
-        </a-dropdown>
+          <a-dropdown>
+            <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
+            <template #overlay>
+              <Menu>
+                <span v-auth="QualityButtonEnum.BatchReleasePrintKM">
+                  <MenuItem @click="handlePrint">
+                    <a-button type="link" :loading="reportLoading"> 批放行单 </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="QualityButtonEnum.BatchQuarantinePeriod">
+                  <MenuItem @click="handlePrintQuarantine">
+                    <a-button type="link" :loading="reportLoading"> 筛选表 </a-button>
+                  </MenuItem>
+                </span>
+              </Menu>
+            </template>
+          </a-dropdown>
+        </span>
       </template>
       <template #mesId="{ record }: { record: Recordable }">
         <span
