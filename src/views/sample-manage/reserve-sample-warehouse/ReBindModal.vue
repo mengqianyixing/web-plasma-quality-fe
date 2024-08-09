@@ -50,7 +50,6 @@
   const boxRef = ref();
   const trayRef = ref();
   const [registerReBindModal, { setModalProps }] = useModalInner(() => {
-    setModalProps({ confirmLoading: false });
     formData.boxId = '';
     formData.trayNo = '';
     trayRef.value.$el.focus();
@@ -70,9 +69,20 @@
     const { boxId, trayNo } = formData;
     if (trayNo && !boxId) boxRef.value.$el.focus();
     if (!boxId || !trayNo) return message.warning('请扫描' + (boxId ? '托盘' : '箱号'));
-    await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind' });
-    formData.boxId = '';
-    message.success('操作成功');
+    try {
+      const focusedElement = document.activeElement as InputHTMLElement;
+      setModalProps({ loading: true, confirmLoading: true });
+      await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind' }, () => {
+        setTimeout(() => {
+          focusedElement.focus();
+          focusedElement.select();
+        }, 300);
+      });
+      formData.boxId = '';
+      message.success('操作成功');
+    } finally {
+      setModalProps({ loading: false, confirmLoading: false });
+    }
   }
 </script>
 

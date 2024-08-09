@@ -39,7 +39,7 @@
     GetApiSearchBankSampleTraySingleRequest,
   } from '@/api/type/sampleManage';
   import dayjs from 'dayjs';
-
+  import { STORE_FLAG } from '@/enums/plasmaStoreEnum';
   import outModal from '@/views/tray/outInStore/outModal.vue';
 
   defineEmits(['success', 'register']);
@@ -137,14 +137,17 @@
   }
 
   function handleTrayOut() {
-    if (!vxeRef.value?.getCheckboxRecords().length) {
+    const rows = vxeRef.value?.getCheckboxRecords() || [];
+    if (!rows.length) {
       createMessage.warn('请选择托盘');
       return;
     }
-
+    const [firstRow] = rows;
+    const notAlike = rows.some((_) => _.houseNo !== firstRow.houseNo);
+    if (notAlike) return createMessage.warn('所选托盘不属于同一库房!');
     openModal(true, {
-      data: vxeRef.value?.getCheckboxRecords() ?? [],
-      showSite: true,
+      data: rows,
+      showSite: firstRow.houseType[1] === STORE_FLAG.S,
     });
   }
 </script>

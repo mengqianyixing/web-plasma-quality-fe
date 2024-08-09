@@ -79,35 +79,7 @@ export const formSchema: FormSchema[] = [
         ),
     },
   },
-  {
-    field: 'dateKey',
-    defaultValue: 'receipt',
-    fields: ['date'],
-    component: 'Input',
-    label: '日期',
-    labelWidth: '30',
-    render({ model, field }, { disabled }) {
-      return (
-        <div class="flex gap-2 ">
-          <Select
-            disabled={disabled}
-            dropdownMatchSelectWidth={false}
-            allowClear={false}
-            style="width: 90px;"
-            v-model:value={model[field]}
-          >
-            <Select.Option value="receipt">接收日期</Select.Option>
-            <Select.Option value="verify">验收发布日期</Select.Option>
-          </Select>
-          <FormItem name="date">
-            <FormItemRest>
-              <RangePicker v-model:value={model['date']} />
-            </FormItemRest>
-          </FormItem>
-        </div>
-      );
-    },
-  },
+
   {
     label: '血浆批号',
     field: 'batchNo',
@@ -129,6 +101,36 @@ export const formSchema: FormSchema[] = [
       api: getDilutionTypeApi,
       labelField: 'key',
       valueField: 'value',
+    },
+  },
+  {
+    field: 'dateKey',
+    defaultValue: 'receipt',
+    fields: ['date'],
+    component: 'Input',
+    label: '日期',
+    labelWidth: '30',
+    colProps: { flex: '0 0 440px' },
+    render({ model, field }, { disabled }) {
+      return (
+        <div class="flex gap-2 ">
+          <Select
+            disabled={disabled}
+            dropdownMatchSelectWidth={false}
+            allowClear={false}
+            style="width: 130px;"
+            v-model:value={model[field]}
+          >
+            <Select.Option value="receipt">接收日期</Select.Option>
+            <Select.Option value="verify">验收发布日期</Select.Option>
+          </Select>
+          <FormItem name="date">
+            <FormItemRest>
+              <RangePicker v-model:value={model['date']} />
+            </FormItemRest>
+          </FormItem>
+        </div>
+      );
     },
   },
 ];

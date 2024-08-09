@@ -83,11 +83,12 @@
     submitPrepareCancelApi,
   } from '@/api/stockout/production-plan';
   import PickingModal from './picking-moda.vue';
-  import { useGlobSetting } from '@/hooks/setting/index';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
   import { COMPANY } from '@/enums/company';
 
-  const globSetting = useGlobSetting();
-  const iskm = globSetting.company === COMPANY.KM;
+  const globalApiStore = useGlobalApiStoreWithOut();
+  const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
   const emit = defineEmits(['close']);
   const [registerPickingModal, { openModal }] = useModal();
   const activeKey = ref(tabList[0].key);

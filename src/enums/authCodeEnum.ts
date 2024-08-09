@@ -162,6 +162,7 @@ export enum QualityButtonEnum {
   BatchReleaseCancelAdd = 'E_94003007',
   BatchReleaseCancelReview = 'E_94003008',
   BatchQuarantinePeriod = 'E_94003009',
+  BatchReleasePrintKM = 'E_940030010',
 }
 
 export enum NonconformityButtonEnum {

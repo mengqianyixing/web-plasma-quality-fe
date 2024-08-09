@@ -72,6 +72,7 @@ enum Api {
   BATCH_KEEP_PACK = '/api/core/batch/sample/accept/keep-pack/batches',
   ACCEPT_FINISH = '/api/core/batch/sample/accept/keep-pack/finish',
   OUT_BAND_BY_BATCH = '/api/core/bank/deliver/sample/scan-batch',
+  OUT_BAND_WMS = '/api/core/bank/deliver/wms/sample/outbound',
 }
 
 export const getReserveSampleList = (params: GetApiCoreBankDeliverSampleRequest) =>
@@ -280,3 +281,5 @@ export const outBandByBatch = (params: PostApiCoreBankDeliverSampleScanBatchRequ
     url: Api.OUT_BAND_BY_BATCH,
     params,
   });
+
+export const outBoundWMSApi = (params) => defHttp.put({ url: Api.OUT_BAND_WMS, params });

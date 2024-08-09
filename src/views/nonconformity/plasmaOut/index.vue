@@ -35,65 +35,63 @@
         <a-button type="primary" @click="handleScan" v-auth="NonconformityButtonEnum.PlasmaOutScan">
           出库扫描
         </a-button>
-        <a-dropdown>
-          <a-button
-            type="primary"
-            :loading="reportLoading"
-            v-auth="[
-              NonconformityButtonEnum.PlasmaOutTransferPrint,
-              NonconformityButtonEnum.PlasmaOutPlasmaPrint,
-              NonconformityButtonEnum.PlasmaOutDestructionPrint,
-            ]"
-          >
-            打印
-          </a-button>
-          <template #overlay>
-            <Menu>
-              <MenuItem
-                :class="!disabledTransfer ? 'pointer-events-none' : ''"
-                @click="
-                  handlePrint(PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER, '不合格原料血浆转移记录')
-                "
-              >
-                <a-button
-                  type="link"
-                  :disabled="!disabledTransfer"
-                  v-auth="NonconformityButtonEnum.PlasmaOutTransferPrint"
-                  >不合格原料血浆转移记录
-                </a-button>
-              </MenuItem>
-              <MenuItem
-                :class="disabledTransfer ? 'pointer-events-none' : ''"
-                @click="
-                  handlePrint(PrintServerEnum.UNQUALIFIED_RAW_PLASMA, '不合格原料血浆信息清单')
-                "
-              >
-                <a-button
-                  type="link"
-                  :disabled="disabledTransfer"
-                  v-auth="NonconformityButtonEnum.PlasmaOutPlasmaPrint"
-                  >不合格原料血浆信息清单
-                </a-button>
-              </MenuItem>
-              <MenuItem
-                :class="disabledTransfer ? 'pointer-events-none' : ''"
-                @click="
-                  handlePrint(
-                    PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA,
-                    '不合格原料血浆销毁处理申请审批表',
-                  )
-                "
-              >
-                <a-button
-                  type="link"
-                  :disabled="disabledTransfer"
-                  v-auth="NonconformityButtonEnum.PlasmaOutDestructionPrint"
-                  >不合格原料血浆销毁处理申请审批表
-                </a-button>
-              </MenuItem>
-            </Menu>
-          </template>
-        </a-dropdown>
+        <span
+          v-auth="[
+            NonconformityButtonEnum.PlasmaOutTransferPrint,
+            NonconformityButtonEnum.PlasmaOutPlasmaPrint,
+            NonconformityButtonEnum.PlasmaOutDestructionPrint,
+          ]"
+        >
+          <a-dropdown>
+            <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
+            <template #overlay>
+              <Menu>
+                <span v-auth="NonconformityButtonEnum.PlasmaOutTransferPrint">
+                  <MenuItem
+                    :class="!disabledTransfer ? 'pointer-events-none' : ''"
+                    @click="
+                      handlePrint(
+                        PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER,
+                        '不合格原料血浆转移记录',
+                      )
+                    "
+                  >
+                    <a-button type="link" :disabled="!disabledTransfer"
+                      >不合格原料血浆转移记录
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="NonconformityButtonEnum.PlasmaOutPlasmaPrint">
+                  <MenuItem
+                    :class="disabledTransfer ? 'pointer-events-none' : ''"
+                    @click="
+                      handlePrint(PrintServerEnum.UNQUALIFIED_RAW_PLASMA, '不合格原料血浆信息清单')
+                    "
+                  >
+                    <a-button type="link" :disabled="disabledTransfer"
+                      >不合格原料血浆信息清单
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="NonconformityButtonEnum.PlasmaOutDestructionPrint">
+                  <MenuItem
+                    :class="disabledTransfer ? 'pointer-events-none' : ''"
+                    @click="
+                      handlePrint(
+                        PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA,
+                        '不合格原料血浆销毁处理申请审批表',
+                      )
+                    "
+                  >
+                    <a-button type="link" :disabled="disabledTransfer"
+                      >不合格原料血浆销毁处理申请审批表
+                    </a-button>
+                  </MenuItem>
+                </span>
+              </Menu>
+            </template>
+          </a-dropdown>
+        </span>
       </template>
       <template #dlvNo="{ record }: { record: Recordable }">
         <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleDt(record)">

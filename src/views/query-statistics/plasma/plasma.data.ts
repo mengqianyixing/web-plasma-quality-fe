@@ -4,11 +4,12 @@ import dayjs from 'dayjs';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useStation } from '@/hooks/common/useStation';
-import { useGlobSetting } from '@/hooks/setting/index';
+import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+import { SysParamsEnum } from '@/enums/sysParamsEnum';
 import { COMPANY } from '@/enums/company';
 
-const globSetting = useGlobSetting();
-const iskm = globSetting.company === COMPANY.KM;
+const globalApiStore = useGlobalApiStoreWithOut();
+const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
 

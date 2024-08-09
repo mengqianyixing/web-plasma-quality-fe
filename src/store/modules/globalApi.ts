@@ -37,6 +37,9 @@ export const useGlobalApiStore = defineStore({
         return map;
       }, new Map());
     },
+    getSysParams(state) {
+      return (key: string) => state.sysParamsMap.get(key);
+    },
   },
   actions: {
     setStationList() {

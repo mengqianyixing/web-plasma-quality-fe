@@ -54,7 +54,7 @@
   </PageWrapper>
 </template>
 <script setup lang="tsx">
-  import { ref, computed, reactive, createVNode, nextTick } from 'vue';
+  import { ref, computed, reactive, createVNode } from 'vue';
   import { debounce } from 'lodash-es';
   import { getAccepts, acceptPlasma, checkTrayNo } from '@/api/inbound-management/receive-plasma';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
@@ -112,7 +112,7 @@
             <a-input
               placeholder="请扫描"
               onChange={(event) => (trayNo.value = event.target.value)}
-              disabled={tableLoading.value}
+              readonly={tableLoading.value}
               value={trayNo}
               onkeyup={debounce(handlePressEntertrayNo, 500)}
             />
@@ -131,7 +131,7 @@
               placeholder="请扫描"
               ref={boxNoRef}
               value={boxNo.value}
-              disabled={tableLoading.value}
+              readonly={tableLoading.value}
               onScanChange={(code: string) => {
                 boxNo.value = code;
               }}
@@ -171,7 +171,7 @@
     schema: schema,
   });
 
-  const _handlePressEnter = debounce(handlePressEnter, 500);
+  const _handlePressEnter = debounce(handlePressEnter, 200);
 
   // 箱号扫描
   async function handlePressEnter(e) {
@@ -189,9 +189,9 @@
         trayNo: trayNo.value,
         batchNo: batchNo.value,
       };
+      const focusedElement = document.activeElement as InputHTMLElement;
       try {
         tableLoading.value = true;
-        const focusedElement = document.activeElement as InputHTMLElement;
         const data = await acceptPlasma(params, () => {
           setTimeout(() => {
             focusedElement.focus();
@@ -211,7 +211,9 @@
         }
       } finally {
         tableLoading.value = false;
-        nextTick(boxNoRef.value.$el.focus);
+        setTimeout(() => {
+          focusedElement.focus();
+        }, 300);
       }
     }
   }
@@ -229,6 +231,7 @@
       }
       try {
         tableLoading.value = true;
+        const focusedElement = document.activeElement as InputHTMLElement;
         const res = await checkTrayNo(trayNo.value);
         if (res.data.code !== '0' && res.data.msg) {
           createWarningModal({
@@ -236,19 +239,18 @@
             content: res.data.msg,
             keyboard: false,
             wrapClassName: 'rpbox9527',
-          });
-          const dom: HTMLElement | null = document.querySelector('.rpbox9527 button');
-          setTimeout(() => {
-            dom?.blur();
+            onOk: () => {
+              setTimeout(() => {
+                focusedElement.focus();
+                focusedElement.select();
+              }, 300);
+            },
           });
           return;
         }
-        tableLoading.value = false;
-        nextTick(() => {
-          boxNoRef.value.$el.focus();
-        });
-      } catch (err) {
-        console.log(err);
+        trayNo.value = '';
+        setTimeout(focusedElement.focus, 300);
+      } finally {
         tableLoading.value = false;
       }
     }

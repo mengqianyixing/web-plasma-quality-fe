@@ -8,12 +8,19 @@
     :destroyOnClose="true"
     :maskClosable="false"
     :min-height="600"
-    width="85%"
+    width="1100px"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
         <div class="flex-1 h-full shrink-1">
-          <BasicTable @register="registerTable" />
+          <BasicTable @register="registerTable">
+            <template #toolbar v-if="isRs">
+              <div class="flex gap-2">
+                <a-button type="primary" @click="autoSorting"> 自动分拣 </a-button>
+                <a-button type="primary" @click="peopleSorting"> 转人工分拣 </a-button>
+              </div>
+            </template>
+          </BasicTable>
         </div>
       </div>
     </div>
@@ -37,11 +44,17 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { productionPMSTask, productionPMSTaskPeople } from '@/api/stockout/production-put-into';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { COMPANY } from '@/enums/company';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
+  const isRs = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.RS;
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
-  const { createMessage } = useMessage();
+  const { createMessage, createConfirm } = useMessage();
   const { warning } = createMessage;
 
   const emit = defineEmits(['success', 'register']);
@@ -53,7 +66,7 @@
     {
       title: '投产准备号',
       dataIndex: 'prepareNo',
-      width: 120,
+      width: 100,
     },
     {
       title: '投产类型',
@@ -66,7 +79,7 @@
     {
       title: '挑浆模式',
       dataIndex: 'pickMode',
-      width: 120,
+      width: 140,
       format(text) {
         return `${pickModeMap.get(text as pickModeValueEnum)}`;
       },
@@ -74,7 +87,7 @@
     {
       title: '批次数量',
       dataIndex: 'batchCount',
-      width: 80,
+      width: 75,
       customRender: ({ record }) => {
         if (record.summary && record.summary.batchCount !== null) {
           return record.summary.batchCount;
@@ -91,7 +104,7 @@
         }
         return '';
       },
-      width: 110,
+      width: 100,
     },
     {
       title: '投产血浆数量',
@@ -102,7 +115,7 @@
         }
         return '';
       },
-      width: 110,
+      width: 100,
     },
     {
       title: '浆员数量',
@@ -118,7 +131,8 @@
     {
       title: '准备人',
       dataIndex: 'creator',
-      width: 100,
+      width: 80,
+      ellipsis: false,
     },
     {
       title: '准备时间',
@@ -126,7 +140,7 @@
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
       },
-      width: 140,
+      width: 160,
     },
     {
       title: '状态',
@@ -143,13 +157,11 @@
       field: 'prepareNo',
       label: '投产准备号',
       component: 'Input',
-      colProps: { span: 4 },
     },
     {
       field: 'prodType',
       label: '投产类型',
       component: 'Select',
-      colProps: { span: 5 },
       defaultValue: [],
       componentProps: {
         options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
@@ -159,7 +171,6 @@
       field: 'prepareStates',
       label: '状态',
       component: 'Select',
-      colProps: { span: 5 },
       defaultValue: ['TPK', 'RPK'],
       componentProps: {
         mode: 'multiple',
@@ -173,11 +184,10 @@
   // 表格选中行
   const selectedRow = ref<any>([]);
 
-  const [registerTable, { clearSelectedRowKeys }] = useTable({
+  const [registerTable, { clearSelectedRowKeys, reload }] = useTable({
     api: getPrepareList,
     columns,
     formConfig: {
-      labelWidth: 90,
       schemas: searchFormSchema,
     },
     immediate: true,
@@ -225,5 +235,43 @@
   function resetField() {
     closeModal();
     clearSelectedRowKeys();
+  }
+
+  async function autoSorting() {
+    if (!selectedRow.value.length) {
+      warning('请先选择一条数据!');
+      return;
+    }
+    const [row] = selectedRow.value;
+    createConfirm({
+      title: '确认',
+      content: '请确认是否自动分拣？',
+      iconType: 'warning',
+      onOk: async () => {
+        await productionPMSTask({
+          prepareNo: row.prepareNo,
+          taskType: 'SEND',
+        });
+        createMessage.success('自动分拣成功');
+        reload();
+      },
+    });
+  }
+  async function peopleSorting() {
+    if (!selectedRow.value.length) {
+      warning('请先选择一条数据!');
+      return;
+    }
+    const [row] = selectedRow.value;
+    createConfirm({
+      title: '确认',
+      content: '请确认是否转人工分拣？',
+      iconType: 'warning',
+      onOk: async () => {
+        await productionPMSTaskPeople(row.prepareNo);
+        createMessage.success('自动分拣成功');
+        reload();
+      },
+    });
   }
 </script>

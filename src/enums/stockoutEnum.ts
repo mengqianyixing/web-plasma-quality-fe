@@ -37,11 +37,11 @@ statusMap.set(statusValueEnum.PLI, statusEnum.PLI);
 statusMap.set(statusValueEnum.PBR, statusEnum.PBR);
 statusMap.set(statusValueEnum.PLD, statusEnum.PLD);
 statusMap.set(statusValueEnum.PVD, statusEnum.PVD);
-statusMap.set(statusValueEnum.OTD, statusEnum.OTD);
 statusMap.set(statusValueEnum.OUI, statusEnum.OUI);
+statusMap.set(statusValueEnum.OTD, statusEnum.OTD);
 statusMap.set(statusValueEnum.ACT, statusEnum.ACT);
 statusMap.set(statusValueEnum.ACD, statusEnum.ACD);
-statusMap.set(statusValueEnum.ROD, statusEnum.ROD);
+// statusMap.set(statusValueEnum.ROD, statusEnum.ROD);
 
 //审核结果
 export enum auditResultEnum {
