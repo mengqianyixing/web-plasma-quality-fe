@@ -36,6 +36,7 @@ enum Api {
   PRODUCTION_TRAY_OUT_STORE = '/api/product/prepare/tray/out',
   PRODUCTION_BOX_NUM_DETAIL = '/api/product/order/box',
   PMS_SORT_TASK = '/api/product/prepare/sorting/task',
+  PMS_SORT_TASK_PEOPLE = '/api/product/prepare/automatic/to/people/',
   PMS_PICK_SYSTEM = '/api/product/plan/bag-out',
 }
 
@@ -101,6 +102,10 @@ export const productionPMSTask = (params: PostApiProductPrepareSortingTaskReques
   defHttp.post<PostApiProductPrepareSortingTaskResponse>({
     url: Api.PMS_SORT_TASK,
     params,
+  });
+export const productionPMSTaskPeople = (prepareNo: string) =>
+  defHttp.post({
+    url: Api.PMS_SORT_TASK_PEOPLE + prepareNo,
   });
 
 export const productionPMSPickSystem = (

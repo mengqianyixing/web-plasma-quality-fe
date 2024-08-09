@@ -48,64 +48,58 @@
           v-auth="StockOutButtonEnum.ProductionPlanReCheck"
           >撤销审核</a-button
         >
-        <a-dropdown
+        <span
           v-auth="[
             StockOutButtonEnum.ProductionPlanCheckListReport,
             StockOutButtonEnum.ProductionPlanTransferReport,
             StockOutButtonEnum.ProductionPlanMaterialReport,
+            StockOutButtonEnum.ProductionPlanPlasmaReport,
+            StockOutButtonEnum.PlasmaProductionApplication,
           ]"
         >
-          <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
-          <template #overlay>
-            <Menu>
-              <MenuItem>
-                <a-button
-                  type="link"
-                  @click="handlePrint('PLASMA_PRODUCTION_CHECKLIST')"
-                  v-auth="StockOutButtonEnum.ProductionPlanCheckListReport"
-                >
-                  原料血浆投产清单
-                </a-button>
-              </MenuItem>
-              <MenuItem>
-                <a-button
-                  type="link"
-                  @click="handlePrint('PLASMA_TRANSFER_RECORD')"
-                  v-auth="StockOutButtonEnum.ProductionPlanTransferReport"
-                >
-                  原料血浆转移记录
-                </a-button>
-              </MenuItem>
-              <MenuItem>
-                <a-button
-                  type="link"
-                  @click="handlePrint('MATERIAL_PLASMA')"
-                  v-auth="StockOutButtonEnum.ProductionPlanMaterialReport"
-                >
-                  原料血浆复检试剂统计报表
-                </a-button>
-              </MenuItem>
-              <MenuItem>
-                <a-button
-                  type="link"
-                  @click="handlePrint('PLASMA_PRODUCTION_PLAN')"
-                  v-auth="StockOutButtonEnum.ProductionPlanPlasmaReport"
-                >
-                  原料血浆投产计划
-                </a-button>
-              </MenuItem>
-              <MenuItem>
-                <a-button
-                  type="link"
-                  @click="handlePrint('PLASMA_PRODUCTION_APPLICATION')"
-                  v-auth="StockOutButtonEnum.PlasmaProductionApplication"
-                >
-                  原料血浆投产申报表
-                </a-button>
-              </MenuItem>
-            </Menu>
-          </template>
-        </a-dropdown>
+          <a-dropdown>
+            <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
+            <template #overlay>
+              <Menu>
+                <span v-auth="StockOutButtonEnum.ProductionPlanCheckListReport">
+                  <MenuItem>
+                    <a-button type="link" @click="handlePrint('PLASMA_PRODUCTION_CHECKLIST')">
+                      原料血浆投产清单
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="StockOutButtonEnum.ProductionPlanTransferReport">
+                  <MenuItem>
+                    <a-button type="link" @click="handlePrint('PLASMA_TRANSFER_RECORD')">
+                      原料血浆转移记录
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="StockOutButtonEnum.ProductionPlanMaterialReport">
+                  <MenuItem>
+                    <a-button type="link" @click="handlePrint('MATERIAL_PLASMA')">
+                      原料血浆复检试剂统计报表
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="StockOutButtonEnum.ProductionPlanPlasmaReport">
+                  <MenuItem>
+                    <a-button type="link" @click="handlePrint('PLASMA_PRODUCTION_PLAN')">
+                      原料血浆投产计划
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="StockOutButtonEnum.PlasmaProductionApplication">
+                  <MenuItem>
+                    <a-button type="link" @click="handlePrint('PLASMA_PRODUCTION_APPLICATION')">
+                      原料血浆投产申报表
+                    </a-button>
+                  </MenuItem>
+                </span>
+              </Menu>
+            </template>
+          </a-dropdown>
+        </span>
         <a-button
           @click="handleDownloadAbstract(PrintServerEnum.PLASMA_ABSTRACT)"
           type="primary"

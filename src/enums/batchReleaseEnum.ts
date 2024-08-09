@@ -10,4 +10,10 @@ export const STATUS_TEXT: Map<string, string> = new Map([
   [STATUS.WAT, '待放行'],
   [STATUS.DON, '已放行'],
 ]);
-export const statusList = Object.keys(STATUS).map((_) => ({ label: STATUS_TEXT.get(_), value: _ }));
+export const statusList = (() => {
+  const list: Recordable = [];
+  for (const [value, label] of STATUS_TEXT) {
+    list.push({ label, value });
+  }
+  return list;
+})();

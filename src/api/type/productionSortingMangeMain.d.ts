@@ -1112,7 +1112,7 @@ export interface GetApiProductOrderBoxResponse {
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `POST /api/product/prepare/sorting/task`
- * @更新时间 `2024-06-05 16:55:39`
+ * @更新时间 `2024-08-08 17:51:05`
  */
 export interface PostApiProductPrepareSortingTaskRequest {
   /**
@@ -1130,7 +1130,7 @@ export interface PostApiProductPrepareSortingTaskRequest {
  *
  * @分类 [血浆分拣↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5667)
  * @请求头 `POST /api/product/prepare/sorting/task`
- * @更新时间 `2024-06-05 16:55:39`
+ * @更新时间 `2024-08-08 17:51:05`
  */
 export interface PostApiProductPrepareSortingTaskResponse {}
 

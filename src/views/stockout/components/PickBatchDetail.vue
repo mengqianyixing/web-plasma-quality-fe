@@ -35,22 +35,6 @@
                 >
               </div>
             </template>
-            <template #toolbar>
-              <a-button
-                @click="autoSorting"
-                type="primary"
-                v-auth="StockOutButtonEnum.ProductionPreparationAutoSorting"
-              >
-                自动分拣
-              </a-button>
-              <a-button
-                @click="manualSorting"
-                type="primary"
-                v-auth="StockOutButtonEnum.ProductionPreparationManualSorting"
-              >
-                转人工分拣
-              </a-button>
-            </template>
           </BasicTable>
         </div></div
       ></div
@@ -70,9 +54,7 @@
     getBatchInfo,
     setSortingBatch,
   } from '@/api/stockout/production-sorting/production-sorting-main';
-  import { productionPMSTask } from '@/api/stockout/production-put-into';
   import { prepareStateMap, prepareStateValueEnum } from '@/enums/stockoutEnum';
-  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
 
   const emit = defineEmits(['success']);
   const prepareNo = ref(''); // 准备号
@@ -160,9 +142,8 @@
   ];
 
   const { createConfirm, createMessage } = useMessage();
-  const { warning } = createMessage;
 
-  const [registerTable, { setProps, reload, getDataSource, setLoading }] = useTable({
+  const [registerTable, { setProps, setLoading }] = useTable({
     api: getBatchInfo,
     columns: columnsImmunity,
     useSearchForm: false,
@@ -200,31 +181,6 @@
         sort,
       },
     });
-  }
-  async function autoSorting() {
-    const dataArr = getDataSource();
-    if (!dataArr.length) {
-      warning('当前准备号无法自动分拣!');
-      return;
-    }
-    createConfirm({
-      title: '确认',
-      content: '请确认是否自动分拣？',
-      iconType: 'warning',
-      onOk: async () => {
-        await productionPMSTask({
-          prepareNo: prepareNo.value,
-          taskType: 'SEND',
-        });
-        createMessage.success('自动分拣成功');
-        await reload();
-      },
-    });
-  }
-
-  function manualSorting() {
-    warning('暂无法转人工分拣!');
-    return;
   }
 
   async function goSort(record) {

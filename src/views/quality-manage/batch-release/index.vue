@@ -47,33 +47,35 @@
           v-auth="QualityButtonEnum.BatchReleaseUnRelease"
           >撤销放行</a-button
         >
-        <a-dropdown
-          v-auth="[QualityButtonEnum.BatchReleasePrint, QualityButtonEnum.BatchQuarantinePeriod]"
+        <a-button
+          type="primary"
+          :loading="reportLoading"
+          @click="handlePrint"
+          v-auth="QualityButtonEnum.BatchReleasePrint"
         >
-          <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
-          <template #overlay>
-            <Menu>
-              <MenuItem @click="handlePrint">
-                <a-button
-                  type="link"
-                  :loading="reportLoading"
-                  v-auth="QualityButtonEnum.BatchReleasePrint"
-                >
-                  原料血浆投产批放行单
-                </a-button>
-              </MenuItem>
-              <MenuItem @click="handlePrintQuarantine">
-                <a-button
-                  type="link"
-                  :loading="reportLoading"
-                  v-auth="QualityButtonEnum.BatchQuarantinePeriod"
-                >
-                  原料血浆检疫期筛选情况
-                </a-button>
-              </MenuItem>
-            </Menu>
-          </template>
-        </a-dropdown>
+          打印
+        </a-button>
+        <span
+          v-auth="[QualityButtonEnum.BatchReleasePrintKM, QualityButtonEnum.BatchQuarantinePeriod]"
+        >
+          <a-dropdown>
+            <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
+            <template #overlay>
+              <Menu>
+                <span v-auth="QualityButtonEnum.BatchReleasePrintKM">
+                  <MenuItem @click="handlePrint">
+                    <a-button type="link" :loading="reportLoading"> 批放行单 </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="QualityButtonEnum.BatchQuarantinePeriod">
+                  <MenuItem @click="handlePrintQuarantine">
+                    <a-button type="link" :loading="reportLoading"> 筛选表 </a-button>
+                  </MenuItem>
+                </span>
+              </Menu>
+            </template>
+          </a-dropdown>
+        </span>
       </template>
       <template #mesId="{ record }: { record: Recordable }">
         <span
@@ -356,6 +358,9 @@
   async function handlePrint() {
     const [row] = getSelections(true);
     if (!row) return;
+    if (row.state === STATUS.TBR) {
+      return message.warning(`【${STATUS_TEXT.get(STATUS.TBR)}】状态不允许打印报表`);
+    }
     try {
       reportLoading.value = true;
       const res = await getReportApi({
@@ -372,6 +377,9 @@
   async function handlePrintQuarantine() {
     const [row] = getSelections(true);
     if (!row) return;
+    if (row.state === STATUS.TBR) {
+      return message.warning(`【${STATUS_TEXT.get(STATUS.TBR)}】状态不允许打印报表`);
+    }
     try {
       reportLoading.value = true;
       const res = await getReportApi({
