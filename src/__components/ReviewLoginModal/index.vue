@@ -55,6 +55,7 @@
   async function handleSubmit() {
     try {
       const values = await validate();
+      setModalProps({ confirmLoading: true });
       const loginRes = await reCheckLogin({
         ...values,
         buttonId: props.authCode,
@@ -63,7 +64,6 @@
         warning('复核人不能与当前登录人相同!');
         return;
       }
-      setModalProps({ confirmLoading: true });
       closeModal();
       emit('success', loginRes.username, loginRes);
       await resetFields();
