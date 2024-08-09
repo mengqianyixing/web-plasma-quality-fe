@@ -135,7 +135,7 @@ const checkManager: AppRouteModule = {
         },
         {
           id: QualityButtonEnum.BatchReleasePrint,
-          title: '原料血浆投产批放行单',
+          title: '打印',
           company: COMPANY.RS,
         },
         {
