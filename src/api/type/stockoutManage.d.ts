@@ -1248,6 +1248,29 @@ export interface GetApiProductPrepareSortingBagsResponse {
 }
 
 /**
+ * 接口 [挑浆系统转人工↗](https://yapi.sharing8.cn/project/529/interface/api/36471) 的 **请求类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `POST /api/product/prepare/automatic/to/people/{prepareNo}`
+ * @更新时间 `2024-08-08 17:48:08`
+ */
+export interface PostApiProductPrepareAutomaticToPeoplePrepareNoRequest {
+  /**
+   * 投产准备号
+   */
+  prepareNo: string;
+}
+
+/**
+ * 接口 [挑浆系统转人工↗](https://yapi.sharing8.cn/project/529/interface/api/36471) 的 **返回类型**
+ *
+ * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
+ * @请求头 `POST /api/product/prepare/automatic/to/people/{prepareNo}`
+ * @更新时间 `2024-08-08 17:48:08`
+ */
+export interface PostApiProductPrepareAutomaticToPeoplePrepareNoResponse {}
+
+/**
  * 接口 [创建非生产出库申请单↗](https://yapi.sharing8.cn/project/529/interface/api/33417) 的 **请求类型**
  *
  * @分类 [非生产出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5757)

@@ -1315,7 +1315,7 @@ export interface PostApiCoreBankDeliverSampleScanResponse {}
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/tray`
- * @更新时间 `2024-05-28 11:27:52`
+ * @更新时间 `2024-08-09 13:33:49`
  */
 export interface GetApiCoreBankDeliverSampleTrayRequest {
   /**
@@ -1341,7 +1341,7 @@ export interface GetApiCoreBankDeliverSampleTrayRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/tray`
- * @更新时间 `2024-05-28 11:27:52`
+ * @更新时间 `2024-08-09 13:33:49`
  */
 export interface GetApiCoreBankDeliverSampleTrayResponse {
   /**
@@ -1360,6 +1360,7 @@ export interface GetApiCoreBankDeliverSampleTrayResponse {
    * 样本袋号
    */
   sampleBagNo?: string;
+  houseType?: string;
   /**
    * 箱号
    */
@@ -2334,7 +2335,7 @@ export interface GetApiCoreBankDeliverSampleScanSingleResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/search/bank/sample/tray-single`
- * @更新时间 `2024-07-26 17:09:45`
+ * @更新时间 `2024-08-09 13:34:34`
  */
 export interface GetApiSearchBankSampleTraySingleRequest {
   /**
@@ -2360,7 +2361,7 @@ export interface GetApiSearchBankSampleTraySingleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/search/bank/sample/tray-single`
- * @更新时间 `2024-07-26 17:09:45`
+ * @更新时间 `2024-08-09 13:34:34`
  */
 export interface GetApiSearchBankSampleTraySingleResponse {
   /**
@@ -2396,6 +2397,7 @@ export interface GetApiSearchBankSampleTraySingleResponse {
    */
   location: string;
   houseNo: string;
+  houseType: string;
 }
 
 /**
