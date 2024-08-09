@@ -231,7 +231,7 @@
               placeholder="请扫描"
               ref={bagNoRef}
               value={bagNo.value}
-              disabled={tableLoading.value}
+              readonly={tableLoading.value}
               onScanChange={(code: string) => {
                 bagNo.value = code;
               }}
