@@ -48,7 +48,6 @@
               <Menu>
                 <span v-auth="NonconformityButtonEnum.PlasmaOutTransferPrint">
                   <MenuItem
-                    :class="!disabledTransfer ? 'pointer-events-none' : ''"
                     @click="
                       handlePrint(
                         PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER,
@@ -63,7 +62,6 @@
                 </span>
                 <span v-auth="NonconformityButtonEnum.PlasmaOutPlasmaPrint">
                   <MenuItem
-                    :class="disabledTransfer ? 'pointer-events-none' : ''"
                     @click="
                       handlePrint(PrintServerEnum.UNQUALIFIED_RAW_PLASMA, '不合格原料血浆信息清单')
                     "
@@ -75,7 +73,6 @@
                 </span>
                 <span v-auth="NonconformityButtonEnum.PlasmaOutDestructionPrint">
                   <MenuItem
-                    :class="disabledTransfer ? 'pointer-events-none' : ''"
                     @click="
                       handlePrint(
                         PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA,
