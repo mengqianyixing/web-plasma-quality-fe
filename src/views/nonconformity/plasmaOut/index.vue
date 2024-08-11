@@ -49,10 +49,14 @@
                 <span v-auth="NonconformityButtonEnum.PlasmaOutTransferPrint">
                   <MenuItem
                     @click="
-                      handlePrint(
-                        PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER,
-                        '不合格原料血浆转移记录',
-                      )
+                      () => {
+                        if (disabledTransfer) {
+                          handlePrint(
+                            PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER,
+                            '不合格原料血浆转移记录',
+                          );
+                        }
+                      }
                     "
                   >
                     <a-button type="link" :disabled="!disabledTransfer"
@@ -63,7 +67,14 @@
                 <span v-auth="NonconformityButtonEnum.PlasmaOutPlasmaPrint">
                   <MenuItem
                     @click="
-                      handlePrint(PrintServerEnum.UNQUALIFIED_RAW_PLASMA, '不合格原料血浆信息清单')
+                      () => {
+                        if (!disabledTransfer) {
+                          handlePrint(
+                            PrintServerEnum.UNQUALIFIED_RAW_PLASMA,
+                            '不合格原料血浆信息清单',
+                          );
+                        }
+                      }
                     "
                   >
                     <a-button type="link" :disabled="disabledTransfer"
@@ -74,10 +85,14 @@
                 <span v-auth="NonconformityButtonEnum.PlasmaOutDestructionPrint">
                   <MenuItem
                     @click="
-                      handlePrint(
-                        PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA,
-                        '不合格原料血浆销毁处理申请审批表',
-                      )
+                      () => {
+                        if (!disabledTransfer) {
+                          handlePrint(
+                            PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA,
+                            '不合格原料血浆销毁处理申请审批表',
+                          );
+                        }
+                      }
                     "
                   >
                     <a-button type="link" :disabled="disabledTransfer"
