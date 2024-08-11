@@ -63,13 +63,16 @@
       const data = await getListApi({ ...getFieldsValue(), currPage: 1, pageSize } as any);
       if ((data.totalCount || 0) > Number(pageSize))
         return message.warning('最多只能导出【' + pageSize + '】条数据');
+      const dataExport = data.result || [];
+      dataExport.push({
+        stationName: '合计',
+        batchNo: '',
+        bagCount: dataExport.reduce((acc, item) => acc + (item.bagCount ?? 0), 0),
+        totalWeight: dataExport.reduce((acc, item) => acc + (item.totalWeight ?? 0), 0),
+      });
 
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
-      const { result, merge: bodyMerge } = formatData(
-        lastLevelCols,
-        data.result || [],
-        rows.length,
-      );
+      const { result, merge: bodyMerge } = formatData(lastLevelCols, dataExport, rows.length);
       jsonToSheetXlsx({
         data: [...rows, ...result],
         json2sheetOpts: { skipHeader: true },

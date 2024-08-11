@@ -204,7 +204,16 @@
     }
 
     const dateFlag = values.dateKey === 'receipt' ? '接收' : '验收';
-
+    originExportData.push({
+      stationNo: '合计',
+      inNum: originExportData.reduce((acc, item) => acc + item.inNum, 0),
+      inWeight: originExportData.reduce((acc, item) => acc + item.inWeight, 0),
+      outNum: originExportData.reduce((acc, item) => acc + item.outNum, 0),
+      outWeight: originExportData.reduce((acc, item) => acc + item.outWeight, 0),
+      surplusNum: originExportData.reduce((acc, item) => acc + item.surplusNum, 0),
+      surplusWeight: originExportData.reduce((acc, item) => acc + item.surplusWeight, 0),
+      bankNames: '',
+    });
     const header = {};
     vxeTableColumns.forEach((item) => {
       header[item.field!] = item.title;
@@ -214,7 +223,10 @@
       header,
       filename: `库存${values.date[0]}-${values.date[1]}${dateFlag}.xlsx`,
       data: originExportData.map((it) => {
-        return omit(it, ['inWeightG', 'outWeightG']);
+        return {
+          ...omit(it, ['inWeightG', 'outWeightG']),
+          stationNo: it.stationNo === '合计' ? '合计' : getStationNameById(it.stationNo),
+        };
       }),
     });
 
