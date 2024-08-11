@@ -198,7 +198,7 @@
             focusedElement.select();
           }, 300);
         });
-
+        focusedElement.focus();
         if (data) {
           success('接收成功!');
           boxNo.value = '';
@@ -211,9 +211,6 @@
         }
       } finally {
         tableLoading.value = false;
-        setTimeout(() => {
-          focusedElement.focus();
-        }, 300);
       }
     }
   }
@@ -229,16 +226,16 @@
         warning('请扫描托盘编号!');
         return;
       }
+
       try {
         tableLoading.value = true;
-        const focusedElement = document.activeElement as InputHTMLElement;
         const res = await checkTrayNo(trayNo.value);
+        const focusedElement = document.activeElement as InputHTMLElement;
         if (res.data.code !== '0' && res.data.msg) {
           createWarningModal({
             title: '提示',
             content: res.data.msg,
             keyboard: false,
-            wrapClassName: 'rpbox9527',
             onOk: () => {
               setTimeout(() => {
                 focusedElement.focus();
@@ -249,7 +246,7 @@
           return;
         }
         trayNo.value = '';
-        setTimeout(focusedElement.focus, 300);
+        boxNoRef.value.$el.focus();
       } finally {
         tableLoading.value = false;
       }
