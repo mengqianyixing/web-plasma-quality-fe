@@ -78,6 +78,13 @@
 
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(lastLevelCols, data || [], rows.length);
+
+      result.push({
+        immType: '合计',
+        immTypeCount: result.reduce((acc, item) => acc + item.immTypeCount, 0),
+        immTypeWeight: result.reduce((acc, item) => acc + item.immTypeWeight, 0),
+        minCollectAt: '',
+      });
       jsonToSheetXlsx({
         data: [...rows, ...result],
         json2sheetOpts: { skipHeader: true },
