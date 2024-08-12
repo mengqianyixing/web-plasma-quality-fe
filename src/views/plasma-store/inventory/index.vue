@@ -177,8 +177,8 @@
   async function handleExport() {
     const values = getFieldsValue();
 
-    if (!values.date) {
-      return createMessage.warning('请选择日期');
+    if (!values.date && !values.batchNo) {
+      return createMessage.warning('请至少选择日期或输入血浆批号');
     }
 
     if (values.dateKey === 'receipt' && values.date) {
@@ -221,7 +221,7 @@
     delete header['undefined'];
     jsonToSheetXlsx<any>({
       header,
-      filename: `库存${values.date[0]}-${values.date[1]}${dateFlag}.xlsx`,
+      filename: `库存${dateFlag}.xlsx`,
       data: originExportData.map((it) => {
         return {
           ...omit(it, ['inWeightG', 'outWeightG']),

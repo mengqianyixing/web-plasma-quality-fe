@@ -274,6 +274,9 @@
   async function handlePrint() {
     const [row] = getSelections(true);
     if (!row) return;
+    if (row.state === 'TBG') {
+      return message.warning('报告制作前不允许打印！');
+    }
     let reportType = 'CALLBACK_CHECK_REPORT';
     if (row.sampleCode === 'NOR') reportType = 'PLASMA_CHECK_REPORT';
     try {

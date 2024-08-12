@@ -47,40 +47,48 @@
             <template #overlay>
               <Menu>
                 <span v-auth="NonconformityButtonEnum.PlasmaOutTransferPrint">
-                  <MenuItem
-                    @click="
-                      handlePrint(
-                        PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER,
-                        '不合格原料血浆转移记录',
-                      )
-                    "
-                  >
-                    <a-button type="link" :disabled="!disabledTransfer"
+                  <MenuItem>
+                    <a-button
+                      type="link"
+                      class="w-full text-left"
+                      @click="
+                        handlePrint(
+                          PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER,
+                          '不合格原料血浆转移记录',
+                        )
+                      "
+                      :disabled="!disabledTransfer"
                       >不合格原料血浆转移记录
                     </a-button>
                   </MenuItem>
                 </span>
                 <span v-auth="NonconformityButtonEnum.PlasmaOutPlasmaPrint">
-                  <MenuItem
-                    @click="
-                      handlePrint(PrintServerEnum.UNQUALIFIED_RAW_PLASMA, '不合格原料血浆信息清单')
-                    "
-                  >
-                    <a-button type="link" :disabled="disabledTransfer"
+                  <MenuItem>
+                    <a-button
+                      type="link"
+                      class="w-full text-left"
+                      @click="
+                        handlePrint(
+                          PrintServerEnum.UNQUALIFIED_RAW_PLASMA,
+                          '不合格原料血浆信息清单',
+                        )
+                      "
+                      :disabled="disabledTransfer"
                       >不合格原料血浆信息清单
                     </a-button>
                   </MenuItem>
                 </span>
                 <span v-auth="NonconformityButtonEnum.PlasmaOutDestructionPrint">
-                  <MenuItem
-                    @click="
-                      handlePrint(
-                        PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA,
-                        '不合格原料血浆销毁处理申请审批表',
-                      )
-                    "
-                  >
-                    <a-button type="link" :disabled="disabledTransfer"
+                  <MenuItem>
+                    <a-button
+                      type="link"
+                      @click="
+                        handlePrint(
+                          PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA,
+                          '不合格原料血浆销毁处理申请审批表',
+                        )
+                      "
+                      :disabled="disabledTransfer"
                       >不合格原料血浆销毁处理申请审批表
                     </a-button>
                   </MenuItem>

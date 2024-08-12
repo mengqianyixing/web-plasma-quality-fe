@@ -63,7 +63,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '当前状态',
-    width: 80,
+    width: 100,
     dataIndex: 'state',
     format: (text) => ReportStateType(text),
   },
