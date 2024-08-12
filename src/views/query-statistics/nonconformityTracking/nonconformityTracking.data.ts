@@ -145,6 +145,7 @@ export const searchFormSchema: FormSchema[] = [
     field: 'printState',
     component: 'Select',
     label: '打印状态',
+    defaultValue: 'N',
     componentProps: {
       options: serverEnumStore.getServerEnum(SERVER_ENUM.PrintState),
     },
