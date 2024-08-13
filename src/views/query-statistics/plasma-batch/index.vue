@@ -2,7 +2,7 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <div class="p-3 root">
       <div class="pt-5 bg-white mb-16px">
-        <BasicForm @register="registerBasicForm" />
+        <BasicForm @register="registerBasicForm" class="search-form" />
       </div>
       <a-tabs
         default-active-key="detail"
@@ -249,7 +249,7 @@
     labelWidth: 140,
     showAdvancedButton: false,
     baseColProps: { flex: '0 0 373px' },
-    actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
+    actionColOptions: { flex: '1 1 150px', style: 'max-width:unset;' },
     compact: true,
   });
 

@@ -91,7 +91,7 @@
       return res;
     },
     beforeFetch: (params) => {
-      return { ...params, houseNo: state.houseNo };
+      return { ...params, houseNo: state.houseNo, queryFlag: 1 };
     },
   });
   const [registerModal] = useModalInner(({ houseNo }) => {

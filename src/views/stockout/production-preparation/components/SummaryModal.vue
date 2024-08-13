@@ -124,7 +124,7 @@
       pageSize: 1,
     });
     prepareDetail.value = res.result[0];
-    reload();
+    changeTabs('columnsImmunity');
     setModalProps({ confirmLoading: false });
   });
 

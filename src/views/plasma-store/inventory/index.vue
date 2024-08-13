@@ -1,7 +1,12 @@
 <template>
   <div class="p-3 root">
     <div class="pt-5 bg-white mb-16px">
-      <BasicForm @register="registerForm" @reset="handleResetBtn" @submit="handleSubmit" />
+      <BasicForm
+        @register="registerForm"
+        class="search-form"
+        @reset="handleResetBtn"
+        @submit="handleSubmit"
+      />
     </div>
 
     <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData">
@@ -63,7 +68,7 @@
 
   const [registerForm, { updateSchema, getFieldsValue, setProps }] = useForm({
     baseColProps: { flex: '0 0 373px' },
-    actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
+    actionColOptions: { flex: '1 1 150px', style: 'max-width:unset;' },
     schemas: formSchema,
     transformDateFunc(date) {
       return dayjs(date).format('YYYY-MM-DD');

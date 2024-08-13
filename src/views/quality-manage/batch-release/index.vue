@@ -359,7 +359,7 @@
     const [row] = getSelections(true);
     if (!row) return;
     if (row.state === STATUS.TBR) {
-      return message.warning(`【${STATUS_TEXT.get(STATUS.TBR)}】状态不允许打印报表`);
+      return message.warning(`制造批号【${row.mesId}】未审核`);
     }
     try {
       reportLoading.value = true;
