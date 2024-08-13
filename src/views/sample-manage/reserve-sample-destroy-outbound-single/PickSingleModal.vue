@@ -9,7 +9,11 @@
     @ok="handleOk"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
+      <BasicForm
+        class="search-form"
+        @register="registerForm"
+        :submitButtonOptions="{ loading: tableLoading }"
+      />
 
       <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData" />
 
@@ -67,7 +71,7 @@
   const [registerForm, { getFieldsValue }] = useForm({
     showAdvancedButton: false,
     baseColProps: { flex: '0 0 373px' },
-    actionColOptions: { flex: '1 1 120px', style: 'max-width:unset; text-align:right;' },
+    actionColOptions: { flex: '1 1 150px', style: 'max-width:unset;' },
     schemas: [
       {
         label: '样本批号',

@@ -14,6 +14,7 @@
     <BasicForm
       @register="registerForm"
       @submit="handleSubmit"
+      class="search-form"
       :submitButtonOptions="{ loading: tableLoading }"
     />
     <vxe-grid
@@ -100,8 +101,8 @@
 
   const [registerForm, { setFieldsValue, getFieldsValue, resetFields }] = useForm({
     labelWidth: 100,
-    baseColProps: { flex: '0 1 285px' },
-    actionColOptions: { flex: '0 1 200px' },
+    baseColProps: { flex: '0 0 373px' },
+    actionColOptions: { flex: '1 1 150px', style: 'max-width:unset;' },
     schemas: searchFormSchema,
     showResetButton: false,
   });

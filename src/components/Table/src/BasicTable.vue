@@ -1,6 +1,7 @@
 <template>
   <div ref="wrapRef" :class="getWrapperClass">
     <BasicForm
+      class="search-form"
       ref="formRef"
       submitOnReset
       v-bind="getFormProps"
@@ -354,10 +355,6 @@
         padding: 8px 6px 0;
         border-radius: 2px;
         background-color: @component-background;
-      }
-
-      .action-form-item {
-        float: right;
       }
     }
 

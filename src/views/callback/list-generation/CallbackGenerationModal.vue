@@ -9,7 +9,11 @@
     @cancel="handleCancel"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
+      <BasicForm
+        class="search-form"
+        @register="registerForm"
+        :submitButtonOptions="{ loading: tableLoading }"
+      />
 
       <vxe-grid
         v-bind="gridOptions"
@@ -105,7 +109,7 @@
     showAdvancedButton: false,
     schemas: callbackModalSearchFromSchema,
     baseColProps: { flex: '0 0 370px' },
-    actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
+    actionColOptions: { flex: '1 1 150px', style: 'max-width:unset;' },
 
     transformDateFunc(date) {
       return dayjs(date).format('YYYY-MM-DD');
