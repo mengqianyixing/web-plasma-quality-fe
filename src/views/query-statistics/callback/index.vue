@@ -12,21 +12,6 @@
         </a-button>
       </template>
     </BasicTable>
-
-    <div class="flex justify-end h-46px bg-white pr-16px p-4px" v-if="pagerLeft.total > 0">
-      <a-pagination
-        class="mt-2"
-        @change="handlePageChange"
-        @show-size-change="handleSizeChange"
-        size="small"
-        show-size-changer
-        show-quick-jumper
-        v-model:current="pagerLeft.current"
-        v-model:pageSize="pagerLeft.pageSize"
-        :total="pagerLeft.total"
-        :show-total="(total) => `共 ${total} 条数据`"
-      />
-    </div>
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -42,7 +27,7 @@
   import { reactive, ref, watch } from 'vue';
   import { SearchManager } from '@/enums/authCodeEnum';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
-  import { message, Pagination as APagination } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { PositionType } from 'ant-design-vue/es/image/style';
   import {
     GetApiSearchDonorCallbackCountTotalRequest,
@@ -59,7 +44,7 @@
   const totalData = ref<GetApiSearchDonorCallbackCountTotalResponse>({});
   const pagerLeft = reactive({
     current: 1,
-    pageSize: 30,
+    pageSize: 99999,
     total: 0,
   });
   const totalStyle = ref<{
@@ -149,6 +134,7 @@
     useSearchForm: true,
     bordered: true,
     showIndexColumn: false,
+    pagination: false,
   });
 
   _reloadTable = debounce(reload, 300) as () => Promise<void>;
@@ -156,18 +142,6 @@
     pagerLeft.current = 1;
 
     await _reloadTable();
-  }
-
-  async function handlePageChange(e) {
-    pagerLeft.current = e;
-
-    await reload();
-  }
-
-  async function handleSizeChange(_, size) {
-    pagerLeft.pageSize = size;
-
-    await reload();
   }
 
   const loading = ref(false);
@@ -181,16 +155,30 @@
         currPage: '1',
         pageSize,
       });
+
+      const OriginTotalData = await getTotalCallbackStatistic({
+        ...getForm().getFieldsValue(),
+        currPage: String(pagerLeft.current),
+        pageSize: String(pagerLeft.pageSize),
+      } as GetApiSearchDonorCallbackCountTotalRequest);
+
       if ((OriginData.totalCount || 0) > Number(pageSize))
         return message.warning('最多只能导出【' + pageSize + '】条数据');
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(
         lastLevelCols,
-        OriginData.result || [],
+        [
+          ...OriginData.result!,
+          {
+            ...OriginTotalData,
+            stationName: '合计',
+          },
+        ] || [],
         rows.length,
       );
+      const _result = result.map((it, idx) => ({ ...it, index: idx + 1 }));
       jsonToSheetXlsx({
-        data: [...rows, ...result],
+        data: [...rows, ..._result],
         json2sheetOpts: { skipHeader: true },
         merges: [...headerMerge, ...bodyMerge],
         filename: currentRoute.value.meta.title + '.xlsx',
