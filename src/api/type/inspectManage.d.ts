@@ -693,7 +693,7 @@ export interface PostApiSysDictItemAlencesResponse {
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
  * @请求头 `GET /api/sys/dict/item/titer-level`
- * @更新时间 `2024-02-02 10:38:30`
+ * @更新时间 `2024-08-14 17:56:26`
  */
 export interface GetApiSysDictItemTiterLevelRequest {}
 
@@ -702,12 +702,12 @@ export interface GetApiSysDictItemTiterLevelRequest {}
  *
  * @分类 [效价类型↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5320)
  * @请求头 `GET /api/sys/dict/item/titer-level`
- * @更新时间 `2024-02-02 10:38:30`
+ * @更新时间 `2024-08-14 17:56:26`
  */
-export interface GetApiSysDictItemTiterLevelResponse {
+export type GetApiSysDictItemTiterLevelResponse = {
   key: string;
   value: string;
-}
+}[];
 
 /**
  * 接口 [根据血浆类型查询有效位数↗](https://yapi.sharing8.cn/project/529/interface/api/34368) 的 **请求类型**
