@@ -115,6 +115,7 @@ export enum InspectButtonEnum {
   ReportReleaseUnProcess = 'E_96002004',
   ReportReleaseRelease = 'E_96002005',
   ReportReleasePrint = 'E_96002006',
+  KMReportReleasePrint = 'E_96002007',
 
   MaterialPreRegistrationAdd = 'E_96003001',
   MaterialPreRegistrationUpdate = 'E_96003002',
@@ -180,6 +181,9 @@ export enum NonconformityButtonEnum {
   PlasmaOutTransferPrint = 'E_92003007',
   PlasmaOutPlasmaPrint = 'E_92003008',
   PlasmaOutDestructionPrint = 'E_92003009',
+  KMPlasmaOutTransferPrint = 'E_92003010',
+  KMPlasmaOutPlasmaPrint = 'E_92003011',
+  KMPlasmaOutDestructionPrint = 'E_92003012',
 }
 
 export enum StockOutButtonEnum {
@@ -220,6 +224,10 @@ export enum StockOutButtonEnum {
   ProductionPlanSummary = 'E_910040013',
   ProductionPlanSummaryKunMing = 'E_910040014',
   PlasmaProductionApplication = 'E_910040015',
+  PlasmaProductionRecordsOfQualified = 'E_910040016',
+  PlasmaProductionRecordsOfQualifiedSummary = 'E_910040017',
+  PlasmaProductionPutIntoSummary = 'E_910040018',
+  PlasmaProductionPutIntoSummaryOfQualified = 'E_910040019',
 
   PutIntoTrayStockOut = 'E_91005001',
   PutIntoBoxStockOut = 'E_91005002',
@@ -244,6 +252,8 @@ export enum StockOutButtonEnum {
   PlasmaTransferApplyReport = 'E_91006012',
   NonPutIntoPickPlasmaSystem = 'E_91006013',
   PlasmaSummaryReport = 'E_91007001',
+  KMPlasmaSummaryReport = 'E_91007002',
+  QuarantineTrackUnqualifiedPlasmaRecords = 'E_91007003',
 }
 
 export enum SampleManageButtonEnum {
@@ -319,4 +329,8 @@ export enum TagManageButtonEnum {
 export enum NonconformityInStoreButtonEnum {
   NonconformityInStoreCheck = 'E_92005001',
   NonconformityInStoreCancelCheck = 'E_92005002',
+}
+
+export enum PlasmaInboundRecordButtonEnum {
+  VerifyReport = 'E_98008001',
 }
