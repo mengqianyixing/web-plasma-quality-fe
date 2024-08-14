@@ -8,8 +8,8 @@
     :minHeight="600"
     @fullscreen="redoHeight"
   >
-    <div class="flex h-inherit max-h-inherit min-h-inherit">
-      <div class="flex-1 w-full">
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
         <BasicTable @register="registerTable" ref="tableRef">
           <template #toolbar>
             <a-button type="primary" @click="handleOut">出库</a-button>

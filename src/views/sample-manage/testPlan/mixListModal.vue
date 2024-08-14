@@ -9,23 +9,19 @@
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
-        <div class="flex-1 h-full shrink-1">
-          <BasicTable @register="registerTable">
-            <template #mixTubeNo="{ record }: { record: Recordable }">
-              <span
-                class="text-blue-500 underline cursor-pointer"
-                @click.stop.self="openDtModal(true, { ...record, ...state })"
-              >
-                {{ record.mixTubeNo }}
-              </span>
-            </template>
-            <template #toolbar>
-              <a-button type="primary" @click="printClick" :loading="labelLoading"
-                >打印管签</a-button
-              >
-            </template>
-          </BasicTable>
-        </div>
+        <BasicTable @register="registerTable">
+          <template #mixTubeNo="{ record }: { record: Recordable }">
+            <span
+              class="text-blue-500 underline cursor-pointer"
+              @click.stop.self="openDtModal(true, { ...record, ...state })"
+            >
+              {{ record.mixTubeNo }}
+            </span>
+          </template>
+          <template #toolbar>
+            <a-button type="primary" @click="printClick" :loading="labelLoading">打印管签</a-button>
+          </template>
+        </BasicTable>
       </div>
     </div>
     <MixDetailsModal @register="registerDtModal" />

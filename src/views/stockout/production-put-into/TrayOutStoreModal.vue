@@ -4,11 +4,16 @@
     @register="register"
     title="托盘出库"
     showFooter
-    width="85%"
+    width="900px"
     @ok="handleTrayOutStore"
     @cancel="emit('success')"
+    :min-height="600"
+    @fullscreen="redoHeight"
   >
-    <BasicTable @register="registerTable" ref="table" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <BasicTable @register="registerTable" ref="table" /> </div
+    ></div>
     <TrayOutConfirmModal @register="registerTrayOutConfirmModal" @success="reload" />
   </BasicModal>
 </template>
@@ -32,7 +37,7 @@
 
   const [registerTrayOutConfirmModal, { openModal }] = useModal();
 
-  const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
+  const [registerTable, { reload, clearSelectedRowKeys, redoHeight }] = useTable({
     api: getTrayOutStoreList,
     columns: trayColumns,
     formConfig: {
@@ -78,7 +83,7 @@
       width: 80,
     },
     immediate: false,
-    canResize: false,
+    isCanResizeParent: true,
   });
   const [register, { setModalProps }] = useModalInner((data) => {
     setModalProps({

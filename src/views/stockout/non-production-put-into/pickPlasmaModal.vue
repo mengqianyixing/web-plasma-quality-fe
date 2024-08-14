@@ -6,6 +6,7 @@
     @ok="handleSubmit"
     :min-height="600"
     width="1200px"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
@@ -42,7 +43,7 @@
     });
   });
 
-  const [registerTable, { getForm, clearSelectedRowKeys }] = useTable({
+  const [registerTable, { getForm, clearSelectedRowKeys, redoHeight }] = useTable({
     immediate: false,
     api: getPickPlasmaList,
     columns: [

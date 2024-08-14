@@ -7,6 +7,7 @@
     :maskClosable="false"
     width="85%"
     :min-height="600"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -129,7 +130,7 @@
     // },
   ];
   const selectedRow = ref<any>([]);
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, redoHeight }] = useTable({
     api: plasmaPauseBoxList,
     searchInfo: {},
     columns,

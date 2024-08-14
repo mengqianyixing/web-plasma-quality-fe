@@ -40,13 +40,11 @@ export const searchFormSchema: FormSchema[] = [
     field: 'batchSampleNo',
     label: '样本批号',
     component: 'Input',
-    colProps: { span: 8 },
   },
   {
     field: 'stationNo',
     label: '采浆公司',
     component: 'Select',
-    colProps: { span: 8 },
     componentProps: {
       options: stationOptions,
     },

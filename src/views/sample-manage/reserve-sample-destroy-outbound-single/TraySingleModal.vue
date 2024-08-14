@@ -3,13 +3,17 @@
     v-bind="$attrs"
     @register="register"
     title="托盘出库"
-    width="80%"
+    width="1000px"
     :min-height="650"
     showFooter
     :showOkBtn="false"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <BasicForm @register="registerForm" :submitButtonOptions="{ loading: tableLoading }" />
+      <BasicForm
+        class="search-form"
+        @register="registerForm"
+        :submitButtonOptions="{ loading: tableLoading }"
+      />
 
       <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData">
         <template #toolbar>
@@ -49,6 +53,8 @@
 
   const [registerOutModal, { openModal }] = useModal();
   const [registerForm, { getFieldsValue }] = useForm({
+    baseColProps: { flex: '0 0 373px' },
+    actionColOptions: { flex: '1 1 150px', style: 'max-width:unset;' },
     showAdvancedButton: false,
     schemas: [
       {

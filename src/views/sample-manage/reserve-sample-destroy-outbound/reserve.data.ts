@@ -217,30 +217,36 @@ export const trayColumns: VxeGridPropTypes.Columns = [
   {
     type: 'seq',
     title: '序号',
-    width: 80,
+    width: 50,
   },
   {
     title: '托盘号',
     field: 'trayNo',
+    width: 100,
   },
   {
     title: '采浆公司',
     field: 'stationName',
+    minWidth: 100,
   },
   {
     title: '样本批号',
     field: 'batchNo',
+    minWidth: 140,
   },
   {
     title: '样本袋号',
     field: 'sampleBagNo',
+    minWidth: 140,
   },
   {
     title: '箱号',
     field: 'boxNo',
+    minWidth: 140,
   },
   {
     title: '存放位置',
     field: 'location',
+    width: 140,
   },
 ];

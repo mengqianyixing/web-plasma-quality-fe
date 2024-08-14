@@ -7,19 +7,23 @@ export const sampleVerifyColumns: BasicColumn[] = [
   {
     title: '采浆公司',
     dataIndex: 'stationName',
+    width: 100,
   },
   {
     title: '样本批号',
     dataIndex: 'batchSampleNo',
+    width: 140,
   },
   {
     title: '样本类型',
     dataIndex: 'sampleType',
     slots: { customRender: 'sampleType' },
+    width: 80,
   },
   {
     title: '样本数量',
     dataIndex: 'totalCount',
+    width: 80,
   },
   {
     title: '接收日期',
@@ -27,6 +31,7 @@ export const sampleVerifyColumns: BasicColumn[] = [
     format: (text) => {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
   {
     title: '状态',
@@ -34,6 +39,7 @@ export const sampleVerifyColumns: BasicColumn[] = [
     format: (text) => {
       return sampleTransferStateMap.get(<sampleTransferStateValueEnum>text) as string;
     },
+    width: 80,
   },
 ];
 
@@ -42,7 +48,6 @@ export const searchFormSchema: FormSchema[] = [
     field: 'batchSampleNo',
     label: '样本批号',
     component: 'Input',
-    colProps: { span: 8 },
   },
   {
     field: 'verifyState',

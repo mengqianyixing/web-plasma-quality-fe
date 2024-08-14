@@ -20,10 +20,13 @@ export const columns: BasicColumn[] = [
     title: '浆站箱号',
     dataIndex: 'boxNo',
     slots: { customRender: 'boxNo' },
+    width: 140,
+    ellipsis: false,
   },
   {
     title: '接收人',
     dataIndex: 'acceptUser',
+    width: 100,
   },
   {
     title: '未验收数量',
@@ -38,14 +41,17 @@ export const columns: BasicColumn[] = [
   {
     title: '验收合格数量',
     dataIndex: 'qualifiedCount',
+    width: 100,
   },
   {
     title: '验收人',
     dataIndex: 'verifyUser',
+    width: 100,
   },
   {
     title: '验收复核人',
     dataIndex: 'checker',
+    width: 100,
   },
   ...(iskm
     ? []

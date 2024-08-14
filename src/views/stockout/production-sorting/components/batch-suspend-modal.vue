@@ -6,9 +6,10 @@
     @cancel="closeModalThis"
     :maskClosable="false"
     :destroyOnClose="true"
-    width="85%"
+    width="1000px"
     :min-height="600"
     :footer="null"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -62,6 +63,7 @@
     {
       title: '血浆批号',
       dataIndex: 'batchNo',
+      width: 150,
     },
     {
       title: '暂停操作时间',
@@ -72,10 +74,12 @@
         }
         return '';
       },
+      width: 160,
     },
     {
       title: '暂停操作人',
       dataIndex: 'creater',
+      width: 100,
     },
     {
       title: '继续操作时间',
@@ -86,14 +90,16 @@
         }
         return '';
       },
+      width: 150,
     },
     {
       title: '继续操作人',
       dataIndex: 'freedBy',
+      width: 100,
     },
   ];
   const selectedRow = ref<any>([]);
-  const [registerTable, { reload, setLoading, clearSelectedRowKeys }] = useTable({
+  const [registerTable, { reload, setLoading, clearSelectedRowKeys, redoHeight }] = useTable({
     api: getPauseList,
     searchInfo: {},
     columns,

@@ -4,7 +4,7 @@
     @register="registerModal"
     showFooter
     title="箱明细"
-    width="80%"
+    width="800px"
     :minHeight="400"
     @fullscreen="redoHeight"
   >
@@ -47,18 +47,25 @@
       {
         title: '托盘编号',
         dataIndex: 'trayNo',
+        width: 100,
       },
       {
         title: '箱号',
         dataIndex: 'boxNo',
+        width: 140,
+        ellipsis: false,
       },
       {
         title: '样本袋数',
         dataIndex: 'packCount',
+        width: 100,
+        ellipsis: false,
       },
       {
         title: '封箱人',
         dataIndex: 'sealer',
+        width: 100,
+        ellipsis: false,
       },
       {
         title: '封箱时间',
@@ -66,6 +73,8 @@
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
         },
+        width: 160,
+        ellipsis: false,
       },
     ],
     useSearchForm: false,

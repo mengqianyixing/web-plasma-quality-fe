@@ -8,7 +8,8 @@
     :showCancelBtn="false"
     :showOkBtn="false"
     :min-height="600"
-    width="70%"
+    width="900px"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -56,7 +57,7 @@
     {
       title: '血浆箱号',
       dataIndex: 'boxNo',
-      width: 180,
+      width: 160,
     },
     {
       title: '装箱类型',
@@ -69,10 +70,12 @@
     {
       title: '血浆数量',
       dataIndex: 'bagCount',
+      width: 100,
     },
     {
       title: '装箱人',
       dataIndex: 'operator',
+      width: 100,
     },
     {
       title: '装箱时间',
@@ -81,6 +84,7 @@
         return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
       },
       sorter: true,
+      width: 160,
     },
     {
       title: '状态',
@@ -126,7 +130,7 @@
     },
   ];
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, redoHeight }] = useTable({
     api: getSortBoxs,
     columns,
     formConfig: {

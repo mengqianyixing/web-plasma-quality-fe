@@ -220,21 +220,27 @@ export const trayColumns: BasicColumn[] = [
   {
     title: '托盘编号',
     dataIndex: 'trayNo',
+    width: 100,
   },
   {
     title: '箱数',
     dataIndex: 'boxNum',
+    width: 100,
   },
   {
     title: '血浆数量',
     dataIndex: 'plasmaNum',
+    width: 100,
   },
   {
     title: '状态',
     dataIndex: 'state',
+    width: 100,
   },
   {
     title: '存放位置',
     dataIndex: 'houseName',
+    width: 150,
+    ellipsis: false,
   },
 ];

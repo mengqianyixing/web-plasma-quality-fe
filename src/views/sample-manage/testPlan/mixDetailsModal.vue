@@ -9,9 +9,7 @@
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit mixdt-table">
       <div class="absolute w-full h-full">
-        <div class="flex-1 h-full shrink-1">
-          <BasicTable @register="registerTable" />
-        </div>
+        <BasicTable @register="registerTable" />
       </div>
     </div>
   </BasicModal>

@@ -17,6 +17,7 @@
     :min-height="600"
     cancelText="关闭"
     :show-ok-btn="false"
+    @fullscreen="redoHeight"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">
       <div class="flex-1 w-full">
@@ -29,6 +30,7 @@
         >
           <TabPane key="1" tab="合格样本">
             <component
+              ref="table1"
               :is="componentMap['1']"
               checkResult="合格"
               :projectId="pid"
@@ -44,10 +46,12 @@
               :projectId="pid"
               type="UNQUALIFIED"
               :bsNo="bsno"
+              ref="table2"
             />
           </TabPane>
           <TabPane key="3" tab="未检测样本">
             <component
+              ref="table3"
               :is="componentMap['3']"
               checkResult="未检测"
               :projectId="pid"
@@ -63,12 +67,14 @@
 <script setup lang="ts">
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { TabPane, Tabs } from 'ant-design-vue';
-  import { ref, markRaw } from 'vue';
+  import { ref, markRaw, nextTick } from 'vue';
   import DtTable from './dtTable.vue';
   import { methodsMappding } from './data';
 
   const emit = defineEmits(['close', 'confirm']);
-
+  const table1 = ref();
+  const table2 = ref();
+  const table3 = ref();
   const activeKey = ref('1');
   const pid = ref('');
   const bsno = ref('');
@@ -79,7 +85,10 @@
     2: 'div',
     3: 'div',
   });
-
+  function redoHeight() {
+    const map = { table1, table2, table3 };
+    map['table' + activeKey.value].value.redoHeight?.();
+  }
   const [registerModal] = useModalInner(async ({ projectId, projectAbbr, bsNo, methodAbbr }) => {
     projectName.value = projectAbbr;
     pid.value = projectId;
@@ -89,6 +98,7 @@
   });
   function change(activeKey) {
     componentMap.value[activeKey] = markRaw(DtTable);
+    nextTick(redoHeight);
   }
   function close() {
     emit('close');
@@ -102,6 +112,7 @@
 </script>
 <style scoped>
   .tabs :deep(.ant-tabs-content) {
+    position: relative;
     height: 100%;
   }
 </style>

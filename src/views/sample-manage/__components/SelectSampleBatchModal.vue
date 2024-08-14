@@ -3,9 +3,10 @@
     v-bind="$attrs"
     @register="register"
     title="样本批次列表"
-    width="80%"
-    :min-height="650"
+    width="1000px"
+    :min-height="600"
     @ok="handleSelect"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
@@ -36,46 +37,46 @@
   const { createMessage } = useMessage();
   const { warning } = createMessage;
 
-  const [registerTable, { reload, setSelectedRowKeys, clearSelectedRowKeys }] = useTable({
-    api: getSampleReceiveList,
-    columns: sampleAcceptColumns,
-    formConfig: {
-      labelWidth: 120,
-      schemas: searchFormSchema,
-      transformDateFunc(date) {
-        return date ? date.format('YYYY-MM-DD') : '';
+  const [registerTable, { reload, setSelectedRowKeys, clearSelectedRowKeys, redoHeight }] =
+    useTable({
+      api: getSampleReceiveList,
+      columns: sampleAcceptColumns,
+      formConfig: {
+        schemas: searchFormSchema,
+        transformDateFunc(date) {
+          return date ? date.format('YYYY-MM-DD') : '';
+        },
       },
-    },
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    clickToRowSelect: true,
-    clearSelectOnPageChange: true,
-    rowSelection: {
-      type: 'radio',
-      onChange: (keys, selectedRows: any) => {
-        if (keys.length === 1 && selectedRows[0].sampleType !== sampleTypeEnum.CallbackSample) {
-          warning('只能选择回访样本批次');
-
-          setSelectedRowKeys(selectedRow.value.map((it) => it.key));
-
-          return;
-        }
-        selectedRow.value = selectedRows;
+      fetchSetting: {
+        pageField: 'currPage',
+        sizeField: 'pageSize',
+        totalField: 'totalCount',
+        listField: 'result',
       },
-    },
-    size: 'small',
-    striped: false,
-    useSearchForm: true,
-    bordered: true,
-    showIndexColumn: false,
-    inset: true,
-    isCanResizeParent: true,
-    immediate: false,
-  });
+      clickToRowSelect: true,
+      clearSelectOnPageChange: true,
+      rowSelection: {
+        type: 'radio',
+        onChange: (keys, selectedRows: any) => {
+          if (keys.length === 1 && selectedRows[0].sampleType !== sampleTypeEnum.CallbackSample) {
+            warning('只能选择回访样本批次');
+
+            setSelectedRowKeys(selectedRow.value.map((it) => it.key));
+
+            return;
+          }
+          selectedRow.value = selectedRows;
+        },
+      },
+      size: 'small',
+      striped: false,
+      useSearchForm: true,
+      bordered: true,
+      showIndexColumn: false,
+      inset: true,
+      isCanResizeParent: true,
+      immediate: false,
+    });
 
   const sampleType = ref<Recordable[]>([]);
 

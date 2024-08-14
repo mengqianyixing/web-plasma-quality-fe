@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full">
+  <div class="absolute w-full h-full">
     <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button type="primary" @click="handleEdit" v-if="checkResult">编辑</a-button>
@@ -125,7 +125,7 @@
     const regex = /^-?\d+(\.\d+)?$/;
     return regex.test(input);
   }
-  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
+  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, redoHeight }] = useTable({
     immediate: true,
     api: getCheckItemDtListApi,
     fetchSetting: {
@@ -153,6 +153,7 @@
       return res;
     },
   });
+  defineExpose({ redoHeight });
   async function handleSubmit() {
     const { conclusion, reason, titerValue } = (await validate()) as any;
     const { username, userId } = userData as any;

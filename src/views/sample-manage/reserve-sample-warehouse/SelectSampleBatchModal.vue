@@ -3,12 +3,13 @@
     v-bind="$attrs"
     @register="register"
     title="样本批次列表"
-    width="80%"
-    :min-height="650"
+    width="1000px"
+    :min-height="600"
     @ok="handleSelect"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <div class="absolute flex flex-col w-full h-full">
+      <div class="absolute w-full h-full">
         <BasicTable @register="registerTable" />
       </div>
     </div>
@@ -29,7 +30,7 @@
   const { createMessage } = useMessage();
   const { stationOptions } = useStation();
 
-  const [registerTable, { reload, clearSelectedRowKeys, getForm }] = useTable({
+  const [registerTable, { reload, clearSelectedRowKeys, getForm, redoHeight }] = useTable({
     api: getKeepPackBatchList,
     columns: [
       {
@@ -53,19 +54,16 @@
       },
     ],
     formConfig: {
-      labelWidth: 120,
       schemas: [
         {
           field: 'batchNo',
           label: '样本批号',
           component: 'Input',
-          colProps: { span: 8 },
         },
         {
           field: 'stationNo',
           label: '采浆公司',
           component: 'Select',
-          colProps: { span: 8 },
           componentProps: {
             options: stationOptions,
           },

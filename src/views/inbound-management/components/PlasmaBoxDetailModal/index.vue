@@ -1,20 +1,33 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="register" title="本批详情" width="1400px" :minHeight="600">
+  <BasicModal
+    v-bind="$attrs"
+    @register="register"
+    @fullscreen="redoHeight"
+    title="本批详情"
+    width="1000px"
+    :minHeight="600"
+  >
     <template #footer>
       <div class="absolute bottom-10px text-right">血浆总箱数：{{ verifyCount }}</div>
       <a-button @click="closeModal">关闭</a-button>
     </template>
-    <BasicTable @register="registerTable">
-      <template #verifyState="{ record }"> {{ PlasmaStateMap.get(record?.verifyState) }} </template>
-      <template #boxNo="{ record }">
-        <span
-          class="text-blue-500 underline cursor-pointer"
-          @click.stop.self="handleGoPlasmaDetail(record)"
-        >
-          {{ record?.boxNo }}
-        </span>
-      </template>
-    </BasicTable>
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
+        <BasicTable @register="registerTable">
+          <template #verifyState="{ record }">
+            {{ PlasmaStateMap.get(record?.verifyState) }}
+          </template>
+          <template #boxNo="{ record }">
+            <span
+              class="text-blue-500 underline cursor-pointer"
+              @click.stop.self="handleGoPlasmaDetail(record)"
+            >
+              {{ record?.boxNo }}
+            </span>
+          </template>
+        </BasicTable>
+      </div></div
+    >
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -30,11 +43,11 @@
   const batchNo = ref('');
   const emit = defineEmits(['success', 'register']);
 
-  const [registerTable, { reload, getForm }] = useTable({
+  const [registerTable, { reload, getForm, redoHeight }] = useTable({
     api: getPlasmaBox,
     columns,
+    isCanResizeParent: true,
     formConfig: {
-      labelWidth: 120,
       schemas: searchFormSchema,
       showResetButton: false,
     },
@@ -53,9 +66,6 @@
     striped: false,
     pagination: false,
     useSearchForm: true,
-    scroll: {
-      y: 400,
-    },
     bordered: true,
     showIndexColumn: false,
     immediate: false,

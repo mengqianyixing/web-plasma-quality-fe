@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full">
+  <div class="absolute w-full h-full">
     <BasicTable @register="registerTable" />
   </div>
 </template>
@@ -31,7 +31,7 @@
     },
   });
 
-  const [registerTable, { clearSelectedRowKeys }] = useTable({
+  const [registerTable, { clearSelectedRowKeys, redoHeight }] = useTable({
     immediate: true,
     api: getCheckItemDtListApi,
     fetchSetting: {
@@ -54,4 +54,5 @@
       return res;
     },
   });
+  defineExpose({ redoHeight });
 </script>

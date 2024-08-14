@@ -4,15 +4,13 @@
     @register="registerModal"
     showFooter
     title="样本袋明细"
-    width="80%"
+    width="1000px"
     :minHeight="400"
     @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
-        <div class="flex-1 shrink-1" style="height: calc(100% - 56px)">
-          <BasicTable @register="registerTable" />
-        </div>
+        <BasicTable @register="registerTable" />
       </div>
     </div>
   </BasicModal>
@@ -47,22 +45,30 @@
       {
         title: '托盘编号',
         dataIndex: 'trayNo',
+        width: 100,
       },
       {
         title: '箱号',
         dataIndex: 'boxNo',
+        width: 140,
+        ellipsis: false,
       },
       {
         title: '样本袋号',
         dataIndex: 'packNo',
+        width: 140,
+        ellipsis: false,
       },
       {
         title: '样本数量',
         dataIndex: 'sampleCount',
+        width: 100,
       },
       {
         title: '接收人',
         dataIndex: 'acceptor',
+        width: 100,
+        ellipsis: false,
       },
       {
         title: '接收时间',
@@ -70,6 +76,7 @@
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '';
         },
+        width: 160,
       },
     ],
     useSearchForm: false,

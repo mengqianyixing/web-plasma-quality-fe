@@ -8,7 +8,8 @@
     :destroyOnClose="true"
     :maskClosable="false"
     :minHeight="600"
-    width="1400px"
+    width="1000px"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -123,30 +124,39 @@
     {
       title: '采浆公司',
       dataIndex: 'stationName',
+      width: 80,
     },
     {
       title: '血浆批次',
       dataIndex: 'batchNo',
+      width: 140,
+      ellipsis: false,
     },
     {
       title: '接收状态',
       dataIndex: 'acceptState',
+      width: 80,
     },
     {
       title: '验收状态',
       dataIndex: 'verifyState',
+      width: 80,
     },
     {
       title: '血浆数量',
       dataIndex: 'plasmaCount',
+      width: 80,
     },
     {
       title: '血浆箱数',
       dataIndex: 'boxCount',
+      width: 80,
     },
     // dispatch 中的 optTime 作为表格列
     {
       title: '出库人',
+      width: 100,
+      ellipsis: false,
       customRender: ({ record }) => {
         if (record.dispatch && record.dispatch.depositor) {
           return record.dispatch.depositor;
@@ -156,6 +166,7 @@
     },
     {
       title: '出库日期',
+      width: 100,
       customRender: ({ record }) => {
         if (record.dispatch && record.dispatch.optTime) {
           return dayjs(record.dispatch.optTime).format('YYYY-MM-DD');
@@ -205,7 +216,7 @@
   const selectedRow = ref<any>([]);
   const searchInfo = ref<any>({});
 
-  const [registerTable, { clearSelectedRowKeys, reload, getForm }] = useTable({
+  const [registerTable, { clearSelectedRowKeys, reload, getForm, redoHeight }] = useTable({
     api: getBatchSummary,
     columns,
     formConfig: {
