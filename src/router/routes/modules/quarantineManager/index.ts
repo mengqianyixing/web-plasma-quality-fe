@@ -58,7 +58,7 @@ const quarantineManager: AppRouteModule = {
           id: QuarantineButtonEnum.PrintQuarantine,
           name: 'print',
           title: '打印',
-          company: COMPANY.RS,
+          company: [COMPANY.RS, COMPANY.KM],
         },
         {
           id: QuarantineButtonEnum.ExportQuarantine,
@@ -78,12 +78,7 @@ const quarantineManager: AppRouteModule = {
         {
           id: QuarantineButtonEnum.NonconformityTrackingReport,
           title: '追踪记录/报告',
-          company: COMPANY.RS,
-        },
-        {
-          id: QuarantineButtonEnum.StationDetectionNonconformityReport,
-          title: '浆站检测不合格血浆追溯',
-          company: COMPANY.KM,
+          company: [COMPANY.RS, COMPANY.KM],
         },
       ],
       component: () => import('@/views/query-statistics/nonconformityTracking/index.vue'),

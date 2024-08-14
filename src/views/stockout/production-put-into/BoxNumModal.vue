@@ -8,6 +8,7 @@
     :min-height="600"
     :showOkBtn="false"
     @cancel="handelCancel"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -46,7 +47,7 @@
 
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
 
-  const [registerTable, { reload, getForm }] = useTable({
+  const [registerTable, { reload, getForm, redoHeight }] = useTable({
     api: getBoxNumDetailList,
     columns: [
       {

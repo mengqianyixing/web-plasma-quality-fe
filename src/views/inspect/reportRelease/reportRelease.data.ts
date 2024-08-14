@@ -1,7 +1,6 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
-import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
 
 import { useStation } from '@/hooks/common/useStation';
 
@@ -147,6 +146,11 @@ export const searchFormschema: FormSchema[] = [
     },
   },
 ];
+export const titerType = {
+  '1': 'H',
+  '2': 'L',
+  '5': 'N',
+};
 export const columnsMap: Record<number, BasicColumn[]> = {
   1: [
     {
@@ -256,11 +260,6 @@ export const totalUnqualifiedSearch: FormSchema[] = [
   {
     field: 'conclusion',
     label: '效价类型',
-    component: 'ApiSelect',
-    componentProps: {
-      api: getDilutionTypeApi,
-      labelField: 'key',
-      valueField: 'value',
-    },
+    component: 'Select',
   },
 ];

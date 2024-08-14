@@ -4,7 +4,7 @@
     @register="registerModal"
     showFooter
     title="托盘入库"
-    width="80%"
+    width="1000px"
     :show-cancel-btn="false"
     :show-ok-btn="false"
     :minHeight="650"
@@ -96,32 +96,40 @@
       {
         title: '托盘编号',
         dataIndex: 'trayNo',
+        width: 100,
       },
       {
         title: '箱数',
         dataIndex: 'boxCount',
         slots: { customRender: 'boxCount' },
+        width: 100,
       },
       {
         title: '样本袋数',
         dataIndex: 'packCount',
         slots: { customRender: 'packCount' },
+        width: 100,
       },
       {
         title: '样本数量',
         dataIndex: 'sampleCount',
+        width: 100,
       },
       {
         title: '状态',
         dataIndex: 'state',
+        width: 100,
       },
       {
         title: '存放库房',
         dataIndex: 'houseName',
+        width: 140,
+        ellipsis: false,
       },
       {
         title: '存放货位',
         dataIndex: 'locationNo',
+        width: 100,
       },
     ],
     useSearchForm: true,
@@ -131,17 +139,11 @@
           label: '样本袋号',
           field: 'packNo',
           component: 'Input',
-          colProps: {
-            span: 6,
-          },
         },
         {
           label: '托盘编号',
           field: 'trayNo',
           component: 'Input',
-          colProps: {
-            span: 6,
-          },
         },
       ],
       transformDateFunc(date) {

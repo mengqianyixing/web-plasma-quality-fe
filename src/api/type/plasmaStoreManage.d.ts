@@ -321,7 +321,7 @@ export interface GetApiCoreBankWarehouseHouseNoResponse {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/locations`
- * @更新时间 `2024-01-16 14:30:29`
+ * @更新时间 `2024-08-13 11:02:36`
  */
 export interface GetApiCoreBankLocationsRequest {
   /**
@@ -348,6 +348,10 @@ export interface GetApiCoreBankLocationsRequest {
    * 货位是否禁用，0表示启用，1表示禁用
    */
   closed?: string;
+  /**
+   * 是否查询操作，0表示否，1表示是，默认否
+   */
+  queryFlag?: string;
 }
 
 /**
@@ -355,7 +359,7 @@ export interface GetApiCoreBankLocationsRequest {
  *
  * @分类 [库房管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5187)
  * @请求头 `GET /api/core/bank/locations`
- * @更新时间 `2024-01-16 14:30:29`
+ * @更新时间 `2024-08-13 11:02:36`
  */
 export interface GetApiCoreBankLocationsResponse {
   currPage: number;

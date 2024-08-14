@@ -3,9 +3,10 @@
     v-bind="$attrs"
     @register="register"
     title="自主回访明细"
-    width="85%"
+    width="1000px"
     :min-height="600"
     :showOkBtn="false"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
@@ -22,7 +23,7 @@
   import { selfBackColumns } from '@/views/callback/list-generation/generation.data';
   import { getSelfBackDetail } from '@/api/callback/list-generation';
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, redoHeight }] = useTable({
     api: getSelfBackDetail,
     columns: selfBackColumns,
     formConfig: {

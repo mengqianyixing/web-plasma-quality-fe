@@ -6,9 +6,10 @@
     @cancel="closeModalThis"
     :maskClosable="false"
     :destroyOnClose="true"
-    width="85%"
+    width="800px"
     :min-height="600"
     :footer="null"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -65,10 +66,12 @@
         }
         return '';
       },
+      width: 150,
     },
     {
       title: '暂停操作人',
       dataIndex: 'creater',
+      width: 100,
     },
     {
       title: '继续操作时间',
@@ -79,13 +82,15 @@
         }
         return '';
       },
+      width: 150,
     },
     {
       title: '继续操作人',
       dataIndex: 'freedBy',
+      width: 100,
     },
   ];
-  const [registerTable, { reload, setLoading }] = useTable({
+  const [registerTable, { reload, setLoading, redoHeight }] = useTable({
     api: getPauseList,
     searchInfo: {},
     columns,

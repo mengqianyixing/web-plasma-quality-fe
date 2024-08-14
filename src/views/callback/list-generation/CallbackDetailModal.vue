@@ -7,6 +7,7 @@
     :min-height="600"
     :showOkBtn="false"
     @cancel="handleCancel"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
@@ -104,7 +105,7 @@
           )
       : callbackDetailModalColumns;
   });
-  const [registerTable, { reload, getForm }] = useTable({
+  const [registerTable, { reload, getForm, redoHeight }] = useTable({
     api: getCallbackDetail,
     formConfig: {
       schemas: callbackDetailFormSchema,

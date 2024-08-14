@@ -58,16 +58,7 @@ const callManager: AppRouteModule = {
         },
       ],
     },
-    {
-      path: 'callback-complete',
-      name: 'CallbackComplete',
-      meta: {
-        title: '回访名单完成',
-        hideMenu: true,
-      },
-      id: 930020,
-      component: () => import('@/views/callback/callback-complete/index.vue'),
-    },
+
     {
       path: 'callback-failure',
       name: 'CallbackFailure',

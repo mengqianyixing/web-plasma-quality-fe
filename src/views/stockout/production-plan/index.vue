@@ -100,6 +100,81 @@
             </template>
           </a-dropdown>
         </span>
+        <span
+          v-auth="[
+            StockOutButtonEnum.ProductionPlanPlasmaReport,
+            StockOutButtonEnum.PlasmaProductionApplication,
+            StockOutButtonEnum.PlasmaProductionRecordsOfQualified,
+            StockOutButtonEnum.PlasmaProductionRecordsOfQualifiedSummary,
+            StockOutButtonEnum.PlasmaProductionPutIntoSummary,
+            StockOutButtonEnum.PlasmaProductionPutIntoSummaryOfQualified,
+          ]"
+        >
+          <a-dropdown>
+            <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
+            <template #overlay>
+              <Menu>
+                <span v-auth="StockOutButtonEnum.ProductionPlanPlasmaReport">
+                  <MenuItem>
+                    <a-button type="link" @click="handlePrint('PLASMA_PRODUCTION_CHECKLIST')">
+                      原料血浆投产计划
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="StockOutButtonEnum.PlasmaProductionApplication">
+                  <MenuItem>
+                    <a-button
+                      type="link"
+                      @click="handlePrint(PrintServerEnum.KM_PLASMA_PRODUCTION_APPLICATION)"
+                    >
+                      原料血浆投产申报表
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="StockOutButtonEnum.PlasmaProductionRecordsOfQualified">
+                  <MenuItem>
+                    <a-button
+                      type="link"
+                      @click="handlePrint(PrintServerEnum.PLASMA_PRODUCTION_CHECKLIST)"
+                    >
+                      检疫期合格血浆投产记录
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="StockOutButtonEnum.PlasmaProductionRecordsOfQualifiedSummary">
+                  <MenuItem>
+                    <a-button
+                      type="link"
+                      @click="handlePrint(PrintServerEnum.KM_PLASMA_TRANSFER_RECORD)"
+                    >
+                      检疫期合格血浆投产交接汇总表
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="StockOutButtonEnum.PlasmaProductionPutIntoSummary">
+                  <MenuItem>
+                    <a-button
+                      type="link"
+                      @click="handlePrint(PrintServerEnum.PRODUCTION_PLASMA_SUMMARY)"
+                    >
+                      投产血浆检验汇总表
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="StockOutButtonEnum.PlasmaProductionPutIntoSummaryOfQualified">
+                  <MenuItem>
+                    <a-button
+                      type="link"
+                      @click="handlePrint(PrintServerEnum.PLASMA_SUMMARY_RECORD)"
+                    >
+                      检疫期合格原料血浆投产汇总表
+                    </a-button>
+                  </MenuItem>
+                </span>
+              </Menu>
+            </template>
+          </a-dropdown>
+        </span>
         <a-button
           @click="handleDownloadAbstract(PrintServerEnum.PLASMA_ABSTRACT)"
           type="primary"

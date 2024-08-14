@@ -16,17 +16,20 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { nextTick, reactive } from 'vue';
+  import { nextTick, reactive, ref } from 'vue';
   import {
     totalUnqualifiedColumns,
     columnsMap,
     totalUnqualifiedSearch,
+    titerType,
   } from './reportRelease.data';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { getUnqualifiedApi } from '@/api/inspect/reportRelease';
+  import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
 
   const state = reactive({ reportNo: '', type: 1, title: '' });
+  const titerTypeOptions = ref<Recordable[]>([]);
 
   const [registerTable, { redoHeight, setColumns, getForm }] = useTable({
     immediate: false,
@@ -48,13 +51,24 @@
       return { ...p, ...state };
     },
   });
+  getDilutionTypeApi().then((res) => {
+    titerTypeOptions.value = res.map((it) => ({ value: it.value, label: it.key }));
+  });
   const [registerModal] = useModalInner(async ({ reportNo, type, title }) => {
     await nextTick();
+    const options: Recordable[] = [];
+    if (titerType[type]) {
+      options.push(...titerTypeOptions.value.filter((it) => it.value.includes(titerType[type])));
+    }
     const { updateSchema, resetFields } = getForm();
     state.reportNo = reportNo;
     state.type = type;
     state.title = title;
-    updateSchema({ field: 'conclusion', ifShow: !(type === 3 || type === 4) });
+    updateSchema({
+      field: 'conclusion',
+      ifShow: !(type === 3 || type === 4),
+      componentProps: { options },
+    });
     const columns = [...totalUnqualifiedColumns, ...(columnsMap[type] || [])];
     setColumns(columns);
     resetFields();

@@ -10,6 +10,8 @@
     :min-height="600"
     @ok="handleSubmit"
     @cancel="close"
+    default-fullscreen
+    :can-fullscreen="false"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">

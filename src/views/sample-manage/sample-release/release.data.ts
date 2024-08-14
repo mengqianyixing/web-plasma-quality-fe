@@ -157,18 +157,24 @@ export const unqualifiedColumns: BasicColumn[] = [
   {
     title: '样本编号',
     dataIndex: 'sampleNo',
+    width: 140,
+    ellipsis: false,
   },
   {
     title: '浆员姓名',
     dataIndex: 'donorName',
+    width: 100,
   },
   {
     title: '浆员编号',
     dataIndex: 'cardNo',
+    width: 100,
   },
   {
     title: '不合格原因',
     dataIndex: 'unqualifiedReason',
+    width: 200,
+    ellipsis: false,
   },
   {
     title: '采浆日期',
@@ -176,5 +182,6 @@ export const unqualifiedColumns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
+    width: 100,
   },
 ];

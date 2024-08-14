@@ -48,8 +48,15 @@
           @click="handlePrint"
           :loading="reportLoading"
           v-auth="InspectButtonEnum.ReportReleasePrint"
-          >打印</a-button
-        >
+          >打印
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handlePrintKM"
+          :loading="reportLoading"
+          v-auth="InspectButtonEnum.KMReportReleasePrint"
+          >打印
+        </a-button>
       </template>
       <template #totalUnqualified="{ record }: { record: Recordable }">
         <span
@@ -125,12 +132,12 @@
   import { useModal } from '@/components/Modal';
 
   import {
-    getListApi,
     createReportApi,
-    revokeReportApi,
-    processReportApi,
+    getListApi,
     precessRevokeApi,
+    processReportApi,
     releaseReportApi,
+    revokeReportApi,
   } from '@/api/inspect/reportRelease';
   import { ref } from 'vue';
   import { message, Modal } from 'ant-design-vue';
@@ -140,6 +147,7 @@
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
   import ResultRegistration from './resultRegistration/index.vue';
+  import { PrintServerEnum } from '@/enums/printServerEnum';
 
   defineOptions({ name: 'ReportRelease' });
 
@@ -277,8 +285,8 @@
     if (row.state === 'TBG') {
       return message.warning('报告制作前不允许打印！');
     }
-    let reportType = 'CALLBACK_CHECK_REPORT';
-    if (row.sampleCode === 'NOR') reportType = 'PLASMA_CHECK_REPORT';
+    let reportType = PrintServerEnum.CALLBACK_CHECK_REPORT;
+    if (row.sampleCode === 'NOR') reportType = PrintServerEnum.PLASMA_CHECK_REPORT;
     try {
       reportLoading.value = true;
       const res = await getReportApi({ reportKey: reportType, contentKey: row.reportNo });
@@ -288,6 +296,25 @@
       reportLoading.value = false;
     }
   }
+
+  async function handlePrintKM() {
+    const [row] = getSelections(true);
+    if (!row) return;
+    if (row.state === 'TBG') {
+      return message.warning('报告制作前不允许打印！');
+    }
+    let reportType = PrintServerEnum.KM_CALLBACK_CHECK_REPORT;
+    if (row.sampleCode === 'NOR') reportType = PrintServerEnum.KM_PLASMA_CHECK_REPORT;
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({ reportKey: reportType, contentKey: row.reportNo });
+      openReportModal(true, window.URL.createObjectURL(res));
+      clearSelectedRowKeys();
+    } finally {
+      reportLoading.value = false;
+    }
+  }
+
   function handleDetails(row: Recordable, type: number, title: string) {
     openModal(true, { ...row, type, title });
   }

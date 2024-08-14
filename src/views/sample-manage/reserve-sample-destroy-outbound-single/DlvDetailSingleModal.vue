@@ -7,9 +7,10 @@
     :min-height="650"
     showFooter
     :showOkBtn="false"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <div class="absolute flex flex-col w-full h-full">
+      <div class="absolute w-full h-full">
         <BasicTable @register="registerBatchTable" />
       </div>
     </div>
@@ -40,7 +41,7 @@
     });
   });
 
-  const [registerBatchTable] = useTable({
+  const [registerBatchTable, { redoHeight }] = useTable({
     api: getDeliverSampleSingleDetail,
     columns: requisitionDetail,
     beforeFetch: (params) => {

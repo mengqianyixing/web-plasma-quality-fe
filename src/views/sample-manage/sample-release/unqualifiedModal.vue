@@ -4,11 +4,12 @@
     @register="register"
     title="不合格样本数量列表"
     showFooter
-    width="85%"
+    width="900px"
     :minHeight="600"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <div class="absolute flex flex-col w-full h-full">
+      <div class="absolute w-full h-full">
         <BasicTable @register="registerTable" ref="table" />
       </div>
     </div>
@@ -26,7 +27,7 @@
   import { unqualifiedColumns } from '@/views/sample-manage/sample-release/release.data';
 
   const batchSampleNo = ref('');
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, redoHeight }] = useTable({
     api: getSampleUnqualifiedList,
     columns: unqualifiedColumns,
     fetchSetting: {

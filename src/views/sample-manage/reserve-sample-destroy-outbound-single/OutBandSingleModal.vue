@@ -3,7 +3,7 @@
     v-bind="$attrs"
     @register="registerModal"
     title="扫描出库"
-    width="80%"
+    width="1000px"
     :min-height="650"
     :showOkBtn="false"
     @cancel="handelCancel"
@@ -174,14 +174,17 @@
       {
         field: 'sampleNo',
         title: '样本编号',
+        minWidth: 160,
       },
       {
         field: 'source',
         title: '类别',
+        minWidth: 100,
       },
       {
         field: 'donorNo',
         title: '浆员编号',
+        minWidth: 100,
       },
     ],
     showFooter: false,
@@ -214,24 +217,27 @@
       {
         field: 'sampleNo',
         title: '样本编号',
-        width: 200,
+        minWidth: 160,
       },
       {
         field: 'source',
         title: '类别',
+        minWidth: 100,
       },
       {
         field: 'donorNo',
         title: '浆员编号',
+        minWidth: 100,
       },
       {
         title: '出库人',
         field: 'scanBy',
+        minWidth: 100,
       },
       {
         title: '出库日期',
         field: 'outDate',
-        width: 200,
+        width: 120,
         formatter(params) {
           return params.cellValue ? dayjs(params.cellValue).format('YYYY-MM-DD') : '-';
         },

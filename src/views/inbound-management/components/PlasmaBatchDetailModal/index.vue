@@ -5,6 +5,8 @@
     title="验收详情"
     width="1400px"
     :minHeight="600"
+    defaultFullscreen
+    :canFullscreen="false"
     @cancel="handleClose"
   >
     <template #footer>

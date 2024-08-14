@@ -79,6 +79,13 @@
         >
           验收发布
         </a-button>
+        <a-button
+          type="primary"
+          @click="handleVerifyRelease"
+          v-auth="PlasmaInboundRecordButtonEnum.VerifyReport"
+        >
+          验收报单
+        </a-button>
       </template>
     </BasicTable>
 
@@ -108,7 +115,7 @@
   import RegisterWeightModal from '@/views/inbound-management/plasma-inbound-record/RegisterWeightModal.vue';
   import UnqualifiedStageModal from '@/views/inbound-management/plasma-inbound-record/UnqualifiedStageModal.vue';
   import { omit } from 'lodash-es';
-  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { PlasmaInboundRecordButtonEnum, ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   const { stationOptions, getStationNameById } = useStation();
   const { createMessage, createConfirm } = useMessage();
