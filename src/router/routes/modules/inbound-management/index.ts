@@ -9,7 +9,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
-import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+import { PlasmaInboundRecordButtonEnum, ReCheckButtonEnum } from '@/enums/authCodeEnum';
 import { COMPANY } from '@/enums/company';
 
 const inboundmanagement: AppRouteModule = {
@@ -129,16 +129,12 @@ const inboundmanagement: AppRouteModule = {
           name: 'verifyRelease',
           title: '验收发布',
         },
-        // {
-        //   id: ReCheckButtonEnum.VerifyList,
-        //   name: 'verifyList',
-        //   title: '验收清单',
-        // },
-        // {
-        //   id: ReCheckButtonEnum.VisualInspectionList,
-        //   name: 'visualInspectionList',
-        //   title: '外观检查单',
-        // },
+        {
+          id: PlasmaInboundRecordButtonEnum.VerifyReport,
+          name: 'verifyReport',
+          title: '验收报单',
+          company: [COMPANY.KM],
+        },
       ],
     },
   ],

@@ -91,6 +91,7 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { jsonToSheetXlsx, formatData, getHeader } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
+  import { PrintServerEnum } from '@/enums/printServerEnum';
 
   defineOptions({ name: 'PlasmaBatchReport' });
 
@@ -210,7 +211,7 @@
       try {
         reportLoading.value = true;
         const res = await getReportApi({
-          reportKey: 'BATCH_RELEASE',
+          reportKey: PrintServerEnum.BATCH_RELEASE,
           contentKey: row.brNo,
         });
         openReportModal(true, window.URL.createObjectURL(res));

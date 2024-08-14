@@ -10,6 +10,7 @@ import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
 import { SearchManager } from '@/enums/authCodeEnum';
+import { COMPANY } from '@/enums/company';
 
 const trayManager: AppRouteModule = {
   path: '/search',
@@ -65,6 +66,7 @@ const trayManager: AppRouteModule = {
             {
               id: SearchManager.PlasmaRawInStoragePrint,
               title: '打印',
+              company: [COMPANY.KM, COMPANY.RS],
             },
           ],
         },

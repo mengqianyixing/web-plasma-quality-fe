@@ -97,6 +97,68 @@
             </template>
           </a-dropdown>
         </span>
+        <span
+          v-auth="[
+            NonconformityButtonEnum.KMPlasmaOutTransferPrint,
+            NonconformityButtonEnum.KMPlasmaOutPlasmaPrint,
+            NonconformityButtonEnum.KMPlasmaOutDestructionPrint,
+          ]"
+        >
+          <a-dropdown>
+            <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
+            <template #overlay>
+              <Menu>
+                <span v-auth="NonconformityButtonEnum.KMPlasmaOutTransferPrint">
+                  <MenuItem>
+                    <a-button
+                      type="link"
+                      class="w-full text-left"
+                      @click="
+                        handlePrint(
+                          PrintServerEnum.UNQUALIFIED_PLASMA_TRANSFER,
+                          '不合格原料血浆转移记录',
+                        )
+                      "
+                      :disabled="!disabledTransfer"
+                      >不合格原料血浆转移记录
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="NonconformityButtonEnum.KMPlasmaOutPlasmaPrint">
+                  <MenuItem>
+                    <a-button
+                      type="link"
+                      class="w-full text-left"
+                      @click="
+                        handlePrint(
+                          PrintServerEnum.UNQUALIFIED_RAW_PLASMA,
+                          '不合格原料血浆信息清单',
+                        )
+                      "
+                      :disabled="disabledTransfer"
+                      >不合格原料血浆信息清单
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="NonconformityButtonEnum.KMPlasmaOutDestructionPrint">
+                  <MenuItem>
+                    <a-button
+                      type="link"
+                      @click="
+                        handlePrint(
+                          PrintServerEnum.DESTROYED_UNQUALIFIED_PLASMA,
+                          '不合格血浆处理申请表',
+                        )
+                      "
+                      :disabled="disabledTransfer"
+                      >不合格血浆处理申请表
+                    </a-button>
+                  </MenuItem>
+                </span>
+              </Menu>
+            </template>
+          </a-dropdown>
+        </span>
       </template>
       <template #dlvNo="{ record }: { record: Recordable }">
         <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleDt(record)">

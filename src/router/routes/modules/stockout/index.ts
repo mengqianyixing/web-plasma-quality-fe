@@ -223,12 +223,7 @@ const nonconformity: AppRouteModule = {
         {
           id: StockOutButtonEnum.ProductionPlanPlasmaReport,
           title: '原料血浆投产计划',
-          company: COMPANY.RS,
-        },
-        {
-          id: StockOutButtonEnum.PlasmaProductionApplication,
-          title: '原料血浆投产申报表-昆明',
-          company: COMPANY.KM,
+          company: [COMPANY.RS, COMPANY.KM],
         },
         {
           id: StockOutButtonEnum.ProductionPlanSummary,
@@ -238,6 +233,31 @@ const nonconformity: AppRouteModule = {
         {
           id: StockOutButtonEnum.ProductionPlanSummaryKunMing,
           title: '下载原料血浆摘要-昆明',
+          company: COMPANY.KM,
+        },
+        {
+          id: StockOutButtonEnum.PlasmaProductionApplication,
+          title: '原料血浆投产申报表-昆明',
+          company: COMPANY.KM,
+        },
+        {
+          id: StockOutButtonEnum.PlasmaProductionRecordsOfQualified,
+          title: '检疫期合格血浆投产记录',
+          company: COMPANY.KM,
+        },
+        {
+          id: StockOutButtonEnum.PlasmaProductionRecordsOfQualifiedSummary,
+          title: '检疫期合格血浆投产交接汇总表',
+          company: COMPANY.KM,
+        },
+        {
+          id: StockOutButtonEnum.PlasmaProductionPutIntoSummary,
+          title: '投产血浆检验汇总表',
+          company: COMPANY.KM,
+        },
+        {
+          id: StockOutButtonEnum.PlasmaProductionPutIntoSummaryOfQualified,
+          title: '检疫期合格原料血浆投产汇总表',
           company: COMPANY.KM,
         },
       ],
@@ -370,13 +390,13 @@ const nonconformity: AppRouteModule = {
           id: StockOutButtonEnum.NonPlasmaTransferRecordReport,
           name: 'nonPlasmaTransferRecord',
           title: '非生产用血浆转移记录',
-          company: COMPANY.RS,
+          company: [COMPANY.RS, COMPANY.KM],
         },
         {
           id: StockOutButtonEnum.PlasmaTransferApplyReport,
           name: 'plasmaTransferApply',
           title: '原料血浆转移申请表',
-          company: COMPANY.RS,
+          company: [COMPANY.RS, COMPANY.KM],
         },
       ],
     },
@@ -393,6 +413,16 @@ const nonconformity: AppRouteModule = {
           id: StockOutButtonEnum.PlasmaSummaryReport,
           title: '打印',
           company: COMPANY.RS,
+        },
+        {
+          id: StockOutButtonEnum.KMPlasmaSummaryReport,
+          title: '原料血浆汇总表',
+          company: COMPANY.KM,
+        },
+        {
+          id: StockOutButtonEnum.QuarantineTrackUnqualifiedPlasmaRecords,
+          title: '检疫期续追踪不合格血浆记录',
+          company: COMPANY.KM,
         },
       ],
     },
