@@ -12,12 +12,32 @@
       <div class="flex-1 w-full">
         <BasicTable @register="registerTable">
           <template #toolbar>
-            <a-button type="primary" @click="handleCreate">新增</a-button>
-            <a-button type="primary" @click="handleUpdate">编辑</a-button>
+            <a-button
+              type="primary"
+              @click="handleCreate"
+              v-auth="BaseSettingButtonEnum.PlasmaFailedReasonAdd"
+              >新增
+            </a-button>
+            <a-button
+              type="primary"
+              @click="handleUpdate"
+              v-auth="BaseSettingButtonEnum.PlasmaFailedReasonEdit"
+              >编辑
+            </a-button>
             <template v-if="!(systemLevel > 0)">
               <a-button v-show="false" type="primary" @click="handleRemove">删除</a-button>
-              <a-button type="primary" @click="handleSwitch(true)">启用</a-button>
-              <a-button type="primary" @click="handleSwitch(false)">禁用</a-button>
+              <a-button
+                type="primary"
+                @click="handleSwitch(true)"
+                v-auth="BaseSettingButtonEnum.PlasmaFailedReasonEnable"
+                >启用
+              </a-button>
+              <a-button
+                type="primary"
+                @click="handleSwitch(false)"
+                v-auth="BaseSettingButtonEnum.PlasmaFailedReasonDisEnable"
+                >禁用
+              </a-button>
             </template>
           </template>
         </BasicTable>
@@ -49,7 +69,7 @@
   } from '@/api/dictionary';
   import { getEnumsItems } from '@/api/enums';
   import { ref, onMounted } from 'vue';
-  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { BaseSettingButtonEnum, ReCheckButtonEnum } from '@/enums/authCodeEnum';
   import { cloneDeep } from 'lodash-es';
   import { useMessage } from '@/hooks/web/useMessage';
 

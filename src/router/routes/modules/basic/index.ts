@@ -189,6 +189,24 @@ const callManager: AppRouteModule = {
         dictId: '110001',
         systemLevel: 0,
       },
+      authElements: [
+        {
+          id: BaseSettingButtonEnum.PlasmaFailedReasonAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.PlasmaFailedReasonEdit,
+          title: '编辑',
+        },
+        {
+          id: BaseSettingButtonEnum.PlasmaFailedReasonEnable,
+          title: '启用',
+        },
+        {
+          id: BaseSettingButtonEnum.PlasmaFailedReasonDisEnable,
+          title: '禁用',
+        },
+      ],
       id: 1000100,
       component: () => import('@/views/system/dictionary/itemList.vue'),
     },
@@ -200,6 +218,24 @@ const callManager: AppRouteModule = {
         dictId: '110003',
         systemLevel: 0,
       },
+      authElements: [
+        {
+          id: BaseSettingButtonEnum.PlasmaFailedReasonAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.PlasmaFailedReasonEdit,
+          title: '编辑',
+        },
+        {
+          id: BaseSettingButtonEnum.PlasmaFailedReasonEnable,
+          title: '启用',
+        },
+        {
+          id: BaseSettingButtonEnum.PlasmaFailedReasonDisEnable,
+          title: '禁用',
+        },
+      ],
       id: 1000110,
       component: () => import('@/views/system/dictionary/itemList.vue'),
     },

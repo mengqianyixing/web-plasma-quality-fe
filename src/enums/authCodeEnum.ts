@@ -69,6 +69,11 @@ export enum BaseSettingButtonEnum {
   RequiredItemAdd = 'E_1000801',
   RequiredItemUpdate = 'E_1000802',
   RequiredItemDelete = 'E_1000803',
+
+  PlasmaFailedReasonAdd = 'E_1000901',
+  PlasmaFailedReasonEdit = 'E_1000902',
+  PlasmaFailedReasonEnable = 'E_1000903',
+  PlasmaFailedReasonDisEnable = 'E_1000904',
 }
 
 export enum StoreButtonEnum {
