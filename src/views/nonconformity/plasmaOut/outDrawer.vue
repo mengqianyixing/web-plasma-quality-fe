@@ -33,11 +33,11 @@
             />
           </div>
         </div>
-        <div class="flex flex-1" style="height: calc(100% - 60px)">
-          <div class="h-full flex-1">
+        <div class="flex flex-1 w-full" style="height: calc(100% - 60px)">
+          <div class="h-full w-1/2">
             <BasicTable @register="registerLeftTable" />
           </div>
-          <div class="h-full flex-1">
+          <div class="h-full w-1/2">
             <BasicTable @register="registerRightTable" />
           </div>
         </div>
@@ -50,7 +50,7 @@
   import { outLeftColumns, outRightColumns } from './plasmaOut.data';
   import { BasicTable, useTable } from '@/components/Table';
   import { scanApi, scanedApi, notScanApi } from '@/api/nonconformity/plasmaOut';
-  import { reactive, ref } from 'vue';
+  import { reactive, ref, nextTick } from 'vue';
   import { debounce } from 'lodash-es';
   import ScanInput from '@/components/Form/src/components/ScanInput.vue';
 
@@ -106,8 +106,10 @@
     }),
   });
   function fullscreen() {
-    lRedoHeight();
-    rRedoHeight();
+    nextTick(() => {
+      lRedoHeight();
+      rRedoHeight();
+    });
   }
   const _submit = debounce(handleSubmit, 200);
   function handleKeyUp(e) {

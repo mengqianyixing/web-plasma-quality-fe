@@ -9,6 +9,7 @@
     @cancel="handleClose"
     :min-height="650"
     width="80%"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
@@ -22,25 +23,32 @@
           <a-tabs
             default-active-key="detail"
             v-model:activeKey="currentKey"
+            @change="redoHeight"
             class="h-full bg-white tabs"
           >
             <a-tab-pane key="batch" tab="血浆批号" force-render>
-              <BasicTable @register="registerBatchTable" />
+              <div class="absolute w-full h-full">
+                <BasicTable @register="registerBatchTable" />
+              </div>
             </a-tab-pane>
             <a-tab-pane key="box" :tab="iskm ? '托盘明细' : '血浆箱号'" force-render>
-              <BasicTable @register="registerBoxTable" />
+              <div class="absolute w-full h-full">
+                <BasicTable @register="registerBoxTable" />
+              </div>
             </a-tab-pane>
             <a-tab-pane key="detail" tab="血浆明细" force-render>
-              <BasicTable @register="registerDetailTable">
-                <template #toolbar>
-                  <a-button type="primary" @click="handlePickPlasma" :disabled="isPreview">
-                    挑选血浆
-                  </a-button>
-                  <a-button type="primary" @click="handleDelete" :disabled="isPreview">
-                    移除
-                  </a-button>
-                </template>
-              </BasicTable>
+              <div class="absolute w-full h-full">
+                <BasicTable @register="registerDetailTable">
+                  <template #toolbar>
+                    <a-button type="primary" @click="handlePickPlasma" :disabled="isPreview">
+                      挑选血浆
+                    </a-button>
+                    <a-button type="primary" @click="handleDelete" :disabled="isPreview">
+                      移除
+                    </a-button>
+                  </template>
+                </BasicTable>
+              </div>
             </a-tab-pane>
           </a-tabs>
         </div>
@@ -158,35 +166,40 @@
     },
   );
 
-  const [registerBatchTable, { reload: reloadBatchTable, setTableData: setBatchTableData }] =
-    useTable({
-      api: getDeliverNonProductiveDetailBatch,
-      beforeFetch(params) {
-        return {
-          ...params,
-          dlvNo: getFieldsValue().dlvNo,
-        };
-      },
-      pagination: false,
-      columns: plasmaBatchColumns,
-      fetchSetting: {
-        pageField: 'currPage',
-        sizeField: 'pageSize',
-        totalField: 'totalCount',
-        listField: 'result',
-      },
-      size: 'small',
-      striped: false,
-      useSearchForm: false,
-      showTableSetting: false,
-      bordered: true,
-      showIndexColumn: false,
-      inset: true,
-      isCanResizeParent: true,
-      immediate: false,
-    });
+  const [
+    registerBatchTable,
+    { reload: reloadBatchTable, setTableData: setBatchTableData, redoHeight: batchRedo },
+  ] = useTable({
+    api: getDeliverNonProductiveDetailBatch,
+    beforeFetch(params) {
+      return {
+        ...params,
+        dlvNo: getFieldsValue().dlvNo,
+      };
+    },
+    pagination: false,
+    columns: plasmaBatchColumns,
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    size: 'small',
+    striped: false,
+    useSearchForm: false,
+    showTableSetting: false,
+    bordered: true,
+    showIndexColumn: false,
+    inset: true,
+    isCanResizeParent: true,
+    immediate: false,
+  });
 
-  const [registerBoxTable, { reload: reloadBoxTable, setTableData: setBoxTableData }] = useTable({
+  const [
+    registerBoxTable,
+    { reload: reloadBoxTable, setTableData: setBoxTableData, redoHeight: boxRedo },
+  ] = useTable({
     api: getDeliverNonProductiveDetailBox,
     beforeFetch(params) {
       return {
@@ -213,41 +226,50 @@
     isCanResizeParent: true,
   });
 
-  const [registerDetailTable, { reload: reloadDetailTable, setTableData: setDetailTableData }] =
-    useTable({
-      api: getDeliverNonProductivePlasma,
-      beforeFetch(params) {
-        return {
-          ...params,
-          dlvNo: getFieldsValue().dlvNo,
-        };
+  const [
+    registerDetailTable,
+    { reload: reloadDetailTable, setTableData: setDetailTableData, redoHeight: btRedo },
+  ] = useTable({
+    api: getDeliverNonProductivePlasma,
+    beforeFetch(params) {
+      return {
+        ...params,
+        dlvNo: getFieldsValue().dlvNo,
+      };
+    },
+    pagination: false,
+    columns: plasmaDetailColumns,
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    clickToRowSelect: true,
+    rowSelection: {
+      type: 'radio',
+      onChange: (_, selectedRows: any) => {
+        selectedRow.value = selectedRows;
       },
-      pagination: false,
-      columns: plasmaDetailColumns,
-      fetchSetting: {
-        pageField: 'currPage',
-        sizeField: 'pageSize',
-        totalField: 'totalCount',
-        listField: 'result',
-      },
-      clickToRowSelect: true,
-      rowSelection: {
-        type: 'radio',
-        onChange: (_, selectedRows: any) => {
-          selectedRow.value = selectedRows;
-        },
-      },
-      size: 'small',
-      striped: false,
-      useSearchForm: false,
-      showTableSetting: false,
-      bordered: true,
-      showIndexColumn: false,
-      inset: true,
-      isCanResizeParent: true,
-      immediate: false,
-    });
-
+    },
+    size: 'small',
+    striped: false,
+    useSearchForm: false,
+    showTableSetting: false,
+    bordered: true,
+    showIndexColumn: false,
+    inset: true,
+    isCanResizeParent: true,
+    immediate: false,
+  });
+  const map = {
+    batch: batchRedo,
+    box: boxRedo,
+    detail: btRedo,
+  };
+  function redoHeight() {
+    map[currentKey.value]();
+  }
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: false });
 
@@ -369,6 +391,7 @@
 </script>
 <style scoped>
   .tabs :deep(.ant-tabs-content) {
+    position: relative;
     height: 100%;
   }
 </style>

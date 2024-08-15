@@ -134,6 +134,7 @@
   import { getReportApi } from '@/api/report';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { PrintServerEnum } from '@/enums/printServerEnum';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -359,12 +360,12 @@
     const [row] = getSelections(true);
     if (!row) return;
     if (row.state === STATUS.TBR) {
-      return message.warning(`【${STATUS_TEXT.get(STATUS.TBR)}】状态不允许打印报表`);
+      return message.warning(`制造批号【${row.mesId}】未审核`);
     }
     try {
       reportLoading.value = true;
       const res = await getReportApi({
-        reportKey: 'PLASMA_PRODUCTION_RELEASE',
+        reportKey: PrintServerEnum.PLASMA_PRODUCTION_RELEASE,
         contentKey: row.prNo,
       });
       openReportModal(true, window.URL.createObjectURL(res));
@@ -383,7 +384,7 @@
     try {
       reportLoading.value = true;
       const res = await getReportApi({
-        reportKey: 'KM_PLASMA_QUARANINE_FILTER',
+        reportKey: PrintServerEnum.KM_PLASMA_QUARANINE_FILTER,
         contentKey: row.orderNo,
       });
       openReportModal(true, window.URL.createObjectURL(res));

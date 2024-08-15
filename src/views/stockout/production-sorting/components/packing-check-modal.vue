@@ -9,7 +9,8 @@
     :showOkBtn="false"
     :closeFunc="handleCloseFunc"
     :min-height="600"
-    width="70%"
+    width="900px"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -83,10 +84,12 @@
     {
       title: '血浆箱号',
       dataIndex: 'boxNo',
+      width: 140,
     },
     {
       title: '血浆编号',
       dataIndex: 'bagNo',
+      width: 140,
     },
     {
       title: '血浆状态',
@@ -94,6 +97,7 @@
       format(text) {
         return `${plasmaMap.get(text as plasmaValueEnum)}`;
       },
+      width: 100,
     },
     {
       title: '状态',
@@ -101,10 +105,12 @@
       format(text) {
         return `${pickBoxMap.get(text as pickBoxValueEnum)}`;
       },
+      width: 100,
     },
     {
       title: '核对人',
       dataIndex: 'checker',
+      width: 100,
     },
     {
       title: '核对日期',
@@ -112,10 +118,11 @@
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD') : '-';
       },
+      width: 100,
     },
   ];
 
-  const [registerTable, { reload, setLoading }] = useTable({
+  const [registerTable, { reload, setLoading, redoHeight }] = useTable({
     api: _getSortBoxsList,
     columns,
     beforeFetch: (p) => {
@@ -179,6 +186,6 @@
   // 关闭弹框前
   function handleCloseFunc() {
     emit('success');
-    return true;
+    return Promise.resolve(true);
   }
 </script>

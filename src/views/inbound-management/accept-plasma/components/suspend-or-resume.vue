@@ -2,8 +2,9 @@
   <BasicModal
     v-bind="$attrs"
     @register="register"
-    width="85%"
+    width="1000px"
     :min-height="700"
+    @fullscreen="redoHeight"
     :showOkBtn="false"
     :title="`暂停${searchForm.pattern === 'BOX' ? '箱' : '批'}记录`"
   >
@@ -64,6 +65,7 @@
     {
       title: '验收人',
       dataIndex: 'creater',
+      width: 100,
     },
     {
       title: '暂停操作时间',
@@ -74,6 +76,7 @@
         }
         return '';
       },
+      width: 160,
     },
     {
       title: '继续操作时间',
@@ -84,6 +87,7 @@
         }
         return '';
       },
+      width: 100,
     },
   ]);
 
@@ -94,6 +98,7 @@
       {
         title: '验收人',
         dataIndex: 'creater',
+        width: 100,
       },
       {
         title: '暂停操作时间',
@@ -104,6 +109,7 @@
           }
           return '';
         },
+        width: 160,
       },
       {
         title: '继续操作时间',
@@ -114,6 +120,7 @@
           }
           return '';
         },
+        width: 160,
       },
     ];
     setModalProps({
@@ -136,10 +143,12 @@
         {
           title: '托盘编号',
           dataIndex: 'trayNo',
+          width: 80,
         },
         {
           title: '血浆箱号',
           dataIndex: 'boxNo',
+          width: 160,
         },
         {
           title: '当前状态',
@@ -147,6 +156,7 @@
           customRender: ({ text }) => {
             return boxSuspendEnum[text];
           },
+          width: 80,
         },
       );
     } else if (data.pattern === 'BCH') {
@@ -169,6 +179,7 @@
       columns.value.splice(1, 0, {
         title: '复核人',
         dataIndex: 'reviewer',
+        width: 100,
       });
       columns.value.splice(
         3,
@@ -176,10 +187,12 @@
         {
           title: '继续操作人',
           dataIndex: 'freedBy',
+          width: 100,
         },
         {
           title: '继续复核人',
           dataIndex: 'reviewBy',
+          width: 100,
         },
       );
     }
@@ -230,7 +243,7 @@
   });
 
   const tableSelected = ref<any[]>([]);
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, redoHeight }] = useTable({
     api: plasmaPauseBoxList,
     beforeFetch: (params) => {
       return {

@@ -17,6 +17,8 @@
     cancelText="关闭"
     :min-height="600"
     @ok="handleSubmit"
+    default-fullscreen
+    :can-fullscreen="false"
     @cancel="close"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">

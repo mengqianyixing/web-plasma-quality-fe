@@ -6,12 +6,11 @@
     width="80%"
     :min-height="600"
     :showOkBtn="false"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
-        <div class="flex-1 h-full shrink-1">
-          <BasicTable @register="registerTable" />
-        </div>
+        <BasicTable @register="registerTable" />
       </div>
     </div>
   </BasicModal>
@@ -25,7 +24,7 @@
 
   const batchSampleNo = ref('');
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, redoHeight }] = useTable({
     api: getVerifyUnqualified,
     columns: plasmaUnqualifiedColumns,
     beforeFetch: (_) => {

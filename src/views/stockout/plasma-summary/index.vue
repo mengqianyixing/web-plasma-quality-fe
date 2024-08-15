@@ -4,12 +4,43 @@
       <template #toolbar>
         <a-button
           type="primary"
-          @click="handlePrint('PLASMA_SUMMARY')"
+          @click="handlePrint(PrintServerEnum.PLASMA_SUMMARY)"
           v-auth="StockOutButtonEnum.PlasmaSummaryReport"
           :loading="reportLoading"
         >
           打印
         </a-button>
+        <span
+          v-auth="[
+            StockOutButtonEnum.KMPlasmaSummaryReport,
+            StockOutButtonEnum.QuarantineTrackUnqualifiedPlasmaRecords,
+          ]"
+        >
+          <a-dropdown>
+            <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
+            <template #overlay>
+              <Menu>
+                <span v-auth="StockOutButtonEnum.KMPlasmaSummaryReport">
+                  <MenuItem>
+                    <a-button type="link" @click="handlePrint(PrintServerEnum.KM_PLASMA_SUMMARY)">
+                      原料血浆汇总表
+                    </a-button>
+                  </MenuItem>
+                </span>
+                <span v-auth="StockOutButtonEnum.QuarantineTrackUnqualifiedPlasmaRecords">
+                  <MenuItem>
+                    <a-button
+                      type="link"
+                      @click="handlePrint(PrintServerEnum.FOLLOW_TRACK_UNQUALIFIED)"
+                    >
+                      检疫期续追踪不合格血浆记录
+                    </a-button>
+                  </MenuItem>
+                </span>
+              </Menu>
+            </template>
+          </a-dropdown>
+        </span>
       </template>
     </BasicTable>
     <ReportModal @register="registerReportModal" />
@@ -21,14 +52,14 @@
   import dayjs from 'dayjs';
   import { getPlasmaSummary } from '@/api/stockout/plasma-summary';
   import { useStation } from '@/hooks/common/useStation';
-  // import { Dropdown as ADropdown, MenuItem, Menu, message } from 'ant-design-vue';
-  import { message } from 'ant-design-vue';
+  import { message, Dropdown as ADropdown, MenuItem, Menu } from 'ant-design-vue';
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
 
   import { ref } from 'vue';
   import ReportModal from '@/components/ReportModal/index.vue';
   import { getReportApi } from '@/api/report';
   import { useModal } from '@/components/Modal';
+  import { PrintServerEnum } from '@/enums/printServerEnum';
 
   const reportLoading = ref(false);
   const [registerReportModal, { openModal: openReportModal }] = useModal();

@@ -4,7 +4,7 @@
     @register="registerModal"
     showFooter
     title="样本明细"
-    width="80%"
+    width="1200px"
     :minHeight="650"
     @fullscreen="redoHeight"
     :showOkBtn="false"
@@ -40,22 +40,31 @@
       {
         title: '采浆公司',
         dataIndex: 'stationName',
+        width: 80,
       },
       {
         title: '样本批号',
         dataIndex: 'batchNo',
+        width: 140,
+        ellipsis: false,
       },
       {
         title: '样本袋号',
         dataIndex: 'packNo',
+        width: 140,
+        ellipsis: false,
       },
       {
         title: '箱号',
         dataIndex: 'boxNo',
+        width: 140,
+        ellipsis: false,
       },
       {
         title: '样本编号',
         dataIndex: 'sampleNo',
+        width: 140,
+        ellipsis: false,
       },
       {
         title: '采集日期',
@@ -63,14 +72,19 @@
         format(text) {
           return text ? dayjs(text).format('YYYY-MM-DD') : '';
         },
+        width: 100,
       },
       {
         title: '浆员编号',
         dataIndex: 'cardNo',
+        width: 100,
+        ellipsis: false,
       },
       {
         title: '浆员姓名',
         dataIndex: 'donorName',
+        width: 100,
+        ellipsis: false,
       },
     ],
     useSearchForm: true,
@@ -84,33 +98,21 @@
             options: stationOptions,
             disabled: true,
           },
-          colProps: {
-            span: 6,
-          },
         },
         {
           label: '样本批号',
           field: 'batchNo',
           component: 'Input',
-          colProps: {
-            span: 6,
-          },
         },
         {
           label: '箱号',
           field: 'boxNo',
           component: 'Input',
-          colProps: {
-            span: 6,
-          },
         },
         {
           label: '样本袋号',
           field: 'packNo',
           component: 'Input',
-          colProps: {
-            span: 6,
-          },
         },
       ],
       transformDateFunc(date) {

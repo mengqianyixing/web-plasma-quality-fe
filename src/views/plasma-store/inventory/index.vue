@@ -1,7 +1,12 @@
 <template>
   <div class="p-3 root">
     <div class="pt-5 bg-white mb-16px">
-      <BasicForm @register="registerForm" @reset="handleResetBtn" @submit="handleSubmit" />
+      <BasicForm
+        @register="registerForm"
+        class="search-form"
+        @reset="handleResetBtn"
+        @submit="handleSubmit"
+      />
     </div>
 
     <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData">
@@ -63,7 +68,7 @@
 
   const [registerForm, { updateSchema, getFieldsValue, setProps }] = useForm({
     baseColProps: { flex: '0 0 373px' },
-    actionColOptions: { flex: '1 1 120px', style: 'max-width:unset;' },
+    actionColOptions: { flex: '1 1 150px', style: 'max-width:unset;' },
     schemas: formSchema,
     transformDateFunc(date) {
       return dayjs(date).format('YYYY-MM-DD');
@@ -177,8 +182,8 @@
   async function handleExport() {
     const values = getFieldsValue();
 
-    if (!values.date) {
-      return createMessage.warning('请选择日期');
+    if (!values.date && !values.batchNo) {
+      return createMessage.warning('请至少选择日期或输入血浆批号');
     }
 
     if (values.dateKey === 'receipt' && values.date) {
@@ -221,7 +226,7 @@
     delete header['undefined'];
     jsonToSheetXlsx<any>({
       header,
-      filename: `库存${values.date[0]}-${values.date[1]}${dateFlag}.xlsx`,
+      filename: `库存${dateFlag}.xlsx`,
       data: originExportData.map((it) => {
         return {
           ...omit(it, ['inWeightG', 'outWeightG']),

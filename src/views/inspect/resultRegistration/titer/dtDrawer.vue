@@ -18,6 +18,7 @@
     :min-height="600"
     @ok="handleSubmit"
     @cancel="close"
+    @fullscreen="redoHeight"
   >
     <div class="flex h-inherit max-h-inherit min-h-inherit">
       <div class="flex-1 w-full">
@@ -29,7 +30,13 @@
           size="small"
         >
           <TabPane key="1" tab="尚未有效价结果">
-            <component :is="componentMap['1']" :projectId="pid" :bsNo="bsno" type="INVALID_PRICE" />
+            <component
+              :is="componentMap['1']"
+              ref="table1"
+              :projectId="pid"
+              :bsNo="bsno"
+              type="INVALID_PRICE"
+            />
           </TabPane>
           <TabPane key="2" tab="已有效价结果">
             <component
@@ -40,10 +47,17 @@
               :plasmaType="plasmaType"
               :pv="pv"
               :bsNo="bsno"
+              ref="table2"
             />
           </TabPane>
           <TabPane key="3" tab="未检测样本">
-            <component :is="componentMap['3']" :projectId="pid" :bsNo="bsno" type="TO_BE_TESTED" />
+            <component
+              :is="componentMap['3']"
+              ref="table3"
+              :projectId="pid"
+              :bsNo="bsno"
+              type="TO_BE_TESTED"
+            />
           </TabPane>
         </Tabs>
       </div>
@@ -53,9 +67,12 @@
 <script setup lang="ts">
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { TabPane, Tabs } from 'ant-design-vue';
-  import { ref, markRaw } from 'vue';
+  import { ref, markRaw, nextTick } from 'vue';
   import DtTable from './dtTable.vue';
 
+  const table1 = ref();
+  const table2 = ref();
+  const table3 = ref();
   const emit = defineEmits(['close']);
   const activeKey = ref('1');
   const pid = ref('');
@@ -68,6 +85,10 @@
     2: 'div',
     3: 'div',
   });
+  function redoHeight() {
+    const map = { table1, table2, table3 };
+    map['table' + activeKey.value].value.redoHeight?.();
+  }
   const [registerModal] = useModalInner(async (data) => {
     pv.value = data.priceValidBit;
     pid.value = data.projectId;
@@ -78,6 +99,7 @@
   });
   function change(activeKey) {
     componentMap.value[activeKey] = markRaw(DtTable);
+    nextTick(redoHeight);
   }
   function handleSubmit() {}
   function close() {
@@ -92,6 +114,7 @@
 </script>
 <style scoped>
   .tabs :deep(.ant-tabs-content) {
+    position: relative;
     height: 100%;
   }
 </style>

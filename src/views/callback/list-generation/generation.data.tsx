@@ -520,6 +520,7 @@ export const callbackDetailCustomColumns: BasicColumn[] = [
     dataIndex: 'liveAddress',
     title: '现居地址',
     width: 150,
+    ellipsis: false,
   },
   {
     dataIndex: 'sampleCollectTime',

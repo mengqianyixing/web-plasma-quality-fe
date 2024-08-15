@@ -6,6 +6,7 @@
     width="80%"
     :minHeight="650"
     :showOkBtn="false"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
@@ -24,7 +25,7 @@
   defineEmits(['register']);
 
   const orderNo = ref('');
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, redoHeight }] = useTable({
     api: getForPlasmaListApi,
     columns: productionInquiryDetailColumns,
     formConfig: {

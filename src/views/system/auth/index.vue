@@ -42,6 +42,7 @@
   import { modulesRouteList } from '@/router/routes';
   import { useUserStore } from '@/store/modules/user';
   import { pushLog } from '@/api/oauth/logger';
+  import { filterRoutes } from './dataTransfer';
 
   const { createMessage } = useMessage();
   const userStore = useUserStore();
@@ -100,60 +101,51 @@
       createMessage.warn('请选择一条记录');
       return;
     }
-    const menuList: any[] = modulesRouteList.filter((x) => x.id);
-    const results: any[] = [];
-    menuList.forEach((x) => {
-      if (x.children) {
-        x.children.forEach((v) => {
-          if (v.authElements) {
-            results.push({
-              btn: { title: v.meta.title },
-              grand: x,
-              parent: v,
-            });
-            v.authElements.forEach((a) => {
-              results.push({
-                btn: a,
-                grand: x,
-                parent: v,
-              });
-            });
-          } else {
-            results.push({
-              btn: { title: v.meta.title },
-              grand: x,
-              parent: v,
-            });
-          }
-        });
+    const menuList: Recordable[] = filterRoutes(modulesRouteList);
+    const flat = () => {
+      const list: Recordable[] = menuList
+        .slice()
+        .map((it) => ({ ...it, titleArr: [it.meta.title] }));
+      const newList: Recordable[] = [];
+      while (list.length) {
+        const node = list.pop() as Recordable;
+        const children: Recordable[] = node.children || node.authElements || [];
+        if (children.length) {
+          const arr = children.map((it) => ({
+            ...it,
+            titleArr: [...node.titleArr, it.title || it.meta.title],
+          }));
+          list.push(...arr.reverse());
+        }
+        newList.push(node);
       }
-    });
+      return newList;
+    };
+    const results: any[] = flat();
     const excelCol = [
-      { label: '一级菜单', prop: 'grand' },
-      { label: '二级菜单', prop: 'parent' },
-      { label: '按钮', prop: 'btn' },
+      { label: '一级菜单', prop: '0' },
+      { label: '二级菜单', prop: '1' },
+      { label: '三级菜单', prop: '2' },
+      { label: '按钮', prop: 'bt' },
     ];
-    const exportData = results.map((x) => ({
-      btn: x.btn.title,
-      grand: x.grand.meta.title,
-      parent: x.parent.meta.title,
-    }));
+    const exportData = results.map((x) => {
+      const { titleArr } = x;
+      const obj = { bt: x.path ? void 0 : titleArr.pop() };
+      for (const key in titleArr) {
+        obj[key] = titleArr[key];
+      }
+      return obj;
+    });
+
     selectedRowsRef.value.forEach((x, i) => {
       const usersStr = (x.users ?? []).map((it) => it.split('/')[1]).join('、');
       excelCol.push({ label: `${x.displayName}/${usersStr}`, prop: `domainsStr${i}` });
       results.forEach((v, n) => {
-        if (v.btn.id) {
-          if (x.domains.includes(v.btn.id)) {
-            exportData[n][`domainsStr${i}`] = '√';
-          }
-        } else {
-          if (x.domains.includes(v.grand.id + '') || x.domains.includes(v.parent.id + '')) {
-            exportData[n][`domainsStr${i}`] = '√';
-          }
+        if (x.domains.includes(v.id.toString())) {
+          exportData[n][`domainsStr${i}`] = '√';
         }
       });
     });
-    console.log(excelCol, exportData);
     exportFile(
       transferCSVData(excelCol, exportData),
       `角色权限导出-${formatDate(new Date(), 'yyyymmddhhiissS')}`,

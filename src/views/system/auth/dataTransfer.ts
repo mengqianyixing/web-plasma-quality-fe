@@ -11,6 +11,8 @@ import { TreeItem } from '@/components/Tree';
 import { jsonClone } from 'js-xxx';
 import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
 import { SysParamsEnum } from '@/enums/sysParamsEnum';
+import type { AppRouteModule } from '@/router/types';
+import { AppRouteRecordRaw } from '@/router/types';
 
 const globalApiStore = useGlobalApiStoreWithOut();
 const company = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany);
@@ -71,23 +73,24 @@ export function getFilterTreeData(treeList: TreeItem[], selectedKeys: any) {
   });
 }
 
-/**
- * 筛选需要的路由数据
- * @param routes
- * @returns
- */
-export function filterRoutes(routes: any[]): any[] {
-  const filteredRoutes: any[] = [];
+export function filterRoutes(routes: AppRouteModule[]): AppRouteModule[] {
+  const filteredRoutes: AppRouteModule[] = [];
 
-  routes.forEach((item: any) => {
-    if (item.company && item.company !== company) {
+  routes.forEach((item: AppRouteModule) => {
+    if (typeof item.company === 'string' && item.company && item.company !== company) {
+      return false;
+    }
+    if (
+      Array.isArray(item.company) &&
+      item.company.length > 0 &&
+      item.company.indexOf(company) === -1
+    ) {
       return false;
     }
     if (item.id && !item.children && !item.authElements) {
       if (`${item?.id}`.includes('E_')) {
         item.class = 'auth-element-tree-node';
       }
-      console.log(item.company);
       filteredRoutes.push({
         ...item,
         title: item?.meta?.title ?? item.title ?? item.name,
@@ -106,7 +109,7 @@ export function filterRoutes(routes: any[]): any[] {
       return;
     }
     if (item.authElements) {
-      const filteredChildren = filterRoutes(item.authElements);
+      const filteredChildren = filterRoutes(item.authElements as unknown as AppRouteRecordRaw[]);
       if (filteredChildren.length > 0) {
         // 将 authElements 导入到菜单
         item.children = filteredChildren;

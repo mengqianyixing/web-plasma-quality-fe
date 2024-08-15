@@ -17,6 +17,7 @@
     cancelText="关闭"
     :min-height="600"
     @cancel="cancel"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
@@ -124,6 +125,7 @@
       getSelectRows: getBindSelectRows,
       clearSelectedRowKeys: clearBindSelectedRowKeys,
       reload: reloadBind,
+      redoHeight: redoHeightBox,
     },
   ] = useTable({
     immediate: false,
@@ -151,7 +153,10 @@
       schemas: bindSearchFormSchema,
     },
   });
-  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload }] = useTable({
+  const [
+    registerTable,
+    { getSelectRows, clearSelectedRowKeys, reload, redoHeight: redoHeightTray },
+  ] = useTable({
     immediate: false,
     api: getInStoreListApi,
     fetchSetting: {
@@ -177,6 +182,10 @@
       schemas: trayInStoreFormSchema,
     },
   });
+  function redoHeight() {
+    redoHeightBox();
+    redoHeightTray();
+  }
   async function change(activeKey) {
     const map = {
       1: reloadBind,

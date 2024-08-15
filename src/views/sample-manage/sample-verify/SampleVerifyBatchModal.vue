@@ -3,12 +3,13 @@
     v-bind="$attrs"
     @register="register"
     title="样本批次列表"
-    width="80%"
+    width="1000px"
     :minHeight="600"
     @ok="handleSelect"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <div class="absolute flex flex-col w-full h-full">
+      <div class="absolute w-full h-full">
         <BasicTable @register="registerTable">
           <template #sampleType="{ record }">
             {{ formatSampleType(record?.sampleType) }}
@@ -43,53 +44,54 @@
 
   const waitVerifyBatchCount = ref(0);
   const waitVerifySampleCount = ref(0);
-  const [registerTable, { reload, getRawDataSource, setSelectedRowKeys, clearSelectedRowKeys }] =
-    useTable({
-      api: getSampleVerifyList,
-      columns: sampleVerifyColumns,
-      formConfig: {
-        labelWidth: 120,
-        schemas: searchFormSchema,
-      },
-      afterFetch(data) {
-        const originData: GetApiCoreBatchSampleVerifyResponse = getRawDataSource();
-        waitVerifySampleCount.value = originData.result![0].waitVerifySampleCount!;
-        waitVerifyBatchCount.value = originData.result![0].waitVerifyBatchCount!;
-        return data;
-      },
-      fetchSetting: {
-        pageField: 'currPage',
-        sizeField: 'pageSize',
-        totalField: 'totalCount',
-        listField: 'result',
-      },
-      clickToRowSelect: true,
-      rowSelection: {
-        type: 'radio',
-        onChange: (keys, selectedRows: any) => {
-          if (
-            keys.length === 1 &&
-            selectedRows[0].sampleType !== sampleTypeEnum.CallbackSample &&
-            selectedRows[0].sampleType !== sampleTypeEnum.PlasmaSample
-          ) {
-            warning('只能选择回访样本批次或血浆样本批次');
+  const [
+    registerTable,
+    { reload, getRawDataSource, setSelectedRowKeys, clearSelectedRowKeys, redoHeight },
+  ] = useTable({
+    api: getSampleVerifyList,
+    columns: sampleVerifyColumns,
+    formConfig: {
+      schemas: searchFormSchema,
+    },
+    afterFetch(data) {
+      const originData: GetApiCoreBatchSampleVerifyResponse = getRawDataSource();
+      waitVerifySampleCount.value = originData.result![0].waitVerifySampleCount!;
+      waitVerifyBatchCount.value = originData.result![0].waitVerifyBatchCount!;
+      return data;
+    },
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    clickToRowSelect: true,
+    rowSelection: {
+      type: 'radio',
+      onChange: (keys, selectedRows: any) => {
+        if (
+          keys.length === 1 &&
+          selectedRows[0].sampleType !== sampleTypeEnum.CallbackSample &&
+          selectedRows[0].sampleType !== sampleTypeEnum.PlasmaSample
+        ) {
+          warning('只能选择回访样本批次或血浆样本批次');
 
-            setSelectedRowKeys(selectedRow.value.map((it) => it.key));
+          setSelectedRowKeys(selectedRow.value.map((it) => it.key));
 
-            return;
-          }
-          selectedRow.value = selectedRows;
-        },
+          return;
+        }
+        selectedRow.value = selectedRows;
       },
-      size: 'small',
-      striped: false,
-      useSearchForm: true,
-      bordered: true,
-      showIndexColumn: false,
-      isCanResizeParent: true,
-      inset: false,
-      immediate: false,
-    });
+    },
+    size: 'small',
+    striped: false,
+    useSearchForm: true,
+    bordered: true,
+    showIndexColumn: false,
+    isCanResizeParent: true,
+    inset: false,
+    immediate: false,
+  });
 
   const sampleType = ref<Recordable[]>([]);
 

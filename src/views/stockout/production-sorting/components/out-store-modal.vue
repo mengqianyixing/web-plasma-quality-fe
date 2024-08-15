@@ -17,6 +17,7 @@
     cancelText="关闭"
     :min-height="600"
     @cancel="cancel"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
@@ -61,6 +62,7 @@
       cancelText="关闭"
       :min-height="600"
       @cancel="reload"
+      @fullscreen="bindRedoHeight"
     >
       <div class="relative h-inherit max-h-inherit min-h-inherit">
         <div class="absolute flex flex-col w-full h-full">
@@ -124,32 +126,33 @@
   });
   const [registerOutModal, { openModal: openOutModal }] = useModal();
   const [registenBindModal, { openModal: openBindModal }] = useModal();
-  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, getForm }] = useTable({
-    immediate: false,
-    api: getOutStoreListApi,
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    columns: trayOutStoreColumns,
-    inset: true,
-    isCanResizeParent: true,
-    size: 'small',
-    useSearchForm: true,
-    showTableSetting: false,
-    bordered: true,
-    rowSelection: { type: 'checkbox' },
-    beforeFetch: (p) => ({ ...p, prepareNo: state.prepareNo }),
-    afterFetch: (res) => {
-      clearSelectedRowKeys();
-      return res;
-    },
-    formConfig: {
-      schemas: trayOutStoreFormSchema,
-    },
-  });
+  const [registerTable, { getSelectRows, clearSelectedRowKeys, reload, getForm, redoHeight }] =
+    useTable({
+      immediate: false,
+      api: getOutStoreListApi,
+      fetchSetting: {
+        pageField: 'currPage',
+        sizeField: 'pageSize',
+        totalField: 'totalCount',
+        listField: 'result',
+      },
+      columns: trayOutStoreColumns,
+      inset: true,
+      isCanResizeParent: true,
+      size: 'small',
+      useSearchForm: true,
+      showTableSetting: false,
+      bordered: true,
+      rowSelection: { type: 'checkbox' },
+      beforeFetch: (p) => ({ ...p, prepareNo: state.prepareNo }),
+      afterFetch: (res) => {
+        clearSelectedRowKeys();
+        return res;
+      },
+      formConfig: {
+        schemas: trayOutStoreFormSchema,
+      },
+    });
   const [
     registerBindTable,
     {
@@ -157,6 +160,7 @@
       clearSelectedRowKeys: clearBindSelectedRowKeys,
       reload: reloadBind,
       setSelectedRowKeys: setBindSelectedRowKeys,
+      redoHeight: bindRedoHeight,
     },
   ] = useTable({
     rowKey: 'boxNo',

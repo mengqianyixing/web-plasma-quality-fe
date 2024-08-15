@@ -18,8 +18,8 @@
     @ok="handleSubmit"
     @fullscreen="redoHeight"
   >
-    <div class="flex h-inherit max-h-inherit min-h-inherit">
-      <div class="flex-1 w-full">
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute w-full h-full">
         <BasicTable @register="registerTable" />
       </div>
     </div>

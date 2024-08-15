@@ -10,14 +10,6 @@
         >
           追踪记录/报告
         </a-button>
-        <a-button
-          type="primary"
-          @click="handlePrint"
-          :loading="reportLoading"
-          v-auth="QuarantineButtonEnum.StationDetectionNonconformityReport"
-        >
-          浆站检测不合格血浆追溯
-        </a-button>
       </template>
       <template #donorNo="{ record }: { record: Recordable }">
         <span class="text-blue-500 underline cursor-pointer" @click.stop.self="handleJump(record)">
@@ -41,7 +33,13 @@
   import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
   import { message } from 'ant-design-vue';
   import { PrintServerEnum } from '@/enums/printServerEnum';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { COMPANY } from '@/enums/company';
   import DonorModel from '@/__components/donor/donorModel.vue';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
+  const globalApiStore = useGlobalApiStoreWithOut();
+  const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 
   const [registerDonorModal, { openModal }] = useModal();
   defineOptions({ name: 'NonconformityTracking' });
@@ -72,8 +70,14 @@
       if (!rows.length) return message.warning('请选择数据');
       const [record] = rows;
       reportLoading.value = true;
+
       const res = await getReportApi({
-        reportKey: record.blockBy === 'S' ? 'PLASMA_TRACK' : 'FACTORY_TRACK',
+        reportKey:
+          record.blockBy === 'S'
+            ? PrintServerEnum.PLASMA_TRACK
+            : iskm
+              ? PrintServerEnum.STATION_BAG_UNQUALIFIED_TRACK
+              : PrintServerEnum.FACTORY_TRACK,
         contentKey: record.dbId,
       });
       openReportModal(true, window.URL.createObjectURL(res));
@@ -83,21 +87,5 @@
   }
   function handleJump(row: Recordable) {
     openModal(true, { cardNo: row.cardNo });
-  }
-
-  async function handlePrint() {
-    try {
-      const rows = getSelectRows();
-      if (!rows.length) return message.warning('请选择数据');
-      const [record] = rows;
-      reportLoading.value = true;
-      const res = await getReportApi({
-        reportKey: PrintServerEnum.STATION_BAG_UNQUALIFIED_TRACK,
-        contentKey: record?.sampleNo,
-      });
-      openReportModal(true, window.URL.createObjectURL(res));
-    } finally {
-      reportLoading.value = false;
-    }
   }
 </script>

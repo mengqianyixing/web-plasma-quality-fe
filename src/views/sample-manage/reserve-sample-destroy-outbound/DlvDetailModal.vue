@@ -9,6 +9,7 @@
     :showOkBtn="showOkBtn"
     @ok="handleOk"
     okText="出库"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
@@ -20,6 +21,7 @@
             default-active-key="batch"
             v-model:activeKey="currentKey"
             type="card"
+            @change="redoHeight"
           >
             <a-tab-pane key="batch" tab="样本批次">
               <BasicTable @register="registerBatchTable" />
@@ -106,7 +108,7 @@
   });
 
   const selectedRow = ref<GetApiCoreBankDeliverSampleDetailResponse>([]);
-  const [registerBatchTable, { clearSelectedRowKeys, reload }] = useTable({
+  const [registerBatchTable, { clearSelectedRowKeys, reload, redoHeight: batchRedo }] = useTable({
     api: getDeliverSampleDetail,
     columns: requisitionDetailByBatch,
     afterFetch: (data) => {
@@ -151,7 +153,7 @@
     isCanResizeParent: true,
   });
 
-  const [registerBagTable] = useTable({
+  const [registerBagTable, { redoHeight: bagRedo }] = useTable({
     api: getDeliverSampleDetailByBag,
     columns: requisitionDetailByBag,
     beforeFetch: (params) => {
@@ -179,6 +181,10 @@
     inset: true,
     isCanResizeParent: true,
   });
+  function redoHeight() {
+    batchRedo();
+    bagRedo();
+  }
 
   const showOkBtn = computed(() => currentKey.value === 'batch');
   async function handleOk() {

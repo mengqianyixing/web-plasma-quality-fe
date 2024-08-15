@@ -9,6 +9,7 @@
     :maskClosable="false"
     :min-height="600"
     width="1100px"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -184,7 +185,7 @@
   // 表格选中行
   const selectedRow = ref<any>([]);
 
-  const [registerTable, { clearSelectedRowKeys, reload }] = useTable({
+  const [registerTable, { clearSelectedRowKeys, reload, redoHeight }] = useTable({
     api: getPrepareList,
     columns,
     formConfig: {

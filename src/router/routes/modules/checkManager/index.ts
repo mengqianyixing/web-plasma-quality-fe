@@ -179,6 +179,11 @@ const checkManager: AppRouteModule = {
           title: '打印',
           company: COMPANY.RS,
         },
+        {
+          id: InspectButtonEnum.KMReportReleasePrint,
+          title: '打印',
+          company: COMPANY.KM,
+        },
       ],
       component: () => import('@/views/inspect/reportRelease/index.vue'),
     },

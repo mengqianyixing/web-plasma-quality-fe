@@ -3,12 +3,13 @@
     v-bind="$attrs"
     @register="register"
     title="浆员血浆袋详情"
-    width="85%"
+    width="900px"
     :min-height="600"
     :showOkBtn="false"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <div class="absolute flex flex-col w-full h-full">
+      <div class="absolute w-full h-full">
         <BasicTable @register="registerTable" />
       </div>
     </div>
@@ -21,13 +22,13 @@
 
   import { getDonorBagDetail } from '@/api/callback/list-generation';
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, redoHeight }] = useTable({
     api: getDonorBagDetail,
     columns: [
       {
         dataIndex: 'bagNo',
         title: '血浆编号',
-        width: 100,
+        width: 140,
       },
       {
         dataIndex: 'plasmaType',
@@ -37,7 +38,7 @@
       {
         dataIndex: 'batchNo',
         title: '血浆批号',
-        width: 120,
+        width: 140,
       },
       {
         dataIndex: 'donorNo',
@@ -47,12 +48,12 @@
       {
         dataIndex: 'name',
         title: '浆员姓名',
-        width: 80,
+        width: 100,
       },
       {
         dataIndex: 'collDate',
         title: '采集日期',
-        width: 150,
+        width: 100,
       },
     ],
     fetchSetting: {

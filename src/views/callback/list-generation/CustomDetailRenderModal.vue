@@ -6,6 +6,7 @@
     width="85%"
     :min-height="600"
     :showOkBtn="false"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
@@ -45,7 +46,7 @@
 
   const [registerModal, { openModal }] = useModal();
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload, redoHeight }] = useTable({
     api: getDetailByState,
     formConfig: {
       schemas: callbackCustomFormSchema,

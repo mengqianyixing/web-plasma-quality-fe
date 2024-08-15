@@ -9,6 +9,7 @@
     :showOkBtn="false"
     :cancelText="'关闭'"
     @cancel="handleClose"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -26,11 +27,11 @@
           />
         </div>
         <div class="flex" style="height: calc(100% - 40px)">
-          <div class="flex-1 shrink-1">
+          <div class="w-1/2">
             <BasicTable @register="registerReceptionTable" :title="receptionTitle" />
           </div>
 
-          <div class="flex-1 shrink-1">
+          <div class="w-1/2">
             <BasicTable @register="registerAcceptedTable" :title="acceptedTitle" />
           </div>
         </div>
@@ -81,7 +82,10 @@
   const receptionTitle = computed(() => `未接收箱数：${receptionCount.value}`);
   const acceptedTitle = computed(() => `已接收箱数：${acceptedCount.value}`);
 
-  const [registerReceptionTable, { reload: reloadReception, getRawDataSource }] = useTable({
+  const [
+    registerReceptionTable,
+    { reload: reloadReception, getRawDataSource, redoHeight: leftRedo },
+  ] = useTable({
     api: getReceptionList,
     columns: [
       {
@@ -124,7 +128,7 @@
   });
   const [
     registerAcceptedTable,
-    { reload: reloadAccepted, getRawDataSource: getRawDataSourceAccepted },
+    { reload: reloadAccepted, getRawDataSource: getRawDataSourceAccepted, redoHeight: rightRedo },
   ] = useTable({
     api: getAcceptedReceptionList,
     columns: [
@@ -166,7 +170,10 @@
     isCanResizeParent: true,
     immediate: false,
   });
-
+  function redoHeight() {
+    leftRedo();
+    rightRedo();
+  }
   let _removeEvent: RemoveEventFn = () => {};
   const [register, { setModalProps, closeModal }] = useModalInner((data) => {
     const { removeEvent } = startEvent();

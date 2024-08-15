@@ -71,6 +71,7 @@
       alwaysShowLines: 7,
       submitOnReset: true,
       showAdvancedButton: true,
+      actionColOptions: { flex: '1 1 220px', style: 'max-width:unset;' },
       transformDateFunc(date) {
         return date ? date.format('YYYY-MM-DD') : '';
       },

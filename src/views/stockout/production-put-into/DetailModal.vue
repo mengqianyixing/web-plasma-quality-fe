@@ -7,6 +7,7 @@
     width="85%"
     :showOkBtn="false"
     :min-height="600"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -27,7 +28,7 @@
 
   defineEmits(['success', 'register']);
 
-  const [registerTable, { getForm }] = useTable({
+  const [registerTable, { getForm, redoHeight }] = useTable({
     api: getForPlasmaListApi,
     columns: detailColumns,
     formConfig: {

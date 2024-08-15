@@ -9,6 +9,7 @@
     :showOkBtn="false"
     :cancelText="'关闭'"
     @cancel="handleClose"
+    @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
@@ -26,14 +27,14 @@
           />
         </div>
         <div class="flex" style="height: calc(100% - 40px)">
-          <div class="flex-1 shrink-1">
+          <div class="w-1/2">
             <BasicTable
               @register="registerNoOutTable"
               :title="'未出库箱数: ' + (noOutTableData?.length ?? 'N/A')"
               :dataSource="noOutTableData"
             />
           </div>
-          <div class="flex-1 shrink-1">
+          <div class="w-1/2">
             <BasicTable
               @register="registerOutStoreTable"
               :title="'已出库箱数: ' + (outTableData?.length ?? 'N/A')"
@@ -83,7 +84,7 @@
       _handleEnter();
     }
   }
-  const [registerNoOutTable] = useTable({
+  const [registerNoOutTable, { redoHeight: leftRedo }] = useTable({
     columns: [
       {
         title: '箱号',
@@ -116,7 +117,7 @@
     isCanResizeParent: true,
     immediate: false,
   });
-  const [registerOutStoreTable] = useTable({
+  const [registerOutStoreTable, { redoHeight: rightRedo }] = useTable({
     columns: [
       {
         title: '箱号',
@@ -148,7 +149,10 @@
     isCanResizeParent: true,
     immediate: false,
   });
-
+  function redoHeight() {
+    leftRedo();
+    rightRedo();
+  }
   let _removeEvent: RemoveEventFn = () => {};
   const [register, { setModalProps, closeModal }] = useModalInner(async (data) => {
     const { removeEvent } = startEvent();

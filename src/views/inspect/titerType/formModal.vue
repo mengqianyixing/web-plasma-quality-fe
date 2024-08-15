@@ -12,7 +12,7 @@
     @register="registerModal"
     showFooter
     :title="state.type"
-    width="800px"
+    width="600px"
     :showOkBtn="state.type !== '查看'"
     cancelText="关闭"
     @ok="handleSubmit"
@@ -52,7 +52,6 @@
   ] = useForm({
     labelWidth: 200,
     baseColProps: { flex: '0 1 440px' },
-    actionColOptions: { flex: '0 1 300px' },
     schemas: formListSchema,
     showActionButtonGroup: false,
   });
