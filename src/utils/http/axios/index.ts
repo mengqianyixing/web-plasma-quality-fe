@@ -88,6 +88,7 @@ const transform: AxiosTransform = {
         title: t('sys.api.errorTip'),
         content: timeoutMsg,
         onOk: options.errorMessageModeOkCb,
+        wrapClassName: options.wrapClassName,
       });
     } else if (options.errorMessageMode === 'message') {
       createMessage.error(timeoutMsg);
