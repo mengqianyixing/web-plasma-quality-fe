@@ -139,10 +139,10 @@
           component: 'InputTextArea',
           componentProps: {
             maxlength: 100,
-            rows: 2,
+            rows: 3,
           },
           colProps: {
-            span: 7,
+            span: 9,
           },
           required: true,
         },
