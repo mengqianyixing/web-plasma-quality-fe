@@ -54,13 +54,14 @@ export const getPlasmaBox = (params: GetApiCoreBatchPlasmaVerifyBoxRequest) => {
 export const plasmaVerifyBag = (
   params: PostApiCoreBatchPlasmaVerifyBagRequest,
   errOkCb: () => void,
+  wrapClassName: string,
 ) => {
   return defHttp.post<PostApiCoreBatchPlasmaVerifyBagResponse>(
     {
       url: Api.PlasmaVerifyBag,
       params,
     },
-    { errorMessageModeOkCb: errOkCb },
+    { errorMessageModeOkCb: errOkCb, wrapClassName },
   );
 };
 

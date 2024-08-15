@@ -83,7 +83,13 @@
         immType: '合计',
         immTypeCount: result.reduce((acc, item) => acc + item.immTypeCount, 0),
         immTypeWeight: result.reduce((acc, item) => acc + item.immTypeWeight, 0),
-        minCollectAt: '',
+        minCollectAt: result.length
+          ? result.reduce((earliest, current) => {
+              return new Date(current.minCollectAt) < new Date(earliest)
+                ? current.minCollectAt
+                : earliest;
+            }, data[0].minCollectAt)
+          : '',
       });
       jsonToSheetXlsx({
         data: [...rows, ...result],

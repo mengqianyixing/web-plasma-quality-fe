@@ -100,23 +100,23 @@
     {
       title: '采浆公司',
       field: 'stationName',
-      width: 100,
+      // width: 100,
     },
     {
       title: '未挑数量',
       field: 'unpickCount',
-      width: 100,
+      // width: 100,
     },
     {
       title: '满足数量',
       field: 'passCount',
-      width: 100,
+      // width: 100,
       sortable: true,
     },
     {
       title: '满足率',
       field: 'passRatio',
-      width: 100,
+      // width: 100,
       formatter({ cellValue }) {
         return cellValue ? cellValue + '%' : '-';
       },
@@ -125,7 +125,7 @@
     {
       title: '浆员数量',
       field: 'donorCount',
-      width: 100,
+      // width: 100,
     },
     {
       title: '最早采集日期',
@@ -191,7 +191,8 @@
         {
           title: '挑浆次数',
           field: 'batchPickCount',
-          width: 100,
+          sortable: true,
+          // width: 100,
         },
       ];
       setPropsed({
@@ -251,7 +252,7 @@
       columnsUnRef.value.unshift(
         {
           type: 'checkbox',
-          width: 50,
+          width: 45,
         },
         {
           title: iskm ? '待挑选托盘编号' : '待挑选血浆箱号',
@@ -262,7 +263,7 @@
         {
           title: '血浆批号',
           field: 'batchNo',
-          width: 150,
+          // width: 150,
         },
       );
       setPropsed({
@@ -310,12 +311,12 @@
         {
           title: `${prodType.value}H,${prodTypeName}高效价`,
           field: 'heightCount',
-          width: 100,
+          width: 120,
         },
         {
           title: `${prodType.value}L,${prodTypeName}低效价`,
           field: 'lowCount',
-          width: 100,
+          width: 120,
         },
       );
     } else {
@@ -336,7 +337,7 @@
       columnsUnRef.value.push({
         title: '普通血浆数量',
         field: 'ordinaryCount',
-        width: 110,
+        // width: 110,
       });
     }
 

@@ -69,6 +69,11 @@ export enum BaseSettingButtonEnum {
   RequiredItemAdd = 'E_1000801',
   RequiredItemUpdate = 'E_1000802',
   RequiredItemDelete = 'E_1000803',
+
+  PlasmaFailedReasonAdd = 'E_1000901',
+  PlasmaFailedReasonEdit = 'E_1000902',
+  PlasmaFailedReasonEnable = 'E_1000903',
+  PlasmaFailedReasonDisEnable = 'E_1000904',
 }
 
 export enum StoreButtonEnum {
@@ -228,6 +233,8 @@ export enum StockOutButtonEnum {
   PlasmaProductionRecordsOfQualifiedSummary = 'E_910040017',
   PlasmaProductionPutIntoSummary = 'E_910040018',
   PlasmaProductionPutIntoSummaryOfQualified = 'E_910040019',
+  PlasmaProductionPrint = 'E_910040020',
+  KMPlasmaProductionPrint = 'E_910040021',
 
   PutIntoTrayStockOut = 'E_91005001',
   PutIntoBoxStockOut = 'E_91005002',

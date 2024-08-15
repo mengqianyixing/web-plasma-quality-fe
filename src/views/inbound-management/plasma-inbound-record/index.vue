@@ -81,10 +81,11 @@
         </a-button>
         <a-button
           type="primary"
-          @click="handleVerifyRelease"
+          @click="handlePrint"
           v-auth="PlasmaInboundRecordButtonEnum.VerifyReport"
+          :loading="reportLoading"
         >
-          验收报单
+          验收报告
         </a-button>
       </template>
     </BasicTable>
@@ -93,6 +94,7 @@
     <BoxDetailModal @register="registerBoxModal" @success="handleGoBatchDetailModal" />
     <RegisterWeightModal @register="registerWeightModal" @success="handleSuccess" />
     <UnqualifiedStageModal @register="registerStage" />
+    <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -114,8 +116,11 @@
   import BoxDetailModal from '../components/PlasmaBoxDetailModal/index.vue';
   import RegisterWeightModal from '@/views/inbound-management/plasma-inbound-record/RegisterWeightModal.vue';
   import UnqualifiedStageModal from '@/views/inbound-management/plasma-inbound-record/UnqualifiedStageModal.vue';
+  import ReportModal from '@/components/ReportModal/index.vue';
   import { omit } from 'lodash-es';
   import { PlasmaInboundRecordButtonEnum, ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { getReportApi } from '@/api/report';
+  import { PrintServerEnum } from '@/enums/printServerEnum';
 
   const { stationOptions, getStationNameById } = useStation();
   const { createMessage, createConfirm } = useMessage();
@@ -139,7 +144,7 @@
   const [registerStage, { openModal: openStageModal }] = useModal();
 
   const selectedRowsRef = ref<Recordable>([]);
-  const [registerTable, { getForm, reload }] = useTable({
+  const [registerTable, { getForm, reload, clearSelectedRowKeys }] = useTable({
     api: getPlasmaInboundList,
     columns,
     formConfig: {
@@ -296,5 +301,26 @@
         createMessage.success('撤销PMS验收任务成功');
       },
     });
+  }
+
+  const reportLoading = ref(false);
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
+  async function handlePrint() {
+    if (!selectedRowsRef.value.length) {
+      createMessage.warning('请选择一条数据');
+      return;
+    }
+
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({
+        reportKey: PrintServerEnum.PLASMA_VERIFY,
+        contentKey: selectedRowsRef.value[0]?.batchNo,
+      });
+      openReportModal(true, window.URL.createObjectURL(res));
+      clearSelectedRowKeys();
+    } finally {
+      reportLoading.value = false;
+    }
   }
 </script>

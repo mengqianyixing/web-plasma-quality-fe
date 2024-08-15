@@ -48,15 +48,7 @@
           v-auth="StockOutButtonEnum.ProductionPlanReCheck"
           >撤销审核</a-button
         >
-        <span
-          v-auth="[
-            StockOutButtonEnum.ProductionPlanCheckListReport,
-            StockOutButtonEnum.ProductionPlanTransferReport,
-            StockOutButtonEnum.ProductionPlanMaterialReport,
-            StockOutButtonEnum.ProductionPlanPlasmaReport,
-            StockOutButtonEnum.PlasmaProductionApplication,
-          ]"
-        >
+        <span v-auth="StockOutButtonEnum.PlasmaProductionPrint">
           <a-dropdown>
             <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
             <template #overlay>
@@ -100,16 +92,7 @@
             </template>
           </a-dropdown>
         </span>
-        <span
-          v-auth="[
-            StockOutButtonEnum.ProductionPlanPlasmaReport,
-            StockOutButtonEnum.PlasmaProductionApplication,
-            StockOutButtonEnum.PlasmaProductionRecordsOfQualified,
-            StockOutButtonEnum.PlasmaProductionRecordsOfQualifiedSummary,
-            StockOutButtonEnum.PlasmaProductionPutIntoSummary,
-            StockOutButtonEnum.PlasmaProductionPutIntoSummaryOfQualified,
-          ]"
-        >
+        <span v-auth="StockOutButtonEnum.KMPlasmaProductionPrint">
           <a-dropdown>
             <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
             <template #overlay>

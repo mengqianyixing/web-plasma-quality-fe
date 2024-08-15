@@ -2,11 +2,13 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    title="挑选血浆"
+    title="挑选血浆11"
     @ok="handleSubmit"
     :min-height="600"
     width="1200px"
+    @cancel="emit('success')"
     @fullscreen="redoHeight"
+    cancel-text="关闭"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute flex flex-col w-full h-full">
@@ -160,7 +162,7 @@
   });
 
   const dlvNo = ref('');
-  const [registerModal, { setModalProps, closeModal }] = useModalInner((data) => {
+  const [registerModal, { setModalProps }] = useModalInner((data) => {
     setModalProps({
       maskClosable: false,
       destroyOnClose: true,
@@ -186,11 +188,8 @@
         plasmaNos: selectedRow.value.map((item) => item.bagNo),
       });
 
-      emit('success');
-
       clearSelectedRowKeys();
       setModalProps({ confirmLoading: true });
-      closeModal();
     } finally {
       setModalProps({ confirmLoading: false });
     }

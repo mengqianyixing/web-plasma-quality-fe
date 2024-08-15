@@ -72,6 +72,7 @@
       title: '血浆批号',
       dataIndex: 'batchNo',
       width: 110,
+      sorter: true,
     },
     {
       title: '采浆公司',
@@ -118,6 +119,7 @@
       dataIndex: 'createAt',
       format: (text) => (text ? dayjs(text).format('YYYY-MM-DD') : '-'),
       width: 100,
+      sorter: true,
     },
     {
       title: '打印人',
@@ -156,6 +158,7 @@
       field: 'printState',
       label: '状态',
       component: 'Select',
+      defaultValue: false,
       componentProps: {
         options: [
           {
@@ -188,11 +191,20 @@
       fixed: true,
       type: 'radio',
     },
-    beforeFetch: (p) => ({
-      ...p,
-      beginTime: p.beginTime?.slice(0, 10),
-      endTime: p.endTime?.slice(0, 10),
-    }),
+    beforeFetch: (p) => {
+      if (p.order) {
+        if (p.order === 'ascend') p.sortOrder = 'ASC';
+        if (p.order === 'descend') p.sortOrder = 'DESC';
+        p.sortIdx = p.field;
+        delete p.order;
+        delete p.field;
+      }
+      return {
+        ...p,
+        beginTime: p.beginTime?.slice(0, 10),
+        endTime: p.endTime?.slice(0, 10),
+      };
+    },
     formConfig: {
       schemas: searchFormschema,
       transformDateFunc(date) {
