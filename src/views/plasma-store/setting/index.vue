@@ -107,6 +107,7 @@
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     const [row] = rows;
+    row.houseType = row.houseType.replace(/R|T/g, '-');
     const [typeFlag, storeFlag, autoFlag] = row.houseType.split('');
     openModal(true, {
       isUpdate: true,
