@@ -48,9 +48,23 @@
   const [registerModal] = useModalInner(async ({ sampleBatchNo, type, title, sampleType }) => {
     await nextTick();
     if (type === typeMap.UNQ) {
-      setProps({ api: getDtApi });
+      setProps({
+        api: getDtApi,
+        columns: [
+          ...dtColumns,
+          {
+            dataIndex: 'unqualifiedReason',
+            title: '不合格原因',
+            ellipsis: false,
+            width: 160,
+          },
+        ],
+      });
     } else {
-      setProps({ api: getUnqualifiedApi });
+      setProps({
+        api: getUnqualifiedApi,
+        columns: dtColumns,
+      });
     }
     const { resetFields } = getForm();
     state.bsNo = sampleBatchNo;

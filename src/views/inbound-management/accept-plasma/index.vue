@@ -499,12 +499,16 @@
       const realAccept = !!filterForm.value.batchNo;
       try {
         tableLoading.value = true;
-        const data = await plasmaVerifyBag(params, () => {
-          setTimeout(() => {
-            focusedElement.focus();
-            focusedElement.select();
-          }, 300);
-        });
+        const data = await plasmaVerifyBag(
+          params,
+          () => {
+            setTimeout(() => {
+              focusedElement.focus();
+              focusedElement.select();
+            }, 300);
+          },
+          'ap9527',
+        );
         if (data) {
           batchNo.value = data.batchNo;
           filterForm.value.stationName = data.stationName;
@@ -568,6 +572,11 @@
             });
           }
         }
+      } catch {
+        setTimeout(() => {
+          const dom: HTMLElement | null = document.querySelector('.ap9527 button');
+          dom?.blur();
+        });
       } finally {
         tableLoading.value = false;
       }
