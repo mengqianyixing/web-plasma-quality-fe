@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="registerModal"
-    title="挑选血浆11"
+    title="挑选血浆"
     @ok="handleSubmit"
     :min-height="600"
     width="1200px"
