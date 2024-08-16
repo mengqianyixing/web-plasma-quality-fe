@@ -101,7 +101,7 @@
       createMessage.warn('请选择一条记录');
       return;
     }
-    const menuList: Recordable[] = filterRoutes(modulesRouteList);
+    const menuList: Recordable[] = filterRoutes(modulesRouteList).reverse();
     const flat = () => {
       const list: Recordable[] = menuList
         .slice()

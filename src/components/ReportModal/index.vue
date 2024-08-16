@@ -37,7 +37,7 @@
   import { updateReportPrintApi } from '@/api/report';
 
   defineOptions({ name: 'ReportModal' });
-  defineEmits(['register']);
+  const emit = defineEmits(['register', 'printed']);
 
   const iframeRef = ref<HTMLIFrameElement>();
   const link = ref('');
@@ -59,6 +59,7 @@
       loading.value = true;
       await updateReportPrintApi();
       iframeRef.value?.contentWindow?.print();
+      emit('printed');
     } finally {
       loading.value = false;
     }
