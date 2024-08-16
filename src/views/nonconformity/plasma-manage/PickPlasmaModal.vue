@@ -25,7 +25,7 @@
     <LoginModal
       @register="registerLoginModal"
       @success="handleSuccess"
-      :auth-code="ReCheckButtonEnum.NonconformityPickCheck"
+      :auth-code="ReCheckButtonEnum.NonconformityPickCheckReview"
     />
   </BasicModal>
 </template>

@@ -87,9 +87,19 @@ const nonconformity: AppRouteModule = {
           title: '挑浆',
         },
         {
+          id: ReCheckButtonEnum.NonconformityPickCheckReview,
+          name: 'reCheckPick',
+          title: '挑浆复核人登录',
+        },
+        {
           id: ReCheckButtonEnum.NonconformityInStoreCheck,
           name: 'recheckInStore',
           title: '入库',
+        },
+        {
+          id: ReCheckButtonEnum.NonconformityInStoreCheckReview,
+          name: 'recheckInStore',
+          title: '入库复核人登录',
         },
         {
           id: NonconformityInStoreButtonEnum.NonconformityInStoreCheck,
