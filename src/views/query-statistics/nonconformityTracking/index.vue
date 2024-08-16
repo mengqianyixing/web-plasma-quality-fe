@@ -17,7 +17,7 @@
         </span>
       </template>
     </BasicTable>
-    <ReportModal @register="registerReportModal" />
+    <ReportModal @register="registerReportModal" @printed="reload" />
     <DonorModel @register="registerDonorModal" />
   </PageWrapper>
 </template>
@@ -46,7 +46,7 @@
   const reportLoading = ref(false);
 
   const [registerReportModal, { openModal: openReportModal }] = useModal();
-  const [registerTable, { getSelectRows }] = useTable({
+  const [registerTable, { getSelectRows, reload }] = useTable({
     api: getNonconformityTrackingList,
     columns,
     formConfig: {
