@@ -29,6 +29,7 @@ export interface RequestOptions {
   // 请求重试机制
   retryRequest?: RetryRequest;
   errorMessageModeOkCb?: () => void;
+  wrapClassName?: string;
 }
 
 export interface RetryRequest {

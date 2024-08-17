@@ -84,16 +84,6 @@ const nonconformity: AppRouteModule = {
           name: 'export',
           title: '导出明细',
         },
-        {
-          id: StockOutButtonEnum.ProductionPreparationAutoSorting,
-          name: 'autoSorting',
-          title: '自动分拣',
-        },
-        {
-          id: StockOutButtonEnum.ProductionPreparationManualSorting,
-          name: 'manualSorting',
-          title: '转人工分拣',
-        },
       ],
     },
     {

@@ -36,7 +36,7 @@
     <LoginModal
       @register="registerLoginModal"
       @success="handleSuccess"
-      :auth-code="ReCheckButtonEnum.NonconformityInStoreCheck"
+      :auth-code="ReCheckButtonEnum.NonconformityInStoreCheckReview"
     />
   </BasicModal>
 </template>
