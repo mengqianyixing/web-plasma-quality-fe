@@ -87,6 +87,7 @@
 
   const globalApiStore = useGlobalApiStoreWithOut();
   const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
+  const isRs = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.RS;
   const { stationOptions } = useStation();
   const serverEnumStore = useServerEnumStoreWithOut();
   const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
@@ -231,7 +232,7 @@
           ifShow: true,
         },
       ];
-      if (warehouseOpts.length) {
+      if (warehouseOpts.length && isRs) {
         upSchs = [
           ...upSchs,
           {
