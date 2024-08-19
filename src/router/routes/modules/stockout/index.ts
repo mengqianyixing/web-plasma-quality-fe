@@ -100,6 +100,16 @@ const nonconformity: AppRouteModule = {
           name: 'reCheckLogin',
           title: '复核人登录',
         },
+        {
+          id: StockOutButtonEnum.AutomaticSorting,
+          name: 'automaticSorting',
+          title: '自动分拣',
+        },
+        {
+          id: StockOutButtonEnum.SwitchToManualSorting,
+          name: 'switchToManualSorting',
+          title: '转人工分拣',
+        },
       ],
     },
     {
@@ -196,6 +206,11 @@ const nonconformity: AppRouteModule = {
           company: COMPANY.KM,
         },
         {
+          id: StockOutButtonEnum.PlasmaProductionPrint,
+          title: '打印',
+          company: COMPANY.RS,
+        },
+        {
           id: StockOutButtonEnum.ProductionPlanCheckListReport,
           title: '原料血浆投产清单',
           company: COMPANY.RS,
@@ -219,6 +234,11 @@ const nonconformity: AppRouteModule = {
           id: StockOutButtonEnum.ProductionPlanSummary,
           title: '下载原料血浆摘要',
           company: COMPANY.RS,
+        },
+        {
+          id: StockOutButtonEnum.KMPlasmaProductionPrint,
+          title: '打印',
+          company: COMPANY.KM,
         },
         {
           id: StockOutButtonEnum.ProductionPlanSummaryKunMing,
@@ -248,16 +268,6 @@ const nonconformity: AppRouteModule = {
         {
           id: StockOutButtonEnum.PlasmaProductionPutIntoSummaryOfQualified,
           title: '检疫期合格原料血浆投产汇总表',
-          company: COMPANY.KM,
-        },
-        {
-          id: StockOutButtonEnum.PlasmaProductionPrint,
-          title: '打印',
-          company: COMPANY.RS,
-        },
-        {
-          id: StockOutButtonEnum.KMPlasmaProductionPrint,
-          title: '打印',
           company: COMPANY.KM,
         },
       ],

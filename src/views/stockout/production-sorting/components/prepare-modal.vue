@@ -17,8 +17,20 @@
           <BasicTable @register="registerTable">
             <template #toolbar v-if="isRs">
               <div class="flex gap-2">
-                <a-button type="primary" @click="autoSorting"> 自动分拣 </a-button>
-                <a-button type="primary" @click="peopleSorting"> 转人工分拣 </a-button>
+                <a-button
+                  type="primary"
+                  @click="autoSorting"
+                  v-auth="StockOutButtonEnum.AutomaticSorting"
+                >
+                  自动分拣
+                </a-button>
+                <a-button
+                  type="primary"
+                  @click="peopleSorting"
+                  v-auth="StockOutButtonEnum.SwitchToManualSorting"
+                >
+                  转人工分拣
+                </a-button>
               </div>
             </template>
           </BasicTable>
@@ -49,6 +61,7 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { SysParamsEnum } from '@/enums/sysParamsEnum';
   import { COMPANY } from '@/enums/company';
+  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   const isRs = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.RS;
