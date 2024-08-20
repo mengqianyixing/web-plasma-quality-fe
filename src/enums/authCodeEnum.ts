@@ -263,6 +263,9 @@ export enum StockOutButtonEnum {
   PlasmaSummaryReport = 'E_91007001',
   KMPlasmaSummaryReport = 'E_91007002',
   QuarantineTrackUnqualifiedPlasmaRecords = 'E_91007003',
+
+  AutomaticSorting = 'E_91007004',
+  SwitchToManualSorting = 'E_91007005',
 }
 
 export enum SampleManageButtonEnum {

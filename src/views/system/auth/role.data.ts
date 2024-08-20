@@ -15,7 +15,9 @@ export const columns: BasicColumn[] = [
     dataIndex: 'users',
     width: 280,
     ellipsis: false,
-    format: (arr: Array<string> & any) => arr.map((_) => _.split('/')[1]).join(','),
+    format: (arr: Array<string> & any) => {
+      return arr ? arr.map((_) => _.split('/')[1]).join(',') : '-';
+    },
   },
   {
     title: '状态',
