@@ -45,7 +45,7 @@
     });
   });
 
-  const [registerTable, { getForm, clearSelectedRowKeys, redoHeight }] = useTable({
+  const [registerTable, { getForm, clearSelectedRowKeys, redoHeight, reload }] = useTable({
     immediate: false,
     api: getPickPlasmaList,
     columns: [
@@ -187,7 +187,7 @@
         dlvNo: dlvNo.value,
         plasmaNos: selectedRow.value.map((item) => item.bagNo),
       });
-
+      reload();
       clearSelectedRowKeys();
       setModalProps({ confirmLoading: true });
     } finally {
