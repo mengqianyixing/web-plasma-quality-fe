@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="register"
-    title="回访明细"
+    :title="title"
     width="85%"
     :min-height="600"
     :showOkBtn="false"
@@ -109,6 +109,7 @@
   });
   const planNo = ref('');
   const record = ref({ planNo: '' });
+  const title = ref('');
 
   const [register, { setModalProps }] = useModalInner((data) => {
     setModalProps({
@@ -118,6 +119,7 @@
     state.value = data.state;
     planNo.value = data.record?.planNo;
     record.value = data.record;
+    title.value = data.title;
 
     reload();
   });
