@@ -183,29 +183,6 @@
     }
   }
 
-  function structureTreeIdMap(treeData) {
-    const res: {
-      id: string;
-      title: string;
-    }[] = [];
-
-    function traverse(node) {
-      res.push({
-        id: node.id,
-        title: node.title,
-      });
-      if (node.children && node.children.length > 0) {
-        node.children.forEach((child) => {
-          traverse(child);
-        });
-      }
-    }
-
-    treeData.forEach((node) => traverse(node));
-
-    return res;
-  }
-
   const cacheInnerData: any = {};
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     await resetFields();
@@ -239,8 +216,6 @@
   };
 
   async function handleSubmit() {
-    const authArr = structureTreeIdMap(treeData.value);
-
     try {
       const values = await validate();
       if (!values.users) {
@@ -299,12 +274,7 @@
           });
         } else {
           const users = values.users.map((item) => item.split('/')[1]).join(',');
-          const authMsg = domains
-            .map((item) => {
-              const auth = authArr.find((auth) => auth.id === item);
-              return auth!.title;
-            })
-            .join(',');
+          const authMsg = domains.map((id) => treeNodeMap.get(id)!.title).join(',');
           const logMsg = `绑定了用户[${users}], 绑定了菜单权限[${authMsg}]`;
           await addCasDoorRole({
             ...values,
