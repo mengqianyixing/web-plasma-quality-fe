@@ -169,5 +169,22 @@ export const treeLevelGroup = <T>(
   }
   return levelGroup;
 };
+type TreeNode<T> = T & {
+  children?: TreeNode<T>[];
+};
+export const treeFlatArray = <T>(
+  treeData: TreeNode<T>[],
+  option?: { key?: string; parentKey?: string },
+) => {
+  const { key, parentKey } = { key: 'id', parentKey: 'parentId', ...option };
+  const list = treeData.slice();
+  const result: TreeNode<T>[] = [];
+  while (list.length) {
+    const node = list.shift()!;
+    result.push(node);
+    list.push(...(node.children || []).map((it) => ({ ...it, [parentKey]: node[key] })));
+  }
+  return result;
+};
 
 export const formatKg = (text) => (text || text === 0 ? (text / 1000).toFixed(3) : '');

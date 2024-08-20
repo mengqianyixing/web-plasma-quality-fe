@@ -523,18 +523,13 @@ export const callbackDetailCustomColumns: BasicColumn[] = [
     ellipsis: false,
   },
   {
-    dataIndex: 'sampleCollectTime',
-    title: '采集日期',
-    width: 100,
-  },
-  {
     dataIndex: 'trackType',
     title: '血浆状态',
     width: 80,
   },
   {
     dataIndex: 'maxCollectTime',
-    title: '最后采浆日期',
+    title: '采集日期',
     width: 100,
   },
   {

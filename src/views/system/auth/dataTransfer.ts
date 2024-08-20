@@ -77,6 +77,7 @@ export function filterRoutes(routes: AppRouteModule[]): AppRouteModule[] {
   const filteredRoutes: AppRouteModule[] = [];
 
   routes.forEach((item: AppRouteModule) => {
+    if (item.id) item.id = item.id.toString();
     if (typeof item.company === 'string' && item.company && item.company !== company) {
       return false;
     }
