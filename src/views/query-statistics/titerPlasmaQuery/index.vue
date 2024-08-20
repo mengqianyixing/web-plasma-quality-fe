@@ -157,7 +157,7 @@
     const { batchNo, stationNo } = data;
     const values = getForm().getFieldsValue();
 
-    openModal(true, { rawImm, titerLevel, batchNo, stationNo, immunity: values.immunity });
+    openModal(true, { ...values, rawImm, titerLevel, batchNo, stationNo });
   }
 </script>
 <style scoped>
