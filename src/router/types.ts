@@ -17,7 +17,7 @@ export interface AppAuthElement {
 // @ts-ignore
 export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
   menuWeight?: number; // 菜单排序权重，越高越前面。
-  id?: number;
+  id?: number | string;
   class?: string;
   title?: string;
   company?: string | string[];
