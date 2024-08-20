@@ -12,10 +12,12 @@ export const columns: BasicColumn[] = [
   {
     title: '投产准备号',
     dataIndex: 'prepareNo',
+    width: 200,
   },
   {
     title: '投产类型',
     dataIndex: 'prodType',
+    width: 100,
     format(text) {
       return `${PlasmaType(text) ?? '-'} `;
     },

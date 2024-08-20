@@ -33,13 +33,7 @@
   import { QuarantineButtonEnum } from '@/enums/authCodeEnum';
   import { message } from 'ant-design-vue';
   import { PrintServerEnum } from '@/enums/printServerEnum';
-  import { SysParamsEnum } from '@/enums/sysParamsEnum';
-  import { COMPANY } from '@/enums/company';
   import DonorModel from '@/__components/donor/donorModel.vue';
-  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
-
-  const globalApiStore = useGlobalApiStoreWithOut();
-  const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 
   const [registerDonorModal, { openModal }] = useModal();
   defineOptions({ name: 'NonconformityTracking' });
@@ -73,11 +67,7 @@
 
       const res = await getReportApi({
         reportKey:
-          record.blockBy === 'S'
-            ? PrintServerEnum.PLASMA_TRACK
-            : iskm
-              ? PrintServerEnum.STATION_BAG_UNQUALIFIED_TRACK
-              : PrintServerEnum.FACTORY_TRACK,
+          record.blockBy === 'S' ? PrintServerEnum.PLASMA_TRACK : PrintServerEnum.FACTORY_TRACK,
         contentKey: record.dbId,
       });
       openReportModal(true, window.URL.createObjectURL(res));

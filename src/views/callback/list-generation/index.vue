@@ -12,7 +12,9 @@
       <template #okNum="{ record }">
         <span
           :class="!record?.okNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'"
-          @click.stop.self="handleGoCustomModal(CallBackDetailState.SUCCESS, record)"
+          @click.stop.self="
+            handleGoCustomModal(CallBackDetailState.SUCCESS, record, '回访成功明细')
+          "
         >
           {{ record?.okNum }}
         </span>
@@ -22,7 +24,7 @@
           :class="
             !record?.failedNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
           "
-          @click.stop.self="handleGoCustomModal(CallBackDetailState.FAIL, record)"
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.FAIL, record, '回访终止明细')"
         >
           {{ record?.failedNum }}
         </span>
@@ -32,7 +34,7 @@
           :class="
             !record?.recoverNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
           "
-          @click.stop.self="handleGoCustomModal(CallBackDetailState.RESUME, record)"
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.RESUME, record, '恢复采浆明细')"
         >
           {{ record?.recoverNum }}
         </span>
@@ -42,7 +44,7 @@
           :class="
             !record?.noVisitNum ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
           "
-          @click.stop.self="handleGoCustomModal(CallBackDetailState.NOVISIT, record)"
+          @click.stop.self="handleGoCustomModal(CallBackDetailState.NOVISIT, record, '未回访明细')"
         >
           {{ record?.noVisitNum }}
         </span>
@@ -321,10 +323,11 @@
     });
   }
 
-  function handleGoCustomModal(state: CallBackDetailState, record: Recordable) {
+  function handleGoCustomModal(state: CallBackDetailState, record: Recordable, title: string) {
     openCallbackCustomDetailModal(true, {
       state,
       record,
+      title,
     });
   }
 

@@ -81,14 +81,14 @@
       field: 'planOut',
       label: '计划出库日期',
       render: (curVal) => {
-        return dayjs(curVal).format('YYYY-MM-DD');
+        return curVal ? dayjs(curVal).format('YYYY-MM-DD') : '-';
       },
     },
     {
       field: 'planTask',
       label: '计划投产日期',
       render: (curVal) => {
-        return dayjs(curVal).format('YYYY-MM-DD');
+        return curVal ? dayjs(curVal).format('YYYY-MM-DD') : '-';
       },
     },
   ];
