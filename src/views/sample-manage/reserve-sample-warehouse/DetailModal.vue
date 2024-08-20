@@ -103,6 +103,9 @@
           label: '样本批号',
           field: 'batchNo',
           component: 'Input',
+          componentProps: {
+            disabled: true,
+          },
         },
         {
           label: '箱号',
