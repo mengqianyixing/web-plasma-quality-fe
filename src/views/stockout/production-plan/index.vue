@@ -81,13 +81,6 @@
                     </a-button>
                   </MenuItem>
                 </span>
-                <span v-auth="StockOutButtonEnum.PlasmaProductionApplication">
-                  <MenuItem>
-                    <a-button type="link" @click="handlePrint('PLASMA_PRODUCTION_APPLICATION')">
-                      原料血浆投产申报表
-                    </a-button>
-                  </MenuItem>
-                </span>
               </Menu>
             </template>
           </a-dropdown>
