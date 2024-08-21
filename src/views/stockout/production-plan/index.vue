@@ -99,7 +99,7 @@
               <Menu>
                 <span v-auth="StockOutButtonEnum.ProductionPlanPlasmaReport">
                   <MenuItem>
-                    <a-button type="link" @click="handlePrint('PLASMA_PRODUCTION_CHECKLIST')">
+                    <a-button type="link" @click="handlePrint('PLASMA_PRODUCTION_PLAN')">
                       原料血浆投产计划
                     </a-button>
                   </MenuItem>
