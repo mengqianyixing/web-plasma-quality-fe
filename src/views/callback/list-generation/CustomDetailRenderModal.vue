@@ -84,9 +84,16 @@
   const state = ref<CallBackDetailState>(CallBackDetailState.SUCCESS);
 
   const columnsComputed = computed(() => {
-    if (state.value === CallBackDetailState.FAIL || state.value === CallBackDetailState.NOVISIT) {
+    if (state.value === CallBackDetailState.FAIL) {
       return callbackDetailCustomColumns.filter(
         (it) => !['callbackDate', 'collDate'].includes(it.dataIndex as string),
+      );
+    } else if (state.value === CallBackDetailState.NOVISIT) {
+      return callbackDetailCustomColumns.filter(
+        (it) =>
+          !['callbackDate', 'collDate', 'sampleNo', 'sampleCollectTime'].includes(
+            it.dataIndex as string,
+          ),
       );
     } else if (state.value === CallBackDetailState.RESUME) {
       return callbackDetailCustomColumns

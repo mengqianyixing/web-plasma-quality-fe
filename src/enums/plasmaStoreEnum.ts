@@ -6,7 +6,7 @@ export enum TYPE_FLAG {
 export enum TYPE_FLAG_TEXT {
   N = '普通库',
   F = '不合格库',
-  V = '暂存库',
+  V = '-',
 }
 export enum STORE_FLAG {
   S = 'S' /**高架库 */,
