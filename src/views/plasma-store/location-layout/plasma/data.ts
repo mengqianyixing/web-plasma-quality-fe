@@ -22,8 +22,8 @@ export const optionMap: Record<string, { cloumns: BasicColumn[]; searchSchema: F
   },
   [tabKey['box']]: {
     cloumns: [
-      { dataIndex: 'boxNo', title: '样本箱号' },
-      { dataIndex: 'totalCount', title: '样本数量' },
+      { dataIndex: 'boxNo', title: '血浆箱号' },
+      { dataIndex: 'totalCount', title: '血浆数量' },
     ],
     searchSchema: [],
   },

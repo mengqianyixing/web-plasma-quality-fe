@@ -135,6 +135,7 @@
     bordered: true,
     showIndexColumn: false,
     pagination: false,
+    immediate: false,
   });
 
   _reloadTable = debounce(reload, 300) as () => Promise<void>;
