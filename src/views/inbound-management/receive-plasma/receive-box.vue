@@ -245,7 +245,6 @@
           });
           return;
         }
-        trayNo.value = '';
         boxNoRef.value.$el.focus();
       } finally {
         tableLoading.value = false;
