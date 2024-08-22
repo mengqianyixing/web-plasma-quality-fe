@@ -89,18 +89,22 @@
     });
   });
   async function handleSubmit() {
-    const values = await validate();
+    try {
+      const values = await validate();
+      setModalProps({ confirmLoading: true });
+      await revokeSampleVerify({
+        ...values,
+        batchSampleNo: batchSampleNo.value,
+      } as PutApiCoreBatchSampleVerifyRevokeRequest);
 
-    await revokeSampleVerify({
-      ...values,
-      batchSampleNo: batchSampleNo.value,
-    } as PutApiCoreBatchSampleVerifyRevokeRequest);
+      createMessage.success('撤销成功');
 
-    createMessage.success('撤销成功');
-
-    closeModal();
-    resetFields();
-    emit('success');
+      closeModal();
+      resetFields();
+      emit('success');
+    } finally {
+      setModalProps({ confirmLoading: false });
+    }
   }
 
   function handleLogin() {
