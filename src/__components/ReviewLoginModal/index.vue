@@ -7,6 +7,10 @@
     ok-text="登录"
     cancel-text="关闭"
     width="500px"
+    @cancel="
+      resetFields();
+      clearValidate();
+    "
   >
     <BasicForm @register="registerForm" />
   </BasicModal>
