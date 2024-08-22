@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight class="root">
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" ref="tableRef">
       <template #toolbar>
         <a-button
           type="primary"
@@ -27,19 +27,21 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { message } from 'ant-design-vue';
   import dayjs from 'dayjs';
+  import { useSticky } from '@/hooks/web/useSticky';
+  import { GetApiSearchBankQualifiedInventoryStatisticQueryDateResponse } from '@/api/type/queryStatistics';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'PlasmaQualifiedInventory' });
 
   const { currentRoute } = useRouter();
-
+  const tableRef = ref();
+  const totalStyle = useSticky(tableRef);
   const [registerTable, { getForm }] = useTable({
     immediate: false,
     api: getPlasmaQualifiedInventory,
     columns,
     formConfig: {
       schemas: searchFormSchema,
-      alwaysShowLines: 7,
       showAdvancedButton: true,
       transformDateFunc(date) {
         return date ? date.format('YYYY-MM-DD') : '';
@@ -56,10 +58,12 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
-    showIndexColumn: true,
+    showIndexColumn: false,
     pagination: false,
-    showSummary: true,
-    summaryFunc: handleSummary,
+    afterFetch: (res) => {
+      const count = handleSummary(res);
+      return [...res, count];
+    },
   });
 
   const loading = ref(false);
@@ -79,18 +83,7 @@
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(lastLevelCols, data || [], rows.length);
 
-      result.push({
-        immType: '合计',
-        immTypeCount: result.reduce((acc, item) => acc + item.immTypeCount, 0),
-        immTypeWeight: result.reduce((acc, item) => acc + item.immTypeWeight, 0),
-        minCollectAt: result.length
-          ? result.reduce((earliest, current) => {
-              return new Date(current.minCollectAt) < new Date(earliest)
-                ? current.minCollectAt
-                : earliest;
-            }, data[0].minCollectAt)
-          : '',
-      });
+      result.push(handleSummary(data));
       jsonToSheetXlsx({
         data: [...rows, ...result],
         json2sheetOpts: { skipHeader: true },
@@ -102,51 +95,43 @@
     }
   }
 
-  function accAdd(arg1: number, arg2: number) {
-    let r1: number, r2: number, m: number;
-    try {
-      r1 = arg1.toString().split('.')[1].length;
-    } catch (e) {
-      r1 = 0;
-    }
-    try {
-      r2 = arg2.toString().split('.')[1].length;
-    } catch (e) {
-      r2 = 0;
-    }
-    m = Math.pow(10, Math.max(r1, r2));
-    return (arg1 * m + arg2 * m) / m;
-  }
-
-  function handleSummary(tableData: any[]) {
-    let immTypeCount = 0;
-    let immTypeWeight = 0;
-    tableData.forEach((item) => {
-      immTypeCount = accAdd(immTypeCount, item.immTypeCount);
-      immTypeWeight = accAdd(immTypeWeight, item.immTypeWeight);
-    });
-
-    const minCollectAtArr = tableData.map((item) => dayjs(item.minCollectAt));
-
-    const earliestDate = minCollectAtArr.reduce((earliest, current) => {
-      return current.isBefore(earliest) ? current : earliest;
-    }, minCollectAtArr[0]);
-
-    return [
-      {
-        immType: '总计',
-        immTypeCount,
-        immTypeWeight,
-        minCollectAt: earliestDate.format('YYYY-MM-DD'),
-      },
-    ];
+  type Row = {
+    immTypeCount: number;
+    immTypeWeight?: string;
+    minCollectAt?: string;
+    immTypeWeightValue: number;
+    minCollectAtValue: number;
+    immType: string;
+  };
+  function handleSummary(data: GetApiSearchBankQualifiedInventoryStatisticQueryDateResponse) {
+    const initData: Row = {
+      immTypeCount: 0,
+      immTypeWeightValue: 0,
+      minCollectAtValue: Date.now(),
+      minCollectAt: '',
+      immTypeWeight: '',
+      immType: '合计',
+    };
+    const row = data.reduce((pre, cur) => {
+      pre.immTypeCount += cur.immTypeCount || 0;
+      pre.immTypeWeightValue += cur.immTypeWeight || 0;
+      pre.minCollectAtValue = Math.min(
+        pre.minCollectAtValue,
+        new Date(cur.minCollectAt!).getTime(),
+      );
+      return pre;
+    }, initData);
+    row.minCollectAt = dayjs(row.minCollectAtValue).format('YYYY-MM-DD');
+    row.immTypeWeight = row.immTypeWeightValue.toFixed(3);
+    return row;
   }
 </script>
 <style scoped>
-  .root :deep(.ant-table-footer) {
-    position: sticky;
-    bottom: 3%;
-    padding: 0 !important;
-    border: 2px solid #f0f0f0 !important;
+  :deep(.ant-table-tbody tr:last-child) {
+    position: v-bind('totalStyle.position');
+    z-index: 99;
+    top: v-bind('totalStyle.top');
+    bottom: v-bind('totalStyle.bottom');
+    background-color: #f5f5f5;
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight class="root">
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" ref="tableRef">
       <template #toolbar>
         <a-button
           type="primary"
@@ -24,16 +24,16 @@
   } from '@/api/query-statistics/callback';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
-  import { reactive, ref, watch } from 'vue';
+  import { reactive, ref } from 'vue';
   import { SearchManager } from '@/enums/authCodeEnum';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { message } from 'ant-design-vue';
-  import { PositionType } from 'ant-design-vue/es/image/style';
   import {
     GetApiSearchDonorCallbackCountTotalRequest,
     GetApiSearchDonorCallbackCountTotalResponse,
   } from '@/api/type/queryStatistics';
   import { debounce } from 'lodash-es';
+  import { useSticky } from '@/hooks/web/useSticky';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -47,45 +47,10 @@
     pageSize: 99999,
     total: 0,
   });
-  const totalStyle = ref<{
-    position: PositionType;
-    top: number | string;
-    bottom: number | string;
-  }>({
-    position: 'sticky',
-    top: 0,
-    bottom: 0,
-  });
-
-  watch(
-    () => totalData.value,
-    () => {
-      setTimeout(() => {
-        const bodyDom = document.getElementsByClassName('ant-table-tbody')[0];
-        const containerDom = document.getElementsByClassName('ant-table-container')[0];
-        const headerDom = document.getElementsByClassName('ant-table-thead')[0];
-
-        const length = getDataSource().length;
-        const filterPx = (str: string) => str.replace(/px/g, '');
-
-        const bodyH = Number(filterPx(getComputedStyle(bodyDom).height));
-        const containerH = Number(filterPx(getComputedStyle(containerDom).height));
-        const headerH = Number(filterPx(getComputedStyle(headerDom).height));
-
-        if (bodyH < containerH - headerH) {
-          totalStyle.value.position = 'relative';
-          totalStyle.value.top = containerH - 38 * length - headerH - 15 + 'px';
-          totalStyle.value.bottom = '';
-        } else {
-          totalStyle.value.position = 'sticky';
-          totalStyle.value.bottom = 0;
-          totalStyle.value.top = '';
-        }
-      }, 300);
-    },
-  );
+  const tableRef = ref();
+  const totalStyle = useSticky(tableRef);
   let _reloadTable: () => Promise<void>;
-  const [registerTable, { getForm, getDataSource, reload, getRawDataSource }] = useTable({
+  const [registerTable, { getForm, reload, getRawDataSource }] = useTable({
     api: getCallbackStatisticList,
     columns,
     beforeFetch: (params) => {

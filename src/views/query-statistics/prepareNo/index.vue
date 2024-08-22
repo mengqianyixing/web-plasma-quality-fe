@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight class="root">
-    <BasicTable @register="registerTable" class="tableHeight" />
+    <BasicTable @register="registerTable" ref="tableRef" class="tableHeight" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -9,54 +9,16 @@
   import { PageWrapper } from '@/components/Page';
   import { getPrepareQuery } from '@/api/query-statistics/prepareNo';
   import { useMessage } from '@/hooks/web/useMessage';
-  import { ref, watch } from 'vue';
+  import { ref } from 'vue';
   import { GetApiSearchProdPrepareResponse } from '@/api/type/queryStatistics';
-  import { PositionType } from 'ant-design-vue/es/image/style';
+  import { useSticky } from '@/hooks/web/useSticky';
 
   defineOptions({ name: 'PrepareNo' });
   const { createMessage } = useMessage();
+  const tableRef = ref();
+  const totalStyle = useSticky(tableRef);
 
   const totalData = ref<GetApiSearchProdPrepareResponse>({});
-  const totalStyle = ref<{
-    position: PositionType;
-    top: number | string;
-    bottom: number | string;
-  }>({
-    position: 'sticky',
-    top: 0,
-    bottom: 0,
-  });
-
-  watch(
-    () => totalData.value,
-    () => {
-      setTimeout(() => {
-        const bodyDom = document.getElementsByClassName('ant-table-tbody')[0];
-        const containerDom = document.getElementsByClassName('ant-table-container')[0];
-        const headerDom = document.getElementsByClassName('ant-table-thead')[0];
-
-        const length = getDataSource().length;
-        const filterPx = (str: string) => str.replace(/px/g, '');
-
-        const bodyH = Number(filterPx(getComputedStyle(bodyDom).height));
-        const containerH = Number(filterPx(getComputedStyle(containerDom).height));
-        const headerH = Number(filterPx(getComputedStyle(headerDom).height));
-
-        if (bodyH < containerH - headerH) {
-          totalStyle.value.position = 'relative';
-          totalStyle.value.top = containerH - 38 * length - headerH - 10 + 'px';
-          totalStyle.value.bottom = '';
-        } else {
-          totalStyle.value.position = 'sticky';
-          totalStyle.value.bottom = 0;
-          totalStyle.value.top = '';
-        }
-      }, 200);
-    },
-    {
-      deep: true,
-    },
-  );
 
   function accAdd(arg1: number, arg2: number) {
     let r1: number, r2: number, m: number;
@@ -74,7 +36,7 @@
     return (arg1 * m + arg2 * m) / m;
   }
 
-  const [registerTable, { getDataSource }] = useTable({
+  const [registerTable] = useTable({
     beforeFetch: (params) => {
       return {
         ...params,
@@ -141,7 +103,7 @@
 <style scoped>
   .root :deep(.ant-table-tbody tr:last-child) {
     position: v-bind('totalStyle.position');
-    z-index: 99;
+    z-index: 9;
     top: v-bind('totalStyle.top');
     bottom: v-bind('totalStyle.bottom');
     background-color: #f5f5f5;

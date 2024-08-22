@@ -1,40 +1,41 @@
 <template>
-  <PageWrapper dense contentFullHeight class="root">
-    <BasicTable @register="registerTable" :columns="columnsRef">
-      <template #toolbar>
-        <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
-      </template>
-      <template
-        v-for="(slotName, index) in columnsCustomTemplate"
-        :key="index"
-        #[slotName]="{ record }"
-      >
-        <span
-          :class="
-            !record[slotName] ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
-          "
-          @click.stop.self="handleDetail(record, slotName)"
-        >
-          {{ record[slotName] }}
-        </span>
-      </template>
-    </BasicTable>
-
-    <div
-      class="flex justify-end items-center bg-white absolute bottom-0 right-6 mt-2"
-      v-if="pagerLeft.total > 0"
-    >
-      <span class="mr-2">共{{ pagerLeft.total }}条数据</span>
-      <a-pagination
-        @change="handlePageChange"
-        @show-size-change="handleSizeChange"
-        size="small"
-        show-size-changer
-        show-quick-jumper
-        v-model:current="pagerLeft.current"
-        v-model:pageSize="pagerLeft.pageSize"
-        :total="pagerLeft.total"
-      />
+  <PageWrapper dense contentFullHeight class="root" content-class="relative">
+    <div class="absolute h-full w-full pb-16px">
+      <div style="height: calc(100% - 45px)">
+        <BasicTable @register="registerTable" :columns="columnsRef" ref="tableRef">
+          <template #toolbar>
+            <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
+          </template>
+          <template
+            v-for="(slotName, index) in columnsCustomTemplate"
+            :key="index"
+            #[slotName]="{ record }"
+          >
+            <span
+              :class="
+                !record[slotName] ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+              "
+              @click.stop.self="handleDetail(record, slotName)"
+            >
+              {{ record[slotName] }}
+            </span>
+          </template>
+        </BasicTable>
+      </div>
+      <div class="mb-10px bg-white pb-6px pr-16px m-6px h-45px" v-if="pagerLeft.total > 0">
+        <a-pagination
+          class="float-right mt-2"
+          @change="handlePageChange"
+          @show-size-change="handleSizeChange"
+          size="small"
+          show-size-changer
+          show-quick-jumper
+          v-model:current="pagerLeft.current"
+          v-model:pageSize="pagerLeft.pageSize"
+          :total="pagerLeft.total"
+          :show-total="(total) => `共 ${total} 条数据`"
+        />
+      </div>
     </div>
 
     <DetailModal @register="registerModal" />
@@ -48,10 +49,9 @@
     getUnqualifiedPlasmaCountTotal,
     getUnqualifiedPlasmaStation,
   } from '@/api/query-statistics/batch-statistics';
-  import { reactive, ref, watch, computed } from 'vue';
+  import { reactive, ref, computed } from 'vue';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
-  import { PositionType } from 'ant-design-vue/es/image/style';
-
+  import { useSticky } from '@/hooks/web/useSticky';
   import DetailModal from './DetailModal.vue';
 
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
@@ -64,6 +64,8 @@
   import { debounce } from 'lodash-es';
   import { useModal } from '@/components/Modal';
 
+  const tableRef = ref();
+  const totalStyle = useSticky(tableRef);
   const [registerModal, { openModal }] = useModal();
 
   const globalApiStore = useGlobalApiStoreWithOut();
@@ -93,49 +95,12 @@
     pageSize: 30,
     total: 0,
   });
-  const totalStyle = ref<{
-    position: PositionType;
-    top: number | string;
-    bottom: number | string;
-  }>({
-    position: 'sticky',
-    top: 0,
-    bottom: 0,
-  });
-
-  watch(
-    () => totalData.value,
-    () => {
-      setTimeout(() => {
-        const bodyDom = document.getElementsByClassName('ant-table-tbody')[0];
-        const containerDom = document.getElementsByClassName('ant-table-container')[0];
-        const headerDom = document.getElementsByClassName('ant-table-thead')[0];
-
-        const length = getDataSource().length;
-        const filterPx = (str: string) => str.replace(/px/g, '');
-
-        const bodyH = Number(filterPx(getComputedStyle(bodyDom).height));
-        const containerH = Number(filterPx(getComputedStyle(containerDom).height));
-        const headerH = Number(filterPx(getComputedStyle(headerDom).height));
-
-        if (bodyH < containerH - headerH) {
-          totalStyle.value.position = 'relative';
-          totalStyle.value.top = containerH - 38 * length - headerH - 10 + 'px';
-          totalStyle.value.bottom = '';
-        } else {
-          totalStyle.value.position = 'sticky';
-          totalStyle.value.bottom = 0;
-          totalStyle.value.top = '';
-        }
-      }, 200);
-    },
-  );
 
   defineOptions({ name: 'UnqualifiedPlasmaByStation' });
 
   let _reloadTable: () => Promise<void>;
 
-  const [registerTable, { getForm, getDataSource, getRawDataSource, reload }] = useTable({
+  const [registerTable, { getForm, getRawDataSource, reload }] = useTable({
     api: getUnqualifiedPlasmaStation,
     formConfig: {
       schemas: searchFormSchema,
@@ -211,6 +176,7 @@
     bordered: true,
     immediate: false,
     pagination: false,
+    isCanResizeParent: true,
   });
 
   _reloadTable = debounce(reload, 300) as () => Promise<void>;
@@ -277,12 +243,16 @@
     });
   }
 </script>
-<style scoped>
-  .root :deep(.ant-table-tbody tr:last-child) {
+<style scoped lang="scss">
+  :deep(.ant-table-tbody tr:last-child) {
     position: v-bind('totalStyle.position');
-    z-index: 99;
+    z-index: 9;
     top: v-bind('totalStyle.top');
     bottom: v-bind('totalStyle.bottom');
     background-color: #f5f5f5;
+
+    & > td {
+      background-color: #f5f5f5;
+    }
   }
 </style>

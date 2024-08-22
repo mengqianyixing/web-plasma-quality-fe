@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" class="tableHeight">
+    <BasicTable @register="registerTable" class="tableHeight" ref="tableRef">
       <template #[checkUnqKey]="{ record }: { record: Recordable }">
         <span
           class="text-blue-500 underline cursor-pointer"
@@ -55,10 +55,13 @@
   import TabelModal from './tabelModal.vue';
 
   import { getListApi } from '@/api/query-statistics/quarantinePeriodUnqualifiedStatistics';
-  import { nextTick } from 'vue';
+  import { nextTick, ref } from 'vue';
+  import { useSticky } from '@/hooks/web/useSticky';
 
   defineOptions({ name: 'QuarantinePeriodUnqualifiedStatistics' });
 
+  const tableRef = ref();
+  const totalStyle = useSticky(tableRef);
   let formData: Recordable = {};
   const cloneColumns = cloneDeep(columns);
   const [registerModal, { openModal }] = useModal();
@@ -263,8 +266,20 @@
     });
   }
 </script>
-<style scoped lang="less">
+<style scoped lang="scss">
   .tableHeight :deep(thead tr th) {
     padding: 5px !important;
+  }
+
+  :deep(.ant-table-tbody tr:last-child) {
+    position: v-bind('totalStyle.position');
+    z-index: 9;
+    top: v-bind('totalStyle.top');
+    bottom: v-bind('totalStyle.bottom');
+    background-color: #f5f5f5;
+
+    & > td {
+      background-color: #f5f5f5;
+    }
   }
 </style>
