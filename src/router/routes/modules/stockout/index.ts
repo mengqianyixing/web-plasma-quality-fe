@@ -41,7 +41,7 @@ const nonconformity: AppRouteModule = {
         {
           id: StockOutButtonEnum.ProductionPreparationEdit,
           name: 'edit',
-          title: '修改',
+          title: '编辑',
         },
         {
           id: StockOutButtonEnum.ProductionPreparationDelete,

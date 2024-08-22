@@ -52,7 +52,7 @@
             v-auth="StockOutButtonEnum.ProductionPreparationEdit"
             type="primary"
           >
-            修改
+            编辑
           </a-button>
           <a-button
             @click="clickRevokeModal"
