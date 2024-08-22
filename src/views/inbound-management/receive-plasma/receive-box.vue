@@ -28,10 +28,16 @@
               <span>{{ acceptList?.length }}</span>
             </div>
             <div class="flex gap-2">
-              <a-button @click="susModal" :disabled="!filterForm.batchNo" type="primary"
-                >暂停接收</a-button
-              >
               <a-button
+                v-auth="ReCheckButtonEnum.PlasmaReceiveSuspend"
+                @click="susModal"
+                :disabled="!filterForm.batchNo"
+                type="primary"
+              >
+                暂停接收
+              </a-button>
+              <a-button
+                v-auth="ReCheckButtonEnum.PlasmaReceiveTray"
                 @click="openModal(true, filterForm)"
                 :disabled="!filterForm.batchNo"
                 type="primary"
@@ -68,6 +74,7 @@
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import dayjs from 'dayjs';
   import ScanInput from '@/components/Form/src/components/ScanInput.vue';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'ReceivePlasma' });
 

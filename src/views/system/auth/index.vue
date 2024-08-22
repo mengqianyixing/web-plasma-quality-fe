@@ -9,11 +9,18 @@
         <template v-if="column.key === 'action'">
           <TableAction
             v-auth="'E_456'"
+            class="inline-block w-20px float-left"
             :actions="[
               {
                 icon: 'clarity:note-edit-line',
                 onClick: handleEdit.bind(null, record),
               },
+            ]"
+          />
+          <TableAction
+            v-auth="'E_789'"
+            class="inline-block w-20px float-right"
+            :actions="[
               {
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
@@ -69,7 +76,7 @@
     bordered: true,
     showIndexColumn: false,
     actionColumn: {
-      width: 80,
+      width: 50,
       title: '操作',
       dataIndex: 'action',
       // slots: { customRender: 'action' },

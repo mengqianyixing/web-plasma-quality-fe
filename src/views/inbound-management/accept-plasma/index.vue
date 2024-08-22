@@ -28,25 +28,56 @@
               <span>{{ acceptList?.length }}</span>
             </div>
             <div class="flex gap-2">
-              <a-button @click="handlePlasmaUnqualified" type="primary" :disabled="!batchNo">
+              <a-button
+                v-auth="ReCheckButtonEnum.UnqualifiedPlasma"
+                @click="handlePlasmaUnqualified"
+                type="primary"
+                :disabled="!batchNo"
+              >
                 血浆不合格
               </a-button>
-              <a-button @click="handleSampleUnqualified" type="primary" :disabled="!batchNo">
+              <a-button
+                v-auth="ReCheckButtonEnum.UnqualifiedSample"
+                @click="handleSampleUnqualified"
+                type="primary"
+                :disabled="!batchNo"
+              >
                 样本不合格
               </a-button>
-              <a-button @click="handleMissNumRegister" type="primary" :disabled="!batchNo">
+              <a-button
+                v-auth="ReCheckButtonEnum.MissNum"
+                @click="handleMissNumRegister"
+                type="primary"
+                :disabled="!batchNo"
+              >
                 缺浆登记
               </a-button>
-              <a-button @click="suspendModal('BOX')" type="primary" :disabled="!batchNo">
+              <a-button
+                v-auth="ReCheckButtonEnum.PlasmaSuspendBox"
+                @click="suspendModal('BOX')"
+                type="primary"
+                :disabled="!batchNo"
+              >
                 暂停箱记录
               </a-button>
-              <a-button @click="suspendModal('BCH')" type="primary" :disabled="!batchNo">
+              <a-button
+                v-auth="ReCheckButtonEnum.PlasmaSuspendBatch"
+                @click="suspendModal('BCH')"
+                type="primary"
+                :disabled="!batchNo"
+              >
                 暂停批记录
               </a-button>
-              <a-button @click="completeAccept" type="primary" :disabled="!batchNo">
+              <a-button
+                v-auth="ReCheckButtonEnum.PlasmaVerifyComplete"
+                @click="completeAccept"
+                type="primary"
+                :disabled="!batchNo"
+              >
                 完成验收
               </a-button>
               <a-button
+                v-auth="ReCheckButtonEnum.PlasmaVerifyTrayIn"
                 @click="
                   openInModal(true, {
                     ...filterForm,
@@ -62,6 +93,7 @@
                 托盘入库
               </a-button>
               <a-button
+                v-auth="ReCheckButtonEnum.PlasmaVerifyTrayOut"
                 @click="
                   openOutModal(true, { ...filterForm, inOut: 'out', queryFlow: 'plasmaVerify' })
                 "
@@ -82,7 +114,7 @@
     <LoginModal
       @register="registerLoginModal"
       @success="handleSuccess"
-      :auth-code="ReCheckButtonEnum.MissNumCheck"
+      :auth-code="ReCheckButtonEnum.PlasmaVerifyReCheckLogin"
     />
     <BatchDetail @register="registerBatchDetail" @close="handleBatchDetailClose" />
     <BoxDetail @register="registerBoxDetail" @success="handleGoDetail" />

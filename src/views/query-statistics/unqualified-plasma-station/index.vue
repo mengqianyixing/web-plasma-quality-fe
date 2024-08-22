@@ -4,7 +4,14 @@
       <div style="height: calc(100% - 45px)">
         <BasicTable @register="registerTable" :columns="columnsRef" ref="tableRef">
           <template #toolbar>
-            <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
+            <a-button
+              v-auth="SearchManager.UnqualifiedPlasmaByStationExport"
+              type="primary"
+              @click="handleExport"
+              :loading="loading"
+            >
+              导出
+            </a-button>
           </template>
           <template
             v-for="(slotName, index) in columnsCustomTemplate"
@@ -53,6 +60,7 @@
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useSticky } from '@/hooks/web/useSticky';
   import DetailModal from './DetailModal.vue';
+  import { SearchManager } from '@/enums/authCodeEnum';
 
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { useRouter } from 'vue-router';

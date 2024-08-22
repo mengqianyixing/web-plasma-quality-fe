@@ -2,7 +2,14 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable" class="tableHeight">
       <template #toolbar>
-        <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
+        <a-button
+          v-auth="SearchManager.PlasmaQueryExport"
+          type="primary"
+          @click="handleExport"
+          :loading="loading"
+        >
+          导出
+        </a-button>
       </template>
       <template #cardNo="{ record }: { record: Recordable }">
         <span
@@ -19,6 +26,7 @@
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
   import { columns, searchFormSchema } from './plasma.data';
+  import { SearchManager } from '@/enums/authCodeEnum';
 
   import { PageWrapper } from '@/components/Page';
   import { getPlasmaQueryList } from '@/api/query-statistics/plasma';

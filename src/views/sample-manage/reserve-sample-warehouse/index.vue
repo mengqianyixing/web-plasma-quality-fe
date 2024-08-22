@@ -32,8 +32,19 @@
             <span>{{ acceptList?.length }}</span>
           </div>
           <div class="flex gap-2">
-            <a-button type="primary" @click="handleTrayInBand"> 入库 </a-button>
-            <a-button :disabled="cancelDisabled" type="primary" @click="handleAcceptComplete">
+            <a-button
+              type="primary"
+              @click="handleTrayInBand"
+              v-auth="SampleManageButtonEnum.ReserveSampleWarehouseIn"
+            >
+              入库
+            </a-button>
+            <a-button
+              v-auth="SampleManageButtonEnum.ReserveSampleWarehouseAccept"
+              :disabled="cancelDisabled"
+              type="primary"
+              @click="handleAcceptComplete"
+            >
               接收完成
             </a-button>
           </div>
@@ -89,6 +100,7 @@
     PostApiCoreBatchSampleAcceptKeepPackResponse,
   } from '@/api/type/sampleManage';
   import { getPrintRecord, printRecord } from '@/api/tag/printRecord';
+  import { SampleManageButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage, createConfirm } = useMessage();
 

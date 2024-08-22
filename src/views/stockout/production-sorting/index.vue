@@ -1,6 +1,50 @@
 <template>
   <PageWrapper contentFullHeight>
     <Description @register="register" :data="prepareData" />
+    <div class="flex justify-end gap-2 pb-10px bg-[#fff]">
+      <a-button
+        v-auth="StockOutButtonEnum.ProductionSortingBatch"
+        :disabled="!prepareNo"
+        @click="_openBatchSuspendModal"
+      >
+        批次暂停
+      </a-button>
+      <a-button
+        v-auth="StockOutButtonEnum.ProductionSortingPP"
+        :disabled="!prepareNo"
+        @click="_openPrepareSuspendModal"
+      >
+        准备号暂停
+      </a-button>
+      <a-button
+        v-auth="StockOutButtonEnum.ProductionSortingBox"
+        :disabled="!prepareNo"
+        @click="pickBoxInfo"
+      >
+        装箱信息
+      </a-button>
+      <a-button
+        v-auth="StockOutButtonEnum.ProductionSortingTrayOut"
+        :disabled="!prepareNo"
+        @click="openOutStoreModal(true, { prepareNo: prepareNo })"
+      >
+        托盘出库
+      </a-button>
+      <a-button
+        v-auth="StockOutButtonEnum.ProductionSortingTrayIn"
+        :disabled="!prepareNo"
+        @click="openInStoreModal(true, { prepareNo: prepareNo })"
+      >
+        托盘入库
+      </a-button>
+      <a-button
+        v-auth="StockOutButtonEnum.ProductionSortingTrayComplete"
+        :disabled="!prepareNo"
+        @click="_completeSorting"
+      >
+        分拣完成
+      </a-button>
+    </div>
     <div class="card-bar mt-1 mb-1 bg-[#fff] h-73.5">
       <div class="card-bar-header h-10 lh-10 pl-3 ]">{{ pickTitle.top }}</div>
       <div class="card-bar-body flex w-100% p-3 bg-[#fff] overflow-x-auto" ref="topBoxBarRef">
@@ -91,6 +135,7 @@
   import BatchSuspendModal from './components/batch-suspend-modal.vue';
   import { SERVER_ENUM } from '@/enums/serverEnum';
   import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+  import { StockOutButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'ProductionSorting' });
 
@@ -197,7 +242,7 @@
       label: '分拣批次',
       render() {
         return (
-          <div className="text-blue-600 cursor-pointer" onClick={goPickBatchDetail}>
+          <div class="text-blue-600 cursor-pointer" onClick={goPickBatchDetail}>
             {prepareData.value.batchNoCount ? prepareData.value.batchNoCount : ''}
           </div>
         );
@@ -212,7 +257,7 @@
             {prepareData.value.sortTotal ? (
               <span>
                 <span>{prepareData.value.sortCount}/</span>
-                <span className="text-blue-600 cursor-pointer" onClick={goPlasmaDetail}>
+                <span class="text-blue-600 cursor-pointer" onClick={goPlasmaDetail}>
                   {prepareData.value.sortTotal}
                 </span>
               </span>
@@ -233,7 +278,7 @@
               <span>
                 <span>{prepareData.value.proSortCount}/</span>
                 <span
-                  className="text-blue-600 cursor-pointer"
+                  class="text-blue-600 cursor-pointer"
                   onClick={() => goPlasmaDetail('prepareProduce')}
                 >
                   {prepareData.value.proTotal}
@@ -242,47 +287,6 @@
             ) : (
               ''
             )}
-          </div>
-        );
-      },
-    },
-    {
-      field: 'totalCount',
-      label: '',
-      span: 6,
-      render() {
-        return (
-          <div class="flex items-center justify-end gap-2 -mt-1 w-100%">
-            <a-button disabled={!prepareNo.value} onclick={_openBatchSuspendModal}>
-              批次暂停
-            </a-button>
-            <a-button disabled={!prepareNo.value} onclick={_openPrepareSuspendModal}>
-              准备号暂停
-            </a-button>
-            <a-button disabled={!prepareNo.value} onclick={pickBoxInfo}>
-              装箱信息
-            </a-button>
-            <a-button
-              disabled={!prepareNo.value}
-              onclick={() => openOutStoreModal(true, { prepareNo: prepareNo.value })}
-            >
-              托盘出库
-            </a-button>
-            <a-button
-              disabled={!prepareNo.value}
-              onclick={() => openInStoreModal(true, { prepareNo: prepareNo.value })}
-            >
-              托盘入库
-            </a-button>
-            <a-button disabled={!prepareNo.value} onclick={_completeSorting}>
-              分拣完成
-            </a-button>
-            {/* <a-button disabled={!prepareNo.value} onclick={_completeBatchNo}>
-              批次完成
-            </a-button> */}
-            {/* <a-button disabled={!prepareNo.value} onclick={printBox}>
-              打印
-            </a-button> */}
           </div>
         );
       },

@@ -48,7 +48,13 @@
         </span>
       </template>
       <template #toolbar>
-        <a-button type="primary" @click="handleExport" :loading="loading">导出</a-button>
+        <a-button
+          v-auth="SearchManager.EntryPlasmaExport"
+          type="primary"
+          @click="handleExport"
+          :loading="loading"
+          >导出</a-button
+        >
       </template>
     </BasicTable>
     <BatchNoModal @register="register" />
@@ -67,7 +73,7 @@
   import VerifyNumModal from './verifyNumModal.vue';
   import NoPassModal from './noPassModal.vue';
   import HortFallModal from './hortFallModal.vue';
-
+  import { SearchManager } from '@/enums/authCodeEnum';
   import { ref } from 'vue';
   import { message } from 'ant-design-vue';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';

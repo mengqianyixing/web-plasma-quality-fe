@@ -4,7 +4,14 @@
       <div style="height: calc(100% - 45px)">
         <BasicTable @register="registerTable" ref="tableRef" :columns="columnsRef">
           <template #toolbar>
-            <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
+            <a-button
+              v-auth="SearchManager.UnqualifiedPlasmaByBatchExport"
+              type="primary"
+              @click="handleExport"
+              :loading="loading"
+            >
+              导出
+            </a-button>
           </template>
           <template
             v-for="(slotName, index) in columnsCustomTemplate"
@@ -64,6 +71,7 @@
   import { debounce } from 'lodash-es';
   import { useModal } from '@/components/Modal';
   import { useSticky } from '@/hooks/web/useSticky';
+  import { SearchManager } from '@/enums/authCodeEnum';
 
   const tableRef = ref();
   const totalStyle = useSticky(tableRef);

@@ -19,11 +19,23 @@
               <span>{{ sampleBatchData.verifyedList?.length }}</span>
             </div>
             <div class="text-[16px] bg-[#ffffff] rounded">
-              <a-button @click="handleNonconformityRegister" class="mr-2"> 不合格登记 </a-button>
-              <a-button type="primary" @click="handleCompleteVerify" class="mr-2">
+              <a-button
+                @click="handleNonconformityRegister"
+                class="mr-2"
+                v-auth="SampleManageButtonEnum.NonconformitySampleRevokeRegister"
+              >
+                不合格登记
+              </a-button>
+              <a-button
+                v-auth="SampleManageButtonEnum.CompleteSampleVerify"
+                type="primary"
+                @click="handleCompleteVerify"
+                class="mr-2"
+              >
                 完成验收
               </a-button>
               <a-button
+                v-auth="SampleManageButtonEnum.RevokeSampleVerify"
                 v-if="!isReceiveByBag"
                 type="primary"
                 @click="handleCancelVerify"
@@ -104,6 +116,7 @@
   import ArrangeModel from '@/views/inbound-management/components/arrange/index.vue';
   import { getSysParamsByParamKey } from '@/api/systemServer/params';
   import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { SampleManageButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'SampleVerify' });
 

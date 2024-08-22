@@ -2,9 +2,15 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增部门 </a-button>
-        <a-button type="primary" @click="handleEdit"> 编辑部门 </a-button>
-        <a-button type="primary" @click="handleDelete"> 删除部门 </a-button>
+        <a-button type="primary" @click="handleCreate" v-auth="SysButtonEnum.AddDept">
+          新增部门
+        </a-button>
+        <a-button type="primary" @click="handleEdit" v-auth="SysButtonEnum.UpdateDept">
+          编辑部门
+        </a-button>
+        <a-button type="primary" @click="handleDelete" v-auth="SysButtonEnum.RemoveDept">
+          删除部门
+        </a-button>
       </template>
     </BasicTable>
     <DeptModal @register="registerModal" @success="handleSuccess" />
@@ -12,6 +18,7 @@
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';
+  import { SysButtonEnum } from '@/enums/authCodeEnum';
 
   import { deleteDept, getDeptList } from '@/api/systemServer/system';
 

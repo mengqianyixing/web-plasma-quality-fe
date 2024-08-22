@@ -38,6 +38,12 @@ const trayManager: AppRouteModule = {
           },
           id: 900020,
           component: () => import('@/views/query-statistics/plasma/index.vue'),
+          authElements: [
+            {
+              id: SearchManager.PlasmaQueryExport,
+              title: '导出',
+            },
+          ],
         },
         {
           path: 'plasmaBagCollect',
@@ -223,6 +229,13 @@ const trayManager: AppRouteModule = {
           meta: {
             title: '不合格血浆按批查询',
           },
+          authElements: [
+            {
+              id: SearchManager.UnqualifiedPlasmaByBatchExport,
+              name: 'export',
+              title: '导出',
+            },
+          ],
           id: 9000291,
           component: () => import('@/views/query-statistics/unqualified-plasma-batch/index.vue'),
         },
@@ -233,6 +246,13 @@ const trayManager: AppRouteModule = {
             title: '不合格血浆按站查询',
           },
           id: 9000290,
+          authElements: [
+            {
+              id: SearchManager.UnqualifiedPlasmaByStationExport,
+              name: 'export',
+              title: '导出',
+            },
+          ],
           component: () => import('@/views/query-statistics/unqualified-plasma-station/index.vue'),
         },
         {
@@ -272,6 +292,12 @@ const trayManager: AppRouteModule = {
           },
           id: 9900600,
           component: () => import('@/views/plasma-store/entry-plasma/index.vue'),
+          authElements: [
+            {
+              id: SearchManager.EntryPlasmaExport,
+              title: '导出',
+            },
+          ],
         },
         {
           path: 'plasmaQualifiedInventory',
@@ -295,6 +321,12 @@ const trayManager: AppRouteModule = {
             title: '库存查询',
           },
           id: 900010,
+          authElements: [
+            {
+              id: SearchManager.StoreInventoryExport,
+              title: '导出',
+            },
+          ],
           component: () => import('@/views/plasma-store/inventory/index.vue'),
         },
         {
@@ -305,13 +337,6 @@ const trayManager: AppRouteModule = {
           },
           id: 9000310,
           component: () => import('@/views/query-statistics/inventory-statistics/index.vue'),
-          authElements: [
-            {
-              id: SearchManager.InventoryExport,
-              name: 'export',
-              title: '导出',
-            },
-          ],
         },
         {
           path: 'stereoWarehouse',
@@ -321,6 +346,12 @@ const trayManager: AppRouteModule = {
           },
           id: 9000180,
           component: () => import('@/views/query-statistics/stereoWarehouse/index.vue'),
+          authElements: [
+            {
+              id: SearchManager.StereoWarehouseExport,
+              title: '导出',
+            },
+          ],
         },
         {
           path: 'location',
@@ -407,6 +438,13 @@ const trayManager: AppRouteModule = {
             title: 'ERP-入库查询',
           },
           id: 9000230,
+          authElements: [
+            {
+              id: SearchManager.ERPEntryStoreExport,
+              name: 'export',
+              title: '导出',
+            },
+          ],
           component: () => import('@/views/query-statistics/ERPEntryStore/index.vue'),
         },
         {
@@ -416,6 +454,13 @@ const trayManager: AppRouteModule = {
             title: 'ERP-出库查询',
           },
           id: 9000231,
+          authElements: [
+            {
+              id: SearchManager.ERPOutStoreExport,
+              name: 'export',
+              title: '导出',
+            },
+          ],
           component: () => import('@/views/query-statistics/ERPOutStore/index.vue'),
         },
       ],

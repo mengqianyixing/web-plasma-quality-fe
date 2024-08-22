@@ -34,9 +34,16 @@ const inboundmanagement: AppRouteModule = {
       component: () => import('@/views/inbound-management/receive-plasma/index.vue'),
       authElements: [
         {
-          id: ReCheckButtonEnum.PlasmaReceiveSuspendCheck,
-          name: 'reCheckLogin',
-          title: '暂停接收复核人登录',
+          id: ReCheckButtonEnum.PlasmaReceiveSuspend,
+          title: '暂停接收',
+        },
+        {
+          id: ReCheckButtonEnum.PlasmaReceiveTray,
+          title: '托盘入库',
+        },
+        {
+          id: ReCheckButtonEnum.PlasmaReceiveBatch,
+          title: '接收(整批)',
         },
       ],
     },
@@ -51,9 +58,9 @@ const inboundmanagement: AppRouteModule = {
       component: () => import('@/views/inbound-management/accept-plasma/index.vue'),
       authElements: [
         {
-          id: ReCheckButtonEnum.MissNumCheck,
-          name: 'missRecheck',
-          title: '缺号登记复核人权限',
+          id: ReCheckButtonEnum.PlasmaVerifyReCheckLogin,
+          name: 'reCheckLogin',
+          title: '复核人登录',
         },
         {
           id: ReCheckButtonEnum.UnqualifiedPlasmaCheck,
@@ -61,9 +68,26 @@ const inboundmanagement: AppRouteModule = {
           title: '不合格血浆登记复核人权限',
         },
         {
+          id: ReCheckButtonEnum.UnqualifiedPlasma,
+          title: '不合格血浆登记',
+        },
+        {
           id: ReCheckButtonEnum.UnqualifiedSampleCheck,
           name: 'sampleRecheck',
           title: '不合格样本登记复核人权限',
+        },
+        {
+          id: ReCheckButtonEnum.UnqualifiedSample,
+          title: '不合格样本登记',
+        },
+        {
+          id: ReCheckButtonEnum.MissNumCheck,
+          name: 'missRecheck',
+          title: '缺浆登记复核人权限',
+        },
+        {
+          id: ReCheckButtonEnum.MissNum,
+          title: '缺浆登记',
         },
         {
           id: ReCheckButtonEnum.RevokeVerifyCheck,
@@ -71,14 +95,29 @@ const inboundmanagement: AppRouteModule = {
           title: '撤销验收复核人权限',
         },
         {
-          id: ReCheckButtonEnum.PlasmaVerifyReCheckLogin,
-          name: 'reCheckLogin',
-          title: '复核人登录',
+          id: ReCheckButtonEnum.PlasmaSuspendBox,
+          title: '箱暂停',
+        },
+        {
+          id: ReCheckButtonEnum.PlasmaSuspendBatch,
+          title: '批暂停',
         },
         {
           id: ReCheckButtonEnum.PlasmaSuspendCheck,
           name: 'suspendRecheck',
-          title: '暂停验收复核人权限',
+          title: '批暂停复核人权限',
+        },
+        {
+          id: ReCheckButtonEnum.PlasmaVerifyComplete,
+          title: '完成验收',
+        },
+        {
+          id: ReCheckButtonEnum.PlasmaVerifyTrayIn,
+          title: '托盘入库',
+        },
+        {
+          id: ReCheckButtonEnum.PlasmaVerifyTrayOut,
+          title: '托盘出库',
         },
       ],
     },
