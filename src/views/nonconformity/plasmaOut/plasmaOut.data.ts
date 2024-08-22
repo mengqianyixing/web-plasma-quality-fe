@@ -191,9 +191,10 @@ export const formSchema: FormSchema[] = [
   },
   {
     label: '申请原因',
-    component: 'Input',
+    component: 'InputTextArea',
     field: 'applicationCause',
     required: true,
+    colProps: { span: 24 },
   },
   // {
   //   label: '编辑原因',
@@ -207,33 +208,39 @@ export const dtColumns: BasicColumn[] = [
     title: '血浆批号',
     dataIndex: 'batchNo',
     width: 110,
+    sorter: true,
   },
   {
     title: '血浆编号',
     dataIndex: 'bagNo',
     width: 120,
+    sorter: true,
   },
   {
     title: '浆员编号',
     dataIndex: 'cardNo',
     width: 120,
+    sorter: true,
   },
   {
     title: '浆员姓名',
     dataIndex: 'donorName',
     width: 100,
     ellipsis: false,
+    sorter: true,
   },
   {
     title: '不合格原因',
     dataIndex: 'failed',
     width: 150,
     ellipsis: false,
+    sorter: true,
   },
   {
     title: '入库日期',
     dataIndex: 'indate',
     width: 100,
+    sorter: true,
   },
 ];
 
