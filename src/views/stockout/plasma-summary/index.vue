@@ -10,12 +10,7 @@
         >
           打印
         </a-button>
-        <span
-          v-auth="[
-            StockOutButtonEnum.KMPlasmaSummaryReport,
-            StockOutButtonEnum.QuarantineTrackUnqualifiedPlasmaRecords,
-          ]"
-        >
+        <span v-auth="[StockOutButtonEnum.KMPlasmaSummaryReport]">
           <a-dropdown>
             <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
             <template #overlay>
@@ -27,16 +22,16 @@
                     </a-button>
                   </MenuItem>
                 </span>
-                <span v-auth="StockOutButtonEnum.QuarantineTrackUnqualifiedPlasmaRecords">
-                  <MenuItem>
-                    <a-button
-                      type="link"
-                      @click="handlePrint(PrintServerEnum.FOLLOW_TRACK_UNQUALIFIED)"
-                    >
-                      检疫期续追踪不合格血浆记录
-                    </a-button>
-                  </MenuItem>
-                </span>
+                <!--                <span v-auth="StockOutButtonEnum.QuarantineTrackUnqualifiedPlasmaRecords">-->
+                <!--                  <MenuItem>-->
+                <!--                    <a-button-->
+                <!--                      type="link"-->
+                <!--                      @click="handlePrint(PrintServerEnum.FOLLOW_TRACK_UNQUALIFIED)"-->
+                <!--                    >-->
+                <!--                      检疫期续追踪不合格血浆记录-->
+                <!--                    </a-button>-->
+                <!--                  </MenuItem>-->
+                <!--                </span>-->
               </Menu>
             </template>
           </a-dropdown>
