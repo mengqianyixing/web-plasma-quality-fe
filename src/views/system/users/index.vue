@@ -2,8 +2,10 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="success" @click="handleExport" :loading="loading">导出</a-button>
-        <a-button type="primary" @click="handleCreate">新增用户</a-button>
+        <a-button type="success" v-auth="'E_1114'" @click="handleExport" :loading="loading"
+          >导出</a-button
+        >
+        <a-button type="primary" v-auth="'E_1113'" @click="handleCreate">新增用户</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
