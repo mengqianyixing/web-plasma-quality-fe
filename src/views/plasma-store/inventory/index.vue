@@ -14,7 +14,7 @@
         class="absolute right-8px mr-16px"
         :loading="loading"
         @click="handleExport"
-        v-auth="SearchManager.InventoryExport"
+        v-auth="SearchManager.StoreInventoryExport"
       >
         导出
       </a-button>

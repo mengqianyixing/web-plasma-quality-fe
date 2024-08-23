@@ -6,6 +6,7 @@
           >编辑</a-button
         >
         <BasicUpload
+          v-auth="BaseSettingButtonEnum.ReportAdd"
           ref="basicUpload"
           :maxSize="20"
           :maxNumber="1"

@@ -32,10 +32,16 @@
                 @click="openModal(true, filterForm)"
                 :disabled="!filterForm.batchNo"
                 type="primary"
+                v-auth="ReCheckButtonEnum.PlasmaReceiveTray"
               >
                 托盘入库
               </a-button>
-              <a-button type="primary" @click="handleAcceptSample" :disabled="!filterForm.batchNo">
+              <a-button
+                v-auth="ReCheckButtonEnum.PlasmaReceiveBatch"
+                type="primary"
+                @click="handleAcceptSample"
+                :disabled="!filterForm.batchNo"
+              >
                 接收
               </a-button>
             </div>
@@ -65,6 +71,7 @@
   import BatchModal from '@/views/inbound-management/receive-plasma/components/batch-modal.vue';
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import dayjs from 'dayjs';
+  import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
 
   defineOptions({ name: 'ReceivePlasma' });
 

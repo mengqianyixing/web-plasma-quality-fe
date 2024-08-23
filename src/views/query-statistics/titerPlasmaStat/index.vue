@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" class="tableHeight" />
+    <BasicTable @register="registerTable" ref="tableRef" class="tableHeight" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -11,9 +11,12 @@
   import { getListApi } from '@/api/query-statistics/titerPlasmaStat';
   import { isArray, isObject } from '@/utils/is';
   import { GetApiSearchPlasmaPrivilegeCountResponse } from '@/api/type/queryStatistics';
+  import { useSticky } from '@/hooks/web/useSticky';
+  import { ref } from 'vue';
 
   defineOptions({ name: 'TiterPlasmaStat' });
-
+  const tableRef = ref();
+  const totalStyle = useSticky(tableRef);
   const [registerTable, { getForm, reload }] = useTable({
     api: getListApi,
     columns,
@@ -84,7 +87,19 @@
     return Object.values(values).some((v) => v || v === 0);
   }
 </script>
-<style scoped lang="less">
+<style scoped lang="scss">
+  :deep(.ant-table-tbody tr:last-child) {
+    position: v-bind('totalStyle.position');
+    z-index: 9;
+    top: v-bind('totalStyle.top');
+    bottom: v-bind('totalStyle.bottom');
+    background-color: #f5f5f5;
+
+    & > td {
+      background-color: #f5f5f5;
+    }
+  }
+
   .tableHeight :deep(thead tr th) {
     padding: 5px !important;
   }

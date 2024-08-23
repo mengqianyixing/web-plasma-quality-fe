@@ -103,7 +103,7 @@
   async function handleSubmit() {
     try {
       const values = await validate();
-
+      setModalProps({ confirmLoading: true });
       await registerNonconformity({
         ...values,
         verifyNo: modalParams.verifyNo,
@@ -114,8 +114,8 @@
       emit('success');
       await resetFields();
       closeModal();
-    } catch (e) {
-      console.log(e);
+    } finally {
+      setModalProps({ confirmLoading: false });
     }
   }
 

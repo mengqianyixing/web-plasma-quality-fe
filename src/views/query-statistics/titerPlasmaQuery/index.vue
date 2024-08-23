@@ -4,7 +4,12 @@
       <BasicTable @register="registerTable" style="padding-bottom: 0" />
     </div>
     <div class="flex-1 p-16px pt-0px pb-0px bg-white m-6px mb-0px">
-      <vxe-grid v-bind="gridOptionsUnaccept" :data="unAcceptList" :loading="tableLoading">
+      <vxe-grid
+        v-bind="gridOptionsUnaccept"
+        ref="tableRef"
+        :data="unAcceptList"
+        :loading="tableLoading"
+      >
         <template #[slot.slotName]="{ row }" v-for="slot in slots" :key="slot.slotName">
           <span v-if="row.stationName === '合计'">
             {{ get(row, slot.key) }}
@@ -49,9 +54,12 @@
   import { reactive, ref } from 'vue';
   import { VxeGridProps } from 'vxe-table';
   import { message, Pagination as APagination } from 'ant-design-vue';
+  import { useSticky } from '@/hooks/web/useSticky';
 
   defineOptions({ name: 'TiterPlasmaQuery' });
 
+  const tableRef = ref();
+  const totalStyle = useSticky(tableRef, { bodyClass: 'vxe-table--body-wrapper' });
   const [registerModal, { openModal }] = useModal();
   const pager = reactive({
     pageSize: 30,
@@ -162,9 +170,9 @@
 </script>
 <style scoped>
   :deep(.vxe-table--body tr:last-child) {
-    position: sticky;
-    top: 0;
-    bottom: 0;
+    position: v-bind('totalStyle.position');
+    top: v-bind('totalStyle.top');
+    bottom: v-bind('totalStyle.bottom');
     background-color: #f5f5f5;
   }
 </style>

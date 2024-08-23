@@ -97,12 +97,17 @@
       );
     } else if (state.value === CallBackDetailState.RESUME) {
       return callbackDetailCustomColumns
-        .filter((it) => !['callbackDate'].includes(it.dataIndex as string))
+        .filter((it) => !['callbackDate', 'sampleCollectTime'].includes(it.dataIndex as string))
         .map((it) => {
           if (it.dataIndex === 'collDate') {
             return {
               ...it,
               title: '恢复采浆日期',
+            };
+          } else if (it.dataIndex === 'maxCollectTime') {
+            return {
+              ...it,
+              title: '采集日期',
             };
           } else {
             return {

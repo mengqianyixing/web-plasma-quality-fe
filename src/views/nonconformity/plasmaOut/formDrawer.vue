@@ -23,7 +23,7 @@
             保存申请单
           </a-button>
         </div>
-        <div class="flex-1 shrink-1" style="height: calc(100% - 170px)">
+        <div class="flex-1 shrink-1" style="height: calc(100% - 240px)">
           <BasicTable @register="registerTable">
             <template #toolbar>
               <template v-if="state.title !== '查看'">
@@ -62,7 +62,7 @@
   const [registerForm, { validate, clearValidate, resetFields, updateSchema, setFieldsValue }] =
     useForm({
       labelWidth: 90,
-      baseColProps: { span: 8 },
+      baseColProps: { span: 6 },
       schemas: formSchema,
       showActionButtonGroup: false,
     });
@@ -96,10 +96,15 @@
       dlvNo: state.dlvNo,
       ...p,
     }),
+
     afterFetch: (res) => {
       clearSelectedRowKeys();
       return res;
     },
+    sortFn: (e) => ({
+      sortIdx: e.order && e.field,
+      sortOrder: e?.order?.slice(0, -3).toUpperCase(),
+    }),
   });
   const [registerModal, { setModalProps }] = useModalInner(async ({ disabled, dlvNo }) => {
     state.dlvNo = dlvNo;

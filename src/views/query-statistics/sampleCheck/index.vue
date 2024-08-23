@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" class="tableHeight" />
+    <BasicTable @register="registerTable" class="tableHeight" ref="tableRef" />
     <TabelModal @register="registerModal" />
     <TabelModal2 @register="registerModal2" />
     <TabelModal3 @register="registerModal3" />
@@ -21,9 +21,12 @@
   import TabelModal from './tabelModal.vue';
   import TabelModal2 from './tabelModal2.vue';
   import TabelModal3 from './tabelModal3.vue';
+  import { useSticky } from '@/hooks/web/useSticky';
+  import { ref } from 'vue';
 
   defineOptions({ name: 'SampleCheck' });
-
+  const tableRef = ref();
+  const totalStyle = useSticky(tableRef);
   const [registerModal, { openModal }] = useModal();
   const [registerModal2, { openModal: openModal2 }] = useModal();
   const [registerModal3, { openModal: openModal3 }] = useModal();
@@ -163,8 +166,20 @@
     return { ...row, stationName: '合计', sampleType: '--', isCount: true };
   }
 </script>
-<style scoped lang="less">
+<style scoped lang="scss">
   .tableHeight :deep(thead tr th) {
     padding: 5px !important;
+  }
+
+  :deep(.ant-table-tbody tr:last-child) {
+    position: v-bind('totalStyle.position');
+    z-index: 9;
+    top: v-bind('totalStyle.top');
+    bottom: v-bind('totalStyle.bottom');
+    background-color: #f5f5f5;
+
+    & > td {
+      background-color: #f5f5f5;
+    }
   }
 </style>

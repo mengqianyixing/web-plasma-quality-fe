@@ -83,10 +83,10 @@
     schemas: formSchema,
     showActionButtonGroup: true,
     showResetButton: true,
-    resetButtonOptions: { text: '提交暂停', loading: pauseLoading },
+    resetButtonOptions: { text: '提交暂停', loading: pauseLoading.value },
     resetFunc: submitReceivePause,
     showSubmitButton: true,
-    submitButtonOptions: { text: '继续', loading: resumeLoading },
+    submitButtonOptions: { text: '继续', loading: resumeLoading.value },
     submitFunc: submitResume,
   });
 
@@ -152,7 +152,7 @@
       getCheckboxProps: (record) => ({
         disabled:
           !!record.freedBy ||
-          (userInfo.getUserInfo.username && record.creater != userInfo.getUserInfo.username), // 有继续人 || 接收人和已登录账户不一致不可操作
+          !!(userInfo.getUserInfo.username && record.creater != userInfo.getUserInfo.username), // 有继续人 || 接收人和已登录账户不一致不可操作
       }),
     },
     size: 'small',

@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" class="tableHeight">
+    <BasicTable @register="registerTable" class="tableHeight" ref="tableRef">
       <template #otherNum="{ record }: { record: Recordable }">
         <span v-if="record.isCount"> {{ record[otherNumUnqKey][numKey] }}</span>
         <span
@@ -40,11 +40,14 @@
   import { isArray, isObject } from '@/utils/is';
   import { getListApi } from '@/api/query-statistics/followDisqualificationStatistics';
   import TabelModal from './tabelModal.vue';
+  import { useSticky } from '@/hooks/web/useSticky';
+  import { ref } from 'vue';
 
   defineOptions({ name: 'FollowDisqualificationStatistics' });
   const cloneColumns = cloneDeep(columns);
   const dictMap = new Map();
-
+  const tableRef = ref();
+  const totalStyle = useSticky(tableRef);
   const [registerModal, { openModal }] = useModal();
   let formData: Recordable = {};
 
@@ -186,8 +189,20 @@
     });
   }
 </script>
-<style scoped lang="less">
+<style scoped lang="scss">
   .tableHeight :deep(thead tr th) {
     padding: 5px !important;
+  }
+
+  :deep(.ant-table-tbody tr:last-child) {
+    position: v-bind('totalStyle.position');
+    z-index: 9;
+    top: v-bind('totalStyle.top');
+    bottom: v-bind('totalStyle.bottom');
+    background-color: #f5f5f5;
+
+    & > td {
+      background-color: #f5f5f5;
+    }
   }
 </style>
