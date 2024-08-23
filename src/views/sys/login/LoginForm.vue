@@ -76,7 +76,7 @@
   import { buildUUID } from '@/utils/uuid';
   import oauth from '@/api/oauth/oauth';
   import { pushLog } from '@/api/oauth/logger';
-  import { formatDate, qsParse } from 'js-xxx';
+  import { qsParse } from 'js-xxx';
   import { closeGlobalLoading } from '@/utils/domUtils';
 
   const ACol = Col;
@@ -114,7 +114,7 @@
             usrId: useInfo.userAccount,
             moduleType: 1,
             optName: '用户登录',
-            optContent: `用户【${useInfo.username}】在【${formatDate(time)}】登录成功`,
+            optContent: `登录成功`,
             path: 'POST /api/sys/user/login',
             time: time.getTime() - timeStamp,
             reqData: JSON.stringify(qsParse(queryString)),
