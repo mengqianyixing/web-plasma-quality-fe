@@ -6,6 +6,7 @@
     showFooter
     width="500px"
     @ok="handleSubmit"
+    @cancel="handleCancel"
   >
     <BasicForm @register="registerForm" />
 
@@ -33,7 +34,7 @@
   defineOptions({ name: 'FormModel' });
 
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
-  const [registerForm, { setFieldsValue, validate, resetFields }] = useForm({
+  const [registerForm, { setFieldsValue, validate, resetFields, clearValidate }] = useForm({
     layout: 'horizontal',
     labelWidth: 120,
     wrapperCol: {
@@ -88,6 +89,10 @@
       sampleNo: data.record.sampleNo,
     });
   });
+  function handleCancel() {
+    resetFields();
+    clearValidate();
+  }
   async function handleSubmit() {
     try {
       const values = await validate();

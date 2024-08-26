@@ -2,7 +2,7 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="success" @click="handleExport">导出</a-button>
+        <a-button v-auth="'E_1234'" type="success" @click="handleExport">导出</a-button>
         <a-button v-auth="'E_123'" type="primary" @click="handleCreate">新增角色</a-button>
       </template>
       <template #bodyCell="{ column, record }">

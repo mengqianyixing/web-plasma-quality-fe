@@ -101,6 +101,7 @@
   } from '@/api/type/sampleManage';
   import { getPrintRecord, printRecord } from '@/api/tag/printRecord';
   import { SampleManageButtonEnum } from '@/enums/authCodeEnum';
+  import ScanInput from '@/components/Form/src/components/ScanInput.vue';
 
   const { createMessage, createConfirm } = useMessage();
 
@@ -113,6 +114,8 @@
   const trayValue = ref('');
   const boxNoValue = ref('');
   const batchValue = ref('');
+  const packNoRef = ref();
+  const boxNoRef = ref();
 
   const packNo = ref('');
 
@@ -134,6 +137,7 @@
               placeholder="扫描托盘编号"
               value={trayValue}
               onChange={(e) => (trayValue.value = e.target.value)}
+              onkeyup={_handleEnter}
             />
           </div>
         );
@@ -146,10 +150,15 @@
       render() {
         return (
           <div class="flex items-center justify-between gap-2 -mt-1" ref="bagRef">
-            <a-input
+            <ScanInput
               placeholder="扫描箱号"
-              value={boxNoValue}
-              onChange={(e) => (boxNoValue.value = e.target.value)}
+              ref={boxNoRef}
+              value={boxNoValue.value}
+              onScanChange={(code: string) => {
+                boxNoValue.value = code;
+              }}
+              onEnter={_handleEnter}
+              onkeyup={_handleEnter}
             />
             <div class="flex items-center justify-center w-[80px]">{packCount.value}</div>
             <a-button type="primary" onClick={handleSeal} loading={sealBtnLoading.value}>
@@ -169,11 +178,15 @@
             class="flex items-center justify-center gap-2  w-[300px] max-w-full  -mt-1"
             ref="bagRef"
           >
-            <a-input
+            <ScanInput
               placeholder="扫描样本袋号或输入袋号回车"
-              value={packNo}
-              onChange={(e) => (packNo.value = e.target.value)}
-              onPressEnter={_handleAcceptSample}
+              value={packNo.value}
+              ref={packNoRef}
+              onScanChange={(code: string) => {
+                packNo.value = code;
+              }}
+              onEnter={_handleAcceptSample}
+              onkeyup={_handleAcceptSample}
             />
           </div>
         );
@@ -392,9 +405,16 @@
 
   const _handleAcceptSample = debounce(handleAcceptSample, 300);
 
+  const _handleEnter = debounce((e) => {
+    if (e.code === 'Enter') packNoRef.value.$el.focus();
+  }, 300);
+
   const pageLoading = ref(false);
-  async function handleAcceptSample() {
+  async function handleAcceptSample(e) {
+    if (e.code !== 'Enter') return;
     let originRes: PostApiCoreBatchSampleAcceptKeepPackResponse;
+    if (!trayValue.value) return createMessage.warn('请扫描托盘编号');
+    if (!packNo.value) return createMessage.warn('请扫描样本袋号');
     try {
       pageLoading.value = true;
       const params = {
@@ -410,14 +430,17 @@
           delete _params[key];
         }
       });
-
-      originRes = await keepPackAccept(_params);
-
+      originRes = await keepPackAccept(_params, () => {
+        setTimeout(() => {
+          packNoRef.value.$el.focus();
+          packNoRef.value.$el.select();
+        }, 300);
+      });
+      packNo.value = '';
       if (originRes?.lastPackAccept) {
         await handleSeal();
       }
     } finally {
-      packNo.value = '';
       pageLoading.value = false;
     }
 

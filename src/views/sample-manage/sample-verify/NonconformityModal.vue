@@ -6,6 +6,7 @@
     width="500px"
     title="不合格登记"
     @ok="handleSubmit"
+    @cancel="handleCancel"
   >
     <BasicForm @register="registerForm" @submit="handleSubmit" />
 
@@ -37,7 +38,7 @@
 
   defineOptions({ name: 'NonconformityModal' });
 
-  const [registerForm, { setFieldsValue, validate, resetFields }] = useForm({
+  const [registerForm, { setFieldsValue, validate, resetFields, clearValidate }] = useForm({
     layout: 'horizontal',
     labelWidth: 120,
     wrapperCol: {
@@ -100,6 +101,10 @@
     modalParams.batchSampleNo = data.record.batchSampleNo;
   });
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
+  function handleCancel() {
+    resetFields();
+    clearValidate();
+  }
   async function handleSubmit() {
     try {
       const values = await validate();

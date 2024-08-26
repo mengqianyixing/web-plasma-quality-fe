@@ -31,6 +31,10 @@ const system: AppRouteModule = {
           title: '新增角色',
         },
         {
+          id: 'E_1234',
+          title: '导出',
+        },
+        {
           id: 'E_456',
           name: 'editRole',
           title: '编辑角色',
@@ -49,6 +53,16 @@ const system: AppRouteModule = {
         title: '用户管理',
       },
       authElements: [
+        {
+          id: 'E_1113',
+          name: 'editUser',
+          title: '新增用户',
+        },
+        {
+          id: 'E_1114',
+          name: 'editUser',
+          title: '导出',
+        },
         {
           id: 'E_910',
           name: 'editUser',

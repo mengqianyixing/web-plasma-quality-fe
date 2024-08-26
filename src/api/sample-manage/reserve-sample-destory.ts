@@ -157,11 +157,17 @@ export const cancelCheckApplication = (
     url: Api.CHECK_APPLICATION + '/' + params,
   });
 
-export const keepPackAccept = (params: PostApiCoreBatchSampleAcceptKeepPackRequest) =>
-  defHttp.post<PostApiCoreBatchSampleAcceptKeepPackResponse>({
-    url: Api.SAMPLE_ACCEPT,
-    params,
-  });
+export const keepPackAccept = (
+  params: PostApiCoreBatchSampleAcceptKeepPackRequest,
+  errOkCb: () => void,
+) =>
+  defHttp.post<PostApiCoreBatchSampleAcceptKeepPackResponse>(
+    {
+      url: Api.SAMPLE_ACCEPT,
+      params,
+    },
+    { errorMessageModeOkCb: errOkCb },
+  );
 
 export const keepPackOutBandList = (params: GetApiCoreBankDeliverSampleScanRequest) =>
   defHttp.get<GetApiCoreBankDeliverSampleScanResponse>(

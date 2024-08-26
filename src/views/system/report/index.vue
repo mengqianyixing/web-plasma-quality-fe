@@ -6,7 +6,6 @@
           >编辑</a-button
         >
         <BasicUpload
-          v-auth="BaseSettingButtonEnum.ReportAdd"
           ref="basicUpload"
           :maxSize="20"
           :maxNumber="1"
@@ -19,7 +18,14 @@
           :showOkBtn="false"
           :showCancelBtn="false"
         />
-        <a-button type="primary" @click="handleUpload" preIcon="carbon:cloud-upload">上传</a-button>
+        <a-button
+          v-auth="BaseSettingButtonEnum.ReportAdd"
+          type="primary"
+          @click="handleUpload"
+          preIcon="carbon:cloud-upload"
+        >
+          上传
+        </a-button>
       </template>
     </BasicTable>
     <FormModal @register="registerFormModal" @success="reload" />
