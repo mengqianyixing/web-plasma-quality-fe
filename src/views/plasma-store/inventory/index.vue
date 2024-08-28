@@ -201,7 +201,6 @@
       return createMessage.warning('暂无数据');
     }
 
-    const dateFlag = values.dateKey === 'receipt' ? '接收' : '验收';
     originExportData.push({
       stationNo: '合计',
       inNum: originExportData.reduce((acc, item) => acc + item.inNum, 0),
@@ -219,7 +218,7 @@
     delete header['undefined'];
     jsonToSheetXlsx<any>({
       header,
-      filename: `库存${dateFlag}.xlsx`,
+      filename: `库存查询.xlsx`,
       data: originExportData.map((it) => {
         return {
           ...omit(it, ['inWeightG', 'outWeightG']),
