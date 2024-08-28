@@ -66,7 +66,7 @@
     currPage: 1,
     total: 0,
   });
-  const slots = ['B', 'R', 'T', 'N', 'G'].reduce((res: Recordable[], it) => {
+  const slots = ['B', 'R', 'T', 'N', 'C'].reduce((res: Recordable[], it) => {
     const list = [
       { slotName: it + 'N', key: it + '.' + 'nTiter' },
       { slotName: it + 'L', key: it + '.' + 'lTiter' },
@@ -130,7 +130,7 @@
         row['R'] = row.titers.find((it) => it.rawImm === '狂免') || {};
         row['T'] = row.titers.find((it) => it.rawImm === '破免') || {};
         row['N'] = row.titers.find((it) => it.rawImm === '普浆') || {};
-        row['G'] = row.titers.find((it) => it.rawImm === '巨细胞') || {};
+        row['C'] = row.titers.find((it) => it.rawImm === '巨细胞') || {};
         return row;
       });
       unAcceptList.value = formatData as any;
