@@ -484,14 +484,14 @@ export const hortFallNumModalColumns: BasicColumn[] = [
     dataIndex: 'donorNo',
   },
   {
-    title: '来浆日期',
+    title: '采浆日期',
     dataIndex: 'collectDate',
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
   },
   {
-    title: '浆站净重',
+    title: '浆站净重(g)',
     dataIndex: 'rawWeight',
   },
 ];
