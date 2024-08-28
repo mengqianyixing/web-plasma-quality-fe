@@ -8,7 +8,7 @@
     width="1200px"
     :isDetail="true"
     :showDetailBack="false"
-    @ok="closeModal"
+    :showOkBtn="false"
   >
     <BasicTable id="noPass" @register="registerTable" />
   </BasicModal>
@@ -50,7 +50,7 @@
       return { ...params, batchNo: state.batchNo, bagVerify: state.bagVerify };
     },
   });
-  const [registerNoPass, { closeModal }] = useModalInner(({ batchNo, bagVerify }) => {
+  const [registerNoPass] = useModalInner(({ batchNo, bagVerify }) => {
     state.batchNo = batchNo;
     state.bagVerify = bagVerify;
 
