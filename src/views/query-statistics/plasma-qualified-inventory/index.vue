@@ -83,7 +83,11 @@
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(lastLevelCols, data || [], rows.length);
 
-      result.push(handleSummary(data));
+      result.push({
+        ...handleSummary(data),
+        immTypeWeightValue: void 0,
+        minCollectAtValue: void 0,
+      });
       jsonToSheetXlsx({
         data: [...rows, ...result],
         json2sheetOpts: { skipHeader: true },
