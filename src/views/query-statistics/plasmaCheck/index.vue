@@ -13,10 +13,10 @@
       <TabPane :tab="tabList[0].title" :key="tabList[0].key" force-render>
         <BasicTable @register="tableList[0][0]" class="tabel1" ref="tableRef1" />
       </TabPane>
-      <TabPane :tab="tabList[0].title" :key="tabList[1].key" force-render>
+      <TabPane :tab="tabList[1].title" :key="tabList[1].key" force-render>
         <BasicTable @register="tableList[1][0]" class="tabel2" ref="tableRef2" />
       </TabPane>
-      <TabPane :tab="tabList[0].title" :key="tabList[2].key" force-render>
+      <TabPane :tab="tabList[2].title" :key="tabList[2].key" force-render>
         <BasicTable @register="tableList[2][0]" class="tabel3" ref="tableRef3" />
       </TabPane>
     </Tabs>
