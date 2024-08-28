@@ -264,7 +264,7 @@
         {
           title: '血浆批号',
           field: 'batchNo',
-          // width: 150,
+          width: 150,
         },
       );
       setPropsed({
