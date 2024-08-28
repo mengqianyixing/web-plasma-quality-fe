@@ -5,12 +5,15 @@
     @register="registerNoPass"
     showFooter
     title="验收不合格详情"
-    width="1200px"
-    :isDetail="true"
-    :showDetailBack="false"
-    @ok="closeModal"
+    width="80%"
+    :min-height="650"
+    :showOkBtn="false"
   >
-    <BasicTable id="noPass" @register="registerTable" />
+    <div class="relative h-inherit max-h-inherit min-h-inherit">
+      <div class="absolute flex flex-col w-full h-full">
+        <BasicTable id="noPass" @register="registerTable" />
+      </div>
+    </div>
   </BasicModal>
 </template>
 <script setup lang="ts">
@@ -49,8 +52,10 @@
     beforeFetch: (params) => {
       return { ...params, batchNo: state.batchNo, bagVerify: state.bagVerify };
     },
+    inset: true,
+    isCanResizeParent: true,
   });
-  const [registerNoPass, { closeModal }] = useModalInner(({ batchNo, bagVerify }) => {
+  const [registerNoPass] = useModalInner(({ batchNo, bagVerify }) => {
     state.batchNo = batchNo;
     state.bagVerify = bagVerify;
 
@@ -58,12 +63,3 @@
     clearSelectedRowKeys();
   });
 </script>
-<style scoped>
-  .locationModal .scrollbar__view {
-    height: 100%;
-  }
-
-  #no-pass-modal {
-    height: 600px;
-  }
-</style>
