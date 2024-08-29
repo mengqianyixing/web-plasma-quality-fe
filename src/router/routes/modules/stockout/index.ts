@@ -93,6 +93,7 @@ const nonconformity: AppRouteModule = {
       meta: {
         title: '血浆分拣',
       },
+      company: COMPANY.RS,
       component: () => import('@/views/stockout/production-sorting/index.vue'),
       authElements: [
         {
