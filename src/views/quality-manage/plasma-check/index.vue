@@ -45,7 +45,7 @@
         </a-button>
         <a-button
           type="primary"
-          @click="handlePrint(PrintServerEnum.KM_PLASMA_INSPECTION_RECORDS)"
+          @click="handlePrint(PrintServerEnum.PLASMA_INSPECTION_RECORDS)"
           :loading="reportLoading"
           v-auth="QualityButtonEnum.PlasmaKMCheckPrint"
         >

@@ -119,10 +119,7 @@
                 </span>
                 <span v-auth="StockOutButtonEnum.PlasmaProductionRecordsOfQualifiedSummary">
                   <MenuItem>
-                    <a-button
-                      type="link"
-                      @click="handlePrint(PrintServerEnum.KM_PLASMA_TRANSFER_RECORD)"
-                    >
+                    <a-button type="link" @click="handlePrint('PLASMA_TRANSFER_RECORD')">
                       检疫期合格血浆投产交接汇总表
                     </a-button>
                   </MenuItem>

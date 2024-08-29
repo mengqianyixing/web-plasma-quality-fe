@@ -17,7 +17,7 @@
               <Menu>
                 <span v-auth="StockOutButtonEnum.KMPlasmaSummaryReport">
                   <MenuItem>
-                    <a-button type="link" @click="handlePrint(PrintServerEnum.KM_PLASMA_SUMMARY)">
+                    <a-button type="link" @click="handlePrint(PrintServerEnum.PLASMA_SUMMARY)">
                       原料血浆汇总表
                     </a-button>
                   </MenuItem>
