@@ -1,5 +1,13 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="registerModal" showFooter width="500px" @ok="handleSubmit">
+  <BasicModal
+    v-bind="$attrs"
+    title="撤销验收"
+    @register="registerModal"
+    showFooter
+    width="500px"
+    @ok="handleSubmit"
+    @cancel="handleCancel"
+  >
     <BasicForm @register="registerForm" @submit="handleSubmit" />
 
     <LoginModal
@@ -24,7 +32,7 @@
 
   defineOptions({ name: 'NonconformityModal' });
 
-  const [registerForm, { setFieldsValue, validate, resetFields }] = useForm({
+  const [registerForm, { setFieldsValue, validate, resetFields, clearValidate }] = useForm({
     layout: 'horizontal',
     labelWidth: 120,
     wrapperCol: {
@@ -82,9 +90,14 @@
     });
   });
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
+  function handleCancel() {
+    resetFields();
+    clearValidate();
+  }
   async function handleSubmit() {
     try {
       const values = await validate();
+      setModalProps({ confirmLoading: true });
 
       await cancelVerifyByBatch({
         ...values,
@@ -94,8 +107,8 @@
       emit('success');
       await resetFields();
       closeModal();
-    } catch (e) {
-      console.log(e);
+    } finally {
+      setModalProps({ confirmLoading: false });
     }
   }
 

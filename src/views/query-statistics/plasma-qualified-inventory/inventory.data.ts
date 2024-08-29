@@ -2,6 +2,8 @@ import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
 import dayjs from 'dayjs';
 
+const format = (v) => (v || 0).toFixed(3);
+
 export const columns: BasicColumn[] = [
   {
     title: '效价类型',
@@ -14,6 +16,7 @@ export const columns: BasicColumn[] = [
   {
     title: '重量（吨）',
     dataIndex: 'immTypeWeight',
+    format: format,
   },
   {
     title: '最早采集日期',

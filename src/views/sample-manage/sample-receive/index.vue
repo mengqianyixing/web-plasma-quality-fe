@@ -33,6 +33,7 @@
           </div>
           <div>
             <a-button
+              v-auth="SampleManageButtonEnum.SampleAccept"
               type="primary"
               :disabled="!inputValue"
               @click="handleAcceptSample"
@@ -82,6 +83,7 @@
   import { useScanHelper } from '@/hooks/common/useScanHelper';
   import { debounce } from 'lodash-es';
   import ScanInput from '@/components/Form/src/components/ScanInput.vue';
+  import { SampleManageButtonEnum } from '@/enums/authCodeEnum';
 
   const { barCode, enterFlag, startEvent } = useScanHelper();
 

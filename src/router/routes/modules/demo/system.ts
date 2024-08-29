@@ -1,6 +1,7 @@
 import type { AppRouteModule } from '@/router/types';
 
 import { LAYOUT } from '@/router/constant';
+import { SysButtonEnum } from '@/enums/authCodeEnum';
 
 const system: AppRouteModule = {
   path: '/system',
@@ -30,9 +31,17 @@ const system: AppRouteModule = {
           title: '新增角色',
         },
         {
+          id: 'E_1234',
+          title: '导出',
+        },
+        {
           id: 'E_456',
           name: 'editRole',
           title: '编辑角色',
+        },
+        {
+          id: 'E_789',
+          title: '删除角色',
         },
       ],
     },
@@ -45,7 +54,22 @@ const system: AppRouteModule = {
       },
       authElements: [
         {
-          id: 'E_789',
+          id: 'E_1113',
+          name: 'editUser',
+          title: '新增用户',
+        },
+        {
+          id: 'E_1114',
+          name: 'editUser',
+          title: '导出',
+        },
+        {
+          id: 'E_910',
+          name: 'editUser',
+          title: '重置密码',
+        },
+        {
+          id: 'E_1112',
           name: 'editUser',
           title: '编辑用户',
         },
@@ -59,6 +83,20 @@ const system: AppRouteModule = {
       meta: {
         title: '部门管理',
       },
+      authElements: [
+        {
+          id: SysButtonEnum.AddDept,
+          title: '新增',
+        },
+        {
+          id: SysButtonEnum.UpdateDept,
+          title: '编辑',
+        },
+        {
+          id: SysButtonEnum.RemoveDept,
+          title: '删除',
+        },
+      ],
       component: () => import('@/views/system/dept/index.vue'),
     },
     //

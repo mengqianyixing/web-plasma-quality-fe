@@ -11,13 +11,25 @@ export enum ReCheckButtonEnum {
   NonconformityInStoreCheckReview = 'E_920070',
   NonconformitySampleCheck = 'E_970020',
   NonconformitySampleRevokeRegisterCheck = 'E_970030',
+  SampleRevokeVerifyCheck = 'E_970040',
   MissNumCheck = 'E_980020',
+  MissNum = 'E_980021',
   UnqualifiedPlasmaCheck = 'E_980030',
+  UnqualifiedPlasma = 'E_980031',
   UnqualifiedSampleCheck = 'E_980040',
+  UnqualifiedSample = 'E_980041',
   RevokeVerifyCheck = 'E_980050',
   PlasmaVerifyReCheckLogin = 'E_980060',
+  PlasmaVerifyComplete = 'E_9800130',
+  PlasmaVerifyTrayIn = 'E_9800140',
+  PlasmaVerifyTrayOut = 'E_9800150',
   PlasmaSuspendCheck = 'E_980070',
+  PlasmaSuspendBox = 'E_980071',
+  PlasmaSuspendBatch = 'E_980072',
   PlasmaReceiveSuspendCheck = 'E_980010',
+  PlasmaReceiveSuspend = 'E_9800110',
+  PlasmaReceiveTray = 'E_9800120',
+  PlasmaReceiveBatch = 'E_9800160',
   PlasmaInboundRecordCheck = 'E_980080',
   RegisterWeightCheck = 'E_980090',
   ProductionSortingReCheck = 'E_910020',
@@ -266,13 +278,23 @@ export enum StockOutButtonEnum {
 
   AutomaticSorting = 'E_91007004',
   SwitchToManualSorting = 'E_91007005',
+  ProductionSortingBatch = 'E_91007006',
+  ProductionSortingPP = 'E_91007007',
+  ProductionSortingBox = 'E_91007008',
+  ProductionSortingTrayIn = 'E_91007009',
+  ProductionSortingTrayOut = 'E_910070010',
+  ProductionSortingTrayComplete = 'E_910070011',
 }
 
 export enum SampleManageButtonEnum {
+  SampleAccept = 'E_970010001',
   SampleRelease = 'E_97003001',
   SampleArrange = 'E_97003002',
   TestPlanAdd = 'E_97004001',
   TestPlanUpdate = 'E_97004002',
+  NonconformitySampleRevokeRegister = 'E_97002010',
+  CompleteSampleVerify = 'E_97002020',
+  RevokeSampleVerify = 'E_97002030',
 
   SampleDestroyAdd = 'E_97004003',
   SampleDestroyEdit = 'E_97004004',
@@ -293,6 +315,9 @@ export enum SampleManageButtonEnum {
   SampleWarehouseOutBand = 'E_97004017',
   SampleWarehouseOutBandWMS = 'E_97004020',
   SampleWarehouseExport = 'E_97004018',
+
+  ReserveSampleWarehouseIn = 'E_970110010',
+  ReserveSampleWarehouseAccept = 'E_970110020',
 }
 
 export enum CallbackButtonEnum {
@@ -304,8 +329,6 @@ export enum CallbackButtonEnum {
 }
 
 export enum SearchManager {
-  InventoryExport = 'E_90003101',
-
   LocationExport = 'E_900017001',
 
   PlasmaBatchExport = 'E_90003001',
@@ -325,6 +348,22 @@ export enum SearchManager {
   PlasmaRawInStoragePrint = 'E_900035001',
 
   SampleQueryExport = 'E_900013001',
+
+  EntryPlasmaExport = 'E_9900600001',
+
+  StoreInventoryExport = 'E_90001001',
+
+  PlasmaQueryExport = 'E_90002001',
+
+  StereoWarehouseExport = 'E_900018001',
+
+  UnqualifiedPlasmaByBatchExport = 'E_900029101',
+
+  UnqualifiedPlasmaByStationExport = 'E_900029001',
+
+  ERPEntryStoreExport = 'E_900023001',
+
+  ERPOutStoreExport = 'E_900023101',
 }
 
 export enum TagManageButtonEnum {
@@ -345,4 +384,10 @@ export enum NonconformityInStoreButtonEnum {
 
 export enum PlasmaInboundRecordButtonEnum {
   VerifyReport = 'E_98008001',
+}
+
+export enum SysButtonEnum {
+  AddDept = 'E_1010211',
+  UpdateDept = 'E_1010212',
+  RemoveDept = 'E_1010213',
 }

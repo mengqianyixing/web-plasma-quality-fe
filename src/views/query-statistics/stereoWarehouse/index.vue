@@ -2,7 +2,14 @@
   <PageWrapper dense contentFullHeight fixedHeight class="root">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleExport" :loading="loading"> 导出 </a-button>
+        <a-button
+          v-auth="SearchManager.StereoWarehouseExport"
+          type="primary"
+          @click="handleExport"
+          :loading="loading"
+        >
+          导出
+        </a-button>
       </template>
     </BasicTable>
   </PageWrapper>
@@ -17,6 +24,7 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { ref } from 'vue';
   import { message } from 'ant-design-vue';
+  import { SearchManager } from '@/enums/authCodeEnum';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   const { currentRoute } = useRouter();

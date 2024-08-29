@@ -2,33 +2,32 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="success" @click="handleExport" :loading="loading">导出</a-button>
-        <a-button type="primary" @click="handleCreate">新增用户</a-button>
+        <a-button type="success" v-auth="'E_1114'" @click="handleExport" :loading="loading"
+          >导出</a-button
+        >
+        <a-button type="primary" v-auth="'E_1113'" @click="handleCreate">新增用户</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <TableAction
-            v-auth="'E_789'"
+            v-auth="'E_910'"
+            class="w-20px float-left"
             :actions="[
               {
-                icon: 'ant-design:user',
-                title: '用户详情',
-                onClick: handleUserDetail.bind(null, record),
-              },
-              {
                 icon: 'ant-design:lock-twotone',
-                title: '修改密码',
+                title: '重置密码',
                 onClick: handleSetPassword.bind(null, record),
               },
+            ]"
+          />
+          <TableAction
+            v-auth="'E_1112'"
+            class="w-20px float-right"
+            :actions="[
               {
                 icon: 'clarity:note-edit-line',
                 title: '编辑用户',
                 onClick: handleEdit.bind(null, record),
-              },
-              {
-                icon: 'ant-design:delete-outlined',
-                color: 'error',
-                onClick: handleDelete.bind(null, record),
               },
             ]"
           />
@@ -36,25 +35,17 @@
       </template>
     </BasicTable>
     <UsersModal @register="registerModal" @success="handleSuccess" />
-    <UsersDetailModal @register="registerUserDetailModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts" setup>
-  import { createVNode, ref } from 'vue';
+  import { ref } from 'vue';
   import { BasicTable, useTable, TableAction } from '@/components/Table';
-  import {
-    deleteCasDoorUser,
-    getCasDoorUserDetail,
-    getCasDoorUsers,
-    resetCasDoorUserPwd,
-  } from '@/api/oauth/users';
+  import { getCasDoorUserDetail, getCasDoorUsers, resetCasDoorUserPwd } from '@/api/oauth/users';
   import { getCasDoorRoles, getCasDoorAllUsers } from '@/api/oauth/auth';
 
-  import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { useMessage } from '@/hooks/web/useMessage';
   import { useModal } from '@/components/Modal';
   import UsersModal from './UsersModal.vue';
-  import UsersDetailModal from './UsersDetailModal.vue';
   import { exportFile, transferCSVData } from 'js-xxx';
 
   import { columns, searchFormSchema } from './users.data';
@@ -65,7 +56,6 @@
   const loading = ref(false);
 
   const [registerModal, { openModal }] = useModal();
-  const [registerUserDetailModal, { openModal: openUsersDetailModal }] = useModal();
   const [registerTable, { reload, getSelectRows }] = useTable({
     api: getCasDoorUsers,
     fetchSetting: {
@@ -132,13 +122,6 @@
     });
   }
 
-  async function handleUserDetail(record: Recordable) {
-    const res: any = await getCasDoorUserDetail(record);
-    openUsersDetailModal(true, {
-      record: { ...record, ...(res ?? {}) },
-    });
-  }
-
   const { createConfirm } = useMessage();
 
   function handleSetPassword(record: Recordable) {
@@ -149,25 +132,6 @@
         await resetCasDoorUserPwd({ userName: record.name });
         createMessage.success('重置密码成功！');
         await reload();
-      },
-    });
-  }
-
-  async function handleDelete(record: Recordable) {
-    createConfirm({
-      iconType: 'error',
-      title: '是否确认删除?',
-      icon: createVNode(ExclamationCircleOutlined),
-      content: '',
-      okText: '删除',
-      okType: 'danger',
-      cancelText: '取消',
-      async onOk() {
-        await deleteCasDoorUser(record);
-        await reload();
-      },
-      onCancel() {
-        console.log('Cancel');
       },
     });
   }

@@ -1,17 +1,18 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <div class="p-3 root">
-      <div class="pt-5 bg-white mb-16px">
+    <div class="p-3 root flex flex-col h-full">
+      <div class="pt-8px bg-white mb-8px">
         <BasicForm @register="registerBasicForm" class="search-form" />
       </div>
       <a-tabs
         default-active-key="detail"
         v-model:activeKey="currentKey"
         type="card"
+        class="mb-16px h-full bg-white tabs flex-1"
         @change="handleTabChange"
       >
         <a-tab-pane key="come" tab="来浆数据">
-          <div class="flex-grow overflow-auto h-83vh">
+          <div style="height: calc(100% - 40px)">
             <BasicTable @register="registerTableLeft">
               <template #toolbar>
                 <a-button
@@ -24,11 +25,9 @@
               </template>
             </BasicTable>
           </div>
-          <div
-            class="sticky bottom-0 right-0 flex justify-end mx-5 mt-3 bg-white"
-            v-if="pagerLeft.total > 0"
-          >
+          <div class="mb-10px bg-white pb-6px pr-16px h-40px mb-6px" v-if="pagerLeft.total > 0">
             <a-pagination
+              class="float-right mt-2"
               @change="handlePageChange"
               @show-size-change="handleSizeChange"
               size="small"
@@ -42,58 +41,58 @@
           </div>
         </a-tab-pane>
         <a-tab-pane key="quarantine" tab="检疫期">
-          <PageWrapper dense contentFullHeight fixedHeight>
-            <div class="flex-grow overflow-auto h-83vh">
-              <BasicTable @register="registerTableRight">
-                <template #toolbar>
-                  <a-button type="primary" @click="handleExportQuarantineData">导出</a-button>
-                </template>
-              </BasicTable>
-            </div>
-            <div
-              class="sticky bottom-0 right-0 flex justify-end mx-5 mt-3 bg-white"
-              v-if="pagerRight.total > 0"
-            >
-              <a-pagination
-                @change="handlePageChange"
-                @show-size-change="handleSizeChange"
-                size="small"
-                show-size-changer
-                show-quick-jumper
-                v-model:current="pagerRight.current"
-                v-model:pageSize="pagerRight.pageSize"
-                :total="pagerRight.total"
-                :show-total="(total) => `共 ${total} 条数据`"
-              />
-            </div>
-          </PageWrapper>
+          <div style="height: calc(100% - 40px)">
+            <BasicTable @register="registerTableRight">
+              <template #toolbar>
+                <a-button type="primary" @click="handleExportQuarantineData">导出</a-button>
+              </template>
+            </BasicTable>
+          </div>
+          <div class="mb-10px bg-white pb-6px pr-16px h-40px mb-6px" v-if="pagerRight.total > 0">
+            <a-pagination
+              class="float-right mt-2"
+              @change="handlePageChange"
+              @show-size-change="handleSizeChange"
+              size="small"
+              show-size-changer
+              show-quick-jumper
+              v-model:current="pagerRight.current"
+              v-model:pageSize="pagerRight.pageSize"
+              :total="pagerRight.total"
+              :show-total="(total) => `共 ${total} 条数据`"
+            />
+          </div>
         </a-tab-pane>
-        <a-tab-pane key="inventory" tab="库存">
-          <PageWrapper dense contentFullHeight fixedHeight>
-            <div class="flex-grow overflow-auto h-83vh">
-              <BasicTable @register="registerInventoryTable" :columns="columnsRef">
-                <template #toolbar>
-                  <a-button type="primary" @click="handleExportInventoryData">导出</a-button>
-                </template>
-              </BasicTable>
-            </div>
-            <div
-              class="sticky bottom-0 right-0 flex justify-end mx-5 mt-3 bg-white"
-              v-if="pagerInventory.total > 0"
+        <a-tab-pane key="inventory" tab="库存" force-render>
+          <div style="height: calc(100% - 40px)">
+            <BasicTable
+              class="inventoryTable"
+              @register="registerInventoryTable"
+              :columns="columnsRef"
+              ref="tableRef"
             >
-              <a-pagination
-                @change="handlePageChange"
-                @show-size-change="handleSizeChange"
-                size="small"
-                show-size-changer
-                show-quick-jumper
-                v-model:current="pagerInventory.current"
-                v-model:pageSize="pagerInventory.pageSize"
-                :total="pagerInventory.total"
-                :show-total="(total) => `共 ${total} 条数据`"
-              />
-            </div>
-          </PageWrapper>
+              <template #toolbar>
+                <a-button type="primary" @click="handleExportInventoryData">导出</a-button>
+              </template>
+            </BasicTable>
+          </div>
+          <div
+            class="mb-10px bg-white pb-6px pr-16px h-40px mb-6px"
+            v-if="pagerInventory.total > 0"
+          >
+            <a-pagination
+              class="float-right mt-2"
+              @change="handlePageChange"
+              @show-size-change="handleSizeChange"
+              size="small"
+              show-size-changer
+              show-quick-jumper
+              v-model:current="pagerInventory.current"
+              v-model:pageSize="pagerInventory.pageSize"
+              :total="pagerInventory.total"
+              :show-total="(total) => `共 ${total} 条数据`"
+            />
+          </div>
         </a-tab-pane>
       </a-tabs>
     </div>
@@ -113,7 +112,7 @@
     getPlasmaBatchListByInventoryTotal,
     getPlasmaBatchListByQuarantine,
   } from '@/api/query-statistics/plasma-batch';
-  import { reactive, ref, unref, watch } from 'vue';
+  import { reactive, ref, unref } from 'vue';
   import { getHeader, formatData, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
@@ -125,7 +124,7 @@
     GetApiSearchBankPlasmaStatisticStockTotalRequest,
     GetApiSearchBankPlasmaStatisticStockTotalResponse,
   } from '@/api/type/queryStatistics';
-  import { PositionType } from 'ant-design-vue/es/image/style';
+  import { useSticky } from '@/hooks/web/useSticky';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'PlasmaBatchQueryStatistics' });
@@ -136,6 +135,10 @@
   const ATabs = Tabs;
   const ATabPane = Tabs.TabPane;
   const APagination = Pagination;
+
+  const tableRef = ref();
+
+  const totalStyle = useSticky(tableRef);
 
   const currentKey = ref('come');
 
@@ -150,21 +153,11 @@
     pageSize: 30,
     total: 0,
   });
-  const totalStyle = ref<{
-    position: PositionType;
-    top: number | string;
-    bottom: number | string;
-    backgroundColor: string;
-  }>({
-    position: undefined,
-    top: '',
-    bottom: 0,
-    backgroundColor: 'white',
-  });
+
   const columnsRef = ref<BasicColumn[]>(columnsByInventory);
   const totalData = ref<GetApiSearchBankPlasmaStatisticStockTotalResponse>({});
 
-  function handleTabChange(key: string) {
+  function handleTabChange(key: string | number) {
     updateSchema([
       {
         field: 'stationNo',
@@ -178,47 +171,6 @@
       },
     ]);
   }
-
-  watch(
-    () => totalData.value,
-    () => {
-      if (currentKey.value !== 'inventory') {
-        totalStyle.value = {
-          position: undefined,
-          top: 0,
-          bottom: 0,
-          backgroundColor: 'white',
-        };
-
-        return;
-      }
-
-      setTimeout(() => {
-        const bodyDom = document.getElementsByClassName('ant-table-tbody')[0];
-        const containerDom = document.getElementsByClassName('ant-table-container')[0];
-        const headerDom = document.getElementsByClassName('ant-table-thead')[0];
-
-        const length = getRawDataSourceInventory().length;
-        const filterPx = (str: string) => str.replace(/px/g, '');
-
-        const bodyH = Number(filterPx(getComputedStyle(bodyDom).height));
-        const containerH = Number(filterPx(getComputedStyle(containerDom).height));
-        const headerH = Number(filterPx(getComputedStyle(headerDom).height));
-
-        if (bodyH < containerH - headerH) {
-          totalStyle.value.position = 'relative';
-          totalStyle.value.top = containerH - 38 * length - headerH - 15 + 'px';
-          totalStyle.value.bottom = '';
-          totalStyle.value.backgroundColor = '#f5f5f5';
-        } else {
-          totalStyle.value.position = 'sticky';
-          totalStyle.value.bottom = 0;
-          totalStyle.value.top = '';
-          totalStyle.value.backgroundColor = '#f5f5f5';
-        }
-      }, 300);
-    },
-  );
 
   const pagerInventory = reactive({
     current: 1,
@@ -316,7 +268,7 @@
       useSearchForm: false,
       bordered: true,
       showIndexColumn: false,
-      canResize: true,
+      isCanResizeParent: true,
       immediate: false,
     });
 
@@ -372,7 +324,7 @@
       useSearchForm: false,
       bordered: true,
       showIndexColumn: false,
-      canResize: true,
+      isCanResizeParent: true,
       immediate: false,
     });
 
@@ -451,7 +403,7 @@
     useSearchForm: false,
     bordered: true,
     showIndexColumn: false,
-    canResize: true,
+    isCanResizeParent: true,
     immediate: false,
   });
 
@@ -563,20 +515,25 @@
     });
   }
 </script>
-<style scoped>
+<style scoped lang="scss">
   :deep(.vben-basic-table-form-container) {
     padding: 0;
   }
 
-  .root :deep(.ant-table-tbody tr:last-child) {
+  .inventoryTable :deep(.ant-table-tbody tr:last-child) {
     position: v-bind('totalStyle.position');
     top: v-bind('totalStyle.top');
     bottom: v-bind('totalStyle.bottom');
-    background-color: v-bind('totalStyle.backgroundColor');
+    background-color: #f5f5f5;
   }
 
   :deep(.ant-form-item-control-input-content > .ant-btn) {
     margin-left: 5px;
     float: right;
+  }
+
+  .tabs :deep(.ant-tabs-content) {
+    position: relative;
+    height: 100%;
   }
 </style>

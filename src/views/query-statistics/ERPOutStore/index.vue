@@ -25,6 +25,7 @@
           </template>
           <template #toolbar>
             <a-button
+              v-auth="SearchManager.ERPOutStoreExport"
               type="primary"
               @click="handleExport(item.api, item.label, item.columns)"
               :loading="loading"
@@ -48,6 +49,7 @@
     searchFormSchemaByNotProd,
   } from './out.data';
   import { Tabs, message } from 'ant-design-vue';
+  import { SearchManager } from '@/enums/authCodeEnum';
 
   import DetailModal from './DetailModal.vue';
   import { ref } from 'vue';

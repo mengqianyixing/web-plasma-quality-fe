@@ -140,12 +140,12 @@ const checkManager: AppRouteModule = {
         },
         {
           id: QualityButtonEnum.BatchReleasePrintKM,
-          title: '批放行单',
+          title: '原料血浆批审核放行单',
           company: COMPANY.KM,
         },
         {
           id: QualityButtonEnum.BatchQuarantinePeriod,
-          title: '筛选表',
+          title: '原料血浆检疫期筛选情况',
           company: COMPANY.KM,
         },
       ],

@@ -303,8 +303,8 @@
     if (row.state === 'TBG') {
       return message.warning('报告制作前不允许打印！');
     }
-    let reportType = PrintServerEnum.KM_CALLBACK_CHECK_REPORT;
-    if (row.sampleCode === 'NOR') reportType = PrintServerEnum.KM_PLASMA_CHECK_REPORT;
+    let reportType = PrintServerEnum.CALLBACK_CHECK_REPORT;
+    if (row.sampleCode === 'NOR') reportType = PrintServerEnum.PLASMA_CHECK_REPORT;
     try {
       reportLoading.value = true;
       const res = await getReportApi({ reportKey: reportType, contentKey: row.reportNo });

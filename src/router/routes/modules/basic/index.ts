@@ -246,7 +246,7 @@ const callManager: AppRouteModule = {
       authElements: [
         {
           id: BaseSettingButtonEnum.ReportAdd,
-          title: '新增',
+          title: '上传',
         },
         {
           id: BaseSettingButtonEnum.ReportUpdate,

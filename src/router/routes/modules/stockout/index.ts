@@ -41,7 +41,7 @@ const nonconformity: AppRouteModule = {
         {
           id: StockOutButtonEnum.ProductionPreparationEdit,
           name: 'edit',
-          title: '修改',
+          title: '编辑',
         },
         {
           id: StockOutButtonEnum.ProductionPreparationDelete,
@@ -98,7 +98,7 @@ const nonconformity: AppRouteModule = {
         {
           id: ReCheckButtonEnum.ProductionSortingReCheck,
           name: 'reCheckLogin',
-          title: '复核人登录',
+          title: '不合格登记复核人登录',
         },
         {
           id: StockOutButtonEnum.AutomaticSorting,
@@ -109,6 +109,36 @@ const nonconformity: AppRouteModule = {
           id: StockOutButtonEnum.SwitchToManualSorting,
           name: 'switchToManualSorting',
           title: '转人工分拣',
+        },
+        {
+          id: StockOutButtonEnum.ProductionSortingBatch,
+          name: 'switchToManualSorting',
+          title: '批次暂停',
+        },
+        {
+          id: StockOutButtonEnum.ProductionSortingPP,
+          name: 'switchToManualSorting',
+          title: '准备号暂停',
+        },
+        {
+          id: StockOutButtonEnum.ProductionSortingBox,
+          name: 'switchToManualSorting',
+          title: '装箱信息',
+        },
+        {
+          id: StockOutButtonEnum.ProductionSortingTrayIn,
+          name: 'switchToManualSorting',
+          title: '托盘出库',
+        },
+        {
+          id: StockOutButtonEnum.ProductionSortingTrayOut,
+          name: 'switchToManualSorting',
+          title: '托盘入库',
+        },
+        {
+          id: StockOutButtonEnum.ProductionSortingTrayComplete,
+          name: 'switchToManualSorting',
+          title: '分拣完成',
         },
       ],
     },

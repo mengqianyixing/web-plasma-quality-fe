@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #prepareNo="{ record }">
         <div class="z-999">
@@ -52,7 +52,7 @@
             v-auth="StockOutButtonEnum.ProductionPreparationEdit"
             type="primary"
           >
-            修改
+            编辑
           </a-button>
           <a-button
             @click="clickRevokeModal"
@@ -112,9 +112,10 @@
     <SummaryModal @register="registerSummaryModal" @success="handleSuccessSummary" />
     <PickBatchDetail @register="registerPickBatchDetailModal" />
     <PlasmaDetail @register="registerPlasmaDetailModal" />
-  </div>
+  </PageWrapper>
 </template>
 <script lang="ts" setup>
+  import { PageWrapper } from '@/components/Page';
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
   import { BasicTable, useTable, BasicColumn } from '@/components/Table';
   import { FormSchema } from '@/components/Form';

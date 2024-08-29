@@ -2,7 +2,13 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleExport" :loading="loading">导出</a-button>
+        <a-button
+          v-auth="SearchManager.ERPEntryStoreExport"
+          type="primary"
+          @click="handleExport"
+          :loading="loading"
+          >导出</a-button
+        >
       </template>
     </BasicTable>
   </PageWrapper>
@@ -14,6 +20,7 @@
   import { getERPInboundList } from '@/api/query-statistics/ERP';
   import { formatData, getHeader, jsonToSheetXlsx } from '@/components/Excel/src/Export2Excel';
   import { ref } from 'vue';
+  import { SearchManager } from '@/enums/authCodeEnum';
 
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { useRouter } from 'vue-router';

@@ -11,6 +11,7 @@
     v-bind="$attrs"
     @register="registerModal"
     showFooter
+    title="不合格登记"
     width="550px"
     @ok="handleSubmit"
     :destroyOnClose="true"

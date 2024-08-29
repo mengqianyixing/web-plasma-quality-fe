@@ -1,5 +1,13 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="registerModal" showFooter width="500px" @ok="handleSubmit">
+  <BasicModal
+    v-bind="$attrs"
+    title="撤销登记"
+    @register="registerModal"
+    showFooter
+    width="500px"
+    @ok="handleSubmit"
+    @cancel="handleCancel"
+  >
     <BasicForm @register="registerForm" />
 
     <LoginModal
@@ -26,7 +34,7 @@
   defineOptions({ name: 'FormModel' });
 
   const [registerLoginModal, { openModal: openLoginModal }] = useModal();
-  const [registerForm, { setFieldsValue, validate, resetFields }] = useForm({
+  const [registerForm, { setFieldsValue, validate, resetFields, clearValidate }] = useForm({
     layout: 'horizontal',
     labelWidth: 120,
     wrapperCol: {
@@ -81,19 +89,27 @@
       sampleNo: data.record.sampleNo,
     });
   });
-  async function handleSubmit() {
-    const values = await validate();
-
-    await revokeSampleVerify({
-      ...values,
-      batchSampleNo: batchSampleNo.value,
-    } as PutApiCoreBatchSampleVerifyRevokeRequest);
-
-    createMessage.success('撤销成功');
-
-    closeModal();
+  function handleCancel() {
     resetFields();
-    emit('success');
+    clearValidate();
+  }
+  async function handleSubmit() {
+    try {
+      const values = await validate();
+      setModalProps({ confirmLoading: true });
+      await revokeSampleVerify({
+        ...values,
+        batchSampleNo: batchSampleNo.value,
+      } as PutApiCoreBatchSampleVerifyRevokeRequest);
+
+      createMessage.success('撤销成功');
+
+      closeModal();
+      resetFields();
+      emit('success');
+    } finally {
+      setModalProps({ confirmLoading: false });
+    }
   }
 
   function handleLogin() {

@@ -81,13 +81,6 @@
                     </a-button>
                   </MenuItem>
                 </span>
-                <span v-auth="StockOutButtonEnum.PlasmaProductionApplication">
-                  <MenuItem>
-                    <a-button type="link" @click="handlePrint('PLASMA_PRODUCTION_APPLICATION')">
-                      原料血浆投产申报表
-                    </a-button>
-                  </MenuItem>
-                </span>
               </Menu>
             </template>
           </a-dropdown>
@@ -126,10 +119,7 @@
                 </span>
                 <span v-auth="StockOutButtonEnum.PlasmaProductionRecordsOfQualifiedSummary">
                   <MenuItem>
-                    <a-button
-                      type="link"
-                      @click="handlePrint(PrintServerEnum.KM_PLASMA_TRANSFER_RECORD)"
-                    >
+                    <a-button type="link" @click="handlePrint('PLASMA_TRANSFER_RECORD')">
                       检疫期合格血浆投产交接汇总表
                     </a-button>
                   </MenuItem>

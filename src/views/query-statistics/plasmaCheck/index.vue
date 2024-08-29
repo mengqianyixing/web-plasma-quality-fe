@@ -10,8 +10,14 @@
       size="small"
       @change="reload"
     >
-      <TabPane v-for="(tab, i) in tabList" :key="tab.key" :tab="tab.title">
-        <BasicTable @register="tableList[i][0]" class="root" />
+      <TabPane :tab="tabList[0].title" :key="tabList[0].key" force-render>
+        <BasicTable @register="tableList[0][0]" class="tabel1" ref="tableRef1" />
+      </TabPane>
+      <TabPane :tab="tabList[1].title" :key="tabList[1].key" force-render>
+        <BasicTable @register="tableList[1][0]" class="tabel2" ref="tableRef2" />
+      </TabPane>
+      <TabPane :tab="tabList[2].title" :key="tabList[2].key" force-render>
+        <BasicTable @register="tableList[2][0]" class="tabel3" ref="tableRef3" />
       </TabPane>
     </Tabs>
     <TabelModal @register="registerModal" />
@@ -50,11 +56,20 @@
   } from '@/api/_dictionary';
   import { useModal } from '@/components/Modal';
   import TabelModal from './tabelModal.vue';
+  import { useSticky } from '@/hooks/web/useSticky';
 
   defineOptions({ name: 'PlasmaTest' });
 
   const [registerModal, { openModal }] = useModal();
   const activeKey = ref('0');
+  const tableRef1 = ref();
+  const tableRef2 = ref();
+  const tableRef3 = ref();
+
+  const totalStyle1 = useSticky(tableRef1);
+  const totalStyle2 = useSticky(tableRef2);
+  const totalStyle3 = useSticky(tableRef3);
+
   const CheckColumns = cloneDeep(
     checkColumns(({ record, key, label, type }) => {
       if (record.isCount) return get(record, key);
@@ -297,15 +312,35 @@
     });
   }
 </script>
-<style scoped>
+<style scoped lang="scss">
   .root :deep(.ant-table-body) {
     position: static;
   }
 
-  .root :deep(.ant-table-body tr:last-child) {
-    position: sticky;
-    top: 0;
-    bottom: 0;
+  :deep(.ant-table-tbody tr:last-child) {
+    z-index: 9;
     background-color: #f5f5f5;
+
+    & > td {
+      background-color: #f5f5f5;
+    }
+  }
+
+  .tabel1 :deep(.ant-table-tbody tr:last-child) {
+    position: v-bind('totalStyle1.position');
+    top: v-bind('totalStyle1.top');
+    bottom: v-bind('totalStyle1.bottom');
+  }
+
+  .tabel2 :deep(.ant-table-tbody tr:last-child) {
+    position: v-bind('totalStyle2.position');
+    top: v-bind('totalStyle2.top');
+    bottom: v-bind('totalStyle2.bottom');
+  }
+
+  .tabel3 :deep(.ant-table-tbody tr:last-child) {
+    position: v-bind('totalStyle3.position');
+    top: v-bind('totalStyle3.top');
+    bottom: v-bind('totalStyle3.bottom');
   }
 </style>

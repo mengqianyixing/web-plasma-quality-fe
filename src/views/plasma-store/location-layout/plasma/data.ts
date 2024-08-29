@@ -15,15 +15,15 @@ export const optionMap: Record<string, { cloumns: BasicColumn[]; searchSchema: F
   [tabKey['batch']]: {
     cloumns: [
       { dataIndex: 'stationName', title: '采浆公司' },
-      { dataIndex: 'batchNo', title: '样本批号' },
-      { dataIndex: 'totalCount', title: '样本数量' },
+      { dataIndex: 'batchNo', title: '血浆批号' },
+      { dataIndex: 'totalCount', title: '血浆数量' },
     ],
     searchSchema: [],
   },
   [tabKey['box']]: {
     cloumns: [
-      { dataIndex: 'boxNo', title: '样本箱号' },
-      { dataIndex: 'totalCount', title: '样本数量' },
+      { dataIndex: 'boxNo', title: '血浆箱号' },
+      { dataIndex: 'totalCount', title: '血浆数量' },
     ],
     searchSchema: [],
   },

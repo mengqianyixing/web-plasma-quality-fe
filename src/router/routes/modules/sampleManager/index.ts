@@ -33,6 +33,12 @@ const sampleManager: AppRouteModule = {
       },
       id: 970010,
       component: () => import('@/views/sample-manage/sample-receive/index.vue'),
+      authElements: [
+        {
+          id: SampleManageButtonEnum.SampleAccept,
+          title: '接收',
+        },
+      ],
     },
     {
       path: 'sample-verify',
@@ -51,7 +57,23 @@ const sampleManager: AppRouteModule = {
         {
           id: ReCheckButtonEnum.NonconformitySampleRevokeRegisterCheck,
           name: 'reCheckSampleVerify',
-          title: '撤销登记登录',
+          title: '撤销登记复核人登录',
+        },
+        {
+          id: SampleManageButtonEnum.NonconformitySampleRevokeRegister,
+          title: '不合格登记',
+        },
+        {
+          id: SampleManageButtonEnum.CompleteSampleVerify,
+          title: '完成验收',
+        },
+        {
+          id: SampleManageButtonEnum.RevokeSampleVerify,
+          title: '撤销验收',
+        },
+        {
+          id: ReCheckButtonEnum.SampleRevokeVerifyCheck,
+          title: '撤销验收复核人登录',
         },
       ],
     },
@@ -84,6 +106,16 @@ const sampleManager: AppRouteModule = {
       company: COMPANY.RS,
 
       component: () => import('@/views/sample-manage/reserve-sample-warehouse/index.vue'),
+      authElements: [
+        {
+          id: SampleManageButtonEnum.ReserveSampleWarehouseIn,
+          title: '入库',
+        },
+        {
+          id: SampleManageButtonEnum.ReserveSampleWarehouseAccept,
+          title: '接收完成',
+        },
+      ],
     },
     {
       path: 'reserve-sample-destroy-outbound-single',

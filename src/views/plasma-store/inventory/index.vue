@@ -1,6 +1,6 @@
 <template>
-  <div class="p-3 root">
-    <div class="pt-5 bg-white mb-16px">
+  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex flex-col" class="p-16px">
+    <div class="bg-white pt-10px">
       <BasicForm
         @register="registerForm"
         class="search-form"
@@ -8,23 +8,21 @@
         @submit="handleSubmit"
       />
     </div>
-
-    <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData">
-      <template #toolbar>
-        <div class="h-40px bg-#ffffff mt-2 flex items-center">
-          <a-button
-            type="primary"
-            class="absolute right-8px"
-            :loading="loading"
-            @click="handleExport"
-            v-auth="SearchManager.InventoryExport"
-          >
-            导出
-          </a-button>
-        </div>
-      </template>
-    </vxe-grid>
-  </div>
+    <div class="bg-#ffffff mt-2 flex items-center basis-40px shrink-0">
+      <a-button
+        type="primary"
+        class="absolute right-8px mr-16px"
+        :loading="loading"
+        @click="handleExport"
+        v-auth="SearchManager.StoreInventoryExport"
+      >
+        导出
+      </a-button>
+    </div>
+    <div class="flex-1">
+      <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData" />
+    </div>
+  </PageWrapper>
 </template>
 
 <script lang="ts" setup>
@@ -37,6 +35,7 @@
   import { GetApiSearchBankStockRequest } from '@/api/type/plasmaStoreManage';
   import dayjs from 'dayjs';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { PageWrapper } from '@/components/Page';
 
   import { inventoryDetailApi } from '@/api/plasmaStore/inventory';
   import { jsonToSheetXlsx } from '@/components/Excel';
@@ -95,7 +94,7 @@
   const gridOptions = reactive<VxeGridProps<GetApiSearchBankStockRequest>>({
     border: true,
     showOverflow: true,
-    height: 810,
+    height: '100%',
     align: 'center',
     size: 'small',
     exportConfig: {},
@@ -104,12 +103,6 @@
     },
     scrollY: {
       enabled: true,
-    },
-    toolbarConfig: {
-      refresh: false,
-      loading: false,
-      export: false,
-      custom: false,
     },
     columns: vxeTableColumns,
     showFooter: true,
@@ -208,7 +201,6 @@
       return createMessage.warning('暂无数据');
     }
 
-    const dateFlag = values.dateKey === 'receipt' ? '接收' : '验收';
     originExportData.push({
       stationNo: '合计',
       inNum: originExportData.reduce((acc, item) => acc + item.inNum, 0),
@@ -226,7 +218,7 @@
     delete header['undefined'];
     jsonToSheetXlsx<any>({
       header,
-      filename: `库存${dateFlag}.xlsx`,
+      filename: `库存查询.xlsx`,
       data: originExportData.map((it) => {
         return {
           ...omit(it, ['inWeightG', 'outWeightG']),
