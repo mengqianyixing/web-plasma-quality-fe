@@ -7,6 +7,7 @@
     width="1000px"
     :minHeight="600"
     @fullscreen="redoHeight"
+    :footer="null"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
       <div class="absolute w-full h-full">
