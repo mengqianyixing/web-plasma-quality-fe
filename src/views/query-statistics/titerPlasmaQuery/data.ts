@@ -413,9 +413,11 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'immunity',
     component: 'Select',
-    label: '血浆类型',
+    label: '特免检测项目',
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
+      options: serverEnumStore
+        .getServerEnum(SERVER_ENUM.PlasmaType)
+        .filter((it) => it.value !== 'N'),
     },
   },
   {

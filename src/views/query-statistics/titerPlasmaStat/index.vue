@@ -79,12 +79,12 @@
       reload();
       return Promise.resolve();
     }
-    message.warning('请选择或输入条件进行查询');
+    message.warning('请选择特免检测项目');
     return Promise.reject();
   }
   function getFormIsNotNull() {
     const values = getForm().getFieldsValue();
-    return Object.values(values).some((v) => v || v === 0);
+    return values.immunity;
   }
 </script>
 <style scoped lang="scss">
