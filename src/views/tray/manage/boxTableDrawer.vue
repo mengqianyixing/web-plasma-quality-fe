@@ -14,6 +14,7 @@
     title="托盘存放浆箱列表"
     width="600px"
     :minHeight="400"
+    :footer="null"
     @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">

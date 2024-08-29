@@ -34,6 +34,7 @@
       :loading-tip="getProps.loadingTip"
       :minHeight="getProps.minHeight"
       :height="getWrapperHeight"
+      :maxHeight="maxHeight"
       :open="openRef"
       :modalFooterHeight="footer !== undefined && !footer ? 0 : undefined"
       v-bind="omit(getProps.wrapperProps, 'open', 'height', 'modalFooterHeight')"
@@ -70,8 +71,9 @@
   import { deepMerge } from '@/utils';
   import { basicProps } from './props';
   import { useFullScreen } from './hooks/useModalFullScreen';
-  import { omit } from 'lodash-es';
+  import { omit, debounce } from 'lodash-es';
   import { useDesign } from '@/hooks/web/useDesign';
+  import { buildShortUUID } from '@/utils/uuid';
 
   defineOptions({ name: 'BasicModal', inheritAttrs: false });
 
@@ -89,6 +91,29 @@
 
   const attrs = useAttrs();
   const openRef = ref(false);
+
+  const wrapClassName = buildShortUUID('model');
+  const maxHeight = ref();
+  const _resize = debounce(resize, 300);
+  const headerHeight = 40;
+  const footerHeight = 45;
+  const marginBottom = 20;
+  function resize() {
+    const dom = document.querySelector('.' + wrapClassName);
+    if (!dom) return;
+    const winH = document.body.clientHeight;
+    const model = dom.querySelector('.ant-modal')!;
+    const modelRect = model.getBoundingClientRect();
+    const oH = headerHeight + footerHeight + modelRect.top + marginBottom;
+    if (model.clientHeight + modelRect.top + marginBottom > winH) {
+      maxHeight.value = winH - oH;
+    }
+    if (maxHeight.value && maxHeight.value + oH < winH) {
+      maxHeight.value = winH - oH;
+    }
+    setTimeout(() => emit('fullscreen'), 0);
+  }
+
   const propsRef = ref<Partial<ModalProps> | null>(null);
   const modalWrapperRef = ref<any>(null);
   const { prefixCls } = useDesign('basic-modal');
@@ -135,6 +160,7 @@
       okButtonProps: undefined,
       cancelButtonProps: undefined,
       title: undefined,
+      maxHeigth: unref(maxHeight),
     };
     return {
       ...opt,
@@ -149,7 +175,9 @@
       open: unref(openRef),
     };
     attr['wrapClassName'] =
-      `${attr?.['wrapClassName'] || ''} ${unref(getWrapClassName)}` + 'vben-basic-modal-wrap';
+      `${attr?.['wrapClassName'] || ''} ${unref(getWrapClassName)}` +
+      'vben-basic-modal-wrap ' +
+      wrapClassName;
     if (unref(fullScreenRef)) {
       return omit(attr, ['height', 'title']);
     }
@@ -173,6 +201,8 @@
       emit('update:open', v);
       instance && modalMethods.emitOpen?.(v, instance.uid);
       nextTick(() => {
+        _resize();
+        window.addEventListener('resize', _resize);
         if (props.scrollTop && v && unref(modalWrapperRef)) {
           (unref(modalWrapperRef) as any).scrollTop();
         }
@@ -185,6 +215,7 @@
 
   // 取消事件
   async function handleCancel(e: Event) {
+    window.removeEventListener('resize', _resize);
     e?.stopPropagation();
     // 过滤自定义关闭按钮的空白区域
     if ((e.target as HTMLElement)?.classList?.contains(prefixCls + '-close--custom')) return;

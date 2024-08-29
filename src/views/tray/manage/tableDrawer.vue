@@ -7,7 +7,14 @@
  * @LastEditTime: 2024-01-10 15:44:41
 -->
 <template>
-  <BasicModal v-bind="$attrs" @register="registerModal" showFooter title="托盘详情" width="600px">
+  <BasicModal
+    :footer="null"
+    v-bind="$attrs"
+    @register="registerModal"
+    showFooter
+    title="托盘详情"
+    width="600px"
+  >
     <BasicTable @register="registerTable" v-show="false" />
   </BasicModal>
 </template>

@@ -22,6 +22,7 @@
     modalHeaderHeight: { type: Number, default: 42 },
     modalFooterHeight: { type: Number, default: 46 },
     minHeight: { type: Number, default: 100 },
+    maxHeight: { type: Number },
     height: { type: Number },
     footerOffset: { type: Number, default: 0 },
     open: { type: Boolean },
@@ -58,8 +59,9 @@
 
   const spinStyle = computed((): CSSProperties => {
     return {
-      minHeight: `${props.minHeight}px`,
-      [props.fullScreen ? 'height' : 'maxHeight']: `${unref(realHeightRef)}px`,
+      minHeight: `${props.maxHeight || props.minHeight}px`,
+      height: props.fullScreen ? unref(realHeightRef) + 'px' : void 0,
+      maxHeight: !props.fullScreen ? (props.maxHeight || unref(realHeightRef)) + 'px' : void 0,
     };
   });
 

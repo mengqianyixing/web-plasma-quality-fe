@@ -25,7 +25,7 @@ export const columns: BasicColumn[] = [
 
   {
     width: 100,
-    title: '血浆数量(袋)',
+    title: '检测数据',
     dataIndex: 'bagCount',
     fixed: 'left',
   },
@@ -169,9 +169,12 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'immunity',
     component: 'Select',
-    label: '血浆类型',
+    label: '特免检测项目',
+    required: true,
     componentProps: {
-      options: serverEnumStore.getServerEnum(SERVER_ENUM.PlasmaType),
+      options: serverEnumStore
+        .getServerEnum(SERVER_ENUM.PlasmaType)
+        .filter((it) => it.value !== 'N'),
     },
   },
   {

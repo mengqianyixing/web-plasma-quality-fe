@@ -101,24 +101,22 @@
 
   type Row = {
     immTypeCount: number;
-    immTypeWeight?: string;
+    immTypeWeight: number;
     minCollectAt?: string;
-    immTypeWeightValue: number;
     minCollectAtValue: number;
     immType: string;
   };
   function handleSummary(data: GetApiSearchBankQualifiedInventoryStatisticQueryDateResponse) {
     const initData: Row = {
       immTypeCount: 0,
-      immTypeWeightValue: 0,
       minCollectAtValue: Date.now(),
       minCollectAt: '',
-      immTypeWeight: '',
+      immTypeWeight: 0,
       immType: '合计',
     };
     const row = data.reduce((pre, cur) => {
       pre.immTypeCount += cur.immTypeCount || 0;
-      pre.immTypeWeightValue += cur.immTypeWeight || 0;
+      pre.immTypeWeight += cur.immTypeWeight || 0;
       pre.minCollectAtValue = Math.min(
         pre.minCollectAtValue,
         new Date(cur.minCollectAt!).getTime(),
@@ -126,7 +124,6 @@
       return pre;
     }, initData);
     row.minCollectAt = dayjs(row.minCollectAtValue).format('YYYY-MM-DD');
-    row.immTypeWeight = row.immTypeWeightValue.toFixed(3);
     return row;
   }
 </script>
