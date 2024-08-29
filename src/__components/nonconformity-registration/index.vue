@@ -22,10 +22,23 @@
   const { createMessage } = useMessage();
 
   async function handleSubmit(values) {
-    await nonconformityRegistration(values);
-    await resetFields();
+    try {
+      await setProps({
+        submitButtonOptions: {
+          loading: true,
+        },
+      });
+      await nonconformityRegistration(values);
+      await resetFields();
 
-    createMessage.success('登记成功');
+      createMessage.success('登记成功');
+    } finally {
+      await setProps({
+        submitButtonOptions: {
+          loading: false,
+        },
+      });
+    }
   }
 
   function handleSuccess(nickname: string) {
@@ -39,7 +52,7 @@
   }
 
   const [registerLoginModal, { openModal }] = useModal();
-  const [register, { setFieldsValue, resetFields, updateSchema }] = useForm({
+  const [register, { setFieldsValue, resetFields, updateSchema, setProps }] = useForm({
     layout: 'horizontal',
     labelWidth: 120,
     labelCol: {
