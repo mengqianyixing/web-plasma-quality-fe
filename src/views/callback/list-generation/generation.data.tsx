@@ -171,7 +171,7 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
   {
     title: '浆员编号',
     field: 'cardNo',
-    width: 150,
+    width: 120,
   },
   {
     title: '浆员姓名',
@@ -184,10 +184,12 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
     formatter: ({ cellValue }) => {
       return donorStatusMap.get(cellValue as donorStatusValueEnum) as string;
     },
+    width: 80,
   },
   {
     title: '血浆状态',
     field: 'trackType',
+    width: 80,
   },
   {
     title: '拒绝日期',
@@ -195,10 +197,12 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
     formatter: ({ cellValue }) => {
       return cellValue ? dayjs(cellValue).format('YYYY-MM-DD') : '-';
     },
+    width: 110,
   },
   {
     title: '拒绝原因',
     field: 'refuseReason',
+    width: 150,
   },
   {
     title: '性别',
@@ -211,6 +215,7 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
     formatter: ({ cellValue }) => {
       return cellValue ? dayjs(cellValue).format('YYYY-MM-DD') : '';
     },
+    width: 110,
   },
   {
     title: '最早采浆血浆编号',
@@ -223,11 +228,13 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
     formatter: ({ cellValue }) => {
       return cellValue ? dayjs(cellValue).format('YYYY-MM-DD') : '';
     },
+    width: 110,
   },
   {
     title: '待追踪袋数',
     field: 'plasmaCount',
     slots: { default: 'plasmaCount' },
+    width: 110,
   },
 ];
 

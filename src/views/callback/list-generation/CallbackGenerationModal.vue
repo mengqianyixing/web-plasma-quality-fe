@@ -9,51 +9,59 @@
     @cancel="handleCancel"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <BasicForm
-        class="search-form"
-        @register="registerForm"
-        :submitButtonOptions="{ loading: tableLoading }"
-      />
-
-      <vxe-grid
-        v-bind="gridOptions"
-        ref="vxeRef"
-        :loading="tableLoading"
-        :data="tableData"
-        :columns="columnsComputed"
-      >
-        <template #plasmaCount="{ row }">
-          <span
-            :class="
-              !row?.plasmaCount ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
-            "
-            @click.stop.self="handleBagDetail(row)"
+      <div class="absolute h-full w-full flex flex-col">
+        <BasicForm
+          class="search-form"
+          @register="registerForm"
+          :submitButtonOptions="{ loading: tableLoading }"
+        />
+        <div class="flex-1">
+          <vxe-grid
+            v-bind="gridOptions"
+            ref="vxeRef"
+            :loading="tableLoading"
+            :data="tableData"
+            :columns="columnsComputed"
           >
-            {{ row?.plasmaCount }}
-          </span>
-        </template>
-        <template #toolbar>
-          <div class="h-40px bg-#ffffff mt-2 flex items-center">
-            <a-button type="primary" @click="handleAdd" class="absolute right-20"> 新增 </a-button>
-            <a-button type="primary" @click="handleDelete" class="absolute right-2">
-              撤销
-            </a-button>
-          </div>
-        </template>
-      </vxe-grid>
-
-      <a-pagination
-        class="float-right mt-2"
-        @change="handlePageChange"
-        @show-size-change="handleSizeChange"
-        size="small"
-        show-size-changer
-        show-quick-jumper
-        v-model:current="pager.currPage"
-        v-model:pageSize="pager.pageSize"
-        :total="pager.total"
-        :show-total="(total) => `共 ${total} 条数据`"
-      />
+            <template #plasmaCount="{ row }">
+              <span
+                :class="
+                  !row?.plasmaCount
+                    ? 'pointer-events-none'
+                    : 'text-blue-500 underline cursor-pointer'
+                "
+                @click.stop.self="handleBagDetail(row)"
+              >
+                {{ row?.plasmaCount }}
+              </span>
+            </template>
+            <template #toolbar>
+              <div class="h-40px bg-#ffffff mt-2 flex items-center">
+                <a-button type="primary" @click="handleAdd" class="absolute right-20">
+                  新增
+                </a-button>
+                <a-button type="primary" @click="handleDelete" class="absolute right-2">
+                  撤销
+                </a-button>
+              </div>
+            </template>
+          </vxe-grid>
+        </div>
+        <div>
+          <a-pagination
+            class="float-right mb-10px"
+            @change="handlePageChange"
+            @show-size-change="handleSizeChange"
+            size="small"
+            show-size-changer
+            show-quick-jumper
+            v-model:current="pager.currPage"
+            v-model:pageSize="pager.pageSize"
+            :total="pager.total"
+            :show-total="(total) => `共 ${total} 条数据`"
+          />
+        </div>
+      </div>
     </div>
 
     <template #footer>
@@ -119,33 +127,26 @@
   });
 
   const gridOptions = reactive<VxeGridProps<any>>({
-    height: 600,
+    height: '100%',
     border: true,
     rowConfig: {
       isHover: true,
     },
-    showOverflow: true,
+    showOverflow: false,
     align: 'center',
     size: 'small',
     exportConfig: {},
     columnConfig: {
       resizable: true,
     },
-    scrollY: {
-      enabled: true,
-    },
+
     checkboxConfig: {
       highlight: true,
       trigger: 'row',
       range: true,
     },
-    toolbarConfig: {
-      refresh: false,
-      loading: false,
-      export: false,
-      custom: false,
-    },
-    showFooter: true,
+
+    showFooter: false,
     autoResize: true,
   });
 
