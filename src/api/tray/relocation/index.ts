@@ -24,6 +24,12 @@ import {
   GetApiCoreBankTrayBindRecordResponse,
   GetApiCoreBankTrayMoveRecordRequest,
   GetApiCoreBankTrayMoveRecordResponse,
+  PostApiCoreBankTrayKeepSampleScanBindRequest,
+  PostApiCoreBankTrayKeepSampleScanBindResponse,
+  GetApiCoreBankTrayKeepSampleScanBindRecordsRequest,
+  GetApiCoreBankTrayKeepSampleScanBindRecordsResponse,
+  PostApiCoreBankTrayKeepSampleHandBindRequest,
+  PostApiCoreBankTrayKeepSampleHandBindResponse,
 } from '@/api/type/trayManage';
 
 enum Api {
@@ -53,6 +59,38 @@ export const bindBoxApi = (params: PostApiCoreBankTrayBoxRequest, errOkCb?: () =
     { url: '/api/core/bank/tray/box', params },
     { errorMessageModeOkCb: errOkCb },
   );
+export const handBindSampleBoxApi = (
+  params: PostApiCoreBankTrayKeepSampleHandBindRequest,
+  errOkCb?: () => void,
+) =>
+  defHttp.post<PostApiCoreBankTrayKeepSampleHandBindResponse>(
+    { url: '/api/core/bank/tray/keep-sample/hand-bind', params },
+    { errorMessageModeOkCb: errOkCb },
+  );
+export const handUnbindSampleBoxApi = (
+  params: PostApiCoreBankTrayKeepSampleHandBindRequest,
+  errOkCb?: () => void,
+) =>
+  defHttp.post<PostApiCoreBankTrayKeepSampleHandBindResponse>(
+    { url: '/api/core/bank/tray/keep-sample/hand-unbind', params },
+    { errorMessageModeOkCb: errOkCb },
+  );
+export const bindSampleBoxApi = (
+  params: PostApiCoreBankTrayKeepSampleScanBindRequest,
+  errOkCb?: () => void,
+) =>
+  defHttp.post<PostApiCoreBankTrayKeepSampleScanBindResponse>(
+    { url: '/api/core/bank/tray/keep-sample/scan-bind', params },
+    { errorMessageModeOkCb: errOkCb },
+  );
+export const unbindSampleBoxApi = (
+  params: PostApiCoreBankTrayKeepSampleScanBindRequest,
+  errOkCb?: () => void,
+) =>
+  defHttp.post<PostApiCoreBankTrayKeepSampleScanBindResponse>(
+    { url: '/api/core/bank/tray/keep-sample/scan-unbind', params },
+    { errorMessageModeOkCb: errOkCb },
+  );
 
 export const bindVerifyBoxApi = (params: PostApiCoreBankTrayBoxRequest, errOkCb: () => void) =>
   defHttp.post<PostApiCoreBankTrayBoxResponse>(
@@ -76,6 +114,34 @@ export const getBankBoxesList = (params: GetApiCoreBankTrayBoxesRequest) =>
 export const getTrayBoxBindRecordApi = (params: GetApiCoreBankTrayBindRecordRequest) =>
   defHttp.get<GetApiCoreBankTrayBindRecordResponse>({
     url: '/api/core/bank/tray/bind-record',
+    params,
+  });
+export const getTraySampleBoxBindRecordApi = (
+  params: GetApiCoreBankTrayKeepSampleScanBindRecordsRequest,
+) =>
+  defHttp.get<GetApiCoreBankTrayKeepSampleScanBindRecordsResponse>({
+    url: '/api/core/bank/tray/keep-sample/scan-bind/records',
+    params,
+  });
+export const getTraySampleBoxUnBindRecordApi = (
+  params: GetApiCoreBankTrayKeepSampleScanBindRecordsRequest,
+) =>
+  defHttp.get<GetApiCoreBankTrayKeepSampleScanBindRecordsResponse>({
+    url: '/api/core/bank/tray/keep-sample/scan-unbind/records',
+    params,
+  });
+export const getTraySampleHandBoxBindRecordApi = (
+  params: GetApiCoreBankTrayKeepSampleScanBindRecordsRequest,
+) =>
+  defHttp.get<GetApiCoreBankTrayKeepSampleScanBindRecordsResponse>({
+    url: '/api/core/bank/tray/keep-sample/hand-bind/packs',
+    params,
+  });
+export const getTraySampleBoxHandUnBindRecordApi = (
+  params: GetApiCoreBankTrayKeepSampleScanBindRecordsRequest,
+) =>
+  defHttp.get<GetApiCoreBankTrayKeepSampleScanBindRecordsResponse>({
+    url: '/api/core/bank/tray/keep-sample/hand-unbind/packs',
     params,
   });
 

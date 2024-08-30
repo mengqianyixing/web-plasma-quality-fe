@@ -100,19 +100,18 @@
         },
       );
       formData.boxId = '';
+      message.success('操作成功');
       reload();
     } finally {
       await nextTick();
       focusedElement.focus();
     }
-    message.success('操作成功');
     trayBoxListApi({ trayNo }).then((res) => {
       count.value = res.length;
     });
   }
   const _submit = debounce(handleSubmit, 200);
   function handleKeyUp(e) {
-    console.log('?>>>>.');
     if (e.key === 'Enter') {
       _submit();
     }

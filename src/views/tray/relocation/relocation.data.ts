@@ -161,6 +161,7 @@ export const plasmaBoxHandSearchFormSchema: FormSchema[] = [
     field: 'prepareNo',
   },
 ];
+
 export const plasmaBoxHandColumns: BasicColumn[] = [
   {
     title: '采浆公司',
@@ -196,7 +197,13 @@ export const sampleBoxScanFormSchema: FormSchema[] = [
   },
   {
     component: 'Input',
-    label: '样本箱号',
+    label: '箱号',
+    field: 'boxId',
+    colProps: { span: 8 },
+  },
+  {
+    component: 'Input',
+    label: '样本袋号',
     field: 'boxId',
     colProps: { span: 8 },
   },
@@ -205,68 +212,136 @@ export const sampleBoxScanSearchFormSchema: FormSchema[] = [
   {
     component: 'Input',
     label: '托盘编号',
-    field: '',
+    field: 'trayNo',
   },
   {
     component: 'Input',
-    label: '样本箱号',
-    field: '',
+    label: '箱号',
+    field: 'boxNo',
+  },
+  {
+    component: 'Input',
+    label: '样品袋号',
+    field: 'packNo',
   },
 ];
 export const sampleBoxScanColumns: (isBinding: boolean) => BasicColumn[] = (isBinding) => [
   {
-    title: '样本箱号',
-    dataIndex: '',
+    title: '托盘编号',
+    dataIndex: 'trayNo',
   },
   {
-    title: '目标托盘',
-    dataIndex: '',
+    title: '箱号',
+    dataIndex: 'boxNo',
+  },
+  {
+    title: '样品袋号',
+    dataIndex: 'packNo',
   },
   {
     title: isBinding ? '绑定人' : '解绑人',
-    dataIndex: '',
+    dataIndex: isBinding ? 'binder' : 'unbinder',
   },
   {
     title: isBinding ? '绑定时间' : '解绑时间',
-    dataIndex: '',
+    dataIndex: isBinding ? 'bindTime' : 'unbindTime',
   },
 ];
-export const sampleBoxHandSearchFormSchema: FormSchema[] = [
+export const sampleBoxHandBindSearchFormSchema: FormSchema[] = [
   {
     component: 'Select',
     label: '采浆公司',
-    field: '',
+    field: 'stationNo',
     colProps: { span: 6 },
     componentProps: {
-      options: [],
+      options: stationOptions,
     },
   },
   {
     component: 'Input',
     label: '样本批号',
-    field: '',
+    field: 'batchNo',
+    colProps: { span: 6 },
+  },
+  {
+    component: 'Input',
+    label: '样本袋号',
+    field: 'packNo',
     colProps: { span: 6 },
   },
 ];
-export const sampleBoxHandColumns: BasicColumn[] = [
+export const sampleBoxHandUnbindSearchFormSchema: FormSchema[] = [
   {
-    title: '采浆公司',
-    dataIndex: '',
+    component: 'Select',
+    label: '采浆公司',
+    field: 'stationNo',
+    colProps: { span: 6 },
+    componentProps: {
+      options: stationOptions,
+    },
   },
   {
-    title: '样本箱号',
-    dataIndex: '采浆公司',
+    component: 'Input',
+    label: '样本批号',
+    field: 'batchNo',
+    colProps: { span: 6 },
+  },
+  {
+    component: 'Input',
+    label: '托盘编号',
+    field: 'trayNo',
+    colProps: { span: 6 },
+  },
+];
+export const sampleBoxHandBindColumns: BasicColumn[] = [
+  {
+    title: '采浆公司',
+    dataIndex: 'stationName',
   },
   {
     title: '样本批号',
-    dataIndex: '采浆公司',
+    dataIndex: 'batchNo',
   },
   {
-    title: '袋数',
-    dataIndex: '采浆公司',
+    title: '样本袋号',
+    dataIndex: 'packNo',
   },
   {
-    title: '类型',
-    dataIndex: '采浆公司',
+    title: '样本数量',
+    dataIndex: 'sampleCount',
+  },
+  {
+    title: '样本类型',
+    dataIndex: 'sampleType',
+  },
+];
+export const sampleBoxHandUnbindColumns: BasicColumn[] = [
+  {
+    title: '采浆公司',
+    dataIndex: 'stationName',
+  },
+  {
+    title: '样本批号',
+    dataIndex: 'batchNo',
+  },
+  {
+    title: '样本袋号',
+    dataIndex: 'packNo',
+  },
+  {
+    title: '箱号',
+    dataIndex: 'boxNo',
+  },
+  {
+    title: '托盘编号',
+    dataIndex: 'trayNo',
+  },
+  {
+    title: '绑定人',
+    dataIndex: 'binder',
+  },
+  {
+    title: '绑定时间',
+    dataIndex: 'bindTime',
   },
 ];

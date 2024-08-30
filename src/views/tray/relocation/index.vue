@@ -26,7 +26,7 @@
       </TabPane>
       <!-- <TabPane key="6" tab="样本箱扫描绑定"> <SampleBoxScan :is-binding="true" /></TabPane>
       <TabPane key="7" tab="样本箱扫描解绑">
-        <SampleBoxScan :is-binding="false" />
+        <SampleBoxScanUnbind :is-binding="false" />
       </TabPane>
       <TabPane key="8" tab="样本箱手工绑定">
         <SampleBoxHand :is-binding="true" />
@@ -45,6 +45,7 @@
   import PlasmaBoxScan from './plasmaBoxScan.vue';
   import PlasmaBoxHand from './plasmaBoxHand.vue';
   // import SampleBoxScan from './sampleBoxScan.vue';
+  // import SampleBoxScanUnbind from './sampleBoxScanUnbind.vue';
   // import SampleBoxHand from './sampleBoxHand.vue';
 
   defineOptions({ name: 'TrayRelocation' });

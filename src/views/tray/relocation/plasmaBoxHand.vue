@@ -2,10 +2,8 @@
   <div class="h-full">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleBinding" v-show="props.isBinding">
-          绑定托盘
-        </a-button>
-        <a-button type="primary" @click="handleUnbinding" v-show="!props.isBinding">
+        <a-button type="primary" @click="handleBinding" v-if="props.isBinding"> 绑定托盘 </a-button>
+        <a-button type="primary" @click="handleUnbinding" v-if="!props.isBinding">
           解绑托盘
         </a-button>
       </template>

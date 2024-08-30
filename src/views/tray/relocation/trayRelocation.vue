@@ -169,7 +169,7 @@
         pageSize: '9999',
         currPage: '1',
         closed: CLOSED.NORMAL,
-        normal: true,
+        normal: 'true',
       });
       const data = res.result || [];
       const options = data.map((_) => ({
