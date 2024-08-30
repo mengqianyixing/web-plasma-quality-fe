@@ -88,6 +88,9 @@
   }
 
   function handleEdit() {
+    if (!selectedRow.value.length) {
+      return createMessage.warn('请选择一条记录');
+    }
     openModal(true, { isUpdate: true, record: selectedRow.value[0] });
   }
 
