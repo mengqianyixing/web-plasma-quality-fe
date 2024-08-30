@@ -16,7 +16,10 @@
         :theme="getHeaderTheme"
         :sider="false"
       />
-      <LayoutBreadcrumb v-if="getShowContent && getShowBread" :theme="getHeaderTheme" />
+      <LayoutBreadcrumb
+        v-if="getShowContent && getShowBread && currentRoute.path !== PageEnum.HOME"
+        :theme="getHeaderTheme"
+      />
     </div>
     <!-- left end -->
 
@@ -69,10 +72,14 @@
   import { useLocale } from '@/locales/useLocale';
   import { createAsyncComponent } from '@/utils/factory/createAsyncComponent';
   import { propTypes } from '@/utils/propTypes';
+  import { useRouter } from 'vue-router';
+  import { PageEnum } from '@/enums/pageEnum';
 
   import LayoutMenu from '../menu/index.vue';
   import LayoutTrigger from '../trigger/index.vue';
   import { ErrorAction, FullScreen, LayoutBreadcrumb, Notify, UserDropDown } from './components';
+
+  const { currentRoute } = useRouter();
 
   const SettingDrawer = createAsyncComponent(() => import('@/layouts/default/setting/index.vue'), {
     loading: true,

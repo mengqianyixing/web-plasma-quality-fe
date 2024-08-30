@@ -125,9 +125,6 @@
   // Close the current tab
   function handleEdit(targetKey: string) {
     // Added operation to hide, currently only use delete operation
-    if (unref(unClose)) {
-      return;
-    }
 
     tabStore.closeTabByKey(targetKey, router);
   }
