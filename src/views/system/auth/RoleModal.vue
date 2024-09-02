@@ -206,6 +206,9 @@
         ...data.record,
         oldName: data.record.name,
       });
+    } else {
+      nodeCheckMap.value = new Map();
+      treeData.value = filterRoutes(modulesRouteList);
     }
   });
 
