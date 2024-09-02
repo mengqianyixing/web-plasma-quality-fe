@@ -52,7 +52,7 @@
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { sampleBoxScanSearchFormSchema, sampleBoxScanColumns } from './relocation.data';
-  import { unbindSampleBoxApi, getTraySampleBoxUnBindRecordApi } from '@/api/tray/relocation';
+  import { unbindSampleBoxApi, getTraySampleBoxBindRecordApi } from '@/api/tray/relocation';
   import { message, Spin } from 'ant-design-vue';
   import ScanInput from '@/components/Form/src/components/ScanInput.vue';
   import { debounce } from 'lodash-es';
@@ -76,7 +76,7 @@
 
   const columns = sampleBoxScanColumns(props.isBinding);
   const [registerTable, { reload }] = useTable({
-    api: getTraySampleBoxUnBindRecordApi,
+    api: getTraySampleBoxBindRecordApi,
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
@@ -86,7 +86,6 @@
     formConfig: {
       schemas: sampleBoxScanSearchFormSchema,
     },
-    rowKey: 'houseNo',
     columns: columns,
     useSearchForm: true,
     bordered: true,
@@ -97,36 +96,31 @@
   async function submit() {
     const focusedElement = document.activeElement as InputHTMLElement;
     try {
-      await unbindSampleBoxApi(formData, () => {
+      const msg = await unbindSampleBoxApi({ ...formData, confirm: false }, () => {
         setTimeout(() => {
           focusedElement.focus();
           focusedElement.select();
         }, 300);
       });
-      const { packNo, boxNo, trayNo } = formData;
-      let msg = '';
-      if (packNo) {
-        msg = `该托盘绑定x箱样本，是否解绑托盘与所有箱关系`;
-      } else if (boxNo) {
-        msg = `是否解绑托盘${trayNo}与箱号${boxNo}关系`;
-      } else {
-        msg = `是否解绑样本箱${boxNo}与样本袋${packNo}关系`;
-      }
       createConfirm({
         title: '确认',
         content: msg,
         iconType: 'warning',
-        onOk: () => {
+        onOk: async () => {
           spinning.value = true;
-          reload();
-          spinning.value = false;
+          try {
+            await unbindSampleBoxApi({ ...formData, confirm: true });
+            reload();
+            message.success('操作成功');
+          } finally {
+            spinning.value = false;
+          }
         },
         onCancel: () => {
           focusedElement.focus();
           focusedElement.select();
         },
       });
-      message.success('操作成功');
     } finally {
       await nextTick();
       focusedElement.focus();

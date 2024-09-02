@@ -240,11 +240,11 @@ export const sampleBoxScanColumns: (isBinding: boolean) => BasicColumn[] = (isBi
   },
   {
     title: isBinding ? '绑定人' : '解绑人',
-    dataIndex: isBinding ? 'binder' : 'unbinder',
+    dataIndex: 'binder',
   },
   {
     title: isBinding ? '绑定时间' : '解绑时间',
-    dataIndex: isBinding ? 'bindTime' : 'unbindTime',
+    dataIndex: 'bindTime',
   },
 ];
 export const sampleBoxHandBindSearchFormSchema: FormSchema[] = [
@@ -336,12 +336,12 @@ export const sampleBoxHandUnbindColumns: BasicColumn[] = [
     title: '托盘编号',
     dataIndex: 'trayNo',
   },
-  {
-    title: '绑定人',
-    dataIndex: 'binder',
-  },
-  {
-    title: '绑定时间',
-    dataIndex: 'bindTime',
-  },
+  // {
+  //   title: '绑定人',
+  //   dataIndex: 'binder',
+  // },
+  // {
+  //   title: '绑定时间',
+  //   dataIndex: 'bindTime',
+  // },
 ];

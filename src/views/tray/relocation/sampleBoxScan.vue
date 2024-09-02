@@ -31,7 +31,13 @@
               @scan-change="(code) => (formData.boxNo = code)"
             />
             <span class="form-label number">袋数({{ formData.packCount }})</span>
-            <a-button type="warning">封箱</a-button>
+            <a-button
+              type="warning"
+              :loading="printLoading"
+              @click="print"
+              :disabled="!formData.boxNo"
+              >封箱</a-button
+            >
           </div>
           <div class="form-item">
             <span class="form-label">样本袋号</span>
@@ -58,6 +64,7 @@
   import ScanInput from '@/components/Form/src/components/ScanInput.vue';
   import { debounce } from 'lodash-es';
   import { ref, nextTick, reactive } from 'vue';
+  import { getPrintRecord, printRecord } from '@/api/tag/printRecord';
 
   const formData = reactive({
     trayNo: '',
@@ -67,6 +74,7 @@
   });
   const packNoRef = ref();
   const spinning = ref(false);
+  const printLoading = ref(false);
 
   const props = defineProps({
     isBinding: {
@@ -93,6 +101,23 @@
     beforeFetch: (p) => ({ ...p, bindType: 1 }),
   });
 
+  async function print() {
+    try {
+      printLoading.value = true;
+      const res = await getPrintRecord({
+        labelType: 'KEEP_SAMPLE_BOX',
+        bissNo: formData.boxNo,
+      });
+      await printRecord({
+        ...res,
+        resolution: void 0,
+        dpi: res.resolution,
+      });
+      formData.boxNo = '';
+    } finally {
+      printLoading.value = false;
+    }
+  }
   async function submit() {
     const focusedElement = document.activeElement as InputHTMLElement;
     try {

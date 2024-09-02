@@ -70,25 +70,30 @@
     labelWidth: 90,
     baseColProps: { span: 24 },
     schemas: [
-      { label: '托盘编号', required: true, component: 'Input', field: 'taryNo' },
+      { label: '托盘编号', required: true, component: 'Input', field: 'trayNo' },
       { label: '样本箱号', required: true, component: 'Input', field: 'boxNo' },
     ],
     showActionButtonGroup: false,
     showResetButton: false,
   });
-  const [registerTable, { getSelectRows, reload, setProps, getForm }] = useTable({
-    immediate: false,
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    useSearchForm: true,
-    bordered: true,
-    size: 'small',
-    rowSelection: { type: 'checkbox' },
-  });
+  const [registerTable, { getSelectRows, reload, setProps, getForm, clearSelectedRowKeys }] =
+    useTable({
+      immediate: false,
+      fetchSetting: {
+        pageField: 'currPage',
+        sizeField: 'pageSize',
+        totalField: 'totalCount',
+        listField: 'result',
+      },
+      useSearchForm: true,
+      bordered: true,
+      size: 'small',
+      rowSelection: { type: 'checkbox' },
+      afterFetch: (res) => {
+        clearSelectedRowKeys();
+        return res;
+      },
+    });
   function getFormIsNotNull() {
     const values = getForm().getFieldsValue();
     return Object.values(values).some((v) => v);
@@ -108,10 +113,10 @@
     if (rows.length === 0) return message.warning('请选择数据');
     createConfirm({
       iconType: 'warning',
-      content: '确认?',
+      content: '确认解绑?',
       onOk: async () => {
         const packNoList = rows.map((_) => _.packNo);
-        await handUnbindSampleBoxApi({ packNoList, trayNo: '', boxNo: '' });
+        await handUnbindSampleBoxApi({ packNoList });
         reload();
       },
     });

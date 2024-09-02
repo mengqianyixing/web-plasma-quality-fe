@@ -30,6 +30,9 @@ import {
   GetApiCoreBankTrayKeepSampleScanBindRecordsResponse,
   PostApiCoreBankTrayKeepSampleHandBindRequest,
   PostApiCoreBankTrayKeepSampleHandBindResponse,
+  PostApiCoreBankTrayKeepSampleScanUnbindRequest,
+  PostApiCoreBankTrayKeepSampleScanUnbindResponse,
+  PostApiCoreBankTrayKeepSampleHandUnbindRequest,
 } from '@/api/type/trayManage';
 
 enum Api {
@@ -68,7 +71,7 @@ export const handBindSampleBoxApi = (
     { errorMessageModeOkCb: errOkCb },
   );
 export const handUnbindSampleBoxApi = (
-  params: PostApiCoreBankTrayKeepSampleHandBindRequest,
+  params: PostApiCoreBankTrayKeepSampleHandUnbindRequest,
   errOkCb?: () => void,
 ) =>
   defHttp.post<PostApiCoreBankTrayKeepSampleHandBindResponse>(
@@ -84,10 +87,10 @@ export const bindSampleBoxApi = (
     { errorMessageModeOkCb: errOkCb },
   );
 export const unbindSampleBoxApi = (
-  params: PostApiCoreBankTrayKeepSampleScanBindRequest,
+  params: PostApiCoreBankTrayKeepSampleScanUnbindRequest,
   errOkCb?: () => void,
 ) =>
-  defHttp.post<PostApiCoreBankTrayKeepSampleScanBindResponse>(
+  defHttp.post<PostApiCoreBankTrayKeepSampleScanUnbindResponse>(
     { url: '/api/core/bank/tray/keep-sample/scan-unbind', params },
     { errorMessageModeOkCb: errOkCb },
   );

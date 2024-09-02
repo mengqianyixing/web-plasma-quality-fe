@@ -17,6 +17,7 @@ export const columns: BasicColumn[] = [
     title: '托盘编号',
     dataIndex: 'trayNo',
     fixed: 'left',
+    width: 80,
   },
   {
     title: '负载状态',
@@ -24,21 +25,25 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return record.totalNumber ? '负载' : '空载';
     },
+    width: 80,
   },
 
   {
     title: '已存放容量(箱)',
     dataIndex: 'totalNumber',
     slots: { customRender: 'totalNumber' },
+    width: 120,
   },
   {
     title: '已存放容量(袋)',
     dataIndex: 'totalBagNumber',
     slots: { customRender: 'totalBagNumber' },
+    width: 120,
   },
   {
     title: '打印人姓名',
     dataIndex: 'creater',
+    width: 120,
   },
   {
     title: '打印时间',
@@ -49,15 +54,19 @@ export const columns: BasicColumn[] = [
     title: '入库状态',
     dataIndex: 'trayStatus',
     format: BankTrayStatusEnum,
+    width: 80,
   },
   {
     title: '所在库房',
     dataIndex: 'wareHouseName',
+    ellipsis: false,
+    width: 160,
   },
 
   {
     title: '所在货位',
     dataIndex: 'locationNo',
+    width: 80,
   },
   {
     title: '启用状态',
@@ -65,6 +74,7 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return record.closed ? '停用' : '启用';
     },
+    width: 80,
   },
 ];
 export const searchFormSchema: FormSchema[] = [
