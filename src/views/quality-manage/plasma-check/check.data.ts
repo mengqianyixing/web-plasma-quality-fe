@@ -14,12 +14,14 @@ export const columns: BasicColumn[] = [
   {
     title: '血浆批号',
     dataIndex: 'batchNo',
+    slots: { customRender: 'batchNo' },
     width: 120,
     fixed: 'left',
   },
   {
     title: '验收数量',
     dataIndex: 'verifyCount',
+    slots: { customRender: 'verifyCount' },
     width: 80,
   },
   {
@@ -38,6 +40,12 @@ export const columns: BasicColumn[] = [
   {
     title: '特免合格数量',
     dataIndex: 'titerQualifiedCount',
+    width: 80,
+  },
+  {
+    title: '不合格血浆数量',
+    dataIndex: 'unqualifiedCount',
+    slots: { customRender: 'unqualifiedCount' },
     width: 80,
   },
   {

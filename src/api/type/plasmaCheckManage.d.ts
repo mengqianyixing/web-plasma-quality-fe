@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
  * @请求头 `GET /api/core/batch/plasma/audits`
- * @更新时间 `2024-01-18 14:37:12`
+ * @更新时间 `2024-09-03 16:12:53`
  */
 export interface GetApiCoreBatchPlasmaAuditsRequest {
   /**
@@ -70,7 +70,7 @@ export interface GetApiCoreBatchPlasmaAuditsRequest {
  *
  * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
  * @请求头 `GET /api/core/batch/plasma/audits`
- * @更新时间 `2024-01-18 14:37:12`
+ * @更新时间 `2024-09-03 16:12:53`
  */
 export interface GetApiCoreBatchPlasmaAuditsResponse {
   totalCount?: number;
@@ -106,6 +106,10 @@ export interface GetApiCoreBatchPlasmaAuditsResponse {
      * 特免合格数量
      */
     titerQualifiedCount?: number;
+    /**
+     * 不合格血浆数量
+     */
+    unqualifiedCount?: number;
     /**
      * 检测结果发布人
      */
@@ -449,5 +453,71 @@ export interface GetApiCoreBatchPlasmaAuditConclusionBatchNoRequest {
  * @更新时间 `2024-01-29 14:09:07`
  */
 export type GetApiCoreBatchPlasmaAuditConclusionBatchNoResponse = string;
+
+/**
+ * 接口 [血浆审核不合格血浆列表↗](https://yapi.sharing8.cn/project/529/interface/api/36651) 的 **请求类型**
+ *
+ * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
+ * @请求头 `GET /api/core/batch/plasma/audit/unqualifiedes`
+ * @更新时间 `2024-09-03 16:28:19`
+ */
+export interface GetApiCoreBatchPlasmaAuditUnqualifiedesRequest {
+  /**
+   * 当前页码
+   */
+  currPage: string;
+  /**
+   * 页大小
+   */
+  pageSize: string;
+  /**
+   * 血浆批号
+   */
+  batchNo: string;
+}
+
+/**
+ * 接口 [血浆审核不合格血浆列表↗](https://yapi.sharing8.cn/project/529/interface/api/36651) 的 **返回类型**
+ *
+ * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
+ * @请求头 `GET /api/core/batch/plasma/audit/unqualifiedes`
+ * @更新时间 `2024-09-03 16:28:19`
+ */
+export interface GetApiCoreBatchPlasmaAuditUnqualifiedesResponse {
+  totalCount?: number;
+  currPage?: null;
+  totalPage?: null;
+  pageSize?: null;
+  result?: {
+    /**
+     * 血浆编号
+     */
+    bagNo?: string;
+    /**
+     * 浆员编号
+     */
+    donorNo?: string;
+    /**
+     * 浆员姓名
+     */
+    donorName?: string;
+    /**
+     * 采集日期
+     */
+    collectDate?: string;
+    /**
+     * 效价类型
+     */
+    titerType?: string;
+    /**
+     * 不合格日期
+     */
+    unqualifiedDate?: string;
+    /**
+     * 不合格原因
+     */
+    unqualifiedReason?: string;
+  }[];
+}
 
 /* prettier-ignore-end */

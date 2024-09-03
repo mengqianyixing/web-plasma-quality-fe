@@ -10,7 +10,10 @@
     @cancel="handleClose"
   >
     <template #footer>
-      <div class="absolute text-right">血浆总袋数：{{ verifyCount }}</div>
+      <div class="absolute flex gap-2">
+        <div class="text-right">血浆总袋数：{{ verifyCount }}</div>
+        <div class="text-right">总净重：{{ totalNetWeight }}g</div>
+      </div>
       <a-button @click="handleClose">关闭</a-button>
     </template>
     <BasicForm
@@ -54,6 +57,7 @@
   import { PlasmaStateMap } from '@/enums/plasmaEnum';
 
   const verifyCount = ref(0);
+  const totalNetWeight = ref(0);
   const tableLoading = ref(false);
   const record = ref<Recordable>({});
   const tableData = ref<GetApiCoreBatchPlasmaVerifyBagResponse>([]);
@@ -72,7 +76,7 @@
 
   const gridOptions = reactive<VxeGridProps<any>>({
     border: true,
-    height: '500px',
+    height: '650px',
     rowConfig: {
       isHover: true,
     },
@@ -115,6 +119,9 @@
       const res = await getPlasmaBag(data);
       tableData.value = res;
       verifyCount.value = res.length;
+      totalNetWeight.value = res.reduce((prev, next) => {
+        return prev + next.netWeight!;
+      }, 0);
     } finally {
       tableLoading.value = false;
     }

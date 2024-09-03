@@ -11,6 +11,38 @@
           {{ record?.auditId }}
         </span>
       </template>
+      <template #batchNo="{ record }">
+        <span
+          :class="
+            !record?.batchNo ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleBatchClick(record)"
+        >
+          {{ record?.batchNo }}
+        </span>
+      </template>
+      <template #verifyCount="{ record }">
+        <span
+          :class="
+            !record?.verifyCount ? 'pointer-events-none' : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleVerifyCountClick(record)"
+        >
+          {{ record?.verifyCount }}
+        </span>
+      </template>
+      <template #unqualifiedCount="{ record }">
+        <span
+          :class="
+            !record?.unqualifiedCount
+              ? 'pointer-events-none'
+              : 'text-blue-500 underline cursor-pointer'
+          "
+          @click.stop.self="handleUnqualifiedDetail(record)"
+        >
+          {{ record?.unqualifiedCount }}
+        </span>
+      </template>
       <template #toolbar>
         <a-button type="primary" @click="handleAdd" v-auth="QualityButtonEnum.PlasmaCheckAdd">
           新增
@@ -68,6 +100,9 @@
     />
     <RevokeCheckModal @register="registerRevokeCheckModal" @success="handleSuccess" />
     <ReportModal @register="registerReportModal" />
+    <UnqualifiedDetailModal @register="registerUnqualifiedDetailModal" />
+    <ResultRegistrationModal @register="registerResultRegistrationModal" />
+    <PlasmaBatchDetailModal @register="registerPlasmaBatchDetailModal" />
   </PageWrapper>
 </template>
 <script lang="ts" setup>
@@ -87,6 +122,9 @@
   import PlasmaCheckModal from '@/views/quality-manage/plasma-check/PlasmaCheckModal.vue';
   import PlasmaLimitDetailModal from '@/views/quality-manage/plasma-check/PlasmaLimitDetailModal.vue';
   import RevokeCheckModal from '@/views/quality-manage/plasma-check/RevokeCheckModal.vue';
+  import UnqualifiedDetailModal from '@/views/quality-manage/plasma-check/UnqualifiedDetailModal.vue';
+  import ResultRegistrationModal from '@/views/inspect/reportRelease/resultRegistration/index.vue';
+  import PlasmaBatchDetailModal from '@/views/inbound-management/components/PlasmaBatchDetailModal/index.vue';
   import { getBindBoxListApi } from '@/api/quality/plasma-restriction';
   import { useStation } from '@/hooks/common/useStation';
   import { PlasmaCheckStateValueEnum } from '@/enums/plasmaEnum';
@@ -117,6 +155,9 @@
   const [registerPlasmaCheckModal, { openModal: openPlasmaCheckModal }] = useModal();
   const [registerPlasmaLimitModal, { openModal: openPlasmaLimitModal }] = useModal();
   const [registerRevokeCheckModal, { openModal: openPlasmaRevokeModal }] = useModal();
+  const [registerUnqualifiedDetailModal, { openModal: openUnqualifiedDetailModal }] = useModal();
+  const [registerResultRegistrationModal, { openModal: openResultRegistrationModal }] = useModal();
+  const [registerPlasmaBatchDetailModal, { openModal: openPlasmaBatchDetailModal }] = useModal();
 
   const selectedRowsRef = ref<Recordable>([]);
   const [registerTable, { reload, clearSelectedRowKeys, getForm }] = useTable({
@@ -374,6 +415,24 @@
   function handleSuccess() {
     clearSelectedRowKeys();
     reload();
+  }
+
+  function handleUnqualifiedDetail(record) {
+    openUnqualifiedDetailModal(true, {
+      record,
+    });
+  }
+
+  function handleBatchClick(record) {
+    openResultRegistrationModal(true, {
+      bsNo: record?.batchNo,
+    });
+  }
+
+  function handleVerifyCountClick(record) {
+    openPlasmaBatchDetailModal(true, {
+      record,
+    });
   }
 </script>
 
