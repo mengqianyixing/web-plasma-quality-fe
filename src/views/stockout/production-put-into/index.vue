@@ -257,9 +257,8 @@
       content: '请确认是否下发出库指令到挑浆系统？此操作不可回退，请谨慎操作！',
       iconType: 'warning',
       onOk: async () => {
-        createMessage.success('下发出库指令到挑浆系统成功');
-
         await productionPMSPickSystem(selectedRow.value[0]?.orderNo);
+        createMessage.success('下发出库指令到挑浆系统成功');
 
         clearSelectedRowKeys();
         await reload();
