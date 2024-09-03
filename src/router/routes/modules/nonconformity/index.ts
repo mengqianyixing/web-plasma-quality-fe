@@ -102,6 +102,11 @@ const nonconformity: AppRouteModule = {
           title: '入库复核人登录',
         },
         {
+          id: NonconformityInStoreButtonEnum.NonconformityInStorePMS,
+          title: ' PMS出库',
+          company: COMPANY.KM,
+        },
+        {
           id: NonconformityInStoreButtonEnum.NonconformityInStoreCheck,
           name: 'check',
           title: '审核',

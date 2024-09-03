@@ -380,6 +380,7 @@ export enum TagManageButtonEnum {
 export enum NonconformityInStoreButtonEnum {
   NonconformityInStoreCheck = 'E_92005001',
   NonconformityInStoreCancelCheck = 'E_92005002',
+  NonconformityInStorePMS = 'E_92005003',
 }
 
 export enum PlasmaInboundRecordButtonEnum {

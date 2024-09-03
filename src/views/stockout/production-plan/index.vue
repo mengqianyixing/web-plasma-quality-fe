@@ -312,7 +312,7 @@
       iconType: 'warning',
       content: '确认调用制造批号【' + row.mesId + '】的PMS组垛任务?',
       onOk: async () => {
-        await submitPMSApi({ orderNo: row.orderNo });
+        await submitPMSApi({ orderNo: row.orderNo, regroupType: 'create' });
         message.success('调用组垛任务成功！');
         clearSelectedRowKeys();
         await reload();

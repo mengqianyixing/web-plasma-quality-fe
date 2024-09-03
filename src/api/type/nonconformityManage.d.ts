@@ -705,6 +705,24 @@ export interface PostApiCoreBagUnqualifiedVerifyRequest {
 export type PostApiCoreBagUnqualifiedVerifyResponse = null;
 
 /**
+ * 接口 [不合格血浆出库任务下发↗](https://yapi.sharing8.cn/project/529/interface/api/36624) 的 **请求类型**
+ *
+ * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
+ * @请求头 `POST /api/core/bank/deliver/unqualified/pms-out`
+ * @更新时间 `2024-09-03 10:05:35`
+ */
+export type PostApiCoreBankDeliverUnqualifiedPmsOutRequest = string[];
+
+/**
+ * 接口 [不合格血浆出库任务下发↗](https://yapi.sharing8.cn/project/529/interface/api/36624) 的 **返回类型**
+ *
+ * @分类 [不合格管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5299)
+ * @请求头 `POST /api/core/bank/deliver/unqualified/pms-out`
+ * @更新时间 `2024-09-03 10:05:35`
+ */
+export interface PostApiCoreBankDeliverUnqualifiedPmsOutResponse {}
+
+/**
  * 接口 [查询不合格出库申请单列表↗](https://yapi.sharing8.cn/project/529/interface/api/32073) 的 **请求类型**
  *
  * @分类 [不合格出库↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5369)
