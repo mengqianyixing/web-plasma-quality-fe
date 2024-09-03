@@ -1191,4 +1191,357 @@ export interface GetApiCoreBankTrayBindRecordResponse {
   }[];
 }
 
+/**
+ * 接口 [保留样本箱扫描绑定↗](https://yapi.sharing8.cn/project/529/interface/api/36525) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/keep-sample/scan-bind`
+ * @更新时间 `2024-08-28 09:17:58`
+ */
+export interface PostApiCoreBankTrayKeepSampleScanBindRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  /**
+   * 样本箱号
+   */
+  boxNo?: string;
+  /**
+   * 样本袋号
+   */
+  packNo?: string;
+}
+
+/**
+ * 接口 [保留样本箱扫描绑定↗](https://yapi.sharing8.cn/project/529/interface/api/36525) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/keep-sample/scan-bind`
+ * @更新时间 `2024-08-28 09:17:58`
+ */
+export interface PostApiCoreBankTrayKeepSampleScanBindResponse {
+  /**
+   * 箱号
+   */
+  boxNo: string;
+  /**
+   * 袋数
+   */
+  packCount: number;
+}
+
+/**
+ * 接口 [保留样本箱扫描绑定\/ 解绑记录列表↗](https://yapi.sharing8.cn/project/529/interface/api/36534) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keep-sample/scan-bind/records`
+ * @更新时间 `2024-08-28 15:02:30`
+ */
+export interface GetApiCoreBankTrayKeepSampleScanBindRecordsRequest {
+  /**
+   * 当前页码
+   */
+  currPage: string;
+  /**
+   * 页大小
+   */
+  pageSize: string;
+  /**
+   * 托盘编号
+   */
+  trayNo?: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+  /**
+   * 样本袋号
+   */
+  packNo?: string;
+  /**
+   * 绑定类型，0表示解绑，1表示绑定
+   */
+  bindType: string;
+}
+
+/**
+ * 接口 [保留样本箱扫描绑定\/ 解绑记录列表↗](https://yapi.sharing8.cn/project/529/interface/api/36534) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keep-sample/scan-bind/records`
+ * @更新时间 `2024-08-28 15:02:30`
+ */
+export interface GetApiCoreBankTrayKeepSampleScanBindRecordsResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 托盘编号
+     */
+    trayNo?: string;
+    /**
+     * 箱号
+     */
+    boxNo?: string;
+    /**
+     * 样本袋号
+     */
+    packNo?: string;
+    /**
+     * 绑定人
+     */
+    binder?: string;
+    /**
+     * 绑定时间
+     */
+    bindTime?: string;
+  }[];
+}
+
+/**
+ * 接口 [保留样本箱手工绑定↗](https://yapi.sharing8.cn/project/529/interface/api/36543) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/keep-sample/hand-bind`
+ * @更新时间 `2024-08-26 18:03:48`
+ */
+export interface PostApiCoreBankTrayKeepSampleHandBindRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  /**
+   * 箱号
+   */
+  boxNo: string;
+  /**
+   * 样本袋号数组
+   */
+  packNoList: string[];
+}
+
+/**
+ * 接口 [保留样本箱手工绑定↗](https://yapi.sharing8.cn/project/529/interface/api/36543) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/keep-sample/hand-bind`
+ * @更新时间 `2024-08-26 18:03:48`
+ */
+export interface PostApiCoreBankTrayKeepSampleHandBindResponse {
+  /**
+   * 响应码
+   */
+  code: string;
+  /**
+   * 响应信息
+   */
+  msg: string;
+}
+
+/**
+ * 接口 [保留样本箱手工绑定列表↗](https://yapi.sharing8.cn/project/529/interface/api/36552) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keep-sample/hand-bind/packs`
+ * @更新时间 `2024-08-27 09:26:39`
+ */
+export interface GetApiCoreBankTrayKeepSampleHandBindPacksRequest {
+  /**
+   * 当前页
+   */
+  currPage: string;
+  /**
+   * 页大小
+   */
+  pageSize: string;
+  /**
+   * 采浆公司编号
+   */
+  stationNo?: string;
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+  /**
+   * 样本袋号
+   */
+  packNo?: string;
+}
+
+/**
+ * 接口 [保留样本箱手工绑定列表↗](https://yapi.sharing8.cn/project/529/interface/api/36552) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keep-sample/hand-bind/packs`
+ * @更新时间 `2024-08-27 09:26:39`
+ */
+export interface GetApiCoreBankTrayKeepSampleHandBindPacksResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 采浆公司编号
+     */
+    stationNo?: string;
+    /**
+     * 采浆公司
+     */
+    stationName?: string;
+    /**
+     * 样本批号
+     */
+    batchNo?: string;
+    /**
+     * 样本袋号
+     */
+    packNo?: string;
+    /**
+     * 样本数量
+     */
+    sampleCount?: number;
+    /**
+     * 样本类型
+     */
+    sampleType?: string;
+  }[];
+}
+
+/**
+ * 接口 [保留样本箱扫描解绑↗](https://yapi.sharing8.cn/project/529/interface/api/36561) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/keep-sample/scan-unbind`
+ * @更新时间 `2024-08-30 14:17:39`
+ */
+export interface PostApiCoreBankTrayKeepSampleScanUnbindRequest {
+  /**
+   * 托盘编号
+   */
+  trayNo: string;
+  /**
+   * 箱号
+   */
+  boxNo?: string;
+  /**
+   * 样本袋号（非空的时候则箱号也必填）
+   */
+  packNo?: string;
+  /**
+   * 是否确认解绑，传false表示否，true表示是
+   */
+  confirm: boolean;
+}
+
+/**
+ * 接口 [保留样本箱扫描解绑↗](https://yapi.sharing8.cn/project/529/interface/api/36561) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/keep-sample/scan-unbind`
+ * @更新时间 `2024-08-30 14:17:39`
+ */
+export type PostApiCoreBankTrayKeepSampleScanUnbindResponse = string;
+
+/**
+ * 接口 [保留样本箱手工解绑列表↗](https://yapi.sharing8.cn/project/529/interface/api/36579) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keep-sample/hand-unbind/packs`
+ * @更新时间 `2024-08-26 18:25:00`
+ */
+export interface GetApiCoreBankTrayKeepSampleHandUnbindPacksRequest {
+  /**
+   * 当前页
+   */
+  currPage: string;
+  /**
+   * 页大小
+   */
+  pageSize: string;
+  /**
+   * 采浆公司编号
+   */
+  stationNo?: string;
+  /**
+   * 样本批号
+   */
+  batchNo?: string;
+  /**
+   * 托盘编号
+   */
+  trayNo?: string;
+}
+
+/**
+ * 接口 [保留样本箱手工解绑列表↗](https://yapi.sharing8.cn/project/529/interface/api/36579) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `GET /api/core/bank/tray/keep-sample/hand-unbind/packs`
+ * @更新时间 `2024-08-26 18:25:00`
+ */
+export interface GetApiCoreBankTrayKeepSampleHandUnbindPacksResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    stationNo?: string;
+    /**
+     * 采浆公司
+     */
+    stationName?: string;
+    /**
+     * 样本批号
+     */
+    batchNo?: string;
+    /**
+     * 样本袋号
+     */
+    packNo?: string;
+    /**
+     * 箱号
+     */
+    boxNo?: string;
+    /**
+     * 托盘编号
+     */
+    trayNo?: string;
+    /**
+     * 绑定人
+     */
+    binder?: string;
+    /**
+     * 绑定时间
+     */
+    bindTime?: string;
+  }[];
+}
+
+/**
+ * 接口 [保留样本箱手工解绑↗](https://yapi.sharing8.cn/project/529/interface/api/36588) 的 **请求类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/keep-sample/hand-unbind`
+ * @更新时间 `2024-08-27 16:54:33`
+ */
+export interface PostApiCoreBankTrayKeepSampleHandUnbindRequest {
+  /**
+   * 样本袋号列表
+   */
+  packNoList: string[];
+}
+
+/**
+ * 接口 [保留样本箱手工解绑↗](https://yapi.sharing8.cn/project/529/interface/api/36588) 的 **返回类型**
+ *
+ * @分类 [托盘管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5229)
+ * @请求头 `POST /api/core/bank/tray/keep-sample/hand-unbind`
+ * @更新时间 `2024-08-27 16:54:33`
+ */
+export interface PostApiCoreBankTrayKeepSampleHandUnbindResponse {
+  code: string;
+  msg: string;
+}
+
 /* prettier-ignore-end */

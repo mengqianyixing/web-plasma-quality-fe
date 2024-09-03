@@ -28,6 +28,13 @@
         </a-button>
         <a-button
           type="primary"
+          @click="handlePickPlasmaSystem"
+          v-auth="NonconformityInStoreButtonEnum.NonconformityInStorePMS"
+        >
+          PMS出库
+        </a-button>
+        <a-button
+          type="primary"
           @click="handleCheck"
           v-auth="NonconformityInStoreButtonEnum.NonconformityInStoreCheck"
           >审核
@@ -74,6 +81,7 @@
     nonconformityCheck,
     nonconformityPlasmaList,
     nonconformityRedoCheck,
+    nonconformityPMS,
   } from '@/api/nonconformity/plasma-manage';
 
   import PickPlasmaModal from '@/views/nonconformity/plasma-manage/PickPlasmaModal.vue';
@@ -138,7 +146,7 @@
     bordered: true,
     clickToRowSelect: true,
     rowSelection: {
-      type: 'radio',
+      type: 'checkbox',
       onChange: (_, selectedRows: any) => {
         selectedRow.value = selectedRows;
       },
@@ -167,13 +175,32 @@
     showActionButtonGroup: false,
   });
 
-  function checkSelectedRows() {
-    if (!selectedRow.value.length) {
+  function checkSelectedRows(onlyOne: boolean = true) {
+    const length = selectedRow.value.length;
+    if (!length) {
       createMessage.warn('请选择一条记录');
+      return false;
+    }
+    if (onlyOne && length > 1) {
+      createMessage.warn('只能选择一条记录');
       return false;
     }
 
     return true;
+  }
+  function handlePickPlasmaSystem() {
+    if (!checkSelectedRows(false)) return;
+    createConfirm({
+      title: '确认',
+      content: '请确认是否下发出库指令到挑浆系统？此操作不可回退，请谨慎操作！',
+      iconType: 'warning',
+      onOk: async () => {
+        await nonconformityPMS(selectedRow.value.map((it) => it.bagNo));
+        createMessage.success('下发出库指令到挑浆系统成功');
+        clearSelectedRowKeys();
+        await reload();
+      },
+    });
   }
 
   function handlePickPlasma() {

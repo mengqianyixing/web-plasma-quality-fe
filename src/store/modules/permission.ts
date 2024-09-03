@@ -275,9 +275,7 @@ export const usePermissionStore = defineStore({
           });
           userStore.setUserInfo({
             ...userStore.getUserInfo,
-            homePath: tempRoutes?.length
-              ? tempRoutes?.[0]?.path + '/' + tempRoutes?.[0]?.children?.[0]?.path ?? '404'
-              : '/404',
+            homePath: PageEnum.HOME,
           });
           this.setBackMenuList(transformRouteToMenu(tempRoutes));
 

@@ -1,7 +1,7 @@
 import type { AppRouteRecordRaw, AppRouteModule } from '@/router/types';
 
 import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from '@/router/routes/basic';
-
+import { LAYOUT } from '@/router/constant';
 import { mainOutRoutes } from './mainOut';
 import { PageEnum } from '@/enums/pageEnum';
 import { jsonClone } from 'js-xxx';
@@ -58,6 +58,23 @@ export const RootRoute: AppRouteRecordRaw = {
     title: 'Root',
   },
 };
+const Home: AppRouteRecordRaw = {
+  path: '/',
+  name: 'Home',
+  component: LAYOUT,
+  redirect: '/home',
+  meta: {
+    title: 'Home',
+  },
+  children: [
+    {
+      path: 'home',
+      name: 'home',
+      meta: { title: '首页' },
+      component: () => import('@/layouts/default/home/index.vue'),
+    },
+  ],
+};
 
 export const LoginRoute: AppRouteRecordRaw = {
   path: '/login',
@@ -86,4 +103,5 @@ export const basicRoutes = [
   REDIRECT_ROUTE,
   PAGE_NOT_FOUND_ROUTE,
   ModifyPasswordRoute,
+  Home,
 ];

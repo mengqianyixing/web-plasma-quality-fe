@@ -122,6 +122,7 @@ export const useMultipleTabStore = defineStore({
       const { path, name, fullPath, params, query, meta } = getRawRoute(route);
       // 404  The page does not need to add a tab
       if (
+        path === PageEnum.HOME ||
         path === PageEnum.ERROR_PAGE ||
         path === PageEnum.BASE_LOGIN ||
         !name ||
@@ -295,7 +296,7 @@ export const useMultipleTabStore = defineStore({
     async closeAllTab(router: Router) {
       this.tabList = this.tabList.filter((item) => item?.meta?.affix ?? false);
       this.clearCacheTabs();
-      this.goToPage(router);
+      router.replace(PageEnum.HOME);
     },
 
     /**

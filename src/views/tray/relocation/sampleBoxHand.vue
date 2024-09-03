@@ -10,15 +10,17 @@
   <div class="h-full">
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleBinding" v-show="props.isBinding">
-          绑定托盘
-        </a-button>
-        <a-button type="primary" @click="handleUnbinding" v-show="!props.isBinding">
-          解绑托盘
-        </a-button>
+        <a-button type="primary" @click="handleBinding" v-if="props.isBinding"> 绑定 </a-button>
+        <a-button type="primary" @click="handleUnbinding" v-if="!props.isBinding"> 解绑 </a-button>
       </template>
     </BasicTable>
-    <BasicModal @register="registerModal" width="600px" @ok="confim" :show-footer="true">
+    <BasicModal
+      @register="registerModal"
+      width="400px"
+      title="绑定"
+      @ok="confim"
+      :show-footer="true"
+    >
       <BasicForm @register="registerForm" />
     </BasicModal>
   </div>
@@ -26,54 +28,96 @@
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form';
-  import { bindBoxApi } from '@/api/tray/relocation';
-  import { plasmaBoxHandSearchFormSchema, plasmaBoxHandColumns } from './relocation.data';
+  import {
+    handBindSampleBoxApi,
+    handUnbindSampleBoxApi,
+    getTraySampleHandBoxBindRecordApi,
+    getTraySampleBoxHandUnBindRecordApi,
+  } from '@/api/tray/relocation';
+  import {
+    sampleBoxHandBindSearchFormSchema,
+    sampleBoxHandUnbindSearchFormSchema,
+    sampleBoxHandBindColumns,
+    sampleBoxHandUnbindColumns,
+  } from './relocation.data';
   import { BasicModal, useModal } from '@/components/Modal';
   import { message } from 'ant-design-vue';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { onMounted } from 'vue';
 
   const props = defineProps({
     isBinding: {
       type: Boolean,
     },
   });
+  onMounted(() => {
+    if (props.isBinding) {
+      setProps({
+        formConfig: { schemas: sampleBoxHandBindSearchFormSchema, submitFunc },
+        columns: sampleBoxHandBindColumns,
+        api: getTraySampleHandBoxBindRecordApi,
+      });
+    } else {
+      setProps({
+        formConfig: { schemas: sampleBoxHandUnbindSearchFormSchema, submitFunc },
+        columns: sampleBoxHandUnbindColumns,
+        api: getTraySampleBoxHandUnBindRecordApi,
+      });
+    }
+  });
   const [registerModal, { openModal, setModalProps }] = useModal();
   const [registerForm, { validate, clearValidate }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
-    schemas: [{ label: '托盘编号', required: true, component: 'Input', field: 'taryNo' }],
+    schemas: [
+      { label: '托盘编号', required: true, component: 'Input', field: 'trayNo' },
+      { label: '样本箱号', required: true, component: 'Input', field: 'boxNo' },
+    ],
     showActionButtonGroup: false,
     showResetButton: false,
   });
-  const [registerTable, { getSelectRows, reload }] = useTable({
-    api: () => Promise.resolve({ result: [{}] }),
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    formConfig: {
-      schemas: plasmaBoxHandSearchFormSchema,
-    },
-    rowKey: 'houseNo',
-    columns: plasmaBoxHandColumns,
-    useSearchForm: true,
-    bordered: true,
-    size: 'small',
-    rowSelection: { type: 'checkbox' },
-  });
-
+  const [registerTable, { getSelectRows, reload, setProps, getForm, clearSelectedRowKeys }] =
+    useTable({
+      immediate: false,
+      fetchSetting: {
+        pageField: 'currPage',
+        sizeField: 'pageSize',
+        totalField: 'totalCount',
+        listField: 'result',
+      },
+      useSearchForm: true,
+      bordered: true,
+      size: 'small',
+      rowSelection: { type: 'checkbox' },
+      afterFetch: (res) => {
+        clearSelectedRowKeys();
+        return res;
+      },
+    });
+  function getFormIsNotNull() {
+    const values = getForm().getFieldsValue();
+    return Object.values(values).some((v) => v);
+  }
+  function submitFunc() {
+    if (getFormIsNotNull()) {
+      reload();
+      return Promise.resolve();
+    }
+    message.warning('请选择或输入条件进行查询');
+    return Promise.reject();
+  }
   const { createConfirm } = useMessage();
 
   function handleUnbinding() {
-    const row = getSelectRows();
-    if (row.length === 0) return message.warning('请选择数据');
+    const rows = getSelectRows();
+    if (rows.length === 0) return message.warning('请选择数据');
     createConfirm({
       iconType: 'warning',
-      content: '确认?',
+      content: '确认解绑?',
       onOk: async () => {
-        await reload();
+        const packNoList = rows.map((_) => _.packNo);
+        await handUnbindSampleBoxApi({ packNoList });
+        reload();
       },
     });
   }
@@ -85,16 +129,15 @@
   }
   async function confim() {
     try {
-      const { trayNo } = await validate();
+      const { trayNo, boxNo } = await validate();
       const rows = getSelectRows();
-      const boxes = rows.map((_) => _.boxId);
+      const packNoList = rows.map((_) => _.packNo);
       setModalProps({ confirmLoading: true });
-      await bindBoxApi({ trayNo: trayNo, type: props.isBinding ? 'bind' : 'unbind', boxes: boxes });
-      setModalProps({ confirmLoading: false });
+      await handBindSampleBoxApi({ trayNo: trayNo, boxNo, packNoList });
       openModal(false);
       reload();
-    } catch (e) {
-      console.log(e);
+    } finally {
+      setModalProps({ confirmLoading: false });
     }
   }
 </script>

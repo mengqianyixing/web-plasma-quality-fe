@@ -50,6 +50,7 @@ import {
   PutApiProductPlanCheckOrderNoResponse,
   GetApiProductPlanStackOrderNoRequest,
   GetApiProductPlanStackOrderNoResponse,
+  PostApiProductPlanBagRegroupRequest,
 } from '@/api/type/productionPlan';
 
 enum Api {
@@ -75,7 +76,7 @@ enum Api {
   CANCEL_REVIEW_PLAN = '/api/product/plan/review/cancel',
   CHECK_PLAN = '/api/product/plan/check/',
   CANCEL_CHECK_PLAN = '/api/product/plan/check/cancel',
-  PMS = '/api/product/plan/bag-out/',
+  PMS = '/api/product/plan/bag-regroup',
 }
 
 export const getListApi = (data: PostApiProductPlanOrdersRequest) =>
@@ -178,7 +179,8 @@ export const submitCheckCancelApi = (data: PutApiProductPlanCheckCancelRequest) 
     url: Api.CANCEL_CHECK_PLAN,
     data: data,
   });
-export const submitPMSApi = (data: PutApiProductPlanReviewOrderNoRequest) =>
+export const submitPMSApi = (data: PostApiProductPlanBagRegroupRequest) =>
   defHttp.post({
-    url: Api.PMS + data.orderNo,
+    url: Api.PMS,
+    data: data,
   });

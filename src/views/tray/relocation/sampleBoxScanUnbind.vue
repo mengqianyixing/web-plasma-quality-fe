@@ -15,72 +15,65 @@
             <span class="form-label">托盘编号</span>
             <ScanInput
               :value="formData.trayNo"
-              @enter="_handleEnter"
-              @keyup="_handleEnter"
+              @enter="handleTrayKeyUp"
+              @keyup="handleTrayKeyUp"
               size="lg"
               @scan-change="(code) => (formData.trayNo = code)"
             />
           </div>
-          <div class="form-item w-460px!">
+          <div class="form-item">
             <span class="form-label">箱号</span>
             <ScanInput
               :value="formData.boxNo"
               size="lg"
-              @enter="_submit"
-              @keyup="handleKeyUp"
+              @enter="handleBoxKeyUp"
+              @keyup="handleBoxKeyUp"
               @scan-change="(code) => (formData.boxNo = code)"
             />
-            <span class="form-label number">袋数({{ formData.packCount }})</span>
-            <a-button
-              type="warning"
-              :loading="printLoading"
-              @click="print"
-              :disabled="!formData.boxNo"
-              >封箱</a-button
-            >
           </div>
           <div class="form-item">
             <span class="form-label">样本袋号</span>
             <ScanInput
               :value="formData.packNo"
-              @enter="_submit"
+              @enter="handlePackKeyUp"
               size="lg"
               ref="packNoRef"
-              @keyup="handleKeyUp"
+              @keyup="handlePackKeyUp"
               @scan-change="(code) => (formData.packNo = code)"
             />
           </div>
         </div>
       </div>
     </Spin>
+
     <BasicTable @register="registerTable" />
   </div>
 </template>
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { sampleBoxScanSearchFormSchema, sampleBoxScanColumns } from './relocation.data';
-  import { bindSampleBoxApi, getTraySampleBoxBindRecordApi } from '@/api/tray/relocation';
+  import { unbindSampleBoxApi, getTraySampleBoxBindRecordApi } from '@/api/tray/relocation';
   import { message, Spin } from 'ant-design-vue';
   import ScanInput from '@/components/Form/src/components/ScanInput.vue';
   import { debounce } from 'lodash-es';
-  import { ref, nextTick, reactive } from 'vue';
-  import { getPrintRecord, printRecord } from '@/api/tag/printRecord';
+  import { ref, reactive, nextTick } from 'vue';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const formData = reactive({
     trayNo: '',
     boxNo: '',
     packNo: '',
-    packCount: 0,
   });
   const packNoRef = ref();
   const spinning = ref(false);
-  const printLoading = ref(false);
 
   const props = defineProps({
     isBinding: {
       type: Boolean,
     },
   });
+  const { createConfirm } = useMessage();
+
   const columns = sampleBoxScanColumns(props.isBinding);
   const [registerTable, { reload }] = useTable({
     api: getTraySampleBoxBindRecordApi,
@@ -93,63 +86,71 @@
     formConfig: {
       schemas: sampleBoxScanSearchFormSchema,
     },
-    rowKey: 'houseNo',
     columns: columns,
     useSearchForm: true,
     bordered: true,
     size: 'small',
-    beforeFetch: (p) => ({ ...p, bindType: 1 }),
+    beforeFetch: (p) => ({ ...p, bindType: 0 }),
   });
 
-  async function print() {
-    try {
-      printLoading.value = true;
-      const res = await getPrintRecord({
-        labelType: 'KEEP_SAMPLE_BOX',
-        bissNo: formData.boxNo,
-      });
-      await printRecord({
-        ...res,
-        resolution: void 0,
-        dpi: res.resolution,
-      });
-      formData.boxNo = '';
-    } finally {
-      printLoading.value = false;
-    }
-  }
   async function submit() {
     const focusedElement = document.activeElement as InputHTMLElement;
     try {
-      const res = await bindSampleBoxApi(formData, () => {
+      const msg = await unbindSampleBoxApi({ ...formData, confirm: false }, () => {
         setTimeout(() => {
           focusedElement.focus();
           focusedElement.select();
         }, 300);
       });
-      formData.packCount = res.packCount;
-      formData.boxNo = res.boxNo || formData.boxNo;
-      formData.packNo = '';
-      reload();
-      message.success('操作成功');
+      createConfirm({
+        title: '确认',
+        content: msg,
+        iconType: 'warning',
+        onOk: async () => {
+          spinning.value = true;
+          try {
+            await unbindSampleBoxApi({ ...formData, confirm: true });
+            reload();
+            message.success('操作成功');
+          } finally {
+            spinning.value = false;
+          }
+        },
+        onCancel: () => {
+          focusedElement.focus();
+          focusedElement.select();
+        },
+      });
     } finally {
       await nextTick();
       focusedElement.focus();
     }
   }
-  const _handleEnter = debounce((e) => {
-    if (e.code === 'Enter') packNoRef.value.$el.focus();
-  }, 300);
-  const _submit = debounce(handleSubmit, 200);
-  function handleKeyUp(e) {
+  const _submitTray = debounce(handleSubmit, 200);
+  function handleTrayKeyUp(e) {
     if (e.key === 'Enter') {
-      _submit();
+      if (!formData.trayNo) return message.warn('请扫描托盘编号');
+      _submitTray();
+    }
+  }
+  const _submitBox = debounce(handleSubmit, 200);
+  function handleBoxKeyUp(e) {
+    if (e.key === 'Enter') {
+      if (!formData.boxNo) return message.warn('请扫描箱号');
+      else if (!formData.trayNo) return message.warn('请扫描托盘编号');
+      _submitBox();
+    }
+  }
+  const _submitPack = debounce(handleSubmit, 200);
+  function handlePackKeyUp(e) {
+    if (e.key === 'Enter') {
+      if (!formData.packNo) return message.warn('请扫描样本袋号');
+      if (!formData.boxNo) return message.warn('请扫描箱号');
+      else if (!formData.trayNo) return message.warn('请扫描托盘编号');
+      _submitPack();
     }
   }
   async function handleSubmit() {
-    const { packNo, trayNo, boxNo } = formData;
-    if (!trayNo) return message.warning(`请扫描托盘`);
-    if (!packNo && !boxNo) return message.warning(`请扫描箱号或者样本袋号`);
     try {
       spinning.value = true;
       await submit();
@@ -170,14 +171,6 @@
       margin-right: 10px;
       font-size: 16px;
       text-align: right;
-    }
-
-    .number {
-      flex-shrink: 0;
-      width: auto;
-      margin: auto 10px;
-      font-size: 14px;
-      text-align: left;
     }
   }
 </style>

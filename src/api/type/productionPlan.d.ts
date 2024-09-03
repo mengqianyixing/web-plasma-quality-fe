@@ -869,10 +869,14 @@ export type GetApiProductPlanStackOrderNoResponse = {
  * 接口 [pms组垛任务创建↗](https://yapi.sharing8.cn/project/529/interface/api/34830) 的 **请求类型**
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
- * @请求头 `POST /api/product/plan/bag-out/{orderNo}`
- * @更新时间 `2024-07-24 16:10:40`
+ * @请求头 `POST /api/product/plan/bag-regroup`
+ * @更新时间 `2024-09-03 11:24:50`
  */
-export interface PostApiProductPlanBagOutOrderNoRequest {
+export interface PostApiProductPlanBagRegroupRequest {
+  /**
+   * create
+   */
+  regroupType: string;
   orderNo: string;
 }
 
@@ -880,8 +884,28 @@ export interface PostApiProductPlanBagOutOrderNoRequest {
  * 接口 [pms组垛任务创建↗](https://yapi.sharing8.cn/project/529/interface/api/34830) 的 **返回类型**
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
+ * @请求头 `POST /api/product/plan/bag-regroup`
+ * @更新时间 `2024-09-03 11:24:50`
+ */
+export interface PostApiProductPlanBagRegroupResponse {}
+
+/**
+ * 接口 [pms出库任务创建↗](https://yapi.sharing8.cn/project/529/interface/api/36642) 的 **请求类型**
+ *
+ * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
  * @请求头 `POST /api/product/plan/bag-out/{orderNo}`
- * @更新时间 `2024-07-24 16:10:40`
+ * @更新时间 `2024-09-03 11:25:46`
+ */
+export interface PostApiProductPlanBagOutOrderNoRequest {
+  orderNo: string;
+}
+
+/**
+ * 接口 [pms出库任务创建↗](https://yapi.sharing8.cn/project/529/interface/api/36642) 的 **返回类型**
+ *
+ * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
+ * @请求头 `POST /api/product/plan/bag-out/{orderNo}`
+ * @更新时间 `2024-09-03 11:25:46`
  */
 export interface PostApiProductPlanBagOutOrderNoResponse {}
 
