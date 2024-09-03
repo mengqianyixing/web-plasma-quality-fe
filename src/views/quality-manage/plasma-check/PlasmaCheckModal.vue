@@ -22,7 +22,7 @@
       </BasicTable>
     </div>
 
-    <Description @register="registerConclusionDetail" :data="conclusionData" />
+    <Description @register="registerConclusionDetail" :data="conclusionData" v-if="!isKM" />
     <BasicForm @register="registerForm" />
     <AddCheckContentModal @register="registerAddModal" @success="handleSuccess" />
   </BasicModal>
@@ -50,7 +50,12 @@
   } from '@/api/type/plasmaCheckManage';
   import { DictionaryEnum, getSysDictionary } from '@/api/_dictionary';
   import dayjs from 'dayjs';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { COMPANY } from '@/enums/company';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
+  const isKM = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
   const plasmaDetail = ref<Recordable>({});
   const conclusionData = reactive<Recordable>({
     conclusion: '',
@@ -147,7 +152,7 @@
         componentProps: {
           rows: 6,
         },
-        show: false,
+        show: isKM,
       },
       {
         field: 'remark',
@@ -181,7 +186,16 @@
       {
         field: 'auditConclusion',
         componentProps: {
-          disabled: true,
+          disabled: !isKM || unref(flag) === 'preview',
+        },
+      },
+    ]);
+
+    await updateSchema([
+      {
+        field: 'remark',
+        componentProps: {
+          disabled: unref(flag) === 'preview',
         },
       },
     ]);
@@ -193,15 +207,6 @@
         auditConclusion: res.auditConclusion,
         remark: res.remark,
       });
-
-      await updateSchema([
-        {
-          field: 'remark',
-          componentProps: {
-            disabled: unref(flag) === 'preview',
-          },
-        },
-      ]);
 
       setTableData(res.itemList as any[]);
     } else if (unref(flag) === 'edit') {
