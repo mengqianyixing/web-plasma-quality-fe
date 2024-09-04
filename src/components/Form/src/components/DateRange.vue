@@ -1,7 +1,13 @@
 <template>
   <div class="w-full">
     <Form.ItemRest>
-      <RangePicker v-bind="attrs" @focus="handleFocus" @blur="handleBlur" @change="handleChange" />
+      <RangePicker
+        v-bind="attrs"
+        value-format="YYYY-MM-DD"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        @change="handleChange"
+      />
     </Form.ItemRest>
   </div>
 </template>
@@ -56,6 +62,6 @@
   }
   function handleChange(e) {
     beforeInput.value = e || [];
-    emit('change', e);
+    emit('change', e || []);
   }
 </script>
