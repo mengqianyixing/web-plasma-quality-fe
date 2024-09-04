@@ -61,4 +61,5 @@ export enum SERVER_ENUM {
   CallbackAdapterState = 'CallbackAdapterState',
   DonorSearchStatus = 'DonorSearchStatus',
   BatchReleaseDlvType = 'BatchReleaseDlvType',
+  PrepareState = 'PrepareState',
 }

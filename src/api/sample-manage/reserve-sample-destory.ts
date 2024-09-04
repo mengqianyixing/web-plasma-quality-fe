@@ -288,4 +288,10 @@ export const outBandByBatch = (params: PostApiCoreBankDeliverSampleScanBatchRequ
     params,
   });
 
-export const outBoundWMSApi = (params) => defHttp.put({ url: Api.OUT_BAND_WMS, params });
+export const outBoundWMSApi = (params) =>
+  defHttp.put(
+    { url: Api.OUT_BAND_WMS, params },
+    {
+      joinParamsToUrl: true,
+    },
+  );

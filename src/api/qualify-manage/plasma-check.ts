@@ -5,6 +5,8 @@ import {
   GetApiCoreBatchPlasmaAuditIdResponse,
   GetApiCoreBatchPlasmaAuditsRequest,
   GetApiCoreBatchPlasmaAuditsResponse,
+  GetApiCoreBatchPlasmaAuditUnqualifiedesRequest,
+  GetApiCoreBatchPlasmaAuditUnqualifiedesResponse,
   PostApiCoreBatchPlasmaAuditRequest,
   PutApiCoreBatchPlasmaAuditApprovalRequest,
   PutApiCoreBatchPlasmaAuditRecheckCancelRequest,
@@ -21,6 +23,7 @@ enum Api {
   PLASMA_RECHECK_CANCEL = '/api/core/batch/plasma/audit/recheck-cancel',
   PLASMA_CHECK_APPROVAL = '/api/core/batch/plasma/audit/approval',
   PLASMA_CHECK_CONCLUSION_TEMPLATE = '/api/core/batch/plasma/audit-conclusion',
+  PLASMA_UNQUALIFIED_DETAIL = '/api/core/batch/plasma/audit/unqualifiedes',
 }
 
 export const getPlasmaCheckList = (params: GetApiCoreBatchPlasmaAuditsRequest) =>
@@ -55,3 +58,9 @@ export const approvalPlasmaCheck = (params: PutApiCoreBatchPlasmaAuditApprovalRe
 export const getCheckConclusionTemplate = (
   params: GetApiCoreBatchPlasmaAuditConclusionBatchNoRequest['batchNo'],
 ) => defHttp.get({ url: Api.PLASMA_CHECK_CONCLUSION_TEMPLATE + '/' + params });
+
+export const getUnqualifiedDetail = (params: GetApiCoreBatchPlasmaAuditUnqualifiedesRequest) =>
+  defHttp.get<GetApiCoreBatchPlasmaAuditUnqualifiedesResponse>(
+    { url: Api.PLASMA_UNQUALIFIED_DETAIL, params },
+    { joinParamsToUrl: true },
+  );

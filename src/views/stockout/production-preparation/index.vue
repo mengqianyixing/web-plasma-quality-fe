@@ -136,8 +136,6 @@
     checkPrepare,
   } from '@/api/stockout/production-preparation.js';
   import {
-    prepareStateMap,
-    prepareStateValueEnum,
     bagFlagMap,
     bagFlagValueEnum,
     pickModeMap,
@@ -287,7 +285,7 @@
       width: 80,
       resizable: true,
       format(text) {
-        return `${prepareStateMap.get(text as prepareStateValueEnum)}`;
+        return serverEnumStore.getServerEnumText(SERVER_ENUM.PrepareState)(text);
       },
     },
   ];
@@ -333,10 +331,7 @@
       label: '状态',
       component: 'Select',
       componentProps: {
-        options: [...prepareStateMap.entries()].map(([key, value]) => ({
-          value: key,
-          label: `${value}`,
-        })),
+        options: serverEnumStore.getServerEnum(SERVER_ENUM.PrepareState),
       },
     },
     {
