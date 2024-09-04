@@ -353,12 +353,12 @@ const nonconformity: AppRouteModule = {
           id: StockOutButtonEnum.PutIntoBatchReceive,
           name: 'batchReceive',
           title: '整批接收',
-          company: COMPANY.RS,
         },
         {
           id: StockOutButtonEnum.PutIntoCancelExamine,
           name: 'cancelExamine',
           title: '撤销接收',
+          company: COMPANY.RS,
         },
       ],
     },
