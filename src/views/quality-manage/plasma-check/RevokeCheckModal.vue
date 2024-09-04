@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="register"
-    title="撤销审核"
+    :title="flag === 'check' ? '撤销审核' : '撤销复核'"
     showFooter
     width="25%"
     @ok="handleSubmit"
