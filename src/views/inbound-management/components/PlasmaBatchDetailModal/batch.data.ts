@@ -1,9 +1,14 @@
 import { FormSchema } from '@/components/Table';
+import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+import { SysParamsEnum } from '@/enums/sysParamsEnum';
+import { COMPANY } from '@/enums/company';
 
+const globalApiStore = useGlobalApiStoreWithOut();
+const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 export const columns = [
   {
     field: 'nowBoxNo',
-    title: '现存箱号',
+    title: iskm ? '现存托盘/箱' : '现存箱号',
     width: 140,
     className: 'no-ellipsis',
   },
@@ -120,7 +125,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: 'nowBoxNo',
-    label: '现存箱号',
+    label: iskm ? '现存托盘/箱' : '现存箱号',
     component: 'Input',
   },
   {

@@ -173,7 +173,7 @@
         {
           component: 'Input',
           field: 'boxNo',
-          label: '血浆箱号',
+          label: iskm ? '托盘/箱' : '血浆箱号',
           ifShow: false,
         },
       ]);
@@ -381,7 +381,7 @@
     },
     {
       component: 'Input',
-      label: '血浆箱号',
+      label: iskm ? '托盘/箱' : '血浆箱号',
       field: 'boxNo',
       colProps: { span: 4 },
     },

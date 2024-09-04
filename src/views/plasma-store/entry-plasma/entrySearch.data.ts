@@ -3,6 +3,12 @@ import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { useStation } from '@/hooks/common/useStation';
 import dayjs from 'dayjs';
+import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+import { SysParamsEnum } from '@/enums/sysParamsEnum';
+import { COMPANY } from '@/enums/company';
+
+const globalApiStore = useGlobalApiStoreWithOut();
+const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 
 const { stationOptions } = useStation();
 const serverEnumStore = useServerEnumStoreWithOut();
@@ -172,7 +178,7 @@ export const entryDetailModalColumns: BasicColumn[] = [
     width: 150,
   },
   {
-    title: '现存箱号',
+    title: iskm ? '现存托盘/箱' : '现存箱号',
     dataIndex: 'currBoxNo',
     width: 150,
   },
