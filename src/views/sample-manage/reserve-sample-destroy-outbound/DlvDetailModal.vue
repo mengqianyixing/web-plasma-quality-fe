@@ -17,7 +17,7 @@
 
         <div class="flex-1 w-full">
           <a-tabs
-            class="tabs h-full"
+            class="h-full tabs"
             default-active-key="batch"
             v-model:activeKey="currentKey"
             type="card"
@@ -55,7 +55,12 @@
   } from '@/views/sample-manage/reserve-sample-destroy-outbound/reserve.data';
   import { useMessage } from '@/hooks/web/useMessage';
   import { GetApiCoreBankDeliverSampleDetailResponse } from '@/api/type/sampleManage';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { COMPANY } from '@/enums/company';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
+  const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
   const { createMessage, createConfirm } = useMessage();
 
   defineEmits(['success', 'register']);
@@ -186,7 +191,7 @@
     bagRedo();
   }
 
-  const showOkBtn = computed(() => currentKey.value === 'batch');
+  const showOkBtn = computed(() => currentKey.value === 'batch' && !iskm);
   async function handleOk() {
     if (!selectedRow.value.length) {
       createMessage.warn('请选择要出库的批次');
