@@ -4,7 +4,7 @@
     @register="register"
     :title="getTitle"
     showFooter
-    width="25%"
+    width="28%"
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm" />
@@ -21,6 +21,7 @@
 
   const [registerForm, { validate, setFieldsValue, resetFields }] = useForm({
     labelWidth: 120,
+    baseColProps: { span: 24 },
     schemas: [
       {
         field: 'sort',
@@ -37,7 +38,7 @@
       {
         field: 'auditContent',
         label: '审核内容',
-        component: 'Input',
+        component: 'InputTextArea',
         required: true,
       },
       {
