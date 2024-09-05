@@ -37,7 +37,7 @@ export const columns = [
     className: 'no-ellipsis',
   },
   {
-    title: '浆员名称',
+    title: '浆员姓名',
     field: 'donorName',
     width: 80,
     className: 'no-ellipsis',
