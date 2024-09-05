@@ -37,8 +37,11 @@
             </template>
             <template #toolbar>
               <div class="h-40px bg-#ffffff mt-2 flex items-center">
+                <a-button type="primary" @click="handleSelectAll" class="absolute right-20">
+                  全部添加
+                </a-button>
                 <a-button type="primary" @click="handleAdd" class="absolute right-20">
-                  新增
+                  筛选添加
                 </a-button>
                 <a-button type="primary" @click="handleDelete" class="absolute right-2">
                   撤销
@@ -81,7 +84,11 @@
     callbackModalSearchFromSchema,
     callbackModalColumns,
   } from '@/views/callback/list-generation/generation.data';
-  import { getCallbackDetail, revokeCallback } from '@/api/callback/list-generation';
+  import {
+    getCallbackDetail,
+    revokeCallback,
+    selectAllCallbackDonor,
+  } from '@/api/callback/list-generation';
   import dayjs from 'dayjs';
   import { BasicForm, useForm } from '@/components/Form';
   import {
@@ -259,6 +266,24 @@
     openBagDetailModal(true, {
       cardNo: _record.cardNo,
       planNo: batchNo.value,
+    });
+  }
+
+  async function handleSelectAll() {
+    createConfirm({
+      iconType: 'warning',
+      title: '确认',
+      content: '确认添加所有待回访的浆员？',
+      onOk: async () => {
+        await selectAllCallbackDonor({
+          batchNo: batchNo.value,
+          stationNo: stationNo.value,
+        });
+
+        await submitFunc();
+
+        emit('success');
+      },
     });
   }
 </script>
