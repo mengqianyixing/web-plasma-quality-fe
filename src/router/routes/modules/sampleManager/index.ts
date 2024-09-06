@@ -90,10 +90,6 @@ const sampleManager: AppRouteModule = {
           id: SampleManageButtonEnum.SampleRelease,
           title: '发布',
         },
-        {
-          id: SampleManageButtonEnum.SampleArrange,
-          title: '查看试管架',
-        },
       ],
     },
     {

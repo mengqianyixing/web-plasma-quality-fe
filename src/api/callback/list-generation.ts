@@ -30,6 +30,7 @@ enum Api {
   DETAIL_BY_STATE = '/api/search/donor/callback/detail-state',
   DONOR_BAG_DETAIL = '/api/search/donor/callback/detail/bag',
   SELF_BACK_DETAIL = '/api/search/donor/callback/detail-self',
+  SELECT_ALL_DONOR = '/api/core/donor/callback/need-all',
 }
 
 export const getCallbackListApi = (params: GetApiCoreDonorCallbackRequest) =>
@@ -106,3 +107,9 @@ export const getSelfBackDetail = (params: GetApiSearchDonorCallbackDetailSelfReq
       joinParamsToUrl: true,
     },
   );
+
+export const selectAllCallbackDonor = (params: { stationNo: string; batchNo: string }) =>
+  defHttp.post({
+    url: Api.SELECT_ALL_DONOR,
+    params,
+  });

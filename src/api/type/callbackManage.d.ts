@@ -873,4 +873,53 @@ export type GetApiSearchDonorCallbackDetailSelfResponse = {
   liveAddress: string;
 }[];
 
+/**
+ * 接口 [待回访浆员一键添加↗](https://yapi.sharing8.cn/project/529/interface/api/36660) 的 **请求类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `POST /api/core/donor/callback/need-all`
+ * @更新时间 `2024-09-05 16:00:56`
+ */
+export interface PostApiCoreDonorCallbackNeedAllRequest {
+  stationNo: string;
+  /**
+   * 批次号
+   */
+  batchNo: string;
+  maxCollectTime: string;
+  minCollectTime: string;
+  /**
+   * 血浆类型      N, // 普浆
+   *     T, // 破免
+   *     B, // 乙免
+   *     R, // 狂免
+   *     A, // 炭疽
+   *     C  // 新冠
+   */
+  immType?: string;
+  /**
+   * 末次距今未采浆天数
+   */
+  gapDays: string;
+  /**
+   * 血浆状态 ：首次 反复
+   */
+  plasmaType?: string;
+  /**
+   * 血浆状态， 首次反复， 1 首次 2反复
+   */
+  trackType?: string;
+  pageSize: string;
+  currPage: string;
+}
+
+/**
+ * 接口 [待回访浆员一键添加↗](https://yapi.sharing8.cn/project/529/interface/api/36660) 的 **返回类型**
+ *
+ * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
+ * @请求头 `POST /api/core/donor/callback/need-all`
+ * @更新时间 `2024-09-05 16:00:56`
+ */
+export interface PostApiCoreDonorCallbackNeedAllResponse {}
+
 /* prettier-ignore-end */

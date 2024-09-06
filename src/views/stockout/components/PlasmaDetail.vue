@@ -34,7 +34,12 @@
     prepareProduceValueEnum,
   } from '@/enums/stockoutEnum';
   import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { COMPANY } from '@/enums/company';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
+  const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
   let prepareNo = ''; // 准备号
   const [registerModal] = useModalInner(async (data) => {
     prepareNo = data.record.prepareNo;
@@ -80,7 +85,7 @@
       title: '血浆批号',
     },
     {
-      title: '血浆箱号',
+      title: iskm ? '托盘/箱' : '血浆箱号',
       dataIndex: 'boxNo',
     },
     {
@@ -160,7 +165,7 @@
     },
     {
       field: 'boxNo',
-      label: '血浆箱号',
+      label: iskm ? '托盘/箱' : '血浆箱号',
       component: 'Input',
     },
     {

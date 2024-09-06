@@ -459,7 +459,7 @@ export type GetApiCoreBatchPlasmaAuditConclusionBatchNoResponse = string;
  *
  * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
  * @请求头 `GET /api/core/batch/plasma/audit/unqualifiedes`
- * @更新时间 `2024-09-03 16:28:19`
+ * @更新时间 `2024-09-03 17:45:50`
  */
 export interface GetApiCoreBatchPlasmaAuditUnqualifiedesRequest {
   /**
@@ -481,7 +481,7 @@ export interface GetApiCoreBatchPlasmaAuditUnqualifiedesRequest {
  *
  * @分类 [血浆审核↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5442)
  * @请求头 `GET /api/core/batch/plasma/audit/unqualifiedes`
- * @更新时间 `2024-09-03 16:28:19`
+ * @更新时间 `2024-09-03 17:45:50`
  */
 export interface GetApiCoreBatchPlasmaAuditUnqualifiedesResponse {
   totalCount?: number;
@@ -505,10 +505,6 @@ export interface GetApiCoreBatchPlasmaAuditUnqualifiedesResponse {
      * 采集日期
      */
     collectDate?: string;
-    /**
-     * 效价类型
-     */
-    titerType?: string;
     /**
      * 不合格日期
      */

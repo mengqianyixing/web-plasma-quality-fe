@@ -267,15 +267,15 @@ const callManager: AppRouteModule = {
       },
       component: () => import('@/views/system/params/index.vue'),
     },
-    {
-      path: 'encoding',
-      name: 'TagEncoding',
-      meta: {
-        title: '系统编码管理',
-      },
-      id: 890020,
-      component: () => import('@/views/tag-manage/encoding/index.vue'),
-    },
+    // {
+    //   path: 'encoding',
+    //   name: 'TagEncoding',
+    //   meta: {
+    //     title: '系统编码管理',
+    //   },
+    //   id: 890020,
+    //   component: () => import('@/views/tag-manage/encoding/index.vue'),
+    // },
     {
       path: 'dictionary',
       name: 'Dictionary',
