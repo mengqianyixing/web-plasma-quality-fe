@@ -2479,6 +2479,62 @@ export interface PostApiCoreBankDeliverSampleScanBatchRequest {
 export interface PostApiCoreBankDeliverSampleScanBatchResponse {}
 
 /**
+ * 接口 [保留样本出库单样本批次详情-样本袋列表样本详情↗](https://yapi.sharing8.cn/project/529/interface/api/36732) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/bag-detail`
+ * @更新时间 `2024-09-05 17:06:47`
+ */
+export interface GetApiCoreBankDeliverSampleBagDetailRequest {
+  /**
+   * 样本袋号
+   */
+  sampleBagNo: string;
+}
+
+/**
+ * 接口 [保留样本出库单样本批次详情-样本袋列表样本详情↗](https://yapi.sharing8.cn/project/529/interface/api/36732) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/core/bank/deliver/sample/bag-detail`
+ * @更新时间 `2024-09-05 17:06:47`
+ */
+export type GetApiCoreBankDeliverSampleBagDetailResponse = {
+  /**
+   * 采浆公司
+   */
+  stationName: string;
+  /**
+   * 样本编号
+   */
+  sampleNo: string;
+  /**
+   * 样本批号
+   */
+  batchNo: string;
+  /**
+   * 采集日期
+   */
+  collectDate: string;
+  /**
+   * 浆员姓名
+   */
+  donorName: string;
+  /**
+   * 浆员编号
+   */
+  cardNo: string;
+  /**
+   * 类别
+   */
+  keepBy: string;
+  /**
+   * 血型
+   */
+  booldType: string;
+}[];
+
+/**
  * 接口 [新增预检项↗](https://yapi.sharing8.cn/project/529/interface/api/34944) 的 **请求类型**
  *
  * @分类 [预检登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5938)
