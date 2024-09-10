@@ -1,6 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight class="root" content-class="relative">
-    <div class="absolute h-full w-full pb-16px">
+    <div class="absolute w-full h-full pb-16px">
       <div style="height: calc(100% - 45px)">
         <BasicTable @register="registerTable" ref="tableRef" :columns="columnsRef">
           <template #toolbar>
@@ -29,7 +29,7 @@
           </template>
         </BasicTable>
       </div>
-      <div class="mb-10px bg-white pb-6px pr-16px m-6px h-45px" v-if="pagerLeft.total > 0">
+      <div class="bg-white mb-10px pb-6px pr-16px m-6px h-45px" v-if="pagerLeft.total > 0">
         <a-pagination
           class="float-right mt-2"
           @change="handlePageChange"
@@ -208,6 +208,7 @@
         ...getForm().getFieldsValue(),
         currPage: '1',
         pageSize: pageSize,
+        exportFlag: true,
       });
 
       const totalData = await getUnqualifiedPlasmaCountTotal(

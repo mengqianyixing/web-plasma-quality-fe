@@ -11,7 +11,7 @@
         <template v-if="column.key === 'action'">
           <TableAction
             v-auth="'E_910'"
-            class="w-20px float-left"
+            class="float-left w-20px"
             :actions="[
               {
                 icon: 'ant-design:lock-twotone',
@@ -22,7 +22,7 @@
           />
           <TableAction
             v-auth="'E_1112'"
-            class="w-20px float-right"
+            class="float-right w-20px"
             :actions="[
               {
                 icon: 'clarity:note-edit-line',
@@ -42,15 +42,16 @@
   import { BasicTable, useTable, TableAction } from '@/components/Table';
   import { getCasDoorUserDetail, getCasDoorUsers, resetCasDoorUserPwd } from '@/api/oauth/users';
   import { getCasDoorRoles, getCasDoorAllUsers } from '@/api/oauth/auth';
-
+  import { useUserStore } from '@/store/modules/user';
   import { useMessage } from '@/hooks/web/useMessage';
   import { useModal } from '@/components/Modal';
   import UsersModal from './UsersModal.vue';
-  import { exportFile, transferCSVData } from 'js-xxx';
-
+  import { exportFile, transferCSVData, getRandNum } from 'js-xxx';
+  import { pushLog } from '@/api/oauth/logger';
   import { columns, searchFormSchema } from './users.data';
 
   const { createMessage } = useMessage();
+  const userStore = useUserStore();
 
   defineOptions({ name: 'Users' });
   const loading = ref(false);
@@ -108,6 +109,17 @@
         exportData.push({ username: it.name, ...obj });
       });
       exportFile(transferCSVData(excelCol, exportData), `用户角色`, 'csv');
+      pushLog({
+        usrName: userStore.userInfo?.username,
+        usrId: userStore.userInfo?.userAccount,
+        moduleType: 1,
+        optName: '系统',
+        optContent: `导出【用户角色】`,
+        path: 'GET /',
+        time: getRandNum(10, 50),
+        reqData: JSON.stringify(userStore.userInfo),
+        respData: JSON.stringify({ code: 0, msg: 'ok', data: null }),
+      });
       createMessage.success('导出成功');
     } finally {
       loading.value = false;

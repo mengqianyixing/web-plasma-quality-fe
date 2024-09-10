@@ -248,6 +248,7 @@
         batchNo: selectedRow.value[0]?.planNo,
         currPage: '1',
         pageSize,
+        exportFlag: true,
       });
       exportLoading.value = false;
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(callbackDetailModalColumns);

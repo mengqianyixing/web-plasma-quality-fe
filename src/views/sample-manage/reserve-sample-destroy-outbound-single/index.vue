@@ -276,6 +276,7 @@
         currPage: '1',
         pageSize,
         dlvNo: getSelectRows()[0]?.dlvNo as string,
+        exportFlag: true,
       } as GetApiCoreBankDeliverSampleDetailSingleRequest);
       console.log(data, 'data');
       if ((data.totalCount || 0) > Number(pageSize))

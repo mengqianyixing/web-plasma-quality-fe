@@ -1,14 +1,14 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <div class="p-3 root flex flex-col h-full">
-      <div class="pt-8px bg-white mb-8px">
+    <div class="flex flex-col h-full p-3 root">
+      <div class="bg-white pt-8px mb-8px">
         <BasicForm @register="registerBasicForm" class="search-form" />
       </div>
       <a-tabs
         default-active-key="detail"
         v-model:activeKey="currentKey"
         type="card"
-        class="mb-16px h-full bg-white tabs flex-1"
+        class="flex-1 h-full bg-white mb-16px tabs"
         @change="handleTabChange"
       >
         <a-tab-pane key="come" tab="来浆数据">
@@ -25,7 +25,7 @@
               </template>
             </BasicTable>
           </div>
-          <div class="mb-10px bg-white pb-6px pr-16px h-40px mb-6px" v-if="pagerLeft.total > 0">
+          <div class="bg-white mb-10px pb-6px pr-16px h-40px mb-6px" v-if="pagerLeft.total > 0">
             <a-pagination
               class="float-right mt-2"
               @change="handlePageChange"
@@ -48,7 +48,7 @@
               </template>
             </BasicTable>
           </div>
-          <div class="mb-10px bg-white pb-6px pr-16px h-40px mb-6px" v-if="pagerRight.total > 0">
+          <div class="bg-white mb-10px pb-6px pr-16px h-40px mb-6px" v-if="pagerRight.total > 0">
             <a-pagination
               class="float-right mt-2"
               @change="handlePageChange"
@@ -77,7 +77,7 @@
             </BasicTable>
           </div>
           <div
-            class="mb-10px bg-white pb-6px pr-16px h-40px mb-6px"
+            class="bg-white mb-10px pb-6px pr-16px h-40px mb-6px"
             v-if="pagerInventory.total > 0"
           >
             <a-pagination
@@ -436,6 +436,7 @@
       ...getFieldsValue(),
       currPage: '1',
       pageSize,
+      exportFlag: true,
     });
     if ((data.totalCount || 0) > Number(pageSize))
       return message.warning('最多只能导出【' + pageSize + '】条数据');
@@ -460,6 +461,7 @@
       ...getFieldsValue(),
       currPage: '1',
       pageSize,
+      exportFlag: true,
     });
     if ((data.totalCount || 0) > Number(pageSize))
       return message.warning('最多只能导出【' + pageSize + '】条数据');
@@ -489,6 +491,7 @@
       ...getFieldsValue(),
       currPage: '1',
       pageSize,
+      exportFlag: true,
     } as GetApiSearchBankPlasmaStatisticStockRequest);
 
     let totalData: any = await getPlasmaBatchListByInventoryTotal(

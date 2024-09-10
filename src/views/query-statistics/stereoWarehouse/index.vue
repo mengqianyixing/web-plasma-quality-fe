@@ -68,7 +68,12 @@
       loading.value = true;
       const { getFieldsValue } = getForm();
       const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
-      const data = await getListApi({ ...getFieldsValue(), currPage: 1, pageSize } as any);
+      const data = await getListApi({
+        ...getFieldsValue(),
+        currPage: 1,
+        pageSize,
+        exportFlag: true,
+      } as any);
       if ((data.totalCount || 0) > Number(pageSize))
         return message.warning('最多只能导出【' + pageSize + '】条数据');
       const dataExport = data.result || [];

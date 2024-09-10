@@ -153,6 +153,7 @@
         ...getForm().getFieldsValue(),
         currPage: '1',
         pageSize,
+        exportFlag: true,
       } as GetApiProductPrepareErpOutProdRequest & GetApiCoreBankErpOutNonProdRequest);
 
       if ((OriginData.totalCount || 0) > Number(pageSize))

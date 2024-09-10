@@ -28,7 +28,7 @@ export const getPlasmaQualifiedInventory = (
   params: GetApiSearchBankQualifiedInventoryStatisticQueryDateRequest,
 ) =>
   defHttp.get<GetApiSearchBankQualifiedInventoryStatisticQueryDateResponse>({
-    url: Api.Plasma_Qualified_Inventory + '/' + params.queryDate,
+    url: Api.Plasma_Qualified_Inventory + '/' + params.queryDate + '/' + params.exportFlag,
   });
 
 export const getPlasmaBagCollect = (params: GetApiCoreBagCollectStatisticRequest) =>

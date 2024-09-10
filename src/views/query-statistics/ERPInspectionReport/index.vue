@@ -78,6 +78,7 @@
         ...getForm().getFieldsValue(),
         currPage: '1',
         pageSize: pageSize,
+        exportFlag: true,
       });
 
       if ((data.totalCount || 0) > Number(pageSize))

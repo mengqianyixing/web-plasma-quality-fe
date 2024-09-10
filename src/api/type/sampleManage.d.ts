@@ -2483,7 +2483,7 @@ export interface PostApiCoreBankDeliverSampleScanBatchResponse {}
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/bag-detail`
- * @更新时间 `2024-09-05 17:06:47`
+ * @更新时间 `2024-09-06 16:07:42`
  */
 export interface GetApiCoreBankDeliverSampleBagDetailRequest {
   /**
@@ -2497,7 +2497,7 @@ export interface GetApiCoreBankDeliverSampleBagDetailRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/bag-detail`
- * @更新时间 `2024-09-05 17:06:47`
+ * @更新时间 `2024-09-06 16:07:42`
  */
 export type GetApiCoreBankDeliverSampleBagDetailResponse = {
   /**
@@ -2531,7 +2531,7 @@ export type GetApiCoreBankDeliverSampleBagDetailResponse = {
   /**
    * 血型
    */
-  booldType: string;
+  bloodType: string;
 }[];
 
 /**
