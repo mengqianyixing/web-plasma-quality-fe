@@ -211,6 +211,7 @@
       !searchParams.acceptBeginAt &&
       !searchParams.verifyBeginAt &&
       !searchParams.publishBeginAt &&
+      !searchParams.deliverBeginAt &&
       !searchParams.batchNo
     ) {
       createMessage.warn('请至少选择日期或输入血浆批号');
