@@ -32,7 +32,6 @@
   import { GetApiCoreBatchStockStatisticsResponse } from '@/api/type/queryStatistics';
   import { getSysParamsByParamKey } from '@/api/systemServer/params';
   import { SysParamsEnum } from '@/enums/sysParamsEnum';
-  import { useMessage } from '@/hooks/web/useMessage';
 
   const ATabs = Tabs;
   const ATabPane = Tabs.TabPane;
@@ -202,21 +201,7 @@
     immediate: false,
   });
 
-  const { createMessage } = useMessage();
-
   async function reloadTable() {
-    const searchParams = getFieldsValue();
-
-    if (
-      !searchParams.acceptBeginAt &&
-      !searchParams.verifyBeginAt &&
-      !searchParams.publishBeginAt &&
-      !searchParams.batchNo
-    ) {
-      createMessage.warn('请至少选择日期或输入血浆批号');
-      return;
-    }
-
     try {
       setLoading(true);
       setProps({ submitButtonOptions: { loading: true } });
