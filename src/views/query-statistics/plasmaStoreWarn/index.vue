@@ -47,7 +47,6 @@
     striped: false,
     useSearchForm: true,
     bordered: true,
-    immediate: false,
     rowClassName: (record) => getClass(record.warnLimitDay),
   });
   async function handleExport() {
