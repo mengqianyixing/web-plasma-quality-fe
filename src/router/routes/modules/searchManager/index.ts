@@ -385,7 +385,7 @@ const trayManager: AppRouteModule = {
           meta: {
             title: '血浆存放预警查询',
           },
-          id: 9000250,
+          id: 90003600,
           component: () => import('@/views/query-statistics/plasmaStoreWarn/index.vue'),
           authElements: [
             {

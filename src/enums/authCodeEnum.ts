@@ -365,7 +365,7 @@ export enum SearchManager {
 
   ERPOutStoreExport = 'E_900023101',
 
-  PlasmaStoreWarnExport = 'E_900025001',
+  PlasmaStoreWarnExport = 'E_900036001',
 }
 
 export enum TagManageButtonEnum {
