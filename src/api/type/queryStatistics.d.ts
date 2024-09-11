@@ -12,7 +12,7 @@ type FileData = File;
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/statistics`
- * @更新时间 `2024-07-17 13:19:27`
+ * @更新时间 `2024-09-10 16:35:46`
  */
 export interface GetApiCoreBagStatisticsRequest {
   /**
@@ -156,6 +156,10 @@ export interface GetApiCoreBagStatisticsRequest {
    */
   seeSampleResult?: string;
   cardNo?: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -163,7 +167,7 @@ export interface GetApiCoreBagStatisticsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/statistics`
- * @更新时间 `2024-07-17 13:19:27`
+ * @更新时间 `2024-09-10 16:35:46`
  */
 export interface GetApiCoreBagStatisticsResponse {
   currPage?: number;
@@ -470,7 +474,7 @@ export interface GetApiSearchBatchQuarantineStatisticResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bank/location/statistics`
- * @更新时间 `2024-02-26 19:20:20`
+ * @更新时间 `2024-09-10 16:41:57`
  */
 export interface GetApiCoreBankLocationStatisticsRequest {
   /**
@@ -505,6 +509,10 @@ export interface GetApiCoreBankLocationStatisticsRequest {
    * 血浆（样本）箱号
    */
   boxNo?: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -512,7 +520,7 @@ export interface GetApiCoreBankLocationStatisticsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bank/location/statistics`
- * @更新时间 `2024-02-26 19:20:20`
+ * @更新时间 `2024-09-10 16:41:57`
  */
 export interface GetApiCoreBankLocationStatisticsResponse {
   currPage?: number;
@@ -720,7 +728,7 @@ export interface GetApiSearchSampleResultResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/sample/query`
- * @更新时间 `2024-05-31 16:35:14`
+ * @更新时间 `2024-09-10 16:38:20`
  */
 export interface GetApiCoreSampleQueryRequest {
   /**
@@ -787,6 +795,10 @@ export interface GetApiCoreSampleQueryRequest {
    * 浆员卡号
    */
   cardNo: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -794,7 +806,7 @@ export interface GetApiCoreSampleQueryRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/sample/query`
- * @更新时间 `2024-05-31 16:35:14`
+ * @更新时间 `2024-09-10 16:38:20`
  */
 export interface GetApiCoreSampleQueryResponse {
   currPage?: number;
@@ -990,7 +1002,7 @@ export interface GetApiCoreSampleStatisticsResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/blood-volume/statistics`
- * @更新时间 `2024-07-02 14:38:11`
+ * @更新时间 `2024-09-10 16:41:36`
  */
 export interface GetApiCoreBatchBloodVolumeStatisticsRequest {
   /**
@@ -1013,6 +1025,10 @@ export interface GetApiCoreBatchBloodVolumeStatisticsRequest {
    * 采浆公司
    */
   stationNo?: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -1020,7 +1036,7 @@ export interface GetApiCoreBatchBloodVolumeStatisticsRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/blood-volume/statistics`
- * @更新时间 `2024-07-02 14:38:11`
+ * @更新时间 `2024-09-10 16:41:36`
  */
 export interface GetApiCoreBatchBloodVolumeStatisticsResponse {
   currPage?: number;
@@ -1063,7 +1079,7 @@ export interface GetApiCoreBatchBloodVolumeStatisticsResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/erp/inbound/query`
- * @更新时间 `2024-02-26 16:22:50`
+ * @更新时间 `2024-09-10 16:42:29`
  */
 export interface GetApiCoreBatchErpInboundQueryRequest {
   /**
@@ -1098,6 +1114,10 @@ export interface GetApiCoreBatchErpInboundQueryRequest {
    * 来浆结束日期
    */
   acceptEndAt?: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -1105,7 +1125,7 @@ export interface GetApiCoreBatchErpInboundQueryRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/erp/inbound/query`
- * @更新时间 `2024-02-26 16:22:50`
+ * @更新时间 `2024-09-10 16:42:29`
  */
 export interface GetApiCoreBatchErpInboundQueryResponse {
   currPage?: number;
@@ -1152,7 +1172,7 @@ export interface GetApiCoreBatchErpInboundQueryResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/lab/erp/test-report/query`
- * @更新时间 `2024-07-04 10:01:05`
+ * @更新时间 `2024-09-10 16:42:52`
  */
 export interface GetApiCoreLabErpTestReportQueryRequest {
   /**
@@ -1179,6 +1199,10 @@ export interface GetApiCoreLabErpTestReportQueryRequest {
    * 血浆复核结束日期
    */
   recheckEndAt?: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -1186,7 +1210,7 @@ export interface GetApiCoreLabErpTestReportQueryRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/lab/erp/test-report/query`
- * @更新时间 `2024-07-04 10:01:05`
+ * @更新时间 `2024-09-10 16:42:52`
  */
 export interface GetApiCoreLabErpTestReportQueryResponse {
   currPage?: number;
@@ -1904,7 +1928,7 @@ export interface GetApiSearchPlasmaTrackResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/donor/callback-count`
- * @更新时间 `2024-06-06 11:16:42`
+ * @更新时间 `2024-09-10 16:30:54`
  */
 export interface GetApiSearchDonorCallbackCountRequest {
   /**
@@ -1937,6 +1961,10 @@ export interface GetApiSearchDonorCallbackCountRequest {
   samplePubEndDate?: string;
   pageSize: string;
   currPage: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -1944,7 +1972,7 @@ export interface GetApiSearchDonorCallbackCountRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/donor/callback-count`
- * @更新时间 `2024-06-06 11:16:42`
+ * @更新时间 `2024-09-10 16:30:54`
  */
 export interface GetApiSearchDonorCallbackCountResponse {
   totalCount?: number;
@@ -2094,7 +2122,7 @@ export interface GetApiSearchPlasmaPrivilegeResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/sample/callback/statistic`
- * @更新时间 `2024-07-17 18:03:47`
+ * @更新时间 `2024-09-10 16:32:24`
  */
 export interface GetApiCoreBatchSampleCallbackStatisticRequest {
   /**
@@ -2123,6 +2151,10 @@ export interface GetApiCoreBatchSampleCallbackStatisticRequest {
    * DESC 降序 ASC 升序
    */
   sortOrder?: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -2130,7 +2162,7 @@ export interface GetApiCoreBatchSampleCallbackStatisticRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/batch/sample/callback/statistic`
- * @更新时间 `2024-07-17 18:03:47`
+ * @更新时间 `2024-09-10 16:32:24`
  */
 export interface GetApiCoreBatchSampleCallbackStatisticResponse {
   totalCount?: number;
@@ -2396,7 +2428,7 @@ export type GetApiSearchPlasmaPrivilegeCountResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/batch/unqualified/statistic-station`
- * @更新时间 `2024-06-14 16:42:34`
+ * @更新时间 `2024-09-10 16:38:48`
  */
 export interface GetApiSearchBatchUnqualifiedStatisticStationRequest {
   pageSize: string;
@@ -2410,6 +2442,10 @@ export interface GetApiSearchBatchUnqualifiedStatisticStationRequest {
   issueEndDate?: string;
   unqInStoreStartDate?: string;
   unqInStoreEndDate?: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -2417,7 +2453,7 @@ export interface GetApiSearchBatchUnqualifiedStatisticStationRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/batch/unqualified/statistic-station`
- * @更新时间 `2024-06-14 16:42:34`
+ * @更新时间 `2024-09-10 16:38:48`
  */
 export interface GetApiSearchBatchUnqualifiedStatisticStationResponse {
   totalCount?: number;
@@ -2744,7 +2780,7 @@ export interface GetApiSearchProdPrepareResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/batch/unqualified/statistic-batch`
- * @更新时间 `2024-06-25 11:28:53`
+ * @更新时间 `2024-09-10 16:39:13`
  */
 export interface GetApiSearchBatchUnqualifiedStatisticBatchRequest {
   pageSize: string;
@@ -2777,6 +2813,10 @@ export interface GetApiSearchBatchUnqualifiedStatisticBatchRequest {
    * 血浆批号
    */
   batchNo?: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -2784,7 +2824,7 @@ export interface GetApiSearchBatchUnqualifiedStatisticBatchRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/batch/unqualified/statistic-batch`
- * @更新时间 `2024-06-25 11:28:53`
+ * @更新时间 `2024-09-10 16:39:13`
  */
 export interface GetApiSearchBatchUnqualifiedStatisticBatchResponse {
   totalCount?: number;
@@ -3053,7 +3093,7 @@ export interface GetApiSearchBatchUnqualifiedStatisticBatchResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/donor/status`
- * @更新时间 `2024-05-31 16:42:10`
+ * @更新时间 `2024-09-10 16:37:51`
  */
 export interface GetApiSearchDonorStatusRequest {
   /**
@@ -3118,6 +3158,10 @@ export interface GetApiSearchDonorStatusRequest {
   listenEnd?: string;
   pageSize: string;
   currPage: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -3125,7 +3169,7 @@ export interface GetApiSearchDonorStatusRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/donor/status`
- * @更新时间 `2024-05-31 16:42:10`
+ * @更新时间 `2024-09-10 16:37:51`
  */
 export interface GetApiSearchDonorStatusResponse {
   currPage: number;
@@ -3175,7 +3219,7 @@ export interface GetApiSearchDonorStatusResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/factory`
- * @更新时间 `2024-05-31 16:48:30`
+ * @更新时间 `2024-09-10 16:28:15`
  */
 export interface GetApiSearchPlasmaFactoryRequest {
   pageSize: string;
@@ -3203,6 +3247,10 @@ export interface GetApiSearchPlasmaFactoryRequest {
    */
   issueBegin?: string;
   issueEnd?: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -3210,7 +3258,7 @@ export interface GetApiSearchPlasmaFactoryRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/plasma/factory`
- * @更新时间 `2024-05-31 16:48:30`
+ * @更新时间 `2024-09-10 16:28:15`
  */
 export interface GetApiSearchPlasmaFactoryResponse {
   currPage: number;
@@ -3899,24 +3947,28 @@ export interface GetApiCoreBagUnqualifiedStatisticQuarantineDetailResponse {
  * 接口 [库存合格血浆查询↗](https://yapi.sharing8.cn/project/529/interface/api/33888) 的 **请求类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/search/bank/qualified-inventory/statistic/{queryDate}`
- * @更新时间 `2024-06-12 20:34:15`
+ * @请求头 `GET /api/search/bank/qualified-inventory/statistic/{queryDate}/{exportFlag}`
+ * @更新时间 `2024-09-10 16:40:34`
  */
-export interface GetApiSearchBankQualifiedInventoryStatisticQueryDateRequest {
+export interface GetApiSearchBankQualifiedInventoryStatisticQueryDateExportFlagRequest {
   /**
    * 库存汇总日期
    */
   queryDate: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag: string;
 }
 
 /**
  * 接口 [库存合格血浆查询↗](https://yapi.sharing8.cn/project/529/interface/api/33888) 的 **返回类型**
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
- * @请求头 `GET /api/search/bank/qualified-inventory/statistic/{queryDate}`
- * @更新时间 `2024-06-12 20:34:15`
+ * @请求头 `GET /api/search/bank/qualified-inventory/statistic/{queryDate}/{exportFlag}`
+ * @更新时间 `2024-09-10 16:40:34`
  */
-export type GetApiSearchBankQualifiedInventoryStatisticQueryDateResponse = {
+export type GetApiSearchBankQualifiedInventoryStatisticQueryDateExportFlagResponse = {
   /**
    * 效价类型
    */
@@ -3940,7 +3992,7 @@ export type GetApiSearchBankQualifiedInventoryStatisticQueryDateResponse = {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/collect/statistic`
- * @更新时间 `2024-07-04 15:17:50`
+ * @更新时间 `2024-09-10 16:36:38`
  */
 export interface GetApiCoreBagCollectStatisticRequest {
   /**
@@ -3959,6 +4011,10 @@ export interface GetApiCoreBagCollectStatisticRequest {
    * 来浆类型，下拉框取枚举类ImmType
    */
   plasmaTypeFromStation?: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -3966,7 +4022,7 @@ export interface GetApiCoreBagCollectStatisticRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bag/collect/statistic`
- * @更新时间 `2024-07-04 15:17:50`
+ * @更新时间 `2024-09-10 16:36:38`
  */
 export type GetApiCoreBagCollectStatisticResponse = {
   /**
@@ -4089,7 +4145,7 @@ export interface GetApiCoreBagOutInStorageStatisticResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/product/prepare/erp-out/prod`
- * @更新时间 `2024-03-26 11:07:38`
+ * @更新时间 `2024-09-10 16:44:41`
  */
 export interface GetApiProductPrepareErpOutProdRequest {
   pageSize: string;
@@ -4114,6 +4170,10 @@ export interface GetApiProductPrepareErpOutProdRequest {
    * 制造批号
    */
   mesId?: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -4121,7 +4181,7 @@ export interface GetApiProductPrepareErpOutProdRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/product/prepare/erp-out/prod`
- * @更新时间 `2024-03-26 11:07:38`
+ * @更新时间 `2024-09-10 16:44:41`
  */
 export interface GetApiProductPrepareErpOutProdResponse {
   totalCount?: number;
@@ -4181,7 +4241,7 @@ export interface GetApiProductPrepareErpOutProdResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bank/erp-out/non-prod`
- * @更新时间 `2024-03-26 18:47:25`
+ * @更新时间 `2024-09-10 16:44:16`
  */
 export interface GetApiCoreBankErpOutNonProdRequest {
   pageSize: string;
@@ -4204,6 +4264,10 @@ export interface GetApiCoreBankErpOutNonProdRequest {
    * NPD("非生产出库"),
    */
   dlvType: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -4211,7 +4275,7 @@ export interface GetApiCoreBankErpOutNonProdRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/core/bank/erp-out/non-prod`
- * @更新时间 `2024-03-26 18:47:25`
+ * @更新时间 `2024-09-10 16:44:16`
  */
 export interface GetApiCoreBankErpOutNonProdResponse {
   totalCount?: number;
@@ -5300,7 +5364,7 @@ export interface GetApiSearchPlasmaPrivilegeTotalResponse {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/bank/plasma/statistic/stock`
- * @更新时间 `2024-06-28 16:43:12`
+ * @更新时间 `2024-09-10 16:37:21`
  */
 export interface GetApiSearchBankPlasmaStatisticStockRequest {
   /**
@@ -5313,6 +5377,10 @@ export interface GetApiSearchBankPlasmaStatisticStockRequest {
   batchEndNo: string;
   currPage: string;
   pageSize: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -5320,7 +5388,7 @@ export interface GetApiSearchBankPlasmaStatisticStockRequest {
  *
  * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
  * @请求头 `GET /api/search/bank/plasma/statistic/stock`
- * @更新时间 `2024-06-28 16:43:12`
+ * @更新时间 `2024-09-10 16:37:21`
  */
 export interface GetApiSearchBankPlasmaStatisticStockResponse {
   totalCount?: number;
@@ -5459,6 +5527,91 @@ export interface GetApiSearchDonorCallbackCountTotalResponse {
   endNum?: number;
   passPlasmaNum?: number;
   canPassPlasmaNum?: number;
+}
+
+/**
+ * 接口 [血浆存放预警查询↗](https://yapi.sharing8.cn/project/529/interface/api/36741) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/bank/stock/warning`
+ * @更新时间 `2024-09-10 17:26:44`
+ */
+export interface GetApiSearchBankStockWarningRequest {
+  /**
+   * 当前页码
+   */
+  currPage: string;
+  /**
+   * 页数大小
+   */
+  pageSize: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
+  /**
+   * 采浆公司编号
+   */
+  stationNo?: string;
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 血浆编号
+   */
+  bagNo?: string;
+  /**
+   * 预警时限
+   */
+  warnLimitDay: string;
+  /**
+   * 有效期开始日期
+   */
+  expirateBeiginDate?: string;
+  /**
+   * 有效期结束日期
+   */
+  expirateEndDate?: string;
+}
+
+/**
+ * 接口 [血浆存放预警查询↗](https://yapi.sharing8.cn/project/529/interface/api/36741) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/bank/stock/warning`
+ * @更新时间 `2024-09-10 17:26:44`
+ */
+export interface GetApiSearchBankStockWarningResponse {
+  currPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  result?: {
+    /**
+     * 采浆公司
+     */
+    stationName?: string;
+    /**
+     * 血浆批号
+     */
+    batchNo?: string;
+    /**
+     * 血浆编号
+     */
+    bagNo?: string;
+    /**
+     * 采集日期
+     */
+    collectDate?: string;
+    /**
+     * 有效期至
+     */
+    expirateDate?: string;
+    /**
+     * 预警时限
+     */
+    warnLimitDay?: number;
+  }[];
 }
 
 /* prettier-ignore-end */

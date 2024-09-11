@@ -566,24 +566,36 @@ export interface GetApiProductPrepareSummaryBoxPrepareNoResponse {
  * 接口 [投产准备汇总（袋）↗](https://yapi.sharing8.cn/project/529/interface/api/32220) 的 **请求类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `GET /api/product/prepare/summary/bag/{prepareNo}`
- * @更新时间 `2024-07-05 10:51:18`
+ * @请求头 `GET /api/product/prepare/summary/bag/{prepareNo}/{currPage}/{pageSize}/{exportFlag}`
+ * @更新时间 `2024-09-10 16:35:10`
  */
-export interface GetApiProductPrepareSummaryBagPrepareNoRequest {
+export interface GetApiProductPrepareSummaryBagPrepareNoCurrPagePageSizeExportFlagRequest {
   /**
    * 投产准备号
    */
   prepareNo: string;
+  /**
+   * 当前页码
+   */
+  currPage: string;
+  /**
+   * 页数大小
+   */
+  pageSize: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag: string;
 }
 
 /**
  * 接口 [投产准备汇总（袋）↗](https://yapi.sharing8.cn/project/529/interface/api/32220) 的 **返回类型**
  *
  * @分类 [投产准备↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5390)
- * @请求头 `GET /api/product/prepare/summary/bag/{prepareNo}`
- * @更新时间 `2024-07-05 10:51:18`
+ * @请求头 `GET /api/product/prepare/summary/bag/{prepareNo}/{currPage}/{pageSize}/{exportFlag}`
+ * @更新时间 `2024-09-10 16:35:10`
  */
-export interface GetApiProductPrepareSummaryBagPrepareNoResponse {
+export interface GetApiProductPrepareSummaryBagPrepareNoCurrPagePageSizeExportFlagResponse {
   field_1: {
     /**
      * 浆站名称

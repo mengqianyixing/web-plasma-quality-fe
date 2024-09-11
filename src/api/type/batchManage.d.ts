@@ -2069,7 +2069,7 @@ export interface PostApiCoreBatchPlasmaVerifyPublishBatchNoResponse {}
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/releases`
- * @更新时间 `2024-01-17 16:55:34`
+ * @更新时间 `2024-09-10 16:26:00`
  */
 export interface GetApiCoreBatchPlasmaReleasesRequest {
   currPage: string;
@@ -2086,6 +2086,10 @@ export interface GetApiCoreBatchPlasmaReleasesRequest {
    * 状态
    */
   state?: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -2093,7 +2097,7 @@ export interface GetApiCoreBatchPlasmaReleasesRequest {
  *
  * @分类 [批次管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5243)
  * @请求头 `GET /api/core/batch/plasma/releases`
- * @更新时间 `2024-01-17 16:55:34`
+ * @更新时间 `2024-09-10 16:26:00`
  */
 export interface GetApiCoreBatchPlasmaReleasesResponse {
   totalCount?: number;

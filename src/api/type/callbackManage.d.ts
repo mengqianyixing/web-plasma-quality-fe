@@ -264,7 +264,7 @@ export type PostApiCoreDonorCallbackNeedResponse = null;
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/search/donor/callback/detail`
- * @更新时间 `2024-06-21 14:06:31`
+ * @更新时间 `2024-09-10 16:30:00`
  */
 export interface GetApiSearchDonorCallbackDetailRequest {
   /**
@@ -295,6 +295,10 @@ export interface GetApiSearchDonorCallbackDetailRequest {
   cardNo?: string;
   currPage: string;
   pageSize: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -302,7 +306,7 @@ export interface GetApiSearchDonorCallbackDetailRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/search/donor/callback/detail`
- * @更新时间 `2024-06-21 14:06:31`
+ * @更新时间 `2024-09-10 16:30:00`
  */
 export interface GetApiSearchDonorCallbackDetailResponse {
   totalCount?: number;
@@ -607,7 +611,7 @@ export type GetApiSearchDonorCallbackEndedResponse = {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/block`
- * @更新时间 `2024-05-31 10:53:31`
+ * @更新时间 `2024-09-10 16:26:53`
  */
 export interface GetApiCoreDonorBlockRequest {
   pageSize: string;
@@ -636,6 +640,10 @@ export interface GetApiCoreDonorBlockRequest {
    * 永拒结束日期
    */
   blockAtEnd: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -643,7 +651,7 @@ export interface GetApiCoreDonorBlockRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/block`
- * @更新时间 `2024-05-31 10:53:31`
+ * @更新时间 `2024-09-10 16:26:53`
  */
 export interface GetApiCoreDonorBlockResponse {
   totalCount?: number;
