@@ -59,7 +59,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: '[pubStartDate, pubEndDate]',
     component: 'RangePicker',
-    label: '回访发布日期',
+    label: '回访生成日期',
     componentProps: {
       valueFormat: 'YYYY-MM-DD',
     },
