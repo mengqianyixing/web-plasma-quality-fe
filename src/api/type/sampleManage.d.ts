@@ -2539,6 +2539,122 @@ export type GetApiCoreBankDeliverSampleBagDetailResponse = {
 }[];
 
 /**
+ * 接口 [保留样本批查询↗](https://yapi.sharing8.cn/project/529/interface/api/36750) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/search/sample/retain/batch`
+ * @更新时间 `2024-09-11 14:22:25`
+ */
+export interface GetApiSearchSampleRetainBatchRequest {
+  stationNo?: string;
+  batchNo?: string;
+  /**
+   * 采浆公司 0， 厂家 1
+   */
+  keepBy?: string;
+  /**
+   * 未入库 0、已入库 1、已出库 2
+   */
+  status?: string;
+}
+
+/**
+ * 接口 [保留样本批查询↗](https://yapi.sharing8.cn/project/529/interface/api/36750) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/search/sample/retain/batch`
+ * @更新时间 `2024-09-11 14:22:25`
+ */
+export interface GetApiSearchSampleRetainBatchResponse {
+  stationName: string;
+  batchNo: string;
+  packNum: string;
+  sampleNum: string;
+  status: string;
+  taryNo?: string;
+  bankName?: string;
+  locationNo?: string;
+}
+
+/**
+ * 接口 [保留样本查询样本袋明细↗](https://yapi.sharing8.cn/project/529/interface/api/36759) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/search/sample/retain/pack`
+ * @更新时间 `2024-09-11 14:22:12`
+ */
+export interface GetApiSearchSampleRetainPackRequest {
+  batchNo: string;
+  boxNo?: string;
+  packNo?: string;
+  /**
+   * 采浆公司 0， 厂家 1
+   */
+  keepBy?: string;
+}
+
+/**
+ * 接口 [保留样本查询样本袋明细↗](https://yapi.sharing8.cn/project/529/interface/api/36759) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/search/sample/retain/pack`
+ * @更新时间 `2024-09-11 14:22:12`
+ */
+export interface GetApiSearchSampleRetainPackResponse {
+  stationName: string;
+  batchNo: string;
+  boxNo: string;
+  packNo: string;
+  sampleNum: string;
+  trayNo?: string;
+  bankName?: string;
+  locationNo?: string;
+}
+
+/**
+ * 接口 [保留样本批查询样本详情↗](https://yapi.sharing8.cn/project/529/interface/api/36768) 的 **请求类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/search/sample/retain/batch-detail`
+ * @更新时间 `2024-09-11 14:29:21`
+ */
+export interface GetApiSearchSampleRetainBatchDetailRequest {
+  batchNo: string;
+  boxNo?: string;
+  packNo?: string;
+  sampleNo?: string;
+  cardNo?: string;
+  /**
+   * 采浆公司 0， 厂家 1
+   */
+  keepBy?: string;
+  /**
+   * 未入库 0、已入库 1、已出库 2
+   */
+  status?: string;
+}
+
+/**
+ * 接口 [保留样本批查询样本详情↗](https://yapi.sharing8.cn/project/529/interface/api/36768) 的 **返回类型**
+ *
+ * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
+ * @请求头 `GET /api/search/sample/retain/batch-detail`
+ * @更新时间 `2024-09-11 14:29:21`
+ */
+export interface GetApiSearchSampleRetainBatchDetailResponse {
+  stationName: string;
+  batchNo: string;
+  boxNo: string;
+  packNo: string;
+  sampleNo: string;
+  keepBy: string;
+  collectionDate: string;
+  cardNo: string;
+  donorName: string;
+  status: string;
+}
+
+/**
  * 接口 [新增预检项↗](https://yapi.sharing8.cn/project/529/interface/api/34944) 的 **请求类型**
  *
  * @分类 [预检登记↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5938)

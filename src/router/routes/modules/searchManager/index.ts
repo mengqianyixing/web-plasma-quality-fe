@@ -214,6 +214,15 @@ const trayManager: AppRouteModule = {
           id: 9000101,
           component: () => import('@/views/query-statistics/checkResult/index.vue'),
         },
+        {
+          path: 'reserveSample',
+          name: 'ReserveSample',
+          meta: {
+            title: '保留样本查询',
+          },
+          id: 9000101,
+          component: () => import('@/views/query-statistics/reserve-sample/index.vue'),
+        },
       ],
     },
     {
