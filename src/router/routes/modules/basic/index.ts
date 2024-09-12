@@ -104,10 +104,7 @@ const callManager: AppRouteModule = {
           id: BaseSettingButtonEnum.InspectMethodUpdate,
           title: '编辑',
         },
-        {
-          id: BaseSettingButtonEnum.InspectMethodDelete,
-          title: '删除',
-        },
+
         {
           id: BaseSettingButtonEnum.InspectMethodEnable,
           title: '启用',

@@ -3,7 +3,7 @@
     <div>
       <BasicTable @register="registerTable" style="padding-bottom: 0" />
     </div>
-    <div class="flex-1 p-16px pt-0px pb-0px bg-white m-6px mb-0px">
+    <div class="flex-1 bg-white p-16px pt-0px pb-0px m-6px mb-0px">
       <vxe-grid
         v-bind="gridOptionsUnaccept"
         ref="tableRef"
@@ -24,7 +24,7 @@
         </template>
       </vxe-grid>
     </div>
-    <div class="mb-10px bg-white pb-6px pr-16px m-6px">
+    <div class="bg-white mb-10px pb-6px pr-16px m-6px">
       <a-pagination
         class="float-right mt-2"
         @change="handlePageChange"
@@ -48,7 +48,7 @@
   import { PageWrapper } from '@/components/Page';
   import { getListApi, getCountApi } from '@/api/query-statistics/titerPlasmaQuery';
   import { GetApiSearchPlasmaPrivilegeResponse } from '@/api/type/queryStatistics';
-  import { get } from 'lodash-es';
+  import { get, isEqual } from 'lodash-es';
   import { useModal } from '@/components/Modal';
   import TabelModal from './tabelModal.vue';
   import { reactive, ref } from 'vue';
@@ -77,6 +77,19 @@
 
   const unAcceptList = ref([]);
   const tableLoading = ref(false);
+  let _saveParams = {};
+  let _saveCount = {};
+
+  const getCacheCount = (p) => {
+    const values = getForm().getFieldsValue();
+    const _isEqual = isEqual(values, _saveParams);
+    if (_isEqual) {
+      return Promise.resolve(_saveCount);
+    } else {
+      _saveParams = values;
+      return getCountApi(p);
+    }
+  };
   const gridOptionsUnaccept = reactive<VxeGridProps<any>>({
     border: true,
     rowConfig: {
@@ -107,7 +120,7 @@
     showFooter: false,
   });
   const [registerTable, { getForm, reload }] = useTable({
-    api: (p) => Promise.all([getListApi(p), getCountApi(p)]),
+    api: (p) => Promise.all([getListApi(p), getCacheCount(p)]),
     immediate: false,
     columns: [],
     formConfig: {
@@ -129,10 +142,11 @@
         row['B'] = row.titers.find((it) => it.rawImm === '乙免') || {};
         row['R'] = row.titers.find((it) => it.rawImm === '狂免') || {};
         row['T'] = row.titers.find((it) => it.rawImm === '破免') || {};
-        row['N'] = row.titers.find((it) => it.rawImm === '普浆') || {};
+        row['N'] = row.titers.find((it) => it.rawImm === '普通') || {};
         row['C'] = row.titers.find((it) => it.rawImm === '巨细胞') || {};
         return row;
       });
+      _saveCount = res[1];
       unAcceptList.value = formatData as any;
       pager.total = res[0].totalCount;
       return [];

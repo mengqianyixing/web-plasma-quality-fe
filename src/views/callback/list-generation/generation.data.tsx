@@ -167,16 +167,17 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
   {
     type: 'seq',
     title: '序号',
+    width: 60,
   },
   {
     title: '浆员编号',
     field: 'cardNo',
-    width: 120,
+    minWidth: 120,
   },
   {
     title: '浆员姓名',
     field: 'donorName',
-    width: 80,
+    minWidth: 80,
   },
   {
     title: '浆员状态',
@@ -184,12 +185,12 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
     formatter: ({ cellValue }) => {
       return donorStatusMap.get(cellValue as donorStatusValueEnum) as string;
     },
-    width: 80,
+    minWidth: 80,
   },
   {
     title: '血浆状态',
     field: 'trackType',
-    width: 80,
+    minWidth: 80,
   },
   {
     title: '拒绝日期',
@@ -197,17 +198,17 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
     formatter: ({ cellValue }) => {
       return cellValue ? dayjs(cellValue).format('YYYY-MM-DD') : '-';
     },
-    width: 110,
+    minWidth: 110,
   },
   {
     title: '拒绝原因',
     field: 'refuseReason',
-    width: 150,
+    minWidth: 150,
   },
   {
     title: '性别',
     field: 'gender',
-    width: 50,
+    minWidth: 50,
   },
   {
     title: '最早待回访采浆日期',
@@ -215,12 +216,12 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
     formatter: ({ cellValue }) => {
       return cellValue ? dayjs(cellValue).format('YYYY-MM-DD') : '';
     },
-    width: 110,
+    minWidth: 110,
   },
   {
     title: '最早采浆血浆编号',
     field: 'minPlasmaNo',
-    width: 150,
+    minWidth: 150,
   },
   {
     title: '最后采浆日期',
@@ -228,13 +229,13 @@ export const callbackModalColumns: VxeGridPropTypes.Columns = [
     formatter: ({ cellValue }) => {
       return cellValue ? dayjs(cellValue).format('YYYY-MM-DD') : '';
     },
-    width: 110,
+    minWidth: 110,
   },
   {
     title: '待追踪袋数',
     field: 'plasmaCount',
     slots: { default: 'plasmaCount' },
-    width: 110,
+    minWidth: 110,
   },
 ];
 

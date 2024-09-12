@@ -189,6 +189,7 @@
 
     const searchParams = {
       ...values,
+      exportFlag: true,
     };
 
     delete searchParams.dateKey;

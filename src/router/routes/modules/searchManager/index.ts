@@ -379,6 +379,22 @@ const trayManager: AppRouteModule = {
           id: 9000200,
           component: () => import('@/views/query-statistics/stationBox/index.vue'),
         },
+        {
+          path: 'plasmaStoreWarn',
+          name: 'PlasmaStoreWarn',
+          meta: {
+            title: '血浆存放预警查询',
+          },
+          id: 90003600,
+          component: () => import('@/views/query-statistics/plasmaStoreWarn/index.vue'),
+          authElements: [
+            {
+              id: SearchManager.PlasmaStoreWarnExport,
+              name: 'export',
+              title: '导出',
+            },
+          ],
+        },
       ],
     },
     {

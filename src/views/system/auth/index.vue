@@ -9,7 +9,7 @@
         <template v-if="column.key === 'action'">
           <TableAction
             v-auth="'E_456'"
-            class="inline-block w-20px float-left"
+            class="inline-block float-left w-20px"
             :actions="[
               {
                 icon: 'clarity:note-edit-line',
@@ -19,7 +19,7 @@
           />
           <TableAction
             v-auth="'E_789'"
-            class="inline-block w-20px float-right"
+            class="inline-block float-right w-20px"
             :actions="[
               {
                 icon: 'ant-design:delete-outlined',
@@ -164,8 +164,8 @@
       usrId: userStore.userInfo?.userAccount,
       moduleType: 1,
       optName: '系统',
-      optContent: `导出角色【${selectedRowsRef.value.map((it) => it.displayName).join(',')}】成功`,
-      path: 'POST /api/sys/user/logout',
+      optContent: `导出【角色权限】`,
+      path: 'GET /',
       time: getRandNum(10, 50),
       reqData: JSON.stringify(userStore.userInfo),
       respData: JSON.stringify({ code: 0, msg: 'ok', data: null }),

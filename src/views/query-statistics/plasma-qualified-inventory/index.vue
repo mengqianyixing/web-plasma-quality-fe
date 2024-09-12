@@ -64,6 +64,7 @@
       const count = handleSummary(res);
       return [...res, count];
     },
+    beforeFetch: (p) => ({ ...p, exportFlag: false }),
   });
 
   const loading = ref(false);
@@ -76,18 +77,16 @@
         ...getForm().getFieldsValue(),
         currPage: 1,
         pageSize,
+        exportFlag: true,
       } as any);
       if ((data.length || 0) > Number(pageSize))
         return message.warning('最多只能导出【' + pageSize + '】条数据');
 
+      const sum = handleSummary(data);
+      data.push(sum);
       const { rows, merges: headerMerge, lastLevelCols } = getHeader(columns);
       const { result, merge: bodyMerge } = formatData(lastLevelCols, data || [], rows.length);
 
-      result.push({
-        ...handleSummary(data),
-        immTypeWeightValue: void 0,
-        minCollectAtValue: void 0,
-      });
       jsonToSheetXlsx({
         data: [...rows, ...result],
         json2sheetOpts: { skipHeader: true },
@@ -114,7 +113,7 @@
       immTypeWeight: 0,
       immType: '合计',
     };
-    const row = data.reduce((pre, cur) => {
+    const row = data.reduce((pre: Row, cur) => {
       pre.immTypeCount += cur.immTypeCount || 0;
       pre.immTypeWeight += cur.immTypeWeight || 0;
       pre.minCollectAtValue = Math.min(
@@ -124,7 +123,7 @@
       return pre;
     }, initData);
     row.minCollectAt = dayjs(row.minCollectAtValue).format('YYYY-MM-DD');
-    return row;
+    return { ...row, minCollectAtValue: void 0 };
   }
 </script>
 <style scoped>

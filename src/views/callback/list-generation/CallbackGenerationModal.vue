@@ -37,7 +37,7 @@
             </template>
             <template #toolbar>
               <div class="h-40px bg-#ffffff mt-2 flex items-center">
-                <a-button type="primary" @click="handleSelectAll" class="absolute right-20">
+                <a-button type="primary" @click="handleSelectAll" class="absolute right-45">
                   全部添加
                 </a-button>
                 <a-button type="primary" @click="handleAdd" class="absolute right-20">

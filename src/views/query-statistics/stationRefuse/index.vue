@@ -99,6 +99,7 @@
         ...getFieldsValue(),
         currPage: 1,
         pageSize,
+        exportFlag: true,
       } as any);
       if ((data.totalCount || 0) > Number(pageSize))
         return message.warning('最多只能导出【' + pageSize + '】条数据');

@@ -22,12 +22,7 @@
           v-auth="BaseSettingButtonEnum.InspectMethodUpdate"
           >编辑</a-button
         >
-        <a-button
-          type="primary"
-          @click="handleRemove"
-          v-auth="BaseSettingButtonEnum.InspectMethodDelete"
-          >删除</a-button
-        >
+
         <a-button
           type="primary"
           @click="handleCheckStatus(false)"
@@ -60,11 +55,7 @@
   import { columns, searchFormschema } from './inspectMethod.data';
   import { message } from 'ant-design-vue';
   import FormModal from './formModal.vue';
-  import {
-    getListApi,
-    updateInspectMethodApi,
-    removeInspectMethodApi,
-  } from '@/api/inspect/inspectMethod';
+  import { getListApi, updateInspectMethodApi } from '@/api/inspect/inspectMethod';
   import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
   import { useMessage } from '@/hooks/web/useMessage';
 
@@ -122,20 +113,6 @@
 
   const { createConfirm } = useMessage();
 
-  function handleRemove() {
-    const [row] = getSelections(true);
-    if (!row) return;
-    const { dictItemId, itemKey } = row;
-    createConfirm({
-      iconType: 'error',
-      content: '确认删除' + itemKey + '?',
-      onOk: async () => {
-        await removeInspectMethodApi({ dictItemId: dictItemId });
-        clearSelectedRowKeys();
-        await reload();
-      },
-    });
-  }
   function handleCheckStatus(action: boolean) {
     const [row] = getSelections(true);
     if (!row) return;

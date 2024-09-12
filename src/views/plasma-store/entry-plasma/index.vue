@@ -139,6 +139,7 @@
         ...getForm().getFieldsValue(),
         currPage: '1',
         pageSize,
+        exportFlag: true,
       });
       if ((OriginData.totalCount || 0) > Number(pageSize))
         return message.warning('最多只能导出【' + pageSize + '】条数据');

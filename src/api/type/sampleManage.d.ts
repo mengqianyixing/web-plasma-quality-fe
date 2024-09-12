@@ -2168,7 +2168,7 @@ export interface GetApiCoreBankDeliverSamplePickSingleResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/detail-single`
- * @更新时间 `2024-06-17 20:06:53`
+ * @更新时间 `2024-09-10 16:23:23`
  */
 export interface GetApiCoreBankDeliverSampleDetailSingleRequest {
   /**
@@ -2177,6 +2177,10 @@ export interface GetApiCoreBankDeliverSampleDetailSingleRequest {
   dlvNo?: string;
   currPage: string;
   pageSize: string;
+  /**
+   * 是否导出操作，true是，false否
+   */
+  exportFlag?: string;
 }
 
 /**
@@ -2184,7 +2188,7 @@ export interface GetApiCoreBankDeliverSampleDetailSingleRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/detail-single`
- * @更新时间 `2024-06-17 20:06:53`
+ * @更新时间 `2024-09-10 16:23:23`
  */
 export interface GetApiCoreBankDeliverSampleDetailSingleResponse {
   totalCount?: number;
@@ -2483,7 +2487,7 @@ export interface PostApiCoreBankDeliverSampleScanBatchResponse {}
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/bag-detail`
- * @更新时间 `2024-09-05 17:06:47`
+ * @更新时间 `2024-09-06 16:07:42`
  */
 export interface GetApiCoreBankDeliverSampleBagDetailRequest {
   /**
@@ -2497,7 +2501,7 @@ export interface GetApiCoreBankDeliverSampleBagDetailRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/core/bank/deliver/sample/bag-detail`
- * @更新时间 `2024-09-05 17:06:47`
+ * @更新时间 `2024-09-06 16:07:42`
  */
 export type GetApiCoreBankDeliverSampleBagDetailResponse = {
   /**
@@ -2531,7 +2535,7 @@ export type GetApiCoreBankDeliverSampleBagDetailResponse = {
   /**
    * 血型
    */
-  booldType: string;
+  bloodType: string;
 }[];
 
 /**

@@ -561,6 +561,7 @@
         prepareNo: prepareDetail.value.prepareNo,
         currPage: plasmaDetailPage.value.currPage,
         pageSize: plasmaDetailPage.value.pageSize,
+        exportFlag: false,
       };
       tableLoading.value = true;
       const res = await getBagList(data);
@@ -604,6 +605,7 @@
       prepareNo: prepareDetail.value.prepareNo,
       currPage: 1,
       pageSize: 9999999,
+      exportFlag: true,
     };
     const res = await getBagList(data);
     const tableDate = res.result;

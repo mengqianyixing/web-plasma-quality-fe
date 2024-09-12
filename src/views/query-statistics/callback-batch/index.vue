@@ -70,6 +70,7 @@
         ...getForm().getFieldsValue(),
         currPage: '1',
         pageSize,
+        exportFlag: true,
       });
       loading.value = false;
       if ((OriginData.totalCount || 0) > Number(pageSize))

@@ -120,6 +120,7 @@
         ...getForm().getFieldsValue(),
         currPage: '1',
         pageSize,
+        exportFlag: true,
       });
 
       const OriginTotalData = await getTotalCallbackStatistic({
