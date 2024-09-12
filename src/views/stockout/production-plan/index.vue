@@ -144,6 +144,16 @@
                     </a-button>
                   </MenuItem>
                 </span>
+                <span v-auth="StockOutButtonEnum.KMRawPlasmaHandoverRecord">
+                  <MenuItem>
+                    <a-button
+                      type="link"
+                      @click="handlePrint(PrintServerEnum.PLASMA_HANDOVER_RECORD)"
+                    >
+                      原料血浆交接记录
+                    </a-button>
+                  </MenuItem>
+                </span>
               </Menu>
             </template>
           </a-dropdown>

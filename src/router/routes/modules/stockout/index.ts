@@ -301,6 +301,11 @@ const nonconformity: AppRouteModule = {
           title: '检疫期合格原料血浆投产汇总表',
           company: COMPANY.KM,
         },
+        {
+          id: StockOutButtonEnum.KMRawPlasmaHandoverRecord,
+          title: '原料血浆交接记录',
+          company: COMPANY.KM,
+        },
       ],
       component: () => import('@/views/stockout/production-plan/index.vue'),
     },

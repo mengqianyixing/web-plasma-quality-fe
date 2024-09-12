@@ -249,6 +249,7 @@ export enum StockOutButtonEnum {
   PlasmaProductionPutIntoSummaryOfQualified = 'E_910040019',
   PlasmaProductionPrint = 'E_910040020',
   KMPlasmaProductionPrint = 'E_910040021',
+  KMRawPlasmaHandoverRecord = 'E_910040022',
 
   PutIntoTrayStockOut = 'E_91005001',
   PutIntoBoxStockOut = 'E_91005002',
