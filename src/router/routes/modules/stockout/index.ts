@@ -277,11 +277,6 @@ const nonconformity: AppRouteModule = {
           company: COMPANY.KM,
         },
         {
-          id: StockOutButtonEnum.PlasmaProductionApplication,
-          title: '原料血浆投产申报表-昆明',
-          company: COMPANY.KM,
-        },
-        {
           id: StockOutButtonEnum.PlasmaProductionRecordsOfQualified,
           title: '检疫期合格血浆投产记录',
           company: COMPANY.KM,
