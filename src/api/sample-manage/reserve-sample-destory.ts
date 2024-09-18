@@ -6,6 +6,8 @@ import {
   DeleteApiCoreBankDeliverSampleProcessDlvNoResponse,
   DeleteApiCoreBankDeliverSampleReadyDlvNoRequest,
   DeleteApiCoreBankDeliverSampleReadyDlvNoResponse,
+  GetApiCoreBankDeliverSampleBagDetailRequest,
+  GetApiCoreBankDeliverSampleBagDetailResponse,
   GetApiCoreBankDeliverSampleDetailBagRequest,
   GetApiCoreBankDeliverSampleDetailBagResponse,
   GetApiCoreBankDeliverSampleDetailRequest,
@@ -73,6 +75,7 @@ enum Api {
   ACCEPT_FINISH = '/api/core/batch/sample/accept/keep-pack/finish',
   OUT_BAND_BY_BATCH = '/api/core/bank/deliver/sample/scan-batch',
   OUT_BAND_WMS = '/api/core/bank/deliver/wms/sample/outbound',
+  SAMPLE_DETAIL = '/api/core/bank/deliver/sample/bag-detail',
 }
 
 export const getReserveSampleList = (params: GetApiCoreBankDeliverSampleRequest) =>
@@ -108,6 +111,19 @@ export const getDeliverSampleDetailByBag = (params: GetApiCoreBankDeliverSampleD
   defHttp.get<GetApiCoreBankDeliverSampleDetailBagResponse>(
     {
       url: Api.DELIVER_DETAIL,
+      params,
+    },
+    {
+      joinParamsToUrl: true,
+    },
+  );
+
+export const getDeliverSampleDetailBySampleNum = (
+  params: GetApiCoreBankDeliverSampleBagDetailRequest,
+) =>
+  defHttp.get<GetApiCoreBankDeliverSampleBagDetailResponse>(
+    {
+      url: Api.SAMPLE_DETAIL,
       params,
     },
     {

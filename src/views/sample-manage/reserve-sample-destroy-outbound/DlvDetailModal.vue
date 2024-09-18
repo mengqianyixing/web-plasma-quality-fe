@@ -27,16 +27,31 @@
               <BasicTable @register="registerBatchTable" />
             </a-tab-pane>
             <a-tab-pane key="bag" tab="样本袋">
-              <BasicTable @register="registerBagTable" />
+              <BasicTable @register="registerBagTable">
+                <template #sampleNum="{ record }">
+                  <span
+                    :class="
+                      !record?.sampleNum
+                        ? 'pointer-events-none'
+                        : 'text-blue-500 underline cursor-pointer'
+                    "
+                    @click.stop.self="handleOpenSampleDetail(record)"
+                  >
+                    {{ record?.sampleNum }}
+                  </span>
+                </template>
+              </BasicTable>
             </a-tab-pane>
           </a-tabs>
         </div>
       </div>
     </div>
   </BasicModal>
+
+  <SampleDetailModal @register="registerSampleDetailModal" />
 </template>
 <script lang="ts" setup>
-  import { BasicModal, useModalInner } from '@/components/Modal';
+  import { BasicModal, useModal, useModalInner } from '@/components/Modal';
   import { DescItem, Description, useDescription } from '@/components/Description';
   import { BasicTable, useTable } from '@/components/Table';
   import { Tabs } from 'ant-design-vue';
@@ -58,10 +73,13 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { SysParamsEnum } from '@/enums/sysParamsEnum';
   import { COMPANY } from '@/enums/company';
+  import SampleDetailModal from './SampleDetailModal.vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
   const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
   const { createMessage, createConfirm } = useMessage();
+
+  const [registerSampleDetailModal, { openModal: openSampleDetailModal }] = useModal();
 
   defineEmits(['success', 'register']);
 
@@ -212,6 +230,12 @@
 
         await reload();
       },
+    });
+  }
+
+  function handleOpenSampleDetail(record) {
+    openSampleDetailModal(true, {
+      record,
     });
   }
 </script>

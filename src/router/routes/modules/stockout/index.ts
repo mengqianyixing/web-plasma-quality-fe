@@ -277,11 +277,6 @@ const nonconformity: AppRouteModule = {
           company: COMPANY.KM,
         },
         {
-          id: StockOutButtonEnum.PlasmaProductionApplication,
-          title: '原料血浆投产申报表-昆明',
-          company: COMPANY.KM,
-        },
-        {
           id: StockOutButtonEnum.PlasmaProductionRecordsOfQualified,
           title: '检疫期合格血浆投产记录',
           company: COMPANY.KM,
@@ -299,6 +294,11 @@ const nonconformity: AppRouteModule = {
         {
           id: StockOutButtonEnum.PlasmaProductionPutIntoSummaryOfQualified,
           title: '检疫期合格原料血浆投产汇总表',
+          company: COMPANY.KM,
+        },
+        {
+          id: StockOutButtonEnum.KMRawPlasmaHandoverRecord,
+          title: '原料血浆交接记录',
           company: COMPANY.KM,
         },
       ],

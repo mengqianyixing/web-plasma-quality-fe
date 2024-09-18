@@ -198,7 +198,7 @@ export const requisitionDetail: BasicColumn[] = [
   },
   {
     dataIndex: 'plasmaType',
-    title: '血浆类型',
+    title: '血浆状态',
     width: 80,
   },
   {

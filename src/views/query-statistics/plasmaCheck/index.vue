@@ -16,7 +16,7 @@
       <TabPane :tab="tabList[1].title" :key="tabList[1].key" force-render>
         <BasicTable @register="tableList[1][0]" class="tabel2" ref="tableRef2" />
       </TabPane>
-      <TabPane :tab="tabList[2].title" :key="tabList[2].key" force-render>
+      <TabPane v-if="openFlag" :tab="tabList[2].title" :key="tabList[2].key" force-render>
         <BasicTable @register="tableList[2][0]" class="tabel3" ref="tableRef3" />
       </TabPane>
     </Tabs>
@@ -57,6 +57,16 @@
   import { useModal } from '@/components/Modal';
   import TabelModal from './tabelModal.vue';
   import { useSticky } from '@/hooks/web/useSticky';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { QuarantineBatchControlEnum } from '@/enums/callbackEnum';
+
+  const globalApiStore = useGlobalApiStoreWithOut();
+
+  const openFlag = ref(true);
+  globalApiStore.getSysParamsValue(SysParamsEnum.QuarantineBatchControl).then((res) => {
+    openFlag.value = res === QuarantineBatchControlEnum.OPEN;
+  });
 
   defineOptions({ name: 'PlasmaTest' });
 
@@ -120,7 +130,7 @@
     },
     {
       api: getFollowUpListApi,
-      title: '续追踪不合格',
+      title: '续追踪汇总',
       key: '2',
       columns: followUpColumns,
       afterFetch: (res: Recordable[]) => {

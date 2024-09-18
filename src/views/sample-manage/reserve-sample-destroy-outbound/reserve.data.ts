@@ -196,6 +196,7 @@ export const requisitionDetailByBag: BasicColumn[] = [
   {
     dataIndex: 'sampleNum',
     title: '样本数量',
+    slots: { customRender: 'sampleNum' },
   },
   {
     dataIndex: 'boxNo',
