@@ -99,14 +99,17 @@
       const rolesRes = await getCasDoorRoles({ currPage: 1, pageSize: 999 });
       const { result: roles } = rolesRes;
       const exportData: any[] = [];
-      const excelCol = [{ label: '用户', prop: 'username' }];
+      const excelCol = [
+        { label: '用户', prop: 'username' },
+        { label: '用户名', prop: 'displayName' },
+      ];
       roles.forEach((it) => excelCol.push({ label: it.displayName, prop: it.displayName }));
       userList.forEach((it) => {
         const obj = (it?.roles || []).reduce((pre, cur) => {
           pre[cur.displayName] = '√';
           return pre;
         }, {});
-        exportData.push({ username: it.name, ...obj });
+        exportData.push({ username: it.name, displayName: it.displayName, ...obj });
       });
       exportFile(transferCSVData(excelCol, exportData), `用户角色`, 'csv');
       pushLog({
