@@ -55,19 +55,17 @@
         >
           打印
         </a-button>
-        <span
-          v-auth="[QualityButtonEnum.BatchReleasePrintKM, QualityButtonEnum.BatchQuarantinePeriod]"
-        >
+        <span>
           <a-dropdown>
             <a-button type="primary" :loading="reportLoading"> 打印 </a-button>
             <template #overlay>
               <Menu>
-                <span v-auth="QualityButtonEnum.BatchReleasePrintKM">
+                <span>
                   <MenuItem @click="handlePrint">
                     <a-button type="link" :loading="reportLoading"> 原料血浆批审核放行单 </a-button>
                   </MenuItem>
                 </span>
-                <span v-auth="QualityButtonEnum.BatchQuarantinePeriod">
+                <span>
                   <MenuItem @click="handlePrintQuarantine">
                     <a-button type="link" :loading="reportLoading">
                       原料血浆检疫期筛选情况

@@ -5614,4 +5614,286 @@ export interface GetApiSearchBankStockWarningResponse {
   }[];
 }
 
+/**
+ * 接口 [检测结果查询-检测结果平行分析↗](https://yapi.sharing8.cn/project/529/interface/api/36777) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/sample/lab-item/parallel`
+ * @更新时间 `2024-09-12 18:23:56`
+ */
+export interface GetApiSearchSampleLabItemParallelRequest {
+  pageSize: string;
+  currPage: string;
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 浆站id
+   */
+  stationNo?: string;
+  /**
+   * 样本采集日期
+   */
+  beginCollectDate?: string;
+  /**
+   * 样本采集日期
+   */
+  endCollectDate?: string;
+  /**
+   * 样本接收日期
+   */
+  beginAcceptDate?: string;
+  /**
+   * 样本接收日期
+   */
+  endAcceptDate?: string;
+  /**
+   * 结果发布日期
+   */
+  beginIssueDate?: string;
+  /**
+   * 结果发布日期
+   */
+  endIssueDate?: string;
+}
+
+/**
+ * 接口 [检测结果查询-检测结果平行分析↗](https://yapi.sharing8.cn/project/529/interface/api/36777) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/sample/lab-item/parallel`
+ * @更新时间 `2024-09-12 18:23:56`
+ */
+export interface GetApiSearchSampleLabItemParallelResponse {
+  currPage?: number;
+  pageSize?: number;
+  result?: {
+    /**
+     * alt不合格数
+     */
+    alt?: number;
+    /**
+     * alt合格率
+     */
+    altSucRate?: number;
+    batchNo?: string;
+    firstCollectAt?: string;
+    hbsag?: number;
+    hbsagSucRate?: number;
+    hcv?: number;
+    hcvSucRate?: number;
+    hiv?: number;
+    hivSucRate?: number;
+    lastCollectAt?: string;
+    stationName?: string;
+    stationTotal?: number;
+    testTotal?: number;
+    totalRate?: number;
+    /**
+     * tp不合格数
+     */
+    tp?: number;
+    /**
+     * tp抗体不合格数
+     */
+    tpAntibody?: number;
+    /**
+     * tp抗体合格率
+     */
+    tpAntibodySucRate?: number;
+    /**
+     * tp合格率
+     */
+    tpSucRate?: number;
+  }[];
+  totalCount?: number;
+  totalPage?: number;
+}
+
+/**
+ * 接口 [检测结果查询-检测结果平行分析总计↗](https://yapi.sharing8.cn/project/529/interface/api/36786) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/sample/lab-item/parallel/total`
+ * @更新时间 `2024-09-12 18:22:09`
+ */
+export interface GetApiSearchSampleLabItemParallelTotalRequest {
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 浆站id
+   */
+  stationNo?: string;
+  /**
+   * 样本采集日期
+   */
+  beginCollectDate?: string;
+  /**
+   * 样本采集日期
+   */
+  endCollectDate?: string;
+  /**
+   * 样本接收日期
+   */
+  beginAcceptDate?: string;
+  /**
+   * 样本接收日期
+   */
+  endAcceptDate?: string;
+  /**
+   * 结果发布日期
+   */
+  beginIssueDate?: string;
+  /**
+   * 结果发布日期
+   */
+  endIssueDate?: string;
+}
+
+/**
+ * 接口 [检测结果查询-检测结果平行分析总计↗](https://yapi.sharing8.cn/project/529/interface/api/36786) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/sample/lab-item/parallel/total`
+ * @更新时间 `2024-09-12 18:22:09`
+ */
+export interface GetApiSearchSampleLabItemParallelTotalResponse {
+  alt?: number;
+  altSucRate?: number;
+  firstCollectAt?: string;
+  hbsag?: number;
+  hbsagSucRate?: number;
+  hcv?: number;
+  hcvSucRate?: number;
+  hiv?: number;
+  hivSucRate?: number;
+  lastCollectAt?: string;
+  stationTotal?: number;
+  testTotal?: number;
+  totalRate?: number;
+  tp?: number;
+  tpAntibody?: number;
+  tpSucRate?: number;
+}
+
+/**
+ * 接口 [检测结果查询-检测结果平行分析 明细↗](https://yapi.sharing8.cn/project/529/interface/api/36795) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/sample/lab-item/parallel/detail`
+ * @更新时间 `2024-09-12 18:26:12`
+ */
+export interface GetApiSearchSampleLabItemParallelDetailRequest {
+  /**
+   * 血浆批号
+   */
+  batchNo?: string;
+  /**
+   * 浆站id
+   */
+  stationNo?: string;
+  /**
+   * 样本采集日期
+   */
+  beginCollectDate?: string;
+  /**
+   * 样本采集日期
+   */
+  endCollectDate?: string;
+  /**
+   * 样本接收日期
+   */
+  beginAcceptDate?: string;
+  /**
+   * 样本接收日期
+   */
+  endAcceptDate?: string;
+  /**
+   * 结果发布日期
+   */
+  beginIssueDate?: string;
+  /**
+   * 结果发布日期
+   */
+  endIssueDate?: string;
+  /**
+   * 血浆编号
+   */
+  bagNo?: string;
+}
+
+/**
+ * 接口 [检测结果查询-检测结果平行分析 明细↗](https://yapi.sharing8.cn/project/529/interface/api/36795) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/search/sample/lab-item/parallel/detail`
+ * @更新时间 `2024-09-12 18:26:12`
+ */
+export interface GetApiSearchSampleLabItemParallelDetailResponse {
+  currPage?: number;
+  pageSize?: number;
+  result?: {
+    /**
+     * 血浆号
+     */
+    bagNo: string;
+    batchNo: string;
+    /**
+     * 血浆类型
+     */
+    bloodType: string;
+    /**
+     * 采集日期
+     */
+    collectAt: string;
+    /**
+     * 浆员名称
+     */
+    donorName: string;
+    donorNo: string;
+    /**
+     * 厂家alt
+     */
+    lisAlt: string;
+    /**
+     * 厂家hbsag
+     */
+    lisHbsag: string;
+    lisHcv: string;
+    lisHiv: string;
+    /**
+     * 厂家tp
+     */
+    lisTp: string;
+    /**
+     * 厂家tp抗体
+     */
+    lisTpAntibody: string;
+    /**
+     * 浆站alt
+     */
+    stationAlt: string;
+    /**
+     * 浆站hbsag
+     */
+    stationHbsag: string;
+    stationHcv: string;
+    stationHiv: string;
+    stationName: string;
+    /**
+     * 浆站tp
+     */
+    stationTp: string;
+    /**
+     * 浆站tp抗体
+     */
+    stationTpAntibody: string;
+  }[];
+  totalCount?: number;
+  totalPage?: number;
+}
+
 /* prettier-ignore-end */

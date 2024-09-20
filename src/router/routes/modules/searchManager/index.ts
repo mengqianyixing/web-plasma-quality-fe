@@ -215,12 +215,21 @@ const trayManager: AppRouteModule = {
           component: () => import('@/views/query-statistics/checkResult/index.vue'),
         },
         {
+          path: 'checkResultAnalysis',
+          name: 'CheckResultAnalysis',
+          meta: {
+            title: '检测结果平行分析',
+          },
+          id: 9000370,
+          component: () => import('@/views/query-statistics/checkResultAnalysis/index.vue'),
+        },
+        {
           path: 'reserveSample',
           name: 'ReserveSample',
           meta: {
             title: '保留样本查询',
           },
-          id: 9000101,
+          id: 9000380,
           component: () => import('@/views/query-statistics/reserve-sample/index.vue'),
         },
       ],
