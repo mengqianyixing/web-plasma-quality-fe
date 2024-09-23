@@ -2543,7 +2543,7 @@ export type GetApiCoreBankDeliverSampleBagDetailResponse = {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/search/sample/retain/batch`
- * @更新时间 `2024-09-11 14:22:25`
+ * @更新时间 `2024-09-12 16:21:43`
  */
 export interface GetApiSearchSampleRetainBatchRequest {
   stationNo?: string;
@@ -2556,6 +2556,8 @@ export interface GetApiSearchSampleRetainBatchRequest {
    * 未入库 0、已入库 1、已出库 2
    */
   status?: string;
+  pageSize: string;
+  currPage: string;
 }
 
 /**
@@ -2563,7 +2565,7 @@ export interface GetApiSearchSampleRetainBatchRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/search/sample/retain/batch`
- * @更新时间 `2024-09-11 14:22:25`
+ * @更新时间 `2024-09-12 16:21:43`
  */
 export interface GetApiSearchSampleRetainBatchResponse {
   stationName: string;
@@ -2571,7 +2573,7 @@ export interface GetApiSearchSampleRetainBatchResponse {
   packNum: string;
   sampleNum: string;
   status: string;
-  taryNo?: string;
+  trayNo?: string;
   bankName?: string;
   locationNo?: string;
 }
@@ -2616,7 +2618,7 @@ export interface GetApiSearchSampleRetainPackResponse {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/search/sample/retain/batch-detail`
- * @更新时间 `2024-09-11 14:29:21`
+ * @更新时间 `2024-09-11 17:07:22`
  */
 export interface GetApiSearchSampleRetainBatchDetailRequest {
   batchNo: string;
@@ -2639,7 +2641,7 @@ export interface GetApiSearchSampleRetainBatchDetailRequest {
  *
  * @分类 [样本管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5376)
  * @请求头 `GET /api/search/sample/retain/batch-detail`
- * @更新时间 `2024-09-11 14:29:21`
+ * @更新时间 `2024-09-11 17:07:22`
  */
 export interface GetApiSearchSampleRetainBatchDetailResponse {
   stationName: string;
@@ -2648,7 +2650,7 @@ export interface GetApiSearchSampleRetainBatchDetailResponse {
   packNo: string;
   sampleNo: string;
   keepBy: string;
-  collectionDate: string;
+  collectDate: string;
   cardNo: string;
   donorName: string;
   status: string;

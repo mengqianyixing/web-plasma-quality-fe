@@ -54,6 +54,25 @@ const callManager: AppRouteModule = {
     {
       path: `plasmaImmType`,
       name: 'PlasmaImmType',
+      authElements: [
+        {
+          id: BaseSettingButtonEnum.PlasmaFailedReasonAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.PlasmaFailedReasonEdit,
+          title: '编辑',
+        },
+
+        {
+          id: BaseSettingButtonEnum.PlasmaFailedReasonEnable,
+          title: '启用',
+        },
+        {
+          id: BaseSettingButtonEnum.PlasmaFailedReasonDisEnable,
+          title: '禁用',
+        },
+      ],
       meta: {
         title: '血浆类型',
         dictId: '100009',
@@ -259,6 +278,20 @@ const callManager: AppRouteModule = {
       path: 'params',
       name: 'Params',
       id: 100060,
+      authElements: [
+        {
+          id: BaseSettingButtonEnum.SystemSettingAdd,
+          title: '新增',
+        },
+        {
+          id: BaseSettingButtonEnum.SystemSettingEdit,
+          title: '编辑',
+        },
+        {
+          id: BaseSettingButtonEnum.SystemSettingDelete,
+          title: '撤销',
+        },
+      ],
       meta: {
         title: '系统参数',
       },

@@ -2,9 +2,23 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleAdd"> 新增 </a-button>
-        <a-button type="primary" @click="handleEdit"> 编辑 </a-button>
-        <a-button type="primary" @click="handleDelete"> 撤销 </a-button>
+        <a-button type="primary" @click="handleAdd" v-auth="BaseSettingButtonEnum.SystemSettingAdd">
+          新增
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleEdit"
+          v-auth="BaseSettingButtonEnum.SystemSettingEdit"
+        >
+          编辑
+        </a-button>
+        <a-button
+          type="primary"
+          @click="handleDelete"
+          v-auth="BaseSettingButtonEnum.SystemSettingEdit"
+        >
+          撤销
+        </a-button>
       </template>
     </BasicTable>
 
@@ -21,6 +35,7 @@
   import { PageWrapper } from '@/components/Page';
   import EditParamsModal from '@/views/system/params/EditParamsModal.vue';
   import { deleteSysParams, getSysParamsList } from '@/api/systemServer/params';
+  import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
 
   const { createMessage, createConfirm } = useMessage();
 
