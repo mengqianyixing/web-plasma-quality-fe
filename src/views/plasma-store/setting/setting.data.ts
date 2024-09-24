@@ -10,13 +10,19 @@ import {
   CLOSED,
   CLOSED_TEXT,
 } from '@/enums/plasmaStoreEnum';
+import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+import { SysParamsEnum } from '@/enums/sysParamsEnum';
+import { COMPANY } from '@/enums/company';
 
+const globalApiStore = useGlobalApiStoreWithOut();
+const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 export const columns: BasicColumn[] = [
   {
     title: '库房名称',
-    slots: { customRender: 'houseName' },
+    slots: iskm ? void 0 : { customRender: 'houseName' },
     width: 150,
     ellipsis: false,
+    dataIndex: 'houseName',
   },
   {
     title: '库房类别',
@@ -55,6 +61,7 @@ export const columns: BasicColumn[] = [
     title: '已使用货位数',
     dataIndex: 'locationUsedCount',
     width: 120,
+    format: (v) => (iskm ? '-' : v),
   },
   {
     title: '是否启用',
