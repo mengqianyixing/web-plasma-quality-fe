@@ -85,7 +85,7 @@
           v-auth="PlasmaInboundRecordButtonEnum.VerifyReport"
           :loading="reportLoading"
         >
-          验收报告
+          验收记录
         </a-button>
       </template>
     </BasicTable>
