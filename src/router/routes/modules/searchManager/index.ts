@@ -220,6 +220,13 @@ const trayManager: AppRouteModule = {
           meta: {
             title: '检测结果平行分析',
           },
+          authElements: [
+            {
+              id: SearchManager.CheckResultAnalysisPrint,
+              name: 'export',
+              title: '打印',
+            },
+          ],
           id: 9000370,
           component: () => import('@/views/query-statistics/checkResultAnalysis/index.vue'),
         },

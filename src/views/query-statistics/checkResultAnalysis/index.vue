@@ -3,6 +3,16 @@
     <div class="absolute w-full h-full pb-16px">
       <div style="height: calc(100% - 45px)">
         <BasicTable @register="registerTable" ref="tableRef">
+          <template #toolbar>
+            <a-button
+              type="primary"
+              @click="handlePrint"
+              :loading="reportLoading"
+              v-auth="SearchManager.CheckResultAnalysisPrint"
+            >
+              导出
+            </a-button>
+          </template>
           <template #testTotal="{ text, record }">
             <span
               v-if="record.batchNo"
@@ -32,6 +42,7 @@
         />
       </div>
     </div>
+    <ReportModal @register="registerReportModal" />
 
     <TabelModal @register="registerModal" />
   </PageWrapper>
@@ -46,9 +57,13 @@
   import { ref, reactive } from 'vue';
   import { useSticky } from '@/hooks/web/useSticky';
   import { Pagination as APagination } from 'ant-design-vue';
+  import { getReportApi } from '@/api/report';
+  import ReportModal from '@/components/ReportModal/index.vue';
+  import { SearchManager } from '@/enums/authCodeEnum';
 
-  defineOptions({ name: 'CheckResult' });
+  defineOptions({ name: 'CheckResultAnalysis' });
   const tableRef = ref();
+  const reportLoading = ref(false);
 
   const totalStyle = useSticky(tableRef);
 
@@ -57,6 +72,7 @@
     pageSize: 30,
     total: 0,
   });
+  const [registerReportModal, { openModal: openReportModal }] = useModal();
   const [registerModal, { openModal }] = useModal();
   const [registerTable, { reload, getForm }] = useTable({
     immediate: false,
@@ -113,6 +129,20 @@
       stationNo: record.stationNo || values.stationNo,
       batchNo: record.batchNo || values.batchNo,
     });
+  }
+
+  async function handlePrint() {
+    try {
+      reportLoading.value = true;
+      const res = await getReportApi({
+        reportKey: 'LAB_SAMPLE_PARALLEL',
+        contentKey: '',
+        params: encodeURIComponent(JSON.stringify(getForm().getFieldsValue())),
+      } as any);
+      openReportModal(true, window.URL.createObjectURL(res));
+    } finally {
+      reportLoading.value = false;
+    }
   }
 </script>
 <style scoped lang="scss">
