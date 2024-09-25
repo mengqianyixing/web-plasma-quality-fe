@@ -105,12 +105,13 @@ export const useUserStore = defineStore({
       try {
         const { goHome = true, mode, ...loginParams } = params;
         const data = await loginApi(loginParams, mode);
-        const { accessToken } = data;
+        const { accessToken, loginTime } = data;
         this.userInfo = {
           userId: 'userid',
           username: data.username,
           userAccount: '',
           homePath: '/404',
+          loginTime: loginTime,
         };
         this.setUserInfo(this.userInfo);
         // save token
@@ -133,6 +134,7 @@ export const useUserStore = defineStore({
           menuIds,
           userAccount,
           needUpdatePassword,
+          loginTime,
         } = data;
         const currentPath = window.location.hash.split('#')[1];
         this.userInfo = {
@@ -145,6 +147,7 @@ export const useUserStore = defineStore({
             return isNaN(_tempId) ? i : _tempId;
           }),
           homePath: currentPath === '/login' ? '/404' : currentPath || '/404',
+          loginTime: loginTime,
         };
         this.setUserInfo(this.userInfo);
         // save token
