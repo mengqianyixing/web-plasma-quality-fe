@@ -5,7 +5,7 @@
     title="样本明细"
     width="80%"
     :min-height="650"
-    showFooter
+    :footer="null"
     :showOkBtn="false"
     @fullscreen="redoHeight"
   >
