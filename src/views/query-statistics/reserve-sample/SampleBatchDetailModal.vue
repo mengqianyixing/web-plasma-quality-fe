@@ -2,7 +2,7 @@
   <BasicModal
     v-bind="$attrs"
     @register="register"
-    title="样本袋详情"
+    title="样本详情"
     width="80%"
     :min-height="650"
     :footer="null"

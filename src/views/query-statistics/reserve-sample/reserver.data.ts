@@ -219,7 +219,7 @@ export const retainBatchColumns: BasicColumn[] = [
   },
   {
     title: '采集日期',
-    dataIndex: 'collectionDate',
+    dataIndex: 'collectDate',
     width: 110,
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
