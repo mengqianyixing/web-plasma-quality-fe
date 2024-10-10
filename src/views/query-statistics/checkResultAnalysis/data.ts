@@ -169,6 +169,8 @@ export const dtSearchFormSchema: FormSchema[] = [
     field: 'batchNo',
     component: 'Input',
     label: '血浆批号',
+    required: true,
+    componentProps: {},
   },
   {
     field: 'bagNo',

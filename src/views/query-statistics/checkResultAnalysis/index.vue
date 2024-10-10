@@ -15,7 +15,7 @@
           </template>
           <template #testTotal="{ text, record }">
             <span
-              v-if="record.batchNo"
+              v-if="record.stationName !== '合计'"
               class="text-blue-500 underline cursor-pointer"
               @click.stop.self="handleDetails(record)"
             >
