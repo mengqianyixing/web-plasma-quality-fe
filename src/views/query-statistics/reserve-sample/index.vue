@@ -32,10 +32,9 @@
         </span>
       </template>
     </BasicTable>
+    <PackDetailModal @register="registerPackDetailModal" />
+    <SampleBatchDetailModal @register="registerSampleBatchDetailModal" />
   </PageWrapper>
-
-  <PackDetailModal @register="registerPackDetailModal" />
-  <SampleBatchDetailModal @register="registerSampleBatchDetailModal" />
 </template>
 <script lang="ts" setup>
   import { BasicTable, useTable } from '@/components/Table';

@@ -49,9 +49,9 @@
   });
   const [registerModal] = useModalInner(async (data) => {
     setPagination({ current: 1 });
-    const { setFieldsValue } = getForm();
+    const { setFieldsValue, resetFields } = getForm();
+    resetFields();
     setFieldsValue(data);
-    console.log(data);
     setTimeout(reload, 200);
   });
 </script>

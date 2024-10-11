@@ -16,6 +16,9 @@ export enum STATUS {
   OTD = 'OTD',
   ACT = 'ACT',
   ACD = 'ACD',
+  TBS = 'TBS',
+  IST = 'IST',
+  SDN = 'SDN',
 }
 export const STATUS_TEXT: Map<string, string> = new Map([
   [STATUS.TBP, '未计划'],
@@ -23,6 +26,9 @@ export const STATUS_TEXT: Map<string, string> = new Map([
   [STATUS.PBR, '待复核'],
   [STATUS.PLD, '待审核'],
   [STATUS.PVD, '已审核'],
+  [STATUS.TBS, '待组垛'],
+  [STATUS.IST, '组垛中'],
+  [STATUS.SDN, '组垛完成'],
   [STATUS.OUI, '出库中'],
   [STATUS.OTD, '已出库'],
   [STATUS.ACT, '接收中'],

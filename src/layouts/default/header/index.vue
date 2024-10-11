@@ -20,6 +20,9 @@
         v-if="getShowContent && getShowBread && currentRoute.path !== PageEnum.HOME"
         :theme="getHeaderTheme"
       />
+      <span style="color: #333; font-size: 16px">
+        欢迎使用血源管理系统，本次登录时间：{{ useUserStore.getUserInfo.loginTime }}
+      </span>
     </div>
     <!-- left end -->
 
@@ -78,6 +81,7 @@
   import LayoutMenu from '../menu/index.vue';
   import LayoutTrigger from '../trigger/index.vue';
   import { ErrorAction, FullScreen, LayoutBreadcrumb, Notify, UserDropDown } from './components';
+  import { useUserStoreWithOut } from '@/store/modules/user';
 
   const { currentRoute } = useRouter();
 
@@ -85,7 +89,7 @@
     loading: true,
   });
   defineOptions({ name: 'LayoutHeader' });
-
+  const useUserStore = useUserStoreWithOut();
   const props = defineProps({
     fixed: propTypes.bool,
   });

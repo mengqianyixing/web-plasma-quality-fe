@@ -42,6 +42,7 @@ export interface UserInfo {
   desc?: string;
   homePath?: string;
   userAccount: string;
+  loginTime: string;
 }
 
 export interface BeforeMiniState {

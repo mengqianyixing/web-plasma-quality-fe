@@ -73,7 +73,7 @@
         title: '类别',
       },
       {
-        dataIndex: 'keepBy',
+        dataIndex: 'bloodType',
         title: '血型',
       },
     ],

@@ -5896,4 +5896,93 @@ export interface GetApiSearchSampleLabItemParallelDetailResponse {
   totalPage?: number;
 }
 
+/**
+ * 接口 [检测结果查询-检测结果平行分析 报表↗](https://yapi.sharing8.cn/project/529/interface/api/36822) 的 **请求类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/report/preview-pdf`
+ * @更新时间 `2024-09-19 16:11:36`
+ */
+export interface GetApiReportPreviewPdfRequest {
+  reportKey: string;
+  params: string;
+  contentKey?: string;
+}
+
+/**
+ * 接口 [检测结果查询-检测结果平行分析 报表↗](https://yapi.sharing8.cn/project/529/interface/api/36822) 的 **返回类型**
+ *
+ * @分类 [查询统计↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5694)
+ * @请求头 `GET /api/report/preview-pdf`
+ * @更新时间 `2024-09-19 16:11:36`
+ */
+export interface GetApiReportPreviewPdfResponse {
+  /**
+   * 分页
+   */
+  sampleParallelDTOList?: {
+    totalCount?: number;
+    pageSize?: number;
+    totalPage?: number;
+    currPage?: number;
+    result?: {
+      stationName?: string;
+      batchNo?: string;
+      firstCollectAt?: string;
+      lastCollectAt?: string;
+      stationTotal?: number;
+      testTotal?: number;
+      hbsag?: number;
+      hbsagSucRate?: number;
+      hcv?: number;
+      hcvSucRate?: number;
+      hiv?: number;
+      hivSucRate?: number;
+      tpAntibody?: number;
+      tpAntibodySucRate?: number;
+      alt?: number;
+      altSucRate?: number;
+      tp?: number;
+      tpSucRate?: number;
+      totalRate?: number;
+      currPage?: null;
+      pageSize?: null;
+      sortIdx?: null;
+      sortOrder?: null;
+      offset?: null;
+      exportFlag?: null;
+    }[];
+  };
+  /**
+   * 汇总
+   */
+  total?: {
+    stationName?: null;
+    batchNo?: null;
+    firstCollectAt?: string;
+    lastCollectAt?: string;
+    stationTotal?: number;
+    testTotal?: number;
+    hbsag?: number;
+    hbsagSucRate?: number;
+    hcv?: number;
+    hcvSucRate?: number;
+    hiv?: number;
+    hivSucRate?: number;
+    tpAntibody?: number;
+    tpAntibodySucRate?: null;
+    alt?: number;
+    altSucRate?: number;
+    tp?: number;
+    tpSucRate?: number;
+    totalRate?: number;
+    currPage?: null;
+    pageSize?: null;
+    sortIdx?: null;
+    sortOrder?: null;
+    offset?: null;
+    exportFlag?: null;
+  };
+}
+
 /* prettier-ignore-end */
