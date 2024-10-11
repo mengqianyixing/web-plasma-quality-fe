@@ -1,7 +1,7 @@
 <template>
   <Layout.Header :class="getHeaderClass">
     <!-- left start -->
-    <div :class="`${prefixCls}-left`">
+    <div :class="`${prefixCls}-left flex-1`">
       <!-- logo -->
       <AppLogo
         v-if="getShowHeaderLogo || getIsMobile"
@@ -20,7 +20,7 @@
         v-if="getShowContent && getShowBread && currentRoute.path !== PageEnum.HOME"
         :theme="getHeaderTheme"
       />
-      <span style="color: #333; font-size: 16px">
+      <span style="color: #333; font-size: 16px; text-align: right" class="flex-1">
         欢迎使用血源管理系统，本次登录时间：{{ useUserStore.getUserInfo.loginTime }}
       </span>
     </div>
