@@ -10,7 +10,7 @@
               :loading="reportLoading"
               v-auth="SearchManager.CheckResultAnalysisPrint"
             >
-              导出
+              打印
             </a-button>
           </template>
           <template #testTotal="{ text, record }">
