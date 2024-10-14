@@ -25,7 +25,7 @@ export const columns: BasicColumn[] = [
 
   {
     width: 100,
-    title: '检测数据',
+    title: '检测数量（袋）',
     dataIndex: 'bagCount',
     fixed: 'left',
   },
