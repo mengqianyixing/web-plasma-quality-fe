@@ -137,7 +137,12 @@
       const res = await getReportApi({
         reportKey: 'LAB_SAMPLE_PARALLEL',
         contentKey: '后端让传的无用信息',
-        params: encodeURIComponent(JSON.stringify(getForm().getFieldsValue())),
+        params: encodeURIComponent(
+          JSON.stringify({
+            ...getForm().getFieldsValue(),
+            ...pagerLeft,
+          }),
+        ),
       } as any);
       openReportModal(true, window.URL.createObjectURL(res));
     } finally {
