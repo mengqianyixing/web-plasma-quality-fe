@@ -4,10 +4,10 @@ import { useStation } from '@/hooks/common/useStation';
 
 const { stationOptions } = useStation();
 export const getClass = (value) => {
-  if (value < 30) return 'red';
-  else if (value < 60) return 'orange';
-  else if (value < 90) return 'yellow';
-  else if (value < 180) return 'blue';
+  if (value <= 30) return 'red';
+  else if (value <= 60) return 'orange';
+  else if (value <= 90) return 'yellow';
+  else if (value <= 180) return 'blue';
 };
 export const columns: BasicColumn[] = [
   {
