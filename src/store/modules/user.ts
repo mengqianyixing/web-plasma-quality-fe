@@ -28,6 +28,7 @@ interface UserState {
   sessionTimeout?: boolean;
   lastUpdateTime: number;
   needUpdatePassword?: boolean;
+  houseNo: string;
 }
 
 export const useUserStore = defineStore({
@@ -45,8 +46,12 @@ export const useUserStore = defineStore({
     // Last fetch time
     lastUpdateTime: 0,
     needUpdatePassword: false,
+    houseNo: '',
   }),
   getters: {
+    getHouseNo(state): string {
+      return state.houseNo || localStorage.getItem('houseNo') || '';
+    },
     getUserInfo(state): UserInfo {
       return state.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
     },
@@ -67,6 +72,10 @@ export const useUserStore = defineStore({
     },
   },
   actions: {
+    setHouseNo(houseNo: string) {
+      this.houseNo = houseNo;
+      localStorage.setItem('houseNo', houseNo);
+    },
     setToken(info: string | undefined) {
       this.token = info ? info : ''; // for null or undefined value
       setAuthCache(TOKEN_KEY, info);
