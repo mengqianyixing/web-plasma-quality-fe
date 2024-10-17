@@ -222,6 +222,7 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { useMessage } from '@/hooks/web/useMessage';
   import { PrintServerEnum } from '@/enums/printServerEnum';
+  import dayJs from 'dayjs';
 
   const { createErrorModal } = useMessage();
 
@@ -422,11 +423,15 @@
   async function handlePrint(reportType: string) {
     const [row] = getSelections(true);
     if (!row) return;
-    if ([STATUS.TBP, STATUS.PLI].includes(row.state)) {
-      return message.warning('未完成计划不可打印');
-    }
     try {
       reportLoading.value = true;
+      const date = (await globalApiStore.getSysParamsValue('historyReportDate')) as string;
+      if (row.planAt && dayJs(date).isAfter(row.planAt)) {
+        return message.warning('历史报表请查阅纸质文档');
+      }
+      if ([STATUS.TBP, STATUS.PLI].includes(row.state)) {
+        return message.warning('未完成计划不可打印');
+      }
       const res = await getReportApi({ reportKey: reportType, contentKey: row.mesId });
       openReportModal(true, window.URL.createObjectURL(res));
       clearSelectedRowKeys();
@@ -439,11 +444,16 @@
   async function handleDownloadAbstract(key: PrintServerEnum) {
     const [row] = getSelections(true);
     if (!row) return;
-    if ([STATUS.TBP, STATUS.PLI].includes(row.state)) {
-      return message.warning('未完成计划不可下载');
-    }
     try {
       loading.value = true;
+      const date = (await globalApiStore.getSysParamsValue('historyReportDate')) as string;
+      if (row.planAt && dayJs(date).isAfter(row.planAt)) {
+        return message.warning('历史报表请查阅纸质文档');
+      }
+      if ([STATUS.TBP, STATUS.PLI].includes(row.state)) {
+        return message.warning('未完成计划不可下载');
+      }
+
       const res = await downloadReport({
         ReportKey: key,
         contentKey: row.mesId,

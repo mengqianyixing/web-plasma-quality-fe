@@ -135,6 +135,7 @@
   import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
   import { useMessage } from '@/hooks/web/useMessage';
   import { PrintServerEnum } from '@/enums/printServerEnum';
+  import dayJs from 'dayjs';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
@@ -359,11 +360,16 @@
   async function handlePrint() {
     const [row] = getSelections(true);
     if (!row) return;
-    if (row.state === STATUS.TBR) {
-      return message.warning(`制造批号【${row.mesId}】未审核`);
-    }
     try {
       reportLoading.value = true;
+      const date = (await globalApiStore.getSysParamsValue('historyReportDate')) as string;
+      if (row.checkAt && dayJs(date).isAfter(row.checkAt)) {
+        return message.warning('历史报表请查阅纸质文档');
+      }
+      if (row.state === STATUS.TBR) {
+        return message.warning(`制造批号【${row.mesId}】未审核`);
+      }
+
       const res = await getReportApi({
         reportKey: PrintServerEnum.PLASMA_PRODUCTION_RELEASE,
         contentKey: row.prNo,

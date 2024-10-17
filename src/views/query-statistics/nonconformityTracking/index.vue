@@ -34,7 +34,10 @@
   import { message } from 'ant-design-vue';
   import { PrintServerEnum } from '@/enums/printServerEnum';
   import DonorModel from '@/__components/donor/donorModel.vue';
+  import dayJs from 'dayjs';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
   const [registerDonorModal, { openModal }] = useModal();
   defineOptions({ name: 'NonconformityTracking' });
   const reportLoading = ref(false);
@@ -64,7 +67,10 @@
       if (!rows.length) return message.warning('请选择数据');
       const [record] = rows;
       reportLoading.value = true;
-
+      const date = (await globalApiStore.getSysParamsValue('historyReportDate')) as string;
+      if (record.printAt && dayJs(date).isAfter(record.printAt)) {
+        return message.warning('历史报表请查阅纸质文档');
+      }
       const res = await getReportApi({
         reportKey:
           record.blockBy === 'S' ? PrintServerEnum.PLASMA_TRACK : PrintServerEnum.FACTORY_TRACK,

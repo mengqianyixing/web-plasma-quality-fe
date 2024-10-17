@@ -207,7 +207,10 @@
   import { PrintServerEnum } from '@/enums/printServerEnum';
   import { getReportApi } from '@/api/report';
   import { useMessage } from '@/hooks/web/useMessage';
+  import dayJs from 'dayjs';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'PlasmaOut' });
 
   const open = ref(false);
@@ -346,6 +349,10 @@
 
     try {
       reportLoading.value = true;
+      const date = (await globalApiStore.getSysParamsValue('historyReportDate')) as string;
+      if (row.createAt && dayJs(date).isAfter(row.createAt)) {
+        return message.warning('历史报表请查阅纸质文档');
+      }
       const res = await getReportApi({ reportKey: field, contentKey: row.dlvNo });
       openReportModal(true, {
         blob: window.URL.createObjectURL(res),

@@ -92,6 +92,7 @@
   import { jsonToSheetXlsx, formatData, getHeader } from '@/components/Excel/src/Export2Excel';
   import { useRouter } from 'vue-router';
   import { PrintServerEnum } from '@/enums/printServerEnum';
+  import dayJs from 'dayjs';
 
   defineOptions({ name: 'PlasmaBatchReport' });
 
@@ -210,6 +211,10 @@
     getSelections(true, async ([row]) => {
       try {
         reportLoading.value = true;
+        const date = (await globalApiStore.getSysParamsValue('historyReportDate')) as string;
+        if (row.createAt && dayJs(date).isAfter(row.createAt)) {
+          return message.warning('历史报表请查阅纸质文档');
+        }
         const res = await getReportApi({
           reportKey: PrintServerEnum.BATCH_RELEASE,
           contentKey: row.brNo,

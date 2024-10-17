@@ -95,6 +95,10 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { statusValueEnum } from '@/enums/stockoutEnum';
   import { PageWrapper } from '@/components/Page';
+  import dayJs from 'dayjs';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
+  const globalApiStore = useGlobalApiStoreWithOut();
 
   defineOptions({ name: 'ProductionOrder' });
 
@@ -282,8 +286,13 @@
   async function handlePrint(reportType: string) {
     if (!selectRowsCheck()) return;
     const mesId = selectedRow.value[0].mesId;
+    const row = selectedRow.value[0];
     try {
       reportLoading.value = true;
+      const date = (await globalApiStore.getSysParamsValue('historyReportDate')) as string;
+      if (row.createAt && dayJs(date).isAfter(row.createAt)) {
+        return warning('历史报表请查阅纸质文档');
+      }
       const res = await getReportApi({ reportKey: reportType, contentKey: mesId });
       openReportModal(true, window.URL.createObjectURL(res));
     } finally {

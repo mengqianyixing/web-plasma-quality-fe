@@ -148,6 +148,10 @@
   import { getReportApi } from '@/api/report';
   import ResultRegistration from './resultRegistration/index.vue';
   import { PrintServerEnum } from '@/enums/printServerEnum';
+  import dayJs from 'dayjs';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
+  const globalApiStore = useGlobalApiStoreWithOut();
 
   defineOptions({ name: 'ReportRelease' });
 
@@ -280,15 +284,20 @@
     }
   }
   async function handlePrint() {
-    const [row] = getSelections(true);
-    if (!row) return;
-    if (row.state === 'TBG') {
-      return message.warning('报告制作前不允许打印！');
-    }
-    let reportType = PrintServerEnum.CALLBACK_CHECK_REPORT;
-    if (row.sampleCode === 'NOR') reportType = PrintServerEnum.PLASMA_CHECK_REPORT;
     try {
       reportLoading.value = true;
+      const [row] = getSelections(true);
+      if (!row) return;
+      const date = (await globalApiStore.getSysParamsValue('historyReportDate')) as string;
+      if (row.productionAt && dayJs(date).isAfter(row.productionAt)) {
+        return message.warning('历史报表请查阅纸质文档');
+      }
+
+      if (row.state === 'TBG') {
+        return message.warning('报告制作前不允许打印！');
+      }
+      let reportType = PrintServerEnum.CALLBACK_CHECK_REPORT;
+      if (row.sampleCode === 'NOR') reportType = PrintServerEnum.PLASMA_CHECK_REPORT;
       const res = await getReportApi({ reportKey: reportType, contentKey: row.reportNo });
       openReportModal(true, window.URL.createObjectURL(res));
       clearSelectedRowKeys();
@@ -298,15 +307,20 @@
   }
 
   async function handlePrintKM() {
-    const [row] = getSelections(true);
-    if (!row) return;
-    if (row.state === 'TBG') {
-      return message.warning('报告制作前不允许打印！');
-    }
-    let reportType = PrintServerEnum.CALLBACK_CHECK_REPORT;
-    if (row.sampleCode === 'NOR') reportType = PrintServerEnum.PLASMA_CHECK_REPORT;
     try {
       reportLoading.value = true;
+      const [row] = getSelections(true);
+      if (!row) return;
+      const date = (await globalApiStore.getSysParamsValue('historyReportDate')) as string;
+      if (dayJs(date).isAfter(row.productionAt)) {
+        return message.warning('历史报表请查阅纸质文档');
+      }
+      if (row.state === 'TBG') {
+        return message.warning('报告制作前不允许打印！');
+      }
+      let reportType = PrintServerEnum.CALLBACK_CHECK_REPORT;
+      if (row.sampleCode === 'NOR') reportType = PrintServerEnum.PLASMA_CHECK_REPORT;
+
       const res = await getReportApi({ reportKey: reportType, contentKey: row.reportNo });
       openReportModal(true, window.URL.createObjectURL(res));
       clearSelectedRowKeys();

@@ -55,6 +55,9 @@
   import { getReportApi } from '@/api/report';
   import { useModal } from '@/components/Modal';
   import { PrintServerEnum } from '@/enums/printServerEnum';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+
+  const globalApiStore = useGlobalApiStoreWithOut();
 
   const reportLoading = ref(false);
   const [registerReportModal, { openModal: openReportModal }] = useModal();
@@ -224,6 +227,10 @@
     getSelections(true, async ([row]) => {
       try {
         reportLoading.value = true;
+        const date = (await globalApiStore.getSysParamsValue('historyReportDate')) as string;
+        if (row.printAt && dayjs(date).isAfter(row.printAt)) {
+          return message.warning('历史报表请查阅纸质文档');
+        }
         const res = await getReportApi({ reportKey: reportType, contentKey: row.batchNo });
         openReportModal(true, window.URL.createObjectURL(res));
         clearSelectedRowKeys();
