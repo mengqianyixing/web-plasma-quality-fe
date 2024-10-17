@@ -218,6 +218,11 @@ export const retainBatchColumns: BasicColumn[] = [
     width: 100,
   },
   {
+    title: '样本编号',
+    dataIndex: 'sampleNo',
+    width: 120,
+  },
+  {
     title: '采集日期',
     dataIndex: 'collectDate',
     width: 110,
