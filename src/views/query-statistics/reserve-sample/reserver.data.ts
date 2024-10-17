@@ -95,7 +95,7 @@ export const searchMainRetainColumnsFormSchema: FormSchema[] = [
         },
         {
           value: 1,
-          label: '已入库',
+          label: '在库',
         },
         {
           value: 2,
@@ -302,7 +302,7 @@ export const searchRetainBatchFormSchema: FormSchema[] = [
         },
         {
           value: 1,
-          label: '已入库',
+          label: '在库',
         },
         {
           value: 2,
