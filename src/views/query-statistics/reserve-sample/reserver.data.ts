@@ -12,7 +12,7 @@ export const mainRetainColumns: BasicColumn[] = [
     fixed: 'left',
   },
   {
-    title: '血浆批号',
+    title: '样本批号',
     dataIndex: 'batchNo',
     width: 120,
     fixed: 'left',
@@ -114,7 +114,7 @@ export const retainPackColumns: BasicColumn[] = [
     fixed: 'left',
   },
   {
-    title: '血浆批号',
+    title: '样本批号',
     dataIndex: 'batchNo',
     width: 120,
     fixed: 'left',
@@ -197,7 +197,7 @@ export const retainBatchColumns: BasicColumn[] = [
     fixed: 'left',
   },
   {
-    title: '血浆批号',
+    title: '样本批号',
     dataIndex: 'batchNo',
     width: 120,
     fixed: 'left',
