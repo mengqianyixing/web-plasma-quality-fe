@@ -15,7 +15,6 @@ import type { AppRouteModule } from '@/router/types';
 import { AppRouteRecordRaw } from '@/router/types';
 
 const globalApiStore = useGlobalApiStoreWithOut();
-const company = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany);
 /**
  * 处理预览树特殊数据显示
  * 比如：
@@ -75,6 +74,7 @@ export function getFilterTreeData(treeList: TreeItem[], selectedKeys: any) {
 
 export function filterRoutes(routes: AppRouteModule[]): AppRouteModule[] {
   const filteredRoutes: AppRouteModule[] = [];
+  const company = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany);
 
   routes.forEach((item: AppRouteModule) => {
     if (item.id) item.id = item.id.toString();
