@@ -63,6 +63,7 @@
     baseColProps: { span: 32 },
     schemas: ReprintRecordFormSchema,
     showActionButtonGroup: false,
+    autoSubmitOnEnter: true,
   });
 
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {

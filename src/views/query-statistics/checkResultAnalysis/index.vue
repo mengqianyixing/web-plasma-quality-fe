@@ -10,7 +10,7 @@
               :loading="reportLoading"
               v-auth="SearchManager.CheckResultAnalysisPrint"
             >
-              导出
+              打印
             </a-button>
           </template>
           <template #testTotal="{ text, record }">
@@ -136,8 +136,13 @@
       reportLoading.value = true;
       const res = await getReportApi({
         reportKey: 'LAB_SAMPLE_PARALLEL',
-        contentKey: '',
-        params: encodeURIComponent(JSON.stringify(getForm().getFieldsValue())),
+        contentKey: 'invalid information',
+        params: encodeURIComponent(
+          JSON.stringify({
+            ...getForm().getFieldsValue(),
+            ...pagerLeft,
+          }),
+        ),
       } as any);
       openReportModal(true, window.URL.createObjectURL(res));
     } finally {

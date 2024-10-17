@@ -100,36 +100,6 @@ const quarantineManager: AppRouteModule = {
       meta: { title: '超一年期确认' },
       component: () => import('@/views/quarantine/overdue-confirmation/index.vue'),
     },
-    {
-      path: 'stationRefuse',
-      name: 'StationRefuse',
-      meta: {
-        title: '浆站永拒查询',
-      },
-      id: 9000220,
-      component: () => import('@/views/query-statistics/stationRefuse/index.vue'),
-      authElements: [
-        {
-          id: QuarantineButtonEnum.StationRefuseExport,
-          title: '导出',
-        },
-      ],
-    },
-    {
-      path: 'factoryCheckFail',
-      name: 'FactoryCheckFail',
-      meta: {
-        title: '厂家检测不合格查询',
-      },
-      id: 9000110,
-      component: () => import('@/views/query-statistics/factoryCheckFail/index.vue'),
-      authElements: [
-        {
-          id: QuarantineButtonEnum.FactoryCheckFailExcel,
-          title: '导出',
-        },
-      ],
-    },
   ],
 };
 

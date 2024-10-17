@@ -38,7 +38,9 @@
   import { STORE_FLAG, CLOSED } from '@/enums/plasmaStoreEnum';
   import { settingListApi } from '@/api/plasmaStore/setting';
   import { submitInHouseApi } from '@/api/tray/relocation';
+  import { useUserStoreWithOut } from '@/store/modules/user';
 
+  const useUserStore = useUserStoreWithOut();
   const emit = defineEmits(['success']);
   type Record = {
     area: string;
@@ -81,12 +83,13 @@
     pagination: false,
   });
   const schemas = inStoreFormSchema(houseChange);
-  const [registerForm, { resetFields, validate, updateSchema, validateFields }] = useForm({
-    labelWidth: 80,
-    baseColProps: { span: 24 },
-    schemas: schemas,
-    showActionButtonGroup: false,
-  });
+  const [registerForm, { resetFields, validate, updateSchema, validateFields, setFieldsValue }] =
+    useForm({
+      labelWidth: 80,
+      baseColProps: { span: 24 },
+      schemas: schemas,
+      showActionButtonGroup: false,
+    });
   const [registerModal, { setModalProps, closeModal }] = useModalInner(
     ({ data, otherParams: params }) => {
       otherParams.value = params;
@@ -128,6 +131,7 @@
   }
 
   function houseChange(houseNo: string) {
+    useUserStore.setHouseNo(houseNo || '');
     if (!houseNo) {
       state.columnLabel = '';
       return;
@@ -142,10 +146,19 @@
       state.data.forEach((_) => (_.area = label));
     }
   }
+  function setDefaultHouseNo() {
+    if (useUserStore.getHouseNo) {
+      setFieldsValue({ houseNo: useUserStore.getHouseNo });
+      houseChange(useUserStore.getHouseNo);
+    }
+  }
 
   async function getHouseList() {
     try {
-      if (state.houseList.length) return;
+      if (state.houseList.length) {
+        return setDefaultHouseNo();
+      }
+
       const res = await settingListApi({
         pageSize: '9999',
         currPage: '1',
@@ -159,6 +172,7 @@
       }));
       state.houseList = options as Select[];
       updateSchema([{ field: 'houseNo', componentProps: { options } }]);
+      setDefaultHouseNo();
     } catch (e) {
       console.error(e);
     }
