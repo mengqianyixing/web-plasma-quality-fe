@@ -56,6 +56,23 @@ export const searchFormSchema: FormSchema[] = [
     label: '永拒原因',
   },
   {
+    field: 'overage',
+    component: 'Select',
+    label: '是否超龄用拒',
+    componentProps: {
+      options: [
+        {
+          label: '超龄永拒',
+          value: true,
+        },
+        {
+          label: '非超龄永拒',
+          value: false,
+        },
+      ],
+    },
+  },
+  {
     field: 'blockAt',
     component: 'RangePicker',
     label: '永拒日期',
