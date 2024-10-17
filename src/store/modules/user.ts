@@ -15,10 +15,15 @@ import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic';
 import { h } from 'vue';
 import { PostApiSysUserLoginRequest, PostApiSysUserLoginResponse } from '@/api/type/login';
-import { getRoutes } from '@/router/routes';
+import { getRoutes, modulesRouteList } from '@/router/routes';
 import { pushLog } from '@/api/oauth/logger';
 import { formatDate, getRandNum } from 'js-xxx';
+import { filterRoutes } from '@/views/system/auth/dataTransfer';
+import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+import { SysParamsEnum } from '@/enums/sysParamsEnum';
+import { treeFlatArray } from '@/utils';
 
+const globalApiStore = useGlobalApiStoreWithOut();
 interface UserState {
   userInfo: Nullable<UserInfo>;
   token?: string;
@@ -145,23 +150,33 @@ export const useUserStore = defineStore({
           needUpdatePassword,
           loginTime,
         } = data;
+        this.setToken(accessToken);
+        this.setRefreshToken(refreshToken);
         const currentPath = window.location.hash.split('#')[1];
+        await globalApiStore.getSysParamsValue(SysParamsEnum.BloodProductionCompany);
+        const menuList: Recordable[] = filterRoutes(modulesRouteList).reverse();
+        const flotArray = treeFlatArray(menuList);
+        const map = flotArray.reduce((t, c) => {
+          t.set(c.id, c.id);
+          return t;
+        }, new Map());
+        const filterMenuIds = (menuIds as string[]).filter((it) => map.get(it));
+
         this.userInfo = {
           needUpdatePassword,
           userId: userId,
           username: username,
           userAccount: userAccount,
-          menuIds: (menuIds ?? []).map((i) => {
-            const _tempId = Number(i);
-            return isNaN(_tempId) ? i : _tempId;
+          menuIds: filterMenuIds.map((it) => {
+            if (it.includes('E')) return it;
+            else return Number(it);
           }),
           homePath: currentPath === '/login' ? '/404' : currentPath || '/404',
           loginTime: loginTime,
         };
         this.setUserInfo(this.userInfo);
         // save token
-        this.setToken(accessToken);
-        this.setRefreshToken(refreshToken);
+
         return this.afterLoginAction(true);
       } catch (error) {
         return Promise.reject(error);

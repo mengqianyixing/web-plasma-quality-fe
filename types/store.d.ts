@@ -38,7 +38,7 @@ export interface UserInfo {
   needUpdatePassword: boolean;
   userId: string;
   username: string;
-  menuIds?: number[];
+  menuIds?: (string | number)[];
   desc?: string;
   homePath?: string;
   userAccount: string;
