@@ -12,7 +12,7 @@ export const mainRetainColumns: BasicColumn[] = [
     fixed: 'left',
   },
   {
-    title: '血浆批号',
+    title: '样本批号',
     dataIndex: 'batchNo',
     width: 120,
     fixed: 'left',
@@ -95,7 +95,7 @@ export const searchMainRetainColumnsFormSchema: FormSchema[] = [
         },
         {
           value: 1,
-          label: '已入库',
+          label: '在库',
         },
         {
           value: 2,
@@ -114,7 +114,7 @@ export const retainPackColumns: BasicColumn[] = [
     fixed: 'left',
   },
   {
-    title: '血浆批号',
+    title: '样本批号',
     dataIndex: 'batchNo',
     width: 120,
     fixed: 'left',
@@ -197,7 +197,7 @@ export const retainBatchColumns: BasicColumn[] = [
     fixed: 'left',
   },
   {
-    title: '血浆批号',
+    title: '样本批号',
     dataIndex: 'batchNo',
     width: 120,
     fixed: 'left',
@@ -216,6 +216,11 @@ export const retainBatchColumns: BasicColumn[] = [
     title: '类别',
     dataIndex: 'keepBy',
     width: 100,
+  },
+  {
+    title: '样本编号',
+    dataIndex: 'sampleNo',
+    width: 120,
   },
   {
     title: '采集日期',
@@ -297,7 +302,7 @@ export const searchRetainBatchFormSchema: FormSchema[] = [
         },
         {
           value: 1,
-          label: '已入库',
+          label: '在库',
         },
         {
           value: 2,
