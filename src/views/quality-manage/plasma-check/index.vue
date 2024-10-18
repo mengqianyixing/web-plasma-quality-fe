@@ -132,7 +132,10 @@
   import { getReportApi } from '@/api/report';
   import { QualityButtonEnum } from '@/enums/authCodeEnum';
   import { PrintServerEnum } from '@/enums/printServerEnum';
+  import dayJs from 'dayjs';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
   const reportLoading = ref(false);
 
   const { stationOptions } = useStation();
@@ -364,6 +367,10 @@
   async function handlePrint(reportKey: PrintServerEnum) {
     if (selectedRowsRef.value.length === 0) createMessage.warn('请选择数据');
     const row = selectedRowsRef.value[0];
+    const date = (await globalApiStore.getSysParamsValue('historyReportDate')) as string;
+    if (row.auditAt && dayJs(date).isAfter(row.auditAt)) {
+      return createMessage.warn('历史报表请查阅纸质文档');
+    }
     if (row.auditState === PlasmaCheckStateValueEnum.WC)
       return createMessage.warn('待审核不允许打印');
     try {

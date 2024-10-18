@@ -214,6 +214,8 @@ export const useMultipleTabStore = defineStore({
         toTarget = getToTarget(page);
       }
       close(currentRoute.value);
+      this.updateCacheTab();
+
       await replace(toTarget);
     },
 

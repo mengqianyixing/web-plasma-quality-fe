@@ -13,7 +13,7 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { nextTick } from 'vue';
+  import { nextTick, onUnmounted, onMounted } from 'vue';
   import { BasicModal, useModalInner } from '@/components/Modal';
   import { BasicForm, useForm, FormSchema } from '@/components/Form';
 
@@ -63,10 +63,9 @@
     baseColProps: { span: 32 },
     schemas: ReprintRecordFormSchema,
     showActionButtonGroup: false,
-    autoSubmitOnEnter: true,
   });
 
-  const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
+  const [registerModal, { setModalProps, closeModal, getOpen }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: true });
 
     labelObj = data.res;
@@ -82,6 +81,17 @@
       },
     ]);
     setModalProps({ confirmLoading: false });
+  });
+  function enter(e) {
+    if (getOpen?.value && e.key === 'Enter') {
+      handleSubmit();
+    }
+  }
+  onMounted(() => {
+    window.addEventListener('keyup', enter);
+  });
+  onUnmounted(() => {
+    window.removeEventListener('keyup', enter);
   });
 
   async function handleSubmit() {

@@ -142,9 +142,12 @@
   } from '@/api/stockout/non-productin-put-into';
   import { StockOutButtonEnum } from '@/enums/authCodeEnum';
   import { PrintServerEnum } from '@/enums/printServerEnum';
-  import { Menu, MenuItem, Dropdown as ADropdown } from 'ant-design-vue';
+  import { Menu, MenuItem, Dropdown as ADropdown, message } from 'ant-design-vue';
   import { getReportApi } from '@/api/report';
+  import dayJs from 'dayjs';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
   defineOptions({ name: 'NonProductionPutInto' });
 
   const [registerOperateModal, { openModal: openOperateModal }] = useModal();
@@ -368,7 +371,12 @@
 
     try {
       reportLoading.value = true;
-      const res = await getReportApi({ reportKey: field, contentKey: selectedRow.value[0].dlvNo });
+      const row = selectedRow.value[0];
+      const date = (await globalApiStore.getSysParamsValue('historyReportDate')) as string;
+      if (row.createDate && dayJs(date).isAfter(row.createDate)) {
+        return message.warning('历史报表请查阅纸质文档');
+      }
+      const res = await getReportApi({ reportKey: field, contentKey: row.dlvNo });
       openReportModal(true, window.URL.createObjectURL(res));
       clearSelectedRowKeys();
     } finally {
