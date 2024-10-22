@@ -34,5 +34,5 @@ export const replayPrintRecord = (params: PutApiSysPrintingRecordRequest) =>
 export const getPrinter = () =>
   defHttp.get<GetApiSysPrintingRecordCreatorsResponse>({ url: Api.GET_PRINTER });
 
-export const printRecord = (params) =>
-  printHttp.post({ url: '/printer/print/direct/label', params });
+export const printRecord = (params, errOkCb?: () => void) =>
+  printHttp.post({ url: '/printer/print/direct/label', params }, { errorMessageModeOkCb: errOkCb });
