@@ -102,13 +102,12 @@ export const columns: BasicColumn[] = [
         title: 'TP符合率',
         dataIndex: 'tpSucRate',
       },
+      {
+        width: 70,
+        title: '总符合率',
+        dataIndex: 'totalRate',
+      },
     ],
-  },
-
-  {
-    width: 70,
-    title: '总符合率',
-    dataIndex: 'totalRate',
   },
 ];
 
