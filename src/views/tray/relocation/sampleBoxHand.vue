@@ -66,7 +66,7 @@
     }
   });
   const [registerModal, { openModal, setModalProps }] = useModal();
-  const [registerForm, { validate, clearValidate }] = useForm({
+  const [registerForm, { validate, clearValidate, resetFields }] = useForm({
     labelWidth: 90,
     baseColProps: { span: 24 },
     schemas: [
@@ -124,6 +124,7 @@
   function handleBinding() {
     const row = getSelectRows();
     if (row.length === 0) return message.warning('请选择数据');
+    resetFields();
     clearValidate();
     openModal(true);
   }
