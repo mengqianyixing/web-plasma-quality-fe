@@ -834,7 +834,11 @@
       dpi: data.labelObj.resolution,
     };
     delete params.resolution;
-    await printRecord(params);
+    try {
+      await printRecord(params);
+    } finally {
+      bagNoRef.value.$el.focus();
+    }
   }
 
   async function openPrint(bagNo) {
