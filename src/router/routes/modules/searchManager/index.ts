@@ -268,6 +268,13 @@ const trayManager: AppRouteModule = {
           },
           id: 9000380,
           component: () => import('@/views/query-statistics/reserve-sample/index.vue'),
+          authElements: [
+            {
+              id: SearchManager.ReserveSampleExport,
+              name: 'export',
+              title: '导出',
+            },
+          ],
         },
       ],
     },
@@ -446,7 +453,7 @@ const trayManager: AppRouteModule = {
             {
               id: SearchManager.PlasmaStoreWarnExport,
               name: 'export',
-              title: '导出',
+              title: '打印',
             },
           ],
         },

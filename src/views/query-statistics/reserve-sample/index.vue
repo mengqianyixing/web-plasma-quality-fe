@@ -6,7 +6,7 @@
           type="primary"
           @click="handleExport"
           :loading="loading"
-          v-auth="SearchManager.CallbackBatchExport"
+          v-auth="SearchManager.ReserveSampleExport"
         >
           导出
         </a-button>
