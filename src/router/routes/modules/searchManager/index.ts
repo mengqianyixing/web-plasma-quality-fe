@@ -421,6 +421,7 @@ const trayManager: AppRouteModule = {
           meta: {
             title: '货位查询',
           },
+          company: COMPANY.RS,
           id: 9000170,
           component: () => import('@/views/query-statistics/location/index.vue'),
           authElements: [
