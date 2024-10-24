@@ -61,7 +61,7 @@ enum Api {
   BOX_SELECT_LIST = '/api/product/plan/box/',
   BOX_NOT_SELECT_LIST = '/api/product/plan/box',
   TITER_LIST = '/api/product/plan/immuneType/',
-  STACK_LIST = '/api/product/plan/stack/',
+  STACK_LIST = '/api/search/prod/plan/stack/',
   STATION_LIST = '/api/product/plan/station/',
   BATCH_LIST = '/api/product/plan/batch/',
   PLASMA_LIST = '/api/product/plan/bag',

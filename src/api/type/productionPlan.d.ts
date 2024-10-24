@@ -828,10 +828,10 @@ export interface PutApiProductPlanReviewCancelResponse {}
  * 接口 [组垛垛号详情↗](https://yapi.sharing8.cn/project/529/interface/api/34800) 的 **请求类型**
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
- * @请求头 `GET /api/product/plan/stack/{orderNo}`
- * @更新时间 `2024-05-16 18:03:00`
+ * @请求头 `GET /api/search/prod/plan/stack/{orderNo}`
+ * @更新时间 `2024-10-23 14:44:42`
  */
-export interface GetApiProductPlanStackOrderNoRequest {
+export interface GetApiSearchProdPlanStackOrderNoRequest {
   orderNo: string;
 }
 
@@ -839,10 +839,10 @@ export interface GetApiProductPlanStackOrderNoRequest {
  * 接口 [组垛垛号详情↗](https://yapi.sharing8.cn/project/529/interface/api/34800) 的 **返回类型**
  *
  * @分类 [投产计划↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5424)
- * @请求头 `GET /api/product/plan/stack/{orderNo}`
- * @更新时间 `2024-05-16 18:03:00`
+ * @请求头 `GET /api/search/prod/plan/stack/{orderNo}`
+ * @更新时间 `2024-10-23 14:44:42`
  */
-export type GetApiProductPlanStackOrderNoResponse = {
+export type GetApiSearchProdPlanStackOrderNoResponse = {
   /**
    * 垛号
    */
