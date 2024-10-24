@@ -8,6 +8,7 @@
     @ok="handleSubmit"
     @open-change="handleVisibleChange"
     class="print-modal"
+    @cancel="emit('cancel')"
   >
     <BasicForm @register="registerForm" />
   </BasicModal>
@@ -19,7 +20,7 @@
 
   defineOptions({ name: 'ReprintModal' });
 
-  const emit = defineEmits(['success', 'register']);
+  const emit = defineEmits(['success', 'register', 'cancel']);
 
   const ReprintRecordFormSchema: FormSchema[] = [
     {

@@ -373,6 +373,8 @@ export enum SearchManager {
   PlasmaStoreWarnExport = 'E_900036001',
 
   CheckResultAnalysisPrint = 'E_9000370001',
+
+  ReserveSampleExport = 'E_9000380001',
 }
 
 export enum TagManageButtonEnum {

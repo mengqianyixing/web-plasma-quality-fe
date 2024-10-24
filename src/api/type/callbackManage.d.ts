@@ -611,7 +611,7 @@ export type GetApiSearchDonorCallbackEndedResponse = {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/block`
- * @更新时间 `2024-09-10 16:26:53`
+ * @更新时间 `2024-10-15 17:51:00`
  */
 export interface GetApiCoreDonorBlockRequest {
   pageSize: string;
@@ -644,6 +644,10 @@ export interface GetApiCoreDonorBlockRequest {
    * 是否导出操作，true是，false否
    */
   exportFlag?: string;
+  /**
+   * 是否超龄永拒：true-超龄 false-非超龄
+   */
+  overage?: string;
 }
 
 /**
@@ -651,7 +655,7 @@ export interface GetApiCoreDonorBlockRequest {
  *
  * @分类 [浆员管理↗](https://yapi.sharing8.cn/project/529/interface/api/cat_5327)
  * @请求头 `GET /api/core/donor/block`
- * @更新时间 `2024-09-10 16:26:53`
+ * @更新时间 `2024-10-15 17:51:00`
  */
 export interface GetApiCoreDonorBlockResponse {
   totalCount?: number;

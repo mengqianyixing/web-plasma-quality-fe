@@ -2,7 +2,7 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button v-auth="'E_1234'" type="success" @click="handleExport">导出</a-button>
+        <a-button type="success" @click="handleExport">导出</a-button>
         <a-button v-auth="'E_123'" type="primary" @click="handleCreate">新增角色</a-button>
       </template>
       <template #bodyCell="{ column, record }">
@@ -130,6 +130,7 @@
     };
     const results: any[] = flat();
     const excelCol = [
+      { label: '权限码', prop: 'id' },
       { label: '一级菜单', prop: '0' },
       { label: '二级菜单', prop: '1' },
       { label: '三级菜单', prop: '2' },
@@ -137,7 +138,7 @@
     ];
     const exportData = results.map((x) => {
       const { titleArr } = x;
-      const obj = { bt: x.path ? void 0 : titleArr.pop() };
+      const obj = { bt: x.path ? void 0 : titleArr.pop(), id: x.id };
       for (const key in titleArr) {
         obj[key] = titleArr[key];
       }

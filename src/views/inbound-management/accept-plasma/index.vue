@@ -142,7 +142,11 @@
       @success="handleModalSuccess"
     />
     <MissNumModal @register="registerMissNumModal" @success="handleModalSuccess" />
-    <ReprintModal @register="registerReprintModal" @success="handleReprintSuccess" />
+    <ReprintModal
+      @register="registerReprintModal"
+      @success="handleReprintSuccess"
+      @cancel="handleReprintCancel"
+    />
   </PageWrapper>
 </template>
 
@@ -835,10 +839,17 @@
     };
     delete params.resolution;
     try {
-      await printRecord(params);
+      await printRecord(params, () => {
+        setTimeout(() => {
+          bagNoRef.value.$el.focus();
+        }, 300);
+      });
     } finally {
       bagNoRef.value.$el.focus();
     }
+  }
+  function handleReprintCancel() {
+    bagNoRef.value.$el.focus();
   }
 
   async function openPrint(bagNo) {

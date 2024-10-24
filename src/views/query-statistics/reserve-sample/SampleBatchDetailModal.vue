@@ -35,13 +35,17 @@
   const [register, { setModalProps }] = useModalInner(async (data) => {
     batchNo.value = data.record?.batchNo;
 
+    await getForm().setFieldsValue({
+      packNo: data.record?.packNo,
+    });
+
     setModalProps({
       maskClosable: false,
       destroyOnClose: true,
     });
   });
 
-  const [registerBatchTable, { redoHeight }] = useTable({
+  const [registerBatchTable, { redoHeight, getForm }] = useTable({
     api: getRetainSampleBatchDetail,
     columns: retainBatchColumns,
     beforeFetch: (params) => {
