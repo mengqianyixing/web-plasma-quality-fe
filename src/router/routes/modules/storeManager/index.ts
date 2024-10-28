@@ -90,6 +90,44 @@ const storeManager: AppRouteModule = {
 
       id: 990030,
       component: () => import('@/views/tray/relocation/index.vue'),
+      authElements: [
+        {
+          id: StoreButtonEnum.TrayRelocation,
+          title: '托盘移库',
+        },
+        {
+          id: StoreButtonEnum.TrayPlasmaBoxScanBind,
+          title: '血浆箱扫描绑定',
+        },
+        {
+          id: StoreButtonEnum.TrayPlasmaBoxScanUnbind,
+          title: '血浆箱扫描解绑',
+        },
+        {
+          id: StoreButtonEnum.TrayPlasmaBoxBind,
+          title: '血浆箱手工绑定',
+        },
+        {
+          id: StoreButtonEnum.TrayPlasmaBoxUnbind,
+          title: '血浆箱手工解绑',
+        },
+        {
+          id: StoreButtonEnum.TraySampleBoxScanBind,
+          title: '样本箱扫描绑定',
+        },
+        {
+          id: StoreButtonEnum.TraySampleBoxScanUnbind,
+          title: '样本箱扫描解绑',
+        },
+        {
+          id: StoreButtonEnum.TraySampleBoxBind,
+          title: '样本箱手工绑定',
+        },
+        {
+          id: StoreButtonEnum.TraySampleBoxUnbind,
+          title: '样本箱手工解绑',
+        },
+      ],
     },
     {
       path: 'outInStore',

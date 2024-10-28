@@ -107,6 +107,16 @@ export enum StoreButtonEnum {
   TrayInStore = 'E_99004001',
   TrayOutStore = 'E_99004002',
 
+  TrayRelocation = 'E_990030001',
+  TrayPlasmaBoxScanBind = 'E_990030002',
+  TrayPlasmaBoxScanUnbind = 'E_990030003',
+  TrayPlasmaBoxBind = 'E_990030004',
+  TrayPlasmaBoxUnbind = 'E_990030005',
+  TraySampleBoxScanBind = 'E_990030006',
+  TraySampleBoxScanUnbind = 'E_990030007',
+  TraySampleBoxBind = 'E_990030008',
+  TraySampleBoxUnbind = 'E_990030009',
+
   PlasmaSiteAdd = 'E_99005001',
   PlasmaSiteUpdate = 'E_99005002',
   PlasmaSiteDisable = 'E_99005004',
