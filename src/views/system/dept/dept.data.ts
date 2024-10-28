@@ -1,5 +1,4 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
-import dayjs from 'dayjs';
 
 export const columns: BasicColumn[] = [
   {
@@ -7,14 +6,6 @@ export const columns: BasicColumn[] = [
     dataIndex: 'title',
     width: 160,
     align: 'left',
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createdTime',
-    format: (text) => {
-      return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
-    },
-    width: 180,
   },
 ];
 
