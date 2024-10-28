@@ -103,7 +103,7 @@ export const columns: BasicColumn[] = [
         dataIndex: 'tpSucRate',
       },
       {
-        width: 70,
+        width: 100,
         title: '总符合率',
         dataIndex: 'totalRate',
       },
