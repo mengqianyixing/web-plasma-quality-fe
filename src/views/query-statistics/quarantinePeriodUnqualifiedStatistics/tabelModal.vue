@@ -15,7 +15,7 @@
         <BasicTable @register="registerTable">
           <template #fkFailedCode="{ value }">
             <span>
-              {{ dictMap.get(value) }}
+              {{ getText(value) }}
             </span>
           </template>
         </BasicTable>
@@ -59,4 +59,12 @@
     Object.assign(state, data, { title: void 0, dictMap: void 0 });
     reload();
   });
+  function getText(code: string | null) {
+    return code
+      ? code
+          .split(',')
+          .map((c) => dictMap.value.get(c))
+          .join(',')
+      : '';
+  }
 </script>
