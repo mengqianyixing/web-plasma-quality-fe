@@ -64,7 +64,7 @@
       ? code
           .split(',')
           .map((c) => dictMap.value.get(c))
-          .join(',')
+          .join('，')
       : '';
   }
 </script>
