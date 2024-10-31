@@ -223,10 +223,14 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { PrintServerEnum } from '@/enums/printServerEnum';
   import dayJs from 'dayjs';
+  import { COMPANY } from '@/enums/company';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
 
   const { createErrorModal } = useMessage();
 
   const globalApiStore = useGlobalApiStoreWithOut();
+  const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
+
   defineOptions({ name: 'ProductionPlan' });
 
   const [registerReportModal, { openModal: openReportModal }] = useModal();
@@ -375,8 +379,13 @@
   function handleCancelCheck() {
     const [row] = getSelections(true);
     if (!row) return;
-    if (row.state !== STATUS.PVD) {
+
+    // 其他血制
+    if (row.state !== STATUS.PVD && !iskm) {
       return message.warning(`请选择【${STATUS_TEXT.get(STATUS.PVD)}】的数据`);
+    } else if (row.state !== STATUS.TBS && iskm) {
+      // 昆明
+      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.TBS)}】的数据`);
     }
     cancelText.value = '撤销审核';
     iterator = handleNext(() => handleCancelConfirm({ api: submitCheckCancelApi, row }));

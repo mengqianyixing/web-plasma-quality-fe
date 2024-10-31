@@ -193,6 +193,7 @@ export const dtColumns: BasicColumn[] = [
     title: '不合格原因',
     slots: { customRender: 'fkFailedCode' },
     width: 160,
+    ellipsis: false,
   },
   {
     dataIndex: 'inStoreAt',

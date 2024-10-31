@@ -163,13 +163,14 @@ const trayManager: AppRouteModule = {
           ],
         },
         {
-          path: 'stationRefuse',
-          name: 'StationRefuse',
+          path: 'stationRefuseRs',
+          name: 'StationRefuseRs',
           meta: {
             title: '浆站永拒查询',
           },
+          company: COMPANY.RS,
           id: 9000220,
-          component: () => import('@/views/query-statistics/stationRefuse/index.vue'),
+          component: () => import('@/views/query-statistics/stationRefuse/rs.vue'),
           authElements: [
             {
               id: QuarantineButtonEnum.StationRefuseExport,
@@ -178,13 +179,14 @@ const trayManager: AppRouteModule = {
           ],
         },
         {
-          path: 'factoryCheckFail',
-          name: 'FactoryCheckFail',
+          path: 'factoryCheckFailRs',
+          name: 'FactoryCheckFailRs',
           meta: {
             title: '厂家检测不合格查询',
           },
+          company: COMPANY.RS,
           id: 9000110,
-          component: () => import('@/views/query-statistics/factoryCheckFail/index.vue'),
+          component: () => import('@/views/query-statistics/factoryCheckFail/rs.vue'),
           authElements: [
             {
               id: QuarantineButtonEnum.FactoryCheckFailExcel,
