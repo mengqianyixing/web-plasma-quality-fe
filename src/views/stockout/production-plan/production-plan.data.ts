@@ -199,7 +199,7 @@ export const tabList = [
   },
   {
     key: TAB.STACKER,
-    label: '剁号明细',
+    label: '垛号明细',
     api: formatResp(getSelectStackerListApi),
   },
   {
