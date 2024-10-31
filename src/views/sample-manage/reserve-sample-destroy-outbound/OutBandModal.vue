@@ -67,6 +67,7 @@
 
   const { barCode, enterFlag, startEvent } = useScanHelper();
 
+  const emit = defineEmits(['success', 'register']);
   const tableLoading = ref(false);
   const sampleBagNo = ref('');
   const sampleBagNoRef = ref();
@@ -306,6 +307,7 @@
   }
   function handelCancel() {
     _removeEvent();
+    emit('success');
   }
   function handleTrayOutBand() {
     openTrayModal(true, {
