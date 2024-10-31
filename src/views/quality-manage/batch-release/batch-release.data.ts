@@ -7,7 +7,12 @@ import {
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import { formatKg } from '@/utils';
+import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+import { SysParamsEnum } from '@/enums/sysParamsEnum';
+import { COMPANY } from '@/enums/company';
 
+const globalApiStore = useGlobalApiStoreWithOut();
+const isKM = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
@@ -245,7 +250,7 @@ export const formSchema: FormSchema[] = [
     field: 'remark',
     component: 'InputTextArea',
     label: '备注',
-    required: true,
+    required: !isKM,
   },
 ];
 
