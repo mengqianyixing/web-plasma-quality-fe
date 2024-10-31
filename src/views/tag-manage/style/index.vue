@@ -151,15 +151,6 @@
     return rows;
   }
 
-  function stateAction(row) {
-    if (row.state === tagStatusValueEnum.EAB) {
-      message.warning('当前状态不能进行该操作');
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   const { createConfirm } = useMessage();
 
   function handleCheckStatus(action: string) {
@@ -196,9 +187,9 @@
   async function handleEdit() {
     const [row] = getSelections(true);
     if (!row) return;
-    const action = stateAction(row);
-    if (action) return;
-
+    if (row.state === tagStatusValueEnum.EAB) {
+      return message.warning('启用中的标签无法编辑，请先停用该标签');
+    }
     openStyleModal(true, {
       labelType: labelTypeDictionary.value,
       record: selectedRow.value[0],
@@ -227,10 +218,9 @@
   async function handleDelete() {
     const [row] = getSelections(true);
     if (!row) return;
-
-    const action = stateAction(row);
-
-    if (action) return;
+    if (row.state === tagStatusValueEnum.EAB) {
+      return message.warning('启用的标签不可撤销');
+    }
 
     const { tagName } = row;
     createConfirm({

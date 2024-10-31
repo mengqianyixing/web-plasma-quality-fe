@@ -200,7 +200,7 @@
     if (!selectRowsCheck()) return;
 
     if (selectedRow.value[0]?.state !== statusValueEnum.TBR) {
-      warning('该指令不是待复核的状态');
+      warning('该生产指令不是待复核的状态，不可复核');
       return;
     }
 
@@ -227,7 +227,7 @@
     if (!selectRowsCheck()) return;
 
     if (selectedRow.value[0]?.state !== statusValueEnum.RVD) {
-      warning('该指令不是已复核的状态');
+      warning('该生产指令不是待审核的状态，不可撤销复核');
       return;
     }
 
@@ -241,7 +241,7 @@
     if (!selectRowsCheck()) return;
 
     if (selectedRow.value[0]?.state !== statusValueEnum.RVD) {
-      warning('该指令不是待审核的状态');
+      warning('该生产指令不是待审核的状态，不可进行审核');
       return;
     }
 

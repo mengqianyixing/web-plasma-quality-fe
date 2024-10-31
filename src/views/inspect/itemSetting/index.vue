@@ -136,7 +136,13 @@
     const [row] = getSelections(true);
     if (!row) return;
     const { projectName, projectId, state } = row;
-    if (state === action) return message.warning('状态不需要变更');
+    if (state === action) {
+      if (!action) {
+        return message.warning('该检测项目已启用');
+      } else {
+        return message.warning('该检测项目已禁用');
+      }
+    }
     createConfirm({
       iconType: 'warning',
       content: '确认' + (action ? '禁用' : '启用') + projectName + '?',

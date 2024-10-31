@@ -183,7 +183,7 @@
     }
 
     if (selectedRowsRef.value[0].state !== 'VFD') {
-      createMessage.warning('该状态不支持该操作!');
+      createMessage.warning('该状态不能进行不合格暂存!');
       return;
     }
 
@@ -199,7 +199,7 @@
     }
 
     if (selectedRowsRef.value[0].state !== 'VFD') {
-      createMessage.warning('该状态不支持该操作!');
+      createMessage.warning('该状态不能进行重量登记!');
       return;
     }
 
