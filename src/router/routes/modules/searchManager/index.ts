@@ -456,7 +456,7 @@ const trayManager: AppRouteModule = {
             {
               id: SearchManager.PlasmaStoreWarnExport,
               name: 'export',
-              title: '打印',
+              title: '导出',
             },
           ],
         },

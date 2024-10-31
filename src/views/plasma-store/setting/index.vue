@@ -121,7 +121,13 @@
     const rows = getSelectRows();
     if (rows.length === 0) return message.warning('请选择一条数据');
     const { closed, houseNo, houseName } = rows[0];
-    if (closed === action) return message.warning('状态不需要变更');
+    if (closed === action) {
+      if (action !== 'CLOSED') {
+        return message.warning('该库房已启用');
+      } else {
+        return message.warning('该库房已禁用');
+      }
+    }
     createConfirm({
       iconType: 'warning',
       content: '确认' + (action === 'CLOSED' ? '禁用' : '启用') + houseName + '?',

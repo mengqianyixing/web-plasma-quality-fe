@@ -150,7 +150,7 @@
       return;
     }
     if (row.state !== '未提交') {
-      return createMessage.warn('已提交的不可修改');
+      return createMessage.warn('已提交的申请单，不可编辑');
     }
 
     openRequisitionSingleModal(true, {

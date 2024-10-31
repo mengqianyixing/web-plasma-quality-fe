@@ -273,7 +273,7 @@
       selectedRow.value[0]?.state !== statusValueEnum.OTD &&
       selectedRow.value[0]?.state !== statusValueEnum.OUI
     ) {
-      createMessage.warn('只有已出库或出库中状态下的制造批号才允许撤销出');
+      createMessage.warn('已出库或出库中状态的制造批号才允许撤销出库');
       return;
     }
 

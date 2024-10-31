@@ -140,7 +140,13 @@
     const [row] = getSelections(true);
     if (!row) return;
     const { itemKey, dictItemId, enable } = row;
-    if (enable === action) return message.warning('状态不需要变更');
+    if (enable === action) {
+      if (action) {
+        return message.warning('该效价类型已启用');
+      } else {
+        return message.warning('该效价类型已禁用');
+      }
+    }
     createConfirm({
       iconType: 'warning',
       content: '确认' + (action ? '启用' : '禁用') + itemKey + '?',

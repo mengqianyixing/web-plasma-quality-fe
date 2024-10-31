@@ -346,7 +346,21 @@
   function handleSwitch(enable: boolean) {
     const [row] = getSelectRow();
     if (!row) return;
-    if (enable === !!row.enable) return message.warning('状态不需要变更');
+    let type = '';
+    if (currentRoute.name === 'PlasmaImmType') {
+      type = '血浆类型';
+    } else if (currentRoute.name === 'SampleFailedReason') {
+      type = '样本不合格原因';
+    } else if (currentRoute.name === 'PlasmaFailedReason') {
+      type = '血浆不合格原因';
+    }
+    if (enable === !!row.enable) {
+      if (enable) {
+        return message.warning('该' + type + '已启用');
+      } else {
+        return message.warning('该' + type + '已禁用');
+      }
+    }
     createConfirm({
       iconType: 'warning',
       content: '确认' + (enable ? '启用' : '禁用') + row.itemKey + '?',
@@ -356,7 +370,6 @@
           openLoginModal(true, {});
           return;
         }
-
         await updateDictItemApi({ dictItemId: row.dictItemId, ...row, enable });
         clearSelectedRowKeys();
         await reload();

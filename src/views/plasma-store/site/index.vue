@@ -101,7 +101,13 @@
     const [row] = getSelections(true);
     if (!row) return;
     const { siteNo, siteName, fkHouseNo, closed } = row;
-    if (closed === action) return message.warning('状态不需要变更');
+    if (closed === action) {
+      if (!action) {
+        return message.warning('该站点已启用');
+      } else {
+        return message.warning('该站点已禁用');
+      }
+    }
     createConfirm({
       iconType: 'warning',
       content: '确认' + (action ? '禁用' : '启用') + siteName + '?',

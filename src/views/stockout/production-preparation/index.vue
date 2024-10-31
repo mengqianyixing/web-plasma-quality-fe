@@ -393,8 +393,12 @@
       return;
     }
     const selectedRowOne: any = selectedRow.value[0];
-    if (selectedRowOne.prepareState !== 'RUN' || selectedRowOne.prodBagCount == 0) {
-      warning('该准备号不可修改!');
+    if (selectedRowOne?.summary?.prodBagCount) {
+      warning('投产准备号中已挑选血浆，不允许进行编辑!');
+      return;
+    }
+    if (selectedRowOne.prepareState !== 'RUN') {
+      warning('非准备中状态的投产准备号，不允许进行编辑!');
       return;
     }
     if (selectedRowOne.creator !== userInfo.getUserInfo.username) {
@@ -424,12 +428,16 @@
     const prodBagCount = selectedRowOne?.summary?.prodBagCount;
     if (isPicked === 'isPicked') {
       if (prepareState !== 'REV') {
-        warning('该准备号不可撤销准备!');
+        warning('非待复核状态的投产准备号，不能撤销准备!');
         return;
       }
     } else {
-      if (prepareState !== 'RUN' || Number(prodBagCount) > 0) {
-        warning('该准备号不可撤销!');
+      if (prepareState !== 'RUN') {
+        warning('非准备中状态的投产准备号，不允许进行撤销!');
+        return;
+      }
+      if (Number(prodBagCount) > 0) {
+        warning('：投产准备号中已挑选血浆，不允许进行撤销!');
         return;
       }
     }
@@ -456,8 +464,12 @@
     const prepareNo = selectedRowOne?.prepareNo;
     const prodBagCount = selectedRowOne?.summary?.prodBagCount;
 
-    if (prepareState !== 'RUN' || Number(prodBagCount) <= 0) {
-      warning('该准备号不可完成准备!');
+    if (prepareState !== 'RUN') {
+      warning('非准备中状态的投产准备号，不能完成准备!');
+      return;
+    }
+    if (!prodBagCount) {
+      warning('投产准备号中未挑选血浆，不能完成准备!');
       return;
     }
     if (selectedRowOne.creator !== userInfo.getUserInfo.username) {
@@ -511,7 +523,7 @@
     const prepareNo = (selectedRow.value[0] as { prepareNo?: string })?.prepareNo;
     const creator = (selectedRow.value[0] as { creator?: string })?.creator;
     if (prepareState !== 'REV') {
-      warning('该准备号不可复核!');
+      warning('非待复核状态的投产准备号，不能进行复核!');
       return;
     }
     // 复核人不能和准备人相同
@@ -552,7 +564,7 @@
     const selectedRowOne: any = selectedRow.value[0];
     const prepareState = selectedRowOne?.prepareState;
     if (prepareState !== 'TPK') {
-      warning('该准备号不可撤销复核!');
+      warning('非待分拣状态的投产准备号，不能进行撤销复核!');
       return;
     }
     if (selectedRowOne.reviewer !== userInfo.getUserInfo.username) {

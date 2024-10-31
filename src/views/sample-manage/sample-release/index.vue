@@ -105,12 +105,12 @@
 
   async function handleRelease() {
     if (selectedRow.value.length === 0) {
-      createMessage.warning('请选择需要发布的样本');
+      createMessage.warning('请选择需要发布的样本批号');
       return;
     }
     const row = selectedRow.value[0];
     if (sampleVerifyStatusValueEnum.S !== row.verifyState) {
-      createMessage.warning('请选择已验收的样本');
+      createMessage.warning('请选择已验收的样本批号');
       return;
     }
     openCIModal(true, { ...row, bsNo: row.batchSampleNo });
