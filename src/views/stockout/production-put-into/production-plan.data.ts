@@ -10,6 +10,7 @@ import {
   getForPlasmaListApi,
   getNotSelectBoxListApi,
   getNotSelectPrepareListApi,
+  getSelectStackerListApi,
 } from '@/api/stockout/production-plan';
 
 import {
@@ -153,6 +154,7 @@ export enum TAB {
   STATION,
   BATCH,
   PLASMA,
+  STACKER,
 }
 function formatResp(api: any) {
   return (params: Recordable) =>
@@ -169,6 +171,11 @@ export const tabList = [
     key: TAB.PREPARE,
     label: '投产准备号',
     api: formatResp(getSelectPrepareListApi),
+  },
+  {
+    key: TAB.STACKER,
+    label: '垛号明细',
+    api: formatResp(getSelectStackerListApi),
   },
   {
     key: TAB.BOX,
@@ -196,7 +203,7 @@ export const tabList = [
     api: getForPlasmaListApi,
     pagination: true,
   },
-];
+].filter((it) => it.key !== TAB.STACKER || iskm);
 
 export const tableColumns: Record<string, BasicColumn[]> = {
   [TAB.PREPARE]: [
@@ -233,6 +240,35 @@ export const tableColumns: Record<string, BasicColumn[]> = {
     {
       title: '效价类型',
       dataIndex: 'immuneTypes',
+    },
+  ],
+  [TAB.STACKER]: [
+    {
+      title: '垛号',
+      dataIndex: 'stackNo',
+      width: 80,
+    },
+    {
+      title: '托盘数量',
+      dataIndex: 'trayNum',
+      width: 80,
+    },
+    {
+      title: '血浆数量',
+      dataIndex: 'bagNum',
+      width: 80,
+    },
+    {
+      title: '血浆净重(kg)',
+      dataIndex: 'totalWeight',
+      width: 80,
+      format: formatKg,
+    },
+    {
+      title: '效价类型',
+      dataIndex: 'titerType',
+      width: 240,
+      ellipsis: false,
     },
   ],
   [TAB.BOX]: [
