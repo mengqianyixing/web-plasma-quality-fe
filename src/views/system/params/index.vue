@@ -2,9 +2,6 @@
   <PageWrapper dense contentFullHeight fixedHeight>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleAdd" v-auth="BaseSettingButtonEnum.SystemSettingAdd">
-          新增
-        </a-button>
         <a-button
           type="primary"
           @click="handleEdit"
@@ -71,12 +68,6 @@
   });
 
   const [registerParamsModal, { openModal: openParamsModal }] = useModal();
-
-  function handleAdd() {
-    openParamsModal(true, {
-      isUpdate: false,
-    });
-  }
 
   function handleEdit() {
     if (!selectedRowsRef.value.length) {

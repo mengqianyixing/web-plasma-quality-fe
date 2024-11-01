@@ -280,10 +280,6 @@ const callManager: AppRouteModule = {
       id: 100060,
       authElements: [
         {
-          id: BaseSettingButtonEnum.SystemSettingAdd,
-          title: '新增',
-        },
-        {
           id: BaseSettingButtonEnum.SystemSettingEdit,
           title: '编辑',
         },
