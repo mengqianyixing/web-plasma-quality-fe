@@ -73,6 +73,11 @@ const system: AppRouteModule = {
           name: 'editUser',
           title: '编辑用户',
         },
+        {
+          id: 'E_1314',
+          name: 'editUser',
+          title: '删除用户',
+        },
       ],
       component: () => import('@/views/system/users/index.vue'),
     },

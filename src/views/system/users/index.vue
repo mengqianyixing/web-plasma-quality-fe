@@ -9,28 +9,42 @@
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
-          <TableAction
-            v-auth="'E_910'"
-            class="float-left w-20px"
-            :actions="[
-              {
-                icon: 'ant-design:lock-twotone',
-                title: '重置密码',
-                onClick: handleSetPassword.bind(null, record),
-              },
-            ]"
-          />
-          <TableAction
-            v-auth="'E_1112'"
-            class="float-right w-20px"
-            :actions="[
-              {
-                icon: 'clarity:note-edit-line',
-                title: '编辑用户',
-                onClick: handleEdit.bind(null, record),
-              },
-            ]"
-          />
+          <div class="flex" style="justify-content: space-around">
+            <TableAction
+              v-auth="'E_910'"
+              class="w-20px"
+              :actions="[
+                {
+                  icon: 'ant-design:lock-twotone',
+                  title: '重置密码',
+                  onClick: handleSetPassword.bind(null, record),
+                },
+              ]"
+            />
+            <TableAction
+              v-auth="'E_1112'"
+              class="w-20px"
+              :actions="[
+                {
+                  icon: 'clarity:note-edit-line',
+                  title: '编辑用户',
+                  onClick: handleEdit.bind(null, record),
+                },
+              ]"
+            />
+            <TableAction
+              v-auth="'E_1314'"
+              class="w-20px"
+              :actions="[
+                {
+                  icon: 'ant-design:delete-outlined',
+                  color: 'error',
+                  title: '删除用户',
+                  onClick: handleDelete.bind(null, record),
+                },
+              ]"
+            />
+          </div>
         </template>
       </template>
     </BasicTable>
@@ -40,7 +54,12 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { BasicTable, useTable, TableAction } from '@/components/Table';
-  import { getCasDoorUserDetail, getCasDoorUsers, resetCasDoorUserPwd } from '@/api/oauth/users';
+  import {
+    getCasDoorUserDetail,
+    getCasDoorUsers,
+    resetCasDoorUserPwd,
+    deleteCasDoorUser,
+  } from '@/api/oauth/users';
   import { getCasDoorRoles, getCasDoorAllUsers } from '@/api/oauth/auth';
   import { useUserStore } from '@/store/modules/user';
   import { useMessage } from '@/hooks/web/useMessage';
@@ -49,6 +68,7 @@
   import { exportFile, transferCSVData, getRandNum } from 'js-xxx';
   import { pushLog } from '@/api/oauth/logger';
   import { columns, searchFormSchema } from './users.data';
+  import { getDeptList } from '@/api/systemServer/system';
 
   const { createMessage } = useMessage();
   const userStore = useUserStore();
@@ -97,11 +117,19 @@
       loading.value = true;
       const userList = await getCasDoorAllUsers({ userIds: rows.map((it) => it.name) });
       const rolesRes = await getCasDoorRoles({ currPage: 1, pageSize: 999 });
+      const groups = await getDeptList({ withTree: false });
+      const groupsMap = groups.reduce((t, c) => {
+        t[c.name] = c.displayName;
+        return t;
+      }, {});
+
       const { result: roles } = rolesRes;
       const exportData: any[] = [];
       const excelCol = [
-        { label: '用户', prop: 'username' },
-        { label: '用户名', prop: 'displayName' },
+        { label: '账号', prop: 'username' },
+        { label: '姓名', prop: 'displayName' },
+        { label: '部门', prop: 'groups' },
+        { label: '状态', prop: 'state' },
       ];
       roles.forEach((it) => excelCol.push({ label: it.displayName, prop: it.displayName }));
       userList.forEach((it) => {
@@ -109,7 +137,13 @@
           pre[cur.displayName] = '√';
           return pre;
         }, {});
-        exportData.push({ username: it.name, displayName: it.displayName, ...obj });
+        exportData.push({
+          state: it.isForbidden ? '停用' : '启用',
+          groups: it.groups?.map((it) => groupsMap[it.split('/')[1]]).join('，'),
+          username: it.name,
+          displayName: it.displayName,
+          ...obj,
+        });
       });
       exportFile(transferCSVData(excelCol, exportData), `用户角色`, 'csv');
       pushLog({
@@ -134,6 +168,18 @@
     openModal(true, {
       record: { ...record, ...(res ?? {}) },
       isUpdate: true,
+    });
+  }
+
+  async function handleDelete(record: Recordable) {
+    createConfirm({
+      iconType: 'warning',
+      content: '确认删除账号【' + record.name + '】吗?',
+      onOk: async () => {
+        await deleteCasDoorUser({ name: record.name });
+        createMessage.success('删除用户【' + record.name + '】成功！');
+        reload();
+      },
     });
   }
 

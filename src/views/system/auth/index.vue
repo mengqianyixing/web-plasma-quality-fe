@@ -130,7 +130,7 @@
     };
     const results: any[] = flat();
     const excelCol = [
-      { label: '权限码', prop: 'id' },
+      { label: '权限编码', prop: 'id' },
       { label: '一级菜单', prop: '0' },
       { label: '二级菜单', prop: '1' },
       { label: '三级菜单', prop: '2' },
