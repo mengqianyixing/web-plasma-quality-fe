@@ -70,7 +70,7 @@
 
     <RequisitionModal @register="registerRequisitionModal" @success="handleSuccess" />
     <DlvDetailModal @register="registerDlvDetailModal" />
-    <OutBandModal @register="registerOutBandModal" />
+    <OutBandModal @register="registerOutBandModal" @success="handleSuccess" />
     <ReportModal @register="registerReportModal" />
   </PageWrapper>
 </template>
