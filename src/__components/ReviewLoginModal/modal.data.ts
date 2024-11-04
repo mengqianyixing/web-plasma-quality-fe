@@ -18,5 +18,8 @@ export const formSchema: FormSchema[] = [
       span: 20,
     },
     required: true,
+    componentProps: {
+      autocomplete: 'new-password',
+    },
   },
 ];
