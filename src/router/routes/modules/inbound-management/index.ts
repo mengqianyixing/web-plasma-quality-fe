@@ -40,6 +40,7 @@ const inboundmanagement: AppRouteModule = {
         {
           id: ReCheckButtonEnum.PlasmaReceiveTray,
           title: '托盘入库',
+          company: COMPANY.RS,
         },
         {
           id: ReCheckButtonEnum.PlasmaReceiveBatch,
