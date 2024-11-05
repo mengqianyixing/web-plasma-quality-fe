@@ -282,7 +282,7 @@
   }
 
   async function handleAcceptSample() {
-    if (!trayNo.value) {
+    if (!trayNo.value && !isKm) {
       warning('请扫描托盘编号!');
       return;
     }
@@ -315,7 +315,7 @@
         warning('请先选择血浆批号!');
         return;
       }
-      if (!trayNo.value) {
+      if (!trayNo.value && !isKm) {
         warning('请扫描托盘编号!');
         return;
       }
