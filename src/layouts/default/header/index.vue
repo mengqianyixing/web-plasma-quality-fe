@@ -21,7 +21,7 @@
         :theme="getHeaderTheme"
       />
       <span style="color: #333; font-size: 16px; text-align: right" class="flex-1">
-        欢迎使用血源管理系统，本次登录时间：{{ useUserStore.getUserInfo.loginTime }}
+        欢迎使用血源信息管理系统，本次登录时间：{{ useUserStore.getUserInfo.loginTime }}
       </span>
     </div>
     <!-- left end -->
