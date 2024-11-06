@@ -32,7 +32,7 @@
                 },
               ]"
             />
-            <TableAction
+            <!-- <TableAction
               v-auth="'E_1314'"
               class="w-20px"
               :actions="[
@@ -43,7 +43,7 @@
                   onClick: handleDelete.bind(null, record),
                 },
               ]"
-            />
+            /> -->
           </div>
         </template>
       </template>
@@ -54,12 +54,7 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { BasicTable, useTable, TableAction } from '@/components/Table';
-  import {
-    getCasDoorUserDetail,
-    getCasDoorUsers,
-    resetCasDoorUserPwd,
-    deleteCasDoorUser,
-  } from '@/api/oauth/users';
+  import { getCasDoorUserDetail, getCasDoorUsers, resetCasDoorUserPwd } from '@/api/oauth/users';
   import { getCasDoorRoles, getCasDoorAllUsers } from '@/api/oauth/auth';
   import { useUserStore } from '@/store/modules/user';
   import { useMessage } from '@/hooks/web/useMessage';
@@ -171,17 +166,17 @@
     });
   }
 
-  async function handleDelete(record: Recordable) {
-    createConfirm({
-      iconType: 'warning',
-      content: '确认删除账号【' + record.name + '】吗?',
-      onOk: async () => {
-        await deleteCasDoorUser({ name: record.name });
-        createMessage.success('删除用户【' + record.name + '】成功！');
-        reload();
-      },
-    });
-  }
+  // async function handleDelete(record: Recordable) {
+  //   createConfirm({
+  //     iconType: 'warning',
+  //     content: '确认删除账号【' + record.name + '】吗?',
+  //     onOk: async () => {
+  //       await deleteCasDoorUser({ name: record.name });
+  //       createMessage.success('删除用户【' + record.name + '】成功！');
+  //       reload();
+  //     },
+  //   });
+  // }
 
   const { createConfirm } = useMessage();
 
