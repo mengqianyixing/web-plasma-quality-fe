@@ -1,6 +1,11 @@
 import { BasicColumn, FormSchema } from '@/components/Table';
 import { useStation } from '@/hooks/common/useStation';
+import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+import { SysParamsEnum } from '@/enums/sysParamsEnum';
+import { COMPANY } from '@/enums/company';
 
+const globalApiStore = useGlobalApiStoreWithOut();
+const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 const { stationOptions } = useStation();
 export const columns: BasicColumn[] = [
   {
@@ -12,7 +17,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'batchNo',
   },
   {
-    title: '血浆箱数',
+    title: iskm ? '托盘数量' : '血浆箱数',
     dataIndex: 'boxCount',
     slots: { customRender: 'boxCount' },
   },
@@ -70,7 +75,7 @@ export const boxColumns: BasicColumn[] = [
     dataIndex: 'batchNo',
   },
   {
-    title: '血浆箱号',
+    title: iskm ? '托盘编号' : '血浆箱号',
     dataIndex: 'boxNo',
   },
   {

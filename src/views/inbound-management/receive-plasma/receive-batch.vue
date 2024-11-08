@@ -29,6 +29,7 @@
             </div>
             <div class="flex gap-2">
               <a-button
+                v-if="!isKm"
                 @click="openModal(true, filterForm)"
                 :disabled="!filterForm.batchNo"
                 type="primary"
@@ -72,6 +73,12 @@
   import InStoreDrawer from '../components/inStoreDrawer/index.vue';
   import dayjs from 'dayjs';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { COMPANY } from '@/enums/company';
+
+  const globalApiStore = useGlobalApiStoreWithOut();
+  const isKm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 
   defineOptions({ name: 'ReceivePlasma' });
 
@@ -107,6 +114,9 @@
     {
       field: 'trayNo',
       label: '托盘编号',
+      show() {
+        return !isKm;
+      },
       contentMinWidth: 100,
       render() {
         return (
@@ -272,7 +282,7 @@
   }
 
   async function handleAcceptSample() {
-    if (!trayNo.value) {
+    if (!trayNo.value && !isKm) {
       warning('请扫描托盘编号!');
       return;
     }
@@ -305,7 +315,7 @@
         warning('请先选择血浆批号!');
         return;
       }
-      if (!trayNo.value) {
+      if (!trayNo.value && !isKm) {
         warning('请扫描托盘编号!');
         return;
       }

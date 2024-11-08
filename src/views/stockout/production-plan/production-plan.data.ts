@@ -98,7 +98,7 @@ export const columns: BasicColumn[] = [
     title: '状态',
     dataIndex: 'state',
     customRender: ({ record }) => {
-      return STATUS_TEXT.get(record.state);
+      return STATUS_TEXT.get(record.state)?.text;
     },
     width: 80,
   },
@@ -167,7 +167,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '状态',
     component: 'Select',
     componentProps: {
-      options: statusList,
+      options: statusList(globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany)),
     },
   },
 ];

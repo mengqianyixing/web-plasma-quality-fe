@@ -40,6 +40,7 @@ const inboundmanagement: AppRouteModule = {
         {
           id: ReCheckButtonEnum.PlasmaReceiveTray,
           title: '托盘入库',
+          company: COMPANY.RS,
         },
         {
           id: ReCheckButtonEnum.PlasmaReceiveBatch,
@@ -151,6 +152,7 @@ const inboundmanagement: AppRouteModule = {
           id: ReCheckButtonEnum.RegisterWeightCheck,
           name: 'registerWeight',
           title: '重量登记复核人登录',
+          company: COMPANY.RS,
         },
         {
           id: ReCheckButtonEnum.UnqualifiedStage,
