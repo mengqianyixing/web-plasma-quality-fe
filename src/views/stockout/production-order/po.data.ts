@@ -1,15 +1,14 @@
 import { FormSchema } from '@/components/Form';
 import { BasicColumn } from '@/components/Table';
-import {
-  expirationMap,
-  expirationValueEnum,
-  statusMap,
-  statusValueEnum,
-} from '@/enums/stockoutEnum';
+import { expirationMap, expirationValueEnum } from '@/enums/stockoutEnum';
+import { STATUS_TEXT, statusList } from '@/enums/productionPlanEnum';
 import dayjs, { Dayjs } from 'dayjs';
 import { SERVER_ENUM } from '@/enums/serverEnum';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
+import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+import { SysParamsEnum } from '@/enums/sysParamsEnum';
 
+const globalApiStore = useGlobalApiStoreWithOut();
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
@@ -64,10 +63,10 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'state',
-    width: 80,
-    format(text) {
-      return statusMap.get(<statusValueEnum>text) as string;
+    customRender: ({ record }) => {
+      return STATUS_TEXT.get(record.state)?.text;
     },
+    width: 80,
   },
   {
     title: '申请人',
@@ -145,14 +144,11 @@ export const searchFormSchema: FormSchema[] = [
     },
   },
   {
-    field: 'state',
+    field: 'planState',
     label: '状态',
     component: 'Select',
     componentProps: {
-      options: [...statusMap.entries()].map(([key, value]) => ({
-        value: key,
-        label: value,
-      })),
+      options: statusList(globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany)),
     },
   },
   {
