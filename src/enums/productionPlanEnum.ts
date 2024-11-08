@@ -6,6 +6,8 @@
  * @LastEditors: zcc
  * @LastEditTime: 2024-01-29 17:11:48
  */
+import { COMPANY } from '@/enums/company';
+
 export enum STATUS {
   TBP = 'TBP',
   PLI = 'PLI',
@@ -20,27 +22,30 @@ export enum STATUS {
   IST = 'IST',
   SDN = 'SDN',
 }
-export const STATUS_TEXT: Map<string, string> = new Map([
-  [STATUS.TBP, '未计划'],
-  [STATUS.PLI, '计划中'],
-  [STATUS.PBR, '待复核'],
-  [STATUS.PLD, '待审核'],
-  [STATUS.PVD, '已审核'],
-  [STATUS.TBS, '待组垛'],
-  [STATUS.IST, '组垛中'],
-  [STATUS.SDN, '组垛完成'],
-  [STATUS.OUI, '出库中'],
-  [STATUS.OTD, '已出库'],
-  [STATUS.ACT, '接收中'],
-  [STATUS.ACD, '已接收'],
+export const STATUS_TEXT: Map<string, { text: string; company?: string }> = new Map([
+  [STATUS.TBP, { text: '未计划' }],
+  [STATUS.PLI, { text: '计划中' }],
+  [STATUS.PBR, { text: '待复核' }],
+  [STATUS.PLD, { text: '待审核' }],
+  [STATUS.PVD, { text: '已审核' }],
+  [STATUS.TBS, { text: '待组垛', company: COMPANY.KM }],
+  [STATUS.IST, { text: '组垛中', company: COMPANY.KM }],
+  [STATUS.SDN, { text: '组垛完成', company: COMPANY.KM }],
+  [STATUS.OUI, { text: '出库中' }],
+  [STATUS.OTD, { text: '已出库' }],
+  [STATUS.ACT, { text: '接收中' }],
+  [STATUS.ACD, { text: '已接收' }],
 ]);
-export const statusList = (() => {
+export const statusList = (company: string) => {
   const list: Recordable = [];
   for (const [value, label] of STATUS_TEXT) {
-    list.push({ label, value });
+    if (label.company && label.company !== company) {
+      continue;
+    }
+    list.push({ label: label.text, value });
   }
   return list;
-})();
+};
 
 export enum EXPIRATION {
   AY = 'AY',
