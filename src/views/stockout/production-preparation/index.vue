@@ -437,7 +437,7 @@
         return;
       }
       if (Number(prodBagCount) > 0) {
-        warning('：投产准备号中已挑选血浆，不允许进行撤销!');
+        warning('投产准备号中已挑选血浆，不允许进行撤销!');
         return;
       }
     }
