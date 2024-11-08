@@ -15,7 +15,7 @@ const globalApiStore = useGlobalApiStoreWithOut();
 const isKM = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
-
+console.log(isKM);
 export const columns: BasicColumn[] = [
   {
     title: '制造批号',
