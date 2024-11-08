@@ -84,7 +84,7 @@
     updateSchema(
       formSchema.map((_: any) => ({
         ..._,
-        required: !onlyRead,
+        required: _.required ? !onlyRead : false,
         componentProps: { disabled: _.componentProps?.disabled || onlyRead },
       })),
     );
