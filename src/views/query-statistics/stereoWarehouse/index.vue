@@ -31,7 +31,7 @@
   defineOptions({ name: 'StereoWarehouse' });
   const loading = ref(false);
 
-  const [registerTable, { getForm, getDataSource }] = useTable({
+  const [registerTable, { getForm, getDataSource, redoHeight }] = useTable({
     api: getListApi,
     columns,
     formConfig: {
@@ -54,6 +54,7 @@
 
   function handleSummary() {
     const origin = getDataSource();
+    redoHeight();
     return [
       {
         stationName: '合计',
