@@ -10,21 +10,26 @@
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex" class="p-16px">
     <BasicTable @register="registerTable" @expand="expand">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate" v-auth="BaseSettingButtonEnum.DictionaryAdd"
-          >新增</a-button
-        >
-        <a-button
-          type="primary"
-          @click="handleUpdate"
-          v-auth="BaseSettingButtonEnum.DictionaryUpdate"
-          >编辑</a-button
-        >
-        <a-button
-          type="primary"
-          @click="handleRemove"
-          v-auth="BaseSettingButtonEnum.DictionaryDelete"
-          >删除</a-button
-        >
+        <template v-if="false">
+          <a-button
+            type="primary"
+            @click="handleCreate"
+            v-auth="BaseSettingButtonEnum.DictionaryAdd"
+            >新增</a-button
+          >
+          <a-button
+            type="primary"
+            @click="handleUpdate"
+            v-auth="BaseSettingButtonEnum.DictionaryUpdate"
+            >编辑</a-button
+          >
+          <a-button
+            type="primary"
+            @click="handleRemove"
+            v-auth="BaseSettingButtonEnum.DictionaryDelete"
+            >删除</a-button
+          >
+        </template>
         <a-button
           type="primary"
           @click="handleCreateItem()"
