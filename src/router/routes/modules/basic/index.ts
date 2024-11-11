@@ -310,18 +310,18 @@ const callManager: AppRouteModule = {
       },
       id: 100040,
       authElements: [
-        {
-          id: BaseSettingButtonEnum.DictionaryAdd,
-          title: '新增',
-        },
-        {
-          id: BaseSettingButtonEnum.DictionaryUpdate,
-          title: '编辑',
-        },
-        {
-          id: BaseSettingButtonEnum.DictionaryDelete,
-          title: '删除',
-        },
+        // {
+        //   id: BaseSettingButtonEnum.DictionaryAdd,
+        //   title: '新增',
+        // },
+        // {
+        //   id: BaseSettingButtonEnum.DictionaryUpdate,
+        //   title: '编辑',
+        // },
+        // {
+        //   id: BaseSettingButtonEnum.DictionaryDelete,
+        //   title: '删除',
+        // },
         {
           id: BaseSettingButtonEnum.DictionaryItemAdd,
           title: '字典项配置',
