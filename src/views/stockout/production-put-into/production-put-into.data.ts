@@ -3,7 +3,8 @@ import { BasicColumn } from '@/components/Table';
 import {
   expirationMap,
   expirationValueEnum,
-  statusMap,
+  rsStatusMap,
+  kmStatusMap,
   statusValueEnum,
 } from '@/enums/stockoutEnum';
 import dayjs from 'dayjs';
@@ -14,7 +15,7 @@ import { SysParamsEnum } from '@/enums/sysParamsEnum';
 import { COMPANY } from '@/enums/company';
 
 const globalApiStore = useGlobalApiStoreWithOut();
-const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
+const isKm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 const serverEnumStore = useServerEnumStoreWithOut();
 const PlasmaType = serverEnumStore.getServerEnumText(SERVER_ENUM.PlasmaType);
 
@@ -67,7 +68,7 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: iskm ? '托盘数量' : '投浆箱数',
+    title: isKm ? '托盘数量' : '投浆箱数',
     dataIndex: 'boxNum',
     slots: { customRender: 'boxNum' },
     width: 80,
@@ -119,7 +120,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'state',
     width: 80,
     format(text) {
-      return statusMap.get(<statusValueEnum>text) as string;
+      return (isKm ? kmStatusMap : rsStatusMap).get(<statusValueEnum>text) as string;
     },
   },
 ];
@@ -143,21 +144,26 @@ export const searchFormSchema: FormSchema[] = [
     label: '状态',
     component: 'Select',
     componentProps: {
-      options: [...statusMap.entries()]
-        .map(([key, value]) => ({
-          value: key,
-          label: value,
-        }))
-        .filter((it) =>
-          [
-            statusValueEnum.PVD,
-            statusValueEnum.OTD,
-            statusValueEnum.OUI,
-            statusValueEnum.ACD,
-            statusValueEnum.ACT,
-            statusValueEnum.ROD,
-          ].includes(it.value),
-        ),
+      options: isKm
+        ? [...kmStatusMap.entries()].map(([key, value]) => ({
+            value: key,
+            label: value,
+          }))
+        : [...rsStatusMap.entries()]
+            .map(([key, value]) => ({
+              value: key,
+              label: value,
+            }))
+            .filter((it) =>
+              [
+                statusValueEnum.PVD,
+                statusValueEnum.OTD,
+                statusValueEnum.OUI,
+                statusValueEnum.ACD,
+                statusValueEnum.ACT,
+                statusValueEnum.ROD,
+              ].includes(it.value),
+            ),
     },
   },
   {

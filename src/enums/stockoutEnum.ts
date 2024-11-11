@@ -5,6 +5,8 @@ export enum statusEnum {
   PLI = '计划中',
   PBR = '计划待复核',
   PLD = '计划待审核',
+  TBS = '待组垛',
+  IST = '组垛中',
   PVD = '待出库',
   OTD = '已出库',
   OUI = '出库中',
@@ -26,22 +28,39 @@ export enum statusValueEnum {
   ACT = 'ACT',
   ACD = 'ACD',
   ROD = 'ROD',
+  TBS = 'TBS',
+  IST = 'IST',
 }
 
-export const statusMap = new Map<statusValueEnum, string>();
+export const rsStatusMap = new Map<statusValueEnum, string>();
 
-statusMap.set(statusValueEnum.TBR, statusEnum.TBR);
-statusMap.set(statusValueEnum.RVD, statusEnum.RVD);
-statusMap.set(statusValueEnum.TBP, statusEnum.TBP);
-statusMap.set(statusValueEnum.PLI, statusEnum.PLI);
-statusMap.set(statusValueEnum.PBR, statusEnum.PBR);
-statusMap.set(statusValueEnum.PLD, statusEnum.PLD);
-statusMap.set(statusValueEnum.PVD, statusEnum.PVD);
-statusMap.set(statusValueEnum.OUI, statusEnum.OUI);
-statusMap.set(statusValueEnum.OTD, statusEnum.OTD);
-statusMap.set(statusValueEnum.ACT, statusEnum.ACT);
-statusMap.set(statusValueEnum.ACD, statusEnum.ACD);
+rsStatusMap.set(statusValueEnum.TBR, statusEnum.TBR);
+rsStatusMap.set(statusValueEnum.RVD, statusEnum.RVD);
+rsStatusMap.set(statusValueEnum.TBP, statusEnum.TBP);
+rsStatusMap.set(statusValueEnum.PLI, statusEnum.PLI);
+rsStatusMap.set(statusValueEnum.PBR, statusEnum.PBR);
+rsStatusMap.set(statusValueEnum.PLD, statusEnum.PLD);
+rsStatusMap.set(statusValueEnum.PVD, statusEnum.PVD);
+rsStatusMap.set(statusValueEnum.OUI, statusEnum.OUI);
+rsStatusMap.set(statusValueEnum.OTD, statusEnum.OTD);
+rsStatusMap.set(statusValueEnum.ACT, statusEnum.ACT);
+rsStatusMap.set(statusValueEnum.ACD, statusEnum.ACD);
 // statusMap.set(statusValueEnum.ROD, statusEnum.ROD);
+
+export const kmStatusMap = new Map<statusValueEnum, string>();
+
+kmStatusMap.set(statusValueEnum.TBR, statusEnum.TBR);
+kmStatusMap.set(statusValueEnum.RVD, statusEnum.RVD);
+kmStatusMap.set(statusValueEnum.TBP, statusEnum.TBP);
+kmStatusMap.set(statusValueEnum.PLI, statusEnum.PLI);
+kmStatusMap.set(statusValueEnum.PBR, statusEnum.PBR);
+kmStatusMap.set(statusValueEnum.PLD, statusEnum.PLD);
+kmStatusMap.set(statusValueEnum.PVD, statusEnum.PVD);
+kmStatusMap.set(statusValueEnum.OUI, statusEnum.OUI);
+kmStatusMap.set(statusValueEnum.OTD, statusEnum.OTD);
+kmStatusMap.set(statusValueEnum.ACD, statusEnum.ACD);
+kmStatusMap.set(statusValueEnum.TBS, statusEnum.TBS);
+kmStatusMap.set(statusValueEnum.IST, statusEnum.IST);
 
 //审核结果
 export enum auditResultEnum {
