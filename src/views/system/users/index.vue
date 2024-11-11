@@ -10,17 +10,29 @@
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <div class="flex" style="justify-content: space-around">
-            <TableAction
-              v-auth="'E_910'"
-              class="w-20px"
-              :actions="[
-                {
-                  icon: 'ant-design:lock-twotone',
-                  title: '重置密码',
-                  onClick: handleSetPassword.bind(null, record),
-                },
-              ]"
-            />
+            <span v-auth="'E_910'" class="cursor-pointer w-20px" @click="handleSetPassword(record)">
+              <svg
+                class="icon"
+                style="
+                  width: 1em;
+                  height: 1em;
+                  overflow: hidden;
+                  fill: currentcolor;
+                  vertical-align: middle;
+                "
+                viewBox="0 0 1024 1024"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                p-id="779"
+              >
+                <path
+                  d="M960 512h64c0 281.6-230.4 512-512 512S0 793.6 0 512 230.4 0 512 0c153.6 0 288 70.4 384 172.8V64h64v256H704v-64h172.8C800 140.8 665.6 64 512 64 262.4 64 64 262.4 64 512s198.4 448 448 448 448-198.4 448-448zM512 256c70.4 0 128 57.6 128 128v64c38.4 0 64 25.6 64 64v192c0 38.4-25.6 64-64 64H384c-38.4 0-64-25.6-64-64V512c0-38.4 25.6-64 64-64v-64c0-70.4 57.6-128 128-128z m64 128c0-38.4-25.6-64-64-64s-64 25.6-64 64v64h128v-64zM384 640c0 38.4 25.6 64 64 64h128c38.4 0 64-25.6 64-64v-64c0-38.4-25.6-64-64-64H448c-38.4 0-64 25.6-64 64v64z"
+                  fill="#EFBD47"
+                  p-id="780"
+                />
+              </svg>
+            </span>
+
             <TableAction
               v-auth="'E_1112'"
               class="w-20px"
