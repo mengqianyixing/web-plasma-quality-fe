@@ -7,6 +7,7 @@ export enum statusEnum {
   PLD = '计划待审核',
   TBS = '待组垛',
   IST = '组垛中',
+  SDN = '计划已审核',
   PVD = '待出库',
   OTD = '已出库',
   OUI = '出库中',
@@ -22,14 +23,15 @@ export enum statusValueEnum {
   PLI = 'PLI',
   PBR = 'PBR',
   PLD = 'PLD',
+  TBS = 'TBS',
+  IST = 'IST',
+  SDN = 'SDN',
   PVD = 'PVD',
   OTD = 'OTD',
   OUI = 'OUI',
   ACT = 'ACT',
   ACD = 'ACD',
   ROD = 'ROD',
-  TBS = 'TBS',
-  IST = 'IST',
 }
 
 export const rsStatusMap = new Map<statusValueEnum, string>();
@@ -55,12 +57,13 @@ kmStatusMap.set(statusValueEnum.TBP, statusEnum.TBP);
 kmStatusMap.set(statusValueEnum.PLI, statusEnum.PLI);
 kmStatusMap.set(statusValueEnum.PBR, statusEnum.PBR);
 kmStatusMap.set(statusValueEnum.PLD, statusEnum.PLD);
+kmStatusMap.set(statusValueEnum.TBS, statusEnum.TBS);
+kmStatusMap.set(statusValueEnum.IST, statusEnum.IST);
+kmStatusMap.set(statusValueEnum.SDN, statusEnum.SDN);
 kmStatusMap.set(statusValueEnum.PVD, statusEnum.PVD);
 kmStatusMap.set(statusValueEnum.OUI, statusEnum.OUI);
 kmStatusMap.set(statusValueEnum.OTD, statusEnum.OTD);
 kmStatusMap.set(statusValueEnum.ACD, statusEnum.ACD);
-kmStatusMap.set(statusValueEnum.TBS, statusEnum.TBS);
-kmStatusMap.set(statusValueEnum.IST, statusEnum.IST);
 
 //审核结果
 export enum auditResultEnum {

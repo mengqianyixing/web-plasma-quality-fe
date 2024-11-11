@@ -72,6 +72,10 @@ const callManager: AppRouteModule = {
           id: BaseSettingButtonEnum.PlasmaFailedReasonDisEnable,
           title: '禁用',
         },
+        {
+          id: BaseSettingButtonEnum.PlasmaImmTypeLogin,
+          title: '血浆类型复核人登陆',
+        },
       ],
       meta: {
         title: '血浆类型',
@@ -222,6 +226,10 @@ const callManager: AppRouteModule = {
           id: BaseSettingButtonEnum.PlasmaFailedReasonDisEnable,
           title: '禁用',
         },
+        {
+          id: BaseSettingButtonEnum.PlasmaFailedReasonLogin,
+          title: '血浆不合格复核人登陆',
+        },
       ],
       id: 1000100,
       component: () => import('@/views/system/dictionary/itemList.vue'),
@@ -250,6 +258,10 @@ const callManager: AppRouteModule = {
         {
           id: BaseSettingButtonEnum.PlasmaFailedReasonDisEnable,
           title: '禁用',
+        },
+        {
+          id: BaseSettingButtonEnum.SampleFailedReasonLogin,
+          title: '样本不合格复核人登陆',
         },
       ],
       id: 1000110,
