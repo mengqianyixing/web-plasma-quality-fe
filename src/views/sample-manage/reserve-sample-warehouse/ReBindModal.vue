@@ -46,12 +46,14 @@
   const formData = reactive({
     trayNo: '',
     boxId: '',
+    batchNo: '',
   });
   const boxRef = ref();
   const trayRef = ref();
-  const [registerReBindModal, { setModalProps }] = useModalInner(() => {
+  const [registerReBindModal, { setModalProps }] = useModalInner((data) => {
     formData.boxId = '';
     formData.trayNo = '';
+    formData.batchNo = data.batchNo;
     trayRef.value.$el.focus();
   });
 
@@ -66,13 +68,13 @@
     }
   }
   async function submit() {
-    const { boxId, trayNo } = formData;
+    const { boxId, trayNo, batchNo } = formData;
     if (trayNo && !boxId) boxRef.value.$el.focus();
     if (!boxId || !trayNo) return message.warning('请扫描' + (boxId ? '托盘' : '箱号'));
     try {
       const focusedElement = document.activeElement as InputHTMLElement;
       setModalProps({ loading: true, confirmLoading: true });
-      await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind' }, () => {
+      await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind', batchNo }, () => {
         setTimeout(() => {
           focusedElement.focus();
           focusedElement.select();
