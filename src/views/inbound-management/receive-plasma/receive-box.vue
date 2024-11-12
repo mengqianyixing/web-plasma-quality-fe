@@ -75,6 +75,12 @@
   import dayjs from 'dayjs';
   import ScanInput from '@/components/Form/src/components/ScanInput.vue';
   import { ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { COMPANY } from '@/enums/company';
+
+  const globalApiStore = useGlobalApiStoreWithOut();
+  const isKm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 
   defineOptions({ name: 'ReceivePlasma' });
 
@@ -331,6 +337,38 @@
     ],
     showFooter: false,
   });
+  const gridOptionsAcceptColumns: VxeGridProps['columns'] = [
+    {
+      field: 'index',
+      title: '序号',
+      type: 'seq',
+    },
+    {
+      field: 'trayNo',
+      title: '托盘编号',
+    },
+    {
+      title: '箱号',
+      field: 'boxNo',
+    },
+    {
+      title: '血浆数量',
+      field: 'plasmaCount',
+    },
+    {
+      title: '接收人',
+      field: 'operator',
+    },
+    {
+      title: '接收日期',
+      field: 'acceptAt',
+      width: 200,
+      formatter(params) {
+        return params.cellValue ? dayjs(params.cellValue).format('YYYY-MM-DD') : '-';
+      },
+    },
+  ];
+  isKm && gridOptionsAcceptColumns.splice(1, 1);
   const gridOptionsAccept = reactive<VxeGridProps<any>>({
     border: true,
     height: '710px',
@@ -357,37 +395,7 @@
       export: false,
       custom: false,
     },
-    columns: [
-      {
-        field: 'index',
-        title: '序号',
-        type: 'seq',
-      },
-      {
-        field: 'trayNo',
-        title: '托盘编号',
-      },
-      {
-        title: '箱号',
-        field: 'boxNo',
-      },
-      {
-        title: '血浆数量',
-        field: 'plasmaCount',
-      },
-      {
-        title: '接收人',
-        field: 'operator',
-      },
-      {
-        title: '接收日期',
-        field: 'acceptAt',
-        width: 200,
-        formatter(params) {
-          return params.cellValue ? dayjs(params.cellValue).format('YYYY-MM-DD') : '-';
-        },
-      },
-    ],
+    columns: gridOptionsAcceptColumns,
     showFooter: false,
   });
 
