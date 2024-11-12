@@ -93,7 +93,7 @@
   const { getFormRules } = useFormRules();
 
   onMounted(() => {
-    getVerifyCode();
+    // getVerifyCode();
     setTimeout(() => {
       closeGlobalLoading();
     }, 10 * 1000);
