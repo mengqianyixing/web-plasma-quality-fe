@@ -45,36 +45,48 @@
     </div>
 
     <ItemFormModal @register="registerItemFormModal" @success="formSuccess" />
-    <Login
-      @register="registerLoginModal"
-      @success="login"
-      :auth-code="ReCheckButtonEnum.TrayManageCheck"
-    />
+    <Login @register="registerLoginModal" @success="login" :auth-code="loginAuthCode" />
   </div>
 </template>
 <script lang="ts" setup>
   import Login from '@/__components/ReviewLoginModal/index.vue';
-  import { BasicTable, useTable, FormSchema } from '@/components/Table';
+  import { BasicTable, FormSchema, useTable } from '@/components/Table';
   import { itemColumns, itemSearchFormSchema } from './dictionary.data';
   import { useModal } from '@/components/Modal';
   import { useRoute } from 'vue-router';
   import ItemFormModal from './itemFormDrawer.vue';
   import { message } from 'ant-design-vue';
   import {
-    getDictListApi,
+    getDictColumnsApi,
     getDictItemListApi,
+    getDictListApi,
     removeDictItemApi,
     updateDictItemApi,
-    getDictColumnsApi,
   } from '@/api/dictionary';
   import { getEnumsItems } from '@/api/enums';
-  import { ref, onMounted } from 'vue';
-  import { BaseSettingButtonEnum, ReCheckButtonEnum } from '@/enums/authCodeEnum';
+  import { onMounted, ref, watch } from 'vue';
+  import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
   import { cloneDeep } from 'lodash-es';
   import { useMessage } from '@/hooks/web/useMessage';
 
   defineOptions({ name: 'ComponentPage' });
   const currentRoute = useRoute();
+  const loginAuthCode = ref<BaseSettingButtonEnum | undefined>(undefined);
+  watch(
+    () => currentRoute.name,
+    (val) => {
+      if (val === 'PlasmaFailedReason') {
+        loginAuthCode.value = BaseSettingButtonEnum.PlasmaFailedReasonLogin;
+      } else if (val === 'SampleFailedReason') {
+        loginAuthCode.value = BaseSettingButtonEnum.SampleFailedReasonLogin;
+      } else if (val === 'PlasmaImmType') {
+        loginAuthCode.value = BaseSettingButtonEnum.PlasmaImmTypeLogin;
+      }
+    },
+    {
+      immediate: true,
+    },
+  );
   const dictId = ref(currentRoute.meta.dictId);
   const systemLevel = ref(Number(currentRoute.meta.systemLevel) || 0);
   const linkMap = ref(new Map());

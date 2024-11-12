@@ -22,19 +22,18 @@ export enum STATUS {
   IST = 'IST',
   SDN = 'SDN',
 }
-export const STATUS_TEXT: Map<string, { text: string; company?: string }> = new Map([
-  [STATUS.TBP, { text: '未计划' }],
-  [STATUS.PLI, { text: '计划中' }],
-  [STATUS.PBR, { text: '待复核' }],
-  [STATUS.PLD, { text: '待审核' }],
-  [STATUS.PVD, { text: '已审核' }],
-  [STATUS.TBS, { text: '待组垛', company: COMPANY.KM }],
-  [STATUS.IST, { text: '组垛中', company: COMPANY.KM }],
-  [STATUS.SDN, { text: '组垛完成', company: COMPANY.KM }],
-  [STATUS.OUI, { text: '出库中' }],
-  [STATUS.OTD, { text: '已出库' }],
-  [STATUS.ACT, { text: '接收中' }],
-  [STATUS.ACD, { text: '已接收' }],
+export const STATUS_TEXT: Map<string, { text: string; company?: string; order: number }> = new Map([
+  [STATUS.TBP, { text: '未计划', order: 0 }],
+  [STATUS.PLI, { text: '计划中', order: 1 }],
+  [STATUS.PBR, { text: '待复核', order: 2 }],
+  [STATUS.PLD, { text: '待审核', order: 3 }],
+  [STATUS.TBS, { text: '待组垛', order: 4, company: COMPANY.KM }],
+  [STATUS.IST, { text: '组垛中', order: 5, company: COMPANY.KM }],
+  [STATUS.PVD, { text: '已审核', order: 6 }],
+  [STATUS.OUI, { text: '出库中', order: 7 }],
+  [STATUS.OTD, { text: '已出库', order: 8 }],
+  [STATUS.ACT, { text: '接收中', order: 9, company: COMPANY.RS }],
+  [STATUS.ACD, { text: '已接收', order: 10 }],
 ]);
 export const statusList = (company: string) => {
   const list: Recordable = [];
@@ -42,9 +41,9 @@ export const statusList = (company: string) => {
     if (label.company && label.company !== company) {
       continue;
     }
-    list.push({ label: label.text, value });
+    list.push({ label: label.text, value, order: label.order });
   }
-  return list;
+  return list.sort((a, b) => a.order - b.order);
 };
 
 export enum EXPIRATION {
