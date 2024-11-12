@@ -249,7 +249,7 @@ export const columnsMap: Record<string, BasicColumn[]> = {
 export const totalUnqualifiedColumns: BasicColumn[] = [
   {
     dataIndex: 'sampleNo',
-    title: '样品编号',
+    title: '样本编号',
     width: 140,
   },
   {
@@ -267,7 +267,7 @@ export const totalUnqualifiedColumns: BasicColumn[] = [
 export const totalUnqualifiedSearch: FormSchema[] = [
   {
     field: 'sampleNo',
-    label: '样品编号',
+    label: '样本编号',
     component: 'Input',
   },
   {
