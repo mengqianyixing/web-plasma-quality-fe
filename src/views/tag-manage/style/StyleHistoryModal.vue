@@ -24,6 +24,9 @@
           />
         </template>
       </template>
+      <template #labelType="{ record }">
+        {{ formatLabelType(record?.labelType) }}
+      </template>
     </BasicTable>
 
     <HistoryStylePreviewModal @register="registerPreviewModal" />
@@ -46,9 +49,11 @@
   const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
   const emit = defineEmits(['success', 'register']);
 
+  let formatLabelType = (type) => type;
   const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
     setModalProps({ confirmLoading: false });
     hisNo.value = data.record.tagNo;
+    formatLabelType = data.formatLabelType;
     await reload();
     await getForm().updateSchema({
       field: 'labelType',
