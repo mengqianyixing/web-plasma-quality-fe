@@ -295,10 +295,6 @@ const callManager: AppRouteModule = {
           id: BaseSettingButtonEnum.SystemSettingEdit,
           title: '编辑',
         },
-        {
-          id: BaseSettingButtonEnum.SystemSettingDelete,
-          title: '撤销',
-        },
       ],
       meta: {
         title: '系统参数',

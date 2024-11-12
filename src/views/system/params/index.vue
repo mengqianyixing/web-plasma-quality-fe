@@ -9,13 +9,6 @@
         >
           编辑
         </a-button>
-        <a-button
-          type="primary"
-          @click="handleDelete"
-          v-auth="BaseSettingButtonEnum.SystemSettingEdit"
-        >
-          撤销
-        </a-button>
       </template>
     </BasicTable>
 
@@ -31,10 +24,10 @@
   import { ref } from 'vue';
   import { PageWrapper } from '@/components/Page';
   import EditParamsModal from '@/views/system/params/EditParamsModal.vue';
-  import { deleteSysParams, getSysParamsList } from '@/api/systemServer/params';
+  import { getSysParamsList } from '@/api/systemServer/params';
   import { BaseSettingButtonEnum } from '@/enums/authCodeEnum';
 
-  const { createMessage, createConfirm } = useMessage();
+  const { createMessage } = useMessage();
 
   defineOptions({ name: 'Params' });
 
@@ -78,23 +71,6 @@
     openParamsModal(true, {
       isUpdate: true,
       record: selectedRowsRef.value[0],
-    });
-  }
-
-  async function handleDelete() {
-    if (!selectedRowsRef.value.length) {
-      createMessage.warn('请选择一条记录');
-      return;
-    }
-
-    createConfirm({
-      title: '撤销',
-      content: '确认撤销该系统参数？',
-      iconType: 'warning',
-      onOk: async () => {
-        await deleteSysParams(selectedRowsRef.value[0].id);
-        handleSuccess();
-      },
     });
   }
 
