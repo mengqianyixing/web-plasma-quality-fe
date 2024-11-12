@@ -111,7 +111,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     component: 'Input',
     field: 'packNo',
-    label: '样品袋号',
+    label: '样本袋号',
   },
   {
     component: 'Input',

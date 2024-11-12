@@ -221,7 +221,7 @@ export const sampleBoxScanSearchFormSchema: FormSchema[] = [
   },
   {
     component: 'Input',
-    label: '样品袋号',
+    label: '样本袋号',
     field: 'packNo',
   },
 ];
@@ -235,7 +235,7 @@ export const sampleBoxScanColumns: (isBinding: boolean) => BasicColumn[] = (isBi
     dataIndex: 'boxNo',
   },
   {
-    title: '样品袋号',
+    title: '样本袋号',
     dataIndex: 'packNo',
   },
   {

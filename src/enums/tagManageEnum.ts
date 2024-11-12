@@ -1,7 +1,7 @@
 export enum tagTypeEnum {
   BACK_BOX = '回访浆箱',
   PLAIN_BOX = '普通浆箱',
-  KEEP_BOX = '保留样品浆箱',
+  KEEP_BOX = '保留样本浆箱',
   TRAY = '托盘',
 }
 

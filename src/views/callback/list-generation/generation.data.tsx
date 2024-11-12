@@ -516,7 +516,7 @@ export const callbackDetailCustomColumns: BasicColumn[] = [
   },
   {
     dataIndex: 'sampleNo',
-    title: '样品编号',
+    title: '样本编号',
     width: 130,
   },
   {
