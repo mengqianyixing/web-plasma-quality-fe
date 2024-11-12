@@ -38,33 +38,35 @@
   const emit = defineEmits(['success', 'register']);
   defineOptions({ name: 'FormModel' });
 
-  const [registerTable, { getSelectRows, clearSelectedRowKeys, setPagination, redoHeight }] =
-    useTable({
-      immediate: false,
-      api: getBoxListApi,
-      fetchSetting: {
-        pageField: 'currPage',
-        sizeField: 'pageSize',
-        totalField: 'totalCount',
-        listField: 'result',
-      },
-      inset: true,
-      isCanResizeParent: true,
-      pagination: false,
-      columns: boxColumns,
-      size: 'small',
-      useSearchForm: true,
-      bordered: true,
-      rowSelection: { type: 'checkbox' },
-      beforeFetch: (p) => ({ ...p, pageSize: 100000, currPage: 1 }),
-      afterFetch: (res) => {
-        clearSelectedRowKeys();
-        return res;
-      },
-      formConfig: {
-        schemas: [{ label: '血浆批号', component: 'Input', field: 'batchNo', required: true }],
-      },
-    });
+  const [
+    registerTable,
+    { setTableData, getSelectRows, clearSelectedRowKeys, setPagination, redoHeight, getForm },
+  ] = useTable({
+    immediate: false,
+    api: getBoxListApi,
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    inset: true,
+    isCanResizeParent: true,
+    pagination: false,
+    columns: boxColumns,
+    size: 'small',
+    useSearchForm: true,
+    bordered: true,
+    rowSelection: { type: 'checkbox' },
+    beforeFetch: (p) => ({ ...p, pageSize: 100000, currPage: 1 }),
+    afterFetch: (res) => {
+      clearSelectedRowKeys();
+      return res;
+    },
+    formConfig: {
+      schemas: [{ label: '血浆批号', component: 'Input', field: 'batchNo', required: true }],
+    },
+  });
   const [registerForm, { validate, clearValidate, resetFields }] = useForm({
     labelWidth: 120,
     baseColProps: { span: 24 },
@@ -74,6 +76,10 @@
   const [registerModal, { setModalProps, closeModal }] = useModalInner(() => {
     clearValidate();
     resetFields();
+    const formAction = getForm();
+    formAction.resetFields();
+    formAction.clearValidate();
+    setTableData([]);
     setPagination({ current: 1, pageSize: 100 });
   });
   async function handleSubmit() {
