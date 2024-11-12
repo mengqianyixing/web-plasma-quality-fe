@@ -172,7 +172,7 @@
   }
 
   function handleTrayBind() {
-    openReBindModal(true, {});
+    openReBindModal(true, { batchNo: batchNo.value });
   }
 
   function handleBoxCountClick(record) {

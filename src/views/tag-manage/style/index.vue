@@ -204,6 +204,7 @@
     openStyleHistoryModal(true, {
       record: selectedRow.value[0],
       labelTypeOptions: labelTypeDictionary.value,
+      formatLabelType,
     });
   }
 

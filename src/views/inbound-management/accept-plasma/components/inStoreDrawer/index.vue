@@ -172,12 +172,15 @@
     const focusedElement = document.activeElement as InputHTMLElement;
     setModalProps({ loading: true, confirmLoading: true });
     try {
-      await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind' }, () => {
-        setTimeout(() => {
-          focusedElement.focus();
-          focusedElement.select();
-        }, 300);
-      });
+      await bindVerifyBoxApi(
+        { boxes: [boxId], trayNo, type: 'bind', batchNo: state.batchNo },
+        () => {
+          setTimeout(() => {
+            focusedElement.focus();
+            focusedElement.select();
+          }, 300);
+        },
+      );
       formData.boxId = '';
       message.success('操作成功');
       reload();
