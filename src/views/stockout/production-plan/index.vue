@@ -299,8 +299,8 @@
     if (!row) return;
     if (row.state !== STATUS.TBP && row.state !== STATUS.PLI) {
       return message.warning(`请选择【
-      ${STATUS_TEXT.get(STATUS.TBP)} 或
-      ${STATUS_TEXT.get(STATUS.PLI)}
+      ${STATUS_TEXT.get(STATUS.TBP)?.text} 或
+      ${STATUS_TEXT.get(STATUS.PLI)?.text}
       】的数据`);
     }
     openModal(true, { ...row, isStacker: isStacker.value });
@@ -335,7 +335,7 @@
     const [row] = getSelections(true);
     if (!row) return;
     if (row.state !== STATUS.PLI) {
-      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.PLI)}】的数据`);
+      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.PLI)?.text}】的数据`);
     }
     handleConfirm({ api: submitComplateApi, text: '完成计划', row });
   }
@@ -343,7 +343,7 @@
     const [row] = getSelections(true);
     if (!row) return;
     if (row.state !== STATUS.PBR) {
-      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.PBR)}】的数据`);
+      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.PBR)?.text}】的数据`);
     }
     cancelText.value = '撤销计划';
     iterator = handleNext(() => handleCancelConfirm({ api: submitComplateCancelApi, row }));
@@ -354,7 +354,7 @@
     const [row] = getSelections(true);
     if (!row) return;
     if (row.state !== STATUS.PBR) {
-      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.PBR)}】的数据`);
+      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.PBR)?.text}】的数据`);
     }
     handleConfirm({ api: submitReviewlApi, text: '复核', row });
   }
@@ -362,7 +362,7 @@
     const [row] = getSelections(true);
     if (!row) return;
     if (row.state !== STATUS.PLD) {
-      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.PLD)}】的数据`);
+      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.PLD)?.text}】的数据`);
     }
     cancelText.value = '撤销复核';
     iterator = handleNext(() => handleCancelConfirm({ api: submitReviewCancelApi, row }));
@@ -372,7 +372,7 @@
     const [row] = getSelections(true);
     if (!row) return;
     if (row.state !== STATUS.PLD) {
-      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.PLD)}】的数据`);
+      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.PLD)?.text}】的数据`);
     }
     handleConfirm({ api: submitChecklApi, text: '审批', row });
   }
@@ -382,10 +382,10 @@
 
     // 其他血制
     if (row.state !== STATUS.PVD && !iskm) {
-      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.PVD)}】的数据`);
+      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.PVD)?.text}】的数据`);
     } else if (row.state !== STATUS.TBS && iskm) {
       // 昆明
-      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.TBS)}】的数据`);
+      return message.warning(`请选择【${STATUS_TEXT.get(STATUS.TBS)?.text}】的数据`);
     }
     cancelText.value = '撤销审核';
     iterator = handleNext(() => handleCancelConfirm({ api: submitCheckCancelApi, row }));
