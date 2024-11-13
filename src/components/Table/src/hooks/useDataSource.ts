@@ -300,7 +300,7 @@ export function useDataSource(
       if (beforeFetch && isFunction(beforeFetch)) {
         params = (await beforeFetch(params)) || params;
       }
-
+      clearSelectedRowKeys();
       const res = await api(params);
       rawDataSourceRef.value = res;
 

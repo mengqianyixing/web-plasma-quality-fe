@@ -145,10 +145,19 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     componentProps: {
       options: isKm
-        ? [...kmStatusMap.entries()].map(([key, value]) => ({
-            value: key,
-            label: value,
-          }))
+        ? [...kmStatusMap.entries()]
+            .map(([key, value]) => ({
+              value: key,
+              label: value,
+            }))
+            .filter((it) =>
+              [
+                statusValueEnum.PVD,
+                statusValueEnum.OTD,
+                statusValueEnum.OUI,
+                statusValueEnum.ACD,
+              ].includes(it.value),
+            )
         : [...rsStatusMap.entries()]
             .map(([key, value]) => ({
               value: key,
