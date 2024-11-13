@@ -74,7 +74,7 @@
     try {
       const focusedElement = document.activeElement as InputHTMLElement;
       setModalProps({ loading: true, confirmLoading: true });
-      await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind', batchNo }, () => {
+      await bindVerifyBoxApi({ boxes: [boxId], trayNo, type: 'bind', batchNo, sample: 1 }, () => {
         setTimeout(() => {
           focusedElement.focus();
           focusedElement.select();
