@@ -291,7 +291,7 @@ export const formSchema: FormSchema[] = [
 export const checkFormSchema: FormSchema[] = [
   {
     field: 'idea',
-    label: '意见',
+    label: isKm ? '原因' : '意见',
     component: 'InputTextArea',
     componentProps: {
       rows: 1,
