@@ -173,7 +173,7 @@ const inboundmanagement: AppRouteModule = {
         {
           id: PlasmaInboundRecordButtonEnum.VerifyReport,
           name: 'verifyReport',
-          title: '验收记录',
+          title: '验收报告',
           company: [COMPANY.KM],
         },
       ],
