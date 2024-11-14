@@ -204,7 +204,7 @@
 
   async function submitFunc() {
     vxeRef.value?.clearScroll();
-
+    pager.currPage = 1;
     await initTableData();
   }
 

@@ -112,7 +112,10 @@
     api: getUnqualifiedPlasmaStation,
     formConfig: {
       schemas: searchFormSchema,
-      submitFunc: () => _reloadTable(),
+      submitFunc: () => {
+        pagerLeft.current = 1;
+        return _reloadTable();
+      },
       resetFunc: resetFunc,
       submitOnReset: true,
     },
