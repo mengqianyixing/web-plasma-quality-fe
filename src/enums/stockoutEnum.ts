@@ -60,6 +60,8 @@ kmStatusMap.set(statusValueEnum.PLD, statusEnum.PLD);
 kmStatusMap.set(statusValueEnum.TBS, statusEnum.TBS);
 kmStatusMap.set(statusValueEnum.IST, statusEnum.IST);
 kmStatusMap.set(statusValueEnum.SDN, statusEnum.SDN);
+kmStatusMap.set(statusValueEnum.PVD, statusEnum.PVD);
+kmStatusMap.set(statusValueEnum.PVD, statusEnum.PVD);
 kmStatusMap.set(statusValueEnum.OUI, statusEnum.OUI);
 kmStatusMap.set(statusValueEnum.OTD, statusEnum.OTD);
 kmStatusMap.set(statusValueEnum.ACD, statusEnum.ACD);
