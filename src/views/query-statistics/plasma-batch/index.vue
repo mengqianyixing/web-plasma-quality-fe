@@ -195,7 +195,11 @@
   const _reloadTable = debounce(reloadTable, 300) as () => Promise<void>;
   const [registerBasicForm, { getFieldsValue, setProps, updateSchema }] = useForm({
     schemas: searchFormSchema,
-    submitFunc: _reloadTable,
+    submitFunc: () => {
+      pagerRight.current = 1;
+      pagerLeft.current = 1;
+      return _reloadTable();
+    },
     resetFunc: resetFunc,
     submitOnReset: true,
     labelWidth: 140,

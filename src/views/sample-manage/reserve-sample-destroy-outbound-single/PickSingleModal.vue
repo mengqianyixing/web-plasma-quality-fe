@@ -223,6 +223,7 @@
   }
 
   async function submitFunc() {
+    pager.current = 1;
     await initTableData();
   }
 
