@@ -5,7 +5,12 @@ import { SERVER_ENUM } from '@/enums/serverEnum';
 import { getNonReasonListApi } from '@/api/query-statistics/nonconformityTracking';
 import { useServerEnumStoreWithOut } from '@/store/modules/serverEnums';
 import dayjs from 'dayjs';
+import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+import { SysParamsEnum } from '@/enums/sysParamsEnum';
+import { COMPANY } from '@/enums/company';
 
+const globalApiStore = useGlobalApiStoreWithOut();
+const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
 const serverEnumStore = useServerEnumStoreWithOut();
 const BlockSource = serverEnumStore.getServerEnumText(SERVER_ENUM.BagBlockSource);
 
@@ -46,7 +51,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '不合格血浆数量',
-    dataIndex: 'trackUnqBagCount',
+    dataIndex: iskm ? 'trackBlockBagCount' : 'trackUnqBagCount',
     width: 100,
   },
   {
