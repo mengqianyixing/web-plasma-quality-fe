@@ -80,6 +80,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '操作类型',
     componentProps: {
       showSearch: true,
+      placeholder: '请先选择功能',
     },
   },
   {

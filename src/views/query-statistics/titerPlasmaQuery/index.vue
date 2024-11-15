@@ -168,6 +168,7 @@
   }
   function submitFunc() {
     if (getFormIsNotNull()) {
+      pager.currPage = 1;
       reload();
       return Promise.resolve();
     }

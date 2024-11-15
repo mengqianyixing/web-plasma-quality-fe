@@ -56,10 +56,11 @@
   import { useModal } from '@/components/Modal';
   import { ref, reactive } from 'vue';
   import { useSticky } from '@/hooks/web/useSticky';
-  import { Pagination as APagination } from 'ant-design-vue';
+  import { Pagination as APagination, message } from 'ant-design-vue';
   import { getReportApi } from '@/api/report';
   import ReportModal from '@/components/ReportModal/index.vue';
   import { SearchManager } from '@/enums/authCodeEnum';
+  import { isEqual } from 'lodash-es';
 
   defineOptions({ name: 'CheckResultAnalysis' });
   const tableRef = ref();
@@ -80,6 +81,15 @@
     columns: columns,
     formConfig: {
       schemas: searchFormSchema,
+      submitFunc: () => {
+        if (paramsIsNotNull()) {
+          pagerLeft.currPage = 1;
+          reload();
+          return Promise.resolve();
+        }
+        message.warning('请输入查询条件进行查询');
+        return Promise.reject();
+      },
     },
     fetchSetting: {
       pageField: 'currPage',
@@ -107,21 +117,40 @@
 
     await reload();
   }
-
+  let _saveParams = {};
+  let _saveCount = {};
   function getData(p) {
     return new Promise((rs, rj) => {
-      Promise.all([getListApi(p), getListCountApi(p)])
+      Promise.all([getListApi(p), getCacheCount(p)])
         .then((resList) => {
           pagerLeft.total = resList[0].totalCount!;
           pagerLeft.pageSize = resList[0].pageSize!;
           pagerLeft.currPage = resList[0].currPage!;
-
+          _saveCount = resList[1];
           resList[0].result?.push({ ...resList[1], stationName: '合计' });
           rs(resList[0]);
         })
         .catch(rj);
     });
   }
+  function paramsIsEqual() {
+    const values = getForm().getFieldsValue();
+    const _isEqual = isEqual(values, _saveParams);
+    if (!_isEqual) _saveParams = values;
+    return _isEqual;
+  }
+  function paramsIsNotNull() {
+    const values = getForm().getFieldsValue();
+    const isNotEmptyObject = Object.keys(values).some((key) => values[key] || values[key] === 0);
+    return isNotEmptyObject;
+  }
+  const getCacheCount = (p) => {
+    if (paramsIsEqual()) {
+      return Promise.resolve(_saveCount);
+    } else {
+      return getListCountApi(p);
+    }
+  };
   function handleDetails(record: Recordable) {
     const values = getForm().getFieldsValue();
     openModal(true, {
@@ -133,6 +162,7 @@
 
   async function handlePrint() {
     try {
+      if (!paramsIsNotNull()) return message.warning('请输入查询条件进行打印');
       reportLoading.value = true;
       const res = await getReportApi({
         reportKey: 'LAB_SAMPLE_PARALLEL',

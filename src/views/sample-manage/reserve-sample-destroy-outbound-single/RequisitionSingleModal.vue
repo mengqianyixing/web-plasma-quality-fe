@@ -20,7 +20,7 @@
 
       <vxe-grid v-bind="gridOptions" ref="vxeRef" :loading="tableLoading" :data="tableData">
         <template #toolbar>
-          <div class="flex items-center justify-between mt-2 p-1">
+          <div class="flex items-center justify-between p-1 mt-2">
             <div class="flex gap-5 text-17px">
               <span>已挑样本数量: {{ sampleNumTotal }}</span>
             </div>
@@ -162,6 +162,7 @@
   const isAdd = ref(false);
   const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
     tableData.value = [];
+    pager.current = 1;
 
     setModalProps({
       maskClosable: false,
