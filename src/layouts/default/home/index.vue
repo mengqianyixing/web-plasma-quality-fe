@@ -1,5 +1,5 @@
 <template>
-  <div class="home"> 血源信息管理系统 </div>
+  <div class="home"> 血源信息管理系统 v2.0</div>
 </template>
 <style scoped lang="scss">
   .home {
