@@ -47,24 +47,6 @@
     baseColProps: { span: 24 },
     schemas: [
       {
-        field: 'expireInHours',
-        component: 'Input',
-        componentProps: {
-          'addon-after': '小时',
-        },
-        label: 'Access Token过期',
-        ifShow: false,
-      },
-      {
-        field: 'refreshExpireInHours',
-        component: 'Input',
-        componentProps: {
-          'addon-after': '小时',
-        },
-        label: 'Refresh Token过期',
-        ifShow: false,
-      },
-      {
         field: 'failedSigninLimit',
         component: 'Input',
         componentProps: {
