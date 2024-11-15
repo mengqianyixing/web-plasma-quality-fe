@@ -32,7 +32,7 @@
     <Login
       @register="registerLoginModal"
       @success="loginSuccess"
-      :auth-code="BaseSettingButtonEnum.StationDisable"
+      :auth-code="BaseSettingButtonEnum.StationDisableCheck"
     />
   </PageWrapper>
 </template>
