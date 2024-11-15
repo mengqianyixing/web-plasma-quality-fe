@@ -46,7 +46,11 @@ const callManager: AppRouteModule = {
         {
           id: BaseSettingButtonEnum.StationDisable,
           name: 'stationDisable',
-          title: '禁用按钮权限(含审核)',
+          title: '禁用按钮权限',
+        },
+        {
+          id: BaseSettingButtonEnum.StationDisableCheck,
+          title: '禁用复核人登录',
         },
       ],
       component: () => import('@/views/base-settings/station/index.vue'),

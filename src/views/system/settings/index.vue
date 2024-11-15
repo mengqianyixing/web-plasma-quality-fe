@@ -14,7 +14,12 @@
   import { PostApiSysCasdoorApplicationConfigRequest } from '@/api/type/systemSettings';
   import { onMounted, ref } from 'vue';
   import { useMessage } from '@/hooks/web/useMessage';
+  import { useGlobalApiStoreWithOut } from '@/store/modules/globalApi';
+  import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { COMPANY } from '@/enums/company';
 
+  const globalApiStore = useGlobalApiStoreWithOut();
+  const iskm = globalApiStore.getSysParams(SysParamsEnum.BloodProductionCompany) === COMPANY.KM;
   const { createMessage } = useMessage();
 
   defineOptions({ name: 'CasConfig' });
@@ -41,22 +46,6 @@
     size: 'large',
     baseColProps: { span: 24 },
     schemas: [
-      {
-        field: 'expireInHours',
-        component: 'Input',
-        componentProps: {
-          'addon-after': '小时',
-        },
-        label: 'Access Token过期',
-      },
-      {
-        field: 'refreshExpireInHours',
-        component: 'Input',
-        componentProps: {
-          'addon-after': '小时',
-        },
-        label: 'Refresh Token过期',
-      },
       {
         field: 'failedSigninLimit',
         component: 'Input',
@@ -107,7 +96,7 @@
               label: '动态开启',
               value: 'Dynamic',
             },
-          ],
+          ].slice(0, iskm ? 2 : 3),
         },
       },
     ],

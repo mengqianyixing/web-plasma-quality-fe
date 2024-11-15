@@ -53,6 +53,7 @@ export enum BaseSettingButtonEnum {
   StationEdit = 'E_1000702',
   StationEnable = 'E_100070',
   StationDisable = 'E_100080',
+  StationDisableCheck = 'E_100090',
 
   TiterTypeAdd = 'E_1000101',
   TiterTypeUpdate = 'E_1000102',

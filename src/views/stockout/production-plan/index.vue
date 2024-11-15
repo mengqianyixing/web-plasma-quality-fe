@@ -38,7 +38,7 @@
         <a-button
           type="primary"
           @click="handleStacker"
-          v-if="isStacker"
+          v-show="isStacker"
           v-auth="StockOutButtonEnum.ProductionPlanPMS"
           >PMS组垛</a-button
         >

@@ -35,7 +35,7 @@
   const { createMessage, createConfirm } = useMessage();
 
   const [registerModal, { openModal }] = useModal();
-  const [registerTable, { reload, clearSelectedRowKeys }] = useTable({
+  const [registerTable, { reload, clearSelectedRowKeys, getSelectRows }] = useTable({
     beforeFetch: (params) => {
       return {
         ...params,
@@ -86,6 +86,8 @@
 
   async function handleDelete() {
     if (!checkSelectedRows()) return;
+    const [row] = getSelectRows();
+    if ((row.children || []).length) return createMessage.warn('请先删除下级部门');
 
     createConfirm({
       title: '确认',
