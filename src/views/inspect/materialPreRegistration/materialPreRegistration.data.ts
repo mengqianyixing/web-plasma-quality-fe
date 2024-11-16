@@ -92,7 +92,7 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: '使用截至日期',
+    title: '使用截止日期',
     dataIndex: 'deadline',
     width: 100,
   },

@@ -39,7 +39,7 @@
         {
           field: 'deadline',
           component: 'DatePicker',
-          label: '使用截至日期',
+          label: '使用截止日期',
           defaultValue: dayjs().format('YYYY-MM-DD'),
           required: true,
 
