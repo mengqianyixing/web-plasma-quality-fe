@@ -27,6 +27,8 @@
   defineOptions({ name: 'SampleCheck' });
   const tableRef = ref();
   const totalStyle = useSticky(tableRef);
+  let _saveParams: any = {};
+
   const [registerModal, { openModal }] = useModal();
   const [registerModal2, { openModal: openModal2 }] = useModal();
   const [registerModal3, { openModal: openModal3 }] = useModal();
@@ -43,6 +45,8 @@
     bordered: true,
     showIndexColumn: false,
     afterFetch: (res: Recordable[]) => {
+      _saveParams = getForm().getFieldsValue();
+
       const row = getCountRow(res);
       return [...res, row];
     },
@@ -105,8 +109,7 @@
 
   function cellClick(key: Array<string> | string, title: string, failedCode: string | null) {
     const type = isArray(key) ? key[0] + key[1].slice(0, 1).toUpperCase() + key[1].slice(1) : key;
-    const values = getForm().getFieldsValue();
-    openModal(true, { type, title, failedCode, ...values });
+    openModal(true, { type, title, failedCode, ..._saveParams });
   }
   function cellClick2(
     key: Array<string> | string,
@@ -115,24 +118,21 @@
     record: Recordable,
   ) {
     const type = isArray(key) ? key[0] + key[1].slice(0, 1).toUpperCase() + key[1].slice(1) : key;
-    const values = getForm().getFieldsValue();
 
     openModal2(true, {
       type,
       title,
       failedCode,
-      ...values,
-      sampleType: record.sampleType === '--' ? values.sampleType : record.sampleType,
-      stationNo: record.sampleType === '--' ? values.stationNo : record.stationNo,
+      ..._saveParams,
+      sampleType: record.sampleType === '--' ? _saveParams.sampleType : record.sampleType,
+      stationNo: record.sampleType === '--' ? _saveParams.stationNo : record.stationNo,
     });
   }
   function cellClick3(record: Recordable) {
-    const values = getForm().getFieldsValue();
-
     openModal3(true, {
-      ...values,
-      sampleType: record.sampleType === '--' ? values.sampleType : record.sampleType,
-      stationNo: record.sampleType === '--' ? values.stationNo : record.stationNo,
+      ..._saveParams,
+      sampleType: record.sampleType === '--' ? _saveParams.sampleType : record.sampleType,
+      stationNo: record.sampleType === '--' ? _saveParams.stationNo : record.stationNo,
     });
   }
   function getCountRow(data: Recordable[]) {

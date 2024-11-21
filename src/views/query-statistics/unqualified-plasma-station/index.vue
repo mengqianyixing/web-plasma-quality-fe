@@ -103,6 +103,7 @@
     pageSize: 30,
     total: 0,
   });
+  let _saveParams = {};
 
   defineOptions({ name: 'UnqualifiedPlasmaByStation' });
 
@@ -128,13 +129,14 @@
     },
     afterFetch: async (data) => {
       const _data = getRawDataSource();
+      _saveParams = getForm().getFieldsValue();
 
       pagerLeft.total = _data.totalCount;
       pagerLeft.pageSize = _data.pageSize;
       pagerLeft.current = _data.currPage;
 
       totalData.value = await getUnqualifiedPlasmaCountTotal(
-        getForm().getFieldsValue() as GetApiSearchBatchCountTotalRequest,
+        _saveParams as GetApiSearchBatchCountTotalRequest,
       );
 
       const nullCols: string[] = [];
@@ -251,7 +253,7 @@
       unqualifiedCode,
       batchNo: record?.batchNo,
       stationNo: record?.stationNo,
-      ...getForm().getFieldsValue(),
+      ..._saveParams,
     });
   }
 </script>

@@ -4,7 +4,7 @@
     <vxe-grid
       v-bind="gridOptionsUnaccept"
       :data="unAcceptList"
-      class="inline-block w-3/10 pr-2"
+      class="inline-block pr-2 w-3/10"
       :loading="tableLoading"
     >
       <template #toolbar>
@@ -35,13 +35,14 @@
             <a-button
               type="primary"
               @click="handleTrayInBand"
+              :disabled="!batchValue"
               v-auth="SampleManageButtonEnum.ReserveSampleWarehouseIn"
             >
               入库
             </a-button>
             <a-button
               v-auth="SampleManageButtonEnum.ReserveSampleWarehouseAccept"
-              :disabled="cancelDisabled"
+              :disabled="cancelDisabled || !batchValue"
               type="primary"
               @click="handleAcceptComplete"
             >
@@ -161,7 +162,12 @@
               onkeyup={_handleEnter}
             />
             <div class="flex items-center justify-center w-[80px]">{packCount.value}</div>
-            <a-button type="primary" onClick={handleSeal} loading={sealBtnLoading.value}>
+            <a-button
+              type="primary"
+              disabled={!batchValue.value || !boxNoValue.value || !trayValue.value}
+              onClick={handleSeal}
+              loading={sealBtnLoading.value}
+            >
               封箱
             </a-button>
           </div>
