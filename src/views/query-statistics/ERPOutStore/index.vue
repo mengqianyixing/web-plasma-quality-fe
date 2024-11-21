@@ -10,7 +10,7 @@
       <a-tab-pane v-for="item in tabList" :key="item.key" :tab="item.label">
         <BasicTable
           :api="item.api"
-          @register="registerTable"
+          @register="item.instance[0]"
           :columns="item.columns"
           :formConfig="item.formConfig"
           :immediate="false"
@@ -27,7 +27,7 @@
             <a-button
               v-auth="SearchManager.ERPOutStoreExport"
               type="primary"
-              @click="handleExport(item.api, item.label, item.columns)"
+              @click="handleExport(item.api, item.label, item.columns, item.instance)"
               :loading="loading"
             >
               导出
@@ -41,7 +41,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { BasicColumn, BasicTable, type FormProps, useTable } from '@/components/Table';
+  import {
+    BasicColumn,
+    BasicTable,
+    type FormProps,
+    useTable,
+    BasicTableProps,
+  } from '@/components/Table';
   import {
     prodERPColumns,
     notProdERPColumns,
@@ -75,6 +81,21 @@
   const currentKey = ref('outStockProd');
 
   type ApiFunction<TParams, TResult> = (params: TParams) => Promise<TResult>;
+  const tableProps: BasicTableProps = {
+    immediate: false,
+    fetchSetting: {
+      pageField: 'currPage',
+      sizeField: 'pageSize',
+      totalField: 'totalCount',
+      listField: 'result',
+    },
+    clickToRowSelect: false,
+    size: 'small',
+    striped: false,
+    useSearchForm: true,
+    bordered: true,
+    showIndexColumn: false,
+  };
   const tabList: {
     key: string;
     label: string;
@@ -83,6 +104,7 @@
       | ApiFunction<GetApiProductPrepareErpOutProdRequest, GetApiProductPrepareErpOutProdResponse>
       | ApiFunction<GetApiCoreBankErpOutNonProdRequest, GetApiCoreBankErpOutNonProdResponse>;
     formConfig: Partial<FormProps>;
+    instance: any;
   }[] = [
     {
       key: 'outStockProd',
@@ -97,8 +119,10 @@
           return date ? date.format('YYYY-MM-DD') : '';
         },
       },
+      instance: useTable(tableProps),
     },
     {
+      instance: useTable(tableProps),
       key: 'notOutStockProd',
       label: '其他出库',
       columns: notProdERPColumns,
@@ -113,25 +137,6 @@
     },
   ];
 
-  const [registerTable, { getForm }] = useTable({
-    immediate: false,
-    fetchSetting: {
-      pageField: 'currPage',
-      sizeField: 'pageSize',
-      totalField: 'totalCount',
-      listField: 'result',
-    },
-    scroll: {
-      x: 0,
-    },
-    clickToRowSelect: false,
-    size: 'small',
-    striped: false,
-    useSearchForm: true,
-    bordered: true,
-    showIndexColumn: false,
-  });
-
   function handleDlvNoClick(dlvNo: string) {
     openModal(true, {
       dlvNo,
@@ -145,12 +150,13 @@
       | ApiFunction<GetApiCoreBankErpOutNonProdRequest, GetApiCoreBankErpOutNonProdResponse>,
     fileName: string,
     columns: BasicColumn[],
+    instance: any,
   ) {
     loading.value = true;
     try {
       const pageSize = (await globalApiStore.getSysParamsValue('maxPageSize')) as string;
       const OriginData = await api({
-        ...getForm().getFieldsValue(),
+        ...instance[1].getForm().getFieldsValue(),
         currPage: '1',
         pageSize,
         exportFlag: true,

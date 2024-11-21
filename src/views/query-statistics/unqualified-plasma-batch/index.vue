@@ -110,6 +110,7 @@
   });
 
   let _reloadTable: () => Promise<void>;
+  let _saveParams = {};
 
   const [registerTable, { getForm, getRawDataSource, reload }] = useTable({
     api: getUnqualifiedPlasmaBatch,
@@ -122,6 +123,7 @@
     },
     afterFetch: async (data) => {
       const _data = getRawDataSource();
+      _saveParams = getForm().getFieldsValue();
 
       pagerLeft.total = _data.totalCount;
       pagerLeft.pageSize = _data.pageSize;
@@ -255,7 +257,7 @@
       unqualifiedCode,
       batchNo: record?.batchNo,
       stationNo: record?.stationNo,
-      ...getForm().getFieldsValue(),
+      ..._saveParams,
     });
   }
 </script>

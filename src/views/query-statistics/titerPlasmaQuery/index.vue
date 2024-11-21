@@ -86,7 +86,6 @@
     if (_isEqual) {
       return Promise.resolve(_saveCount);
     } else {
-      _saveParams = values;
       return getCountApi(p);
     }
   };
@@ -147,6 +146,8 @@
         return row;
       });
       _saveCount = res[1];
+      _saveParams = getForm().getFieldsValue();
+
       unAcceptList.value = formatData as any;
       pager.total = res[0].totalCount;
       return [];
@@ -178,9 +179,8 @@
   function cellClick(slotName: string, data: Recordable) {
     const [rawImm, titerLevel] = slotName.split('');
     const { batchNo, stationNo } = data;
-    const values = getForm().getFieldsValue();
 
-    openModal(true, { ...values, rawImm, titerLevel, batchNo, stationNo });
+    openModal(true, { ..._saveParams, rawImm, titerLevel, batchNo, stationNo });
   }
 </script>
 <style scoped>

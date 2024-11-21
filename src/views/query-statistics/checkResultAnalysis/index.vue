@@ -117,7 +117,7 @@
 
     await reload();
   }
-  let _saveParams = {};
+  let _saveParams: any = {};
   let _saveCount = {};
   function getData(p) {
     return new Promise((rs, rj) => {
@@ -127,6 +127,7 @@
           pagerLeft.pageSize = resList[0].pageSize!;
           pagerLeft.currPage = resList[0].currPage!;
           _saveCount = resList[1];
+          _saveParams = getForm().getFieldsValue();
           resList[0].result?.push({ ...resList[1], stationName: '合计' });
           rs(resList[0]);
         })
@@ -136,7 +137,6 @@
   function paramsIsEqual() {
     const values = getForm().getFieldsValue();
     const _isEqual = isEqual(values, _saveParams);
-    if (!_isEqual) _saveParams = values;
     return _isEqual;
   }
   function paramsIsNotNull() {
@@ -152,11 +152,10 @@
     }
   };
   function handleDetails(record: Recordable) {
-    const values = getForm().getFieldsValue();
     openModal(true, {
-      ...values,
-      stationNo: record.stationNo || values.stationNo,
-      batchNo: record.batchNo || values.batchNo,
+      ..._saveParams,
+      stationNo: record.stationNo || _saveParams.stationNo,
+      batchNo: record.batchNo || _saveParams.batchNo,
     });
   }
 
