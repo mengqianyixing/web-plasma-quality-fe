@@ -32,6 +32,7 @@
   import { GetApiCoreBatchStockStatisticsResponse } from '@/api/type/queryStatistics';
   import { getSysParamsByParamKey } from '@/api/systemServer/params';
   import { SysParamsEnum } from '@/enums/sysParamsEnum';
+  import { formatKg } from '@/utils';
 
   const ATabs = Tabs;
   const ATabPane = Tabs.TabPane;
@@ -72,6 +73,7 @@
     {
       title: '验收净重（kg）',
       dataIndex: 'totalVerifyWeight',
+      format: formatKg,
     },
   ];
   const tabList: {
@@ -104,6 +106,7 @@
         {
           title: '验收净重（kg）',
           dataIndex: 'totalVerifyWeight',
+          format: formatKg,
         },
         {
           title: '最早采集日期',
@@ -126,6 +129,7 @@
         {
           title: '验收净重（kg）',
           dataIndex: 'totalVerifyWeight',
+          format: formatKg,
         },
         {
           title: '最早采集日期',
@@ -148,6 +152,7 @@
         {
           title: '验收净重（kg）',
           dataIndex: 'totalVerifyWeight',
+          format: formatKg,
         },
         {
           title: '最早采集日期',
