@@ -24,7 +24,7 @@
         key="3"
         tab="血浆箱扫描解绑"
       >
-        <PlasmaBoxScan :is-binding="false" />
+        <PlasmaBoxScanUnbind :is-binding="false" />
       </TabPane>
       <TabPane v-if="getPermission(StoreButtonEnum.TrayPlasmaBoxBind)" key="4" tab="血浆箱手工绑定">
         <PlasmaBoxHand :is-binding="true" />
@@ -69,6 +69,7 @@
   import { TabPane, Tabs } from 'ant-design-vue';
   import TrayRelocation from './trayRelocation.vue';
   import PlasmaBoxScan from './plasmaBoxScan.vue';
+  import PlasmaBoxScanUnbind from './plasmaBoxScanUnbind.vue';
   import PlasmaBoxHand from './plasmaBoxHand.vue';
   import SampleBoxScan from './sampleBoxScan.vue';
   import SampleBoxScanUnbind from './sampleBoxScanUnbind.vue';
