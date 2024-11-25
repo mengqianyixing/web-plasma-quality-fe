@@ -153,3 +153,12 @@ export const getTrayRelocationRecordApi = (params: GetApiCoreBankTrayMoveRecordR
     url: '/api/core/bank/tray/move-record',
     params,
   });
+
+export const unbindPlasmaBoxApi = (
+  params: { trayNo: string; confirm: boolean; type: string; bizScen: string },
+  errOkCb?: () => void,
+) =>
+  defHttp.post<PostApiCoreBankTrayKeepSampleScanUnbindResponse>(
+    { url: '/api/core/bank/tray/relate', params },
+    { errorMessageModeOkCb: errOkCb },
+  );

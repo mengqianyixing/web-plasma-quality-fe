@@ -15,8 +15,8 @@
             <span class="form-label">托盘编号</span>
             <ScanInput
               :value="formData.trayNo"
-              @enter="_submit"
-              @keyup="handleKeyUp"
+              @enter="handleTrayKeyUp"
+              @keyup="handleTrayKeyUp"
               size="lg"
               @scan-change="(code) => (formData.trayNo = code)"
             />
@@ -42,12 +42,13 @@
 <script setup lang="ts">
   import { BasicTable, useTable } from '@/components/Table';
   import { plasmaBoxScanSearchFormSchema, plasmaBoxScanColumns } from './relocation.data';
-  import { bindBoxApi, getTrayBoxBindRecordApi } from '@/api/tray/relocation';
+  import { bindBoxApi, getTrayBoxBindRecordApi, unbindPlasmaBoxApi } from '@/api/tray/relocation';
   import { message, Spin } from 'ant-design-vue';
   import { trayBoxListApi } from '@/api/tray/list';
   import { ref, nextTick, reactive } from 'vue';
   import ScanInput from '@/components/Form/src/components/ScanInput.vue';
   import { debounce } from 'lodash-es';
+  import { useMessage } from '@/hooks/web/useMessage';
 
   const count = ref(0);
   const spinning = ref(false);
@@ -56,13 +57,9 @@
     trayNo: '',
     boxId: '',
   });
+  const { createConfirm } = useMessage();
 
-  const props = defineProps({
-    isBinding: {
-      type: Boolean,
-    },
-  });
-  const columns = plasmaBoxScanColumns(props.isBinding);
+  const columns = plasmaBoxScanColumns(false);
   const [registerTable, { reload }] = useTable({
     api: getTrayBoxBindRecordApi,
     fetchSetting: {
@@ -78,7 +75,7 @@
     columns: columns,
     useSearchForm: true,
     bordered: true,
-    beforeFetch: (p) => ({ ...p, operateType: props.isBinding ? 'bind' : 'unbind' }),
+    beforeFetch: (p) => ({ ...p, operateType: 'unbind' }),
     size: 'small',
   });
   async function submit() {
@@ -88,7 +85,7 @@
       await bindBoxApi(
         {
           trayNo: trayNo,
-          type: props.isBinding ? 'bind' : 'unbind',
+          type: 'unbind',
           boxes: [boxId],
           bizScen: 'scanBox',
         },
@@ -111,9 +108,64 @@
     });
   }
   const _submit = debounce(handleSubmit, 200);
+  const _submitTray = debounce(handleTraySubmit, 200);
   function handleKeyUp(e) {
     if (e.key === 'Enter') {
       _submit();
+    }
+  }
+  function handleTrayKeyUp(e) {
+    if (e.key === 'Enter') {
+      _submitTray();
+    }
+  }
+  async function handleTraySubmit() {
+    const { trayNo } = formData;
+    if (!trayNo) return message.warning('请扫描托盘编号');
+    const focusedElement = document.activeElement as InputHTMLElement;
+    try {
+      spinning.value = true;
+      const msg = await unbindPlasmaBoxApi(
+        {
+          trayNo,
+          confirm: false,
+          type: 'unbind',
+          bizScen: 'scanBox',
+        },
+        () => {
+          setTimeout(() => {
+            focusedElement.focus();
+            focusedElement.select();
+          }, 300);
+        },
+      );
+      createConfirm({
+        title: '确认',
+        content: msg,
+        iconType: 'warning',
+        onOk: async () => {
+          spinning.value = true;
+          try {
+            await unbindPlasmaBoxApi({
+              ...formData,
+              confirm: true,
+              type: 'unbind',
+              bizScen: 'scanBox',
+            });
+            reload();
+            message.success('操作成功');
+          } finally {
+            spinning.value = false;
+          }
+        },
+        onCancel: () => {
+          boxidRef.value.$el.focus();
+        },
+      });
+    } finally {
+      await nextTick();
+      focusedElement.focus();
+      spinning.value = false;
     }
   }
   async function handleSubmit() {
