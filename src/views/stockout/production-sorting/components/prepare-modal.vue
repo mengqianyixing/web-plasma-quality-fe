@@ -47,12 +47,7 @@
   import { ref } from 'vue';
   import BasicModal from '@/components/Modal/src/BasicModal.vue';
   import { getPrepareList } from '@/api/stockout/production-preparation.js';
-  import {
-    prepareStateMap,
-    prepareStateValueEnum,
-    pickModeMap,
-    pickModeValueEnum,
-  } from '@/enums/stockoutEnum';
+  import { pickModeMap, pickModeValueEnum } from '@/enums/stockoutEnum';
   import dayjs from 'dayjs';
   import { useMessage } from '@/hooks/web/useMessage';
   import { SERVER_ENUM } from '@/enums/serverEnum';
@@ -161,7 +156,7 @@
       dataIndex: 'prepareState',
       width: 80,
       format(text) {
-        return `${prepareStateMap.get(text as prepareStateValueEnum)}`;
+        return serverEnumStore.getServerEnumText(SERVER_ENUM.PrepareState)(text);
       },
     },
   ];
@@ -188,10 +183,7 @@
       defaultValue: ['TPK', 'RPK'],
       componentProps: {
         mode: 'multiple',
-        options: [...prepareStateMap.entries()].map(([key, value]) => ({
-          value: key,
-          label: `${value}`,
-        })),
+        options: serverEnumStore.getServerEnum(SERVER_ENUM.PrepareState),
       },
     },
   ];
