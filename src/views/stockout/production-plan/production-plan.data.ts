@@ -494,7 +494,7 @@ export const pick = {
   },
   [TAB.BOX]: {
     api: getNotSelectBoxListApi,
-    title: '血浆箱挑选',
+    title: iskm ? '托盘挑选' : '血浆箱挑选',
   },
 };
 export const pickingColumns: Record<string, BasicColumn[]> = {
