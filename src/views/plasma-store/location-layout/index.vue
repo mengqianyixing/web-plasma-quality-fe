@@ -131,7 +131,7 @@
           const cellData = dataMap.get(data[0] + '.' + data[1]);
           return `<div>
           位置：${data[1] + 1}层${data[0] + 1}列<br/>
-          货位编号：${cellData?.locationNo}<br/>
+          托盘编号：${cellData?.trayNo}<br/>
           存放说明：${cellData?.desc}</div>`;
         },
       },
