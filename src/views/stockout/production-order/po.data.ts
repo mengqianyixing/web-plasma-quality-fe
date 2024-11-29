@@ -176,6 +176,11 @@ export const searchFormSchema: FormSchema[] = [
     label: '计划投产日期',
     component: 'RangePicker',
   },
+  {
+    field: 'remark',
+    label: '备注',
+    component: 'Input',
+  },
 ];
 
 export const formSchema: FormSchema[] = [
