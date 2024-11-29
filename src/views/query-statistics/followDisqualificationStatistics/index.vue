@@ -118,6 +118,7 @@
     dictItemTypes: [DictionaryItemKeyEnum.Track],
   }).then((res) => {
     const list = (res || []).filter((it) => it.dictItemId !== '110001407');
+
     cloneColumns[2].children?.unshift(
       ...list.map((it) => ({
         dataIndex: [backTrackUnqKey, it.dictItemId],
