@@ -117,8 +117,9 @@
     dataKey: DictionaryReasonEnum.PlasmaFailedReason as any,
     dictItemTypes: [DictionaryItemKeyEnum.Track],
   }).then((res) => {
+    const list = (res || []).filter((it) => it.dictItemId !== '110001407');
     cloneColumns[2].children?.unshift(
-      ...(res || []).map((it) => ({
+      ...list.map((it) => ({
         dataIndex: [backTrackUnqKey, it.dictItemId],
         title: it.label,
         width: it.label.length * 16,
@@ -143,7 +144,7 @@
       })),
     );
     cloneColumns[3].children?.unshift(
-      ...(res || []).map((it) => ({
+      ...list.map((it) => ({
         dataIndex: [followTrackNumUnqKey, it.dictItemId],
         title: it.label,
         width: it.label.length * 16,
@@ -167,7 +168,7 @@
         },
       })),
     );
-    res.forEach((it) => {
+    list.forEach((it) => {
       dictMap.set(it.dictItemId, it.label);
     });
     setColumns(cloneColumns);
