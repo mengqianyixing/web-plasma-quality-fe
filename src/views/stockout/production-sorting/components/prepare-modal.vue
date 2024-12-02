@@ -230,7 +230,12 @@
     }
     const firstSelectedItem: any = selectedRow.value[0];
     const prepareState = firstSelectedItem?.prepareState;
-    if (prepareState !== 'TPK' && prepareState !== 'RPK' && prepareState !== 'CPK') {
+    if (
+      prepareState !== 'TPK' &&
+      prepareState !== 'RPK' &&
+      prepareState !== 'CPK' &&
+      prepareState !== 'AS'
+    ) {
       warning('当前准备号不可分拣!');
       return;
     }
