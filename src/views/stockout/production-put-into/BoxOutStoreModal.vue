@@ -84,7 +84,7 @@
       _handleEnter();
     }
   }
-  const [registerNoOutTable, { redoHeight: leftRedo }] = useTable({
+  const [registerNoOutTable, { redoHeight: leftRedo, setLoading: setLeftLoading }] = useTable({
     columns: [
       {
         title: '箱号',
@@ -117,7 +117,7 @@
     isCanResizeParent: true,
     immediate: false,
   });
-  const [registerOutStoreTable, { redoHeight: rightRedo }] = useTable({
+  const [registerOutStoreTable, { redoHeight: rightRedo, setLoading: setRightLoading }] = useTable({
     columns: [
       {
         title: '箱号',
@@ -167,13 +167,11 @@
   });
 
   async function reloadTable() {
-    setModalProps({
-      loading: true,
-    });
+    setLeftLoading(true);
+    setRightLoading(true);
     originTableData.value = await getProductionOutStoreList(orderNo.value);
-    setModalProps({
-      loading: false,
-    });
+    setLeftLoading(false);
+    setRightLoading(false);
   }
 
   const noOutTableData = computed(() => originTableData.value?.notOutList);
@@ -183,9 +181,6 @@
     inputDisabled.value = true;
 
     try {
-      setModalProps({
-        loading: true,
-      });
       const res = await productionOutStore({
         orderNo: orderNo.value,
         boxNo: inputValue.value,
@@ -214,9 +209,6 @@
         createMessage.success('全部出库成功');
       }
     } finally {
-      setModalProps({
-        loading: false,
-      });
       inputDisabled.value = false;
     }
   }
