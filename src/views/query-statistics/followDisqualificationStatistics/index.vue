@@ -169,7 +169,7 @@
         },
       })),
     );
-    list.forEach((it) => {
+    (res || []).forEach((it) => {
       dictMap.set(it.dictItemId, it.label);
     });
     setColumns(cloneColumns);
