@@ -467,7 +467,7 @@
               icon: createVNode(ExclamationCircleOutlined),
               content: createVNode(
                 'div',
-                { style: 'color:red;' },
+                { style: 'color:red;font-size:20px;' },
                 '本箱全部为满足要求的血浆,要进行封箱操作并打印箱签吗?',
               ),
               onOk() {
@@ -954,11 +954,15 @@
       const elements = document.querySelectorAll('.one-bag');
       elements.forEach((element) => {
         element.style.fontWeight = '400';
+        element.style.fontSize = '1rem';
       });
       // 当前操作袋号加粗
       if (!isBold) return;
       const firstBag = childDom.querySelector('.one-bag');
-      if (firstBag) firstBag.style.fontWeight = 'bold';
+      if (firstBag) {
+        firstBag.style.fontWeight = 'bold';
+        firstBag.style.fontSize = '1.5rem';
+      }
     });
   }
 
