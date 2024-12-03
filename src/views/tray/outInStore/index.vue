@@ -50,7 +50,6 @@
     formConfig: {
       schemas: searchFormSchema,
     },
-    rowKey: 'trayNo',
     columns,
     useSearchForm: true,
     bordered: true,
