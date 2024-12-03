@@ -61,13 +61,13 @@
             <a
               class="mr-1"
               @click="_sortingMouldAssembling(item)"
-              :class="isPMSAutoSort ? 'cursor-not-allowed disabled' : 'cursor-pointer'"
+              :class="isPMSAutoSort ? ' pointer-events-none  text-#c9c9c9' : 'cursor-pointer'"
             >
               合箱
             </a>
             <a
               @click="_sortingBoxSealing(item, index, true)"
-              :class="isPMSAutoSort ? 'cursor-not-allowed disabled' : 'cursor-pointer'"
+              :class="isPMSAutoSort ? ' pointer-events-none text-#c9c9c9' : 'cursor-pointer'"
             >
               封箱
             </a>
@@ -93,13 +93,13 @@
             <a
               class="mr-1"
               @click="_sortingMouldAssembling(item)"
-              :class="isPMSAutoSort ? 'cursor-not-allowed disabled' : 'cursor-pointer'"
+              :class="isPMSAutoSort ? ' pointer-events-none  text-#c9c9c9' : 'cursor-pointer'"
             >
               合箱
             </a>
             <a
               @click="_sortingBoxSealing(item, index, false)"
-              :class="isPMSAutoSort ? 'cursor-not-allowed disabled' : 'cursor-pointer'"
+              :class="isPMSAutoSort ? ' pointer-events-none  text-#c9c9c9' : 'cursor-pointer'"
               >封箱
             </a>
           </template>
