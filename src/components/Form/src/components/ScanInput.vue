@@ -1,5 +1,5 @@
 <script lang="tsx">
-  import { defineComponent, useAttrs, PropType, ref } from 'vue';
+  import { defineComponent, useAttrs, PropType, ref, computed } from 'vue';
   import { debounce } from 'lodash-es';
 
   export default defineComponent({
@@ -15,37 +15,48 @@
         type: String as PropType<'lg' | 'small'>,
         default: 'default',
       },
+      readonly: {
+        default: false,
+      },
     },
     setup(props, { emit }) {
       const attr = useAttrs();
       const code = ref('');
       const readOnly = ref(false);
+      const readonlyValue = computed(() => props.readonly || readOnly.value);
       let firstCode = '';
       let time = 0;
-      const _update = debounce(() => {
-        readOnly.value = false;
+      const _resetCode = debounce(() => {
         code.value = '';
       }, 100);
+      const _resetReadState = debounce(() => {
+        readOnly.value = false;
+      }, 1000);
       const _enter = debounce(() => {
-        setTimeout(_update, 300);
+        setTimeout(_resetCode, 100);
         if (code.value.length < 2) {
           code.value = '';
           return;
         }
         emit('enter', { code: 'Enter' });
       }, 100);
-      const _reset = debounce(() => {
+      const _resetTime = debounce(() => {
         time = 0;
-      }, 1000);
+      }, 100);
       function keyupEvent(e: KeyboardEvent) {
         if (['Shift', 'Process'].includes(e.key)) return;
         const now = Date.now();
+        // 偶现第二位输入和第一位输入间隔为0的情况
+        if (time === now && /^[0-9a-zA-Z-]{1}$/.test(e.key)) {
+          firstCode += e.key;
+        }
         if (time === 0 && /^[0-9a-zA-Z-]{1}$/.test(e.key)) {
           firstCode = e.key.toUpperCase();
           time = now;
         }
-        console.log('current key', e.key, now - time);
-        if (now - time < 40 && time !== now) {
+        console.log('current key', e.key, now - time, readonlyValue.value, code.value);
+
+        if (now - time < 80 && time !== now) {
           readOnly.value = true;
           time = now;
           if (/^[0-9a-zA-Z-]{1}$/.test(e.key)) {
@@ -53,15 +64,17 @@
             firstCode = '';
             emit('change', code.value);
             emit('scan-change', code.value);
+            _enter();
+            _resetTime();
+            _resetReadState();
           }
         }
-        _enter();
-        _reset();
       }
       function inputEvent(e) {
         if (code.value === '') {
           emit('scanChange', e.target.value);
           emit('change', e.target.value);
+          _resetTime();
         }
       }
       return () => (
@@ -71,7 +84,7 @@
           placeholder={props.placeholder}
           value={props.value}
           onInput={inputEvent.bind(null)}
-          readonly={readOnly.value}
+          readonly={readonlyValue.value}
           onKeyup={keyupEvent.bind(null)}
         ></input>
       );
