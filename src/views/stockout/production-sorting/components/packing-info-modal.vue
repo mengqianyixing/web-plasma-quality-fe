@@ -101,7 +101,6 @@
       field: 'boxType',
       label: '装箱类型',
       component: 'Select',
-      colProps: { span: 6 },
       defaultValue: [],
       componentProps: {
         options: [...boxTypeMap.entries()].map(([key, value]) => ({
@@ -111,22 +110,25 @@
       },
     },
     {
-      field: 'boxNo',
-      label: '血浆箱号',
-      component: 'Input',
-      colProps: { span: 6 },
-    },
-    {
       field: 'state',
       label: '状态',
       component: 'Select',
-      colProps: { span: 6 },
       componentProps: {
         options: [...pickBoxMap.entries()].map(([key, value]) => ({
           value: key,
           label: `${value}`,
         })),
       },
+    },
+    {
+      field: 'boxNo',
+      label: '血浆箱号',
+      component: 'Input',
+    },
+    {
+      field: 'operator',
+      label: '装箱人',
+      component: 'Input',
     },
   ];
 
