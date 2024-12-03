@@ -238,6 +238,7 @@ export const totalUnqualifiedColumns: BasicColumn[] = [
     dataIndex: 'cardNo',
     title: '浆员编号',
     width: 100,
+    slots: { customRender: 'cardNo' },
   },
   {
     dataIndex: 'donorName',

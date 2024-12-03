@@ -11,8 +11,24 @@
     @fullscreen="redoHeight"
   >
     <div class="relative h-inherit max-h-inherit min-h-inherit">
-      <div class="absolute w-full h-full"> <BasicTable @register="registerTable" /> </div
-    ></div>
+      <div class="absolute w-full h-full">
+        <BasicTable @register="registerTable">
+          <template #cardNo="{ value }">
+            <span
+              v-if="state.type === 3"
+              class="text-blue-500 underline cursor-pointer"
+              @click.stop.self="openModal(true, { cardNo: value })"
+            >
+              {{ value }}
+            </span>
+            <span v-else>
+              {{ value }}
+            </span>
+          </template>
+        </BasicTable>
+      </div>
+    </div>
+    <DonorModel @register="registerDonorModal" />
   </BasicModal>
 </template>
 <script lang="ts" setup>
@@ -23,13 +39,15 @@
     totalUnqualifiedSearch,
     titerType,
   } from './reportRelease.data';
-  import { BasicModal, useModalInner } from '@/components/Modal';
+  import { BasicModal, useModalInner, useModal } from '@/components/Modal';
   import { BasicTable, useTable } from '@/components/Table';
   import { getUnqualifiedApi } from '@/api/inspect/reportRelease';
   import { getDilutionTypeApi } from '@/api/plasmaStore/inventory';
+  import DonorModel from '@/__components/donor/donorModel.vue';
 
   const state = reactive({ reportNo: '', type: 1, title: '' });
   const titerTypeOptions = ref<Recordable[]>([]);
+  const [registerDonorModal, { openModal }] = useModal();
 
   const [registerTable, { redoHeight, setColumns, getForm }] = useTable({
     immediate: false,
