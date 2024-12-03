@@ -103,6 +103,7 @@ export enum prepareStateEnum {
   REV = '待复核',
   TPK = '待分拣',
   RPK = '分拣中',
+  AS = '自动分拣中',
   CPK = '已分拣',
   OUT = '已出库',
   DEL = '已取消',
@@ -113,6 +114,7 @@ export enum prepareStateValueEnum {
   REV = 'REV',
   TPK = 'TPK',
   RPK = 'RPK',
+  AS = 'AS',
   CPK = 'CPK',
   OUT = 'OUT',
   DEL = 'DEL',
@@ -124,6 +126,7 @@ prepareStateMap.set(prepareStateValueEnum.RUN, prepareStateEnum.RUN);
 prepareStateMap.set(prepareStateValueEnum.REV, prepareStateEnum.REV);
 prepareStateMap.set(prepareStateValueEnum.TPK, prepareStateEnum.TPK);
 prepareStateMap.set(prepareStateValueEnum.RPK, prepareStateEnum.RPK);
+prepareStateMap.set(prepareStateValueEnum.AS, prepareStateEnum.AS);
 prepareStateMap.set(prepareStateValueEnum.CPK, prepareStateEnum.CPK);
 prepareStateMap.set(prepareStateValueEnum.OUT, prepareStateEnum.OUT);
 prepareStateMap.set(prepareStateValueEnum.DEL, prepareStateEnum.DEL);

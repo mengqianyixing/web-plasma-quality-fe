@@ -4,42 +4,42 @@
     <div class="flex justify-end gap-2 pb-10px bg-[#fff]">
       <a-button
         v-auth="StockOutButtonEnum.ProductionSortingBatch"
-        :disabled="!prepareNo"
+        :disabled="!prepareNo || isPMSAutoSort"
         @click="_openBatchSuspendModal"
       >
         批次暂停
       </a-button>
       <a-button
         v-auth="StockOutButtonEnum.ProductionSortingPP"
-        :disabled="!prepareNo"
+        :disabled="!prepareNo || isPMSAutoSort"
         @click="_openPrepareSuspendModal"
       >
         准备号暂停
       </a-button>
       <a-button
         v-auth="StockOutButtonEnum.ProductionSortingBox"
-        :disabled="!prepareNo"
+        :disabled="!prepareNo || (isPMSAutoSort && !prepareNo)"
         @click="pickBoxInfo"
       >
         装箱信息
       </a-button>
       <a-button
         v-auth="StockOutButtonEnum.ProductionSortingTrayOut"
-        :disabled="!prepareNo"
+        :disabled="!prepareNo || (isPMSAutoSort && !prepareNo)"
         @click="openOutStoreModal(true, { prepareNo: prepareNo })"
       >
         托盘出库
       </a-button>
       <a-button
         v-auth="StockOutButtonEnum.ProductionSortingTrayIn"
-        :disabled="!prepareNo"
+        :disabled="!prepareNo || (isPMSAutoSort && !prepareNo)"
         @click="openInStoreModal(true, { prepareNo: prepareNo })"
       >
         托盘入库
       </a-button>
       <a-button
         v-auth="StockOutButtonEnum.ProductionSortingTrayComplete"
-        :disabled="!prepareNo"
+        :disabled="!prepareNo || isPMSAutoSort"
         @click="_completeSorting"
       >
         分拣完成
@@ -57,10 +57,21 @@
           :class="{ selected: item.isSelected }"
           :title="`${item.title}(${item.sortCount}/${item.sortTotalCount}/${item.totalCount})`"
         >
-          <template #extra
-            ><a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a
-            ><a @click="_sortingBoxSealing(item, index, true)">封箱</a></template
-          >
+          <template #extra>
+            <a
+              class="mr-1"
+              @click="_sortingMouldAssembling(item)"
+              :class="isPMSAutoSort ? 'cursor-not-allowed disabled' : 'cursor-pointer'"
+            >
+              合箱
+            </a>
+            <a
+              @click="_sortingBoxSealing(item, index, true)"
+              :class="isPMSAutoSort ? 'cursor-not-allowed disabled' : 'cursor-pointer'"
+            >
+              封箱
+            </a>
+          </template>
           <div class="text-4 one-bag" v-for="one in item.bagNos" :key="one">{{ one }}</div>
         </Card>
       </div>
@@ -78,10 +89,20 @@
           :class="{ selected: item.isSelected }"
           :title="`${item.title}(${item.sortCount}/${item.sortTotalCount}/${item.totalCount})`"
         >
-          <template #extra
-            ><a class="mr-1" @click="_sortingMouldAssembling(item)">合箱</a
-            ><a @click="_sortingBoxSealing(item, index, false)">封箱</a></template
-          >
+          <template #extra>
+            <a
+              class="mr-1"
+              @click="_sortingMouldAssembling(item)"
+              :class="isPMSAutoSort ? 'cursor-not-allowed disabled' : 'cursor-pointer'"
+            >
+              合箱
+            </a>
+            <a
+              @click="_sortingBoxSealing(item, index, false)"
+              :class="isPMSAutoSort ? 'cursor-not-allowed disabled' : 'cursor-pointer'"
+              >封箱
+            </a>
+          </template>
           <div class="text-4 one-bag" v-for="one in item.bagNos" :key="one">{{ one }}</div>
         </Card>
       </div>
@@ -102,7 +123,7 @@
 </template>
 
 <script lang="tsx" setup>
-  import { ref, createVNode, nextTick } from 'vue';
+  import { ref, createVNode, nextTick, computed } from 'vue';
   import Description from '@/components/Description/src/Description.vue';
   import { DescItem, useDescription } from '@/components/Description';
   import PageWrapper from '@/components/Page/src/PageWrapper.vue';
@@ -192,6 +213,7 @@
   const bagNoRef = ref<any>(null);
 
   const prepareData = ref<PrepareData>({}); // 准备号相关数据
+  const isPMSAutoSort = computed(() => prepareData.value.prepareState === prepareStateValueEnum.AS);
   const batchData = ref<BatchData>({}); // 本批次数据
 
   // 准备号栏信息
@@ -310,6 +332,7 @@
         return (
           <div class="flex items-center justify-center gap-2 w-[180px] -mt-1">
             <a-input
+              disabled={isPMSAutoSort.value}
               placeholder="请扫描"
               value={boxNo}
               onChange={(event) => (boxNo.value = event.target.value)}
@@ -327,6 +350,7 @@
         return (
           <div class="flex items-center justify-center gap-2 w-[180px] -mt-1">
             <a-input
+              disabled={isPMSAutoSort.value}
               placeholder="请扫描"
               value={bagNo}
               ref={bagNoRef}
