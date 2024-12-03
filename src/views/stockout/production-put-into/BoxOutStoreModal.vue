@@ -69,7 +69,7 @@
   const originTableData = ref<GetApiProductOutStoreBoxesOrderNoResponse>({});
 
   const emit = defineEmits(['success', 'register']);
-  const { createMessage, createWarningModal } = useMessage();
+  const { createMessage } = useMessage();
   const { barCode, startEvent, enterFlag } = useScanHelper();
   const _handleEnter = debounce(handleEnter, 300);
 
@@ -187,19 +187,13 @@
       });
       if (res.data.code !== '0' && res.data.msg) {
         _removeEvent();
-        return createWarningModal({
-          title: '提示',
-          content: res.data.msg,
-          keyboard: false,
-          onOk: () => {
-            const { removeEvent } = startEvent();
-            _removeEvent = removeEvent;
-            setTimeout(() => {
-              inputRef.value.$el.focus();
-              inputRef.value.$el.select();
-            }, 300);
-          },
-        });
+        createMessage.warn(res?.data?.msg);
+        inputValue.value = '';
+        setTimeout(() => {
+          inputRef.value.$el.focus();
+          inputRef.value.$el.select();
+        }, 300);
+        return;
       }
       createMessage.success('出库成功');
       inputValue.value = '';
