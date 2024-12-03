@@ -47,6 +47,10 @@
 
   const [registerDetailModal, { openModal: openDetailModal }] = useModal();
 
+  const sortMap = {
+    boxNo: 'boxNo',
+    bagNum: 'bagNum',
+  };
   const [registerTable, { reload, getForm, redoHeight }] = useTable({
     api: getBoxNumDetailList,
     columns: [
@@ -57,11 +61,13 @@
       {
         title: iskm ? '托盘编号' : '血浆箱号',
         dataIndex: 'boxNo',
+        sorter: true,
       },
       {
         title: '血浆数量',
         dataIndex: 'bagNum',
         slots: { customRender: 'bagNum' },
+        sorter: true,
       },
       {
         title: '血浆类型',
@@ -76,6 +82,12 @@
         dataIndex: 'packAt',
       },
     ],
+    sortFn(sortInfo) {
+      return {
+        sortIdx: sortMap[sortInfo.field],
+        sortOrder: sortInfo.order ? (sortInfo.order === 'ascend' ? 'ASC' : 'DESC') : null,
+      };
+    },
     fetchSetting: {
       pageField: 'currPage',
       sizeField: 'pageSize',
