@@ -84,7 +84,15 @@
       _handleEnter();
     }
   }
-  const [registerNoOutTable, { redoHeight: leftRedo, setLoading: setLeftLoading }] = useTable({
+  const [
+    registerNoOutTable,
+    {
+      redoHeight: leftRedo,
+      setLoading: setLeftLoading,
+      deleteTableDataRecord,
+      findTableDataRecord,
+    },
+  ] = useTable({
     columns: [
       {
         title: '箱号',
@@ -103,7 +111,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
-
+    rowKey: 'boxNo',
     size: 'small',
     striped: false,
     useSearchForm: false,
@@ -117,7 +125,10 @@
     isCanResizeParent: true,
     immediate: false,
   });
-  const [registerOutStoreTable, { redoHeight: rightRedo, setLoading: setRightLoading }] = useTable({
+  const [
+    registerOutStoreTable,
+    { redoHeight: rightRedo, setLoading: setRightLoading, insertTableDataRecord },
+  ] = useTable({
     columns: [
       {
         title: '箱号',
@@ -136,6 +147,7 @@
       totalField: 'totalCount',
       listField: 'result',
     },
+    rowKey: 'boxNo',
     size: 'small',
     striped: false,
     useSearchForm: false,
@@ -174,6 +186,8 @@
     setRightLoading(false);
   }
 
+  const _reloadTable = debounce(reloadTable, 8000);
+
   const noOutTableData = computed(() => originTableData.value?.notOutList);
   const outTableData = computed(() => originTableData.value?.outList);
 
@@ -185,6 +199,7 @@
         orderNo: orderNo.value,
         boxNo: inputValue.value,
       });
+
       if (res.data.code !== '0' && res.data.msg) {
         _removeEvent();
         createMessage.warn(res?.data?.msg);
@@ -195,13 +210,18 @@
         }, 300);
         return;
       }
-      createMessage.success('出库成功');
-      inputValue.value = '';
-      await reloadTable();
 
+      const outTableDataRecord = findTableDataRecord(inputValue.value);
+
+      deleteTableDataRecord(inputValue.value);
+      insertTableDataRecord(outTableDataRecord as any);
+      createMessage.success('出库成功');
       if (noOutTableData.value?.length === 0) {
         createMessage.success('全部出库成功');
       }
+
+      await _reloadTable();
+      inputValue.value = '';
     } finally {
       inputDisabled.value = false;
     }
