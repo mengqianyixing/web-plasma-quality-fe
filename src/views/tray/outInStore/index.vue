@@ -60,6 +60,10 @@
     },
     rowSelection: { type: 'checkbox' },
     beforeFetch: (p) => ({ ...p, closed: 0 }),
+    sortFn: (e) => ({
+      sortIdx: e.order && e.field,
+      sortOrder: e?.order?.slice(0, -3).toUpperCase(),
+    }),
   });
 
   function handleOutStore() {

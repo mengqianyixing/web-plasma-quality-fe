@@ -35,6 +35,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'boxTypes',
     width: 100,
     ellipsis: false,
+    sorter: true,
   },
   {
     title: '已存容量(箱)',
