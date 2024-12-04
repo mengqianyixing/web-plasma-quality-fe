@@ -75,6 +75,7 @@
           emit('scanChange', e.target.value);
           emit('change', e.target.value);
           _resetTime();
+          _resetReadState();
         }
       }
       return () => (
