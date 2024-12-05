@@ -71,7 +71,7 @@
   const emit = defineEmits(['success', 'register']);
   const { createMessage } = useMessage();
   const { barCode, startEvent, enterFlag } = useScanHelper();
-  const _handleEnter = debounce(handleEnter, 300);
+  const _handleEnter = debounce(handleEnter, 1000);
 
   watch([barCode, enterFlag], async ([code, flag]) => {
     if (code && flag) {
