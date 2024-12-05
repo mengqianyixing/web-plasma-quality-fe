@@ -88,6 +88,7 @@ export const columns: BasicColumn[] = [
   {
     title: '放行单号',
     dataIndex: 'prNo',
+    slots: { customRender: 'prNo' },
     width: 100,
     ellipsis: false,
   },

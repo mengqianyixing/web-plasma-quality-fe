@@ -83,6 +83,16 @@
         <span
           v-if="record.prNo"
           class="text-blue-500 underline cursor-pointer"
+          @click.stop.self="handleMesIdClick(record)"
+        >
+          {{ record.mesId }}
+        </span>
+        <span v-else> {{ record.mesId }}</span>
+      </template>
+      <template #prNo="{ record }: { record: Recordable }">
+        <span
+          v-if="record.prNo"
+          class="text-blue-500 underline cursor-pointer"
           @click.stop.self="handleDetails(record)"
         >
           {{ record.mesId }}
@@ -107,6 +117,7 @@
       </div>
     </Modal>
     <ReportModal @register="registerReportModal" />
+    <PickedModal @register="registerMesModal" />
   </PageWrapper>
 </template>
 <script setup lang="ts">
@@ -138,11 +149,13 @@
   import { useMessage } from '@/hooks/web/useMessage';
   import { PrintServerEnum } from '@/enums/printServerEnum';
   import dayJs from 'dayjs';
+  import PickedModal from '@/views/stockout/production-plan/picked-modal.vue';
 
   const globalApiStore = useGlobalApiStoreWithOut();
 
   defineOptions({ name: 'BatchRelease' });
   const [registerReportModal, { openModal: openReportModal }] = useModal();
+  const [registerMesModal, { openModal: openMesModal }] = useModal();
 
   const reportLoading = ref(false);
   const open = ref(false);
@@ -400,5 +413,12 @@
     } finally {
       reportLoading.value = false;
     }
+  }
+
+  function handleMesIdClick(record) {
+    openMesModal(true, {
+      ...record,
+      disabled: true,
+    });
   }
 </script>
