@@ -15,7 +15,7 @@
           <p>{{ t.desc }}</p>
         </a-timeline-item>
       </a-timeline>
-      <div v-else class="mt-5">暂无审批流</div>
+      <div v-else class="mt-5"></div>
     </PageWrapper>
   </BasicModal>
 </template>
