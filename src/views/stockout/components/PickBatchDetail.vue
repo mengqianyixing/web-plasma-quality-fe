@@ -36,9 +36,9 @@
               </div>
             </template>
           </BasicTable>
-        </div></div
-      ></div
-    >
+        </div>
+      </div>
+    </div>
     <PlasmaDetail @register="registerPlasmaDetailModal" />
   </BasicModal>
 </template>
@@ -92,6 +92,7 @@
       title: '血浆批号',
       dataIndex: 'batchNo',
       width: 110,
+      sorter: true,
     },
     {
       dataIndex: 'pickCount',
@@ -110,7 +111,8 @@
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
       },
-      width: 140,
+      width: 160,
+      sorter: true,
     },
     {
       title: '结束时间',
@@ -118,7 +120,7 @@
       format(text) {
         return text ? dayjs(text).format('YYYY-MM-DD HH:mm:ss') : '-';
       },
-      width: 140,
+      width: 160,
     },
     {
       title: '耗时',
@@ -168,6 +170,10 @@
     bordered: true,
     showIndexColumn: false,
     isCanResizeParent: true,
+    sortFn: (e) => ({
+      sortIdx: e.order && e.field,
+      sortOrder: e?.order?.slice(0, -3).toUpperCase(),
+    }),
   });
 
   // 血浆明细

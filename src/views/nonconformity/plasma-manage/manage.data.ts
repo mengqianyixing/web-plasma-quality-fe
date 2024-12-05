@@ -39,6 +39,7 @@ export const columns: BasicColumn[] = [
     ellipsis: false,
     width: 120,
     fixed: 'left',
+    sorter: true,
   },
   {
     title: '血浆编号',
@@ -73,6 +74,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'stockLocation',
     width: 150,
     ellipsis: false,
+    sorter: true,
   },
   {
     title: iskm ? '托盘/箱' : '箱号',
@@ -86,6 +88,7 @@ export const columns: BasicColumn[] = [
     ellipsis: false,
     format: BagUnqualifiedFlowEnum,
     width: 130,
+    sorter: true,
   },
   {
     title: '不合格原因',
@@ -98,6 +101,7 @@ export const columns: BasicColumn[] = [
     title: '不合格日期',
     dataIndex: 'unqDate',
     width: 100,
+    sorter: true,
   },
   {
     title: '不合格入库日期',
@@ -105,7 +109,8 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
-    width: 110,
+    width: 140,
+    sorter: true,
   },
   {
     title: '不合格出库日期',
@@ -113,7 +118,8 @@ export const columns: BasicColumn[] = [
     format(text) {
       return text ? dayjs(text).format('YYYY-MM-DD') : '-';
     },
-    width: 110,
+    width: 140,
+    sorter: true,
   },
   {
     title: '状态',

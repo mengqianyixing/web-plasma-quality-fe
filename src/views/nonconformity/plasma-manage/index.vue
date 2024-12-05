@@ -137,9 +137,10 @@
       listField: 'result',
     },
     columns,
-    scroll: {
-      x: 0,
-    },
+    sortFn: (e) => ({
+      sortIdx: e.order && e.field,
+      sortOrder: e?.order?.slice(0, -3).toUpperCase(),
+    }),
     size: 'small',
     useSearchForm: true,
     showTableSetting: false,
@@ -157,7 +158,6 @@
         return date ? date.format('YYYY-MM-DD') : '';
       },
     },
-    showIndexColumn: false,
     canResize: true,
   });
 
