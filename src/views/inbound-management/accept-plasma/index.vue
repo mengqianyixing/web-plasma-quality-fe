@@ -5,7 +5,7 @@
       <vxe-grid
         v-bind="gridOptionsUnaccept"
         :data="unAcceptList"
-        class="inline-block w-1/4 pr-2"
+        class="pr-2 basis-260px shrink-0"
         :loading="tableLoading"
       >
         <template #toolbar>
@@ -19,7 +19,7 @@
         v-bind="gridOptionsAccept"
         :data="acceptList"
         :loading="tableLoading"
-        class="inline-block w-3/4"
+        style="width: calc(100% - 260px)"
       >
         <template #toolbar>
           <div class="flex items-center justify-between bg-[#ffffff]">
@@ -398,10 +398,12 @@
         field: 'index',
         title: '序号',
         type: 'seq',
+        width: 80,
       },
       {
         field: 'bagNo',
         title: '血浆编号',
+        width: 160,
       },
     ],
     showFooter: false,
@@ -437,15 +439,17 @@
         field: 'index',
         title: '序号',
         type: 'seq',
+        width: 80,
       },
       {
         field: 'bagNo',
         title: '血浆编号',
+        width: 160,
       },
       {
         title: '验收时间',
         field: 'verifyAt',
-        width: 200,
+        width: 180,
         formatter(params) {
           return params.cellValue ? dayjs(params.cellValue).format('YYYY-MM-DD HH:mm:ss') : '-';
         },
