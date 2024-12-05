@@ -9,9 +9,9 @@
         :loading="tableLoading"
       >
         <template #toolbar>
-          <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
+          <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded flex items-center">
             <span>本箱未验收(袋)：</span>
-            <span>{{ unAcceptList?.length }}</span>
+            <span class="text-[28px]">{{ unAcceptList?.length }}</span>
           </div>
         </template>
       </vxe-grid>
@@ -23,9 +23,9 @@
       >
         <template #toolbar>
           <div class="flex items-center justify-between bg-[#ffffff]">
-            <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded">
+            <div class="p-3 font-medium text-[16px] bg-[#ffffff] rounded flex items-center">
               <span>本箱已验收(袋)：</span>
-              <span>{{ acceptList?.length }}</span>
+              <span class="text-[28px]">{{ acceptList?.length }}</span>
             </div>
             <div class="flex gap-2">
               <a-button
