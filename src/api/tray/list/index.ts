@@ -78,3 +78,9 @@ export const traySampleBagListApi = (params: GetApiCoreBankTrayKeepsamplesReques
     url: `/api/core/bank/tray/keepsamples`,
     params,
   });
+
+export const getTrayBoxListApi = (params: { trayNo: string; batchNo: string }) =>
+  defHttp.get({
+    url: `/api/search/bank/box`,
+    params,
+  });

@@ -20,6 +20,7 @@ export const columns: BasicColumn[] = [
   {
     title: '箱数',
     dataIndex: 'boxCount',
+    slots: { customRender: 'boxCount' },
   },
   {
     title: '血浆数量',
@@ -62,5 +63,22 @@ export const searchForm: FormSchema[] = [
         { value: '1', label: '是' },
       ],
     },
+  },
+];
+export const dtColumns: BasicColumn[] = [
+  {
+    width: 120,
+    title: '血浆箱号',
+    dataIndex: 'boxNo',
+  },
+  {
+    width: 120,
+    title: '验收人',
+    dataIndex: 'verifyBy',
+  },
+  {
+    width: 140,
+    title: '验收时间',
+    dataIndex: 'verifyTime',
   },
 ];

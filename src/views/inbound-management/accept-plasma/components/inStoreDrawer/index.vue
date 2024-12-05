@@ -25,6 +25,14 @@
             <a-button type="primary" @click="handleIn">入库</a-button>
             <a-button type="primary" @click="handleReBind">托盘重绑</a-button>
           </template>
+          <template #boxCount="{ value, record }">
+            <span
+              class="text-blue-500 underline cursor-pointer"
+              @click.stop.self="openTableModal(true, { ...record, batchNo: state.batchNo })"
+            >
+              {{ value }}
+            </span>
+          </template>
         </BasicTable>
       </div>
     </div>
@@ -58,9 +66,11 @@
             ref="boxRef"
             @keyup="handleKeyUp"
             @scan-change="(code) => (formData.boxId = code)"
-          /> </div
-      ></div>
+          />
+        </div>
+      </div>
     </BasicModal>
+    <TableModal @register="registerTableModal" />
   </BasicModal>
 </template>
 <script setup lang="ts">
@@ -74,6 +84,7 @@
   import { bindVerifyBoxApi } from '@/api/tray/relocation';
   import ScanInput from '@/components/Form/src/components/ScanInput.vue';
   import { debounce } from 'lodash-es';
+  import TableModal from './TableModal.vue';
 
   const emit = defineEmits(['register', 'close']);
   defineOptions({ name: 'InStoreModal' });
@@ -93,6 +104,7 @@
 
   const [registerInModal, { openModal: openInModal }] = useModal();
   const [registerBindModal, { openModal, setModalProps }] = useModal();
+  const [registerTableModal, { openModal: openTableModal }] = useModal();
 
   const [registerModal] = useModalInner(async (data) => {
     state.batchNo = data.batchNo;
