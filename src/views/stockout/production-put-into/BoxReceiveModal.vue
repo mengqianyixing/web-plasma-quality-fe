@@ -28,11 +28,19 @@
         </div>
         <div class="flex" style="height: calc(100% - 40px)">
           <div class="w-1/2">
-            <BasicTable @register="registerReceptionTable" :title="receptionTitle" />
+            <BasicTable
+              @register="registerReceptionTable"
+              :title="receptionTitle"
+              :dataSource="receptionData"
+            />
           </div>
 
           <div class="w-1/2">
-            <BasicTable @register="registerAcceptedTable" :title="acceptedTitle" />
+            <BasicTable
+              @register="registerAcceptedTable"
+              :title="acceptedTitle"
+              :dataSource="acceptedData"
+            />
           </div>
         </div>
       </div>
@@ -48,8 +56,7 @@
   import { debounce } from 'lodash-es';
 
   import {
-    getAcceptedReceptionList,
-    getReceptionList,
+    getReceiveBoxListSummary,
     productionAcceptByBox,
   } from '@/api/stockout/production-put-into';
   import { RemoveEventFn } from '@/hooks/event/useEventListener';
@@ -77,16 +84,17 @@
       _handleEnter();
     }
   }
-  const receptionCount = ref(0);
-  const acceptedCount = ref(0);
-  const receptionTitle = computed(() => `未接收箱数：${receptionCount.value}`);
-  const acceptedTitle = computed(() => `已接收箱数：${acceptedCount.value}`);
+  const originTableData = ref('');
+  const receptionData = computed(() => originTableData.value?.receptionBoxes?.result);
+  const acceptedData = computed(() => originTableData.value?.acceptedBoxes?.result);
+  const receptionTitle = computed(() => `未接收箱数：${receptionData.value?.length ?? 'N/A'}`);
+  const acceptedTitle = computed(() => `已接收箱数：${acceptedData.value?.length ?? 'N/A'}`);
 
   const [
     registerReceptionTable,
-    { reload: reloadReception, getRawDataSource, redoHeight: leftRedo },
+    { redoHeight: leftRedo, getPaginationRef: LeftPaginationRef, setLoading: setLeftLoading },
   ] = useTable({
-    api: getReceptionList,
+    onChange: reloadTable,
     columns: [
       {
         title: '箱号',
@@ -110,9 +118,6 @@
         ...params,
         orderNo: orderNo.value,
       };
-    },
-    afterFetch: () => {
-      receptionCount.value = getRawDataSource().totalCount;
     },
     size: 'small',
     striped: false,
@@ -128,9 +133,9 @@
   });
   const [
     registerAcceptedTable,
-    { reload: reloadAccepted, getRawDataSource: getRawDataSourceAccepted, redoHeight: rightRedo },
+    { redoHeight: rightRedo, getPaginationRef: RightPaginationRef, setLoading: setRightLoading },
   ] = useTable({
-    api: getAcceptedReceptionList,
+    onChange: reloadTable,
     columns: [
       {
         title: '箱号',
@@ -154,9 +159,6 @@
         ...params,
         orderNo: orderNo.value,
       };
-    },
-    afterFetch: () => {
-      acceptedCount.value = getRawDataSourceAccepted().totalCount;
     },
     size: 'small',
     striped: false,
@@ -187,19 +189,26 @@
     reloadTable();
   });
 
-  function reloadTable() {
-    reloadReception();
-    reloadAccepted();
+  async function reloadTable() {
+    const leftPager = LeftPaginationRef();
+    const rightPager = RightPaginationRef();
+    setLeftLoading(true);
+    setRightLoading(true);
+    originTableData.value = await getReceiveBoxListSummary({
+      orderNo: orderNo.value,
+      reCurrPage: leftPager.current,
+      rePageSize: leftPager.defaultPageSize,
+      acCurrPage: rightPager.current,
+      acPageSize: rightPager.defaultPageSize,
+    });
+    setLeftLoading(false);
+    setRightLoading(false);
   }
 
   async function handleEnter() {
     inputDisabled.value = true;
 
     try {
-      setModalProps({
-        loading: true,
-      });
-
       const res = await productionAcceptByBox({
         orderNo: orderNo.value,
         boxNo: inputValue.value,
@@ -217,11 +226,8 @@
       inputValue.value = '';
       createMessage.success('接收成功');
     } finally {
-      setModalProps({
-        loading: false,
-      });
       inputDisabled.value = false;
-      reloadTable();
+      await reloadTable();
     }
   }
 

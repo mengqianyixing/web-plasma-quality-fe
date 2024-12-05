@@ -30,6 +30,7 @@ enum Api {
   PRODUCTION_BATCH_RECEIVE_REVOKE = '/api/product/reception/accept/revoke',
   PRODUCTION_RECEPTION_LIST = '/api/product/reception/boxes',
   PRODUCTION_ACCEPTED_LIST = '/api/product/reception/accepted/boxes',
+  PRODUCTION_ACCEPTED_SUMMARY = '/api/product/reception/summary/boxes',
   PRODUCTION_ACCEPT_BOX = '/api/product/reception/accept/box',
   PRODUCTION_OUT_STORE_LIST = '/api/product/out-store/boxes',
   PRODUCTION_OUT_STORE = '/api/product/out-store/box',
@@ -59,6 +60,12 @@ export const getReceptionList = (params: PostApiProductReceptionBoxesRequest) =>
 export const getAcceptedReceptionList = (params: PostApiProductReceptionAcceptedBoxesRequest) =>
   defHttp.post<PostApiProductReceptionAcceptedBoxesResponse>({
     url: Api.PRODUCTION_ACCEPTED_LIST,
+    params,
+  });
+
+export const getReceiveBoxListSummary = (params: any) =>
+  defHttp.post({
+    url: Api.PRODUCTION_ACCEPTED_SUMMARY,
     params,
   });
 
